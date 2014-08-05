@@ -19,7 +19,17 @@ $custom = array(
 		'foreign_uid'         => array(
 			'config' => array(
 				'type' => 'none',
-			)
+			),
+		),
+		'start_date'          => array(
+			'config' => array(
+				'eval' => 'required,date',
+			),
+		),
+		'end_date'          => array(
+			'config' => array(
+				'eval' => 'required,date',
+			),
 		),
 	),
 );

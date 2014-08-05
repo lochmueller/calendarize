@@ -107,7 +107,7 @@ class Configuration extends AbstractModel {
 	 * @return boolean
 	 */
 	public function getAllDay() {
-		return $this->allDay;
+		return (bool)$this->allDay;
 	}
 
 	/**

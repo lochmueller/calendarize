@@ -8,6 +8,8 @@
  */
 namespace HDNET\Calendarize;
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 /**
  * Register the calendarize objects
  *
@@ -22,6 +24,7 @@ class Register {
 	 * @param array $configuration
 	 */
 	static public function extTables(array $configuration) {
+		self::createTcaConfiguration($configuration);
 		self::register($configuration);
 	}
 
@@ -32,15 +35,6 @@ class Register {
 	 */
 	static public function extLocalconf(array $configuration) {
 		self::register($configuration);
-	}
-
-	/**
-	 * Internal register
-	 *
-	 * @param array $configuration
-	 */
-	static protected function register(array $configuration) {
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
 	}
 
 	/**
@@ -68,6 +62,34 @@ class Register {
 			'required'          => TRUE,
 		);
 		return $configuration;
+	}
+
+	/**
+	 * Internal register
+	 *
+	 * @param array $configuration
+	 */
+	static protected function register(array $configuration) {
+		$GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
+	}
+
+	/**
+	 * Add the calendarize to the given TCA
+	 *
+	 * @param $configuration
+	 */
+	static protected function createTcaConfiguration($configuration) {
+		$tableName = $configuration['tableName'];
+		$GLOBALS['TCA'][$tableName]['columns']['calendarize'] = array(
+			'label'  => 'Calendarize',
+			'config' => array(
+				'type'          => 'inline',
+				'foreign_table' => 'tx_calendarize_domain_model_configuration',
+				'minitems'      => $configuration['required'] ? 1 : 0,
+				'maxitems'      => 99,
+			),
+		);
+		ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize');
 	}
 
 }

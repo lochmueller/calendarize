@@ -35,9 +35,9 @@ class ProcessDatamapClass {
 	 */
 	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, DataHandler $dataHandler) {
 		$register = Register::getRegister();
-		foreach ($register as $configuration) {
+		foreach ($register as $key => $configuration) {
 			if ($configuration['tableName'] == $table) {
-				IndexerService::reindex($table, $id);
+				IndexerService::reindex($key, $table, $id);
 			}
 		}
 	}

@@ -33,12 +33,60 @@ class Index extends AbstractModel {
 	protected $uniqueRegisterKey;
 
 	/**
+	 * TableName
+	 *
+	 * @var string
+	 * @db
+	 */
+	protected $foreignTable;
+
+	/**
 	 * The Id of the foreign element
 	 *
 	 * @var int
 	 * @db
 	 */
 	protected $foreignUid;
+
+	/**
+	 * Start date
+	 *
+	 * @var \DateTime
+	 * @db
+	 */
+	protected $startDate;
+
+	/**
+	 * End date
+	 *
+	 * @var \DateTime
+	 * @db
+	 */
+	protected $endDate;
+
+	/**
+	 * Start time
+	 *
+	 * @var int
+	 * @db
+	 */
+	protected $startTime;
+
+	/**
+	 * End time
+	 *
+	 * @var int
+	 * @db
+	 */
+	protected $endTime;
+
+	/**
+	 * AllDay
+	 *
+	 * @var boolean
+	 * @db
+	 */
+	protected $allDay;
 
 	/**
 	 * Get the original record for the current index
@@ -60,10 +108,10 @@ class Index extends AbstractModel {
 	protected function getOriginalRecordByConfiguration($configuration, $uid) {
 		$query = HelperUtility::getQuery($configuration['modelName']);
 		$query->getQuerySettings()
-			->setRespectStoragePage(FALSE);
+		      ->setRespectStoragePage(FALSE);
 		$query->equals('uid', $uid);
 		return $query->execute()
-			->getFirst();
+		             ->getFirst();
 	}
 
 	/**
@@ -106,6 +154,90 @@ class Index extends AbstractModel {
 	 */
 	public function getUniqueRegisterKey() {
 		return $this->uniqueRegisterKey;
+	}
+
+	/**
+	 * @param string $foreignTable
+	 */
+	public function setForeignTable($foreignTable) {
+		$this->foreignTable = $foreignTable;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getForeignTable() {
+		return $this->foreignTable;
+	}
+
+	/**
+	 * @param boolean $allDay
+	 */
+	public function setAllDay($allDay) {
+		$this->allDay = $allDay;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function getAllDay() {
+		return $this->allDay;
+	}
+
+	/**
+	 * @param \DateTime $endDate
+	 */
+	public function setEndDate($endDate) {
+		$this->endDate = $endDate;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getEndDate() {
+		return $this->endDate;
+	}
+
+	/**
+	 * @param int $endTime
+	 */
+	public function setEndTime($endTime) {
+		$this->endTime = $endTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEndTime() {
+		return $this->endTime;
+	}
+
+	/**
+	 * @param \DateTime $startDate
+	 */
+	public function setStartDate($startDate) {
+		$this->startDate = $startDate;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getStartDate() {
+		return $this->startDate;
+	}
+
+	/**
+	 * @param int $startTime
+	 */
+	public function setStartTime($startTime) {
+		$this->startTime = $startTime;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStartTime() {
+		return $this->startTime;
 	}
 
 }

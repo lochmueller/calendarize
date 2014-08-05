@@ -6,6 +6,12 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_index.all_day"><![CDATA[all_day]]></label>
+			<label index="tx_calendarize_domain_model_index.end_time"><![CDATA[end_time]]></label>
+			<label index="tx_calendarize_domain_model_index.start_time"><![CDATA[start_time]]></label>
+			<label index="tx_calendarize_domain_model_index.end_date"><![CDATA[end_date]]></label>
+			<label index="tx_calendarize_domain_model_index.start_date"><![CDATA[start_date]]></label>
+			<label index="tx_calendarize_domain_model_index.foreign_table"><![CDATA[foreign_table]]></label>
 			<label index="tx_calendarize_domain_model_index.foreign_uid"><![CDATA[foreign_uid]]></label>
 			<label index="tx_calendarize_domain_model_index.unique_register_key"><![CDATA[unique_register_key]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
