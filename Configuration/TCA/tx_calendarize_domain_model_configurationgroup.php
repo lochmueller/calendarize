@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TCA Structure for ConfigurationGroups
+ */
+
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\ConfigurationGroup');
 
 $custom = array(

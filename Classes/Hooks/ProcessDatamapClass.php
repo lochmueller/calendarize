@@ -1,10 +1,10 @@
 <?php
 /**
- * @todo       General file information
+ * Hook for Datamap processing
  *
  * @category   Extension
  * @package    Calendarize
- * @subpackage ...
+ * @subpackage Hooks
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -15,16 +15,18 @@ use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 
 /**
- * @todo       General class information
+ * Hook for Datamap processing
  *
  * @package    Calendarize
- * @subpackage ...
+ * @subpackage Hooks
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @hook       TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processDatamapClass
  */
 class ProcessDatamapClass {
 
 	/**
+	 * Hook into the after database operations
+	 *
 	 * @param             $status
 	 * @param             $table
 	 * @param             $id

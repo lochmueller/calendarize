@@ -111,6 +111,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set end date
+	 *
 	 * @param \DateTime $endDate
 	 */
 	public function setEndDate($endDate) {

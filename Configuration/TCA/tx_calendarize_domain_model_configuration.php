@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TCA Structure for Configurations
+ */
+
 use HDNET\Calendarize\Domain\Model\Configuration;
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
@@ -7,7 +11,7 @@ $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calend
 $custom = array(
 	'ctrl'    => array(
 		'type'            => 'type',
-	#	'hideTable'       => TRUE,
+		#	'hideTable'       => TRUE,
 		'typeicons'       => array(
 			Configuration::TYPE_TIME          => '../typo3conf/ext/calendarize/Resources/Public/Icons/Configuration.png',
 			Configuration::TYPE_INCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationInclude.png',

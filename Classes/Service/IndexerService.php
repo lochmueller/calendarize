@@ -1,10 +1,10 @@
 <?php
 /**
- * @todo       General file information
+ * Index the given events
  *
  * @category   Extension
  * @package    Calendarize
- * @subpackage ...
+ * @subpackage Service
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -13,17 +13,19 @@ namespace HDNET\Calendarize\Service;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @todo       General class information
+ * Index the given events
  *
  * @package    Calendarize
- * @subpackage ...
+ * @subpackage Service
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class IndexerService {
 
 	/**
-	 * @param $tableName
-	 * @param $uid
+	 * Reindex the given element
+	 *
+	 * @param string $tableName
+	 * @param int    $uid
 	 */
 	static public function reindex($tableName, $uid) {
 		/** @var \HDNET\Calendarize\Service\IndexerService $indexer */
@@ -32,8 +34,10 @@ class IndexerService {
 	}
 
 	/**
-	 * @param $tableName
-	 * @param $uid
+	 * Reindex the given element / internal function
+	 *
+	 * @param string $tableName
+	 * @param int    $uid
 	 */
 	public function reindexInternal($tableName, $uid) {
 		// Check info
@@ -45,7 +49,10 @@ class IndexerService {
 		// rebuild new index
 	}
 
-	public function reindexAll(){
+	/**
+	 * Reindex all elements
+	 */
+	public function reindexAll() {
 
 	}
 
