@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+	<type>database</type>
+	<description>Language file is created via the HDNET extension on Thursday, 31-Jul-2014 09:08:42 CEST</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_configurationgroup"><![CDATA[Configuration group]]></label>
+			<label index="tx_calendarize_domain_model_configurationgroup.title"><![CDATA[Title]]></label>
+			<label index="tx_calendarize_domain_model_configuration.type"><![CDATA[Type]]></label>
+			<label index="tx_calendarize_domain_model_configuration"><![CDATA[Configuration]]></label>
+			<label index="tx_calendarize_domain_model_configuration.frequency"><![CDATA[frequency]]></label>
+			<label index="tx_calendarize_domain_model_configuration.all_day"><![CDATA[all_day]]></label>
+			<label index="tx_calendarize_domain_model_configuration.end_time"><![CDATA[end_time]]></label>
+			<label index="tx_calendarize_domain_model_configuration.start_time"><![CDATA[start_time]]></label>
+			<label index="tx_calendarize_domain_model_configuration.end_date"><![CDATA[end_date]]></label>
+			<label index="tx_calendarize_domain_model_configuration.start_date"><![CDATA[start_date]]></label>
+			<label index="tx_calendarize_domain_model_index"><![CDATA[Index]]></label>
+			<label index="tx_calendarize_domain_model_event"><![CDATA[Event]]></label>
+			<label index="tx_calendarize_domain_model_event.description"><![CDATA[Description]]></label>
+			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="tx_calendarize_domain_model_event"><![CDATA[Ereignis]]></label>
+			<label index="tx_calendarize_domain_model_event.description"><![CDATA[Beschreibung]]></label>
+			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Titel]]></label>
+		</languageKey>
+	</data>
+</T3locallang>

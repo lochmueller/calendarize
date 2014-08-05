@@ -1,0 +1,19 @@
+<T3DataStructure>
+	<meta type="array">
+		<langChildren type="integer">0</langChildren>
+		<langDisable type="integer">1</langDisable>
+	</meta>
+	<ROOT>
+		<type>array</type>
+		<el>
+			<settings.configuration>
+				<TCEforms>
+					<label>Configuration</label>
+					<config>
+						<type>select</type>
+					</config>
+				</TCEforms>
+			</settings.configuration>
+		</el>
+	</ROOT>
+</T3DataStructure>

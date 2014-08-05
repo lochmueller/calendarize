@@ -1,0 +1,9 @@
+<f:layout name="Default" />
+
+<f:section name="Main">
+
+	<f:for each="{indices}" as="index">
+		<f:link.action action="detail" arguments="{index: index}">{index.uid}</f:link.action>
+	</f:for>
+
+</f:section>
