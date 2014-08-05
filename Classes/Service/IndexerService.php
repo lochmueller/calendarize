@@ -3,7 +3,7 @@
  * @todo       General file information
  *
  * @category   Extension
- * @package    Hdnet
+ * @package    Calendarize
  * @subpackage ...
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * @todo       General class information
  *
- * @package    Hdnet
+ * @package    Calendarize
  * @subpackage ...
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */

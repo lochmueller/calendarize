@@ -3,7 +3,7 @@
  * @todo       General file information
  *
  * @category   Extension
- * @package    Hdnet
+ * @package    Calendarize
  * @subpackage ...
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
@@ -17,7 +17,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 /**
  * @todo       General class information
  *
- * @package    Hdnet
+ * @package    Calendarize
  * @subpackage ...
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @hook       TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processDatamapClass

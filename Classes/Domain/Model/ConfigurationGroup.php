@@ -1,32 +1,36 @@
 <?php
 /**
- * @todo       General file information
+ * Logical configuration group
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * @todo       General class information
+ * Logical configuration group
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @db
  */
 class ConfigurationGroup extends AbstractModel {
 
 	/**
+	 * Title
+	 *
 	 * @var string
 	 * @db
 	 */
 	protected $title;
 
 	/**
+	 * Set title
+	 *
 	 * @param string $title
 	 */
 	public function setTitle($title) {
@@ -34,6 +38,8 @@ class ConfigurationGroup extends AbstractModel {
 	}
 
 	/**
+	 * Get title
+	 *
 	 * @return string
 	 */
 	public function getTitle() {

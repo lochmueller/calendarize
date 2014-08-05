@@ -1,20 +1,20 @@
 <?php
 /**
- * @todo       General file information
+ * Event (Example) for the calandarize function
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * Event
+ * Event (Example) for the calandarize function
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @db
  */
@@ -37,6 +37,8 @@ class Event extends AbstractModel {
 	protected $description;
 
 	/**
+	 * Set title
+	 *
 	 * @param string $title
 	 */
 	public function setTitle($title) {
@@ -44,6 +46,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Get title
+	 *
 	 * @return string
 	 */
 	public function getTitle() {
@@ -51,6 +55,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Set description
+	 *
 	 * @param string $description
 	 */
 	public function setDescription($description) {
@@ -58,6 +64,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Get description
+	 *
 	 * @return string
 	 */
 	public function getDescription() {

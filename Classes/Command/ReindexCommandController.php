@@ -1,23 +1,25 @@
 <?php
 /**
- * @todo       General file information
+ * Reindex the event models
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Command
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 namespace HDNET\Calendarize\Command;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
+
 /**
- * @todo       General class information
+ * Reindex the event models
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Command
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
-class ReindexCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
+class ReindexCommandController extends CommandController {
 
 	/**
 	 * Run the reindex process

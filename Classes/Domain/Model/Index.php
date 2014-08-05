@@ -1,20 +1,20 @@
 <?php
 /**
- * @todo       General file information
+ * Index information
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * @todo       General class information
+ * Index information
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @db
  */

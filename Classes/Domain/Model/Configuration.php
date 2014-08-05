@@ -1,20 +1,20 @@
 <?php
 /**
- * @todo       General file information
+ * Configuration for time options
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * @todo       General class information
+ * Configuration for time options
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Domain\Model
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @db
  */
@@ -27,42 +27,56 @@ class Configuration extends AbstractModel {
 	const TYPE_EXCLUDE_GROUP = 'exclude';
 
 	/**
+	 * Type
+	 *
 	 * @var string
 	 * @db
 	 */
 	protected $type = self::TYPE_TIME;
 
 	/**
+	 * Start date
+	 *
 	 * @var \DateTime
 	 * @db
 	 */
 	protected $startDate;
 
 	/**
+	 * End date
+	 *
 	 * @var \DateTime
 	 * @db
 	 */
 	protected $endDate;
 
 	/**
+	 * Start time
+	 *
 	 * @var int
 	 * @db
 	 */
 	protected $startTime;
 
 	/**
+	 * End time
+	 *
 	 * @var int
 	 * @db
 	 */
 	protected $endTime;
 
 	/**
+	 * AllDay
+	 *
 	 * @var boolean
 	 * @db
 	 */
 	protected $allDay;
 
 	/**
+	 * Set type
+	 *
 	 * @param string $type
 	 */
 	public function setType($type) {
@@ -70,6 +84,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get type
+	 *
 	 * @return string
 	 */
 	public function getType() {
@@ -77,6 +93,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set all day
+	 *
 	 * @param boolean $allDay
 	 */
 	public function setAllDay($allDay) {
@@ -84,6 +102,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get all day
+	 *
 	 * @return boolean
 	 */
 	public function getAllDay() {
@@ -98,6 +118,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get end date
+	 *
 	 * @return \DateTime
 	 */
 	public function getEndDate() {
@@ -105,6 +127,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set end time
+	 *
 	 * @param int $endTime
 	 */
 	public function setEndTime($endTime) {
@@ -112,6 +136,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get end time
+	 *
 	 * @return int
 	 */
 	public function getEndTime() {
@@ -119,6 +145,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set start date
+	 *
 	 * @param \DateTime $startDate
 	 */
 	public function setStartDate($startDate) {
@@ -126,6 +154,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get start date
+	 *
 	 * @return \DateTime
 	 */
 	public function getStartDate() {
@@ -133,6 +163,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set start time
+	 *
 	 * @param int $startTime
 	 */
 	public function setStartTime($startTime) {
@@ -140,6 +172,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get start time
+	 *
 	 * @return int
 	 */
 	public function getStartTime() {

@@ -1,24 +1,24 @@
 <?php
 /**
- * @todo       General file information
+ * Register the calendarize objects
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 namespace HDNET\Calendarize;
 
 /**
- * @todo       General class information
+ * Register the calendarize objects
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class Register {
 
 	/**
+	 * Register in the extTables
+	 *
 	 * @param array $configuration
 	 */
 	static public function extTables(array $configuration) {
@@ -26,6 +26,8 @@ class Register {
 	}
 
 	/**
+	 * Register in the extLocalconf
+	 *
 	 * @param array $configuration
 	 */
 	static public function extLocalconf(array $configuration) {
@@ -33,6 +35,8 @@ class Register {
 	}
 
 	/**
+	 * Internal register
+	 *
 	 * @param array $configuration
 	 */
 	static protected function register(array $configuration) {
