@@ -6,6 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_index.foreign_uid"><![CDATA[foreign_uid]]></label>
+			<label index="tx_calendarize_domain_model_index.unique_register_key"><![CDATA[unique_register_key]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup"><![CDATA[Configuration group]]></label>

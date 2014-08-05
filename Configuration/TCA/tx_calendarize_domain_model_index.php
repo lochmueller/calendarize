@@ -8,7 +8,19 @@ $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calend
 
 
 $custom = array(
-	'ctrl' => array( #	'hideTable' => TRUE,
+	'ctrl'    => array( #	'hideTable' => TRUE,
+	),
+	'columns' => array(
+		'unique_register_key' => array(
+			'config' => array(
+				'type' => 'none',
+			)
+		),
+		'foreign_uid'         => array(
+			'config' => array(
+				'type' => 'none',
+			)
+		),
 	),
 );
 

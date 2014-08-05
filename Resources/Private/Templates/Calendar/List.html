@@ -3,7 +3,10 @@
 <f:section name="Main">
 
 	<f:for each="{indices}" as="index">
-		<f:link.action action="detail" arguments="{index: index}">{index.uid}</f:link.action>
+
+		<f:link.action action="detail" arguments="{index: index}">
+			<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+		</f:link.action>
 	</f:for>
 
 </f:section>
