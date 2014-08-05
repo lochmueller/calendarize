@@ -6,6 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
+			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup"><![CDATA[Configuration group]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.title"><![CDATA[Title]]></label>
 			<label index="tx_calendarize_domain_model_configuration.type"><![CDATA[Type]]></label>

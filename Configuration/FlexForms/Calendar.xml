@@ -11,6 +11,7 @@
 					<label>Configuration</label>
 					<config>
 						<type>select</type>
+						<itemsProcFunc>HDNET\Calendarize\UserFunction\PluginConfiguration->addConfigurations</itemsProcFunc>
 					</config>
 				</TCEforms>
 			</settings.configuration>

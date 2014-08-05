@@ -1,14 +1,17 @@
 <?php
 
+use HDNET\Calendarize\Domain\Model\Configuration;
+
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
 
 $custom = array(
 	'ctrl'    => array(
 		'type'            => 'type',
+	#	'hideTable'       => TRUE,
 		'typeicons'       => array(
-			\HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME          => '../typo3conf/ext/calendarize/Resources/Public/Icons/Configuration.png',
-			\HDNET\Calendarize\Domain\Model\Configuration::TYPE_INCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationInclude.png',
-			\HDNET\Calendarize\Domain\Model\Configuration::TYPE_EXCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationExclude.png',
+			Configuration::TYPE_TIME          => '../typo3conf/ext/calendarize/Resources/Public/Icons/Configuration.png',
+			Configuration::TYPE_INCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationInclude.png',
+			Configuration::TYPE_EXCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationExclude.png',
 		),
 		'typeicon_column' => 'type',
 	),
@@ -19,29 +22,29 @@ $custom = array(
 				'items'   => array(
 					array(
 						'Time',
-						\HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME
+						Configuration::TYPE_TIME
 					),
 					array(
 						'Include Group',
-						\HDNET\Calendarize\Domain\Model\Configuration::TYPE_INCLUDE_GROUP
+						Configuration::TYPE_INCLUDE_GROUP
 					),
 					array(
 						'Exclude Group',
-						\HDNET\Calendarize\Domain\Model\Configuration::TYPE_EXCLUDE_GROUP
+						Configuration::TYPE_EXCLUDE_GROUP
 					),
 				),
-				'default' => \HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME
+				'default' => Configuration::TYPE_TIME
 			)
 		),
 	),
 	'types'   => array(
-		\HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME          => array(
+		Configuration::TYPE_TIME          => array(
 			'showitems' => $base['types']['1'],
 		),
-		\HDNET\Calendarize\Domain\Model\Configuration::TYPE_INCLUDE_GROUP => array(
+		Configuration::TYPE_INCLUDE_GROUP => array(
 			'showitems' => $base['types']['1'],
 		),
-		\HDNET\Calendarize\Domain\Model\Configuration::TYPE_EXCLUDE_GROUP => array(
+		Configuration::TYPE_EXCLUDE_GROUP => array(
 			'showitems' => $base['types']['1'],
 		),
 	)

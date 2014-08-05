@@ -49,7 +49,7 @@ class Register {
 	 * @return array
 	 */
 	static public function getRegister() {
-		return $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] ? : array();
+		return is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']) ? $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] : array();
 	}
 
 	/**
@@ -60,7 +60,8 @@ class Register {
 	 */
 	static public function getDefaultCalendarizeConfiguration() {
 		$configuration = array(
-			'uniqueRegisterKey' => 'Calendarize Event',
+			'uniqueRegisterKey' => 'Event',
+			'title'             => 'Calendarize Event',
 			'modelName'         => 'HDNET\\Calendarize\\Domain\\Model\\Event',
 			'partialIdentifier' => 'Event',
 			'tableName'         => 'tx_calendarize_domain_model_event',

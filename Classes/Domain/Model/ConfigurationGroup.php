@@ -29,6 +29,14 @@ class ConfigurationGroup extends AbstractModel {
 	protected $title;
 
 	/**
+	 * Configurations
+	 *
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
+	 * @db text NOT NULL
+	 */
+	protected $configurations;
+
+	/**
 	 * Set title
 	 *
 	 * @param string $title
@@ -44,6 +52,24 @@ class ConfigurationGroup extends AbstractModel {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+
+	/**
+	 * Set configurations
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $configurations
+	 */
+	public function setConfigurations($configurations) {
+		$this->configurations = $configurations;
+	}
+
+	/**
+	 * Get configurations
+	 *
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 */
+	public function getConfigurations() {
+		return $this->configurations;
 	}
 
 }
