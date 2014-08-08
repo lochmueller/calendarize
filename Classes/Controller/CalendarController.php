@@ -10,6 +10,7 @@
 
 namespace HDNET\Calendarize\Controller;
 
+use HDNET\Calendarize\Domain\Model\Index;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
 /**
@@ -72,7 +73,7 @@ class CalendarController extends ActionController {
 	 *
 	 * @param \HDNET\Calendarize\Domain\Model\Index $index
 	 */
-	public function detailAction(\HDNET\Calendarize\Domain\Model\Index $index) {
+	public function detailAction(Index $index) {
 		$this->view->assign('index', $index);
 	}
 

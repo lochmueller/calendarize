@@ -24,10 +24,15 @@ class Database {
 	/**
 	 * Add the smart object SQL string the the signal below
 	 *
+	 *
 	 * @signalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
 	 * @signalName tablesDefinitionIsBeingBuilt
+	 *
+	 * @param array $sqlString
+	 *
+	 * @return array
 	 */
-	public function loadSmartObjectTables(array $sqlString) {
+	public function loadCalendarizeTables(array $sqlString) {
 		$sqlString[] = $this->getCalendarizeDatabaseString();
 		return array('sqlString' => $sqlString);
 	}
@@ -37,8 +42,14 @@ class Database {
 	 *
 	 * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
 	 * @signalName tablesDefinitionIsBeingBuilt
+	 *
+	 * @param array  $sqlString
+	 * @param string $extensionKey
+	 *
+	 * @return array
+	 *
 	 */
-	public function updateSmartObjectTables(array $sqlString, $extensionKey) {
+	public function updateCalendarizeTables(array $sqlString, $extensionKey) {
 		$sqlString[] = $this->getCalendarizeDatabaseString();
 		return array(
 			'sqlString'    => $sqlString,
@@ -47,6 +58,8 @@ class Database {
 	}
 
 	/**
+	 * Get  the calendarize string for the registered tables
+	 *
 	 * @return string
 	 */
 	protected function getCalendarizeDatabaseString() {

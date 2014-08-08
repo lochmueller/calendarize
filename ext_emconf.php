@@ -3,12 +3,12 @@
  * $EM_CONF
  *
  * @category   Extension
- * @package    Autoloader
+ * @package    Calendarize
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF['calendarize'] = array(
 	'title'              => 'Calendarize',
 	'description'        => 'Smart Extbase calendar for one central or your own tables.',
 	'category'           => 'misc',
@@ -33,12 +33,10 @@ $EM_CONF[$_EXTKEY] = array(
 	'constraints'        => array(
 		'depends'   => array(
 			'typo3'      => '6.2.0-6.2.99',
-			'autoloader' => '1.0.1-0.0.0',
+			'autoloader' => '1.1.0-0.0.0',
 		),
 		'conflicts' => array(),
 		'suggests'  => array(),
 	),
 	'suggests'           => array(),
 );
-
-?>

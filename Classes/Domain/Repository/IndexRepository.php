@@ -10,8 +10,6 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
 /**
  * Index repository
  *
@@ -19,7 +17,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @subpackage Domain\Repository
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
-class IndexRepository extends Repository {
+class IndexRepository extends AbstractRepository {
 
 	/**
 	 * Create a default query

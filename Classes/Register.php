@@ -25,7 +25,7 @@ class Register {
 	 */
 	static public function extTables(array $configuration) {
 		self::createTcaConfiguration($configuration);
-		self::register($configuration);
+		self::registerItem($configuration);
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Register {
 	 * @param array $configuration
 	 */
 	static public function extLocalconf(array $configuration) {
-		self::register($configuration);
+		self::registerItem($configuration);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Register {
 	 *
 	 * @param array $configuration
 	 */
-	static protected function register(array $configuration) {
+	static protected function registerItem(array $configuration) {
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
 	}
 

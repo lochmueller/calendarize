@@ -51,6 +51,8 @@ class IndexerService {
 	}
 
 	/**
+	 * Build the index for one element
+	 *
 	 * @param string $configurationKey
 	 * @param        $tableName
 	 * @param        $uid
@@ -72,11 +74,16 @@ class IndexerService {
 
 				$this->prepareRecordForDatabase($record);
 				$this->getDatabaseConnection()
-				     ->exec_INSERTquery('tx_calendarize_domain_model_index', $record);
+					->exec_INSERTquery('tx_calendarize_domain_model_index', $record);
 			}
 		}
 	}
 
+	/**
+	 * Prepare the record for the database insert
+	 *
+	 * @param $record
+	 */
 	protected function prepareRecordForDatabase(&$record) {
 		foreach ($record as $key => $value) {
 			if ($value instanceof \DateTime) {
@@ -90,16 +97,28 @@ class IndexerService {
 
 	}
 
+	/**
+	 * Get the configuration key by table name
+	 *
+	 * @param $tableName
+	 */
 	protected function getConfigurationKeyByTableName($tableName) {
 
 	}
 
+	/**
+	 * Build time table by configuration uid
+	 *
+	 * @param $configurationUid
+	 *
+	 * @return array
+	 */
 	protected function buildTimeTableByConfigurationUid($configurationUid) {
 		$timeTable = array();
 
-		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configurationRepository */
-		$configurationRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
-		$configuration = $configurationRepository->findByUid($configurationUid);
+		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
+		$configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
+		$configuration = $configRepository->findByUid($configurationUid);
 		if (!($configuration instanceof Configuration)) {
 			return $timeTable;
 		}
@@ -127,9 +146,15 @@ class IndexerService {
 
 	}
 
+	/**
+	 * Clear the index for one element
+	 *
+	 * @param $tableName
+	 * @param $uid
+	 */
 	protected function clearIndex($tableName, $uid) {
 		$this->getDatabaseConnection()
-		     ->exec_DELETEquery('tx_calendarize_domain_model_index', 'foreign_table="' . $tableName . '" AND foreign_uid="' . $tableName . '"');
+			->exec_DELETEquery('tx_calendarize_domain_model_index', 'foreign_table="' . $tableName . '" AND foreign_uid="' . $uid . '"');
 	}
 
 	/**

@@ -1,10 +1,10 @@
 <?php
 /**
- * @todo       General file information
+ * Helper Utility
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Utility
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -13,10 +13,10 @@ namespace HDNET\Calendarize\Utility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * @todo       General class information
+ * Helper Utility
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Utility
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class HelperUtility {

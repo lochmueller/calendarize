@@ -1,6 +1,6 @@
 <?php
 /**
- * Configuration repository
+ * Repository Abstraction
  *
  * @category   Extension
  * @package    Calendarize
@@ -10,13 +10,15 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+
 /**
- * Configuration repository
+ * Repository Abstraction
  *
  * @package    Calendarize
  * @subpackage Domain\Repository
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
-class ConfigurationRepository extends AbstractRepository {
+class AbstractRepository extends Repository {
 
 }

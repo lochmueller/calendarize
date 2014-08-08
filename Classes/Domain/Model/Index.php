@@ -100,6 +100,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get the original record by configuration
+	 *
 	 * @param $configuration
 	 * @param $uid
 	 *
@@ -108,10 +110,10 @@ class Index extends AbstractModel {
 	protected function getOriginalRecordByConfiguration($configuration, $uid) {
 		$query = HelperUtility::getQuery($configuration['modelName']);
 		$query->getQuerySettings()
-		      ->setRespectStoragePage(FALSE);
+			->setRespectStoragePage(FALSE);
 		$query->equals('uid', $uid);
 		return $query->execute()
-		             ->getFirst();
+			->getFirst();
 	}
 
 	/**
@@ -129,6 +131,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set foreign uid
+	 *
 	 * @param int $foreignUid
 	 */
 	public function setForeignUid($foreignUid) {
@@ -136,6 +140,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get foreign uid
+	 *
 	 * @return int
 	 */
 	public function getForeignUid() {
@@ -143,6 +149,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set unique register key
+	 *
 	 * @param string $uniqueRegisterKey
 	 */
 	public function setUniqueRegisterKey($uniqueRegisterKey) {
@@ -150,6 +158,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get unique register key
+	 *
 	 * @return string
 	 */
 	public function getUniqueRegisterKey() {
@@ -157,6 +167,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set foreign table
+	 *
 	 * @param string $foreignTable
 	 */
 	public function setForeignTable($foreignTable) {
@@ -164,6 +176,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get foreign table
+	 *
 	 * @return string
 	 */
 	public function getForeignTable() {
@@ -171,6 +185,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set all day
+	 *
 	 * @param boolean $allDay
 	 */
 	public function setAllDay($allDay) {
@@ -178,6 +194,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get all day
+	 *
 	 * @return boolean
 	 */
 	public function getAllDay() {
@@ -185,6 +203,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set end date
+	 *
 	 * @param \DateTime $endDate
 	 */
 	public function setEndDate($endDate) {
@@ -192,6 +212,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get end date
+	 *
 	 * @return \DateTime
 	 */
 	public function getEndDate() {
@@ -199,6 +221,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set end time
+	 *
 	 * @param int $endTime
 	 */
 	public function setEndTime($endTime) {
@@ -206,6 +230,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get end time
+	 *
 	 * @return int
 	 */
 	public function getEndTime() {
@@ -213,6 +239,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set start date
+	 *
 	 * @param \DateTime $startDate
 	 */
 	public function setStartDate($startDate) {
@@ -220,6 +248,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get starte date
+	 *
 	 * @return \DateTime
 	 */
 	public function getStartDate() {
@@ -227,6 +257,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Set start time
+	 *
 	 * @param int $startTime
 	 */
 	public function setStartTime($startTime) {
@@ -234,6 +266,8 @@ class Index extends AbstractModel {
 	}
 
 	/**
+	 * Get start time
+	 *
 	 * @return int
 	 */
 	public function getStartTime() {

@@ -29,15 +29,15 @@ class ProcessDatamapClass {
 	 *
 	 * @param             $status
 	 * @param             $table
-	 * @param             $id
+	 * @param             $identifier
 	 * @param             $fieldArray
 	 * @param DataHandler $dataHandler
 	 */
-	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, DataHandler $dataHandler) {
+	public function processDatamap_afterDatabaseOperations($status, $table, $identifier, $fieldArray, DataHandler $dataHandler) {
 		$register = Register::getRegister();
 		foreach ($register as $key => $configuration) {
 			if ($configuration['tableName'] == $table) {
-				IndexerService::reindex($key, $table, $id);
+				IndexerService::reindex($key, $table, $identifier);
 			}
 		}
 	}
