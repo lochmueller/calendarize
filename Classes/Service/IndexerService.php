@@ -10,9 +10,7 @@
 
 namespace HDNET\Calendarize\Service;
 
-use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Register;
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

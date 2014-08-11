@@ -1,10 +1,10 @@
 <?php
 /**
- * @todo       General file information
+ * Time table builder service
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage Service
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
@@ -13,15 +13,17 @@ namespace HDNET\Calendarize\Service;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
- * @todo       General class information
+ * Time table builder service
  *
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @package    Calendarize
+ * @subpackage Service
+ * @author     Tim Lochmüller
  */
 class TimeTableService {
 
 	/**
+	 * Build the timetable for the given configuration matrix (sorted)
+	 *
 	 * @param array $uids
 	 *
 	 * @return array

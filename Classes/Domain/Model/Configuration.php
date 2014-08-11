@@ -224,6 +224,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set groups
+	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $groups
 	 */
 	public function setGroups($groups) {
@@ -231,6 +233,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get groups
+	 *
 	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getGroups() {
@@ -238,6 +242,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set frequency
+	 *
 	 * @param string $frequency
 	 */
 	public function setFrequency($frequency) {
@@ -245,6 +251,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get frequency
+	 *
 	 * @return string
 	 */
 	public function getFrequency() {
@@ -252,6 +260,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set till date
+	 *
 	 * @param \DateTime $tillDate
 	 */
 	public function setTillDate($tillDate) {
@@ -259,6 +269,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get till date
+	 *
 	 * @return \DateTime
 	 */
 	public function getTillDate() {
@@ -266,6 +278,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set counter amount
+	 *
 	 * @param int $counterAmount
 	 */
 	public function setCounterAmount($counterAmount) {
@@ -273,6 +287,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get counter amount
+	 *
 	 * @return int
 	 */
 	public function getCounterAmount() {
@@ -280,6 +296,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Set counter interval
+	 *
 	 * @param int $counterInterval
 	 */
 	public function setCounterInterval($counterInterval) {
@@ -287,6 +305,8 @@ class Configuration extends AbstractModel {
 	}
 
 	/**
+	 * Get counter interval
+	 *
 	 * @return int
 	 */
 	public function getCounterInterval() {
