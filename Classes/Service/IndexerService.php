@@ -11,10 +11,12 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Index the given events
@@ -63,19 +65,19 @@ class IndexerService {
 	protected function buildIndex($configurationKey, $tableName, $uid) {
 		$record = BackendUtility::getRecord($tableName, $uid);
 		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
+		$timeTableSerive = new TimeTableService();
+		$records = $timeTableSerive->getTimeTablesByConfigurationUids($configurations);
 
-		foreach ($configurations as $configurationUid) {
-			$records = $this->buildTimeTableByConfigurationUid($configurationUid);
-			foreach ($records as $record) {
 
-				$record['foreign_table'] = $tableName;
-				$record['foreign_uid'] = $uid;
-				$record['unique_register_key'] = $configurationKey;
+		foreach ($records as $record) {
 
-				$this->prepareRecordForDatabase($record);
-				$this->getDatabaseConnection()
-					->exec_INSERTquery('tx_calendarize_domain_model_index', $record);
-			}
+			$record['foreign_table'] = $tableName;
+			$record['foreign_uid'] = $uid;
+			$record['unique_register_key'] = $configurationKey;
+
+			$this->prepareRecordForDatabase($record);
+			$this->getDatabaseConnection()
+				->exec_INSERTquery('tx_calendarize_domain_model_index', $record);
 		}
 	}
 
@@ -98,52 +100,19 @@ class IndexerService {
 	}
 
 	/**
-	 * Get the configuration key by table name
-	 *
-	 * @param $tableName
-	 */
-	protected function getConfigurationKeyByTableName($tableName) {
-
-	}
-
-	/**
-	 * Build time table by configuration uid
-	 *
-	 * @param $configurationUid
-	 *
-	 * @return array
-	 */
-	protected function buildTimeTableByConfigurationUid($configurationUid) {
-		$timeTable = array();
-
-		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
-		$configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
-		$configuration = $configRepository->findByUid($configurationUid);
-		if (!($configuration instanceof Configuration)) {
-			return $timeTable;
-		}
-
-		if ($configuration->getType() == Configuration::TYPE_TIME) {
-			$entry = array(
-				'start_date' => $configuration->getStartDate(),
-				'end_date'   => $configuration->getEndDate(),
-				'start_time' => $configuration->getStartTime(),
-				'end_time'   => $configuration->getEndTime(),
-				'all_day'    => $configuration->getAllDay(),
-			);
-			$timeTable[] = $entry;
-		}
-
-		return $timeTable;
-	}
-
-	/**
 	 * Reindex all elements
-	 *
-	 * @todo
 	 */
 	public function reindexAll() {
+		$pageSelect = new PageRepository();
+		foreach (Register::getRegister() as $key => $configuration) {
+			$tableName = $configuration['tableName'];
 
+			$rows = $this->getDatabaseConnection()
+				->exec_SELECTgetRows('uid', $tableName, '1=1' . $pageSelect->enableFields($tableName));
+			foreach ($rows as $row) {
+				$this->buildIndex($key, $configuration['tableName'], $row['uid']);
+			}
+		}
 	}
 
 	/**
