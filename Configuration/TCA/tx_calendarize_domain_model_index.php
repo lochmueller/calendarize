@@ -8,7 +8,8 @@ $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calend
 
 
 $custom = array(
-	'ctrl'    => array( #	'hideTable' => TRUE,
+	'ctrl'    => array(
+		'hideTable' => TRUE,
 	),
 	'columns' => array(
 		'unique_register_key' => array(
@@ -26,7 +27,7 @@ $custom = array(
 				'eval' => 'required,date',
 			),
 		),
-		'end_date'          => array(
+		'end_date'            => array(
 			'config' => array(
 				'eval' => 'required,date',
 			),

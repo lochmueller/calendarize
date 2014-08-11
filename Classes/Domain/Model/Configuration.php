@@ -26,6 +26,16 @@ class Configuration extends AbstractModel {
 
 	const TYPE_EXCLUDE_GROUP = 'exclude';
 
+	const FREQUENCY_NONE = '';
+
+	const FREQUENCY_DAILY = 'daily';
+
+	const FREQUENCY_WEEKLY = 'weekly';
+
+	const FREQUENCY_MONTHLY = 'monthly';
+
+	const FREQUENCY_YEARLY = 'yearly';
+
 	/**
 	 * Type
 	 *
@@ -73,6 +83,37 @@ class Configuration extends AbstractModel {
 	 * @db
 	 */
 	protected $allDay;
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\ConfigurationGroup>
+	 * @db text NOT NULL
+	 * @lazy
+	 */
+	protected $groups;
+
+	/**
+	 * @var string
+	 * @db
+	 */
+	protected $frequency = self::FREQUENCY_NONE;
+
+	/**
+	 * @var \DateTime
+	 * @db
+	 */
+	protected $tillDate;
+
+	/**
+	 * @var  int
+	 * @db
+	 */
+	protected $counterAmount;
+
+	/**
+	 * @var int
+	 * @db
+	 */
+	protected $counterInterval;
 
 	/**
 	 * Set type
@@ -180,6 +221,76 @@ class Configuration extends AbstractModel {
 	 */
 	public function getStartTime() {
 		return $this->startTime;
+	}
+
+	/**
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $groups
+	 */
+	public function setGroups($groups) {
+		$this->groups = $groups;
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 */
+	public function getGroups() {
+		return $this->groups;
+	}
+
+	/**
+	 * @param string $frequency
+	 */
+	public function setFrequency($frequency) {
+		$this->frequency = $frequency;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFrequency() {
+		return $this->frequency;
+	}
+
+	/**
+	 * @param \DateTime $tillDate
+	 */
+	public function setTillDate($tillDate) {
+		$this->tillDate = $tillDate;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getTillDate() {
+		return $this->tillDate;
+	}
+
+	/**
+	 * @param int $counterAmount
+	 */
+	public function setCounterAmount($counterAmount) {
+		$this->counterAmount = $counterAmount;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCounterAmount() {
+		return $this->counterAmount;
+	}
+
+	/**
+	 * @param int $counterInterval
+	 */
+	public function setCounterInterval($counterInterval) {
+		$this->counterInterval = $counterInterval;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCounterInterval() {
+		return $this->counterInterval;
 	}
 
 }
