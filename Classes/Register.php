@@ -4,7 +4,7 @@
  *
  * @category   Extension
  * @package    Calendarize
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 namespace HDNET\Calendarize;
 
@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * Register the calendarize objects
  *
  * @package    Calendarize
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class Register {
 

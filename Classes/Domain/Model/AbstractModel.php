@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Domain\Model
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  * @package    Calendarize
  * @subpackage Domain\Model
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class AbstractModel extends AbstractEntity {
 

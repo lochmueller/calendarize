@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Domain\Model
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -19,7 +19,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
  *
  * @package    Calendarize
  * @subpackage Domain\Model
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  * @db
  */
 class Index extends AbstractModel {

@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Utility
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Utility;
@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  *
  * @package    Calendarize
  * @subpackage Utility
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class HelperUtility {
 

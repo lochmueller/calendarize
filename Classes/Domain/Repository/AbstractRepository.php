@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Domain\Repository
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Repository;
@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  *
  * @package    Calendarize
  * @subpackage Domain\Repository
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class AbstractRepository extends Repository {
 

@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Controller
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Controller;
@@ -18,7 +18,7 @@ use TYPO3\CMS\Extensionmanager\Controller\ActionController;
  *
  * @package    Calendarize
  * @subpackage Controller
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class CalendarController extends ActionController {
 

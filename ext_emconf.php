@@ -4,7 +4,7 @@
  *
  * @category   Extension
  * @package    Calendarize
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 
@@ -26,8 +26,8 @@ $EM_CONF['calendarize'] = array(
 	'clearcacheonload'   => 0,
 	'lockType'           => '',
 	'author'             => 'Tim Lochmüller',
-	'author_email'       => 'tl@hdnet.de',
-	'author_company'     => 'hdnet.de',
+	'author_email'       => '',
+	'author_company'     => '',
 	'CGLcompliance'      => '',
 	'CGLcompliance_note' => '',
 	'constraints'        => array(

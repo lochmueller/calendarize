@@ -4,7 +4,7 @@
  *
  * @category   Extension
  * @package    Calendarize
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 if (!defined('TYPO3_MODE')) {

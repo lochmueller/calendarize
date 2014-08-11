@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage UserFunction
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\UserFunction;
@@ -17,7 +17,7 @@ use HDNET\Calendarize\Register;
  *
  * @package    Calendarize
  * @subpackage UserFunction
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class PluginConfiguration {
 

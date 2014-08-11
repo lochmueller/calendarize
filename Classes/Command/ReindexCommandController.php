@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Command
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Command;
@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
  *
  * @package    Calendarize
  * @subpackage Command
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class ReindexCommandController extends CommandController {
 

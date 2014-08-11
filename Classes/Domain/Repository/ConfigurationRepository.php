@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Domain\Repository
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Repository;
@@ -15,7 +15,7 @@ namespace HDNET\Calendarize\Domain\Repository;
  *
  * @package    Calendarize
  * @subpackage Domain\Repository
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class ConfigurationRepository extends AbstractRepository {
 

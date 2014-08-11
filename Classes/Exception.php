@@ -4,7 +4,7 @@
  *
  * @category   Extension
  * @package    Calendarize
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize;
@@ -13,7 +13,7 @@ namespace HDNET\Calendarize;
  * Calendarize logical exception
  *
  * @package    Calendarize
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class Exception extends \Exception {
 

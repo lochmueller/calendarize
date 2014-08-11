@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Domain\Model
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -15,7 +15,7 @@ namespace HDNET\Calendarize\Domain\Model;
  *
  * @package    Calendarize
  * @subpackage Domain\Model
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  * @db
  */
 class ConfigurationGroup extends AbstractModel {
