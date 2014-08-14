@@ -89,7 +89,14 @@ class Register {
 				'maxitems'      => 99,
 			),
 		);
-		ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize');
+		$GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = array(
+			'label'  => 'Calendarize (Information - Save to refresh...)',
+			'config' => array(
+				'type'     => 'user',
+				'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
+			),
+		);
+		ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info');
 	}
 
 }
