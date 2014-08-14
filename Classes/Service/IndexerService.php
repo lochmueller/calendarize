@@ -87,7 +87,7 @@ class IndexerService {
 	protected function prepareRecordForDatabase(&$record) {
 		foreach ($record as $key => $value) {
 			if ($value instanceof \DateTime) {
-				$record[$key] = $value->format('Y-m-d 00:00:00');
+				$record[$key] = $value->getTimestamp();
 			} elseif (is_bool($value)) {
 				$record[$key] = (int)$value;
 			} elseif ($value === NULL) {

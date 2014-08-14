@@ -10,6 +10,8 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+
 /**
  * Index repository
  *
@@ -18,6 +20,14 @@ namespace HDNET\Calendarize\Domain\Repository;
  * @author     Tim Lochmüller
  */
 class IndexRepository extends AbstractRepository {
+
+	/**
+	 * @var array
+	 */
+	protected $defaultOrderings = array(
+		'start_date' => QueryInterface::ORDER_ASCENDING,
+		'start_time' => QueryInterface::ORDER_ASCENDING,
+	);
 
 	/**
 	 * Create a default query

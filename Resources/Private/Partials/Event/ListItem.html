@@ -1,9 +1,16 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title></title>
-	</head>
-	<body>
+<f:alias map="{event: index.originalObject}">
+	<f:for each="{event.images}" as="image" iteration="i">
+		<f:if condition="{i.isFirst}">
+			<div class="image">
+				<f:link.action action="detail" arguments="{index: index}">
+					<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200" maxHeight="200" />
+				</f:link.action>
+			</div>
+		</f:if>
+	</f:for>
+	<f:link.action action="detail" arguments="{index: index}">
+		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+	</f:link.action>
 
-	</body>
-</html>
+	<f:render partial="DateInformation" arguments="{index: index}" />
+</f:alias>

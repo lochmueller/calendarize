@@ -1,13 +1,6 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-
-	<h1>
-		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-	</h1>
-
-	<f:link.action action="detail" arguments="{index: index}" format="ics">{index.uid}</f:link.action>
-
-	<f:link.action action="list">back</f:link.action>
-
+	<f:render partial="{index.configuration.partialIdentifier}/Detail" arguments="{index: index}" />
+	<f:link.action action="detail" arguments="{index: index}" format="ics">{index.uid}</f:link.action> / <f:link.action action="list">back</f:link.action>
 </f:section>

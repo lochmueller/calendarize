@@ -1,9 +1,20 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title></title>
-	</head>
-	<body>
+<f:alias map="{event: index.originalObject}">
+	<h1>
+		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+	</h1>
+	<h3>
+		<f:render partial="DateInformation" arguments="{index: index}" />
+	</h3>
 
-	</body>
-</html>
+	<div class="text">
+		<f:format.html>{event.description}</f:format.html>
+	</div>
+
+	<div class="images">
+		<f:for each="{event.images}" as="image" iteration="i">
+			<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200" />
+		</f:for>
+	</div>
+
+
+</f:alias>

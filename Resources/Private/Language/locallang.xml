@@ -6,6 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_event.downloads"><![CDATA[downloads]]></label>
+			<label index="tx_calendarize_domain_model_event.images"><![CDATA[images]]></label>
 			<label index="tx_calendarize_domain_model_configuration.counter_interval"><![CDATA[Interval]]></label>
 			<label index="tx_calendarize_domain_model_configuration.counter_amount"><![CDATA[Amount]]></label>
 			<label index="tx_calendarize_domain_model_configuration.interval"><![CDATA[Interval]]></label>

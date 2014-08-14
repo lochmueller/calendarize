@@ -89,14 +89,22 @@ class Index extends AbstractModel {
 	protected $allDay;
 
 	/**
+	 * @var object
+	 */
+	protected $originalObject;
+
+	/**
 	 * Get the original record for the current index
 	 */
 	public function getOriginalObject() {
-		$configuration = $this->getConfiguration();
-		if ($configuration === NULL) {
-			throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
+		if ($this->originalObject === NULL) {
+			$configuration = $this->getConfiguration();
+			if ($configuration === NULL) {
+				throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
+			}
+			$this->originalObject = $this->getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
 		}
-		return $this->getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
+		return $this->originalObject;
 	}
 
 	/**
@@ -111,7 +119,7 @@ class Index extends AbstractModel {
 		$query = HelperUtility::getQuery($configuration['modelName']);
 		$query->getQuerySettings()
 			->setRespectStoragePage(FALSE);
-		$query->equals('uid', $uid);
+		$query->matching($query->equals('uid', $uid));
 		return $query->execute()
 			->getFirst();
 	}

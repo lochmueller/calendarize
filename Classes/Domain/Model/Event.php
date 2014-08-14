@@ -37,6 +37,22 @@ class Event extends AbstractModel {
 	protected $description;
 
 	/**
+	 * Images
+	 *
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+	 * @db
+	 */
+	protected $images;
+
+	/**
+	 * Downloads
+	 *
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+	 * @db
+	 */
+	protected $downloads;
+
+	/**
 	 * Set title
 	 *
 	 * @param string $title
@@ -70,6 +86,34 @@ class Event extends AbstractModel {
 	 */
 	public function getDescription() {
 		return $this->description;
+	}
+
+	/**
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $downloads
+	 */
+	public function setDownloads($downloads) {
+		$this->downloads = $downloads;
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 */
+	public function getDownloads() {
+		return $this->downloads;
+	}
+
+	/**
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+	 */
+	public function setImages($images) {
+		$this->images = $images;
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+	 */
+	public function getImages() {
+		return $this->images;
 	}
 
 }
