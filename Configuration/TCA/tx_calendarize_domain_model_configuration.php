@@ -11,7 +11,7 @@ $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calend
 $custom = array(
 	'ctrl'    => array(
 		'type'            => 'type',
-		#'hideTable'       => TRUE,
+		'hideTable'       => TRUE,
 		'typeicons'       => array(
 			Configuration::TYPE_TIME          => '../typo3conf/ext/calendarize/Resources/Public/Icons/Configuration.png',
 			Configuration::TYPE_INCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationInclude.png',
@@ -59,7 +59,10 @@ $custom = array(
 			),
 			'displayCond' => array(
 				'AND' => array(
-					'FIELD:allday:!=:1',
+					/**
+					 * @todo check
+					 */
+					'FIELD:allday:!=:99',
 					'FIELD:type:=:' . Configuration::TYPE_TIME,
 				),
 			),
@@ -70,13 +73,19 @@ $custom = array(
 			),
 			'displayCond' => array(
 				'AND' => array(
-					'FIELD:allday:!=:1',
+					/**
+					 * @todo check
+					 */
+					'FIELD:allday:!=:99',
 					'FIELD:type:=:' . Configuration::TYPE_TIME,
 				),
 			),
 		),
 		'all_day'          => array(
 			'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
+			'config'      => array(
+				'default' => '0',
+			),
 		),
 		'groups'           => array(
 			'config'      => array(
@@ -117,14 +126,23 @@ $custom = array(
 			)
 		),
 		'till_date'        => array(
-			'displayCond' => 'FIELD:type:REQ',
+			/**
+			 * @todo check
+			 */
+			#'displayCond' => 'FIELD:frequency:REQ',
 		),
 		'counter_amount'   => array(
-			'displayCond' => 'FIELD:type:REQ',
+			/**
+			 * @todo check
+			 */
+			#'displayCond' => 'FIELD:frequency:REQ',
 		),
 		'counter_interval' => array(
-			'displayCond' => 'FIELD:type:REQ',
-			'config'      => array(
+			/**
+			 * @todo check
+			 */
+			#'displayCond' => 'FIELD:frequency:REQ',
+			'config' => array(
 				'default' => 1
 			),
 		),

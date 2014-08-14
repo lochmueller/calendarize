@@ -6,12 +6,12 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_calendarize_domain_model_configuration.counter_interval"><![CDATA[counter_interval]]></label>
-			<label index="tx_calendarize_domain_model_configuration.counter_amount"><![CDATA[counter_amount]]></label>
-			<label index="tx_calendarize_domain_model_configuration.interval"><![CDATA[interval]]></label>
-			<label index="tx_calendarize_domain_model_configuration.amount"><![CDATA[amount]]></label>
-			<label index="tx_calendarize_domain_model_configuration.till_date"><![CDATA[till_date]]></label>
-			<label index="tx_calendarize_domain_model_configuration.groups"><![CDATA[groups]]></label>
+			<label index="tx_calendarize_domain_model_configuration.counter_interval"><![CDATA[Interval]]></label>
+			<label index="tx_calendarize_domain_model_configuration.counter_amount"><![CDATA[Amount]]></label>
+			<label index="tx_calendarize_domain_model_configuration.interval"><![CDATA[Interval]]></label>
+			<label index="tx_calendarize_domain_model_configuration.amount"><![CDATA[Amount]]></label>
+			<label index="tx_calendarize_domain_model_configuration.till_date"><![CDATA[Till date]]></label>
+			<label index="tx_calendarize_domain_model_configuration.groups"><![CDATA[Groups]]></label>
 			<label index="tx_calendarize_domain_model_index.all_day"><![CDATA[All day]]></label>
 			<label index="tx_calendarize_domain_model_index.end_time"><![CDATA[End time]]></label>
 			<label index="tx_calendarize_domain_model_index.start_time"><![CDATA[Start time]]></label>

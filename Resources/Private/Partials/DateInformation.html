@@ -1,0 +1,10 @@
+<f:format.date format="d.m.Y">{index.startDate}</f:format.date>
+<f:format.date format="d.m.Y">{index.endDate}</f:format.date>
+
+<f:if condition="{index.allDay}">
+	<f:then></f:then>
+	<f:else>
+		<f:format.date format="H:i">@{index.startTime}</f:format.date>
+		<f:format.date format="H:i">@{index.endTime}</f:format.date>
+	</f:else>
+</f:if>

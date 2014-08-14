@@ -2,11 +2,15 @@
 
 <f:section name="Main">
 
-	<f:for each="{indices}" as="index">
-
-		<f:link.action action="detail" arguments="{index: index}">
-			<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-		</f:link.action>
-	</f:for>
+	<ul>
+		<f:for each="{indices}" as="index">
+			<li>
+				<f:link.action action="detail" arguments="{index: index}">
+					<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+					<f:render partial="DateInformation" arguments="{index: index}" />
+				</f:link.action>
+			</li>
+		</f:for>
+	</ul>
 
 </f:section>

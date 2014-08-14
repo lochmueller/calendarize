@@ -10,7 +10,9 @@
 
 namespace HDNET\Calendarize\Service;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
+use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
  * Time table builder service
@@ -29,52 +31,152 @@ class TimeTableService {
 	 * @return array
 	 */
 	public function getTimeTablesByConfigurationUids(array $uids) {
-		$timeTables = array();
+		$timeTable = array();
 		if (!$uids) {
-			return $timeTables;
+			return $timeTable;
 		}
-		return $timeTables;
+
+		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
+		$configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
 
 		foreach ($uids as $configurationUid) {
-			DebuggerUtility::var_dump($this->buildSingleTimeTable($configurationUid));
+			$configuration = $configRepository->findByUid($configurationUid);
+			if (!($configuration instanceof Configuration)) {
+				continue;
+			}
+
+			$singleTimeTable = $this->buildSingleTimeTable($configuration);
+			if ($configuration->getType() == Configuration::TYPE_EXCLUDE_GROUP) {
+				$timeTable = $this->checkAndRemoveTimes($timeTable, $singleTimeTable);
+			} else {
+				$timeTable = array_merge($timeTable, $singleTimeTable);
+			}
 		}
 
-		DebuggerUtility::var_dump($uids);
-		die();
-		#$timeTable =
+		return $timeTable;
+	}
 
-		return $timeTables;
+	/**
+	 * Remove excluded events
+	 *
+	 * @param $base
+	 * @param $remove
+	 *
+	 * @return mixed
+	 */
+	protected function checkAndRemoveTimes($base, $remove) {
+		foreach ($base as $key => $value) {
+			foreach ($remove as $removeValue) {
+				$eventStart = & $value['start_date'];
+				$eventEnd = & $value['end_date'];
+				$removeStart = & $removeValue['start_date'];
+				$removeEnd = & $removeValue['end_date'];
+
+				$startIn = ($eventStart >= $removeStart && $eventStart < $removeEnd);
+				$endIn = ($eventEnd > $removeStart && $eventEnd <= $removeEnd);
+				$envelope = ($eventStart < $removeStart && $eventEnd > $removeEnd);
+
+				if ($startIn || $endIn || $envelope) {
+					unset($base[$key]);
+					continue;
+				}
+			}
+		}
+
+		return $base;
 	}
 
 	/**
 	 * Build time table by configuration uid
 	 *
-	 * @param $configurationUid
+	 * @param Configuration $configuration
 	 *
 	 * @return array
 	 */
-	protected function buildSingleTimeTable($configurationUid) {
+	protected function buildSingleTimeTable(Configuration $configuration) {
+		$debug = $configuration->getUid() === 5;
 		$timeTable = array();
-
-		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
-		$configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
-		$configuration = $configRepository->findByUid($configurationUid);
-		if (!($configuration instanceof Configuration)) {
-			return $timeTable;
-		}
-
 		if ($configuration->getType() == Configuration::TYPE_TIME) {
-			$entry = array(
+			$baseEntry = array(
 				'start_date' => $configuration->getStartDate(),
 				'end_date'   => $configuration->getEndDate(),
-				'start_time' => $configuration->getStartTime(),
-				'end_time'   => $configuration->getEndTime(),
+				'start_time' => $configuration->getAllDay() ? NULL : $configuration->getStartTime(),
+				'end_time'   => $configuration->getAllDay() ? NULL : $configuration->getEndTime(),
 				'all_day'    => $configuration->getAllDay(),
 			);
-			$timeTable[] = $entry;
+			$timeTable[] = $baseEntry;
+
+			$frequencyIncrement = $this->getFrequencyIncrement($configuration);
+			if ($frequencyIncrement) {
+				$amountCounter = $configuration->getCounterAmount();
+				$tillDate = $configuration->getTillDate();
+
+				$maxLimit = 99999;
+				$lastLoop = $baseEntry;
+				for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
+					$loopEntry = $lastLoop;
+
+					$loopEntry['start_date'] = clone $loopEntry['start_date'];
+					$loopEntry['end_date'] = clone $loopEntry['end_date'];
+					$loopEntry['start_date']->modify($frequencyIncrement);
+					$loopEntry['end_date']->modify($frequencyIncrement);
+
+					if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
+						break;
+					}
+
+					$lastLoop = $loopEntry;
+					$timeTable[] = $loopEntry;
+				}
+			}
+		} else if ($configuration->getType() === Configuration::TYPE_EXCLUDE_GROUP || $configuration->getType() === Configuration::TYPE_INCLUDE_GROUP) {
+			foreach ($configuration->getGroups() as $group) {
+				$timeTable = array_merge($timeTable, $this->buildSingleTimeTableByGroup($group));
+			}
 		}
 
 		return $timeTable;
+	}
+
+	/**
+	 * Get the frequency date increment
+	 *
+	 * @param Configuration $configuration
+	 *
+	 * @return null|string
+	 */
+	protected function getFrequencyIncrement(Configuration $configuration) {
+		$interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
+		switch ($configuration->getFrequency()) {
+			case Configuration::FREQUENCY_DAILY:
+				return '+' . $interval . ' days';
+				break;
+			case Configuration::FREQUENCY_WEEKLY:
+				return '+' . $interval . ' weeks';
+				break;
+			case Configuration::FREQUENCY_MONTHLY:
+				return '+' . $interval . ' months';
+				break;
+			case Configuration::FREQUENCY_YEARLY:
+				return '+' . $interval . ' years';
+				break;
+		}
+		return NULL;
+	}
+
+	/**
+	 * @param ConfigurationGroup $group
+	 *
+	 * @return array
+	 */
+	protected function buildSingleTimeTableByGroup(ConfigurationGroup $group) {
+		$uids = array();
+		foreach ($group->getConfigurations() as $configuration) {
+			if ($configuration instanceof Configuration) {
+				$uids[] = $configuration->getUid();
+			}
+		}
+		return $this->getTimeTablesByConfigurationUids($uids);
 	}
 
 }

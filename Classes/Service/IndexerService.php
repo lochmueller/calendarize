@@ -14,6 +14,7 @@ use HDNET\Calendarize\Register;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -66,7 +67,6 @@ class IndexerService {
 		$timeTableSerive = new TimeTableService();
 		$records = $timeTableSerive->getTimeTablesByConfigurationUids($configurations);
 
-
 		foreach ($records as $record) {
 
 			$record['foreign_table'] = $tableName;
@@ -87,7 +87,7 @@ class IndexerService {
 	protected function prepareRecordForDatabase(&$record) {
 		foreach ($record as $key => $value) {
 			if ($value instanceof \DateTime) {
-				$record[$key] = $value->format('d-m-Y');
+				$record[$key] = $value->format('Y-m-d 00:00:00');
 			} elseif (is_bool($value)) {
 				$record[$key] = (int)$value;
 			} elseif ($value === NULL) {
