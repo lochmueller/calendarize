@@ -1,0 +1,9 @@
+/**
+ * Configuration
+ */
+plugin.tx_calendarize {
+
+	features {
+		skipDefaultArguments = 1
+	}
+}
