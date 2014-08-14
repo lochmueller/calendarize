@@ -10,8 +10,6 @@
 
 namespace HDNET\Calendarize\Hooks;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * @todo       General class information
  *
@@ -28,42 +26,22 @@ class RealurlConfiguration {
 	 * @return array
 	 * @hook TYPO3_CONF_VARS|SC_OPTIONS|ext/realurl/class.tx_realurl_autoconfgen.php|extensionConfiguration
 	 */
-	function addAlbum3xConfig($params, &$pObj) {
-
-		return $params['config'];
-
-		/**
-		 *
-		 *
-		'event'   => array(
-		array('GETvar' => 'tx_calendarize_calendar[action]'),
-		array(
-		'GETvar'   => 'tx_calendarize_calendar[index]',
-		'userFunc' => 'EXT:calendarize/Classes/UserFunction/RealurlAlias.php:HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
-		),
-		),
-		'page' => array(
-		array(
-		'GETvar' => 'tx_calendarize_calendar[@widget_0][currentPage]',
-		)
-		)
-		 *
-		 */
-
+	function addCalendarizeConfiguration($params, &$pObj) {
 		return array_merge_recursive($params['config'], array(
 			'postVarSets' => array(
 				'_DEFAULT' => array(
-					'page3x'  => array(
+					'event' => array(
+						array('GETvar' => 'tx_calendarize_calendar[action]'),
 						array(
-							'GETvar' => 'tx_album3x_pi1[page]',
+							'GETvar'   => 'tx_calendarize_calendar[index]',
+							'userFunc' => 'EXT:calendarize/Classes/UserFunction/RealurlAlias.php:HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
 						),
 					),
-					'image3x' => array(
+					'page'  => array(
 						array(
-							'GETvar'   => 'tx_album3x_pi1[showUid]',
-							'userFunc' => 'EXT:album3x/class.tx_album3x_realurl.php:&tx_album3x_realurl->main',
-						),
-					),
+							'GETvar' => 'tx_calendarize_calendar[@widget_0][currentPage]',
+						)
+					)
 				)
 			)
 		));

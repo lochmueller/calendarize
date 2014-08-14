@@ -10,8 +10,6 @@
 
 namespace HDNET\Calendarize\UserFunction;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * @todo       General class information
  *
@@ -35,18 +33,30 @@ class RealurlAlias {
 		}
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return string
+	 */
 	function id2alias($value) {
 		#DebuggerUtility::var_dump($value, 'ID');
 		#die();
 		return '--' . $value . '--';
 	}
 
+	/**
+	 * @param $value
+	 *
+	 * @return null
+	 */
 	function alias2id($value) {
 		#DebuggerUtility::var_dump($value);
 		#die();
-		if (ereg('^--([0-9]+)--$', $value, $reg)) {
-			return $reg[1];
+		$matches = array();
+		if (preg_match('/^--([0-9]+)--$/', $value, $matches)) {
+			return $matches[1];
 		}
+		return NULL;
 	}
 }
  

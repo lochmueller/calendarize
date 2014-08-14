@@ -13,7 +13,6 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Time table builder service
