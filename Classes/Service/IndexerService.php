@@ -66,11 +66,16 @@ class IndexerService {
 		$timeTableSerive = new TimeTableService();
 		$records = $timeTableSerive->getTimeTablesByConfigurationUids($configurations);
 
+		// use the enable Fields of the orinial record, if there are same
+		// @todo
+
 		foreach ($records as $record) {
 
 			$record['foreign_table'] = $tableName;
 			$record['foreign_uid'] = $uid;
 			$record['unique_register_key'] = $configurationKey;
+
+
 
 			$this->prepareRecordForDatabase($record);
 			$this->getDatabaseConnection()

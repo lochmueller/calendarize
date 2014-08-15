@@ -21,6 +21,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
  * @subpackage Domain\Model
  * @author     Tim Lochmüller
  * @db
+ * @smartExclude language,workspaces
  */
 class Index extends AbstractModel {
 
