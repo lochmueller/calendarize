@@ -8,6 +8,9 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
 
+$typeBase = str_replace('--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xml:language;language', '', $base['types']['1']['showitem']);
+$typeBase = str_replace(',frequency', ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tx_calendarize_domain_model_configuration.frequency,frequency', $typeBase);
+
 $custom = array(
 	'ctrl'    => array(
 		'type'            => 'type',
@@ -44,25 +47,25 @@ $custom = array(
 		'start_date'       => array(
 			'config'      => array(
 				'eval' => 'required,date',
+				'size' => 8,
 			),
 			'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
 		),
 		'end_date'         => array(
 			'config'      => array(
 				'eval' => 'required,date',
+				'size' => 8,
 			),
 			'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
 		),
 		'start_time'       => array(
 			'config'      => array(
 				'eval' => 'time',
+				'size' => 8,
 			),
 			'displayCond' => array(
 				'AND' => array(
-					/**
-					 * @todo check
-					 */
-					'FIELD:allday:!=:99',
+					'FIELD:all_day:!=:1',
 					'FIELD:type:=:' . Configuration::TYPE_TIME,
 				),
 			),
@@ -70,13 +73,11 @@ $custom = array(
 		'end_time'         => array(
 			'config'      => array(
 				'eval' => 'time',
+				'size' => 8,
 			),
 			'displayCond' => array(
 				'AND' => array(
-					/**
-					 * @todo check
-					 */
-					'FIELD:allday:!=:99',
+					'FIELD:all_day:!=:1',
 					'FIELD:type:=:' . Configuration::TYPE_TIME,
 				),
 			),
@@ -98,7 +99,7 @@ $custom = array(
 			'displayCond' => 'FIELD:type:!=:' . Configuration::TYPE_TIME,
 		),
 		'frequency'        => array(
-			'config' => array(
+			'config'      => array(
 				'type'    => 'select',
 				'items'   => array(
 					array(
@@ -123,39 +124,57 @@ $custom = array(
 					),
 				),
 				'default' => Configuration::FREQUENCY_NONE
-			)
+			),
+			'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
 		),
 		'till_date'        => array(
-			/**
-			 * @todo check
-			 */
-			#'displayCond' => 'FIELD:frequency:REQ',
+			'config'      => array(
+				'eval' => 'date',
+				'size' => 8,
+			),
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+					'FIELD:type:=:' . Configuration::TYPE_TIME,
+				),
+			),
 		),
 		'counter_amount'   => array(
-			/**
-			 * @todo check
-			 */
-			#'displayCond' => 'FIELD:frequency:REQ',
+			'config'      => array(
+				'eval'    => 'int',
+				'size'    => 5,
+				'default' => 0,
+			),
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+					'FIELD:type:=:' . Configuration::TYPE_TIME,
+				),
+			),
 		),
 		'counter_interval' => array(
-			/**
-			 * @todo check
-			 */
-			#'displayCond' => 'FIELD:frequency:REQ',
-			'config' => array(
-				'default' => 1
+			'config'      => array(
+				'eval'    => 'int,required',
+				'size'    => 5,
+				'default' => '1',
+			),
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+					'FIELD:type:=:' . Configuration::TYPE_TIME,
+				),
 			),
 		),
 	),
 	'types'   => array(
 		Configuration::TYPE_TIME          => array(
-			'showitem' => $base['types']['1']['showitem'],
+			'showitem' => $typeBase,
 		),
 		Configuration::TYPE_INCLUDE_GROUP => array(
-			'showitem' => $base['types']['1']['showitem'],
+			'showitem' => $typeBase,
 		),
 		Configuration::TYPE_EXCLUDE_GROUP => array(
-			'showitem' => $base['types']['1']['showitem'],
+			'showitem' => $typeBase,
 		),
 	)
 );

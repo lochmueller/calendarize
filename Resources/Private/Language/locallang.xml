@@ -2,12 +2,12 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language file is created via the HDNET extension on Thursday, 31-Jul-2014 09:08:42 CEST</description>
+		<description>Language file is generate by the HDNET extension on: Friday, 15-Aug-2014 09:14:06 CEST</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_calendarize_domain_model_event.downloads"><![CDATA[downloads]]></label>
-			<label index="tx_calendarize_domain_model_event.images"><![CDATA[images]]></label>
+			<label index="tx_calendarize_domain_model_event.downloads"><![CDATA[Downloads]]></label>
+			<label index="tx_calendarize_domain_model_event.images"><![CDATA[Images]]></label>
 			<label index="tx_calendarize_domain_model_configuration.counter_interval"><![CDATA[Interval]]></label>
 			<label index="tx_calendarize_domain_model_configuration.counter_amount"><![CDATA[Amount]]></label>
 			<label index="tx_calendarize_domain_model_configuration.interval"><![CDATA[Interval]]></label>
@@ -19,16 +19,15 @@
 			<label index="tx_calendarize_domain_model_index.start_time"><![CDATA[Start time]]></label>
 			<label index="tx_calendarize_domain_model_index.end_date"><![CDATA[End date]]></label>
 			<label index="tx_calendarize_domain_model_index.start_date"><![CDATA[Start date]]></label>
-			<label index="tx_calendarize_domain_model_index.foreign_table"><![CDATA[foreign_table]]></label>
-			<label index="tx_calendarize_domain_model_index.foreign_uid"><![CDATA[foreign_uid]]></label>
+			<label index="tx_calendarize_domain_model_index.foreign_table"><![CDATA[Foreign table]]></label>
+			<label index="tx_calendarize_domain_model_index.foreign_uid"><![CDATA[Foreign UID]]></label>
 			<label index="tx_calendarize_domain_model_index.unique_register_key"><![CDATA[unique_register_key]]></label>
-			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
-			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[configurations]]></label>
+			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[Configurations]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup"><![CDATA[Configuration group]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.title"><![CDATA[Title]]></label>
 			<label index="tx_calendarize_domain_model_configuration.type"><![CDATA[Type]]></label>
 			<label index="tx_calendarize_domain_model_configuration"><![CDATA[Configuration]]></label>
-			<label index="tx_calendarize_domain_model_configuration.frequency"><![CDATA[frequency]]></label>
+			<label index="tx_calendarize_domain_model_configuration.frequency"><![CDATA[Frequency]]></label>
 			<label index="tx_calendarize_domain_model_configuration.all_day"><![CDATA[All day]]></label>
 			<label index="tx_calendarize_domain_model_configuration.end_time"><![CDATA[End time]]></label>
 			<label index="tx_calendarize_domain_model_configuration.start_time"><![CDATA[Start time]]></label>
@@ -40,6 +39,7 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="tx_calendarize_domain_model_configuration.frequency"><![CDATA[Frequenz]]></label>
 			<label index="tx_calendarize_domain_model_index.all_day"><![CDATA[Ganztägig]]></label>
 			<label index="tx_calendarize_domain_model_index.end_time"><![CDATA[Endzeit]]></label>
 			<label index="tx_calendarize_domain_model_index.start_time"><![CDATA[Startzeit]]></label>
@@ -53,6 +53,22 @@
 			<label index="tx_calendarize_domain_model_event"><![CDATA[Ereignis]]></label>
 			<label index="tx_calendarize_domain_model_event.description"><![CDATA[Beschreibung]]></label>
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Titel]]></label>
+			<label index="tx_calendarize_domain_model_event.downloads"><![CDATA[Downloads]]></label>
+			<label index="tx_calendarize_domain_model_event.images"><![CDATA[Bilder]]></label>
+			<label index="tx_calendarize_domain_model_configuration.counter_interval"><![CDATA[Intervall]]></label>
+			<label index="tx_calendarize_domain_model_configuration.counter_amount"><![CDATA[Anzahl]]></label>
+			<label index="tx_calendarize_domain_model_configuration.interval"><![CDATA[Intervall]]></label>
+			<label index="tx_calendarize_domain_model_configuration.amount"><![CDATA[Anzahl]]></label>
+			<label index="tx_calendarize_domain_model_configuration.till_date"><![CDATA[Bis Datum]]></label>
+			<label index="tx_calendarize_domain_model_configuration.groups"><![CDATA[Gruppen]]></label>
+			<label index="tx_calendarize_domain_model_index.foreign_table"><![CDATA[Fremd Tabelle]]></label>
+			<label index="tx_calendarize_domain_model_index.foreign_uid"><![CDATA[Fremd UID]]></label>
+			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[Konfigurationen]]></label>
+			<label index="tx_calendarize_domain_model_configurationgroup"><![CDATA[Konfigurationsgruppe]]></label>
+			<label index="tx_calendarize_domain_model_configurationgroup.title"><![CDATA[Titel]]></label>
+			<label index="tx_calendarize_domain_model_configuration.type"><![CDATA[Typ]]></label>
+			<label index="tx_calendarize_domain_model_configuration"><![CDATA[Konfiguration]]></label>
+			<label index="tx_calendarize_domain_model_index"><![CDATA[Index]]></label>
 		</languageKey>
 	</data>
 </T3locallang>
