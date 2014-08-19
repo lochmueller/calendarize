@@ -10,6 +10,7 @@
 
 namespace HDNET\Calendarize\UserFunction;
 
+use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
@@ -23,21 +24,28 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 class TcaInformation {
 
 	/**
-	 * @param $PA
+	 * @param $configuration
 	 * @param $fObj
 	 *
 	 * @return string
 	 */
-	public function informationField($PA, \TYPO3\CMS\Backend\Form\FormEngine $fObj) {
-		if (!isset($PA['row']['uid'])) {
+	public function informationField($configuration, FormEngine $fObj) {
+		if (!isset($configuration['row']['uid'])) {
 			$content = 'Please save the record first...';
 		} else {
-			$next = $this->getNextEvents($PA['table'], $PA['row']['uid']);
-			$content = 'There are ' . $this->getIndexCount($PA['table'], $PA['row']['uid']) . ' Items in the Index of the current record. The next 5 Events are...' . $this->getEventList($next);
+			$next = $this->getNextEvents($configuration['table'], $configuration['row']['uid']);
+			$content = 'There are ' . $this->getIndexCount($configuration['table'], $configuration['row']['uid']) . ' Items in the Index of the current record. The next 5 Events are...' . $this->getEventList($next);
 		}
 		return '<div style="padding: 5px;">' . $content . '</div>';
 	}
 
+	/**
+	 * Get event list
+	 *
+	 * @param $events
+	 *
+	 * @return string
+	 */
 	protected function getEventList($events) {
 		$items = array();
 		foreach ($events as $event) {
@@ -52,6 +60,8 @@ class TcaInformation {
 	}
 
 	/**
+	 * Get index count
+	 *
 	 * @param $table
 	 * @param $uid
 	 *
@@ -62,6 +72,13 @@ class TcaInformation {
 			->exec_SELECTcountRows('*', 'tx_calendarize_domain_model_index', 'foreign_table="' . $table . '" AND foreign_uid=' . (int)$uid);
 	}
 
+	/**
+	 * @param     $table
+	 * @param     $uid
+	 * @param int $limit
+	 *
+	 * @return array|NULL
+	 */
 	protected function getNextEvents($table, $uid, $limit = 5) {
 		return $this->getDatabaseConnection()
 			->exec_SELECTgetRows('*', 'tx_calendarize_domain_model_index', 'start_date > ' . time() . ' AND foreign_table="' . $table . '" AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
@@ -69,6 +86,8 @@ class TcaInformation {
 	}
 
 	/**
+	 * Get database connection
+	 *
 	 * @return DatabaseConnection
 	 */
 	protected function getDatabaseConnection() {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Hook for Datamap processing
+ * Hook for data map processing
  *
  * @category   Extension
  * @package    Calendarize
@@ -15,7 +15,7 @@ use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 
 /**
- * Hook for Datamap processing
+ * Hook for data map processing
  *
  * @package    Calendarize
  * @subpackage Hooks

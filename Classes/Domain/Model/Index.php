@@ -257,7 +257,7 @@ class Index extends AbstractModel {
 	}
 
 	/**
-	 * Get starte date
+	 * Get start date
 	 *
 	 * @return \DateTime
 	 */
