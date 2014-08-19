@@ -10,6 +10,7 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -110,11 +111,13 @@ class IndexRepository extends AbstractRepository {
 		$query = $this->createQuery();
 		$constraints = $this->getDefaultConstraints();
 
-		/**
-		 * @todo implement week convert
-		 */
-		//$constraints[] = $query->greaterThanOrEqual('start_date', mktime(0, 0, 0, $month, 0, $year));
-		//$constraints[] = $query->lessThan('start_date', mktime(0, 0, 0, $month + 1, 0, $year));
+		$firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
+		$timeStampStart = $firstDay->getTimestamp();
+		$firstDay->modify('+1 week');
+		$timeStampEnd = $firstDay->getTimestamp();
+
+		$constraints[] = $query->greaterThanOrEqual('start_date', mktime(0, 0, 0, date('m', $timeStampStart), date('d', $timeStampStart), date('Y', $timeStampStart)));
+		$constraints[] = $query->lessThan('start_date', mktime(0, 0, 0, date('m', $timeStampEnd), date('d', $timeStampEnd), date('Y', $timeStampEnd)));
 		$query->matching($query->logicalAnd($constraints));
 		return $query->execute();
 	}

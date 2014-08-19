@@ -11,6 +11,7 @@
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
 /**
@@ -80,8 +81,12 @@ class CalendarController extends ActionController {
 		if ($week === NULL) {
 			$week = date('W');
 		}
-		$this->view->assign('indices', $this->indexRepository->findWeek($year, $week));
-
+		$firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
+		$firstDay->setTime(0, 0, 0);
+		$this->view->assignMultiple(array(
+			'firstDay' => $firstDay,
+			'indices'  => $this->indexRepository->findWeek($year, $week),
+		));
 	}
 
 	/**
