@@ -104,30 +104,8 @@ class TimeTableService {
 				'all_day'    => $configuration->getAllDay(),
 			);
 			$timeTable[] = $baseEntry;
+			$this->addFrequencyItems($timeTable, $configuration, $baseEntry);
 
-			$frequencyIncrement = $this->getFrequencyIncrement($configuration);
-			if ($frequencyIncrement) {
-				$amountCounter = $configuration->getCounterAmount();
-				$tillDate = $configuration->getTillDate();
-
-				$maxLimit = 99999;
-				$lastLoop = $baseEntry;
-				for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
-					$loopEntry = $lastLoop;
-
-					$loopEntry['start_date'] = clone $loopEntry['start_date'];
-					$loopEntry['end_date'] = clone $loopEntry['end_date'];
-					$loopEntry['start_date']->modify($frequencyIncrement);
-					$loopEntry['end_date']->modify($frequencyIncrement);
-
-					if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
-						break;
-					}
-
-					$lastLoop = $loopEntry;
-					$timeTable[] = $loopEntry;
-				}
-			}
 		} else if ($configuration->getType() === Configuration::TYPE_EXCLUDE_GROUP || $configuration->getType() === Configuration::TYPE_INCLUDE_GROUP) {
 			foreach ($configuration->getGroups() as $group) {
 				$timeTable = array_merge($timeTable, $this->buildSingleTimeTableByGroup($group));
@@ -135,6 +113,43 @@ class TimeTableService {
 		}
 
 		return $timeTable;
+	}
+
+	/**
+	 * Add frequency items
+	 *
+	 * @param array         $timeTable
+	 * @param Configuration $configuration
+	 * @param array         $baseEntry
+	 */
+	protected function addFrequencyItems(array &$timeTable, Configuration $configuration, array $baseEntry) {
+		$frequencyIncrement = $this->getFrequencyIncrement($configuration);
+		if ($frequencyIncrement) {
+			$amountCounter = $configuration->getCounterAmount();
+			$tillDate = $configuration->getTillDate();
+			$maxLimit = 99999;
+			$lastLoop = $baseEntry;
+			for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
+				$loopEntry = $lastLoop;
+
+				/** @var $startDate \DateTime */
+				$startDate = clone $loopEntry['start_date'];
+				$startDate->modify($frequencyIncrement);
+				$loopEntry['start_date'] = $startDate;
+
+				/** @var $endDate \DateTime */
+				$endDate = clone $loopEntry['end_date'];
+				$endDate->modify($frequencyIncrement);
+				$loopEntry['end_date'] = $endDate;
+
+				if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
+					break;
+				}
+
+				$lastLoop = $loopEntry;
+				$timeTable[] = $loopEntry;
+			}
+		}
 	}
 
 	/**

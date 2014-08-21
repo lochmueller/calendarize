@@ -20,14 +20,15 @@ namespace HDNET\Calendarize\Utility;
 class DateTimeUtility {
 
 	/**
+	 * Convert a Week/Year combination to a DateTime of the first day of week
+	 *
 	 * @param int $week
 	 * @param int $year
 	 *
 	 * @return \DateTime
 	 */
 	static public function convertWeekYear2DayMonthYear($week, $year) {
-
-		return new \DateTime('now');
+		return new \DateTime('@' . strtotime($year . "W" . $week . "1"));
 	}
 }
  

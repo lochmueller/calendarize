@@ -1,23 +1,22 @@
 <?php
 /**
- * @todo       General file information
+ * Modify a DateTime
  *
  * @category   Extension
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage ViewHelpers\DateTime
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * @todo       General class information
+ * Modify a DateTime@
  *
- * @package    Hdnet
- * @subpackage ...
+ * @package    Calendarize
+ * @subpackage ViewHelpers\DateTime
  * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class ModifyViewHelper extends AbstractViewHelper {

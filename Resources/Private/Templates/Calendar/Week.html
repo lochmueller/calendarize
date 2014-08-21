@@ -3,6 +3,12 @@
 
 <f:section name="Main">
 
+	<f:link.action action="list">List</f:link.action>
+	<f:link.action action="year">Year</f:link.action>
+	<f:link.action action="month">Month</f:link.action>
+	<f:link.action action="week">Week</f:link.action>
+	<f:link.action action="day">Day</f:link.action>
+
 	<table>
 		<tr>
 			<f:for each="{0:0,1:1,2:2,3:3,4:4,5:5,6:6}" as="day">
@@ -12,9 +18,11 @@
 
 
 					<f:for each="{indices}" as="index">
-						<li>
-							<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-						</li>
+						<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay)}">
+							<li>
+								<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+							</li>
+						</f:if>
 					</f:for>
 
 				</td>

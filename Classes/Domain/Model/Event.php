@@ -1,6 +1,6 @@
 <?php
 /**
- * Event (Example) for the calandarize function
+ * Event (Example) for the calendarize function
  *
  * @category   Extension
  * @package    Calendarize
@@ -11,7 +11,7 @@
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * Event (Example) for the calandarize function
+ * Event (Example) for the calendarize function
  *
  * @package    Calendarize
  * @subpackage Domain\Model
