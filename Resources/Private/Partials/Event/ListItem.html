@@ -1,16 +1,31 @@
 <f:alias map="{event: index.originalObject}">
-	<f:for each="{event.images}" as="image" iteration="i">
-		<f:if condition="{i.isFirst}">
-			<div class="image">
-				<f:link.action action="detail" arguments="{index: index}">
-					<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200" maxHeight="200" />
-				</f:link.action>
-			</div>
-		</f:if>
-	</f:for>
-	<f:link.action action="detail" arguments="{index: index}">
-		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-	</f:link.action>
+	<div class="panel panel-default">
+		<div class="panel-body">
 
-	<f:render partial="DateInformation" arguments="{index: index}" />
+			<div class="media calendarize-item">
+				<f:for each="{event.images}" as="image" iteration="i">
+					<f:if condition="{i.isFirst}">
+						<f:link.action action="detail" arguments="{index: index}" class="pull-left">
+							<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200" maxHeight="200" class="media-object img-rounded" />
+						</f:link.action>
+					</f:if>
+				</f:for>
+
+				<div class="media-body">
+					<h2>
+						<f:link.action action="detail" arguments="{index: index}">
+							<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+						</f:link.action>
+					</h2>
+					<h4>
+						<f:render partial="DateInformation" arguments="{index: index}" />
+					</h4>
+
+					<f:link.action action="detail" arguments="{index: index}" class="btn btn-default btn-primary">
+						More <span class="glyphicon glyphicon-arrow-right"></span>
+					</f:link.action>
+				</div>
+			</div>
+		</div>
+	</div>
 </f:alias>

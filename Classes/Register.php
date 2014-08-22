@@ -38,6 +38,20 @@ class Register {
 	}
 
 	/**
+	 * @return array
+	 */
+	static public function getDefaultAutoloader() {
+		return array(
+			'Hooks',
+			'Slots',
+			'SmartObjects',
+			'FlexForms',
+			'CommandController',
+			'StaticTyposcript'
+		);
+	}
+
+	/**
 	 * Get the register
 	 *
 	 * @return array

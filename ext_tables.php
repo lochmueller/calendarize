@@ -11,7 +11,7 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extTables('HDNET', 'calendarize');
+\HDNET\Autoloader\Loader::extTables('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
 
 \HDNET\Calendarize\Register::extTables(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
 

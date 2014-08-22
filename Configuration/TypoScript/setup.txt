@@ -3,6 +3,14 @@
  */
 plugin.tx_calendarize {
 
+    view {
+        widget {
+            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
+                templateRootPath = EXT:calendarize/Resources/Private/Templates/
+            }
+        }
+    }
+
 	features {
 		skipDefaultArguments = 1
 	}

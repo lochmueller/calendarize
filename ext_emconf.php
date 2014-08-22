@@ -14,17 +14,13 @@ $EM_CONF['calendarize'] = array(
 	'category'           => 'misc',
 	'version'            => '1.0.0',
 	'state'              => 'beta',
-	'uploadfolder'       => 0,
-	'createDirs'         => '',
-	'modify_tables'      => '',
-	'clearcacheonload'   => 0,
+	'clearcacheonload'   => 1,
 	'author'             => 'Tim Lochmüller',
-	'author_email'       => '',
-	'author_company'     => '',
+	'author_email'       => 'tim@fruit-lab.de',
 	'constraints'        => array(
 		'depends'   => array(
 			'typo3'      => '6.2.0-6.2.99',
-			'autoloader' => '1.1.0-0.0.0',
+			'autoloader' => '1.2.1-0.0.0',
 		),
 	),
 );
