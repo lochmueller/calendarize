@@ -127,7 +127,7 @@ class CalendarController extends ActionController {
 	 */
 	public function detailAction(Index $index = NULL) {
 		if ($index === NULL) {
-			$this->redirect('list', NULL, NULL, array());
+			$this->redirect('list', NULL, NULL, array(), NULL, 0, 301);
 		}
 		$this->view->assign('index', $index);
 	}
