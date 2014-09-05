@@ -63,10 +63,10 @@ class IndexerService {
 	protected function buildIndex($configurationKey, $tableName, $uid) {
 		$record = BackendUtility::getRecord($tableName, $uid);
 		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
-		$timeTableSerive = new TimeTableService();
-		$records = $timeTableSerive->getTimeTablesByConfigurationUids($configurations);
+		$timeTableService = new TimeTableService();
+		$records = $timeTableService->getTimeTablesByConfigurationIds($configurations);
 
-		// use the enable Fields of the orinial record, if there are same
+		// use the enable Fields of the original record, if there are same
 		// @todo
 
 		foreach ($records as $record) {

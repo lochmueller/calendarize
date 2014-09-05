@@ -26,20 +26,20 @@ class TimeTableService {
 	/**
 	 * Build the timetable for the given configuration matrix (sorted)
 	 *
-	 * @param array $uids
+	 * @param array $ids
 	 *
 	 * @return array
 	 */
-	public function getTimeTablesByConfigurationUids(array $uids) {
+	public function getTimeTablesByConfigurationIds(array $ids) {
 		$timeTable = array();
-		if (!$uids) {
+		if (!$ids) {
 			return $timeTable;
 		}
 
 		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
 		$configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
 
-		foreach ($uids as $configurationUid) {
+		foreach ($ids as $configurationUid) {
 			$configuration = $configRepository->findByUid($configurationUid);
 			if (!($configuration instanceof Configuration)) {
 				continue;
@@ -184,13 +184,13 @@ class TimeTableService {
 	 * @return array
 	 */
 	protected function buildSingleTimeTableByGroup(ConfigurationGroup $group) {
-		$uids = array();
+		$ids = array();
 		foreach ($group->getConfigurations() as $configuration) {
 			if ($configuration instanceof Configuration) {
-				$uids[] = $configuration->getUid();
+				$ids[] = $configuration->getUid();
 			}
 		}
-		return $this->getTimeTablesByConfigurationUids($uids);
+		return $this->getTimeTablesByConfigurationIds($ids);
 	}
 
 }
