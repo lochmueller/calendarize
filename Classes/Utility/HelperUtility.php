@@ -54,4 +54,3 @@ class HelperUtility {
 		return $manager->createQueryForType($objectName);
 	}
 }
- 

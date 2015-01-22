@@ -145,4 +145,3 @@ class CalendarController extends ActionController {
 	}
 
 }
- 

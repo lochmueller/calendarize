@@ -75,4 +75,3 @@ class ConfigurationGroup extends AbstractModel {
 	}
 
 }
- 

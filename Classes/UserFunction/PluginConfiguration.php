@@ -38,4 +38,3 @@ class PluginConfiguration {
 		return $config;
 	}
 }
- 

@@ -39,4 +39,3 @@ class ModifyViewHelper extends AbstractViewHelper {
 	}
 
 }
- 

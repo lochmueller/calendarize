@@ -164,16 +164,12 @@ class TimeTableService {
 		switch ($configuration->getFrequency()) {
 			case Configuration::FREQUENCY_DAILY:
 				return '+' . $interval . ' days';
-				break;
 			case Configuration::FREQUENCY_WEEKLY:
 				return '+' . $interval . ' weeks';
-				break;
 			case Configuration::FREQUENCY_MONTHLY:
 				return '+' . $interval . ' months';
-				break;
 			case Configuration::FREQUENCY_YEARLY:
 				return '+' . $interval . ' years';
-				break;
 		}
 		return NULL;
 	}
@@ -194,4 +190,3 @@ class TimeTableService {
 	}
 
 }
- 

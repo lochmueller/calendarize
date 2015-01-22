@@ -31,4 +31,3 @@ class DateTimeUtility {
 		return new \DateTime('@' . strtotime($year . 'W' . $week . '1'));
 	}
 }
- 

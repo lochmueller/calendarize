@@ -34,4 +34,3 @@ class IndexOnDayViewHelper extends AbstractViewHelper {
 	}
 
 }
- 
