@@ -17,9 +17,9 @@ use HDNET\Calendarize\Utility\HelperUtility;
 /**
  * Index information
  *
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @package      Calendarize
+ * @subpackage   Domain\Model
+ * @author       Tim Lochmüller
  * @db
  * @smartExclude language,workspaces
  */

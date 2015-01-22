@@ -76,7 +76,6 @@ class IndexerService {
 			$record['unique_register_key'] = $configurationKey;
 
 
-
 			$this->prepareRecordForDatabase($record);
 			$this->getDatabaseConnection()
 				->exec_INSERTquery('tx_calendarize_domain_model_index', $record);

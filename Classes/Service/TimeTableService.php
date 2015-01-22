@@ -67,10 +67,10 @@ class TimeTableService {
 	protected function checkAndRemoveTimes($base, $remove) {
 		foreach ($base as $key => $value) {
 			foreach ($remove as $removeValue) {
-				$eventStart = & $value['start_date'];
-				$eventEnd = & $value['end_date'];
-				$removeStart = & $removeValue['start_date'];
-				$removeEnd = & $removeValue['end_date'];
+				$eventStart = &$value['start_date'];
+				$eventEnd = &$value['end_date'];
+				$removeStart = &$removeValue['start_date'];
+				$removeEnd = &$removeValue['end_date'];
 
 				$startIn = ($eventStart >= $removeStart && $eventStart < $removeEnd);
 				$endIn = ($eventEnd > $removeStart && $eventEnd <= $removeEnd);
