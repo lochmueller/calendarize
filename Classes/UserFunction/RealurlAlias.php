@@ -25,12 +25,11 @@ class RealurlAlias {
 	 *
 	 * @return string
 	 */
-	function main($params, $ref) {
+	public function main($params, $ref) {
 		if ($params['decodeAlias']) {
 			return $this->alias2id($params['value']);
-		} else {
-			return $this->id2alias($params['value']);
 		}
+		return $this->id2alias($params['value']);
 	}
 
 	/**
@@ -38,9 +37,7 @@ class RealurlAlias {
 	 *
 	 * @return string
 	 */
-	function id2alias($value) {
-		#DebuggerUtility::var_dump($value, 'ID');
-		#die();
+	protected function id2alias($value) {
 		return '--' . $value . '--';
 	}
 
@@ -49,9 +46,7 @@ class RealurlAlias {
 	 *
 	 * @return null
 	 */
-	function alias2id($value) {
-		#DebuggerUtility::var_dump($value);
-		#die();
+	protected function alias2id($value) {
 		$matches = array();
 		if (preg_match('/^--([0-9]+)--$/', $value, $matches)) {
 			return $matches[1];

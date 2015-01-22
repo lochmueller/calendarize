@@ -40,6 +40,8 @@ class ConfigurationGroup extends AbstractModel {
 	 * Set title
 	 *
 	 * @param string $title
+	 *
+	 * @return void
 	 */
 	public function setTitle($title) {
 		$this->title = $title;

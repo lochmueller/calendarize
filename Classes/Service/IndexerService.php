@@ -75,7 +75,6 @@ class IndexerService {
 			$record['foreign_uid'] = $uid;
 			$record['unique_register_key'] = $configurationKey;
 
-
 			$this->prepareRecordForDatabase($record);
 			$this->getDatabaseConnection()
 				->exec_INSERTquery('tx_calendarize_domain_model_index', $record);
@@ -86,6 +85,8 @@ class IndexerService {
 	 * Prepare the record for the database insert
 	 *
 	 * @param $record
+	 *
+	 * @return void
 	 */
 	protected function prepareRecordForDatabase(&$record) {
 		foreach ($record as $key => $value) {
@@ -97,11 +98,12 @@ class IndexerService {
 				$record[$key] = '';
 			}
 		}
-
 	}
 
 	/**
 	 * Reindex all elements
+	 *
+	 * @return void
 	 */
 	public function reindexAll() {
 		$pageSelect = new PageRepository();
@@ -121,6 +123,8 @@ class IndexerService {
 	 *
 	 * @param $tableName
 	 * @param $uid
+	 *
+	 * @return void
 	 */
 	protected function clearIndex($tableName, $uid) {
 		$this->getDatabaseConnection()
@@ -137,4 +141,3 @@ class IndexerService {
 	}
 
 }
- 

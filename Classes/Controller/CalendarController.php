@@ -33,6 +33,8 @@ class CalendarController extends ActionController {
 
 	/**
 	 * List action
+	 *
+	 * @return void
 	 */
 	public function listAction() {
 		$this->view->assign('indices', $this->indexRepository->findList());
@@ -42,6 +44,8 @@ class CalendarController extends ActionController {
 	 * Year action
 	 *
 	 * @param int $year
+	 *
+	 * @return void
 	 */
 	public function yearAction($year = NULL) {
 		if ($year === NULL) {
@@ -56,6 +60,8 @@ class CalendarController extends ActionController {
 	 *
 	 * @param int $year
 	 * @param int $month
+	 *
+	 * @return void
 	 */
 	public function monthAction($year = NULL, $month = NULL) {
 		if ($year === NULL) {
@@ -73,6 +79,8 @@ class CalendarController extends ActionController {
 	 *
 	 * @param int $year
 	 * @param int $week
+	 *
+	 * @return void
 	 */
 	public function weekAction($year = NULL, $week = NULL) {
 		if ($year === NULL) {
@@ -95,6 +103,8 @@ class CalendarController extends ActionController {
 	 * @param int $year
 	 * @param int $month
 	 * @param int $day
+	 *
+	 * @return void
 	 */
 	public function dayAction($year = NULL, $month = NULL, $day = NULL) {
 		if ($year === NULL) {
@@ -124,6 +134,8 @@ class CalendarController extends ActionController {
 	 * Detail action
 	 *
 	 * @param \HDNET\Calendarize\Domain\Model\Index $index
+	 *
+	 * @return void
 	 */
 	public function detailAction(Index $index = NULL) {
 		if ($index === NULL) {

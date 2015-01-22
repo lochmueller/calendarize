@@ -22,6 +22,8 @@ class Register {
 	 * Register in the extTables
 	 *
 	 * @param array $configuration
+	 *
+	 * @return void
 	 */
 	static public function extTables(array $configuration) {
 		self::createTcaConfiguration($configuration);
@@ -32,6 +34,8 @@ class Register {
 	 * Register in the extLocalconf
 	 *
 	 * @param array $configuration
+	 *
+	 * @return void
 	 */
 	static public function extLocalconf(array $configuration) {
 		self::registerItem($configuration);

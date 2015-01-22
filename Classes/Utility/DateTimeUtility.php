@@ -28,7 +28,7 @@ class DateTimeUtility {
 	 * @return \DateTime
 	 */
 	static public function convertWeekYear2DayMonthYear($week, $year) {
-		return new \DateTime('@' . strtotime($year . "W" . $week . "1"));
+		return new \DateTime('@' . strtotime($year . 'W' . $week . '1'));
 	}
 }
  
