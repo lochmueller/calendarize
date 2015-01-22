@@ -18,4 +18,3 @@ namespace HDNET\Calendarize;
 class Exception extends \Exception {
 
 }
- 

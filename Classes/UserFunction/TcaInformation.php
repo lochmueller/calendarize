@@ -1,6 +1,6 @@
 <?php
 /**
- * @todo       General file information
+ * TCA information
  *
  * @category   Extension
  * @package    Hdnet
@@ -15,7 +15,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
- * @todo       General class information
+ * TCA information
  *
  * @package    Hdnet
  * @subpackage ...

@@ -1,6 +1,6 @@
 <?php
 /**
- * @todo       General file information
+ * Realurl configuration
  *
  * @category   Extension
  * @package    Hdnet
@@ -11,7 +11,7 @@
 namespace HDNET\Calendarize\Hooks;
 
 /**
- * @todo       General class information
+ * Realurl configuration
  *
  * @package    Hdnet
  * @subpackage ...
@@ -34,7 +34,7 @@ class RealurlConfiguration {
 						array('GETvar' => 'tx_calendarize_calendar[action]'),
 						array(
 							'GETvar'   => 'tx_calendarize_calendar[index]',
-							'userFunc' => 'EXT:calendarize/Classes/UserFunction/RealurlAlias.php:HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
+							'userFunc' => 'HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
 						),
 					),
 					'page'  => array(

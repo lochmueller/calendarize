@@ -1,6 +1,6 @@
 <?php
 /**
- * @todo       General file information
+ * RealURL alias
  *
  * @category   Extension
  * @package    Hdnet
@@ -11,7 +11,7 @@
 namespace HDNET\Calendarize\UserFunction;
 
 /**
- * @todo       General class information
+ * RealURL alias
  *
  * @package    Hdnet
  * @subpackage ...
