@@ -1,10 +1,26 @@
-<f:format.date format="d.m.Y">{index.startDate}</f:format.date>
-<f:format.date format="d.m.Y">{index.endDate}</f:format.date>
-
+{index.startDate -> f:format.date(format: 'd.m.Y')}
 <f:if condition="{index.allDay}">
 	<f:then></f:then>
 	<f:else>
-		<f:format.date format="H:i">@{index.startTime}</f:format.date>
-		<f:format.date format="H:i">@{index.endTime}</f:format.date>
+		<f:format.date format="H:i">@{index.startTime}</f:format.date> Uhr
+	</f:else>
+</f:if>
+
+<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
+	<f:then></f:then>
+	<f:else>
+		- {index.endDate -> f:format.date(format: 'd.m.Y')}
+	</f:else>
+</f:if>
+
+<f:if condition="{index.allDay}">
+	<f:then>
+		ganztägig
+	</f:then>
+	<f:else>
+		<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
+			-
+		</f:if>
+		<f:format.date format="H:i">@{index.endTime}</f:format.date> Uhr
 	</f:else>
 </f:if>
