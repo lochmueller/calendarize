@@ -1,7 +1,11 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="Main">
 
-	Render view
+	<c:loop.weeksInMonth date="{date}" iteration="month">
+		Test
+		<f:debug>{month}</f:debug>
+	</c:loop.weeksInMonth>
 
 </f:section>

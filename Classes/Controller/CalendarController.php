@@ -70,8 +70,14 @@ class CalendarController extends ActionController {
 		if ($month === NULL) {
 			$month = date('m');
 		}
-		$this->view->assign('indices', $this->indexRepository->findMonth($year, $month));
 
+		$date = new \DateTime();
+		$date->setDate($year, $month, 1);
+
+		$this->view->assignMultiple(array(
+			'date'    => $date,
+			'indices' => $this->indexRepository->findMonth($year, $month),
+		));
 	}
 
 	/**
