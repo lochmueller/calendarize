@@ -31,6 +31,8 @@ class IndexerService {
 	 * @param string $configurationKey
 	 * @param string $tableName
 	 * @param int    $uid
+	 *
+	 * @return void
 	 */
 	static public function reindex($configurationKey, $tableName, $uid) {
 		/** @var \HDNET\Calendarize\Service\IndexerService $indexer */
@@ -44,6 +46,8 @@ class IndexerService {
 	 * @param string $configurationKey
 	 * @param string $tableName
 	 * @param int    $uid
+	 *
+	 * @return void
 	 */
 	public function reindexInternal($configurationKey, $tableName, $uid) {
 		$this->clearIndex($tableName, $uid);
@@ -59,6 +63,8 @@ class IndexerService {
 	 *
 	 * @todo iteration
 	 * @todo realurl handling of the UID
+	 *
+	 * @return void
 	 */
 	protected function buildIndex($configurationKey, $tableName, $uid) {
 		$record = BackendUtility::getRecord($tableName, $uid);

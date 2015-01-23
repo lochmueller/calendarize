@@ -119,6 +119,8 @@ class Configuration extends AbstractModel {
 	 * Set type
 	 *
 	 * @param string $type
+	 *
+	 * @return void
 	 */
 	public function setType($type) {
 		$this->type = $type;
@@ -314,4 +316,3 @@ class Configuration extends AbstractModel {
 	}
 
 }
- 

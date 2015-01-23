@@ -1,8 +1,8 @@
 <?php
 /**
- * @todo    General file information
+ * Days in week view helper
  *
- * @package Hdnet
+ * @package Calendarize\ViewHelpers\Loop
  * @author  Tim Lochmüller
  */
 
@@ -11,7 +11,7 @@ namespace HDNET\Calendarize\ViewHelpers\Loop;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
- * @todo   General class information
+ * Days in week view helper
  *
  * @author Tim Lochmüller
  */
@@ -34,6 +34,8 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper {
 	 * @param RenderingContextInterface $renderingContext
 	 *
 	 * @return string
+	 * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+	 * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception\InvalidVariableException
 	 */
 	static public function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext) {
 		$templateVariableContainer = $renderingContext->getTemplateVariableContainer();

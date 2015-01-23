@@ -284,4 +284,3 @@ class Index extends AbstractModel {
 	}
 
 }
- 

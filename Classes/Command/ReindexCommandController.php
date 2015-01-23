@@ -23,6 +23,8 @@ class ReindexCommandController extends CommandController {
 
 	/**
 	 * Run the reindex process
+	 *
+	 * @return void
 	 */
 	public function runCommand() {
 		/** @var \HDNET\Calendarize\Service\IndexerService $indexer */

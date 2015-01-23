@@ -1,18 +1,21 @@
 <?php
 /**
- * @todo    General file information
+ * Abstraction for loop view helper
  *
- * @package Hdnet
+ * @package Calendarize\ViewHelpers\Loop
  * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
+
 /**
- * @todo   General class information
+ * Abstraction for loop view helper
  *
  * @author Tim Lochmüller
  */
-class AbstractLoopViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface {
+class AbstractLoopViewHelper extends AbstractViewHelper implements CompilableInterface {
 
 }

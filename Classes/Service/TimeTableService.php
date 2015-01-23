@@ -12,6 +12,7 @@ namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
+use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
@@ -96,17 +97,19 @@ class TimeTableService {
 	protected function buildSingleTimeTable(Configuration $configuration) {
 		$timeTable = array();
 		if ($configuration->getType() == Configuration::TYPE_TIME) {
+			$startTime = $configuration->getAllDay() ? NULL : $configuration->getStartTime();
+			$endTime = $configuration->getAllDay() ? NULL : $configuration->getEndTime();
 			$baseEntry = array(
 				'start_date' => $configuration->getStartDate(),
 				'end_date'   => $configuration->getEndDate(),
-				'start_time' => $configuration->getAllDay() ? NULL : $configuration->getStartTime(),
-				'end_time'   => $configuration->getAllDay() ? NULL : $configuration->getEndTime(),
+				'start_time' => $startTime,
+				'end_time'   => $endTime,
 				'all_day'    => $configuration->getAllDay(),
 			);
 			$timeTable[] = $baseEntry;
 			$this->addFrequencyItems($timeTable, $configuration, $baseEntry);
 
-		} else if ($configuration->getType() === Configuration::TYPE_EXCLUDE_GROUP || $configuration->getType() === Configuration::TYPE_INCLUDE_GROUP) {
+		} elseif ($configuration->getType() === Configuration::TYPE_EXCLUDE_GROUP || $configuration->getType() === Configuration::TYPE_INCLUDE_GROUP) {
 			foreach ($configuration->getGroups() as $group) {
 				$timeTable = array_merge($timeTable, $this->buildSingleTimeTableByGroup($group));
 			}
@@ -157,7 +160,8 @@ class TimeTableService {
 	 *
 	 * @param Configuration $configuration
 	 *
-	 * @return null|string
+	 * @return string
+	 * @throws Exception
 	 */
 	protected function getFrequencyIncrement(Configuration $configuration) {
 		$interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
@@ -170,8 +174,9 @@ class TimeTableService {
 				return '+' . $interval . ' months';
 			case Configuration::FREQUENCY_YEARLY:
 				return '+' . $interval . ' years';
+			default:
+				throw new Exception('Illegal frequency: ' . $configuration->getFrequency(), 123718239123);
 		}
-		return NULL;
 	}
 
 	/**

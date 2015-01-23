@@ -32,6 +32,8 @@ class ProcessDatamapClass {
 	 * @param             $identifier
 	 * @param             $fieldArray
 	 * @param DataHandler $dataHandler
+	 *
+	 * @return void
 	 */
 	public function processDatamap_afterDatabaseOperations($status, $table, $identifier, $fieldArray, DataHandler $dataHandler) {
 		$register = Register::getRegister();

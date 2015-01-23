@@ -51,7 +51,9 @@ class TcaInformation {
 		foreach ($events as $event) {
 			$entry = date('d.m.Y', $event['start_date']) . ' - ' . date('d.m.Y', $event['end_date']);
 			if (!$event['all_day']) {
-				$entry .= ' (' . BackendUtility::time($event['start_time'], FALSE) . ' - ' . BackendUtility::time($event['end_time'], FALSE) . ')';
+				$start = BackendUtility::time($event['start_time'], FALSE);
+				$end = BackendUtility::time($event['end_time'], FALSE);
+				$entry .= ' (' . $start . ' - ' . $end . ')';
 
 			}
 			$items[] = $entry;

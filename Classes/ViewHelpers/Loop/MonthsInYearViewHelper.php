@@ -1,16 +1,18 @@
 <?php
 /**
- * @todo General file information
+ * Months in year view Helper
  *
- * @package Hdnet
+ * @package Calendarize\ViewHelpers\Loop
  * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
+
 /**
- * @todo General class information
+ * Months in year view Helper
  *
  * @author Tim Lochmüller
- */class MonthsInYearViewHelper extends AbstractLoopViewHelper {
+ */
+class MonthsInYearViewHelper extends AbstractLoopViewHelper {
 
 }

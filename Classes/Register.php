@@ -66,7 +66,8 @@ class Register {
 
 	/**
 	 * Default configuration for the current extension.
-	 * If you want to use the calendarize features in your own extension, you hav to implement a own configuration.
+	 * If you want to use the calendarize features in your own extension,
+	 * you have to implement a own configuration.
 	 *
 	 * @return array
 	 */
