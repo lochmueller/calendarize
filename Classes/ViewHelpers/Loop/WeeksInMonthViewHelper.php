@@ -46,9 +46,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper {
 			'total' => count($arguments['each'])
 		);
 
-		$weeks = array(
-			'test'
-		);
+		$weeks = self::getWeeksOfMonth($arguments['date']);
 
 		$output = '';
 		foreach ($weeks as $week) {
@@ -56,6 +54,9 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper {
 			$iterationData['isLast'] = $iterationData['cycle'] === $iterationData['total'];
 			$iterationData['isEven'] = $iterationData['cycle'] % 2 === 0;
 			$iterationData['isOdd'] = !$iterationData['isEven'];
+			$iterationData['calendarWeek'] = $week['week'];
+			$iterationData['calendarDate'] = $week['date'];
+
 			$templateVariableContainer->add($arguments['iteration'], $iterationData);
 
 			$output .= $renderChildrenClosure();
@@ -65,5 +66,26 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper {
 			$iterationData['cycle']++;
 		}
 		return $output;
+	}
+
+	/**
+	 * @param \DateTime $date
+	 *
+	 * @return array
+	 */
+	static protected function getWeeksOfMonth(\DateTime $date) {
+		$weeks = array();
+		$date->setDate($date->format('Y'), $date->format('n'), 1);
+		while ((int)$date->format('t') > (int)$date->format('d')) {
+			$week = (int)$date->format('W');
+			if (!isset($weeks[$week])) {
+				$weeks[$week] = array(
+					'week' => $week,
+					'date' => clone $date,
+				);
+			}
+			$date->modify('+1 day');
+		}
+		return $weeks;
 	}
 }
