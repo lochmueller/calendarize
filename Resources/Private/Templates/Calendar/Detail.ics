@@ -1,1 +1,11 @@
-test
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//TYPO3/NONSGML Calendarize//EN
+<f:if condition="{index}">BEGIN:VEVENT
+UID:calendarize-{index.uid}@{domain}
+DTSTAMP:<f:format.date format="%Y%m%d">{index.tstamp}</f:format.date><f:if condition="{index.allDay}"><f:then></f:then><f:else><f:format.date format="T%H%M%S%Z">{index.startTime}</f:format.date></f:else></f:if>
+DTSTART:<f:format.date format="%Y%m%d">{index.startDate}</f:format.date><f:if condition="{index.allDay}"><f:then></f:then><f:else><f:format.date format="T%H%M%S%Z">{index.endTime}</f:format.date></f:else></f:if>
+DTEND:<f:format.date format="%Y%m%dT%H%M%S%Z">{index.endDate}</f:format.date>
+SUMMARY:<f:format.htmlspecialchars>{newsItem.title}</f:format.htmlspecialchars>
+END:VEVENT
+</f:if>END:VCALENDAR

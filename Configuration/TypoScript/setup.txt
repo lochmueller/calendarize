@@ -2,6 +2,19 @@
  * Configuration
  */
 plugin.tx_calendarize {
+	mvc.callDefaultActionIfActionCantBeResolved = 1
+
+	view {
+		templateRootPaths {
+			100 = EXT:calendarize/Resources/Private/Templates/
+		}
+		partialRootPaths {
+			100 = EXT:calendarize/Resources/Private/Partials/
+		}
+		layoutRootPaths {
+			100 = EXT:calendarize/Resources/Private/Layouts/
+		}
+	}
 
     view {
         widget {

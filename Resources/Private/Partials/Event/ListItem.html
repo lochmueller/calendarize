@@ -6,7 +6,7 @@
 				<f:for each="{event.images}" as="image" iteration="i">
 					<f:if condition="{i.isFirst}">
 						<f:link.action action="detail" arguments="{index: index}" class="pull-left">
-							<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200" maxHeight="200" class="media-object img-rounded" />
+							<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="160" maxHeight="160" class="media-object img-rounded" />
 						</f:link.action>
 					</f:if>
 				</f:for>
@@ -20,6 +20,12 @@
 					<h4>
 						<f:render partial="DateInformation" arguments="{index: index}" />
 					</h4>
+
+					<p>
+						<f:format.crop maxCharacters="180" append="&nbsp;[...]">
+							<f:format.stripTags>{event.description}</f:format.stripTags>
+						</f:format.crop>
+					</p>
 
 					<f:link.action action="detail" arguments="{index: index}" class="btn btn-default btn-primary">
 						More <span class="glyphicon glyphicon-arrow-right"></span>

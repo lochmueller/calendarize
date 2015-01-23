@@ -12,6 +12,7 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
 /**
@@ -148,6 +149,17 @@ class CalendarController extends ActionController {
 			$this->redirect('list', NULL, NULL, array(), NULL, 0, 301);
 		}
 		$this->view->assign('index', $index);
+
+		$format = $this->controllerContext->getRequest()
+			->getFormat();
+
+		if ($format === 'ics') {
+			$this->view->assign('domain', GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'));
+			header('Content-type: text/calendar; charset=utf-8');
+			header('Content-Disposition: inline; filename=ical.ics');
+			echo $this->view->render();
+			die();
+		}
 	}
 
 }
