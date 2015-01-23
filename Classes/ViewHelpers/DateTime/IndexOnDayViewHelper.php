@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage ViewHelpers\DateTime
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
@@ -18,7 +18,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @package    Calendarize
  * @subpackage ViewHelpers\DateTime
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class IndexOnDayViewHelper extends AbstractViewHelper {
 

@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Hdnet
  * @subpackage ...
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\UserFunction;
@@ -15,7 +15,7 @@ namespace HDNET\Calendarize\UserFunction;
  *
  * @package    Hdnet
  * @subpackage ...
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class RealurlAlias {
 

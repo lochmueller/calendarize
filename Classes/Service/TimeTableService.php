@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Calendarize
  * @subpackage Service
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Service;

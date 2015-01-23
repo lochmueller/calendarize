@@ -5,7 +5,7 @@
  * @category   Extension
  * @package    Hdnet
  * @subpackage ...
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\UserFunction;
@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
  *
  * @package    Hdnet
  * @subpackage ...
- * @author     Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @author     Tim Lochmüller
  */
 class TcaInformation {
 
