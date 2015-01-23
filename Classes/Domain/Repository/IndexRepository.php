@@ -59,10 +59,15 @@ class IndexRepository extends AbstractRepository {
 	 *
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findList() {
+	public function findList($limit = 0) {
 		$query = $this->createQuery();
 		$constraints = $this->getDefaultConstraints();
 		$query->matching($query->logicalAnd($constraints));
+
+		if ($limit > 0) {
+			$query->setLimit($limit);
+		}
+
 		return $query->execute();
 	}
 

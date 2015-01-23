@@ -37,7 +37,7 @@ class CalendarController extends ActionController {
 	 * @return void
 	 */
 	public function listAction() {
-		$this->view->assign('indices', $this->indexRepository->findList());
+		$this->view->assign('indices', $this->indexRepository->findList((int)$this->settings['limit']));
 	}
 
 	/**
