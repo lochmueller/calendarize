@@ -10,7 +10,7 @@
 
 $EM_CONF['calendarize'] = array(
 	'title'            => 'Calendarize',
-	'description'      => 'Create a structure for timely controlled tables and plugins for the different output. The extension is shipped with one default event table, but the target table is completely independent and configurable from this extension. Use your own Models as Event items in this calender. Experimental concept at the moment / Dev on https://github.com/lochmueller/calendarize',
+	'description'      => 'Create a structure for timely controlled tables and one plugin for the different output. The extension is shipped with one default event table, but the target table is completely independent and configurable from this extension. Use your own Models as Event items in this calender. Experimental concept at the moment / Dev on https://github.com/lochmueller/calendarize',
 	'category'         => 'misc',
 	'version'          => '1.0.1',
 	'state'            => 'alpha',
