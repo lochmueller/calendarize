@@ -14,7 +14,6 @@ use HDNET\Calendarize\Register;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Index the given events
@@ -69,12 +68,11 @@ class IndexerService {
 	protected function buildIndex($configurationKey, $tableName, $uid) {
 		$record = BackendUtility::getRecord($tableName, $uid);
 		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
+		if (!$configurations) {
+			return;
+		}
 		$timeTableService = new TimeTableService();
 		$records = $timeTableService->getTimeTablesByConfigurationIds($configurations);
-
-		// use the enable Fields of the original record, if there are same
-		// @todo
-
 		foreach ($records as $record) {
 
 			$record['foreign_table'] = $tableName;
@@ -112,12 +110,10 @@ class IndexerService {
 	 * @return void
 	 */
 	public function reindexAll() {
-		$pageSelect = new PageRepository();
 		foreach (Register::getRegister() as $key => $configuration) {
 			$tableName = $configuration['tableName'];
-
 			$rows = $this->getDatabaseConnection()
-				->exec_SELECTgetRows('uid', $tableName, '1=1' . $pageSelect->enableFields($tableName));
+				->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
 			foreach ($rows as $row) {
 				$this->buildIndex($key, $configuration['tableName'], $row['uid']);
 			}

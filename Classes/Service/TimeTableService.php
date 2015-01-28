@@ -12,7 +12,6 @@ namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
-use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
@@ -108,7 +107,6 @@ class TimeTableService {
 			);
 			$timeTable[] = $baseEntry;
 			$this->addFrequencyItems($timeTable, $configuration, $baseEntry);
-
 		} elseif ($configuration->getType() === Configuration::TYPE_EXCLUDE_GROUP || $configuration->getType() === Configuration::TYPE_INCLUDE_GROUP) {
 			foreach ($configuration->getGroups() as $group) {
 				$timeTable = array_merge($timeTable, $this->buildSingleTimeTableByGroup($group));
@@ -130,7 +128,7 @@ class TimeTableService {
 		if ($frequencyIncrement) {
 			$amountCounter = $configuration->getCounterAmount();
 			$tillDate = $configuration->getTillDate();
-			$maxLimit = 99999;
+			$maxLimit = 999;
 			$lastLoop = $baseEntry;
 			for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
 				$loopEntry = $lastLoop;
@@ -161,22 +159,26 @@ class TimeTableService {
 	 * @param Configuration $configuration
 	 *
 	 * @return string
-	 * @throws Exception
 	 */
 	protected function getFrequencyIncrement(Configuration $configuration) {
 		$interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
 		switch ($configuration->getFrequency()) {
 			case Configuration::FREQUENCY_DAILY:
-				return '+' . $interval . ' days';
+				$intervalValue = '+' . $interval . ' days';
+				break;
 			case Configuration::FREQUENCY_WEEKLY:
-				return '+' . $interval . ' weeks';
+				$intervalValue = '+' . $interval . ' weeks';
+				break;
 			case Configuration::FREQUENCY_MONTHLY:
-				return '+' . $interval . ' months';
+				$intervalValue = '+' . $interval . ' months';
+				break;
 			case Configuration::FREQUENCY_YEARLY:
-				return '+' . $interval . ' years';
+				$intervalValue = '+' . $interval . ' years';
+				break;
 			default:
-				throw new Exception('Illegal frequency: ' . $configuration->getFrequency(), 123718239123);
+				$intervalValue = FALSE;
 		}
+		return $intervalValue;
 	}
 
 	/**

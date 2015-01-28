@@ -25,6 +25,13 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 class ProcessDatamapClass {
 
 	/**
+	 * Index the given items
+	 *
+	 * @var array
+	 */
+	protected $indexItems = array();
+
+	/**
 	 * Hook into the after database operations
 	 *
 	 * @param             $status
@@ -37,10 +44,36 @@ class ProcessDatamapClass {
 	 */
 	public function processDatamap_afterDatabaseOperations($status, $table, $identifier, $fieldArray, DataHandler $dataHandler) {
 		$register = Register::getRegister();
-		foreach ($register as $key => $configuration) {
+		foreach ($register as $configuration) {
 			if ($configuration['tableName'] == $table) {
-				IndexerService::reindex($key, $table, $identifier);
+				if ($status == 'new' && isset($dataHandler->substNEWwithIDs[$identifier])) {
+					$identifier = $dataHandler->substNEWwithIDs[$identifier];
+				}
+				$this->indexItems[$table][] = $identifier;
 			}
 		}
 	}
+
+	/**
+	 * @param DataHandler $dataHandler
+	 *
+	 * @return void
+	 */
+	public function processDatamap_afterAllOperations(DataHandler $dataHandler) {
+		if (!$this->indexItems) {
+			return;
+		}
+		$register = Register::getRegister();
+		foreach ($register as $key => $configuration) {
+			foreach ($this->indexItems as $table => $identifiers) {
+				if ($table === $configuration['tableName']) {
+					foreach ($identifiers as $uid) {
+						IndexerService::reindex($key, $table, $uid);
+					}
+				}
+			}
+		}
+		$this->indexItems = array();
+	}
+
 }
