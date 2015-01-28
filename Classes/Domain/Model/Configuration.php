@@ -17,6 +17,7 @@ namespace HDNET\Calendarize\Domain\Model;
  * @subpackage Domain\Model
  * @author     Tim Lochmüller
  * @db
+ * @smartExclude language,enableFields
  */
 class Configuration extends AbstractModel {
 
