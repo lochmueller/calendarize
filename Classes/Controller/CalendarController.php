@@ -149,17 +149,8 @@ class CalendarController extends ActionController {
 			$this->redirect('list', NULL, NULL, array(), NULL, 0, 301);
 		}
 		$this->view->assign('index', $index);
-
-		$format = $this->controllerContext->getRequest()
-			->getFormat();
-
-		if ($format === 'ics') {
-			$this->view->assign('domain', GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'));
-			header('Content-type: text/calendar; charset=utf-8');
-			header('Content-Disposition: inline; filename=ical.ics');
-			echo $this->view->render();
-			die();
-		}
+		// domain for ICS view
+		$this->view->assign('domain', GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'));
 	}
 
 }
