@@ -77,9 +77,8 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper {
 	 */
 	static protected function getDaysOfWeek(\DateTime $date) {
 		$days = array();
-		$firstDay = strtotime('this monday', $date->getTimestamp());
-		$date->setDate(date('Y', $firstDay), date('m', $firstDay), date('d', $firstDay));
-
+		$move = (int)($date->format('N') - 1);
+		$date->modify('-' . $move . ' days');
 		for ($i = 0; $i < 7; $i++) {
 			$days[] = array(
 				'day'  => $i,

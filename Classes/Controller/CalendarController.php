@@ -75,9 +75,22 @@ class CalendarController extends ActionController {
 		$date = new \DateTime();
 		$date->setDate($year, $month, 1);
 
+		$nextMonth = clone $date;
+		$nextMonth->modify('+1 month');
+		$lastMonth = clone $date;
+		$lastMonth->modify('-1 month');
+
 		$this->view->assignMultiple(array(
-			'date'    => $date,
-			'indices' => $this->indexRepository->findMonth($year, $month),
+			'date'      => $date,
+			'indices'   => $this->indexRepository->findMonth($year, $month),
+			'nextMonth' => array(
+				'year'  => $nextMonth->format('Y'),
+				'month' => $nextMonth->format('n')
+			),
+			'lastMonth' => array(
+				'year'  => $lastMonth->format('Y'),
+				'month' => $lastMonth->format('n')
+			),
 		));
 	}
 
