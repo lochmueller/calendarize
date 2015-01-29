@@ -13,6 +13,7 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
 /**
@@ -158,15 +159,19 @@ class CalendarController extends ActionController {
 	 *
 	 * @param \HDNET\Calendarize\Domain\Model\Index $index
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function detailAction(Index $index = NULL) {
 		if ($index === NULL) {
-			$this->redirect('list', NULL, NULL, array(), NULL, 0, 301);
+			if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
+				return 'No Event found! There is no valid fallback PID (list) in the detail plugin';
+			}
+			$this->redirect('list', NULL, NULL, array(), NULL, $this->settings['listPid'], 301);
 		}
 		$this->view->assign('index', $index);
 		// domain for ICS view
 		$this->view->assign('domain', GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'));
+		return $this->view->render();
 	}
 
 }
