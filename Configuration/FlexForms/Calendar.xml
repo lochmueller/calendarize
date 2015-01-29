@@ -129,6 +129,14 @@
 					<settings.limit>
 						<TCEforms>
 							<label>Limit</label>
+							<displayCond>
+								<OR>
+									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<OR>
+										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</OR>
+							</displayCond>
 							<config>
 								<type>input</type>
 								<size>5</size>
@@ -141,6 +149,14 @@
 					<settings.hidePagination>
 						<TCEforms>
 							<label>Hide pagination</label>
+							<displayCond>
+								<OR>
+									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<OR>
+										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</OR>
+							</displayCond>
 							<config>
 								<type>check</type>
 							</config>
