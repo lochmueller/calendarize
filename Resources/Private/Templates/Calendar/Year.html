@@ -12,9 +12,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:loop.monthsInYear date="{date}" iteration="year">
-				<tr>
-					<td class="">
+			<tr>
+				<c:loop.monthsInYear date="{date}" iteration="year">
+					<td>
+
+						<f:comment>
+							<f:render partial="Month" arguments="{date: year.calendar.date}"/>
+						</f:comment>
 
 						<!-- Move to partial -->
 						<table class="table table-bordered">
@@ -50,8 +54,10 @@
 
 
 					</td>
-				</tr>
-			</c:loop.monthsInYear>
+
+					{f:if(condition: '{year.calendar.break4} == 0', then: '</tr><tr>')}
+				</c:loop.monthsInYear>
+			</tr>
 		</tbody>
 	</table>
 </f:section>
