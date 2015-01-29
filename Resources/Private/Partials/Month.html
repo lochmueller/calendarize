@@ -19,9 +19,9 @@
 	<tbody>
 		<c:loop.weeksInMonth date="{date}" iteration="week">
 			<tr>
-				<c:loop.daysInWeek date="{week.calendarDate}" iteration="day">
+				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day">
 					<td class="">
-						<f:format.date format="d">{day.calendarDate}</f:format.date>
+						<f:format.date format="d">{day.calendar.date}</f:format.date>
 					</td>
 				</c:loop.daysInWeek>
 			</tr>
