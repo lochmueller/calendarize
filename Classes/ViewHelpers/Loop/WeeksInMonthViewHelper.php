@@ -8,6 +8,7 @@
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**

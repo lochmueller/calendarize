@@ -1,7 +1,24 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="Main">
 
-	Render view
-
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<f:format.date format="Y">{date}</f:format.date>
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<c:loop.monthsInYear date="{date}" iteration="year">
+				<tr>
+					<td class="">
+						<f:render partial="Month" arguments="{date: year.calendarDate}" />
+					</td>
+				</tr>
+			</c:loop.monthsInYear>
+		</tbody>
+	</table>
 </f:section>

@@ -28,7 +28,7 @@ class PluginConfiguration {
 	 *
 	 * @return array
 	 */
-	public function addConfigurations($config) {
+	public function addConfig($config) {
 		foreach (Register::getRegister() as $key => $configuration) {
 			$config['items'][] = array(
 				$configuration['title'],

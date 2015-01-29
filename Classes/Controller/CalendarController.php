@@ -52,8 +52,11 @@ class CalendarController extends ActionController {
 		if ($year === NULL) {
 			$year = date('Y');
 		}
-		$this->view->assign('indices', $this->indexRepository->findYear($year));
+		$date = new \DateTime();
+		$date->setDate($year, 1, 1);
 
+		$this->view->assign('indices', $this->indexRepository->findYear($year));
+		$this->view->assign('date', $date);
 	}
 
 	/**
