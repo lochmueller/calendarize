@@ -24,9 +24,21 @@
 			<c:loop.weeksInMonth date="{date}" iteration="week">
 				<tr>
 					<c:loop.daysInWeek date="{week.calendar.date}" iteration="day">
-						<td class="">
-							<f:format.date format="d">{day.calendar.date}</f:format.date>
-						</td>
+
+
+						<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
+							<f:then>
+								<td class="hasEvents">
+									<f:format.date format="d">{day.calendar.date}</f:format.date>
+								</td>
+							</f:then>
+							<f:else>
+								<td>
+									<f:format.date format="d">{day.calendar.date}</f:format.date>
+								</td>
+							</f:else>
+						</f:if>
+
 					</c:loop.daysInWeek>
 				</tr>
 			</c:loop.weeksInMonth>

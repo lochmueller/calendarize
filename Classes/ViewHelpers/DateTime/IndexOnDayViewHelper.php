@@ -23,14 +23,29 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class IndexOnDayViewHelper extends AbstractViewHelper {
 
 	/**
-	 * @param Index     $index
+	 * Check if the index or one of the given indices is on the given day
+	 *
 	 * @param \DateTime $day
+	 * @param Index     $index
+	 * @param array     $indices
 	 *
 	 * @return bool
 	 */
-	public function render(Index $index, \DateTime $day) {
-		return $index->getStartDate()
-			->format('d.m.Y') === $day->format('d.m.Y');
+	public function render(\DateTime $day, Index $index = NULL, $indices = array()) {
+		foreach ($indices as $idx) {
+			/** @var $idx Index */
+			if ($idx->getStartDate()
+					->format('d.m.Y') === $day->format('d.m.Y')
+			) {
+				return TRUE;
+			}
+		}
+
+		if ($index instanceof Index) {
+			return $index->getStartDate()
+				->format('d.m.Y') === $day->format('d.m.Y');
+		}
+		return FALSE;
 	}
 
 }

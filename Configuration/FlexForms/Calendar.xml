@@ -20,6 +20,10 @@
 							<config>
 								<type>select</type>
 								<items>
+									<numIndex index="0">
+										<numIndex index="0">Normal</numIndex>
+										<numIndex index="1">--div--</numIndex>
+									</numIndex>
 									<numIndex index="1">
 										<numIndex index="0">List + Detail</numIndex>
 										<numIndex index="1">Calendar->list;Calendar->detail</numIndex>
@@ -32,19 +36,23 @@
 										<numIndex index="0">Detail</numIndex>
 										<numIndex index="1">Calendar->detail</numIndex>
 									</numIndex>
-									<numIndex index="10">
+									<numIndex index="4">
+										<numIndex index="0">Special</numIndex>
+										<numIndex index="1">--div--</numIndex>
+									</numIndex>
+									<numIndex index="5">
 										<numIndex index="0">Year</numIndex>
 										<numIndex index="1">Calendar->year</numIndex>
 									</numIndex>
-									<numIndex index="11">
+									<numIndex index="6">
 										<numIndex index="0">Month</numIndex>
 										<numIndex index="1">Calendar->month</numIndex>
 									</numIndex>
-									<numIndex index="12">
+									<numIndex index="7">
 										<numIndex index="0">Week</numIndex>
 										<numIndex index="1">Calendar->week</numIndex>
 									</numIndex>
-									<numIndex index="13">
+									<numIndex index="8">
 										<numIndex index="0">Day</numIndex>
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>

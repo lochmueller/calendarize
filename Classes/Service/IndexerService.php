@@ -49,6 +49,7 @@ class IndexerService {
 	 * @return void
 	 */
 	public function reindexInternal($configurationKey, $tableName, $uid) {
+		$this->cleanupOldIndex($tableName);
 		$this->clearIndex($tableName, $uid);
 		$this->buildIndex($configurationKey, $tableName, $uid);
 	}
@@ -112,12 +113,24 @@ class IndexerService {
 	public function reindexAll() {
 		foreach (Register::getRegister() as $key => $configuration) {
 			$tableName = $configuration['tableName'];
+			$this->cleanupOldIndex($tableName);
 			$rows = $this->getDatabaseConnection()
 				->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
 			foreach ($rows as $row) {
 				$this->buildIndex($key, $configuration['tableName'], $row['uid']);
 			}
 		}
+	}
+
+	/**
+	 * Cleanup the old index for the given table
+	 *
+	 * @param $tableName
+	 *
+	 * @return void
+	 */
+	protected function cleanupOldIndex($tableName) {
+		// @todo check TCA , check deleted flag, search for deleted items and remove the index!!
 	}
 
 	/**
