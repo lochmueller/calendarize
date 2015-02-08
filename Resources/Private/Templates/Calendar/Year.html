@@ -20,38 +20,7 @@
 							<f:render partial="Month" arguments="{date: year.calendar.date}"/>
 						</f:comment>
 
-						<!-- Move to partial -->
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<td colspan="7">
-										<f:if condition="{lastMonth}">
-											<f:link.action action="month" arguments="{year: lastMonth.year, month: lastMonth.month}">
-												&lt;
-											</f:link.action>
-										</f:if>
-										<f:format.date format="F Y">{year.calendar.date}</f:format.date>
-										<f:if condition="{nextMonth}">
-											<f:link.action action="month" arguments="{year: nextMonth.year, month: nextMonth.month}">
-												&gt;
-											</f:link.action>
-										</f:if>
-									</td>
-								</tr>
-							</thead>
-							<tbody>
-								<c:loop.weeksInMonth date="{year.calendar.date}" iteration="week">
-									<tr>
-										<c:loop.daysInWeek date="{week.calendar.date}" iteration="day">
-											<td class="">
-												<f:format.date format="d">{day.calendar.date}</f:format.date>
-											</td>
-										</c:loop.daysInWeek>
-									</tr>
-								</c:loop.weeksInMonth>
-							</tbody>
-						</table>
-
+						<f:render partial="Month" arguments="{date: year.calendar.date}" />
 
 					</td>
 
