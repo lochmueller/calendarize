@@ -37,22 +37,26 @@
 										<numIndex index="1">Calendar->detail</numIndex>
 									</numIndex>
 									<numIndex index="4">
+										<numIndex index="0">Search</numIndex>
+										<numIndex index="1">Calendar->search</numIndex>
+									</numIndex>
+									<numIndex index="5">
 										<numIndex index="0">Special</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
-									<numIndex index="5">
+									<numIndex index="6">
 										<numIndex index="0">Year</numIndex>
 										<numIndex index="1">Calendar->year</numIndex>
 									</numIndex>
-									<numIndex index="6">
+									<numIndex index="7">
 										<numIndex index="0">Month</numIndex>
 										<numIndex index="1">Calendar->month</numIndex>
 									</numIndex>
-									<numIndex index="7">
+									<numIndex index="8">
 										<numIndex index="0">Week</numIndex>
 										<numIndex index="1">Calendar->week</numIndex>
 									</numIndex>
-									<numIndex index="8">
+									<numIndex index="9">
 										<numIndex index="0">Day</numIndex>
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>

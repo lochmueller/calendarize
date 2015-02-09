@@ -174,4 +174,11 @@ class CalendarController extends ActionController {
 		return $this->view->render();
 	}
 
+	/**
+	 * Render the search view
+	 */
+	public function searchAction() {
+
+	}
+
 }

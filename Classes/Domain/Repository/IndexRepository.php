@@ -50,6 +50,7 @@ class IndexRepository extends AbstractRepository {
 	public function findList($limit = 0) {
 		$query = $this->createQuery();
 		$constraints = array();
+		$constraints[] = $query->greaterThan('start_date', time());
 		$query->matching($query->logicalAnd($constraints));
 
 		if ($limit > 0) {
