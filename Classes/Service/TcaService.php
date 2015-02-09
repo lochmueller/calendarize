@@ -6,20 +6,18 @@
  * @author     Tim Lochmüller
  */
 
-/**
- * @todo       General class information
- *
- * @author     Tim Lochmüller
- */
-
 namespace HDNET\Calendarize\Service;
-
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
+/**
+ * @todo       General class information
+ *
+ * @author     Tim Lochmüller
+ */
 class TcaService {
 
 	/**
@@ -60,7 +58,7 @@ class TcaService {
 			if ($groups) {
 				$title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
 			}
-		} elseif($row['type'] === Configuration::TYPE_EXTERNAL){
+		} elseif ($row['type'] === Configuration::TYPE_EXTERNAL) {
 
 			$title .= 'TODO!!! External URI here';
 

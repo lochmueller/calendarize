@@ -2,10 +2,8 @@
 /**
  * Configuration for time options
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @package Calendarize\Domain\Model
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -13,9 +11,7 @@ namespace HDNET\Calendarize\Domain\Model;
 /**
  * Configuration for time options
  *
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @author       Tim Lochmüller
  * @db
  * @smartExclude language,enableFields
  */
@@ -88,6 +84,8 @@ class Configuration extends AbstractModel {
 	protected $allDay;
 
 	/**
+	 * Groups
+	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\ConfigurationGroup>
 	 * @db text NOT NULL
 	 * @lazy
@@ -95,24 +93,32 @@ class Configuration extends AbstractModel {
 	protected $groups;
 
 	/**
+	 * Frequency
+	 *
 	 * @var string
 	 * @db
 	 */
 	protected $frequency = self::FREQUENCY_NONE;
 
 	/**
+	 * Till date
+	 *
 	 * @var \DateTime
 	 * @db
 	 */
 	protected $tillDate;
 
 	/**
+	 * Counter amount
+	 *
 	 * @var  int
 	 * @db
 	 */
 	protected $counterAmount;
 
 	/**
+	 * Counter interval
+	 *
 	 * @var int
 	 * @db
 	 */

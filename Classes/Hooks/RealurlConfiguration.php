@@ -20,6 +20,8 @@ namespace HDNET\Calendarize\Hooks;
 class RealurlConfiguration {
 
 	/**
+	 * Add the realurl configuration example
+	 *
 	 * @param $params
 	 * @param $pObj
 	 *

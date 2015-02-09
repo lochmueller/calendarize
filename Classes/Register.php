@@ -42,6 +42,8 @@ class Register {
 	}
 
 	/**
+	 * Get the EXT:autoloader default configuration
+	 *
 	 * @return array
 	 */
 	static public function getDefaultAutoloader() {

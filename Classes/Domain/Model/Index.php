@@ -13,6 +13,7 @@ namespace HDNET\Calendarize\Domain\Model;
 use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Index information
@@ -90,12 +91,17 @@ class Index extends AbstractModel {
 	protected $allDay;
 
 	/**
-	 * @var object
+	 * The original object
+	 *
+	 * @var AbstractEntity
 	 */
 	protected $originalObject;
 
 	/**
 	 * Get the original record for the current index
+	 *
+	 * @return AbstractEntity
+	 * @throws Exception
 	 */
 	public function getOriginalObject() {
 		if ($this->originalObject === NULL) {

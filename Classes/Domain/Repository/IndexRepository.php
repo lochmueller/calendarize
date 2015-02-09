@@ -45,6 +45,8 @@ class IndexRepository extends AbstractRepository {
 	/**
 	 * Find List
 	 *
+	 * @param int $limit
+	 *
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
 	public function findList($limit = 0) {
@@ -135,8 +137,10 @@ class IndexRepository extends AbstractRepository {
 	}
 
 	/**
-	 * @param $constraints
-	 * @param $query
+	 * @param array          $constraints
+	 * @param QueryInterface $query
+	 * @param int            $startTime
+	 * @param int            $endTime
 	 */
 	protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime) {
 		$orConstraint = array();

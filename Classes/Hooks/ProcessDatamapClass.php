@@ -55,6 +55,8 @@ class ProcessDatamapClass {
 	}
 
 	/**
+	 * Process the reindex after all operations
+	 *
 	 * @param DataHandler $dataHandler
 	 *
 	 * @return void

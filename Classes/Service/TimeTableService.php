@@ -186,6 +186,8 @@ class TimeTableService {
 	}
 
 	/**
+	 * Build a single time table by group
+	 *
 	 * @param ConfigurationGroup $group
 	 *
 	 * @return array

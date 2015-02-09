@@ -2,10 +2,8 @@
 /**
  * Logical configuration group
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @package Calendarize\Domain\Model
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -13,9 +11,7 @@ namespace HDNET\Calendarize\Domain\Model;
 /**
  * Logical configuration group
  *
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  * @db
  */
 class ConfigurationGroup extends AbstractModel {

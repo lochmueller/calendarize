@@ -2,10 +2,8 @@
 /**
  * Reindex the event models
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Command
- * @author     Tim Lochmüller
+ * @package Calendarize\Command
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Command;
@@ -14,10 +12,8 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
  * Reindex the event models
- *
- * @package    Calendarize
- * @subpackage Command
- * @author     Tim Lochmüller
+ *s
+ * @author Tim Lochmüller
  */
 class ReindexCommandController extends CommandController {
 

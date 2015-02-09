@@ -2,10 +2,8 @@
 /**
  * Event (Example) for the calendarize function
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @package Calendarize\Domain\Model
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -13,8 +11,6 @@ namespace HDNET\Calendarize\Domain\Model;
 /**
  * Event (Example) for the calendarize function
  *
- * @package    Calendarize
- * @subpackage Domain\Model
  * @author     Tim Lochmüller
  * @db
  */
@@ -91,6 +87,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Set downloads
+	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $downloads
 	 */
 	public function setDownloads($downloads) {
@@ -98,6 +96,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Get downloads
+	 *
 	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getDownloads() {
@@ -105,6 +105,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Set images
+	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
 	 */
 	public function setImages($images) {
@@ -112,6 +114,8 @@ class Event extends AbstractModel {
 	}
 
 	/**
+	 * Get images
+	 *
 	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getImages() {
