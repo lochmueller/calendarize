@@ -111,6 +111,10 @@ class TimeTableService {
 			foreach ($configuration->getGroups() as $group) {
 				$timeTable = array_merge($timeTable, $this->buildSingleTimeTableByGroup($group));
 			}
+		} elseif ($configuration->getType() === Configuration::TYPE_EXTERNAL) {
+
+			// @todo implement ICS Reader
+
 		}
 
 		return $timeTable;

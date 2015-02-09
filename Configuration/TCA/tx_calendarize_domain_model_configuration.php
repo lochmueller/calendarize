@@ -42,6 +42,10 @@ $custom = array(
 						LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_EXCLUDE_GROUP, 'calendarize'),
 						Configuration::TYPE_EXCLUDE_GROUP
 					),
+					array(
+						LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_EXTERNAL, 'calendarize'),
+						Configuration::TYPE_EXTERNAL
+					),
 				),
 				'default' => Configuration::TYPE_TIME
 			)

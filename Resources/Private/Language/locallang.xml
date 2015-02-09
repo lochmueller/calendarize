@@ -12,6 +12,7 @@
 			<label index="configuration.type.time"><![CDATA[Time]]></label>
 			<label index="configuration.type.include"><![CDATA[Include group]]></label>
 			<label index="configuration.type.exclude"><![CDATA[Exclude group]]></label>
+			<label index="configuration.type.external"><![CDATA[External]]></label>
 			<label index="configuration.frequency.none"><![CDATA[None]]></label>
 			<label index="configuration.frequency.daily"><![CDATA[Daily]]></label>
 			<label index="configuration.frequency.weekly"><![CDATA[Weekly]]></label>
@@ -57,6 +58,7 @@
 			<label index="configuration.type.time"><![CDATA[Zeit]]></label>
 			<label index="configuration.type.include"><![CDATA[Einschließende Gruppe]]></label>
 			<label index="configuration.type.exclude"><![CDATA[Ausschließeden Gruppe]]></label>
+			<label index="configuration.type.external"><![CDATA[Extern]]></label>
 			<label index="configuration.frequency.none"><![CDATA[Keine]]></label>
 			<label index="configuration.frequency.daily"><![CDATA[Täglich]]></label>
 			<label index="configuration.frequency.weekly"><![CDATA[Wöchentlich]]></label>

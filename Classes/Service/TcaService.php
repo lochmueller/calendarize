@@ -60,6 +60,10 @@ class TcaService {
 			if ($groups) {
 				$title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
 			}
+		} elseif($row['type'] === Configuration::TYPE_EXTERNAL){
+
+			$title .= 'TODO!!! External URI here';
+
 		}
 
 		$params['title'] = $title;

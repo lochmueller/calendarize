@@ -27,6 +27,8 @@ class Configuration extends AbstractModel {
 
 	const TYPE_EXCLUDE_GROUP = 'exclude';
 
+	const TYPE_EXTERNAL = 'external';
+
 	const FREQUENCY_NONE = '';
 
 	const FREQUENCY_DAILY = 'daily';
