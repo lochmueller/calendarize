@@ -12,6 +12,7 @@ $custom = array(
 			'config' => array(
 				'type'          => 'inline',
 				'foreign_table' => 'tx_calendarize_domain_model_configuration',
+				'minitems'      => 1,
 			)
 		),
 	),
