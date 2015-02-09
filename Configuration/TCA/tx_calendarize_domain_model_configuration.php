@@ -13,15 +13,16 @@ $typeBase = str_replace(',frequency', ',--div--;LLL:EXT:calendarize/Resources/Pr
 
 $custom = array(
 	'ctrl'    => array(
-		'type'            => 'type',
-		'hideTable'       => TRUE,
-		'typeicons'       => array(
+		'type'                    => 'type',
+		'hideTable'               => TRUE,
+		'typeicons'               => array(
 			Configuration::TYPE_TIME          => '../typo3conf/ext/calendarize/Resources/Public/Icons/Configuration.png',
 			Configuration::TYPE_INCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationInclude.png',
 			Configuration::TYPE_EXCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationExclude.png',
 		),
-		'typeicon_column' => 'type',
-		'requestUpdate'   => 'all_day,frequency',
+		'typeicon_column'         => 'type',
+		'requestUpdate'           => 'all_day,frequency',
+		'formattedLabel_userFunc' => 'HDNET\\Calendarize\\Service\\TcaService->configurationTitle'
 	),
 	'columns' => array(
 		'type'             => array(
