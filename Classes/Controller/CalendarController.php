@@ -14,6 +14,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
 /**
@@ -164,7 +165,7 @@ class CalendarController extends ActionController {
 	public function detailAction(Index $index = NULL) {
 		if ($index === NULL) {
 			if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-				return 'No Event found! There is no valid fallback PID (list) in the detail plugin';
+				return LocalizationUtility::translate('noEventDetailView', 'calendarize');
 			}
 			$this->redirect('list', NULL, NULL, array(), NULL, $this->settings['listPid'], 301);
 		}

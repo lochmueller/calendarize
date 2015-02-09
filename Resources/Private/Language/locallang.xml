@@ -6,6 +6,18 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tca.information"><![CDATA[Calendarize (Information - Save to refresh...)]]></label>
+			<label index="save.first"><![CDATA[Please save the record first...]]></label>
+			<label index="pluginName"><![CDATA[Calendar]]></label>
+			<label index="configuration.type.time"><![CDATA[Time]]></label>
+			<label index="configuration.type.include"><![CDATA[Include group]]></label>
+			<label index="configuration.type.exclude"><![CDATA[Exclude group]]></label>
+			<label index="configuration.frequency.none"><![CDATA[None]]></label>
+			<label index="configuration.frequency.daily"><![CDATA[Daily]]></label>
+			<label index="configuration.frequency.weekly"><![CDATA[Weekly]]></label>
+			<label index="configuration.frequency.monthly"><![CDATA[Monthly]]></label>
+			<label index="configuration.frequency.yearly"><![CDATA[Yearly]]></label>
+			<label index="noEventDetailView"><![CDATA[No Event found! There is no valid fallback PID (list) in the detail plugin]]></label>
 			<label index="tx_calendarize_domain_model_event.downloads"><![CDATA[Downloads]]></label>
 			<label index="tx_calendarize_domain_model_event.images"><![CDATA[Images]]></label>
 			<label index="tx_calendarize_domain_model_configuration.counter_interval"><![CDATA[Interval]]></label>
@@ -39,6 +51,18 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="tca.information"><![CDATA[Calendarize (Informationen - Speichern um zu aktualisieren...)]]></label>
+			<label index="save.first"><![CDATA[Bite sichere zunächst den Datensatz...]]></label>
+			<label index="pluginName"><![CDATA[Kalendar]]></label>
+			<label index="configuration.type.time"><![CDATA[Zeit]]></label>
+			<label index="configuration.type.include"><![CDATA[Einschließende Gruppe]]></label>
+			<label index="configuration.type.exclude"><![CDATA[Ausschließeden Gruppe]]></label>
+			<label index="configuration.frequency.none"><![CDATA[Keine]]></label>
+			<label index="configuration.frequency.daily"><![CDATA[Täglich]]></label>
+			<label index="configuration.frequency.weekly"><![CDATA[Wöchentlich]]></label>
+			<label index="configuration.frequency.monthly"><![CDATA[Monatlich]]></label>
+			<label index="configuration.frequency.yearly"><![CDATA[Jährlich]]></label>
+			<label index="noEventDetailView"><![CDATA[Kein Event gefunden! Es gibt keine valide Fallback PID (list) in dem Detail Plugin]]></label>
 			<label index="tx_calendarize_domain_model_configuration.frequency"><![CDATA[Frequenz]]></label>
 			<label index="tx_calendarize_domain_model_index.all_day"><![CDATA[Ganztägig]]></label>
 			<label index="tx_calendarize_domain_model_index.end_time"><![CDATA[Endzeit]]></label>

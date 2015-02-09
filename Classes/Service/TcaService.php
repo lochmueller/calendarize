@@ -17,6 +17,8 @@ namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class TcaService {
 
@@ -28,7 +30,8 @@ class TcaService {
 		$title = '';
 		$row = $params['row'];
 
-		$title .= '<b>' . ucfirst($row['type']) . '</b><br />';
+		$title .= '<b>' . LocalizationUtility::translate('configuration.type.' . $row['type'], 'calendarize') . '</b><br />';
+
 
 		if ($row['type'] == Configuration::TYPE_TIME) {
 			if ($row['start_date']) {
@@ -40,18 +43,23 @@ class TcaService {
 				}
 			}
 			if ($row['all_day']) {
-				$title .= ' All Day';
+				$title .= ' ' . LocalizationUtility::translate('tx_calendarize_domain_model_index.all_day', 'calendarize');
 			} else {
 				if ($row['start_time']) {
 					$title .= "<br />" . BackendUtility::time($row['start_time'], FALSE);
 					$title .= ' - ' . BackendUtility::time($row['end_time'], FALSE);
 				}
 			}
+
+
 			if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
-				$title .= '<br /><i>' . ucfirst($row['frequency']) . '</i>';
+				$title .= '<br /><i>' . LocalizationUtility::translate('configuration.type.' . $row['frequency'], 'calendarize') . '</i>';
 			}
 		} elseif ($row['type'] === Configuration::TYPE_INCLUDE_GROUP || $row['type'] === Configuration::TYPE_EXCLUDE_GROUP) {
-			$title .= 'Groups: ' . $row['groups'];
+			$groups = GeneralUtility::trimExplode(',', $row['groups'], TRUE);
+			if ($groups) {
+				$title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
+			}
 		}
 
 		$params['title'] = $title;

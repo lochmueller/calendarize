@@ -5,6 +5,7 @@
  */
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
 
@@ -30,15 +31,15 @@ $custom = array(
 				'type'    => 'select',
 				'items'   => array(
 					array(
-						'Time',
+						LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_TIME, 'calendarize'),
 						Configuration::TYPE_TIME
 					),
 					array(
-						'Include Group',
+						LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_INCLUDE_GROUP, 'calendarize'),
 						Configuration::TYPE_INCLUDE_GROUP
 					),
 					array(
-						'Exclude Group',
+						LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_EXCLUDE_GROUP, 'calendarize'),
 						Configuration::TYPE_EXCLUDE_GROUP
 					),
 				),
@@ -104,23 +105,23 @@ $custom = array(
 				'type'    => 'select',
 				'items'   => array(
 					array(
-						'None',
+						LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_NONE, 'calendarize'),
 						Configuration::FREQUENCY_NONE
 					),
 					array(
-						'Daily',
+						LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_DAILY, 'calendarize'),
 						Configuration::FREQUENCY_DAILY
 					),
 					array(
-						'Weekly',
+						LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_WEEKLY, 'calendarize'),
 						Configuration::FREQUENCY_WEEKLY
 					),
 					array(
-						'Monthly',
+						LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_MONTHLY, 'calendarize'),
 						Configuration::FREQUENCY_MONTHLY
 					),
 					array(
-						'Yearly',
+						LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_YEARLY, 'calendarize'),
 						Configuration::FREQUENCY_YEARLY
 					),
 				),

@@ -160,7 +160,7 @@
 					<!-- Hide pagination -->
 					<settings.hidePagination>
 						<TCEforms>
-							<label>Hide pagination</label>
+							<label>Hide pagination / Teaser Mode</label>
 							<displayCond>
 								<OR>
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>

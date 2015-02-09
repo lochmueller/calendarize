@@ -13,6 +13,7 @@ namespace HDNET\Calendarize\UserFunction;
 use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * TCA information
@@ -31,8 +32,9 @@ class TcaInformation {
 	 */
 	public function informationField($configuration, FormEngine $fObj) {
 		if (!isset($configuration['row']['uid'])) {
-			$content = 'Please save the record first...';
+			$content = LocalizationUtility::translate('save.first', 'calendarize');
 		} else {
+			// @todo l10n
 			$next = $this->getNextEvents($configuration['table'], $configuration['row']['uid']);
 			$content = 'There are ' . $this->getIndexCount($configuration['table'], $configuration['row']['uid']) . ' Items in the Index of the current record. The next 5 Events are...' . $this->getEventList($next);
 		}
