@@ -2,10 +2,8 @@
 /**
  * RealURL alias
  *
- * @category   Extension
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller
+ * @package Calendarize\UserFunction
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\UserFunction;
@@ -13,13 +11,13 @@ namespace HDNET\Calendarize\UserFunction;
 /**
  * RealURL alias
  *
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class RealurlAlias {
 
 	/**
+	 * Build the realurl alias
+	 *
 	 * @param $params
 	 * @param $ref
 	 *

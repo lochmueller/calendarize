@@ -2,10 +2,8 @@
 /**
  * Index information
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Domain\Model
- * @author     Tim Lochmüller
+ * @package Calendarize\Domain\Model
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Model;
@@ -18,8 +16,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Index information
  *
- * @package      Calendarize
- * @subpackage   Domain\Model
  * @author       Tim Lochmüller
  * @db
  * @smartExclude language,workspaces

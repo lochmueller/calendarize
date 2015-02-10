@@ -2,10 +2,8 @@
 /**
  * Helper Utility
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Utility
- * @author     Tim Lochmüller
+ * @package Calendarize\Utility
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Utility;
@@ -15,9 +13,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 /**
  * Helper Utility
  *
- * @package    Calendarize
- * @subpackage Utility
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class HelperUtility {
 

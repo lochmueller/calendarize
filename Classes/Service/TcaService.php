@@ -1,9 +1,9 @@
 <?php
 /**
- * @todo       General file information
+ * TCA service
  *
- * @package    ...
- * @author     Tim Lochmüller
+ * @package Calendarize\Service
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Service;
@@ -14,13 +14,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * @todo       General class information
+ * TCA service
  *
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class TcaService {
 
 	/**
+	 * Render the configuartion title
+	 *
 	 * @param $params
 	 * @param $object
 	 */

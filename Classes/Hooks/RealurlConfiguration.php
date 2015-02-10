@@ -2,10 +2,8 @@
 /**
  * Realurl configuration
  *
- * @category   Extension
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller
+ * @package Calendarize\Hooks
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Hooks;
@@ -13,9 +11,7 @@ namespace HDNET\Calendarize\Hooks;
 /**
  * Realurl configuration
  *
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class RealurlConfiguration {
 

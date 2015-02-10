@@ -2,10 +2,8 @@
 /**
  * Index repository
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Domain\Repository
- * @author     Tim Lochmüller
+ * @package Calendarize\Domain\Repository
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Domain\Repository;
@@ -16,13 +14,13 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 /**
  * Index repository
  *
- * @package    Calendarize
- * @subpackage Domain\Repository
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class IndexRepository extends AbstractRepository {
 
 	/**
+	 * Default orderings for index records
+	 *
 	 * @var array
 	 */
 	protected $defaultOrderings = array(
@@ -137,6 +135,8 @@ class IndexRepository extends AbstractRepository {
 	}
 
 	/**
+	 * Add time frame related queries
+	 *
 	 * @param array          $constraints
 	 * @param QueryInterface $query
 	 * @param int            $startTime

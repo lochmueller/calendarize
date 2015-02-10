@@ -2,7 +2,7 @@
 /**
  * ICS View
  *
- * @package Hdnet
+ * @package Calendarize\View\Calendar
  * @author  Tim Lochmüller
  */
 

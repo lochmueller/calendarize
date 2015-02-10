@@ -2,10 +2,8 @@
 /**
  * TCA information
  *
- * @category   Extension
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller
+ * @package Calendarize\UserFunction
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\UserFunction;
@@ -18,15 +16,15 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * TCA information
  *
- * @package    Hdnet
- * @subpackage ...
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class TcaInformation {
 
 	/**
-	 * @param $configuration
-	 * @param $fObj
+	 * Generate the information field
+	 *
+	 * @param array      $configuration
+	 * @param FormEngine $fObj
 	 *
 	 * @return string
 	 */
@@ -77,9 +75,11 @@ class TcaInformation {
 	}
 
 	/**
-	 * @param     $table
-	 * @param     $uid
-	 * @param int $limit
+	 * Get the next events
+	 *
+	 * @param string $table
+	 * @param int    $uid
+	 * @param int    $limit
 	 *
 	 * @return array|NULL
 	 */

@@ -16,6 +16,8 @@ namespace HDNET\Calendarize\ViewHelpers\Loop;
 class MonthsInYearViewHelper extends AbstractLoopViewHelper {
 
 	/**
+	 * Get the items
+	 *
 	 * @param \DateTime $date
 	 *
 	 * @return array

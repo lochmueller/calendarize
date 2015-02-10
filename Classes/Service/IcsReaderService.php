@@ -1,18 +1,18 @@
 <?php
 /**
- * @todo       General file information
+ * ICS Service
  *
- * @package    ...
- * @author     Tim Lochmüller
+ * @package Calendarize\Service
+ * @author  Tim Lochmüller
  */
 
 
 namespace HDNET\Calendarize\Service;
 
 /**
- * @todo       General class information
+ * ICS Service
  *
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class IcsReaderService {
 

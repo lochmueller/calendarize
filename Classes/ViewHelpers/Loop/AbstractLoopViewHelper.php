@@ -18,6 +18,8 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 abstract class AbstractLoopViewHelper extends AbstractViewHelper {
 
 	/**
+	 * Render the element
+	 *
 	 * @param \DateTime $date
 	 * @param string    $iteration
 	 *

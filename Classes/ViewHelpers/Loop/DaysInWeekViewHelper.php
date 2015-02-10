@@ -16,6 +16,8 @@ namespace HDNET\Calendarize\ViewHelpers\Loop;
 class DaysInWeekViewHelper extends AbstractLoopViewHelper {
 
 	/**
+	 * Get items
+	 *
 	 * @param \DateTime $date
 	 *
 	 * @return array

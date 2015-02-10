@@ -2,10 +2,8 @@
 /**
  * DateTime Utility
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Utility
- * @author     Tim Lochmüller
+ * @package Calendarize\Utility
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Utility;
@@ -13,9 +11,7 @@ namespace HDNET\Calendarize\Utility;
 /**
  * DateTime Utility
  *
- * @package    Calendarize
- * @subpackage Utility
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class DateTimeUtility {
 

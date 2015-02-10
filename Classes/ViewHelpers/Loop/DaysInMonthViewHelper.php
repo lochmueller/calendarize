@@ -16,6 +16,8 @@ namespace HDNET\Calendarize\ViewHelpers\Loop;
 class DaysInMonthViewHelper extends AbstractLoopViewHelper {
 
 	/**
+	 * Get items
+	 *
 	 * @param \DateTime $date
 	 *
 	 * @return array
@@ -24,7 +26,7 @@ class DaysInMonthViewHelper extends AbstractLoopViewHelper {
 		$weeks = array();
 
 		// @todo implement
-		
+
 		return $weeks;
 	}
 }

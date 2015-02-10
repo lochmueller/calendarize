@@ -2,10 +2,8 @@
 /**
  * Create the needed database fields
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Slots
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @package Calendarize\Slots
+ * @author  Tim Lochmüller <tim@fruit-lab.de>
  */
 
 namespace HDNET\Calendarize\Slots;
@@ -15,9 +13,7 @@ use HDNET\Calendarize\Register;
 /**
  * Create the needed database fields
  *
- * @package    Calendarize
- * @subpackage Slots
- * @author     Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller <tim@fruit-lab.de>
  */
 class Database {
 

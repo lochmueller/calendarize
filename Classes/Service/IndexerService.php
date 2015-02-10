@@ -2,10 +2,8 @@
 /**
  * Index the given events
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Service
- * @author     Tim Lochmüller
+ * @package Calendarize\Service
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Service;
@@ -18,9 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Index the given events
  *
- * @package    Calendarize
- * @subpackage Service
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class IndexerService {
 

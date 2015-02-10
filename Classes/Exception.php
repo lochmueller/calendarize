@@ -2,9 +2,8 @@
 /**
  * Calendarize logical exception
  *
- * @category   Extension
- * @package    Calendarize
- * @author     Tim Lochmüller
+ * @package Calendarize
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize;
@@ -12,8 +11,7 @@ namespace HDNET\Calendarize;
 /**
  * Calendarize logical exception
  *
- * @package    Calendarize
- * @author     Tim Lochmüller
+ * @author  Tim Lochmüller
  */
 class Exception extends \Exception {
 

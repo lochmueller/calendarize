@@ -2,10 +2,8 @@
 /**
  * Time table builder service
  *
- * @category   Extension
- * @package    Calendarize
- * @subpackage Service
- * @author     Tim Lochmüller
+ * @package Calendarize\Service
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Service;
@@ -17,9 +15,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
 /**
  * Time table builder service
  *
- * @package    Calendarize
- * @subpackage Service
- * @author     Tim Lochmüller
+ * @author Tim Lochmüller
  */
 class TimeTableService {
 
