@@ -27,44 +27,65 @@ class TcaService extends AbstractService {
 	 * @param $object
 	 */
 	public function configurationTitle(&$params, $object) {
+		$params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $row['type'], 'calendarize') . '</b><br />';
+		switch ($row['type']) {
+			case Configuration::TYPE_TIME:
+				$params['title'] .= $this->getConfigurationTitleTime($params['row']);
+				break;
+			case Configuration::TYPE_INCLUDE_GROUP:
+			case Configuration::TYPE_EXCLUDE_GROUP:
+				$params['title'] .= $this->getConfigurationGroupTitle($params['row']);
+				break;
+			case Configuration::TYPE_EXTERNAL:
+				$params['title'] .= 'URL: ' . $row['external_ics_url'];
+				break;
+		}
+	}
+
+	/**
+	 * Get group title
+	 *
+	 * @param $row
+	 *
+	 * @return string
+	 */
+	protected function getConfigurationGroupTitle($row) {
 		$title = '';
-		$row = $params['row'];
+		$groups = GeneralUtility::trimExplode(',', $row['groups'], TRUE);
+		if ($groups) {
+			$title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
+		}
+		return $title;
+	}
 
-		$title .= '<b>' . LocalizationUtility::translate('configuration.type.' . $row['type'], 'calendarize') . '</b><br />';
-
-
-		if ($row['type'] == Configuration::TYPE_TIME) {
-			if ($row['start_date']) {
-				$dateStart = date('d.m.Y', $row['start_date']);
-				$dateEnd = date('d.m.Y', $row['end_date']);
-				$title .= $dateStart;
-				if ($dateStart != $dateEnd) {
-					$title .= ' - ' . $dateEnd;
-				}
+	/**
+	 * Get the title for a configuration time
+	 *
+	 * @param $row
+	 *
+	 * @return string
+	 */
+	protected function getConfigurationTitleTime($row) {
+		$title = '';
+		if ($row['start_date']) {
+			$dateStart = date('d.m.Y', $row['start_date']);
+			$dateEnd = date('d.m.Y', $row['end_date']);
+			$title .= $dateStart;
+			if ($dateStart != $dateEnd) {
+				$title .= ' - ' . $dateEnd;
 			}
-			if ($row['all_day']) {
-				$title .= ' ' . LocalizationUtility::translate('tx_calendarize_domain_model_index.all_day', 'calendarize');
-			} else {
-				if ($row['start_time']) {
-					$title .= "<br />" . BackendUtility::time($row['start_time'], FALSE);
-					$title .= ' - ' . BackendUtility::time($row['end_time'], FALSE);
-				}
-			}
-
-
-			if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
-				$title .= '<br /><i>' . LocalizationUtility::translate('configuration.type.' . $row['frequency'], 'calendarize') . '</i>';
-			}
-		} elseif ($row['type'] === Configuration::TYPE_INCLUDE_GROUP || $row['type'] === Configuration::TYPE_EXCLUDE_GROUP) {
-			$groups = GeneralUtility::trimExplode(',', $row['groups'], TRUE);
-			if ($groups) {
-				$title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
-			}
-		} elseif ($row['type'] === Configuration::TYPE_EXTERNAL) {
-			$title .= 'URL: ' . $row['external_ics_url'];
+		}
+		if ($row['all_day']) {
+			$title .= ' ' . LocalizationUtility::translate('tx_calendarize_domain_model_index.all_day', 'calendarize');
+		} elseif ($row['start_time']) {
+			$title .= "<br />" . BackendUtility::time($row['start_time'], FALSE);
+			$title .= ' - ' . BackendUtility::time($row['end_time'], FALSE);
 		}
 
-		$params['title'] = $title;
+		if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
+			$title .= '<br /><i>' . LocalizationUtility::translate('configuration.type.' . $row['frequency'], 'calendarize') . '</i>';
+		}
+		return $title;
 	}
 
 }
