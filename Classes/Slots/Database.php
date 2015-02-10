@@ -3,7 +3,7 @@
  * Create the needed database fields
  *
  * @package Calendarize\Slots
- * @author  Tim Lochmüller <tim@fruit-lab.de>
+ * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Slots;
@@ -13,13 +13,12 @@ use HDNET\Calendarize\Register;
 /**
  * Create the needed database fields
  *
- * @author Tim Lochmüller <tim@fruit-lab.de>
+ * @author Tim Lochmüller
  */
 class Database {
 
 	/**
 	 * Add the smart object SQL string the the signal below
-	 *
 	 *
 	 * @signalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
 	 * @signalName tablesDefinitionIsBeingBuilt
@@ -43,7 +42,6 @@ class Database {
 	 * @param string $extensionKey
 	 *
 	 * @return array
-	 *
 	 */
 	public function updateCalendarizeTables(array $sqlString, $extensionKey) {
 		$sqlString[] = $this->getCalendarizeDatabaseString();
