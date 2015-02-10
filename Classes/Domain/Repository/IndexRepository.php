@@ -128,8 +128,9 @@ class IndexRepository extends AbstractRepository {
 	public function findDay($year, $month, $day) {
 		$query = $this->createQuery();
 		$constraints = array();
-		$constraints[] = $query->greaterThanOrEqual('start_date', mktime(0, 0, 0, $month, $day, $year));
-		$constraints[] = $query->lessThan('start_date', mktime(0, 0, 0, $month, $day + 1, $year));
+		$startTime = mktime(0, 0, 0, $month, $day, $year);
+		$endTime = mktime(0, 0, 0, $month, $day + 1, $year);
+		$this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
 		$query->matching($query->logicalAnd($constraints));
 		return $query->execute();
 	}
@@ -146,29 +147,34 @@ class IndexRepository extends AbstractRepository {
 		$orConstraint = array();
 
 		// before - in
-		$beforeIn = array();
-		$beforeIn[] = $query->lessThan('start_date', $startTime);
-		$beforeIn[] = $query->greaterThanOrEqual('end_date', $startTime);
-		$beforeIn[] = $query->lessThan('end_date', $endTime);
+		$beforeIn = array(
+			$query->lessThan('start_date', $startTime),
+			$query->greaterThanOrEqual('end_date', $startTime),
+			$query->lessThan('end_date', $endTime),
+		);
 		$orConstraint[] = $query->logicalAnd($beforeIn);
 
 		// in - in
-		$inIn = array();
-		$inIn[] = $query->greaterThanOrEqual('start_date', $startTime);
-		$inIn[] = $query->lessThan('end_date', $endTime);
+		$inIn = array(
+			$query->greaterThanOrEqual('start_date', $startTime),
+			$query->lessThan('end_date', $endTime),
+		);
 		$orConstraint[] = $query->logicalAnd($inIn);
 
 		// in - after
-		$inAfter = array();
-		$inAfter[] = $query->greaterThanOrEqual('start_date', $startTime);
-		$inAfter[] = $query->lessThan('start_date', $endTime);
-		$inAfter[] = $query->greaterThanOrEqual('end_date', $endTime);
+		$inAfter = array(
+			$query->greaterThanOrEqual('start_date', $startTime),
+			$query->lessThan('start_date', $endTime),
+			$query->greaterThanOrEqual('end_date', $endTime),
+		);
 		$orConstraint[] = $query->logicalAnd($inAfter);
 
 		// before - after
-		$beforeAfter = array();
-		$beforeAfter[] = $query->lessThan('start_date', $startTime);
-		$beforeAfter[] = $query->greaterThan('end_date', $endTime);
+		$beforeAfter = array(
+			$query->lessThan('start_date', $startTime),
+			$query->greaterThan('end_date', $endTime),
+
+		);
 		$orConstraint[] = $query->logicalAnd($beforeAfter);
 
 		// finish
