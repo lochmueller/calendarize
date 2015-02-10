@@ -47,11 +47,7 @@ class CalendarController extends ActionController {
 	 * @return void
 	 */
 	public function yearAction($year = NULL) {
-		if ($year === NULL) {
-			$year = date('Y');
-		}
-		$date = new \DateTime();
-		$date->setDate($year, 1, 1);
+		$date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
 		$this->view->assign('indices', $this->indexRepository->findYear($year));
 		$this->view->assign('date', $date);
@@ -66,15 +62,7 @@ class CalendarController extends ActionController {
 	 * @return void
 	 */
 	public function monthAction($year = NULL, $month = NULL) {
-		if ($year === NULL) {
-			$year = date('Y');
-		}
-		if ($month === NULL) {
-			$month = date('m');
-		}
-
-		$date = new \DateTime();
-		$date->setDate($year, $month, 1);
+		$date = DateTimeUtility::normalizeDateTime(1, $month, $year);
 
 		$nextMonth = clone $date;
 		$nextMonth->modify('+1 month');
@@ -128,21 +116,15 @@ class CalendarController extends ActionController {
 	 * @return void
 	 */
 	public function dayAction($year = NULL, $month = NULL, $day = NULL) {
-		if ($year === NULL) {
-			$year = date('Y');
-		}
-		if ($month === NULL) {
-			$month = date('m');
-		}
-		if ($day === NULL) {
-			$day = date('d');
-		}
-		$todayTimestamp = mktime(12, 0, 0, $month, $day, $year);
-		$today = new \DateTime($todayTimestamp);
+		$today = DateTimeUtility::normalizeDateTime($day, $month, $year);
+		$today->modify('+12 hours');
+
 		$previous = clone $today;
 		$previous->modify('-1 day');
+
 		$next = clone $today;
 		$next->modify('+1 day');
+
 		$this->view->assignMultiple(array(
 			'indices'  => $this->indexRepository->findDay($year, $month, $day),
 			'today'    => $today,
