@@ -14,15 +14,12 @@ plugin.tx_calendarize {
 		layoutRootPaths {
 			100 = EXT:calendarize/Resources/Private/Layouts/
 		}
+		widget {
+			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
+				templateRootPath = EXT:calendarize/Resources/Private/Templates/
+			}
+		}
 	}
-
-    view {
-        widget {
-            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
-                templateRootPath = EXT:calendarize/Resources/Private/Templates/
-            }
-        }
-    }
 
 	features {
 		skipDefaultArguments = 1
