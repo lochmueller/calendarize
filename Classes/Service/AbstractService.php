@@ -1,18 +1,21 @@
 <?php
 /**
- * ICS Service
+ * Service abstraction
  *
  * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 
+
 namespace HDNET\Calendarize\Service;
 
+use TYPO3\CMS\Core\SingletonInterface;
+
 /**
- * ICS Service
+ * Service abstraction
  *
  * @author Tim Lochmüller
  */
-class IcsReaderService extends AbstractService {
+class AbstractService implements SingletonInterface {
 
 }

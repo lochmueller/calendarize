@@ -171,6 +171,11 @@ $custom = array(
 				),
 			),
 		),
+		'external_ics_url' => array(
+			'displayCond' => array(
+				'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
+			),
+		),
 	),
 	'types'   => array(
 		Configuration::TYPE_TIME          => array(

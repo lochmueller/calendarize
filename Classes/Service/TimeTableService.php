@@ -17,7 +17,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
  *
  * @author Tim Lochmüller
  */
-class TimeTableService {
+class TimeTableService extends AbstractService {
 
 	/**
 	 * Build the timetable for the given configuration matrix (sorted)

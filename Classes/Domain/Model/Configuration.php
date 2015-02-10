@@ -125,6 +125,14 @@ class Configuration extends AbstractModel {
 	protected $counterInterval;
 
 	/**
+	 * External ICS url
+	 *
+	 * @var string
+	 * @db
+	 */
+	protected $externalIcsUrl;
+
+	/**
 	 * Set type
 	 *
 	 * @param string $type
@@ -322,6 +330,24 @@ class Configuration extends AbstractModel {
 	 */
 	public function getCounterInterval() {
 		return $this->counterInterval;
+	}
+
+	/**
+	 * Get external ICS URL
+	 *
+	 * @return string
+	 */
+	public function getExternalIcsUrl() {
+		return $this->externalIcsUrl;
+	}
+
+	/**
+	 * Set external ICS URL
+	 *
+	 * @param string $externalIcsUrl
+	 */
+	public function setExternalIcsUrl($externalIcsUrl) {
+		$this->externalIcsUrl = $externalIcsUrl;
 	}
 
 }

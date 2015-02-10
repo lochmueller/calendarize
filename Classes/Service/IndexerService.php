@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Tim Lochmüller
  */
-class IndexerService {
+class IndexerService extends AbstractService {
 
 	/**
 	 * Reindex the given element
@@ -116,6 +116,8 @@ class IndexerService {
 				$this->buildIndex($key, $configuration['tableName'], $row['uid']);
 			}
 		}
+
+		// @todo delete all entries that are not part of the current registered events
 	}
 
 	/**

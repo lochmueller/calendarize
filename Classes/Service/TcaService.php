@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *
  * @author Tim Lochmüller
  */
-class TcaService {
+class TcaService extends AbstractService {
 
 	/**
 	 * Render the configuartion title
@@ -61,9 +61,7 @@ class TcaService {
 				$title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
 			}
 		} elseif ($row['type'] === Configuration::TYPE_EXTERNAL) {
-
-			$title .= 'TODO!!! External URI here';
-
+			$title .= 'URL: ' . $row['external_ics_url'];
 		}
 
 		$params['title'] = $title;
