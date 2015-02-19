@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_configuration.external_ics_url"><![CDATA[External ICS URL]]></label>
 			<label index="tca.information"><![CDATA[Calendarize (Information - Save to refresh...)]]></label>
 			<label index="save.first"><![CDATA[Please save the record first...]]></label>
 			<label index="pluginName"><![CDATA[Calendar]]></label>
