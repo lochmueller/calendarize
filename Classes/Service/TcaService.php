@@ -27,14 +27,15 @@ class TcaService extends AbstractService {
 	 * @param $object
 	 */
 	public function configurationTitle(&$params, $object) {
+		$row = $params['row'];
 		$params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $row['type'], 'calendarize') . '</b><br />';
 		switch ($row['type']) {
 			case Configuration::TYPE_TIME:
-				$params['title'] .= $this->getConfigurationTitleTime($params['row']);
+				$params['title'] .= $this->getConfigurationTitleTime($row);
 				break;
 			case Configuration::TYPE_INCLUDE_GROUP:
 			case Configuration::TYPE_EXCLUDE_GROUP:
-				$params['title'] .= $this->getConfigurationGroupTitle($params['row']);
+				$params['title'] .= $this->getConfigurationGroupTitle($row);
 				break;
 			case Configuration::TYPE_EXTERNAL:
 				$params['title'] .= 'URL: ' . $row['external_ics_url'];
