@@ -1,1 +1,10 @@
-Search form
+<f:form pageUid="{settings.listPid}">
+
+	<f:form.textfield name="startDate" value="{startDate -> f:format.date(format: 'd.m.Y')}" />
+
+	<f:form.textfield name="endDate" value="{endDate -> f:format.date(format: 'd.m.Y')}" />
+
+	<f:form.textfield name="customSearch[fullText]" value="{customSearch.fullText}" />
+
+	<f:form.submit value="search" />
+</f:form>

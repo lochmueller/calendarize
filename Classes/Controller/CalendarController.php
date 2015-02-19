@@ -12,6 +12,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
@@ -30,13 +31,42 @@ class CalendarController extends ActionController {
 	 */
 	protected $indexRepository;
 
+	public function initializeAction() {
+		if (isset($this->arguments['startDate'])) {
+			$this->arguments['startDate']->getPropertyMappingConfiguration()
+				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'd.m.Y');
+		}
+		if (isset($this->arguments['endDate'])) {
+			$this->arguments['endDate']->getPropertyMappingConfiguration()
+				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'd.m.Y');
+		}
+	}
+
 	/**
 	 * List action
 	 *
-	 * @return void
+	 * @param \DateTime $startDate
+	 * @param \DateTime $endDate
+	 * @param array     $customSearch
+	 *
+	 * @ignorevalidation $startDate
+	 * @ignorevalidation $endDate
+	 * @ignorevalidation $customSearch
 	 */
-	public function listAction() {
-		$this->view->assign('indices', $this->indexRepository->findList((int)$this->settings['limit']));
+	public function listAction(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
+
+		if ($startDate || $endDate || $customSearch) {
+			$searchMode = TRUE;
+			$indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
+		} else {
+			$searchMode = FALSE;
+			$indices = $this->indexRepository->findList((int)$this->settings['limit']);
+		}
+
+		$this->view->assignMultiple(array(
+			'indices'    => $indices,
+			'searchMode' => $searchMode
+		));
 	}
 
 	/**
@@ -155,8 +185,28 @@ class CalendarController extends ActionController {
 
 	/**
 	 * Render the search view
+	 *
+	 * @param \DateTime $startDate
+	 * @param \DateTime $endDate
+	 * @param array     $customSearch
+	 *
+	 * @ignorevalidation $startDate
+	 * @ignorevalidation $endDate
+	 * @ignorevalidation $customSearch
 	 */
-	public function searchAction() {
+	public function searchAction(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
+		if (!($startDate instanceof \DateTime)) {
+			$startDate = new \DateTime();
+		}
+		if (!($endDate instanceof \DateTime)) {
+			$endDate = new \DateTime('+1 month');
+		}
+
+		$this->view->assignMultiple(array(
+			'startDate'    => $startDate,
+			'endDate'      => $endDate,
+			'customSearch' => $customSearch
+		));
 
 	}
 

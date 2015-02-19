@@ -49,4 +49,13 @@ class HelperUtility {
 		}
 		return $manager->createQueryForType($objectName);
 	}
+
+	/**
+	 * Get the signal slot dispatcher
+	 *
+	 * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+	 */
+	public static function getSignalSlotDispatcher() {
+		return self::create('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+	}
 }

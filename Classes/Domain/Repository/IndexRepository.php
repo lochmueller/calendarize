@@ -9,6 +9,7 @@
 namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -58,6 +59,31 @@ class IndexRepository extends AbstractRepository {
 		}
 
 		return $query->execute();
+	}
+
+	/**
+	 * Find by custom search
+	 *
+	 * @param \DateTime $startDate
+	 * @param \DateTime $endDate
+	 * @param array     $customSearch
+	 */
+	public function findBySearch(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
+		$arguments = array(
+			'indexUids'    => array(),
+			'startDate'    => $startDate,
+			'endDate'      => $endDate,
+			'customSearch' => $customSearch,
+		);
+		$signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
+		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
+
+		// run index search
+		// @todo implement
+
+		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $arguments);
+
+		return array();
 	}
 
 	/**
