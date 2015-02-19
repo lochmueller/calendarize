@@ -25,7 +25,7 @@ class DetailIcs extends TemplateView {
 	public function render($actionName = NULL) {
 		$content = parent::render($actionName);
 		header('Content-type: text/calendar; charset=utf-8');
-		header('Content-Disposition: inline; filename=ical.ics');
+		header('Content-Disposition: inline; filename=event.ics');
 		echo $content;
 		die();
 	}

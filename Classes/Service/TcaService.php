@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class TcaService extends AbstractService {
 
 	/**
-	 * Render the configuartion title
+	 * Render the configuration title
 	 *
 	 * @param $params
 	 * @param $object
