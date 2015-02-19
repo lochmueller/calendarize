@@ -6,6 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="noEvents.day"><![CDATA[There are no events on the current date]]></label>
+			<label index="back"><![CDATA[back]]></label>
 			<label index="tx_calendarize_domain_model_configuration.external_ics_url"><![CDATA[External ICS URL]]></label>
 			<label index="tca.information"><![CDATA[Calendarize (Information - Save to refresh...)]]></label>
 			<label index="save.first"><![CDATA[Please save the record first...]]></label>
@@ -53,6 +55,8 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="noEvents.day"><![CDATA[Es gibt keine Ereignisse an dem aktuellen Tag]]></label>
+			<label index="back"><![CDATA[zurück]]></label>
 			<label index="tca.information"><![CDATA[Calendarize (Informationen - Speichern um zu aktualisieren...)]]></label>
 			<label index="save.first"><![CDATA[Bite sichere zunächst den Datensatz...]]></label>
 			<label index="pluginName"><![CDATA[Kalendar]]></label>

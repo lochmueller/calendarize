@@ -2,13 +2,25 @@
 
 <f:section name="Main">
 
-	previous day
+	<f:format.date format="d.m.Y">{previous}</f:format.date>
+	previous day Link
 
+	<h1>
+		<f:format.date format="d.m.Y">{today}</f:format.date>
+	</h1>
 
-	list view with dates
+	<f:if condition="{indices}">
+		<f:then>
+			<f:for each="{indices}" as="index">
+				<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
+			</f:for>
+		</f:then>
+		<f:else>
+			<f:translate key="noEvents.day" />
+		</f:else>
+	</f:if>
 
-
-	ney day
-
+	<f:format.date format="d.m.Y">{next}</f:format.date>
+	next day Link
 
 </f:section>
