@@ -32,9 +32,10 @@ class TcaInformation {
 		if (!isset($configuration['row']['uid'])) {
 			$content = LocalizationUtility::translate('save.first', 'calendarize');
 		} else {
-			// @todo l10n
-			$next = $this->getNextEvents($configuration['table'], $configuration['row']['uid']);
-			$content = 'There are ' . $this->getIndexCount($configuration['table'], $configuration['row']['uid']) . ' Items in the Index of the current record. The next 5 Events are...' . $this->getEventList($next);
+			$previewLimit = 10;
+			$count = $this->getIndexCount($configuration['table'], $configuration['row']['uid']);
+			$next = $this->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
+			$content = sprintf(LocalizationUtility::translate('previewLabel', 'calendarize'), $count, $previewLimit) . $this->getEventList($next);
 		}
 		return '<div style="padding: 5px;">' . $content . '</div>';
 	}
@@ -58,7 +59,10 @@ class TcaInformation {
 			}
 			$items[] = $entry;
 		}
-		return sizeof($items) ? '<ul><li>' . implode('</li><li>', $items) . '</li></ul>' : 'no Events';
+		if (!sizeof($items)) {
+			$items[] = LocalizationUtility::translate('noEvents', 'calendarize');
+		}
+		return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
 	}
 
 	/**

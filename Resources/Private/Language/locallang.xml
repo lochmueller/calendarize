@@ -6,6 +6,31 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="previewLabel"><![CDATA[There is/are %d item/items in the index of the current record. The next %d events are...]]></label>
+			<label index="mode"><![CDATA[Mode]]></label>
+			<label index="mode.normal"><![CDATA[Normal]]></label>
+			<label index="mode.listDetail"><![CDATA[List + Detail]]></label>
+			<label index="mode.list"><![CDATA[List only]]></label>
+			<label index="mode.detail"><![CDATA[Detail only]]></label>
+			<label index="mode.search"><![CDATA[Search]]></label>
+			<label index="mode.special"><![CDATA[Special Views]]></label>
+			<label index="mode.year"><![CDATA[Year]]></label>
+			<label index="mode.month"><![CDATA[Month]]></label>
+			<label index="mode.week"><![CDATA[Week]]></label>
+			<label index="mode.day"><![CDATA[Day]]></label>
+			<label index="configuration"><![CDATA[Configuration]]></label>
+			<label index="inherit"><![CDATA[Inherit]]></label>
+			<label index="limit"><![CDATA[Limit]]></label>
+			<label index="hide.pagination.teaser"><![CDATA[Hide pagination + Teaser mode]]></label>
+			<label index="detailPid"><![CDATA[Detail PID]]></label>
+			<label index="listPid"><![CDATA[List PID]]></label>
+			<label index="yearPid"><![CDATA[Year PID]]></label>
+			<label index="monthPid"><![CDATA[Month PID]]></label>
+			<label index="weekPid"><![CDATA[Week PID]]></label>
+			<label index="dayPid"><![CDATA[Day PID]]></label>
+			<label index="mainConfiguration"><![CDATA[Main configuration]]></label>
+			<label index="pidConfiguration"><![CDATA[Page ID configuration]]></label>
+			<label index="noEvents"><![CDATA[No events]]></label>
 			<label index="noEvents.day"><![CDATA[There are no events on the current date]]></label>
 			<label index="back"><![CDATA[back]]></label>
 			<label index="tx_calendarize_domain_model_configuration.external_ics_url"><![CDATA[External ICS URL]]></label>
@@ -55,6 +80,31 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="previewLabel"><![CDATA[Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind..]]></label>
+			<label index="mode"><![CDATA[Modus]]></label>
+			<label index="mode.normal"><![CDATA[Normal]]></label>
+			<label index="mode.listDetail"><![CDATA[Liste + Detail]]></label>
+			<label index="mode.list"><![CDATA[nur Liste]]></label>
+			<label index="mode.detail"><![CDATA[nur Detail]]></label>
+			<label index="mode.search"><![CDATA[Suche]]></label>
+			<label index="mode.special"><![CDATA[Spezielle Ansichten]]></label>
+			<label index="mode.year"><![CDATA[Jahr]]></label>
+			<label index="mode.month"><![CDATA[Monat]]></label>
+			<label index="mode.week"><![CDATA[Woche]]></label>
+			<label index="mode.day"><![CDATA[Tag]]></label>
+			<label index="configuration"><![CDATA[Konfiguration]]></label>
+			<label index="inherit"><![CDATA[Vererbt]]></label>
+			<label index="limit"><![CDATA[Limit]]></label>
+			<label index="hide.pagination.teaser"><![CDATA[Verstecke Pagination + Teaser Modus]]></label>
+			<label index="detailPid"><![CDATA[Detail PID]]></label>
+			<label index="listPid"><![CDATA[Listen PID]]></label>
+			<label index="yearPid"><![CDATA[Jahres PID]]></label>
+			<label index="monthPid"><![CDATA[Monats PID]]></label>
+			<label index="weekPid"><![CDATA[Wochen PID]]></label>
+			<label index="dayPid"><![CDATA[Tages PID]]></label>
+			<label index="mainConfiguration"><![CDATA[Hauptkonfiguration]]></label>
+			<label index="pidConfiguration"><![CDATA[Seiten ID Konfiguration]]></label>
+			<label index="noEvents"><![CDATA[Keine Ereignisse]]></label>
 			<label index="noEvents.day"><![CDATA[Es gibt keine Ereignisse an dem aktuellen Tag]]></label>
 			<label index="back"><![CDATA[zurück]]></label>
 			<label index="tca.information"><![CDATA[Calendarize (Informationen - Speichern um zu aktualisieren...)]]></label>

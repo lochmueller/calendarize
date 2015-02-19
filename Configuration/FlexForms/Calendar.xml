@@ -7,7 +7,7 @@
 		<main>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>Main configuration</sheetTitle>
+					<sheetTitle>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mainConfiguration</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
@@ -15,49 +15,49 @@
 					<!-- View -->
 					<switchableControllerActions>
 						<TCEforms>
-							<label>Mode</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode</label>
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<items>
 									<numIndex index="0">
-										<numIndex index="0">Normal</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.normal</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
 									<numIndex index="1">
-										<numIndex index="0">List + Detail</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.listDetail</numIndex>
 										<numIndex index="1">Calendar->list;Calendar->detail</numIndex>
 									</numIndex>
 									<numIndex index="2">
-										<numIndex index="0">List</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.list</numIndex>
 										<numIndex index="1">Calendar->list</numIndex>
 									</numIndex>
 									<numIndex index="3">
-										<numIndex index="0">Detail</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.detail</numIndex>
 										<numIndex index="1">Calendar->detail</numIndex>
 									</numIndex>
 									<numIndex index="4">
-										<numIndex index="0">Search</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.search</numIndex>
 										<numIndex index="1">Calendar->search</numIndex>
 									</numIndex>
 									<numIndex index="5">
-										<numIndex index="0">Special</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.special</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
 									<numIndex index="6">
-										<numIndex index="0">Year</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.year</numIndex>
 										<numIndex index="1">Calendar->year</numIndex>
 									</numIndex>
 									<numIndex index="7">
-										<numIndex index="0">Month</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.month</numIndex>
 										<numIndex index="1">Calendar->month</numIndex>
 									</numIndex>
 									<numIndex index="8">
-										<numIndex index="0">Week</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.week</numIndex>
 										<numIndex index="1">Calendar->week</numIndex>
 									</numIndex>
 									<numIndex index="9">
-										<numIndex index="0">Day</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.day</numIndex>
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>
 								</items>
@@ -68,7 +68,7 @@
 					<!-- Calendar configuration -->
 					<settings.configuration>
 						<TCEforms>
-							<label>Configuration</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:configuration</label>
 							<config>
 								<type>select</type>
 								<itemsProcFunc>HDNET\Calendarize\UserFunction\PluginConfiguration->addConfig</itemsProcFunc>
@@ -105,7 +105,7 @@
 								<type>select</type>
 								<items type="array">
 									<numIndex index="1" type="array">
-										<numIndex index="0">Inherit</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:inherit</numIndex>
 										<numIndex index="1"></numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">
@@ -140,7 +140,7 @@
 					<!-- Limit Start -->
 					<settings.limit>
 						<TCEforms>
-							<label>Limit</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:limit</label>
 							<displayCond>
 								<OR>
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
@@ -160,7 +160,7 @@
 					<!-- Hide pagination -->
 					<settings.hidePagination>
 						<TCEforms>
-							<label>Hide pagination / Teaser Mode</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:hide.pagination.teaser</label>
 							<displayCond>
 								<OR>
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
@@ -180,7 +180,7 @@
 		<pages>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>Page configuration</sheetTitle>
+					<sheetTitle>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:pidConfiguration</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
@@ -188,7 +188,7 @@
 					<!-- PID Detail Page -->
 					<settings.detailPid>
 						<TCEforms>
-							<label>Detail PID</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:detailPid</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -209,7 +209,7 @@
 					<!-- PID list Page -->
 					<settings.listPid>
 						<TCEforms>
-							<label>List PID</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:listPid</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -230,7 +230,7 @@
 					<!-- PID year Page -->
 					<settings.yearPid>
 						<TCEforms>
-							<label>Year PID</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:yearPid</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -251,7 +251,7 @@
 					<!-- PID month Page -->
 					<settings.monthPid>
 						<TCEforms>
-							<label>Month PID</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:monthPid</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -272,7 +272,7 @@
 					<!-- PID week Page -->
 					<settings.weekPid>
 						<TCEforms>
-							<label>Week PID</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:weekPid</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -293,7 +293,7 @@
 					<!-- PID day Page -->
 					<settings.dayPid>
 						<TCEforms>
-							<label>Day PID</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:dayPid</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
