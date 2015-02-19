@@ -84,7 +84,7 @@ class TcaService extends AbstractService {
 		}
 
 		if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
-			$title .= '<br /><i>' . LocalizationUtility::translate('configuration.type.' . $row['frequency'], 'calendarize') . '</i>';
+			$title .= '<br /><i>' . LocalizationUtility::translate('configuration.frequency.' . $row['frequency'], 'calendarize') . '</i>';
 		}
 		return $title;
 	}
