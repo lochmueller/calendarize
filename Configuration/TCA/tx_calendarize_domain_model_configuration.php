@@ -5,6 +5,7 @@
  */
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
@@ -17,9 +18,10 @@ $custom = array(
 		'type'                    => 'type',
 		'hideTable'               => TRUE,
 		'typeicons'               => array(
-			Configuration::TYPE_TIME          => '../typo3conf/ext/calendarize/Resources/Public/Icons/Configuration.png',
-			Configuration::TYPE_INCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationInclude.png',
-			Configuration::TYPE_EXCLUDE_GROUP => '../typo3conf/ext/calendarize/Resources/Public/Icons/ConfigurationExclude.png',
+
+			Configuration::TYPE_TIME          => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/Configuration.png',
+			Configuration::TYPE_INCLUDE_GROUP => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationInclude.png',
+			Configuration::TYPE_EXCLUDE_GROUP => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationExclude.png',
 		),
 		'typeicon_column'         => 'type',
 		'requestUpdate'           => 'all_day,frequency',
