@@ -29,6 +29,7 @@ class Event extends AbstractModel {
 	 *
 	 * @var string
 	 * @db
+	 * @enableRichText
 	 */
 	protected $description;
 

@@ -17,12 +17,6 @@ $custom = array(
 			'type' => 'text',
 			'eval' => 'required'
 		),
-		'description' => array(
-			'config'        => array(
-				'type' => 'text',
-			),
-			'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
-		),
 	),
 );
 
