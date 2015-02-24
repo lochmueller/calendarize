@@ -20,7 +20,7 @@ $EM_CONF['calendarize'] = array(
 	'constraints'      => array(
 		'depends' => array(
 			'typo3'      => '6.2.0-6.2.99',
-			'autoloader' => '1.2.1-0.0.0',
+			'autoloader' => '1.5.5-0.0.0',
 		),
 	),
 );
