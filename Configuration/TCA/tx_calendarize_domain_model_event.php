@@ -12,6 +12,7 @@ $custom = array(
 	'ctrl'    => array(
 		'hideTable'    => (boolean)$extensionConfiguration['disableDefaultEvent'],
 		'searchFields' => 'uid,title,description',
+		'thumbnail'    => 'images',
 	),
 	'columns' => array(
 		'title' => array(
