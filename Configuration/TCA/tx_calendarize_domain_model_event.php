@@ -10,10 +10,11 @@ $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extCon
 
 $custom = array(
 	'ctrl'    => array(
-		'hideTable' => (boolean)$extensionConfiguration['disableDefaultEvent']
+		'hideTable'    => (boolean)$extensionConfiguration['disableDefaultEvent'],
+		'searchFields' => 'uid,title,description',
 	),
 	'columns' => array(
-		'title'       => array(
+		'title' => array(
 			'type' => 'text',
 			'eval' => 'required'
 		),

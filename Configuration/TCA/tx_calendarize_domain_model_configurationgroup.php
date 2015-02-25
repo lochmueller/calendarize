@@ -7,6 +7,9 @@
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\ConfigurationGroup');
 
 $custom = array(
+	'ctrl'    => array(
+		'searchFields' => 'uid,title',
+	),
 	'columns' => array(
 		'configurations' => array(
 			'config' => array(
