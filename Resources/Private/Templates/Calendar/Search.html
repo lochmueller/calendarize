@@ -1,10 +1,18 @@
 <f:form pageUid="{settings.listPid}">
+	<div class="form-group">
+		<label for="calendarizeStartDate">Start date</label>
+		<f:form.textfield name="startDate" id="calendarizeStartDate" value="{startDate -> f:format.date(format: 'd.m.Y')}" />
+	</div>
+	<div class="form-group">
+		<label for="calendarizeEndDate">End date</label>
+		<f:form.textfield name="endDate" id="calendarizeEndDate" value="{endDate -> f:format.date(format: 'd.m.Y')}" />
+	</div>
 
-	<f:form.textfield name="startDate" value="{startDate -> f:format.date(format: 'd.m.Y')}" />
+	<!-- move to extension partial -->
+	<div class="form-group">
+		<label for="calendarizeExample">Custom example fulltext</label>
+		<f:form.textfield id="calendarizeExample" name="customSearch[fullText]" value="{customSearch.fullText}" />
+	</div>
 
-	<f:form.textfield name="endDate" value="{endDate -> f:format.date(format: 'd.m.Y')}" />
-
-	<f:form.textfield name="customSearch[fullText]" value="{customSearch.fullText}" />
-
-	<f:form.submit value="search" />
+	<button type="submit" class="btn btn-primary">Search</button>
 </f:form>
