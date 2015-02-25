@@ -77,7 +77,7 @@
 					</settings.configuration>
 
 					<!-- startingpoint -->
-					<settings.startingpoint>
+					<persistence.storagePid>
 						<TCEforms>
 							<label>LLL:EXT:lang/locallang_general.xml:LGL.startingpoint</label>
 							<config>
@@ -95,10 +95,10 @@
 								</wizards>
 							</config>
 						</TCEforms>
-					</settings.startingpoint>
+					</persistence.storagePid>
 
 					<!-- recursive -->
-					<settings.recursive>
+					<persistence.recursive>
 						<TCEforms>
 							<label>LLL:EXT:lang/locallang_general.xml:LGL.recursive</label>
 							<config>
@@ -135,7 +135,7 @@
 								</items>
 							</config>
 						</TCEforms>
-					</settings.recursive>
+					</persistence.recursive>
 
 					<!-- Limit Start -->
 					<settings.limit>
