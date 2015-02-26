@@ -31,7 +31,12 @@ class CalendarController extends ActionController {
 	 */
 	protected $indexRepository;
 
+	/**
+	 * Init all actions
+	 */
 	public function initializeAction() {
+		$this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration']));
+
 		if (isset($this->arguments['startDate'])) {
 			$this->arguments['startDate']->getPropertyMappingConfiguration()
 				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'd.m.Y');

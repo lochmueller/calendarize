@@ -30,6 +30,22 @@ class IndexRepository extends AbstractRepository {
 	);
 
 	/**
+	 * Index types for selection
+	 *
+	 * @var array
+	 */
+	protected $indexTypes = array();
+
+	/**
+	 * Set the index types
+	 *
+	 * @param array $types
+	 */
+	public function setIndexTypes(array $types) {
+		$this->indexTypes = $types;
+	}
+
+	/**
 	 * Create a default query
 	 *
 	 * @return QueryInterface
@@ -50,7 +66,7 @@ class IndexRepository extends AbstractRepository {
 	 */
 	public function findList($limit = 0) {
 		$query = $this->createQuery();
-		$constraints = array();
+		$constraints = $this->getDefaultConstraints($query);
 		$constraints[] = $query->greaterThan('start_date', time());
 		$query->matching($query->logicalAnd($constraints));
 
@@ -95,7 +111,7 @@ class IndexRepository extends AbstractRepository {
 	 */
 	public function findYear($year) {
 		$query = $this->createQuery();
-		$constraints = array();
+		$constraints = $this->getDefaultConstraints($query);
 		$this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year), mktime(0, 0, 0, 0, 0, $year + 1));
 		$query->matching($query->logicalAnd($constraints));
 		return $query->execute();
@@ -111,7 +127,7 @@ class IndexRepository extends AbstractRepository {
 	 */
 	public function findMonth($year, $month) {
 		$query = $this->createQuery();
-		$constraints = array();
+		$constraints = $this->getDefaultConstraints($query);
 		$startTime = mktime(0, 0, 0, $month, 0, $year);
 		$endTime = mktime(0, 0, 0, $month + 1, 0, $year);
 		$this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
@@ -131,7 +147,7 @@ class IndexRepository extends AbstractRepository {
 	 */
 	public function findWeek($year, $week) {
 		$query = $this->createQuery();
-		$constraints = array();
+		$constraints = $this->getDefaultConstraints($query);
 
 		$firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
 		$timeStampStart = $firstDay->getTimestamp();
@@ -153,12 +169,25 @@ class IndexRepository extends AbstractRepository {
 	 */
 	public function findDay($year, $month, $day) {
 		$query = $this->createQuery();
-		$constraints = array();
+		$constraints = $this->getDefaultConstraints($query);
 		$startTime = mktime(0, 0, 0, $month, $day, $year);
 		$endTime = mktime(0, 0, 0, $month, $day + 1, $year);
 		$this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
 		$query->matching($query->logicalAnd($constraints));
 		return $query->execute();
+	}
+
+	/**
+	 * Get the default constraint for the queries
+	 *
+	 * @param QueryInterface $query
+	 *
+	 * @return array
+	 */
+	protected function getDefaultConstraints(QueryInterface $query) {
+		$constraints = array();
+		$constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
+		return $constraints;
 	}
 
 	/**

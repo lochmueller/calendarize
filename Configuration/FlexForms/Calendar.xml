@@ -72,6 +72,9 @@
 							<config>
 								<type>select</type>
 								<itemsProcFunc>HDNET\Calendarize\UserFunction\PluginConfiguration->addConfig</itemsProcFunc>
+								<renderMode>checkbox</renderMode>
+								<minitems>1</minitems>
+								<maxitems>99</maxitems>
 							</config>
 						</TCEforms>
 					</settings.configuration>
