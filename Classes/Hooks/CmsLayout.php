@@ -9,6 +9,7 @@
 namespace HDNET\Calendarize\Hooks;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -43,10 +44,11 @@ class CmsLayout {
 	 * @hook TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|list_type_Info|calendarize_calendar
 	 */
 	public function getExtensionSummary(array $params) {
-		$result = '<strong>Calendarize</strong>';
+		$relIconPath = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ExtensionManagementUtility::siteRelPath('calendarize') . 'ext_icon.png';
+		$result = '<strong><img src="' . $relIconPath . '" /> Calendarize</strong>';
 
 		if ($params['row']['list_type'] == 'calendarize_calendar') {
-			$this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
+			$this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
 			if ($this->flexformData) {
 				$actions = $this->getFieldFromFlexform('switchableControllerActions', 'main');
 				$parts = GeneralUtility::trimExplode(';', $actions, TRUE);
@@ -116,7 +118,6 @@ class CmsLayout {
 		if (!$this->tableData) {
 			return '';
 		}
-
 		$content = '';
 		foreach ($this->tableData as $line) {
 			$content .= '<strong>' . $line[0] . '</strong>' . ' ' . $line[1] . '<br />';

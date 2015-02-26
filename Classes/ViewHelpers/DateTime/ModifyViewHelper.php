@@ -18,6 +18,8 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class ModifyViewHelper extends AbstractViewHelper {
 
 	/**
+	 * Modify the given datetime by the string modification
+	 *
 	 * @param string    $modification
 	 * @param \DateTime $dateTime
 	 *

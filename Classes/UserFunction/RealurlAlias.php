@@ -31,6 +31,8 @@ class RealurlAlias {
 	}
 
 	/**
+	 * Handle the index ID to alias convert
+	 *
 	 * @param $value
 	 *
 	 * @return string
@@ -40,6 +42,8 @@ class RealurlAlias {
 	}
 
 	/**
+	 * Handle the alias to index ID convert
+	 *
 	 * @param $value
 	 *
 	 * @return null

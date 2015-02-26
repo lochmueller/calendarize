@@ -18,7 +18,9 @@ use TYPO3\CMS\Fluid\View\TemplateView;
 class DetailIcs extends TemplateView {
 
 	/**
-	 * @param null $actionName
+	 * Render the given template as ICS file
+	 *
+	 * @param string $actionName
 	 *
 	 * @return void
 	 */
