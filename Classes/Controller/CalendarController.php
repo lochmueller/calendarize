@@ -99,22 +99,9 @@ class CalendarController extends ActionController {
 	public function monthAction($year = NULL, $month = NULL) {
 		$date = DateTimeUtility::normalizeDateTime(1, $month, $year);
 
-		$nextMonth = clone $date;
-		$nextMonth->modify('+1 month');
-		$lastMonth = clone $date;
-		$lastMonth->modify('-1 month');
-
 		$this->view->assignMultiple(array(
-			'date'      => $date,
-			'indices'   => $this->indexRepository->findMonth($year, $month),
-			'nextMonth' => array(
-				'year'  => $nextMonth->format('Y'),
-				'month' => $nextMonth->format('n')
-			),
-			'lastMonth' => array(
-				'year'  => $lastMonth->format('Y'),
-				'month' => $lastMonth->format('n')
-			),
+			'date'    => $date,
+			'indices' => $this->indexRepository->findMonth($date->format('Y'), $date->format('n')),
 		));
 	}
 

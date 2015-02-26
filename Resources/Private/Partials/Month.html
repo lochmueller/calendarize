@@ -4,42 +4,62 @@
 	<thead>
 		<tr>
 			<td colspan="7">
-				<f:if condition="{lastMonth}">
-					<f:link.action action="month" arguments="{year: lastMonth.year, month: lastMonth.month}">
+				<f:if condition="{settings.monthPid}">
+					<c:dateTime.modify modification="-1 month">{date}</c:dateTime.modify>
+					<c:link.month pageUid="{settings.monthPid}" date="{date}">
 						&lt;
-					</f:link.action>
+					</c:link.month>
+					<c:dateTime.modify modification="+1 month">{date}</c:dateTime.modify>
 				</f:if>
 				<f:format.date format="F Y">{date}</f:format.date>
-				<f:if condition="{nextMonth}">
-					<f:link.action action="month" arguments="{year: nextMonth.year, month: nextMonth.month}">
+				<f:if condition="{settings.monthPid}">
+					<c:dateTime.modify modification="+1 month">{date}</c:dateTime.modify>
+					<c:link.month pageUid="{settings.monthPid}" date="{date}">
 						&gt;
-					</f:link.action>
+					</c:link.month>
+					<c:dateTime.modify modification="-1 month">{date}</c:dateTime.modify>
 				</f:if>
 			</td>
 		</tr>
 	</thead>
 	<tbody>
-
 		<c:loop.weeksInMonth date="{date}" iteration="week">
 			<tr>
-
 				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day">
-
-
-						<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
-							<f:then>
-								<td class="hasEvents">
-									<f:format.date format="d">{day.calendar.date}</f:format.date>
-								</td>
-							</f:then>
-							<f:else>
-								<td>
-									<f:format.date format="d">{day.calendar.date}</f:format.date>
-								</td>
-							</f:else>
-						</f:if>
-
-
+					<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
+						<f:then>
+							<td class="hasEvents">
+								<f:if condition="{settings.dayPid}">
+									<f:then>
+										<c:link.day pageUid="{settings.dayPid}" date="{day.calendar.date}">
+											<f:format.date format="d">{day.calendar.date}</f:format.date>
+										</c:link.day>
+									</f:then>
+									<f:else>
+										<f:format.date format="d">{day.calendar.date}</f:format.date>
+									</f:else>
+								</f:if>
+								<f:if condition="{settings.dayPid}">
+									<ul class="events">
+										<f:for each="{indices}" as="index">
+											<f:if condition="{c:dateTime.indexOnDay(index: index, day:day.calendar.date)}">
+												<li>
+													<c:link.index index="{index}" pageUid="{settings.dayPid}">
+														<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+													</c:link.index>
+												</li>
+											</f:if>
+										</f:for>
+									</ul>
+								</f:if>
+							</td>
+						</f:then>
+						<f:else>
+							<td>
+								<f:format.date format="d">{day.calendar.date}</f:format.date>
+							</td>
+						</f:else>
+					</f:if>
 				</c:loop.daysInWeek>
 			</tr>
 		</c:loop.weeksInMonth>
