@@ -8,6 +8,7 @@
 
 namespace HDNET\Calendarize\Hooks;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -59,17 +60,50 @@ class CmsLayout {
 					LocalizationUtility::translate('mode', 'calendarize'),
 					LocalizationUtility::translate('mode.' . $actionKey, 'calendarize')
 				);
-				switch ($actionKey) {
-					case 'search':
-						// @todo special plugins
-						break;
-					default:
+
+				$this->tableData[] = array(
+					LocalizationUtility::translate('configuration', 'calendarize'),
+					$this->getFieldFromFlexform('settings.configuration', 'main')
+				);
+
+				if ((bool)$this->getFieldFromFlexform('settings.hidePagination', 'main')) {
+					$this->tableData[] = array(
+						LocalizationUtility::translate('hide.pagination.teaser', 'calendarize'),
+						'!!!'
+					);
 				}
+				$this->addPageIdsToTable();
 				$result .= $this->renderSettingsAsTable();
 			}
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Add page IDs to the preview of the element
+	 */
+	protected function addPageIdsToTable() {
+		$pageIdsNames = array(
+			'detailPid',
+			'listPid',
+			'yearPid',
+			'monthPid',
+			'weekPid',
+			'dayPid',
+		);
+		foreach ($pageIdsNames as $pageIdName) {
+			$pageId = (int)$this->getFieldFromFlexform('settings.' . $pageIdName, 'pages');
+			if ($pageId) {
+				$pageRow = BackendUtility::getRecord('pages', $pageId);
+				if ($pageRow) {
+					$this->tableData[] = array(
+						LocalizationUtility::translate($pageIdName, 'calendarize'),
+						$pageRow['title'] . ' (' . $pageId . ')'
+					);
+				}
+			}
+		}
 	}
 
 	/**
