@@ -19,7 +19,7 @@ $EM_CONF['calendarize'] = array(
 	'author_email'     => 'tim@fruit-lab.de',
 	'constraints'      => array(
 		'depends' => array(
-			'typo3'      => '6.2.0-6.2.99',
+			'typo3'      => '6.2.0-7.1.99',
 			'autoloader' => '1.5.5-0.0.0',
 		),
 	),
