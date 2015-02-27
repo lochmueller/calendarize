@@ -1,3 +1,5 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
 <f:alias map="{event: index.originalObject}">
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -5,17 +7,17 @@
 			<div class="media calendarize-item">
 				<f:for each="{event.images}" as="image" iteration="i">
 					<f:if condition="{i.isFirst}">
-						<f:link.action action="detail" arguments="{index: index}" class="pull-left">
+						<c:link.index index="{index}">
 							<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="160" maxHeight="160" class="media-object img-rounded" />
-						</f:link.action>
+						</c:link.index>
 					</f:if>
 				</f:for>
 
 				<div class="media-body">
 					<h2>
-						<f:link.action action="detail" arguments="{index: index}">
+						<c:link.index index="{index}">
 							<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-						</f:link.action>
+						</c:link.index>
 					</h2>
 					<h4>
 						<f:render partial="DateInformation" arguments="{index: index}" />
@@ -27,9 +29,9 @@
 						</f:format.crop>
 					</p>
 
-					<f:link.action action="detail" arguments="{index: index}" class="btn btn-default btn-primary">
+					<c:link.index index="{index}" class="btn btn-default btn-primary">
 						More <span class="glyphicon glyphicon-arrow-right"></span>
-					</f:link.action>
+					</c:link.index>
 				</div>
 			</div>
 		</div>

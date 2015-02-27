@@ -50,15 +50,19 @@ class CalendarController extends ActionController {
 	/**
 	 * List action
 	 *
-	 * @param \DateTime $startDate
-	 * @param \DateTime $endDate
-	 * @param array     $customSearch
+	 * @param \HDNET\Calendarize\Domain\Model\Index $index
+	 * @param \DateTime                             $startDate
+	 * @param \DateTime                             $endDate
+	 * @param array                                 $customSearch
 	 *
 	 * @ignorevalidation $startDate
 	 * @ignorevalidation $endDate
 	 * @ignorevalidation $customSearch
 	 */
-	public function listAction(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
+	public function listAction(Index $index = NULL, \DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
+		if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
+			$this->forward('detail');
+		}
 
 		if ($startDate || $endDate || $customSearch) {
 			$searchMode = TRUE;
@@ -200,6 +204,20 @@ class CalendarController extends ActionController {
 			'customSearch' => $customSearch
 		));
 
+	}
+
+	/**
+	 * Get the allowed actions
+	 *
+	 * @return array
+	 */
+	protected function getAllowedActions() {
+		$configuration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$allowedControllerActions = array();
+		foreach ($configuration['controllerConfiguration'] as $controllerName => $controllerActions) {
+			$allowedControllerActions[$controllerName] = $controllerActions['actions'];
+		}
+		return isset($allowedControllerActions['Calendar']) ? $allowedControllerActions['Calendar'] : array();
 	}
 
 }

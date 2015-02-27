@@ -8,24 +8,23 @@
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
-use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
-
 /**
  * Link to the day
  *
  * @author Tim Lochmüller
  */
-class DayViewHelper extends PageViewHelper {
+class DayViewHelper extends AbstractLinkViewHelper {
 
 	/**
 	 * Render the link to the given day
 	 *
-	 * @param int       $pageUid
 	 * @param \DateTime $date
+	 * @param int       $pageUid
 	 *
 	 * @return string
 	 */
-	public function render($pageUid, \DateTime $date) {
+	public function render(\DateTime $date, $pageUid = NULL) {
+		$pageUid = $pageUid === NULL ? $GLOBALS['TSFE']->id : $pageUid;
 		$additionalParams = array(
 			'tx_calendarize_calendar' => array(
 				'year'  => $date->format('Y'),

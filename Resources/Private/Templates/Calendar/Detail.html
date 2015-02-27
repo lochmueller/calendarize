@@ -1,3 +1,5 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Main">
@@ -5,10 +7,12 @@
 		<div class="panel-body">
 			<f:render partial="{index.configuration.partialIdentifier}/Detail" arguments="{index: index}" />
 			<div class="btn-group">
-				<f:link.action action="list" class="btn btn-default">
-					<span class="glyphicon glyphicon-arrow-left"></span> <f:translate key="back" />
+				<c:link.list class="btn btn-default">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					<f:translate key="back" />
+				</c:link.list>
+				<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal
 				</f:link.action>
-				<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal</f:link.action>
 			</div>
 		</div>
 	</div>
