@@ -349,6 +349,8 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
+	 * Get day
+	 *
 	 * @return string
 	 */
 	public function getDay() {
@@ -356,6 +358,8 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
+	 * Set day
+	 *
 	 * @param string $day
 	 */
 	public function setDay($day) {
@@ -363,6 +367,8 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
+	 * Get recurrence
+	 *
 	 * @return string
 	 */
 	public function getRecurrence() {
@@ -370,6 +376,8 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
+	 * Set recurrence
+	 *
 	 * @param string $recurrence
 	 */
 	public function setRecurrence($recurrence) {
