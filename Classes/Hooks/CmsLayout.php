@@ -8,6 +8,8 @@
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Calendarize\Service\ContentElementLayoutService;
+use HDNET\Calendarize\Service\FlexFormService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -22,18 +24,18 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class CmsLayout {
 
 	/**
-	 * Flex form data
+	 * Flex form service
 	 *
-	 * @var array
+	 * @var FlexFormService
 	 */
-	protected $flexformData = array();
+	protected $flexFormService;
 
 	/**
-	 * Table data
+	 * Content element data
 	 *
-	 * @var array
+	 * @var ContentElementLayoutService
 	 */
-	protected $tableData = array();
+	protected $contentElementLayoutService;
 
 	/**
 	 * Returns information about this extension plugin
@@ -45,41 +47,34 @@ class CmsLayout {
 	 */
 	public function getExtensionSummary(array $params) {
 		$relIconPath = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ExtensionManagementUtility::siteRelPath('calendarize') . 'ext_icon.png';
-		$result = '<strong><img src="' . $relIconPath . '" /> Calendarize</strong>';
+		$this->flexFormService = new FlexFormService();
+		$this->contentElementLayoutService = new ContentElementLayoutService();
+		$this->contentElementLayoutService->setTitle('<img src="' . $relIconPath . '" /> Calendarize');
 
-		if ($params['row']['list_type'] == 'calendarize_calendar') {
-			$this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
-			if ($this->flexformData) {
-				$actions = $this->getFieldFromFlexform('switchableControllerActions', 'main');
-				$parts = GeneralUtility::trimExplode(';', $actions, TRUE);
-				$parts = array_map(function ($element) {
-					$split = explode('->', $element);
-					return ucfirst($split[1]);
-				}, $parts);
-				$actionKey = lcfirst(implode('', $parts));
 
-				$this->tableData[] = array(
-					LocalizationUtility::translate('mode', 'calendarize'),
-					LocalizationUtility::translate('mode.' . $actionKey, 'calendarize')
-				);
-
-				$this->tableData[] = array(
-					LocalizationUtility::translate('configuration', 'calendarize'),
-					$this->getFieldFromFlexform('settings.configuration', 'main')
-				);
-
-				if ((bool)$this->getFieldFromFlexform('settings.hidePagination', 'main')) {
-					$this->tableData[] = array(
-						LocalizationUtility::translate('hide.pagination.teaser', 'calendarize'),
-						'!!!'
-					);
-				}
-				$this->addPageIdsToTable();
-				$result .= $this->renderSettingsAsTable();
-			}
+		if ($params['row']['list_type'] != 'calendarize_calendar') {
+			return '';
 		}
+		$this->flexFormService->load($params['row']['pi_flexform']);
+		if (!$this->flexFormService->isValid()) {
+			return '';
+		}
+		$actions = $this->flexFormService->get('switchableControllerActions', 'main');
+		$parts = GeneralUtility::trimExplode(';', $actions, TRUE);
+		$parts = array_map(function ($element) {
+			$split = explode('->', $element);
+			return ucfirst($split[1]);
+		}, $parts);
+		$actionKey = lcfirst(implode('', $parts));
 
-		return $result;
+		$this->contentElementLayoutService->addRow(LocalizationUtility::translate('mode', 'calendarize'), LocalizationUtility::translate('mode.' . $actionKey, 'calendarize'));
+		$this->contentElementLayoutService->addRow(LocalizationUtility::translate('configuration', 'calendarize'), $this->flexFormService->get('settings.configuration', 'main'));
+
+		if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
+			$this->contentElementLayoutService->addRow(LocalizationUtility::translate('hide.pagination.teaser', 'calendarize'), '!!!');
+		}
+		$this->addPageIdsToTable();
+		return $this->contentElementLayoutService->render();
 	}
 
 	/**
@@ -95,56 +90,11 @@ class CmsLayout {
 			'dayPid',
 		);
 		foreach ($pageIdsNames as $pageIdName) {
-			$pageId = (int)$this->getFieldFromFlexform('settings.' . $pageIdName, 'pages');
-			if ($pageId) {
-				$pageRow = BackendUtility::getRecord('pages', $pageId);
-				if ($pageRow) {
-					$this->tableData[] = array(
-						LocalizationUtility::translate($pageIdName, 'calendarize'),
-						$pageRow['title'] . ' (' . $pageId . ')'
-					);
-				}
+			$pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
+			$pageRow = BackendUtility::getRecord('pages', $pageId);
+			if ($pageRow) {
+				$this->contentElementLayoutService->addRow(LocalizationUtility::translate($pageIdName, 'calendarize'), $pageRow['title'] . ' (' . $pageId . ')');
 			}
 		}
-	}
-
-	/**
-	 * Render the settings as table for Web>Page module
-	 * System settings are displayed in mono font
-	 *
-	 * @return string
-	 */
-	protected function renderSettingsAsTable() {
-		if (!$this->tableData) {
-			return '';
-		}
-		$content = '';
-		foreach ($this->tableData as $line) {
-			$content .= '<strong>' . $line[0] . '</strong>' . ' ' . $line[1] . '<br />';
-		}
-
-		return '<pre style="white-space:normal">' . $content . '</pre>';
-	}
-
-	/**
-	 * Get field value from flexform configuration,
-	 * including checks if flexform configuration is available
-	 *
-	 * @param string $key   name of the key
-	 * @param string $sheet name of the sheet
-	 *
-	 * @return string|NULL if nothing found, value if found
-	 */
-	public function getFieldFromFlexform($key, $sheet = 'sDEF') {
-		$flexform = $this->flexformData;
-		if (isset($flexform['data'])) {
-			$flexform = $flexform['data'];
-			if (is_array($flexform) && is_array($flexform[$sheet]) && is_array($flexform[$sheet]['lDEF']) && is_array($flexform[$sheet]['lDEF'][$key]) && isset($flexform[$sheet]['lDEF'][$key]['vDEF'])
-			) {
-				return $flexform[$sheet]['lDEF'][$key]['vDEF'];
-			}
-		}
-
-		return NULL;
 	}
 }
