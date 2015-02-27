@@ -35,6 +35,36 @@ class Configuration extends AbstractModel {
 
 	const FREQUENCY_YEARLY = 'yearly';
 
+	const DAY_SPECIAL_WEEKDAY = 'weekday'; // Wochentag
+
+	const DAY_SPECIAL_WORKDAY = 'workday'; // Arbeitstag
+
+	const DAY_SPECIAL_BUSINESS = 'business'; // Werktag
+
+	const DAY_MONDAY = 'monday';
+
+	const DAY_TUESDAY = 'tuesday';
+
+	const DAY_WEDNESDAY = 'wednesday';
+
+	const DAY_THURSDAY = 'thursday';
+
+	const DAY_FRIDAY = 'friday';
+
+	const DAY_SATURDAY = 'saturday';
+
+	const DAY_SUNDAY = 'sunday';
+
+	const RECURRENCE_FIRST = 'first';
+
+	const RECURRENCE_SECOND = 'second';
+
+	const RECURRENCE_THIRD = 'third';
+
+	const RECURRENCE_FOURTH = 'fourth';
+
+	const RECURRENCE_LAST = 'last';
+
 	/**
 	 * Type
 	 *
@@ -131,6 +161,22 @@ class Configuration extends AbstractModel {
 	 * @db
 	 */
 	protected $counterInterval;
+
+	/**
+	 * Recurrence
+	 *
+	 * @var string
+	 * @db
+	 */
+	protected $recurrence;
+
+	/**
+	 * Day property
+	 *
+	 * @var string
+	 * @db
+	 */
+	protected $day;
 
 	/**
 	 * Set type
@@ -348,6 +394,34 @@ class Configuration extends AbstractModel {
 	 */
 	public function setExternalIcsUrl($externalIcsUrl) {
 		$this->externalIcsUrl = $externalIcsUrl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDay() {
+		return $this->day;
+	}
+
+	/**
+	 * @param string $day
+	 */
+	public function setDay($day) {
+		$this->day = $day;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRecurrence() {
+		return $this->recurrence;
+	}
+
+	/**
+	 * @param string $recurrence
+	 */
+	public function setRecurrence($recurrence) {
+		$this->recurrence = $recurrence;
 	}
 
 }

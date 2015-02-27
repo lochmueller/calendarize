@@ -179,6 +179,93 @@ $custom = array(
 				'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
 			),
 		),
+		'day'              => array(
+			'config'      => array(
+				'type'    => 'select',
+				'items'   => array(
+					array(
+						'',
+						''
+					),
+					array(
+						Configuration::DAY_SPECIAL_BUSINESS,
+						Configuration::DAY_SPECIAL_BUSINESS
+					),
+					array(
+						Configuration::DAY_SPECIAL_WEEKDAY,
+						Configuration::DAY_SPECIAL_WEEKDAY
+					),
+					array(
+						Configuration::DAY_SPECIAL_WORKDAY,
+						Configuration::DAY_SPECIAL_WORKDAY
+					),
+					array(
+						Configuration::DAY_MONDAY,
+						Configuration::DAY_MONDAY
+					),
+					array(
+						Configuration::DAY_TUESDAY,
+						Configuration::DAY_TUESDAY
+					),
+					array(
+						Configuration::DAY_WEDNESDAY,
+						Configuration::DAY_WEDNESDAY
+					),
+					array(
+						Configuration::DAY_THURSDAY,
+						Configuration::DAY_THURSDAY
+					),
+					array(
+						Configuration::DAY_FRIDAY,
+						Configuration::DAY_FRIDAY
+					),
+					array(
+						Configuration::DAY_SATURDAY,
+						Configuration::DAY_SATURDAY
+					),
+					array(
+						Configuration::DAY_SUNDAY,
+						Configuration::DAY_SUNDAY
+					),
+				),
+				'default' => ''
+
+			),
+			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+		),
+		'recurrence'       => array(
+			'config'      => array(
+				'type'    => 'select',
+				'items'   => array(
+					array(
+						'',
+						''
+					),
+					array(
+						Configuration::RECURRENCE_FIRST,
+						Configuration::RECURRENCE_FIRST
+					),
+					array(
+						Configuration::RECURRENCE_SECOND,
+						Configuration::RECURRENCE_SECOND
+					),
+					array(
+						Configuration::RECURRENCE_THIRD,
+						Configuration::RECURRENCE_THIRD
+					),
+					array(
+						Configuration::RECURRENCE_FOURTH,
+						Configuration::RECURRENCE_FOURTH
+					),
+					array(
+						Configuration::RECURRENCE_LAST,
+						Configuration::RECURRENCE_LAST
+					),
+				),
+				'default' => ''
+			),
+			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+		),
 	),
 	'types'   => array(
 		Configuration::TYPE_TIME          => array(

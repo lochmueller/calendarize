@@ -6,6 +6,8 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_calendarize_domain_model_configuration.recurrence"><![CDATA[Recurrence]]></label>
+			<label index="tx_calendarize_domain_model_configuration.day"><![CDATA[Day]]></label>
 			<label index="general"><![CDATA[General]]></label>
 			<label index="previewLabel"><![CDATA[There is/are %d item/items in the index of the current record. The next %d events are...]]></label>
 			<label index="mode"><![CDATA[Mode]]></label>
@@ -81,6 +83,8 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="tx_calendarize_domain_model_configuration.recurrence"><![CDATA[Wiederholung]]></label>
+			<label index="tx_calendarize_domain_model_configuration.day"><![CDATA[Tag]]></label>
 			<label index="general"><![CDATA[Allgemein]]></label>
 			<label index="previewLabel"><![CDATA[Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind..]]></label>
 			<label index="mode"><![CDATA[Modus]]></label>
