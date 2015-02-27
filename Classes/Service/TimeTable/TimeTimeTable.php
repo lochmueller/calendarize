@@ -25,7 +25,7 @@ class TimeTimeTable extends AbstractTimeTable {
 	 *
 	 * @return void
 	 */
-	public function handleConfiguration(array &$times, $configuration) {
+	public function handleConfiguration(array &$times, Configuration $configuration) {
 		$startTime = $configuration->getAllDay() ? NULL : $configuration->getStartTime();
 		$endTime = $configuration->getAllDay() ? NULL : $configuration->getEndTime();
 		$baseEntry = array(

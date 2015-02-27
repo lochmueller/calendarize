@@ -25,7 +25,7 @@ class ExcludeTimeTable extends AbstractTimeTable {
 	 *
 	 * @return void
 	 */
-	public function handleConfiguration(array &$times, $configuration) {
+	public function handleConfiguration(array &$times, Configuration $configuration) {
 		$excludeTimes = array();
 		foreach ($configuration->getGroups() as $group) {
 			$excludeTimes = array_merge($excludeTimes, $this->buildSingleTimeTableByGroup($group));

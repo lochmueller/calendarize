@@ -35,7 +35,7 @@ abstract class AbstractTimeTable extends AbstractService {
 	 *
 	 * @return void
 	 */
-	abstract public function handleConfiguration(array &$times, $configuration);
+	abstract public function handleConfiguration(array &$times, Configuration $configuration);
 
 	/**
 	 * Build a single time table by group

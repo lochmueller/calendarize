@@ -25,7 +25,7 @@ class IncludeTimeTable extends AbstractTimeTable {
 	 *
 	 * @return void
 	 */
-	public function handleConfiguration(array &$times, $configuration) {
+	public function handleConfiguration(array &$times, Configuration $configuration) {
 		foreach ($configuration->getGroups() as $group) {
 			$times = array_merge($times, $this->buildSingleTimeTableByGroup($group));
 		}

@@ -12,7 +12,6 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Time table builder service
@@ -44,12 +43,7 @@ class TimeTableService extends AbstractService {
 
 			$handler = $this->buildConfigurationHandler($configuration);
 			if (!$handler) {
-				$flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', 'There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 'Index invalid', FlashMessage::ERROR, TRUE);
-				$class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
-				/** @var $flashMessageService \TYPO3\CMS\Core\Messaging\FlashMessageService */
-				$flashMessageService = GeneralUtility::makeInstance($class);
-				$defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
-				$defaultFlashMessageQueue->enqueue($flashMessage);
+				HelperUtility::createFlashMessage('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 'Index invalid', FlashMessage::ERROR);
 				continue;
 			}
 

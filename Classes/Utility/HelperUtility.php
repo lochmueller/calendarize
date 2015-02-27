@@ -8,6 +8,8 @@
 
 namespace HDNET\Calendarize\Utility;
 
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
@@ -57,5 +59,23 @@ class HelperUtility {
 	 */
 	public static function getSignalSlotDispatcher() {
 		return self::create('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+	}
+
+	/**
+	 * Create a flash message
+	 *
+	 * @param string $message
+	 * @param string $title
+	 * @param int    $mode
+	 *
+	 * @throws \TYPO3\CMS\Core\Exception
+	 */
+	public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK) {
+		$flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', $message, $title, $mode, TRUE);
+		$class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
+		/** @var $flashMessageService \TYPO3\CMS\Core\Messaging\FlashMessageService */
+		$flashMessageService = GeneralUtility::makeInstance($class);
+		$defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+		$defaultFlashMessageQueue->enqueue($flashMessage);
 	}
 }
