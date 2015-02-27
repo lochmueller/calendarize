@@ -6,6 +6,25 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="configuration.day."><![CDATA[None]]></label>
+			<label index="configuration.day.none"><![CDATA[None]]></label>
+			<label index="configuration.day.business"><![CDATA[Business day (Mo-Sa)]]></label>
+			<label index="configuration.day.weekday"><![CDATA[Weekday (Mo-So)]]></label>
+			<label index="configuration.day.workday"><![CDATA[Workday (Mo-Fr)]]></label>
+			<label index="configuration.day.monday"><![CDATA[Monday]]></label>
+			<label index="configuration.day.tuesday"><![CDATA[Tuesday]]></label>
+			<label index="configuration.day.wednesday"><![CDATA[Wednesday]]></label>
+			<label index="configuration.day.thursday"><![CDATA[Thursday]]></label>
+			<label index="configuration.day.friday"><![CDATA[Friday]]></label>
+			<label index="configuration.day.saturday"><![CDATA[Saturday]]></label>
+			<label index="configuration.day.sunday"><![CDATA[Sunday]]></label>
+			<label index="configuration.recurrence."><![CDATA[None]]></label>
+			<label index="configuration.recurrence.none"><![CDATA[None]]></label>
+			<label index="configuration.recurrence.first"><![CDATA[First]]></label>
+			<label index="configuration.recurrence.second"><![CDATA[Second]]></label>
+			<label index="configuration.recurrence.third"><![CDATA[Third]]></label>
+			<label index="configuration.recurrence.fourth"><![CDATA[Fourth]]></label>
+			<label index="configuration.recurrence.last"><![CDATA[Last]]></label>
 			<label index="tx_calendarize_domain_model_configuration.recurrence"><![CDATA[Recurrence]]></label>
 			<label index="tx_calendarize_domain_model_configuration.day"><![CDATA[Day]]></label>
 			<label index="general"><![CDATA[General]]></label>
@@ -44,6 +63,7 @@
 			<label index="configuration.type.include"><![CDATA[Include group]]></label>
 			<label index="configuration.type.exclude"><![CDATA[Exclude group]]></label>
 			<label index="configuration.type.external"><![CDATA[External]]></label>
+			<label index="configuration.frequency."><![CDATA[None]]></label>
 			<label index="configuration.frequency.none"><![CDATA[None]]></label>
 			<label index="configuration.frequency.daily"><![CDATA[Daily]]></label>
 			<label index="configuration.frequency.weekly"><![CDATA[Weekly]]></label>
@@ -83,6 +103,25 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="configuration.day."><![CDATA[Keinen]]></label>
+			<label index="configuration.day.none"><![CDATA[Keinen]]></label>
+			<label index="configuration.day.business"><![CDATA[Werktag (Mo-Sa)]]></label>
+			<label index="configuration.day.weekday"><![CDATA[Wochentag (Mo-So)]]></label>
+			<label index="configuration.day.workday"><![CDATA[Arbeitstag (Mo-Fr)]]></label>
+			<label index="configuration.day.monday"><![CDATA[Montag]]></label>
+			<label index="configuration.day.tuesday"><![CDATA[Dienstag]]></label>
+			<label index="configuration.day.wednesday"><![CDATA[Mittwoch]]></label>
+			<label index="configuration.day.thursday"><![CDATA[Donnerstag]]></label>
+			<label index="configuration.day.friday"><![CDATA[Freitag]]></label>
+			<label index="configuration.day.saturday"><![CDATA[Samstag]]></label>
+			<label index="configuration.day.sunday"><![CDATA[Sontag]]></label>
+			<label index="configuration.recurrence."><![CDATA[None]]></label>
+			<label index="configuration.recurrence.none"><![CDATA[None]]></label>
+			<label index="configuration.recurrence.first"><![CDATA[First]]></label>
+			<label index="configuration.recurrence.second"><![CDATA[Second]]></label>
+			<label index="configuration.recurrence.third"><![CDATA[Third]]></label>
+			<label index="configuration.recurrence.fourth"><![CDATA[Fourth]]></label>
+			<label index="configuration.recurrence.last"><![CDATA[Last]]></label>
 			<label index="tx_calendarize_domain_model_configuration.recurrence"><![CDATA[Wiederholung]]></label>
 			<label index="tx_calendarize_domain_model_configuration.day"><![CDATA[Tag]]></label>
 			<label index="general"><![CDATA[Allgemein]]></label>
@@ -120,6 +159,7 @@
 			<label index="configuration.type.include"><![CDATA[Einschließende Gruppe]]></label>
 			<label index="configuration.type.exclude"><![CDATA[Ausschließeden Gruppe]]></label>
 			<label index="configuration.type.external"><![CDATA[Extern]]></label>
+			<label index="configuration.frequency."><![CDATA[Keine]]></label>
 			<label index="configuration.frequency.none"><![CDATA[Keine]]></label>
 			<label index="configuration.frequency.daily"><![CDATA[Täglich]]></label>
 			<label index="configuration.frequency.weekly"><![CDATA[Wöchentlich]]></label>

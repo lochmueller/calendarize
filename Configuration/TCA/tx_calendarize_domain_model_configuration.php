@@ -184,51 +184,51 @@ $custom = array(
 				'type'    => 'select',
 				'items'   => array(
 					array(
-						'',
-						''
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_NONE, 'calendarize'),
+						Configuration::DAY_NONE
 					),
 					array(
-						Configuration::DAY_SPECIAL_BUSINESS,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS, 'calendarize'),
 						Configuration::DAY_SPECIAL_BUSINESS
 					),
 					array(
-						Configuration::DAY_SPECIAL_WEEKDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY, 'calendarize'),
 						Configuration::DAY_SPECIAL_WEEKDAY
 					),
 					array(
-						Configuration::DAY_SPECIAL_WORKDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY, 'calendarize'),
 						Configuration::DAY_SPECIAL_WORKDAY
 					),
 					array(
-						Configuration::DAY_MONDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_MONDAY, 'calendarize'),
 						Configuration::DAY_MONDAY
 					),
 					array(
-						Configuration::DAY_TUESDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_TUESDAY, 'calendarize'),
 						Configuration::DAY_TUESDAY
 					),
 					array(
-						Configuration::DAY_WEDNESDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_WEDNESDAY, 'calendarize'),
 						Configuration::DAY_WEDNESDAY
 					),
 					array(
-						Configuration::DAY_THURSDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_THURSDAY, 'calendarize'),
 						Configuration::DAY_THURSDAY
 					),
 					array(
-						Configuration::DAY_FRIDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_FRIDAY, 'calendarize'),
 						Configuration::DAY_FRIDAY
 					),
 					array(
-						Configuration::DAY_SATURDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SATURDAY, 'calendarize'),
 						Configuration::DAY_SATURDAY
 					),
 					array(
-						Configuration::DAY_SUNDAY,
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SUNDAY, 'calendarize'),
 						Configuration::DAY_SUNDAY
 					),
 				),
-				'default' => ''
+				'default' => Configuration::DAY_NONE
 
 			),
 			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
@@ -238,31 +238,31 @@ $custom = array(
 				'type'    => 'select',
 				'items'   => array(
 					array(
-						'',
-						''
+						LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_NONE, 'calendarize'),
+						Configuration::RECURRENCE_NONE
 					),
 					array(
-						Configuration::RECURRENCE_FIRST,
+						LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_FIRST, 'calendarize'),
 						Configuration::RECURRENCE_FIRST
 					),
 					array(
-						Configuration::RECURRENCE_SECOND,
+						LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_SECOND, 'calendarize'),
 						Configuration::RECURRENCE_SECOND
 					),
 					array(
-						Configuration::RECURRENCE_THIRD,
+						LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_THIRD, 'calendarize'),
 						Configuration::RECURRENCE_THIRD
 					),
 					array(
-						Configuration::RECURRENCE_FOURTH,
+						LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_FOURTH, 'calendarize'),
 						Configuration::RECURRENCE_FOURTH
 					),
 					array(
-						Configuration::RECURRENCE_LAST,
+						LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_LAST, 'calendarize'),
 						Configuration::RECURRENCE_LAST
 					),
 				),
-				'default' => ''
+				'default' => Configuration::RECURRENCE_NONE
 			),
 			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
 		),

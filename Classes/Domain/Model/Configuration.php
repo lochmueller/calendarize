@@ -35,11 +35,13 @@ class Configuration extends AbstractModel {
 
 	const FREQUENCY_YEARLY = 'yearly';
 
-	const DAY_SPECIAL_WEEKDAY = 'weekday'; // Wochentag
+	const DAY_NONE = '';
 
-	const DAY_SPECIAL_WORKDAY = 'workday'; // Arbeitstag
+	const DAY_SPECIAL_WEEKDAY = 'weekday';
 
-	const DAY_SPECIAL_BUSINESS = 'business'; // Werktag
+	const DAY_SPECIAL_WORKDAY = 'workday';
+
+	const DAY_SPECIAL_BUSINESS = 'business';
 
 	const DAY_MONDAY = 'monday';
 
@@ -54,6 +56,8 @@ class Configuration extends AbstractModel {
 	const DAY_SATURDAY = 'saturday';
 
 	const DAY_SUNDAY = 'sunday';
+
+	const RECURRENCE_NONE = '';
 
 	const RECURRENCE_FIRST = 'first';
 
@@ -168,7 +172,7 @@ class Configuration extends AbstractModel {
 	 * @var string
 	 * @db
 	 */
-	protected $recurrence;
+	protected $recurrence = self::RECURRENCE_NONE;
 
 	/**
 	 * Day property
@@ -176,7 +180,7 @@ class Configuration extends AbstractModel {
 	 * @var string
 	 * @db
 	 */
-	protected $day;
+	protected $day = self::DAY_NONE;
 
 	/**
 	 * Set type
