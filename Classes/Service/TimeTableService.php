@@ -9,8 +9,10 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
-use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
+use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Time table builder service
@@ -34,168 +36,42 @@ class TimeTableService extends AbstractService {
 
 		/** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
 		$configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
-
 		foreach ($ids as $configurationUid) {
 			$configuration = $configRepository->findByUid($configurationUid);
 			if (!($configuration instanceof Configuration)) {
 				continue;
 			}
 
-			$singleTimeTable = $this->buildSingleTimeTable($configuration);
-			if ($configuration->getType() == Configuration::TYPE_EXCLUDE_GROUP) {
-				$timeTable = $this->checkAndRemoveTimes($timeTable, $singleTimeTable);
-			} else {
-				$timeTable = array_merge($timeTable, $singleTimeTable);
+			$handler = $this->buildConfigurationHandler($configuration);
+			if (!$handler) {
+				$flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', 'There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 'Index invalid', FlashMessage::ERROR, TRUE);
+				$class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
+				/** @var $flashMessageService \TYPO3\CMS\Core\Messaging\FlashMessageService */
+				$flashMessageService = GeneralUtility::makeInstance($class);
+				$defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
+				$defaultFlashMessageQueue->enqueue($flashMessage);
+				continue;
 			}
+
+			$handler->handleConfiguration($timeTable, $configuration);
 		}
 
 		return $timeTable;
 	}
 
 	/**
-	 * Remove excluded events
-	 *
-	 * @param $base
-	 * @param $remove
-	 *
-	 * @return mixed
-	 */
-	protected function checkAndRemoveTimes($base, $remove) {
-		foreach ($base as $key => $value) {
-			foreach ($remove as $removeValue) {
-				$eventStart = &$value['start_date'];
-				$eventEnd = &$value['end_date'];
-				$removeStart = &$removeValue['start_date'];
-				$removeEnd = &$removeValue['end_date'];
-
-				$startIn = ($eventStart >= $removeStart && $eventStart < $removeEnd);
-				$endIn = ($eventEnd > $removeStart && $eventEnd <= $removeEnd);
-				$envelope = ($eventStart < $removeStart && $eventEnd > $removeEnd);
-
-				if ($startIn || $endIn || $envelope) {
-					unset($base[$key]);
-					continue;
-				}
-			}
-		}
-
-		return $base;
-	}
-
-	/**
-	 * Build time table by configuration uid
+	 * Build the configuration handler
 	 *
 	 * @param Configuration $configuration
 	 *
-	 * @return array
+	 * @return bool|AbstractTimeTable
 	 */
-	protected function buildSingleTimeTable(Configuration $configuration) {
-		$timeTable = array();
-		if ($configuration->getType() == Configuration::TYPE_TIME) {
-			$startTime = $configuration->getAllDay() ? NULL : $configuration->getStartTime();
-			$endTime = $configuration->getAllDay() ? NULL : $configuration->getEndTime();
-			$baseEntry = array(
-				'start_date' => $configuration->getStartDate(),
-				'end_date'   => $configuration->getEndDate(),
-				'start_time' => $startTime,
-				'end_time'   => $endTime,
-				'all_day'    => $configuration->getAllDay(),
-			);
-			$timeTable[] = $baseEntry;
-			$this->addFrequencyItems($timeTable, $configuration, $baseEntry);
-		} elseif ($configuration->getType() === Configuration::TYPE_EXCLUDE_GROUP || $configuration->getType() === Configuration::TYPE_INCLUDE_GROUP) {
-			foreach ($configuration->getGroups() as $group) {
-				$timeTable = array_merge($timeTable, $this->buildSingleTimeTableByGroup($group));
-			}
-		} elseif ($configuration->getType() === Configuration::TYPE_EXTERNAL) {
-
-			// @todo implement ICS Reader
-
+	protected function buildConfigurationHandler(Configuration $configuration) {
+		$handler = 'HDNET\\Calendarize\\Service\\TimeTable\\' . ucfirst($configuration->getType()) . 'TimeTable';
+		if (!class_exists($handler)) {
+			return FALSE;
 		}
-
-		return $timeTable;
-	}
-
-	/**
-	 * Add frequency items
-	 *
-	 * @param array         $timeTable
-	 * @param Configuration $configuration
-	 * @param array         $baseEntry
-	 */
-	protected function addFrequencyItems(array &$timeTable, Configuration $configuration, array $baseEntry) {
-		$frequencyIncrement = $this->getFrequencyIncrement($configuration);
-		if ($frequencyIncrement) {
-			$amountCounter = $configuration->getCounterAmount();
-			$tillDate = $configuration->getTillDate();
-			$maxLimit = 999;
-			$lastLoop = $baseEntry;
-			for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
-				$loopEntry = $lastLoop;
-
-				/** @var $startDate \DateTime */
-				$startDate = clone $loopEntry['start_date'];
-				$startDate->modify($frequencyIncrement);
-				$loopEntry['start_date'] = $startDate;
-
-				/** @var $endDate \DateTime */
-				$endDate = clone $loopEntry['end_date'];
-				$endDate->modify($frequencyIncrement);
-				$loopEntry['end_date'] = $endDate;
-
-				if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
-					break;
-				}
-
-				$lastLoop = $loopEntry;
-				$timeTable[] = $loopEntry;
-			}
-		}
-	}
-
-	/**
-	 * Get the frequency date increment
-	 *
-	 * @param Configuration $configuration
-	 *
-	 * @return string
-	 */
-	protected function getFrequencyIncrement(Configuration $configuration) {
-		$interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
-		switch ($configuration->getFrequency()) {
-			case Configuration::FREQUENCY_DAILY:
-				$intervalValue = '+' . $interval . ' days';
-				break;
-			case Configuration::FREQUENCY_WEEKLY:
-				$intervalValue = '+' . $interval . ' weeks';
-				break;
-			case Configuration::FREQUENCY_MONTHLY:
-				$intervalValue = '+' . $interval . ' months';
-				break;
-			case Configuration::FREQUENCY_YEARLY:
-				$intervalValue = '+' . $interval . ' years';
-				break;
-			default:
-				$intervalValue = FALSE;
-		}
-		return $intervalValue;
-	}
-
-	/**
-	 * Build a single time table by group
-	 *
-	 * @param ConfigurationGroup $group
-	 *
-	 * @return array
-	 */
-	protected function buildSingleTimeTableByGroup(ConfigurationGroup $group) {
-		$ids = array();
-		foreach ($group->getConfigurations() as $configuration) {
-			if ($configuration instanceof Configuration) {
-				$ids[] = $configuration->getUid();
-			}
-		}
-		return $this->getTimeTablesByConfigurationIds($ids);
+		return HelperUtility::create($handler);
 	}
 
 }
