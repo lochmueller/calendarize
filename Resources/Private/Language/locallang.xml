@@ -6,6 +6,10 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="date"><![CDATA[Date]]></label>
+			<label index="time"><![CDATA[Time]]></label>
+			<label index="termination_condition"><![CDATA[Termination condition]]></label>
+			<label index="frequency_configuration"><![CDATA[Frequency configuration]]></label>
 			<label index="configuration.day."><![CDATA[None]]></label>
 			<label index="configuration.day.none"><![CDATA[None]]></label>
 			<label index="configuration.day.business"><![CDATA[Business day (Mo-Sa)]]></label>
@@ -103,6 +107,10 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="date"><![CDATA[Datum]]></label>
+			<label index="time"><![CDATA[Zeit]]></label>
+			<label index="termination_condition"><![CDATA[Abbruchbedingung]]></label>
+			<label index="frequency_configuration"><![CDATA[Frequenz Konfiguration]]></label>
 			<label index="configuration.day."><![CDATA[Keinen]]></label>
 			<label index="configuration.day.none"><![CDATA[Keinen]]></label>
 			<label index="configuration.day.business"><![CDATA[Werktag (Mo-Sa)]]></label>

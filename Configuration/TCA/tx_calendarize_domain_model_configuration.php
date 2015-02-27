@@ -10,12 +10,18 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
 
-$typeBase = str_replace('--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xml:language;language', '', $base['types']['1']['showitem']);
-$typeBase = str_replace(',frequency', ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tx_calendarize_domain_model_configuration.frequency,frequency', $typeBase);
-$typeBase = str_replace(',external_ics_url', '', $typeBase);
+$timeType = str_replace('--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xml:language;language', '', $base['types']['1']['showitem']);
+$timeType = str_replace(',frequency', ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tx_calendarize_domain_model_configuration.frequency,frequency', $timeType);
+$timeType = str_replace(',external_ics_url', '', $timeType);
+$timeType = str_replace(',groups', '', $timeType);
+$timeType = str_replace(',start_date,end_date', ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:date;date', $timeType);
+$timeType = str_replace(',start_time,end_time,all_day', ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:time;time', $timeType);
+$timeType = str_replace(',counter_interval,recurrence,day', ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:frequency_configuration;frequency_configuration', $timeType);
+
+$extendTab = ',--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
 
 $custom = array(
-	'ctrl'    => array(
+	'ctrl'     => array(
 		'type'                    => 'type',
 		'hideTable'               => TRUE,
 		'typeicons'               => array(
@@ -28,7 +34,7 @@ $custom = array(
 		'requestUpdate'           => 'all_day,frequency',
 		'formattedLabel_userFunc' => 'HDNET\\Calendarize\\Service\\TcaService->configurationTitle'
 	),
-	'columns' => array(
+	'columns'  => array(
 		'type'             => array(
 			'config' => array(
 				'type'    => 'select',
@@ -231,7 +237,7 @@ $custom = array(
 				'default' => Configuration::DAY_NONE
 
 			),
-			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_MONTHLY,
 		),
 		'recurrence'       => array(
 			'config'      => array(
@@ -264,21 +270,39 @@ $custom = array(
 				),
 				'default' => Configuration::RECURRENCE_NONE
 			),
-			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_MONTHLY,
 		),
 	),
-	'types'   => array(
+	'palettes' => array(
+		'date'                    => array(
+			'canNotCollapse' => 1,
+			'showitem'       => 'start_date,end_date',
+		),
+		'time'                    => array(
+			'canNotCollapse' => 1,
+			'showitem'       => 'start_time,end_time,--linebreak--,all_day',
+		),
+		'termination_condition'   => array(
+			'canNotCollapse' => 1,
+			'showitem'       => 'till_date,counter_amount',
+		),
+		'frequency_configuration' => array(
+			'canNotCollapse' => 1,
+			'showitem'       => 'counter_interval,recurrence,day',
+		),
+	),
+	'types'    => array(
 		Configuration::TYPE_TIME          => array(
-			'showitem' => $typeBase,
+			'showitem' => $timeType,
 		),
 		Configuration::TYPE_INCLUDE_GROUP => array(
-			'showitem' => $typeBase,
+			'showitem' => 'type,groups' . $extendTab,
 		),
 		Configuration::TYPE_EXCLUDE_GROUP => array(
-			'showitem' => $typeBase,
+			'showitem' => 'type,groups' . $extendTab,
 		),
 		Configuration::TYPE_EXTERNAL      => array(
-			'showitem' => 'type,external_ics_url,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended'
+			'showitem' => 'type,external_ics_url' . $extendTab,
 		),
 	)
 );
