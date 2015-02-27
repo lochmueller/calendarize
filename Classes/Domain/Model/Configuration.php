@@ -84,6 +84,14 @@ class Configuration extends AbstractModel {
 	protected $allDay;
 
 	/**
+	 * External ICS url
+	 *
+	 * @var string
+	 * @db
+	 */
+	protected $externalIcsUrl;
+
+	/**
 	 * Groups
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\ConfigurationGroup>
@@ -123,14 +131,6 @@ class Configuration extends AbstractModel {
 	 * @db
 	 */
 	protected $counterInterval;
-
-	/**
-	 * External ICS url
-	 *
-	 * @var string
-	 * @db
-	 */
-	protected $externalIcsUrl;
 
 	/**
 	 * Set type

@@ -12,16 +12,17 @@ $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calend
 
 $typeBase = str_replace('--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xml:language;language', '', $base['types']['1']['showitem']);
 $typeBase = str_replace(',frequency', ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tx_calendarize_domain_model_configuration.frequency,frequency', $typeBase);
+$typeBase = str_replace(',external_ics_url', '', $typeBase);
 
 $custom = array(
 	'ctrl'    => array(
 		'type'                    => 'type',
 		'hideTable'               => TRUE,
 		'typeicons'               => array(
-
 			Configuration::TYPE_TIME          => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/Configuration.png',
 			Configuration::TYPE_INCLUDE_GROUP => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationInclude.png',
 			Configuration::TYPE_EXCLUDE_GROUP => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationExclude.png',
+			Configuration::TYPE_EXTERNAL      => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationExternal.png',
 		),
 		'typeicon_column'         => 'type',
 		'requestUpdate'           => 'all_day,frequency',
@@ -188,6 +189,9 @@ $custom = array(
 		),
 		Configuration::TYPE_EXCLUDE_GROUP => array(
 			'showitem' => $typeBase,
+		),
+		Configuration::TYPE_EXTERNAL      => array(
+			'showitem' => 'type,external_ics_url,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended'
 		),
 	)
 );
