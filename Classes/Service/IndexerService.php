@@ -21,6 +21,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class IndexerService extends AbstractService {
 
 	/**
+	 * Index table name
+	 */
+	const TABLE_NAME = 'tx_calendarize_domain_model_index';
+
+	/**
 	 * Reindex all elements
 	 *
 	 * @return void
@@ -58,31 +63,66 @@ class IndexerService extends AbstractService {
 	 * Build the index for one element
 	 *
 	 * @param string $configurationKey
-	 * @param        $tableName
-	 * @param        $uid
-	 *
-	 * @todo iteration
-	 * @todo realurl handling of the UID
+	 * @param string $tableName
+	 * @param int    $uid
 	 *
 	 * @return void
 	 */
 	protected function updateIndex($configurationKey, $tableName, $uid) {
+		$database = $this->getDatabaseConnection();
+		$checkProperty = array(
+			'start_date',
+			'end_date',
+			'start_time',
+			'end_time',
+			'all_day'
+		);
 		$record = BackendUtility::getRecord($tableName, $uid);
 		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
-		if (!$configurations) {
-			return;
+		if ($configurations) {
+			$timeTableService = new TimeTableService();
+			$neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
+			foreach ($neededItems as $key => $record) {
+
+				$record['foreign_table'] = $tableName;
+				$record['foreign_uid'] = $uid;
+				$record['unique_register_key'] = $configurationKey;
+
+				$this->prepareRecordForDatabase($record);
+				$neededItems[$key] = $record;
+			}
+		} else {
+			$neededItems = array();
 		}
-		$timeTableService = new TimeTableService();
-		$records = $timeTableService->getTimeTablesByConfigurationIds($configurations);
-		foreach ($records as $record) {
 
-			$record['foreign_table'] = $tableName;
-			$record['foreign_uid'] = $uid;
-			$record['unique_register_key'] = $configurationKey;
+		$currentItems = $database->exec_SELECTgetRows('uid,' . implode(',', $checkProperty), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
+		foreach ($neededItems as $neededKey => $neededItem) {
+			$remove = FALSE;
+			foreach ($currentItems as $currentKey => $currentItem) {
+				$same = TRUE;
+				foreach ($checkProperty as $check) {
+					if ((int)$neededItem[$check] !== (int)$currentItem[$check]) {
+						$same = FALSE;
+						break;
+					}
+				}
 
-			$this->prepareRecordForDatabase($record);
-			$this->getDatabaseConnection()
-				->exec_INSERTquery('tx_calendarize_domain_model_index', $record);
+				if ($same) {
+					$remove = TRUE;
+					unset($neededItems[$neededKey]);
+					unset($currentItems[$currentKey]);
+					break;
+				}
+			}
+			if ($remove) {
+				continue;
+			}
+		}
+		foreach ($currentItems as $item) {
+			$database->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
+		}
+		foreach ($neededItems as $record) {
+			$database->exec_INSERTquery(self::TABLE_NAME, $record);
 		}
 	}
 
@@ -123,7 +163,7 @@ class IndexerService extends AbstractService {
 		} else {
 			$where = 'foreign_table = "' . $tableName . '"';
 		}
-		$databaseConnection->exec_DELETEquery('tx_calendarize_domain_model_index', $where);
+		$databaseConnection->exec_DELETEquery(self::TABLE_NAME, $where);
 	}
 
 	/**
@@ -133,10 +173,10 @@ class IndexerService extends AbstractService {
 		$validKeys = array_keys(Register::getRegister());
 		if ($validKeys) {
 			$this->getDatabaseConnection()
-				->exec_DELETEquery('tx_calendarize_domain_model_index', 'unique_register_key NOT IN ("' . implode('","', $validKeys) . '")');
+				->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN ("' . implode('","', $validKeys) . '")');
 		} else {
 			$this->getDatabaseConnection()
-				->exec_TRUNCATEquery('tx_calendarize_domain_model_index');
+				->exec_TRUNCATEquery(self::TABLE_NAME);
 		}
 	}
 
