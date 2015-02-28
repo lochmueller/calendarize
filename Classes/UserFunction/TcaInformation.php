@@ -8,9 +8,9 @@
 
 namespace HDNET\Calendarize\UserFunction;
 
+use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -74,7 +74,7 @@ class TcaInformation {
 	 * @return mixed
 	 */
 	protected function getIndexCount($table, $uid) {
-		return $this->getDatabaseConnection()
+		return HelperUtility::getDatabaseConnection()
 			->exec_SELECTcountRows('*', 'tx_calendarize_domain_model_index', 'foreign_table="' . $table . '" AND foreign_uid=' . (int)$uid);
 	}
 
@@ -88,18 +88,8 @@ class TcaInformation {
 	 * @return array|NULL
 	 */
 	protected function getNextEvents($table, $uid, $limit = 5) {
-		return $this->getDatabaseConnection()
+		return HelperUtility::getDatabaseConnection()
 			->exec_SELECTgetRows('*', 'tx_calendarize_domain_model_index', 'start_date > ' . time() . ' AND foreign_table="' . $table . '" AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
 
 	}
-
-	/**
-	 * Get database connection
-	 *
-	 * @return DatabaseConnection
-	 */
-	protected function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];
-	}
-
 }

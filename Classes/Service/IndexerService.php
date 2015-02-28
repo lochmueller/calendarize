@@ -9,8 +9,8 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -32,12 +32,12 @@ class IndexerService extends AbstractService {
 	 */
 	public function reindexAll() {
 		$this->removeInvalidConfigurationIndex();
+		$databaseConnection = HelperUtility::getDatabaseConnection();
 
 		foreach (Register::getRegister() as $key => $configuration) {
 			$tableName = $configuration['tableName'];
 			$this->removeInvalidRecordIndex($tableName);
-			$rows = $this->getDatabaseConnection()
-				->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+			$rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
 			foreach ($rows as $row) {
 				$this->updateIndex($key, $configuration['tableName'], $row['uid']);
 			}
@@ -69,7 +69,7 @@ class IndexerService extends AbstractService {
 	 * @return void
 	 */
 	protected function updateIndex($configurationKey, $tableName, $uid) {
-		$database = $this->getDatabaseConnection();
+		$databaseConnection = HelperUtility::getDatabaseConnection();
 		$checkProperty = array(
 			'start_date',
 			'end_date',
@@ -95,7 +95,7 @@ class IndexerService extends AbstractService {
 			$neededItems = array();
 		}
 
-		$currentItems = $database->exec_SELECTgetRows('uid,' . implode(',', $checkProperty), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
+		$currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperty), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
 		foreach ($neededItems as $neededKey => $neededItem) {
 			$remove = FALSE;
 			foreach ($currentItems as $currentKey => $currentItem) {
@@ -119,10 +119,10 @@ class IndexerService extends AbstractService {
 			}
 		}
 		foreach ($currentItems as $item) {
-			$database->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
+			$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
 		}
 		foreach ($neededItems as $record) {
-			$database->exec_INSERTquery(self::TABLE_NAME, $record);
+			$databaseConnection->exec_INSERTquery(self::TABLE_NAME, $record);
 		}
 	}
 
@@ -152,7 +152,7 @@ class IndexerService extends AbstractService {
 	 * @param string $tableName
 	 */
 	protected function removeInvalidRecordIndex($tableName) {
-		$databaseConnection = $this->getDatabaseConnection();
+		$databaseConnection = HelperUtility::getDatabaseConnection();
 		$rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
 		$ids = array();
 		foreach ($rows as $row) {
@@ -171,22 +171,12 @@ class IndexerService extends AbstractService {
 	 */
 	protected function removeInvalidConfigurationIndex() {
 		$validKeys = array_keys(Register::getRegister());
+		$databaseConnection = HelperUtility::getDatabaseConnection();
 		if ($validKeys) {
-			$this->getDatabaseConnection()
-				->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN ("' . implode('","', $validKeys) . '")');
+			$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN ("' . implode('","', $validKeys) . '")');
 		} else {
-			$this->getDatabaseConnection()
-				->exec_TRUNCATEquery(self::TABLE_NAME);
+			$databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
 		}
-	}
-
-	/**
-	 * Get the database connection
-	 *
-	 * @return DatabaseConnection
-	 */
-	protected function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];
 	}
 
 }
