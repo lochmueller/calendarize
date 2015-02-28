@@ -62,21 +62,21 @@ $custom = array(
 		'start_date'       => array(
 			'config'      => array(
 				'eval' => 'required,date',
-				'size' => 8,
+				'size' => 6,
 			),
 			'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
 		),
 		'end_date'         => array(
 			'config'      => array(
 				'eval' => 'required,date',
-				'size' => 8,
+				'size' => 6,
 			),
 			'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
 		),
 		'start_time'       => array(
 			'config'      => array(
 				'eval' => 'time',
-				'size' => 8,
+				'size' => 4,
 			),
 			'displayCond' => array(
 				'AND' => array(
@@ -88,7 +88,7 @@ $custom = array(
 		'end_time'         => array(
 			'config'      => array(
 				'eval' => 'time',
-				'size' => 8,
+				'size' => 4,
 			),
 			'displayCond' => array(
 				'AND' => array(
