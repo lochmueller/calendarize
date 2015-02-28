@@ -235,9 +235,13 @@ $custom = array(
 					),
 				),
 				'default' => Configuration::DAY_NONE
-
 			),
-			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_MONTHLY,
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+					'FIELD:frequency:=:' . Configuration::FREQUENCY_MONTHLY,
+				),
+			),
 		),
 		'recurrence'       => array(
 			'config'      => array(
@@ -270,7 +274,12 @@ $custom = array(
 				),
 				'default' => Configuration::RECURRENCE_NONE
 			),
-			'displayCond' => 'FIELD:frequency:!=:' . Configuration::FREQUENCY_MONTHLY,
+			'displayCond' => array(
+				'AND' => array(
+					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+					'FIELD:frequency:=:' . Configuration::FREQUENCY_MONTHLY,
+				),
+			),
 		),
 	),
 	'palettes' => array(
