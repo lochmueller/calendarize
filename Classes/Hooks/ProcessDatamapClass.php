@@ -9,7 +9,7 @@
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
-use HDNET\Calendarize\Service\IndexerService;
+use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 
 /**
@@ -62,11 +62,13 @@ class ProcessDatamapClass {
 			return;
 		}
 		$register = Register::getRegister();
+		/** @var \HDNET\Calendarize\Service\IndexerService $indexer */
+		$indexer = HelperUtility::create('HDNET\\Calendarize\\Service\\IndexerService');
 		foreach ($register as $key => $configuration) {
 			foreach ($this->indexItems as $table => $identifiers) {
 				if ($table === $configuration['tableName']) {
 					foreach ($identifiers as $uid) {
-						IndexerService::reindex($key, $table, $uid);
+						$indexer->reindex($key, $table, $uid);
 					}
 				}
 			}

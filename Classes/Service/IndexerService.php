@@ -21,6 +21,25 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class IndexerService extends AbstractService {
 
 	/**
+	 * Reindex all elements
+	 *
+	 * @return void
+	 */
+	public function reindexAll() {
+		$this->removeInvalidConfigurationIndex();
+
+		foreach (Register::getRegister() as $key => $configuration) {
+			$tableName = $configuration['tableName'];
+			$this->removeInvalidRecordIndex($tableName);
+			$rows = $this->getDatabaseConnection()
+				->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+			foreach ($rows as $row) {
+				$this->updateIndex($key, $configuration['tableName'], $row['uid']);
+			}
+		}
+	}
+
+	/**
 	 * Reindex the given element
 	 *
 	 * @param string $configurationKey
@@ -29,25 +48,10 @@ class IndexerService extends AbstractService {
 	 *
 	 * @return void
 	 */
-	static public function reindex($configurationKey, $tableName, $uid) {
-		/** @var \HDNET\Calendarize\Service\IndexerService $indexer */
-		$indexer = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
-		$indexer->reindexInternal($configurationKey, $tableName, $uid);
-	}
-
-	/**
-	 * Reindex the given element / internal function
-	 *
-	 * @param string $configurationKey
-	 * @param string $tableName
-	 * @param int    $uid
-	 *
-	 * @return void
-	 */
-	public function reindexInternal($configurationKey, $tableName, $uid) {
-		$this->cleanupOldIndex($tableName);
-		$this->clearIndex($tableName, $uid);
-		$this->buildIndex($configurationKey, $tableName, $uid);
+	public function reindex($configurationKey, $tableName, $uid) {
+		$this->removeInvalidConfigurationIndex();
+		$this->removeInvalidRecordIndex($tableName);
+		$this->updateIndex($configurationKey, $tableName, $uid);
 	}
 
 	/**
@@ -62,7 +66,7 @@ class IndexerService extends AbstractService {
 	 *
 	 * @return void
 	 */
-	protected function buildIndex($configurationKey, $tableName, $uid) {
+	protected function updateIndex($configurationKey, $tableName, $uid) {
 		$record = BackendUtility::getRecord($tableName, $uid);
 		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
 		if (!$configurations) {
@@ -102,46 +106,38 @@ class IndexerService extends AbstractService {
 	}
 
 	/**
-	 * Reindex all elements
+	 * Remove Index items of the given table of records
+	 * that are deleted or do not exists anymore.
 	 *
-	 * @return void
+	 * @param string $tableName
 	 */
-	public function reindexAll() {
-		foreach (Register::getRegister() as $key => $configuration) {
-			$tableName = $configuration['tableName'];
-			$this->cleanupOldIndex($tableName);
-			$rows = $this->getDatabaseConnection()
-				->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
-			foreach ($rows as $row) {
-				$this->buildIndex($key, $configuration['tableName'], $row['uid']);
-			}
+	protected function removeInvalidRecordIndex($tableName) {
+		$databaseConnection = $this->getDatabaseConnection();
+		$rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+		$ids = array();
+		foreach ($rows as $row) {
+			$ids[] = $row['uid'];
 		}
-
-		// @todo delete all entries that are not part of the current registered events
+		if ($ids) {
+			$where = 'foreign_table = "' . $tableName . '" AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
+		} else {
+			$where = 'foreign_table = "' . $tableName . '"';
+		}
+		$databaseConnection->exec_DELETEquery('tx_calendarize_domain_model_index', $where);
 	}
 
 	/**
-	 * Cleanup the old index for the given table
-	 *
-	 * @param $tableName
-	 *
-	 * @return void
+	 * Remove index Items of configurations that are not valid anymore
 	 */
-	protected function cleanupOldIndex($tableName) {
-		// @todo check TCA , check deleted flag, search for deleted items and remove the index!!
-	}
-
-	/**
-	 * Clear the index for one element
-	 *
-	 * @param $tableName
-	 * @param $uid
-	 *
-	 * @return void
-	 */
-	protected function clearIndex($tableName, $uid) {
-		$this->getDatabaseConnection()
-			->exec_DELETEquery('tx_calendarize_domain_model_index', 'foreign_table="' . $tableName . '" AND foreign_uid="' . $uid . '"');
+	protected function removeInvalidConfigurationIndex() {
+		$validKeys = array_keys(Register::getRegister());
+		if ($validKeys) {
+			$this->getDatabaseConnection()
+				->exec_DELETEquery('tx_calendarize_domain_model_index', 'unique_register_key NOT IN ("' . implode('","', $validKeys) . '")');
+		} else {
+			$this->getDatabaseConnection()
+				->exec_TRUNCATEquery('tx_calendarize_domain_model_index');
+		}
 	}
 
 	/**
