@@ -78,35 +78,6 @@ class RecurrenceService extends AbstractService {
 	}
 
 	/**
-	 * @param \DateTime $dateTime
-	 * @param string    $direction
-	 * @param array     $validDays
-	 * @param int       $position
-	 *
-	 * @return \DateTime|FALSE
-	 */
-	protected function findDayInCurrentMonth($dateTime, $direction, $validDays, $position = 1) {
-		if ($direction === self::DIRECTION_UP) {
-			$dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
-			$modify = '+1 day';
-		} else {
-			$dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), $dateTime->format('t'));
-			$modify = '-1 day';
-		}
-		$validMonth = $dateTime->format('Y-m');
-		while ($dateTime->format('Y-m') == $validMonth) {
-			if (in_array($dateTime->format('N'), $validDays)) {
-				$position--;
-			}
-			if ($position === 0) {
-				return $dateTime;
-			}
-			$dateTime->modify($modify);
-		}
-		return FALSE;
-	}
-
-	/**
 	 * Numbers are match against the date format "N" 1 => mon till 7 => sun
 	 *
 	 * @param string $day
@@ -155,6 +126,35 @@ class RecurrenceService extends AbstractService {
 				break;
 		}
 		return $days;
+	}
+
+	/**
+	 * @param \DateTime $dateTime
+	 * @param string    $direction
+	 * @param array     $validDays
+	 * @param int       $position
+	 *
+	 * @return \DateTime|FALSE
+	 */
+	protected function findDayInCurrentMonth($dateTime, $direction, $validDays, $position = 1) {
+		if ($direction === self::DIRECTION_UP) {
+			$dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
+			$modify = '+1 day';
+		} else {
+			$dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), $dateTime->format('t'));
+			$modify = '-1 day';
+		}
+		$validMonth = $dateTime->format('Y-m');
+		while ($dateTime->format('Y-m') == $validMonth) {
+			if (in_array($dateTime->format('N'), $validDays)) {
+				$position--;
+			}
+			if ($position === 0) {
+				return $dateTime;
+			}
+			$dateTime->modify($modify);
+		}
+		return FALSE;
 	}
 
 }

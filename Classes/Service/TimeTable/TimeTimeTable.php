@@ -42,6 +42,44 @@ class TimeTimeTable extends AbstractTimeTable {
 	}
 
 	/**
+	 * Add frequency items
+	 *
+	 * @param array         $times
+	 * @param Configuration $configuration
+	 * @param array         $baseEntry
+	 */
+	protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry) {
+		$frequencyIncrement = $this->getFrequencyIncrement($configuration);
+		if (!$frequencyIncrement) {
+			return;
+		}
+		$amountCounter = $configuration->getCounterAmount();
+		$tillDate = $configuration->getTillDate();
+		$maxLimit = 999;
+		$lastLoop = $baseEntry;
+		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
+			$loopEntry = $lastLoop;
+
+			/** @var $startDate \DateTime */
+			$startDate = clone $loopEntry['start_date'];
+			$startDate->modify($frequencyIncrement);
+			$loopEntry['start_date'] = $startDate;
+
+			/** @var $endDate \DateTime */
+			$endDate = clone $loopEntry['end_date'];
+			$endDate->modify($frequencyIncrement);
+			$loopEntry['end_date'] = $endDate;
+
+			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
+				break;
+			}
+
+			$lastLoop = $loopEntry;
+			$times[] = $loopEntry;
+		}
+	}
+
+	/**
 	 * Add recurrence items
 	 *
 	 * @param array         $times
@@ -79,44 +117,6 @@ class TimeTimeTable extends AbstractTimeTable {
 			$endDate->modify($frequencyIncrement);
 			$loopEntry['end_date'] = $endDate;
 
-
-			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
-				break;
-			}
-
-			$lastLoop = $loopEntry;
-			$times[] = $loopEntry;
-		}
-	}
-
-	/**
-	 * Add frequency items
-	 *
-	 * @param array         $times
-	 * @param Configuration $configuration
-	 * @param array         $baseEntry
-	 */
-	protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry) {
-		$frequencyIncrement = $this->getFrequencyIncrement($configuration);
-		if (!$frequencyIncrement) {
-			return;
-		}
-		$amountCounter = $configuration->getCounterAmount();
-		$tillDate = $configuration->getTillDate();
-		$maxLimit = 999;
-		$lastLoop = $baseEntry;
-		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
-			$loopEntry = $lastLoop;
-
-			/** @var $startDate \DateTime */
-			$startDate = clone $loopEntry['start_date'];
-			$startDate->modify($frequencyIncrement);
-			$loopEntry['start_date'] = $startDate;
-
-			/** @var $endDate \DateTime */
-			$endDate = clone $loopEntry['end_date'];
-			$endDate->modify($frequencyIncrement);
-			$loopEntry['end_date'] = $endDate;
 
 			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
 				break;

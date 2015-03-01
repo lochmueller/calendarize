@@ -31,17 +31,6 @@ class RealurlAlias {
 	}
 
 	/**
-	 * Handle the index ID to alias convert
-	 *
-	 * @param $value
-	 *
-	 * @return string
-	 */
-	protected function id2alias($value) {
-		return '--' . $value . '--';
-	}
-
-	/**
 	 * Handle the alias to index ID convert
 	 *
 	 * @param $value
@@ -54,5 +43,16 @@ class RealurlAlias {
 			return $matches[1];
 		}
 		return NULL;
+	}
+
+	/**
+	 * Handle the index ID to alias convert
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	protected function id2alias($value) {
+		return '--' . $value . '--';
 	}
 }

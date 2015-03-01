@@ -50,17 +50,6 @@ class Event extends AbstractModel {
 	protected $downloads;
 
 	/**
-	 * Set title
-	 *
-	 * @param string $title
-	 *
-	 * @return void
-	 */
-	public function setTitle($title) {
-		$this->title = $title;
-	}
-
-	/**
 	 * Get title
 	 *
 	 * @return string
@@ -70,12 +59,14 @@ class Event extends AbstractModel {
 	}
 
 	/**
-	 * Set description
+	 * Set title
 	 *
-	 * @param string $description
+	 * @param string $title
+	 *
+	 * @return void
 	 */
-	public function setDescription($description) {
-		$this->description = $description;
+	public function setTitle($title) {
+		$this->title = $title;
 	}
 
 	/**
@@ -88,12 +79,12 @@ class Event extends AbstractModel {
 	}
 
 	/**
-	 * Set downloads
+	 * Set description
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $downloads
+	 * @param string $description
 	 */
-	public function setDownloads($downloads) {
-		$this->downloads = $downloads;
+	public function setDescription($description) {
+		$this->description = $description;
 	}
 
 	/**
@@ -106,12 +97,12 @@ class Event extends AbstractModel {
 	}
 
 	/**
-	 * Set images
+	 * Set downloads
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $downloads
 	 */
-	public function setImages($images) {
-		$this->images = $images;
+	public function setDownloads($downloads) {
+		$this->downloads = $downloads;
 	}
 
 	/**
@@ -121,6 +112,15 @@ class Event extends AbstractModel {
 	 */
 	public function getImages() {
 		return $this->images;
+	}
+
+	/**
+	 * Set images
+	 *
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+	 */
+	public function setImages($images) {
+		$this->images = $images;
 	}
 
 }

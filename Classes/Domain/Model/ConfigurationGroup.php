@@ -33,6 +33,15 @@ class ConfigurationGroup extends AbstractModel {
 	protected $configurations;
 
 	/**
+	 * Get title
+	 *
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
 	 * Set title
 	 *
 	 * @param string $title
@@ -44,12 +53,12 @@ class ConfigurationGroup extends AbstractModel {
 	}
 
 	/**
-	 * Get title
+	 * Get configurations
 	 *
-	 * @return string
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
-	public function getTitle() {
-		return $this->title;
+	public function getConfigurations() {
+		return $this->configurations;
 	}
 
 	/**
@@ -59,15 +68,6 @@ class ConfigurationGroup extends AbstractModel {
 	 */
 	public function setConfigurations($configurations) {
 		$this->configurations = $configurations;
-	}
-
-	/**
-	 * Get configurations
-	 *
-	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-	 */
-	public function getConfigurations() {
-		return $this->configurations;
 	}
 
 }

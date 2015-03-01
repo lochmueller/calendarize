@@ -44,7 +44,7 @@ class ExternalTimeTable extends AbstractTimeTable {
 			return;
 		}
 
-		HelperUtility::createFlashMessage('ICS Import is not implemeted yet', 'Index ICS URL', FlashMessage::NOTICE);
+		HelperUtility::createFlashMessage('ICS Import is not implemented yet', 'Index ICS URL', FlashMessage::NOTICE);
 
 		#$events = $this->icsReaderService->toArray($url);
 		#DebuggerUtility::var_dump($events);

@@ -131,17 +131,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	protected $day = self::DAY_NONE;
 
 	/**
-	 * Set type
-	 *
-	 * @param string $type
-	 *
-	 * @return void
-	 */
-	public function setType($type) {
-		$this->type = $type;
-	}
-
-	/**
 	 * Get type
 	 *
 	 * @return string
@@ -151,12 +140,14 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set all day
+	 * Set type
 	 *
-	 * @param boolean $allDay
+	 * @param string $type
+	 *
+	 * @return void
 	 */
-	public function setAllDay($allDay) {
-		$this->allDay = $allDay;
+	public function setType($type) {
+		$this->type = $type;
 	}
 
 	/**
@@ -169,12 +160,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set end date
+	 * Set all day
 	 *
-	 * @param \DateTime $endDate
+	 * @param boolean $allDay
 	 */
-	public function setEndDate($endDate) {
-		$this->endDate = $endDate;
+	public function setAllDay($allDay) {
+		$this->allDay = $allDay;
 	}
 
 	/**
@@ -187,12 +178,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set end time
+	 * Set end date
 	 *
-	 * @param int $endTime
+	 * @param \DateTime $endDate
 	 */
-	public function setEndTime($endTime) {
-		$this->endTime = $endTime;
+	public function setEndDate($endDate) {
+		$this->endDate = $endDate;
 	}
 
 	/**
@@ -205,12 +196,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set start date
+	 * Set end time
 	 *
-	 * @param \DateTime $startDate
+	 * @param int $endTime
 	 */
-	public function setStartDate($startDate) {
-		$this->startDate = $startDate;
+	public function setEndTime($endTime) {
+		$this->endTime = $endTime;
 	}
 
 	/**
@@ -223,12 +214,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set start time
+	 * Set start date
 	 *
-	 * @param int $startTime
+	 * @param \DateTime $startDate
 	 */
-	public function setStartTime($startTime) {
-		$this->startTime = $startTime;
+	public function setStartDate($startDate) {
+		$this->startDate = $startDate;
 	}
 
 	/**
@@ -241,12 +232,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set groups
+	 * Set start time
 	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $groups
+	 * @param int $startTime
 	 */
-	public function setGroups($groups) {
-		$this->groups = $groups;
+	public function setStartTime($startTime) {
+		$this->startTime = $startTime;
 	}
 
 	/**
@@ -259,12 +250,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set frequency
+	 * Set groups
 	 *
-	 * @param string $frequency
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $groups
 	 */
-	public function setFrequency($frequency) {
-		$this->frequency = $frequency;
+	public function setGroups($groups) {
+		$this->groups = $groups;
 	}
 
 	/**
@@ -277,12 +268,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set till date
+	 * Set frequency
 	 *
-	 * @param \DateTime $tillDate
+	 * @param string $frequency
 	 */
-	public function setTillDate($tillDate) {
-		$this->tillDate = $tillDate;
+	public function setFrequency($frequency) {
+		$this->frequency = $frequency;
 	}
 
 	/**
@@ -295,12 +286,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set counter amount
+	 * Set till date
 	 *
-	 * @param int $counterAmount
+	 * @param \DateTime $tillDate
 	 */
-	public function setCounterAmount($counterAmount) {
-		$this->counterAmount = $counterAmount;
+	public function setTillDate($tillDate) {
+		$this->tillDate = $tillDate;
 	}
 
 	/**
@@ -313,12 +304,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Set counter interval
+	 * Set counter amount
 	 *
-	 * @param int $counterInterval
+	 * @param int $counterAmount
 	 */
-	public function setCounterInterval($counterInterval) {
-		$this->counterInterval = $counterInterval;
+	public function setCounterAmount($counterAmount) {
+		$this->counterAmount = $counterAmount;
 	}
 
 	/**
@@ -328,6 +319,15 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	 */
 	public function getCounterInterval() {
 		return $this->counterInterval;
+	}
+
+	/**
+	 * Set counter interval
+	 *
+	 * @param int $counterInterval
+	 */
+	public function setCounterInterval($counterInterval) {
+		$this->counterInterval = $counterInterval;
 	}
 
 	/**

@@ -29,6 +29,41 @@ class Register {
 	}
 
 	/**
+	 * Add the calendarize to the given TCA
+	 *
+	 * @param $configuration
+	 */
+	static protected function createTcaConfiguration($configuration) {
+		$tableName = $configuration['tableName'];
+		$GLOBALS['TCA'][$tableName]['columns']['calendarize'] = array(
+			'label'  => 'Calendarize',
+			'config' => array(
+				'type'          => 'inline',
+				'foreign_table' => 'tx_calendarize_domain_model_configuration',
+				'minitems'      => $configuration['required'] ? 1 : 0,
+				'maxitems'      => 99,
+			),
+		);
+		$GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = array(
+			'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tca.information',
+			'config' => array(
+				'type'     => 'user',
+				'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
+			),
+		);
+		ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info');
+	}
+
+	/**
+	 * Internal register
+	 *
+	 * @param array $configuration
+	 */
+	static protected function registerItem(array $configuration) {
+		$GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
+	}
+
+	/**
 	 * Register in the extLocalconf
 	 *
 	 * @param array $configuration
@@ -81,41 +116,6 @@ class Register {
 			'required'          => TRUE,
 		);
 		return $configuration;
-	}
-
-	/**
-	 * Internal register
-	 *
-	 * @param array $configuration
-	 */
-	static protected function registerItem(array $configuration) {
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
-	}
-
-	/**
-	 * Add the calendarize to the given TCA
-	 *
-	 * @param $configuration
-	 */
-	static protected function createTcaConfiguration($configuration) {
-		$tableName = $configuration['tableName'];
-		$GLOBALS['TCA'][$tableName]['columns']['calendarize'] = array(
-			'label'  => 'Calendarize',
-			'config' => array(
-				'type'          => 'inline',
-				'foreign_table' => 'tx_calendarize_domain_model_configuration',
-				'minitems'      => $configuration['required'] ? 1 : 0,
-				'maxitems'      => 99,
-			),
-		);
-		$GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = array(
-			'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tca.information',
-			'config' => array(
-				'type'     => 'user',
-				'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
-			),
-		);
-		ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info');
 	}
 
 }

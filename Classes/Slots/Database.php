@@ -33,6 +33,21 @@ class Database {
 	}
 
 	/**
+	 * Get  the calendarize string for the registered tables
+	 *
+	 * @return string
+	 */
+	protected function getCalendarizeDatabaseString() {
+		$sql = array();
+		foreach (Register::getRegister() as $configuration) {
+			$sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (
+			calendarize tinytext
+			);';
+		}
+		return implode(LF, $sql);
+	}
+
+	/**
 	 * Add the smart object SQL string the the signal below
 	 *
 	 * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
@@ -49,20 +64,5 @@ class Database {
 			'sqlString'    => $sqlString,
 			'extensionKey' => $extensionKey
 		);
-	}
-
-	/**
-	 * Get  the calendarize string for the registered tables
-	 *
-	 * @return string
-	 */
-	protected function getCalendarizeDatabaseString() {
-		$sql = array();
-		foreach (Register::getRegister() as $configuration) {
-			$sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (
-			calendarize tinytext
-			);';
-		}
-		return implode(LF, $sql);
 	}
 } 

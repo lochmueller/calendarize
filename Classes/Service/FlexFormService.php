@@ -34,15 +34,6 @@ class FlexFormService extends AbstractService {
 	}
 
 	/**
-	 * Check if the flexform get valid data
-	 *
-	 * @return bool
-	 */
-	public function isValid() {
-		return is_array($this->flexformData) && isset($this->flexformData['data']);
-	}
-
-	/**
 	 * Get field value from flexform configuration,
 	 * including checks if flexform configuration is available
 	 *
@@ -61,5 +52,14 @@ class FlexFormService extends AbstractService {
 			return $flexformData[$sheet]['lDEF'][$key]['vDEF'];
 		}
 		return NULL;
+	}
+
+	/**
+	 * Check if the flexform get valid data
+	 *
+	 * @return bool
+	 */
+	public function isValid() {
+		return is_array($this->flexformData) && isset($this->flexformData['data']);
 	}
 }

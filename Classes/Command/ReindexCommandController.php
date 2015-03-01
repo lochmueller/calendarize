@@ -12,7 +12,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
  * Reindex the event models
- *s
+ *
  * @author Tim Lochmüller
  */
 class ReindexCommandController extends CommandController {
