@@ -83,10 +83,12 @@ class IndexRepository extends AbstractRepository {
 	 * @param \DateTime $startDate
 	 * @param \DateTime $endDate
 	 * @param array     $customSearch
+	 *
+	 * @return array
 	 */
 	public function findBySearch(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
 		$arguments = array(
-			'indexUids'    => array(),
+			'indexIds'    => array(),
 			'startDate'    => $startDate,
 			'endDate'      => $endDate,
 			'customSearch' => $customSearch,

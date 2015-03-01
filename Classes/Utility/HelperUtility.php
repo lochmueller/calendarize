@@ -72,6 +72,7 @@ class HelperUtility {
 	 * @throws \TYPO3\CMS\Core\Exception
 	 */
 	public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK) {
+		/** @var FlashMessage $flashMessage */
 		$flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', $message, $title, $mode, TRUE);
 		$class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
 		/** @var $flashMessageService \TYPO3\CMS\Core\Messaging\FlashMessageService */

@@ -12,6 +12,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Extensionmanager\Controller\ActionController;
@@ -212,7 +213,7 @@ class CalendarController extends ActionController {
 	 * @return array
 	 */
 	protected function getAllowedActions() {
-		$configuration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		$allowedControllerActions = array();
 		foreach ($configuration['controllerConfiguration'] as $controllerName => $controllerActions) {
 			$allowedControllerActions[$controllerName] = $controllerActions['actions'];
