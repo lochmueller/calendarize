@@ -9,6 +9,7 @@
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Service\RecurrenceService;
 
 /**
  * Time service
@@ -37,6 +38,55 @@ class TimeTimeTable extends AbstractTimeTable {
 		);
 		$times[] = $baseEntry;
 		$this->addFrequencyItems($times, $configuration, $baseEntry);
+		$this->addRecurrenceItems($times, $configuration, $baseEntry);
+	}
+
+	/**
+	 * Add recurrence items
+	 *
+	 * @param array         $times
+	 * @param Configuration $configuration
+	 * @param array         $baseEntry
+	 */
+	protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry) {
+		if ($configuration->getRecurrence() === Configuration::RECURRENCE_NONE || $configuration->getDay() === Configuration::DAY_NONE || $configuration->getFrequency() !== Configuration::FREQUENCY_MONTHLY) {
+			return;
+		}
+		$recurrenceService = new RecurrenceService();
+		$amountCounter = $configuration->getCounterAmount();
+		$tillDate = $configuration->getTillDate();
+		$maxLimit = 999;
+		$lastLoop = $baseEntry;
+		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
+			$loopEntry = $lastLoop;
+
+			$dateTime = $recurrenceService->getRecurrenceForNextMonth($loopEntry['start_date'], $configuration->getRecurrence(), $configuration->getDay());
+			if ($dateTime === FALSE) {
+				break;
+			}
+
+			/** @var \DateInterval $interval */
+			$interval = $loopEntry['start_date']->diff($dateTime);
+			$frequencyIncrement = $interval->format('%R%a days');
+
+			/** @var $startDate \DateTime */
+			$startDate = clone $loopEntry['start_date'];
+			$startDate->modify($frequencyIncrement);
+			$loopEntry['start_date'] = $startDate;
+
+			/** @var $endDate \DateTime */
+			$endDate = clone $loopEntry['end_date'];
+			$endDate->modify($frequencyIncrement);
+			$loopEntry['end_date'] = $endDate;
+
+
+			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
+				break;
+			}
+
+			$lastLoop = $loopEntry;
+			$times[] = $loopEntry;
+		}
 	}
 
 	/**
@@ -75,7 +125,6 @@ class TimeTimeTable extends AbstractTimeTable {
 			$lastLoop = $loopEntry;
 			$times[] = $loopEntry;
 		}
-
 	}
 
 	/**
@@ -95,6 +144,9 @@ class TimeTimeTable extends AbstractTimeTable {
 				$intervalValue = '+' . $interval . ' weeks';
 				break;
 			case Configuration::FREQUENCY_MONTHLY:
+				if ($configuration->getRecurrence() !== Configuration::RECURRENCE_NONE) {
+					return FALSE;
+				}
 				$intervalValue = '+' . $interval . ' months';
 				break;
 			case Configuration::FREQUENCY_YEARLY:

@@ -190,16 +190,12 @@ $custom = array(
 				'type'    => 'select',
 				'items'   => array(
 					array(
-						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_NONE, 'calendarize'),
-						Configuration::DAY_NONE
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY, 'calendarize'),
+						Configuration::DAY_SPECIAL_WEEKDAY
 					),
 					array(
 						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS, 'calendarize'),
 						Configuration::DAY_SPECIAL_BUSINESS
-					),
-					array(
-						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY, 'calendarize'),
-						Configuration::DAY_SPECIAL_WEEKDAY
 					),
 					array(
 						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY, 'calendarize'),
@@ -234,7 +230,7 @@ $custom = array(
 						Configuration::DAY_SUNDAY
 					),
 				),
-				'default' => Configuration::DAY_NONE
+				'default' => Configuration::DAY_SPECIAL_WEEKDAY
 			),
 			'displayCond' => array(
 				'AND' => array(
