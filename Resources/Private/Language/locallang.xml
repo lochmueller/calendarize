@@ -8,6 +8,7 @@
 		<languageKey index="default" type="array">
 			<label index="date"><![CDATA[Date]]></label>
 			<label index="time"><![CDATA[Time]]></label>
+			<label index="all_day"><![CDATA[All day]]></label>
 			<label index="termination_condition"><![CDATA[Termination condition]]></label>
 			<label index="frequency_configuration"><![CDATA[Frequency configuration]]></label>
 			<label index="configuration.day."><![CDATA[None]]></label>
@@ -109,6 +110,7 @@
 		<languageKey index="de" type="array">
 			<label index="date"><![CDATA[Datum]]></label>
 			<label index="time"><![CDATA[Zeit]]></label>
+			<label index="all_day"><![CDATA[ganztägig]]></label>
 			<label index="termination_condition"><![CDATA[Abbruchbedingung]]></label>
 			<label index="frequency_configuration"><![CDATA[Frequenz Konfiguration]]></label>
 			<label index="configuration.day."><![CDATA[Keinen]]></label>

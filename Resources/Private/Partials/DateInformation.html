@@ -15,7 +15,7 @@
 
 <f:if condition="{index.allDay}">
 	<f:then>
-		ganztägig
+		<f:translate key="all_day" />
 	</f:then>
 	<f:else>
 		<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
