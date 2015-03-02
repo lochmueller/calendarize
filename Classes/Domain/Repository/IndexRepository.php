@@ -88,7 +88,7 @@ class IndexRepository extends AbstractRepository {
 	 */
 	public function findBySearch(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
 		$arguments = array(
-			'indexIds'    => array(),
+			'indexIds'     => array(),
 			'startDate'    => $startDate,
 			'endDate'      => $endDate,
 			'customSearch' => $customSearch,
@@ -96,12 +96,26 @@ class IndexRepository extends AbstractRepository {
 		$signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
 		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 
-		// run index search
-		// @todo implement
+		$query = $this->createQuery();
+		$constraints = array();
+		if ($arguments['startDate'] instanceof \DateTime) {
+			$constraints[] = $query->greaterThan('start_date', $arguments['startDate']);
+		}
+		if ($arguments['endDate'] instanceof \DateTime) {
+			$constraints[] = $query->lessThan('start_date', $arguments['endDate']);
+		}
+		if ($arguments['ids']) {
+			$constraints[] = $query->in('foreign_uid', $arguments['ids']);
+		}
+		if ($constraints) {
+			$query->matching($query->logicalAnd($constraints));
+		}
+		$result = array(
+			'result' => $query->execute()
+		);
+		$signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $result);
 
-		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $arguments);
-
-		return array();
+		return $result['result'];
 	}
 
 	/**
