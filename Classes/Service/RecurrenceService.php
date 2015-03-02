@@ -108,6 +108,10 @@ class RecurrenceService extends AbstractService {
 			case ConfigurationInterface::DAY_SUNDAY:
 				$days[] = 7;
 				break;
+			case ConfigurationInterface::DAY_SPECIAL_WEEKEND:
+				$days[] = 7;
+				$days[] = 6;
+				break;
 			case ConfigurationInterface::DAY_SPECIAL_WEEKDAY:
 				// no break!
 				$days[] = 7;

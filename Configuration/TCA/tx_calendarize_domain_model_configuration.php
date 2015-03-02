@@ -202,6 +202,10 @@ $custom = array(
 						Configuration::DAY_SPECIAL_WORKDAY
 					),
 					array(
+						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND, 'calendarize'),
+						Configuration::DAY_SPECIAL_WEEKEND
+					),
+					array(
 						LocalizationUtility::translate('configuration.day.' . Configuration::DAY_MONDAY, 'calendarize'),
 						Configuration::DAY_MONDAY
 					),

@@ -41,6 +41,8 @@ interface ConfigurationInterface {
 
 	const DAY_SPECIAL_BUSINESS = 'business';
 
+	const DAY_SPECIAL_WEEKEND = 'weekend';
+
 	const DAY_MONDAY = 'monday';
 
 	const DAY_TUESDAY = 'tuesday';

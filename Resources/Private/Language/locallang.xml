@@ -16,6 +16,7 @@
 			<label index="configuration.day.business"><![CDATA[Business day (Mo-Sa)]]></label>
 			<label index="configuration.day.weekday"><![CDATA[Weekday (Mo-So)]]></label>
 			<label index="configuration.day.workday"><![CDATA[Workday (Mo-Fr)]]></label>
+			<label index="configuration.day.weekend"><![CDATA[Weekend (Sa-So)]]></label>
 			<label index="configuration.day.monday"><![CDATA[Monday]]></label>
 			<label index="configuration.day.tuesday"><![CDATA[Tuesday]]></label>
 			<label index="configuration.day.wednesday"><![CDATA[Wednesday]]></label>
@@ -118,6 +119,7 @@
 			<label index="configuration.day.business"><![CDATA[Werktag (Mo-Sa)]]></label>
 			<label index="configuration.day.weekday"><![CDATA[Wochentag (Mo-So)]]></label>
 			<label index="configuration.day.workday"><![CDATA[Arbeitstag (Mo-Fr)]]></label>
+			<label index="configuration.day.weekend"><![CDATA[Wochenendtag (Sa-So)]]></label>
 			<label index="configuration.day.monday"><![CDATA[Montag]]></label>
 			<label index="configuration.day.tuesday"><![CDATA[Dienstag]]></label>
 			<label index="configuration.day.wednesday"><![CDATA[Mittwoch]]></label>
