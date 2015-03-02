@@ -193,10 +193,10 @@ class CalendarController extends ActionController {
 	 */
 	public function searchAction(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
 		if (!($startDate instanceof \DateTime)) {
-			$startDate = new \DateTime();
+			$startDate = new \DateTime('now', DateTimeUtility::getTimeZone());
 		}
 		if (!($endDate instanceof \DateTime)) {
-			$endDate = new \DateTime('+1 month');
+			$endDate = new \DateTime('+1 month', DateTimeUtility::getTimeZone());
 		}
 
 		$this->view->assignMultiple(array(

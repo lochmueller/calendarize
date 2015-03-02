@@ -26,7 +26,7 @@ class DateTimeUtility {
 	 * @return \DateTime
 	 */
 	static public function convertWeekYear2DayMonthYear($week, $year) {
-		return new \DateTime('@' . strtotime($year . 'W' . $week . '1'));
+		return new \DateTime('@' . strtotime($year . 'W' . $week . '1'), self::getTimeZone());
 	}
 
 	/**
@@ -49,9 +49,19 @@ class DateTimeUtility {
 			$day = date('d');
 		}
 
-		$date = new \DateTime();
+		$date = new \DateTime('now', DateTimeUtility::getTimeZone());
 		$date->setDate($year, $month, $day);
 		$date->setTime(0, 0, 0);
 		return $date;
+	}
+
+	/**
+	 * Time zone is set by the TYPO3 core
+	 *
+	 * @return \DateTimeZone
+	 * @see \TYPO3\CMS\Core\Core\Bootstrap->setDefaultTimezone()
+	 */
+	static public function getTimeZone() {
+		return new \DateTimeZone(date_default_timezone_get());
 	}
 }
