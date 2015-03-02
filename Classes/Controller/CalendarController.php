@@ -54,22 +54,33 @@ class CalendarController extends ActionController {
 	 * @param \HDNET\Calendarize\Domain\Model\Index $index
 	 * @param \DateTime                             $startDate
 	 * @param \DateTime                             $endDate
-	 * @param array                                 $customSearch
+	 * @param array                                 $customSearch *
+	 * @param int                                   $year
+	 * @param int                                   $month
+	 * @param int                                   $week
 	 *
 	 * @ignorevalidation $startDate
 	 * @ignorevalidation $endDate
 	 * @ignorevalidation $customSearch
+	 *
+	 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
 	 */
-	public function listAction(Index $index = NULL, \DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
+	public function listAction(Index $index = NULL, \DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array(), $year = NULL, $month = NULL, $week = NULL) {
 		if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
 			$this->forward('detail');
 		}
 
+		$searchMode = FALSE;
 		if ($startDate || $endDate || $customSearch) {
 			$searchMode = TRUE;
 			$indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
+		} elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
+			$indices = $this->indexRepository->findMonth($year, $month);
+		} elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
+			$indices = $this->indexRepository->findWeek($year, $week);
+		} elseif (MathUtility::canBeInterpretedAsInteger($year)) {
+			$indices = $this->indexRepository->findYear($year);
 		} else {
-			$searchMode = FALSE;
 			$indices = $this->indexRepository->findList((int)$this->settings['limit']);
 		}
 
