@@ -78,6 +78,9 @@ class IndexerService extends AbstractService {
 			'all_day'
 		);
 		$record = BackendUtility::getRecord($tableName, $uid);
+		if (!$record) {
+			return;
+		}
 		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
 		if ($configurations) {
 			$timeTableService = new TimeTableService();
