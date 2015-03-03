@@ -42,8 +42,12 @@ class Register {
 				'foreign_table' => 'tx_calendarize_domain_model_configuration',
 				'minitems'      => $configuration['required'] ? 1 : 0,
 				'maxitems'      => 99,
+				'behaviour'     => array(
+					'enableCascadingDelete' => TRUE,
+				),
 			),
 		);
+
 		$GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = array(
 			'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tca.information',
 			'config' => array(
