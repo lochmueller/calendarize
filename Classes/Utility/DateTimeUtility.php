@@ -30,6 +30,16 @@ class DateTimeUtility {
 	}
 
 	/**
+	 * Time zone is set by the TYPO3 core
+	 *
+	 * @return \DateTimeZone
+	 * @see \TYPO3\CMS\Core\Core\Bootstrap->setDefaultTimezone()
+	 */
+	static public function getTimeZone() {
+		return new \DateTimeZone(date_default_timezone_get());
+	}
+
+	/**
 	 * Get a normalize date time object
 	 *
 	 * @param int|null $day
@@ -53,15 +63,5 @@ class DateTimeUtility {
 		$date->setDate($year, $month, $day);
 		$date->setTime(0, 0, 0);
 		return $date;
-	}
-
-	/**
-	 * Time zone is set by the TYPO3 core
-	 *
-	 * @return \DateTimeZone
-	 * @see \TYPO3\CMS\Core\Core\Bootstrap->setDefaultTimezone()
-	 */
-	static public function getTimeZone() {
-		return new \DateTimeZone(date_default_timezone_get());
 	}
 }

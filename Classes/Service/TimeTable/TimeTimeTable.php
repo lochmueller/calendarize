@@ -80,6 +80,37 @@ class TimeTimeTable extends AbstractTimeTable {
 	}
 
 	/**
+	 * Get the frequency date increment
+	 *
+	 * @param Configuration $configuration
+	 *
+	 * @return string
+	 */
+	protected function getFrequencyIncrement(Configuration $configuration) {
+		$interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
+		switch ($configuration->getFrequency()) {
+			case Configuration::FREQUENCY_DAILY:
+				$intervalValue = '+' . $interval . ' days';
+				break;
+			case Configuration::FREQUENCY_WEEKLY:
+				$intervalValue = '+' . $interval . ' weeks';
+				break;
+			case Configuration::FREQUENCY_MONTHLY:
+				if ($configuration->getRecurrence() !== Configuration::RECURRENCE_NONE) {
+					return FALSE;
+				}
+				$intervalValue = '+' . $interval . ' months';
+				break;
+			case Configuration::FREQUENCY_YEARLY:
+				$intervalValue = '+' . $interval . ' years';
+				break;
+			default:
+				$intervalValue = FALSE;
+		}
+		return $intervalValue;
+	}
+
+	/**
 	 * Add recurrence items
 	 *
 	 * @param array         $times
@@ -125,36 +156,5 @@ class TimeTimeTable extends AbstractTimeTable {
 			$lastLoop = $loopEntry;
 			$times[] = $loopEntry;
 		}
-	}
-
-	/**
-	 * Get the frequency date increment
-	 *
-	 * @param Configuration $configuration
-	 *
-	 * @return string
-	 */
-	protected function getFrequencyIncrement(Configuration $configuration) {
-		$interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
-		switch ($configuration->getFrequency()) {
-			case Configuration::FREQUENCY_DAILY:
-				$intervalValue = '+' . $interval . ' days';
-				break;
-			case Configuration::FREQUENCY_WEEKLY:
-				$intervalValue = '+' . $interval . ' weeks';
-				break;
-			case Configuration::FREQUENCY_MONTHLY:
-				if ($configuration->getRecurrence() !== Configuration::RECURRENCE_NONE) {
-					return FALSE;
-				}
-				$intervalValue = '+' . $interval . ' months';
-				break;
-			case Configuration::FREQUENCY_YEARLY:
-				$intervalValue = '+' . $interval . ' years';
-				break;
-			default:
-				$intervalValue = FALSE;
-		}
-		return $intervalValue;
 	}
 }

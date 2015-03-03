@@ -7,7 +7,6 @@
  * @author     Tim Lochmüller
  */
 
-
 if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
@@ -19,6 +18,5 @@ $extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extCon
 if (!(boolean)$extensionConfiguration['disableDefaultEvent']) {
 	\HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
 }
-
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar', array('Calendar' => 'list,year,month,week,day,detail,search'), array('Calendar' => 'list,year,month,week,day,detail,search'));
