@@ -28,14 +28,13 @@ class RealurlConfiguration {
 		return array_merge_recursive($params['config'], array(
 			'postVarSets' => array(
 				'_DEFAULT' => array(
-					'event' => array(
-						array('GETvar' => 'tx_calendarize_calendar[action]'),
+					'event'      => array(
 						array(
 							'GETvar'   => 'tx_calendarize_calendar[index]',
 							'userFunc' => 'HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
 						),
 					),
-					'page'  => array(
+					'event-page' => array(
 						array(
 							'GETvar' => 'tx_calendarize_calendar[@widget_0][currentPage]',
 						)
