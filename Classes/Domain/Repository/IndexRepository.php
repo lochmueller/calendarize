@@ -11,6 +11,7 @@ namespace HDNET\Calendarize\Domain\Repository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Index repository
@@ -104,8 +105,8 @@ class IndexRepository extends AbstractRepository {
 		if ($arguments['endDate'] instanceof \DateTime) {
 			$constraints[] = $query->lessThan('start_date', $arguments['endDate']);
 		}
-		if ($arguments['ids']) {
-			$constraints[] = $query->in('foreign_uid', $arguments['ids']);
+		if ($arguments['indexIds']) {
+			$constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
 		}
 		if ($constraints) {
 			$query->matching($query->logicalAnd($constraints));

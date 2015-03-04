@@ -9,6 +9,7 @@
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -211,9 +212,10 @@ class CalendarController extends ActionController {
 		}
 
 		$this->view->assignMultiple(array(
-			'startDate'    => $startDate,
-			'endDate'      => $endDate,
-			'customSearch' => $customSearch
+			'startDate'      => $startDate,
+			'endDate'        => $endDate,
+			'customSearch'   => $customSearch,
+			'configurations' => $this->getCurrentConfigurations()
 		));
 
 	}
@@ -230,6 +232,22 @@ class CalendarController extends ActionController {
 			$allowedControllerActions[$controllerName] = $controllerActions['actions'];
 		}
 		return isset($allowedControllerActions['Calendar']) ? $allowedControllerActions['Calendar'] : array();
+	}
+
+	/**
+	 * Get the current configurations
+	 *
+	 * @return array
+	 */
+	protected function getCurrentConfigurations() {
+		$configurations = GeneralUtility::trimExplode(',', $this->settings['configuration'], TRUE);
+		$return = array();
+		foreach (Register::getRegister() as $key => $configuration) {
+			if (in_array($key, $configurations)) {
+				$return[] = $configuration;
+			}
+		}
+		return $return;
 	}
 
 }

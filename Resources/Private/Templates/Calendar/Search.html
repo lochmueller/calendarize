@@ -8,11 +8,9 @@
 		<f:form.textfield name="endDate" id="calendarizeEndDate" value="{endDate -> f:format.date(format: 'd.m.Y')}" />
 	</div>
 
-	<!-- move to extension partial -->
-	<div class="form-group">
-		<label for="calendarizeExample">Custom example fulltext</label>
-		<f:form.textfield id="calendarizeExample" name="customSearch[fullText]" value="{customSearch.fullText}" />
-	</div>
+	<f:for each="{configurations}" as="configuration">
+		<f:render partial="{configuration.partialIdentifier}/Search" arguments="{customSearch: customSearch}" />
+	</f:for>
 
 	<button type="submit" class="btn btn-primary">Search</button>
 </f:form>
