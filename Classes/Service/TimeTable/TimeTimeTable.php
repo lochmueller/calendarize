@@ -102,6 +102,9 @@ class TimeTimeTable extends AbstractTimeTable {
 				$intervalValue = '+' . $interval . ' months';
 				break;
 			case Configuration::FREQUENCY_YEARLY:
+				if ($configuration->getRecurrence() !== Configuration::RECURRENCE_NONE) {
+					return FALSE;
+				}
 				$intervalValue = '+' . $interval . ' years';
 				break;
 			default:
@@ -118,9 +121,10 @@ class TimeTimeTable extends AbstractTimeTable {
 	 * @param array         $baseEntry
 	 */
 	protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry) {
-		if ($configuration->getRecurrence() === Configuration::RECURRENCE_NONE || $configuration->getDay() === Configuration::DAY_NONE || $configuration->getFrequency() !== Configuration::FREQUENCY_MONTHLY) {
+		if ($configuration->getRecurrence() === Configuration::RECURRENCE_NONE || $configuration->getDay() === Configuration::DAY_NONE) {
 			return;
 		}
+
 		$recurrenceService = new RecurrenceService();
 		$amountCounter = $configuration->getCounterAmount();
 		$tillDate = $configuration->getTillDate();
@@ -129,7 +133,13 @@ class TimeTimeTable extends AbstractTimeTable {
 		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
 			$loopEntry = $lastLoop;
 
-			$dateTime = $recurrenceService->getRecurrenceForNextMonth($loopEntry['start_date'], $configuration->getRecurrence(), $configuration->getDay());
+			if ($configuration->getFrequency() === Configuration::FREQUENCY_MONTHLY) {
+				$dateTime = $recurrenceService->getRecurrenceForNextMonth($loopEntry['start_date'], $configuration->getRecurrence(), $configuration->getDay());
+			} elseif ($configuration->getFrequency() === Configuration::FREQUENCY_YEARLY) {
+				$dateTime = $recurrenceService->getRecurrenceForNextYear($loopEntry['start_date'], $configuration->getRecurrence(), $configuration->getDay());
+			} else {
+				break;
+			}
 			if ($dateTime === FALSE) {
 				break;
 			}

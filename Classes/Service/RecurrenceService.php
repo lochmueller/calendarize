@@ -46,7 +46,25 @@ class RecurrenceService extends AbstractService {
 	}
 
 	/**
-	 * Get the date if the configuration of the next month
+	 * Get the date if the configuration of the next year
+	 *
+	 * @param \DateTime $date
+	 * @param string    $recurrence
+	 * @param string    $day
+	 *
+	 * @return \DateTime
+	 */
+	public function getRecurrenceForNextYear(\DateTime $date, $recurrence, $day) {
+		// clone and reset and move to next month
+		$dateTime = clone $date;
+		$dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
+		$dateTime->modify('+1 year');
+
+		return $this->getRecurrenceForCurrentMonth($dateTime, $recurrence, $day);
+	}
+
+	/**
+	 * Get the date if the configuration of the current month
 	 *
 	 * @param \DateTime $date
 	 * @param string    $recurrence

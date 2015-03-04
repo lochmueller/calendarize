@@ -237,9 +237,9 @@ $custom = array(
 				'default' => Configuration::DAY_SPECIAL_WEEKDAY
 			),
 			'displayCond' => array(
-				'AND' => array(
-					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+				'OR' => array(
 					'FIELD:frequency:=:' . Configuration::FREQUENCY_MONTHLY,
+					'FIELD:frequency:=:' . Configuration::FREQUENCY_YEARLY,
 				),
 			),
 		),
@@ -275,9 +275,9 @@ $custom = array(
 				'default' => Configuration::RECURRENCE_NONE
 			),
 			'displayCond' => array(
-				'AND' => array(
-					'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+				'OR' => array(
 					'FIELD:frequency:=:' . Configuration::FREQUENCY_MONTHLY,
+					'FIELD:frequency:=:' . Configuration::FREQUENCY_YEARLY,
 				),
 			),
 		),
