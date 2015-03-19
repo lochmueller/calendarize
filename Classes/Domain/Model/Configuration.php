@@ -13,7 +13,7 @@ namespace HDNET\Calendarize\Domain\Model;
  *
  * @author       Tim Lochmüller
  * @db
- * @smartExclude language,enableFields
+ * @smartExclude Language
  */
 class Configuration extends AbstractModel implements ConfigurationInterface {
 

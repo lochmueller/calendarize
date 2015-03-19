@@ -13,6 +13,7 @@ namespace HDNET\Calendarize\Domain\Model;
  *
  * @author Tim Lochmüller
  * @db
+ * @smartExclude Language
  */
 class ConfigurationGroup extends AbstractModel {
 
