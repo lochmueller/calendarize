@@ -1,0 +1,48 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Meetup//RemoteApi//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-ORIGINAL-URL:http://www.meetup.com/HNLondon/events/ical/x/
+X-WR-CALNAME:Events - x
+X-MS-OLK-FORCEINSPECTOROPEN:TRUE
+BEGIN:VTIMEZONE
+TZID:Europe/London
+TZURL:http://tzurl.org/zoneinfo-outlook/Europe/London
+X-LIC-LOCATION:Europe/London
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0000
+TZOFFSETTO:+0100
+TZNAME:BST
+DTSTART:19700329T010000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0000
+TZNAME:GMT
+DTSTART:19701025T020000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTAMP:20121013T074055Z
+DTSTART;TZID=Europe/London:20121018T183000
+DTEND;TZID=Europe/London:20121018T213000
+STATUS:CONFIRMED
+SUMMARY:#HNLondon
+DESCRIPTION:Hacker News London Meetup Group\nThursday\, October 18 at 6:3
+ 0 PM\n\nThe Hacker News London meetup is back with our usual selection o
+ f tech talks from top London hackers\, as well as a plentiful supply of 
+ beer and pizza....\n\nDetails: http://www.meetup.com/HNLondon/events/860
+ 21202/
+CLASS:PUBLIC
+CREATED:20121008T133713Z
+GEO:51.52;-0.07
+LOCATION:Central Foundation Boys School (Cowper Street\, London\, United 
+ Kingdom)
+URL:http://www.meetup.com/HNLondon/events/86021202/
+LAST-MODIFIED:20121011T225811Z
+UID:event_86021202@meetup.com
+END:VEVENT
+END:VCALENDAR

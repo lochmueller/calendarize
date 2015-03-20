@@ -40,6 +40,19 @@ class DateTimeUtility {
 	}
 
 	/**
+	 * Get the time seconds of the given date (TYPO3 Backend style)
+	 *
+	 * @param \DateTime $dateTime
+	 *
+	 * @return int
+	 */
+	static public function getDaySecondsOfDateTime(\DateTime $dateTime) {
+		$hours = (int)$dateTime->format('G');
+		$minutes = $hours * 60 + (int)$dateTime->format('i');
+		return $minutes * 60 + (int)$dateTime->format('s');
+	}
+
+	/**
 	 * Get a normalize date time object
 	 *
 	 * @param int|null $day

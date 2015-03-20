@@ -8,6 +8,7 @@
 
 namespace HDNET\Calendarize\Service;
 
+use JMBTechnologyLimited\ICalDissect\ICalParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -23,30 +24,18 @@ class IcsReaderService extends AbstractService {
 	 * @param string $paramUrl
 	 *
 	 * @return array
-	 * @todo implement caching
 	 */
 	function toArray($paramUrl) {
-		$icsFile = GeneralUtility::getUrl($paramUrl);
-		$icsData = explode("BEGIN:", $icsFile);
-		$icsDatesMeta = array();
-		$icsDates = array();
-		foreach ($icsData as $key => $value) {
-			$icsDatesMeta[$key] = explode("\n", $value);
+		$tempFileName = GeneralUtility::getFileAbsFileName('typo3temp/calendarize_temp_' . GeneralUtility::shortMD5($paramUrl));
+		if (filemtime($tempFileName) < (time() - 60 * 60)) {
+			$icsFile = GeneralUtility::getUrl($paramUrl);
+			GeneralUtility::writeFile($tempFileName, $icsFile);
 		}
 
-		foreach ($icsDatesMeta as $key => $value) {
-			foreach ($value as $subKey => $subValue) {
-				if ($subValue != "") {
-					if ($key != 0 && $subKey == 0) {
-						$icsDates[$key]["BEGIN"] = $subValue;
-					} else {
-						$subValueArr = explode(":", $subValue, 2);
-						$icsDates[$key][$subValueArr[0]] = $subValueArr[1];
-					}
-				}
-			}
+		$backend = new ICalParser();
+		if ($backend->parseFromFile($tempFileName)) {
+			return $backend->getEvents();
 		}
-
-		return $icsDates;
+		return array();
 	}
 }

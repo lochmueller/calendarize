@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:1.0
+BEGIN:VEVENT
+URL:http://techmeetupdundee.eventbrite.com
+ 
+ 
+DTSTART:20121030T183000Z
+DTEND:20121030T210000Z
+SUMMARY:TechMeetup Dundee
+DESCRIPTION:For details, click here: http://techmeetupdundee.eventbrite.com
+LOCATION:School of Computing - Queen Mother Building - University of Dundee -  Dundee - United Kingdom
+END:VEVENT
+END:VCALENDAR

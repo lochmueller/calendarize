@@ -9,7 +9,9 @@
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use JMBTechnologyLimited\ICalDissect\ICalEvent;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -19,6 +21,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Tim Lochmüller
  */
 class ExternalTimeTable extends AbstractTimeTable {
+
+	/**
+	 * Seconds of 23:59:59 that mark the day end in the ICS parser
+	 */
+	const DAY_END = 86399;
 
 	/**
 	 * ICS reader service
@@ -35,7 +42,6 @@ class ExternalTimeTable extends AbstractTimeTable {
 	 * @param Configuration $configuration
 	 *
 	 * @return void
-	 * @todo implement
 	 */
 	public function handleConfiguration(array &$times, Configuration $configuration) {
 		$url = $configuration->getExternalIcsUrl();
@@ -44,10 +50,22 @@ class ExternalTimeTable extends AbstractTimeTable {
 			return;
 		}
 
-		HelperUtility::createFlashMessage('ICS Import is not implemented yet', 'Index ICS URL', FlashMessage::NOTICE);
-
-		#$events = $this->icsReaderService->toArray($url);
-		#DebuggerUtility::var_dump($events);
+		$events = $this->icsReaderService->toArray($url);
+		foreach ($events as $event) {
+			/** @var $event ICalEvent */
+			$startTime = DateTimeUtility::getDaySecondsOfDateTime($event->getStart());
+			$endTime = DateTimeUtility::getDaySecondsOfDateTime($event->getEnd());
+			if ($endTime === self::DAY_END) {
+				$endTime = 0;
+			}
+			$entry = array(
+				'start_date' => $event->getStart(),
+				'end_date'   => $event->getEnd(),
+				'start_time' => $startTime,
+				'end_time'   => $endTime,
+				'all_day'    => $endTime === 0,
+			);
+			$times[] = $entry;
+		}
 	}
-
 }

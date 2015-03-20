@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//JarOfGreen//NONSGML JarOfGreenWikiCalendarBundle//EN
+BEGIN:VEVENT
+UID:event-166@opentechcalendar.co.uk
+SUMMARY:Test 3 SpecFic Writing Group
+DESCRIPTION:Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Do
+ g Lizard
+URL:http://opentechcalendar.co.uk/index.php/event/166
+DTSTART:20121112T180000Z
+DTEND:20121112T203000Z
+END:VEVENT
+END:VCALENDAR

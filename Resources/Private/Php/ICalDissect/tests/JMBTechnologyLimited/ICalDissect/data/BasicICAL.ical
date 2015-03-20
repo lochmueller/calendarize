@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//JarOfGreen//NONSGML JarOfGreenWikiCalendarBundle//EN
+BEGIN:VEVENT
+UID:event-166@opentechcalendar.co.uk
+SUMMARY:Test 3 SpecFic Writing Group
+DESCRIPTION:http://opentechcalendar.co.uk/index.php/event/166
+URL:http://opentechcalendar.co.uk/index.php/event/166
+DTSTART:20131112T180000Z
+DTEND:20131112T203000Z
+END:VEVENT
+END:VCALENDAR
