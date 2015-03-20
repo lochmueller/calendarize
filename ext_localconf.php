@@ -11,11 +11,9 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
-
 \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
 
-if (!(boolean)$extensionConfiguration['disableDefaultEvent']) {
+if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
 	\HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
 }
 

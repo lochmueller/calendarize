@@ -6,11 +6,9 @@
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Event');
 
-$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
-
 $custom = array(
 	'ctrl'    => array(
-		'hideTable'    => (boolean)$extensionConfiguration['disableDefaultEvent'],
+		'hideTable'    => (boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent'),
 		'searchFields' => 'uid,title,description',
 		'thumbnail'    => 'images',
 	),

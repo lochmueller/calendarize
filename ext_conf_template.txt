@@ -1,2 +1,5 @@
 # cat=basic/enable; type=boolean; label=Disable default event:Disable the default event table in the list view and in the registration
 disableDefaultEvent = 0
+
+# cat=basic/int+; type=int+; label=Frequency limit per item:Set the maximum level of iteration of frequency events to avoid endless indexing
+frequencyLimitPerItem = 300

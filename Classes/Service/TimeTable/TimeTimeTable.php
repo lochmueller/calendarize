@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\RecurrenceService;
+use HDNET\Calendarize\Utility\ConfigurationUtility;
 
 /**
  * Time service
@@ -55,7 +56,7 @@ class TimeTimeTable extends AbstractTimeTable {
 		}
 		$amountCounter = $configuration->getCounterAmount();
 		$tillDate = $configuration->getTillDate();
-		$maxLimit = 999;
+		$maxLimit = $this->getFrequencyLimitPerItem();
 		$lastLoop = $baseEntry;
 		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
 			$loopEntry = $lastLoop;
@@ -128,7 +129,7 @@ class TimeTimeTable extends AbstractTimeTable {
 		$recurrenceService = new RecurrenceService();
 		$amountCounter = $configuration->getCounterAmount();
 		$tillDate = $configuration->getTillDate();
-		$maxLimit = 999;
+		$maxLimit = $this->getFrequencyLimitPerItem();
 		$lastLoop = $baseEntry;
 		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
 			$loopEntry = $lastLoop;
@@ -158,7 +159,6 @@ class TimeTimeTable extends AbstractTimeTable {
 			$endDate->modify($frequencyIncrement);
 			$loopEntry['end_date'] = $endDate;
 
-
 			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
 				break;
 			}
@@ -166,5 +166,18 @@ class TimeTimeTable extends AbstractTimeTable {
 			$lastLoop = $loopEntry;
 			$times[] = $loopEntry;
 		}
+	}
+
+	/**
+	 * Get the limit of the frequency
+	 *
+	 * @return int
+	 */
+	protected function getFrequencyLimitPerItem() {
+		$maxLimit = (int)ConfigurationUtility::get('frequencyLimitPerItem');
+		if ($maxLimit <= 0) {
+			$maxLimit = 300;
+		}
+		return $maxLimit;
 	}
 }
