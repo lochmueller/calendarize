@@ -77,11 +77,12 @@ class IndexerService extends AbstractService {
 			'end_time',
 			'all_day'
 		);
-		$record = BackendUtility::getRecord($tableName, $uid);
-		if (!$record) {
+		$rawRecord = BackendUtility::getRecord($tableName, $uid);
+		if (!$rawRecord) {
 			return;
 		}
-		$configurations = GeneralUtility::intExplode(',', $record['calendarize'], TRUE);
+		$configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], TRUE);
+		$neededItems = array();
 		if ($configurations) {
 			$timeTableService = new TimeTableService();
 			$neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
@@ -94,9 +95,9 @@ class IndexerService extends AbstractService {
 				$this->prepareRecordForDatabase($record);
 				$neededItems[$key] = $record;
 			}
-		} else {
-			$neededItems = array();
 		}
+
+		$this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
 
 		$currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperty), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
 		foreach ($neededItems as $neededKey => $neededItem) {
@@ -104,7 +105,8 @@ class IndexerService extends AbstractService {
 			foreach ($currentItems as $currentKey => $currentItem) {
 				$same = TRUE;
 				foreach ($checkProperty as $check) {
-					if ((int)$neededItem[$check] !== (int)$currentItem[$check]) {
+					// no type check, because there is also the fe_group field
+					if ($neededItem[$check] != $currentItem[$check]) {
 						$same = FALSE;
 						break;
 					}
@@ -124,8 +126,41 @@ class IndexerService extends AbstractService {
 		foreach ($currentItems as $item) {
 			$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
 		}
-		foreach ($neededItems as $record) {
-			$databaseConnection->exec_INSERTquery(self::TABLE_NAME, $record);
+		foreach ($neededItems as $item) {
+			$databaseConnection->exec_INSERTquery(self::TABLE_NAME, $item);
+		}
+	}
+
+	/**
+	 * @param array  $neededItems
+	 * @param string $tableName
+	 * @param array  $record
+	 */
+	protected function addEnableFieldInformation(array &$neededItems, $tableName, array $record) {
+		if (!isset($GLOBALS['TCA'][$tableName])) {
+			return;
+		}
+		$enableFields = isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']) ? $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] : array();
+		if (!$enableFields) {
+			return;
+		}
+
+		$addFields = array();
+		if (isset($enableFields['disabled'])) {
+			$addFields['hidden'] = (int)$record[$enableFields['disabled']];
+		}
+		if (isset($enableFields['starttime'])) {
+			$addFields['starttime'] = (int)$record[$enableFields['starttime']];
+		}
+		if (isset($enableFields['endtime'])) {
+			$addFields['endtime'] = (int)$record[$enableFields['endtime']];
+		}
+		if (isset($enableFields['fe_group'])) {
+			$addFields['fe_group'] = (string)$record[$enableFields['fe_group']];
+		}
+
+		foreach ($neededItems as $key => $value) {
+			$neededItems[$key] = array_merge($value, $addFields);
 		}
 	}
 
