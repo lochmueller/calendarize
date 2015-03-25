@@ -24,13 +24,12 @@ class MonthViewHelper extends AbstractLinkViewHelper {
 	 * @return string
 	 */
 	public function render(\DateTime $date, $pageUid = NULL) {
-		$pageUid = $pageUid === NULL ? $GLOBALS['TSFE']->id : $pageUid;
 		$additionalParams = array(
 			'tx_calendarize_calendar' => array(
 				'year'  => $date->format('Y'),
 				'month' => $date->format('n'),
 			),
 		);
-		return parent::render($pageUid, $additionalParams);
+		return parent::render($this->getPageUid($pageUid), $additionalParams);
 	}
 }

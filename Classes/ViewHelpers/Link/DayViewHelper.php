@@ -24,7 +24,6 @@ class DayViewHelper extends AbstractLinkViewHelper {
 	 * @return string
 	 */
 	public function render(\DateTime $date, $pageUid = NULL) {
-		$pageUid = $pageUid === NULL ? $GLOBALS['TSFE']->id : $pageUid;
 		$additionalParams = array(
 			'tx_calendarize_calendar' => array(
 				'year'  => $date->format('Y'),
@@ -32,6 +31,6 @@ class DayViewHelper extends AbstractLinkViewHelper {
 				'day'   => $date->format('j'),
 			),
 		);
-		return parent::render($pageUid, $additionalParams);
+		return parent::render($this->getPageUid($pageUid), $additionalParams);
 	}
 }

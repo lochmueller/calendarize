@@ -21,18 +21,18 @@ abstract class AbstractLinkViewHelper extends PageViewHelper {
 	/**
 	 * Get the right page Uid
 	 *
-	 * @param $pageUid
-	 * @param $contextName
+	 * @param int         $pageUid
+	 * @param string|NULL $contextName
 	 *
 	 * @return int
 	 */
-	protected function getPageUid($pageUid, $contextName) {
+	protected function getPageUid($pageUid, $contextName = NULL) {
 		if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
 			return (int)$pageUid;
 		}
 
 		// by settings
-		if ($this->templateVariableContainer->exists('settings')) {
+		if ($contextName && $this->templateVariableContainer->exists('settings')) {
 			$settings = $this->templateVariableContainer->get('settings');
 			if (isset($settings[$contextName]) && MathUtility::canBeInterpretedAsInteger($settings[$contextName])) {
 				return (int)$settings[$contextName];
