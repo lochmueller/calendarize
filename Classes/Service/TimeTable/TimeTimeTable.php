@@ -59,17 +59,7 @@ class TimeTimeTable extends AbstractTimeTable {
 		$maxLimit = $this->getFrequencyLimitPerItem();
 		$lastLoop = $baseEntry;
 		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
-			$loopEntry = $lastLoop;
-
-			/** @var $startDate \DateTime */
-			$startDate = clone $loopEntry['start_date'];
-			$startDate->modify($frequencyIncrement);
-			$loopEntry['start_date'] = $startDate;
-
-			/** @var $endDate \DateTime */
-			$endDate = clone $loopEntry['end_date'];
-			$endDate->modify($frequencyIncrement);
-			$loopEntry['end_date'] = $endDate;
+			$loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
 			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
 				break;
@@ -78,6 +68,27 @@ class TimeTimeTable extends AbstractTimeTable {
 			$lastLoop = $loopEntry;
 			$times[] = $loopEntry;
 		}
+	}
+
+	/**
+	 * Create the next loop entry
+	 *
+	 * @param array  $loopEntry
+	 * @param string $modification
+	 *
+	 * @return mixed
+	 */
+	protected function createNextLoopEntry($loopEntry, $modification) {
+		/** @var $startDate \DateTime */
+		$startDate = clone $loopEntry['start_date'];
+		$startDate->modify($modification);
+		$loopEntry['start_date'] = $startDate;
+
+		/** @var $endDate \DateTime */
+		$endDate = clone $loopEntry['end_date'];
+		$endDate->modify($modification);
+		$loopEntry['end_date'] = $endDate;
+		return $loopEntry;
 	}
 
 	/**
@@ -134,12 +145,11 @@ class TimeTimeTable extends AbstractTimeTable {
 		for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
 			$loopEntry = $lastLoop;
 
+			$dateTime = FALSE;
 			if ($configuration->getFrequency() === Configuration::FREQUENCY_MONTHLY) {
 				$dateTime = $recurrenceService->getRecurrenceForNextMonth($loopEntry['start_date'], $configuration->getRecurrence(), $configuration->getDay());
 			} elseif ($configuration->getFrequency() === Configuration::FREQUENCY_YEARLY) {
 				$dateTime = $recurrenceService->getRecurrenceForNextYear($loopEntry['start_date'], $configuration->getRecurrence(), $configuration->getDay());
-			} else {
-				break;
 			}
 			if ($dateTime === FALSE) {
 				break;
@@ -149,15 +159,7 @@ class TimeTimeTable extends AbstractTimeTable {
 			$interval = $loopEntry['start_date']->diff($dateTime);
 			$frequencyIncrement = $interval->format('%R%a days');
 
-			/** @var $startDate \DateTime */
-			$startDate = clone $loopEntry['start_date'];
-			$startDate->modify($frequencyIncrement);
-			$loopEntry['start_date'] = $startDate;
-
-			/** @var $endDate \DateTime */
-			$endDate = clone $loopEntry['end_date'];
-			$endDate->modify($frequencyIncrement);
-			$loopEntry['end_date'] = $endDate;
+			$loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
 
 			if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
 				break;

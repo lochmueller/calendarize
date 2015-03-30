@@ -69,14 +69,6 @@ class IndexerService extends AbstractService {
 	 * @return void
 	 */
 	protected function updateIndex($configurationKey, $tableName, $uid) {
-		$databaseConnection = HelperUtility::getDatabaseConnection();
-		$checkProperty = array(
-			'start_date',
-			'end_date',
-			'start_time',
-			'end_time',
-			'all_day'
-		);
 		$rawRecord = BackendUtility::getRecord($tableName, $uid);
 		if (!$rawRecord) {
 			return;
@@ -98,21 +90,30 @@ class IndexerService extends AbstractService {
 		}
 
 		$this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
+		$this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);
+	}
 
-		$currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperty), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
+	/**
+	 * Insert and/or update the needed index records
+	 *
+	 * @param array  $neededItems
+	 * @param string $tableName
+	 * @param int    $uid
+	 */
+	protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid) {
+		$databaseConnection = HelperUtility::getDatabaseConnection();
+		$checkProperties = array(
+			'start_date',
+			'end_date',
+			'start_time',
+			'end_time',
+			'all_day'
+		);
+		$currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperties), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
 		foreach ($neededItems as $neededKey => $neededItem) {
 			$remove = FALSE;
 			foreach ($currentItems as $currentKey => $currentItem) {
-				$same = TRUE;
-				foreach ($checkProperty as $check) {
-					// no type check, because there is also the fe_group field
-					if ($neededItem[$check] != $currentItem[$check]) {
-						$same = FALSE;
-						break;
-					}
-				}
-
-				if ($same) {
+				if ($this->isEqualArray($neededItem, $currentItem, $checkProperties)) {
 					$remove = TRUE;
 					unset($neededItems[$neededKey]);
 					unset($currentItems[$currentKey]);
@@ -129,6 +130,25 @@ class IndexerService extends AbstractService {
 		foreach ($neededItems as $item) {
 			$databaseConnection->exec_INSERTquery(self::TABLE_NAME, $item);
 		}
+	}
+
+	/**
+	 * Check if the properties of the given arrays are equals
+	 *
+	 * @param array $array1
+	 * @param array $array2
+	 * @param array $checkProperties
+	 *
+	 * @return bool
+	 */
+	protected function isEqualArray(array $array1, array $array2, array $checkProperties) {
+		foreach ($checkProperties as $check) {
+			// no type check, because there is also the fe_group field
+			if ($array1[$check] != $array2[$check]) {
+				return FALSE;
+			}
+		}
+		return TRUE;
 	}
 
 	/**
