@@ -28,14 +28,14 @@ class TimeTimeTable extends AbstractTimeTable {
 	 * @return void
 	 */
 	public function handleConfiguration(array &$times, Configuration $configuration) {
-		$startTime = $configuration->getAllDay() ? NULL : $configuration->getStartTime();
-		$endTime = $configuration->getAllDay() ? NULL : $configuration->getEndTime();
+		$startTime = $configuration->isAllDay() ? NULL : $configuration->getStartTime();
+		$endTime = $configuration->isAllDay() ? NULL : $configuration->getEndTime();
 		$baseEntry = array(
 			'start_date' => $configuration->getStartDate(),
 			'end_date'   => $configuration->getEndDate(),
 			'start_time' => $startTime,
 			'end_time'   => $endTime,
-			'all_day'    => $configuration->getAllDay(),
+			'all_day'    => $configuration->isAllDay(),
 		);
 		$times[] = $baseEntry;
 		$this->addFrequencyItems($times, $configuration, $baseEntry);

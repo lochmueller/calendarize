@@ -35,7 +35,7 @@ class CmsLayout {
 	 *
 	 * @var ContentElementLayoutService
 	 */
-	protected $contentElementLayoutService;
+	protected $layoutService;
 
 	/**
 	 * Returns information about this extension plugin
@@ -48,9 +48,8 @@ class CmsLayout {
 	public function getExtensionSummary(array $params) {
 		$relIconPath = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ExtensionManagementUtility::siteRelPath('calendarize') . 'ext_icon.png';
 		$this->flexFormService = new FlexFormService();
-		$this->contentElementLayoutService = new ContentElementLayoutService();
-		$this->contentElementLayoutService->setTitle('<img src="' . $relIconPath . '" /> Calendarize');
-
+		$this->layoutService = new ContentElementLayoutService();
+		$this->layoutService->setTitle('<img src="' . $relIconPath . '" /> Calendarize');
 
 		if ($params['row']['list_type'] != 'calendarize_calendar') {
 			return '';
@@ -67,14 +66,14 @@ class CmsLayout {
 		}, $parts);
 		$actionKey = lcfirst(implode('', $parts));
 
-		$this->contentElementLayoutService->addRow(LocalizationUtility::translate('mode', 'calendarize'), LocalizationUtility::translate('mode.' . $actionKey, 'calendarize'));
-		$this->contentElementLayoutService->addRow(LocalizationUtility::translate('configuration', 'calendarize'), $this->flexFormService->get('settings.configuration', 'main'));
+		$this->layoutService->addRow(LocalizationUtility::translate('mode', 'calendarize'), LocalizationUtility::translate('mode.' . $actionKey, 'calendarize'));
+		$this->layoutService->addRow(LocalizationUtility::translate('configuration', 'calendarize'), $this->flexFormService->get('settings.configuration', 'main'));
 
 		if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
-			$this->contentElementLayoutService->addRow(LocalizationUtility::translate('hide.pagination.teaser', 'calendarize'), '!!!');
+			$this->layoutService->addRow(LocalizationUtility::translate('hide.pagination.teaser', 'calendarize'), '!!!');
 		}
 		$this->addPageIdsToTable();
-		return $this->contentElementLayoutService->render();
+		return $this->layoutService->render();
 	}
 
 	/**
@@ -93,7 +92,7 @@ class CmsLayout {
 			$pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
 			$pageRow = BackendUtility::getRecord('pages', $pageId);
 			if ($pageRow) {
-				$this->contentElementLayoutService->addRow(LocalizationUtility::translate($pageIdName, 'calendarize'), $pageRow['title'] . ' (' . $pageId . ')');
+				$this->layoutService->addRow(LocalizationUtility::translate($pageIdName, 'calendarize'), $pageRow['title'] . ' (' . $pageId . ')');
 			}
 		}
 	}

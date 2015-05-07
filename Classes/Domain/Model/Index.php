@@ -205,12 +205,12 @@ class Index extends AbstractModel {
 	}
 
 	/**
-	 * Get all day
+	 * Is all day
 	 *
 	 * @return boolean
 	 */
-	public function getAllDay() {
-		return $this->allDay;
+	public function isAllDay() {
+		return (bool)$this->allDay;
 	}
 
 	/**

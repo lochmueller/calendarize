@@ -157,9 +157,6 @@ class IndexerService extends AbstractService {
 	 * @param array  $record
 	 */
 	protected function addEnableFieldInformation(array &$neededItems, $tableName, array $record) {
-		if (!isset($GLOBALS['TCA'][$tableName])) {
-			return;
-		}
 		$enableFields = isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']) ? $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] : array();
 		if (!$enableFields) {
 			return;
@@ -216,16 +213,17 @@ class IndexerService extends AbstractService {
 		foreach ($rows as $row) {
 			$ids[] = $row['uid'];
 		}
+		$where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME);
 		if ($ids) {
-			$where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME) . ' AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
-		} else {
-			$where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME);
+			$where .= ' AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
 		}
 		$databaseConnection->exec_DELETEquery(self::TABLE_NAME, $where);
 	}
 
 	/**
 	 * Remove index Items of configurations that are not valid anymore
+	 *
+	 * @return bool
 	 */
 	protected function removeInvalidConfigurationIndex() {
 		$validKeys = array_keys(Register::getRegister());
@@ -234,10 +232,9 @@ class IndexerService extends AbstractService {
 			foreach ($validKeys as $key => $value) {
 				$validKeys[$key] = $databaseConnection->fullQuoteStr($value, IndexerService::TABLE_NAME);
 			}
-			$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN (' . implode(',', $validKeys) . ')');
-		} else {
-			$databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
+			return (bool)$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN (' . implode(',', $validKeys) . ')');
 		}
+		return (bool)$databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
 	}
 
 }

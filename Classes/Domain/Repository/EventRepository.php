@@ -8,8 +8,6 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * Event repository
  *

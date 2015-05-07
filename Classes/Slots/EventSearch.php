@@ -33,7 +33,7 @@ class EventSearch {
 	 */
 	public function setIdsByCustomSearch(array $indexIds, \DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch) {
 		if (!isset($customSearch['fullText'])) {
-			return;
+			return NULL;
 		}
 		/** @var EventRepository $eventRepository */
 		$eventRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\EventRepository');

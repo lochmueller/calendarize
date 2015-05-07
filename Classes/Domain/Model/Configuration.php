@@ -151,11 +151,11 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	}
 
 	/**
-	 * Get all day
+	 * Is all day
 	 *
 	 * @return boolean
 	 */
-	public function getAllDay() {
+	public function isAllDay() {
 		return (bool)$this->allDay;
 	}
 
@@ -165,7 +165,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface {
 	 * @param boolean $allDay
 	 */
 	public function setAllDay($allDay) {
-		$this->allDay = $allDay;
+		$this->allDay = (bool)$allDay;
 	}
 
 	/**
