@@ -1,9 +1,26 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="Main">
 
-	<f:format.date format="d.m.Y">{previous}</f:format.date>
-	previous day Link
+	<f:if condition="{settings.dayPid}">
+		<div class="browser">
+
+			<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{previous}">
+				<c:link.day pageUid="{settings.dayPid}" date="{previous}">
+					&lt; <f:format.date format="d.m.Y">{previous}</f:format.date>
+				</c:link.day>
+			</c:ifDateUpper>
+
+			<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{next}">
+				<c:link.day pageUid="{settings.dayPid}" date="{next}">
+					<f:format.date format="d.m.Y">{next}</f:format.date> &gt;
+				</c:link.day>
+			</c:ifDateLower>
+
+		</div>
+	</f:if>
 
 	<h1>
 		<f:format.date format="d.m.Y">{today}</f:format.date>
@@ -19,8 +36,5 @@
 			<f:translate key="noEvents.day" />
 		</f:else>
 	</f:if>
-
-	<f:format.date format="d.m.Y">{next}</f:format.date>
-	next day Link
 
 </f:section>

@@ -7,7 +7,28 @@
 		<thead>
 			<tr>
 				<td colspan="4">
+
+					<f:if condition="{settings.yearPid}">
+						<c:dateTime.modify modification="-1 year">{date}</c:dateTime.modify>
+						<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{date}">
+							<c:link.year pageUid="{settings.yearPid}" date="{date}">
+								&lt;
+							</c:link.year>
+						</c:ifDateUpper>
+						<c:dateTime.modify modification="+1 year">{date}</c:dateTime.modify>
+					</f:if>
+
 					<f:format.date format="Y">{date}</f:format.date>
+
+					<f:if condition="{settings.yearPid}">
+						<c:dateTime.modify modification="+1 year">{date}</c:dateTime.modify>
+						<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{date}">
+							<c:link.year pageUid="{settings.yearPid}" date="{date}">
+								&gt;
+							</c:link.year>
+						</c:ifDateLower>
+						<c:dateTime.modify modification="-1 year">{date}</c:dateTime.modify>
+					</f:if>
 				</td>
 			</tr>
 		</thead>

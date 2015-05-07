@@ -3,6 +3,30 @@
 
 <f:section name="Main">
 
+	<f:if condition="{settings.weekPid}">
+		<div class="browser">
+			<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
+			<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{firstDay}">
+				<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
+					&lt;
+				</c:link.week>
+			</c:ifDateUpper>
+			<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
+
+			<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
+			<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{firstDay}">
+				<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
+					&gt;
+				</c:link.week>
+			</c:ifDateLower>
+			<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
+		</div>
+	</f:if>
+
+	<h1>
+		<f:format.date format="Y">{firstDay}</f:format.date> week <f:format.date format="W">{firstDay}</f:format.date>
+	</h1>
+
 	<div class="row">
 		<f:for each="{0:2,1:2,2:2,3:2,4:2,5:1,6:1}" key="count" as="cols">
 			<div class="col-md-{cols}">
