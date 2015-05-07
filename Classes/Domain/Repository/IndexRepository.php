@@ -11,7 +11,6 @@ namespace HDNET\Calendarize\Domain\Repository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Index repository
@@ -68,7 +67,16 @@ class IndexRepository extends AbstractRepository {
 	public function findList($limit = 0) {
 		$query = $this->createQuery();
 		$constraints = $this->getDefaultConstraints($query);
-		$constraints[] = $query->greaterThan('start_date', time());
+
+		// time check
+		$orConstraint = array();
+		$orConstraint[] = $query->greaterThanOrEqual('start_date', time());
+		$orConstraint[] = $query->logicalAnd(array(
+			$query->lessThanOrEqual('start_date', time()),
+			$query->greaterThanOrEqual('end_date', time())
+		));
+
+		$constraints[] = $query->logicalOr($orConstraint);
 		$query->matching($query->logicalAnd($constraints));
 
 		if ($limit > 0) {
