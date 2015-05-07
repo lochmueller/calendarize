@@ -96,7 +96,7 @@ class RecurrenceService extends AbstractService {
 	}
 
 	/**
-	 * Numbers are match against the date format "N" 1 => mon till 7 => sun
+	 * Numbers are match against the date format 'N' 1 => mon till 7 => sun
 	 *
 	 * @param string $day
 	 *

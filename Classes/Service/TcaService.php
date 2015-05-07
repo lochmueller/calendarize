@@ -79,7 +79,7 @@ class TcaService extends AbstractService {
 		if ($row['all_day']) {
 			$title .= ' ' . LocalizationUtility::translate('tx_calendarize_domain_model_index.all_day', 'calendarize');
 		} elseif ($row['start_time']) {
-			$title .= "<br />" . BackendUtility::time($row['start_time'], FALSE);
+			$title .= '<br />' . BackendUtility::time($row['start_time'], FALSE);
 			$title .= ' - ' . BackendUtility::time($row['end_time'], FALSE);
 		}
 

@@ -109,7 +109,7 @@ class IndexerService extends AbstractService {
 			'end_time',
 			'all_day'
 		);
-		$currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperties), self::TABLE_NAME, 'foreign_table="' . $tableName . '" AND foreign_uid=' . $uid);
+		$currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperties), self::TABLE_NAME, 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME) . ' AND foreign_uid=' . $uid);
 		foreach ($neededItems as $neededKey => $neededItem) {
 			$remove = FALSE;
 			foreach ($currentItems as $currentKey => $currentItem) {
@@ -217,9 +217,9 @@ class IndexerService extends AbstractService {
 			$ids[] = $row['uid'];
 		}
 		if ($ids) {
-			$where = 'foreign_table = "' . $tableName . '" AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
+			$where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME) . ' AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
 		} else {
-			$where = 'foreign_table = "' . $tableName . '"';
+			$where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME);
 		}
 		$databaseConnection->exec_DELETEquery(self::TABLE_NAME, $where);
 	}
@@ -231,7 +231,10 @@ class IndexerService extends AbstractService {
 		$validKeys = array_keys(Register::getRegister());
 		$databaseConnection = HelperUtility::getDatabaseConnection();
 		if ($validKeys) {
-			$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN ("' . implode('","', $validKeys) . '")');
+			foreach ($validKeys as $key => $value) {
+				$validKeys[$key] = $databaseConnection->fullQuoteStr($value, IndexerService::TABLE_NAME);
+			}
+			$databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'unique_register_key NOT IN (' . implode(',', $validKeys) . ')');
 		} else {
 			$databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
 		}

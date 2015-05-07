@@ -8,6 +8,7 @@
 
 namespace HDNET\Calendarize\UserFunction;
 
+use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -55,7 +56,6 @@ class TcaInformation {
 				$start = BackendUtility::time($event['start_time'], FALSE);
 				$end = BackendUtility::time($event['end_time'], FALSE);
 				$entry .= ' (' . $start . ' - ' . $end . ')';
-
 			}
 			$items[] = $entry;
 		}
@@ -74,8 +74,8 @@ class TcaInformation {
 	 * @return mixed
 	 */
 	protected function getIndexCount($table, $uid) {
-		return HelperUtility::getDatabaseConnection()
-			->exec_SELECTcountRows('*', 'tx_calendarize_domain_model_index', 'foreign_table="' . $table . '" AND foreign_uid=' . (int)$uid);
+		$databaseConnection = HelperUtility::getDatabaseConnection();
+		return $databaseConnection->exec_SELECTcountRows('*', IndexerService::TABLE_NAME, 'foreign_table=' . $databaseConnection->fullQuoteStr($table, IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
 	}
 
 	/**
@@ -88,8 +88,7 @@ class TcaInformation {
 	 * @return array|NULL
 	 */
 	protected function getNextEvents($table, $uid, $limit = 5) {
-		return HelperUtility::getDatabaseConnection()
-			->exec_SELECTgetRows('*', 'tx_calendarize_domain_model_index', 'start_date > ' . time() . ' AND foreign_table="' . $table . '" AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
-
+		$databaseConnection = HelperUtility::getDatabaseConnection();
+		return $databaseConnection->exec_SELECTgetRows('*', IndexerService::TABLE_NAME, 'start_date > ' . time() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table, IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
 	}
 }
