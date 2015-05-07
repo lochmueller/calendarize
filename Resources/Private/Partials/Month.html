@@ -39,12 +39,12 @@
 										<f:format.date format="d">{day.calendar.date}</f:format.date>
 									</f:else>
 								</f:if>
-								<f:if condition="{settings.dayPid}">
+								<f:if condition="{settings.detailPid}">
 									<ul class="events">
 										<f:for each="{indices}" as="index">
 											<f:if condition="{c:dateTime.indexOnDay(index: index, day:day.calendar.date)}">
 												<li>
-													<c:link.index index="{index}" pageUid="{settings.dayPid}">
+													<c:link.index index="{index}" pageUid="{settings.detailPid}">
 														<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
 													</c:link.index>
 												</li>
