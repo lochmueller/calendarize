@@ -77,4 +77,20 @@ class DateTimeUtility {
 		$date->setTime(0, 0, 0);
 		return $date;
 	}
+
+	/**
+	 * Get a normalize date time object
+	 *
+	 * @param int|null|\DateTime $dateTimeOrString
+	 *
+	 * @return \DateTime
+	 */
+	static public function normalizeDateTimeSingle($dateTimeOrString) {
+		if ($dateTimeOrString instanceof \DateTime) {
+			return $dateTimeOrString;
+		} elseif (!is_string($dateTimeOrString)) {
+			$dateTimeOrString = 'now';
+		}
+		return new \DateTime($dateTimeOrString, DateTimeUtility::getTimeZone());
+	}
 }

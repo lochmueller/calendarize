@@ -2,6 +2,15 @@
  * Configuration
  */
 plugin.tx_calendarize {
+
+	settings {
+		# Limit for the previous button in the day,week,month,year view
+		dateLimitBrowserPrev = 2012-01-01
+
+		# Limit for the next button in the day,week,month,year view
+		dateLimitBrowserNext = 2020-01-01
+	}
+
 	mvc.callDefaultActionIfActionCantBeResolved = 1
 
 	view {
