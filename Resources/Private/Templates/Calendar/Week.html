@@ -31,7 +31,7 @@
 		<f:for each="{0:2,1:2,2:2,3:2,4:2,5:1,6:1}" key="count" as="cols">
 			<div class="col-md-{cols}">
 				<c:dateTime.modify modification="+1 day">{firstDay}</c:dateTime.modify>
-				<f:format.date format="d.m.Y">{firstDay}</f:format.date>
+				<f:format.date format="{settings.dateFormat}">{firstDay}</f:format.date>
 				<f:for each="{indices}" as="index">
 					<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay)}">
 						<li>

@@ -9,13 +9,13 @@
 
 			<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{previous}">
 				<c:link.day pageUid="{settings.dayPid}" date="{previous}">
-					&lt; <f:format.date format="d.m.Y">{previous}</f:format.date>
+					&lt; <f:format.date format="{settings.dateFormat}">{previous}</f:format.date>
 				</c:link.day>
 			</c:ifDateUpper>
 
 			<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{next}">
 				<c:link.day pageUid="{settings.dayPid}" date="{next}">
-					<f:format.date format="d.m.Y">{next}</f:format.date> &gt;
+					<f:format.date format="{settings.dateFormat}">{next}</f:format.date> &gt;
 				</c:link.day>
 			</c:ifDateLower>
 
@@ -23,7 +23,7 @@
 	</f:if>
 
 	<h1>
-		<f:format.date format="d.m.Y">{today}</f:format.date>
+		<f:format.date format="{settings.dateFormat}">{today}</f:format.date>
 	</h1>
 
 	<f:if condition="{indices}">

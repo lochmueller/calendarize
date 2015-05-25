@@ -9,6 +9,9 @@ plugin.tx_calendarize {
 
 		# Limit for the next button in the day,week,month,year view
 		dateLimitBrowserNext = 2020-01-01
+
+		# date format - http://php.net/manual/de/function.date.php
+		dateFormat = d.m.Y
 	}
 
 	mvc.callDefaultActionIfActionCantBeResolved = 1

@@ -41,11 +41,11 @@ class CalendarController extends ActionController {
 
 		if (isset($this->arguments['startDate'])) {
 			$this->arguments['startDate']->getPropertyMappingConfiguration()
-				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'd.m.Y');
+				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, $this->settings['dateFormat']);
 		}
 		if (isset($this->arguments['endDate'])) {
 			$this->arguments['endDate']->getPropertyMappingConfiguration()
-				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, 'd.m.Y');
+				->setTypeConverterOption('TYPO3\\CMS\\Extbase\\Property\\TypeConverter\\DateTimeConverter', DateTimeConverter::CONFIGURATION_DATE_FORMAT, $this->settings['dateFormat']);
 		}
 	}
 
