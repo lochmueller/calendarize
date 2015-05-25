@@ -12,6 +12,9 @@ plugin.tx_calendarize {
 
 		# date format - http://php.net/manual/de/function.date.php
 		dateFormat = d.m.Y
+
+		# time format - http://php.net/manual/de/function.date.php
+		timeFormat = H:i
 	}
 
 	mvc.callDefaultActionIfActionCantBeResolved = 1
