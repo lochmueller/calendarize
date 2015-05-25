@@ -1,6 +1,12 @@
 ChangeLog
 ---------
 
+2015-05-25 Tim Lochmüller
+
+- Add time format
+- Add date format
+- Add week start of the week (experimental)
+
 2015-05-08 Tim Lochmüller
 
 - Support dbal by removing double quotes in the SQL queries
