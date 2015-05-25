@@ -8,6 +8,8 @@
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
+use TYPO3\CMS\Core\Utility\MathUtility;
+
 /**
  * Weeks in month view helper
  *
@@ -16,11 +18,34 @@ namespace HDNET\Calendarize\ViewHelpers\Loop;
 class WeeksInMonthViewHelper extends AbstractLoopViewHelper {
 
 	/**
+	 * The week start at
+	 *
+	 * @var int
+	 */
+	protected $weekStartsAt;
+
+	/**
+	 * Render the element
+	 *
+	 * @param \DateTime $date
+	 * @param string    $iteration
+	 * @param int       $weekStartsAt
+	 *
+	 * @return string
+	 * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+	 */
+	public function render(\DateTime $date, $iteration, $weekStartsAt) {
+		$this->weekStartsAt = MathUtility::forceIntegerInRange((int)$weekStartsAt, 1, 7, 1);
+		return parent::render($date, $iteration);
+	}
+
+	/**
 	 * Get the items
 	 *
 	 * @param \DateTime $date
 	 *
 	 * @return array
+	 * @todo check $this->weekStartsAt in this loop
 	 */
 	protected function getItems(\DateTime $date) {
 		$weeks = array();

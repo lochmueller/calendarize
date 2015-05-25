@@ -27,9 +27,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:loop.weeksInMonth date="{date}" iteration="week">
+		<c:loop.weeksInMonth date="{date}" iteration="week" weekStartsAt="{settings.weekStart}">
 			<tr>
-				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day">
+				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day" weekStartsAt="{settings.weekStart}">
 					<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
 						<f:then>
 							<td class="hasEvents">
