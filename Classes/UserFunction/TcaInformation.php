@@ -53,6 +53,7 @@ class TcaInformation {
 		foreach ($events as $event) {
 			$entry = date('d.m.Y', $event['start_date']) . ' - ' . date('d.m.Y', $event['end_date']);
 			if (!$event['all_day']) {
+				// @todo the times seems to be COMPLETE timestamps in TYPO3 7.x?!?!
 				$start = BackendUtility::time($event['start_time'], FALSE);
 				$end = BackendUtility::time($event['end_time'], FALSE);
 				$entry .= ' (' . $start . ' - ' . $end . ')';
