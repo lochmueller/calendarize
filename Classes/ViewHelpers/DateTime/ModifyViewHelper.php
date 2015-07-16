@@ -2,7 +2,6 @@
 /**
  * Modify a DateTime
  *
- * @package Calendarize\ViewHelpers\DateTime
  * @author  Tim Lochmüller
  */
 

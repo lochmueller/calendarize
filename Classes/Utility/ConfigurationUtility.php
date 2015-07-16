@@ -2,7 +2,6 @@
 /**
  * Configuration Utility
  *
- * @package Calendarize\Utility
  * @author  Tim Lochmüller
  */
 

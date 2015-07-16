@@ -2,7 +2,6 @@
 /**
  * Time service
  *
- * @package Calendarize\Service\TimeTable
  * @author  Tim Lochmüller
  */
 

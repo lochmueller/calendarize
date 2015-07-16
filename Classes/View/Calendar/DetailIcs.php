@@ -2,7 +2,6 @@
 /**
  * ICS View
  *
- * @package Calendarize\View\Calendar
  * @author  Tim Lochmüller
  */
 

@@ -2,7 +2,6 @@
 /**
  * Link to the index
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 

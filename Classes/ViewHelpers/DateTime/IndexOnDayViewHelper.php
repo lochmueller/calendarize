@@ -2,7 +2,6 @@
 /**
  * Check if the given Index is on the given day
  *
- * @package Calendarize\ViewHelpers\DateTime
  * @author  Tim Lochmüller
  */
 

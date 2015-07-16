@@ -2,7 +2,6 @@
 /**
  * Check if a date is upper
  *
- * @package Calendarize\ViewHelpers
  * @author  Tim Lochmüller
  */
 
@@ -19,6 +18,8 @@ use TYPO3\CMS\Fluid\ViewHelpers\IfViewHelper;
 class IfDateUpperViewHelper extends IfViewHelper {
 
 	/**
+	 * Render the view helper
+	 *
 	 * @param string|\DateTime $base
 	 * @param string|\DateTime $check
 	 *
