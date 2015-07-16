@@ -103,6 +103,7 @@ class IndexerService extends AbstractService {
 	protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid) {
 		$databaseConnection = HelperUtility::getDatabaseConnection();
 		$checkProperties = array(
+			'pid',
 			'start_date',
 			'end_date',
 			'start_time',

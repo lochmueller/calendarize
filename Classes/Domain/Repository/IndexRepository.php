@@ -55,18 +55,6 @@ class IndexRepository extends AbstractRepository {
 	}
 
 	/**
-	 * Create a default query
-	 *
-	 * @return QueryInterface
-	 */
-	public function createQuery() {
-		$query = parent::createQuery();
-		$query->getQuerySettings()
-			->setRespectStoragePage(FALSE);
-		return $query;
-	}
-
-	/**
 	 * Find List
 	 *
 	 * @param int $limit

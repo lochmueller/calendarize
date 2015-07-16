@@ -10,6 +10,7 @@ $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calend
 $custom = array(
 	'ctrl'    => array(
 		'hideTable' => TRUE,
+		'rootLevel' => -1
 	),
 	'columns' => array(
 		'unique_register_key' => array(
