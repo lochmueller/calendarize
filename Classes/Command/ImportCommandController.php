@@ -30,6 +30,8 @@ class ImportCommandController extends AbstractCommandController {
 	protected $eventRepository;
 
 	/**
+	 * Import command
+	 *
 	 * @param string $icsCalendarUri
 	 * @param int    $pid
 	 */
@@ -116,6 +118,8 @@ class ImportCommandController extends AbstractCommandController {
 	}
 
 	/**
+	 * DateTime to day seconds
+	 *
 	 * @param \DateTime $dateTime
 	 *
 	 * @return int

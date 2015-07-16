@@ -2,12 +2,10 @@
 /**
  * Layout for BE content elements
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 
 namespace HDNET\Calendarize\Service;
-
 
 /**
  * Layout for BE content elements

@@ -2,7 +2,6 @@
 /**
  * Create the needed database fields
  *
- * @package Calendarize\Slots
  * @author  Tim Lochmüller
  */
 

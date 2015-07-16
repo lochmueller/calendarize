@@ -2,7 +2,6 @@
 /**
  * Index the given events
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 
@@ -153,6 +152,8 @@ class IndexerService extends AbstractService {
 	}
 
 	/**
+	 * Add the enable field information
+	 *
 	 * @param array  $neededItems
 	 * @param string $tableName
 	 * @param array  $record

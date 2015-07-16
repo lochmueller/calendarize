@@ -2,7 +2,6 @@
 /**
  * Recurrence service
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 
@@ -151,6 +150,8 @@ class RecurrenceService extends AbstractService {
 	}
 
 	/**
+	 * Find the modified in the current month
+	 *
 	 * @param \DateTime $dateTime
 	 * @param string    $direction
 	 * @param array     $validDays

@@ -2,7 +2,6 @@
 /**
  * ICS Service
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 

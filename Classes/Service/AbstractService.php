@@ -2,10 +2,8 @@
 /**
  * Service abstraction
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
-
 
 namespace HDNET\Calendarize\Service;
 

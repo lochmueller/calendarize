@@ -2,7 +2,6 @@
 /**
  * RealURL alias
  *
- * @package Calendarize\UserFunction
  * @author  Tim Lochmüller
  */
 

@@ -42,9 +42,16 @@ class IndexRepository extends AbstractRepository {
 		$this->indexTypes = $types;
 	}
 
+	/**
+	 * Current content record
+	 *
+	 * @var array
+	 */
 	protected $contentRecord = array();
 
 	/**
+	 * Set the current content record
+	 *
 	 * @param array $contentRecord
 	 */
 	public function setContentRecord($contentRecord) {

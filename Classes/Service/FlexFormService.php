@@ -2,7 +2,6 @@
 /**
  * Work on flex forms
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 

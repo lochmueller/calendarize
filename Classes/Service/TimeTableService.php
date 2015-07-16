@@ -2,7 +2,6 @@
 /**
  * Time table builder service
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 

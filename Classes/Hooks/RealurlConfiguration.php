@@ -2,7 +2,6 @@
 /**
  * Realurl configuration
  *
- * @package Calendarize\Hooks
  * @author  Tim Lochmüller
  */
 

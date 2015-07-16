@@ -2,7 +2,6 @@
 /**
  * TCA service
  *
- * @package Calendarize\Service
  * @author  Tim Lochmüller
  */
 

@@ -2,7 +2,6 @@
 /**
  * Event search service
  *
- * @package Calendarize\Slots
  * @author  Tim Lochmüller
  */
 

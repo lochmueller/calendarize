@@ -2,7 +2,6 @@
 /**
  * TCA information
  *
- * @package Calendarize\UserFunction
  * @author  Tim Lochmüller
  */
 

@@ -2,7 +2,6 @@
 /**
  * UserFunctions for Plugin configurations
  *
- * @package Calendarize\UserFunction
  * @author  Tim Lochmüller
  */
 
