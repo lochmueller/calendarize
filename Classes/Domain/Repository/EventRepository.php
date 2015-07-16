@@ -2,7 +2,6 @@
 /**
  * Event repository
  *
- * @package Calendarize\Domain\Repository
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\Domain\Repository;
 
 /**
  * Event repository
- *
- * @author Tim Lochmüller
  */
 class EventRepository extends AbstractRepository {
 

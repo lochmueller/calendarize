@@ -2,7 +2,6 @@
 /**
  * Render the CMS layout
  *
- * @package Calendarize\Hooks
  * @author  Tim Lochmüller
  */
 
@@ -18,8 +17,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Render the CMS layout
  *
- * @author Tim Lochmüller
- * @see    News extension (Thanks Georg)
+ * @see News extension (Thanks Georg)
  */
 class CmsLayout {
 

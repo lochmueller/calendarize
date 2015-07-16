@@ -1,8 +1,6 @@
 <?php
 /**
  * Import
- *
- * @package ...
  * @author  Tim Lochmüller
  */
 

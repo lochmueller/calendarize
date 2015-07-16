@@ -2,7 +2,6 @@
 /**
  * Hook for data map processing
  *
- * @package Calendarize\Hooks
  * @author  Tim Lochmüller
  */
 
@@ -15,7 +14,6 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 /**
  * Hook for data map processing
  *
- * @author Tim Lochmüller
  * @hook   TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processDatamapClass
  */
 class ProcessDatamapClass {

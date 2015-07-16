@@ -2,7 +2,6 @@
 /**
  * Configuration for time options
  *
- * @package Calendarize\Domain\Model
  * @author  Tim Lochmüller
  */
 
@@ -11,7 +10,6 @@ namespace HDNET\Calendarize\Domain\Model;
 /**
  * Configuration for time options
  *
- * @author       Tim Lochmüller
  * @db
  * @smartExclude Language
  */

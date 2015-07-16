@@ -2,7 +2,6 @@
 /**
  * Logical configuration group
  *
- * @package Calendarize\Domain\Model
  * @author  Tim Lochmüller
  */
 
@@ -11,7 +10,6 @@ namespace HDNET\Calendarize\Domain\Model;
 /**
  * Logical configuration group
  *
- * @author Tim Lochmüller
  * @db
  * @smartExclude Language
  */

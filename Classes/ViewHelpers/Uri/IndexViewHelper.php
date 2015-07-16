@@ -2,7 +2,6 @@
 /**
  * Uri to the index
  *
- * @package Calendarize\ViewHelpers\Uri
  * @author  Tim Lochmüller
  */
 
@@ -12,8 +11,6 @@ use HDNET\Calendarize\Domain\Model\Index;
 
 /**
  * Uri to the index
- *
- * @author Tim Lochmüller
  */
 class IndexViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\IndexViewHelper {
 

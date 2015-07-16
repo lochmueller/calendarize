@@ -2,7 +2,6 @@
 /**
  * Register the calendarize objects
  *
- * @package Calendarize
  * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize;
@@ -11,8 +10,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Register the calendarize objects
- *
- * @author Tim Lochmüller
  */
 class Register {
 

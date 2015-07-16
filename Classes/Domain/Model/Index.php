@@ -2,7 +2,6 @@
 /**
  * Index information
  *
- * @package Calendarize\Domain\Model
  * @author  Tim Lochmüller
  */
 
@@ -16,7 +15,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Index information
  *
- * @author       Tim Lochmüller
  * @db
  * @smartExclude Language,Workspaces
  */

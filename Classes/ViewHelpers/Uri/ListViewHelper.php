@@ -2,7 +2,6 @@
 /**
  * Uri to the list
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
  * Uri to the list
- *
- * @author Tim Lochmüller
  */
 class ListViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\ListViewHelper {
 

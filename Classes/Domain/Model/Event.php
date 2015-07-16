@@ -2,7 +2,6 @@
 /**
  * Event (Example) for the calendarize function
  *
- * @package Calendarize\Domain\Model
  * @author  Tim Lochmüller
  */
 
@@ -11,7 +10,6 @@ namespace HDNET\Calendarize\Domain\Model;
 /**
  * Event (Example) for the calendarize function
  *
- * @author     Tim Lochmüller
  * @db
  */
 class Event extends AbstractModel {

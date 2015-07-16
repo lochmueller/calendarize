@@ -2,7 +2,6 @@
 /**
  * Months in year view Helper
  *
- * @package Calendarize\ViewHelpers\Loop
  * @author  Tim Lochmüller
  */
 

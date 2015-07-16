@@ -2,7 +2,6 @@
 /**
  * Uri to the year
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
  * Uri to the year
- *
- * @author Tim Lochmüller
  */
 class YearViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\YearViewHelper {
 

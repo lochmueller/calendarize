@@ -2,7 +2,6 @@
 /**
  * Index repository
  *
- * @package Calendarize\Domain\Repository
  * @author  Tim Lochmüller
  */
 
@@ -14,8 +13,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Index repository
- *
- * @author Tim Lochmüller
  */
 class IndexRepository extends AbstractRepository {
 

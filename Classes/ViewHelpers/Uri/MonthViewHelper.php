@@ -2,7 +2,6 @@
 /**
  * Uri to the month
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
  * Uri to the month
- *
- * @author Tim Lochmüller
  */
 class MonthViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\MonthViewHelper {
 

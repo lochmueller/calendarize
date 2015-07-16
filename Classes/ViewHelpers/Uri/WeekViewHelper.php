@@ -2,7 +2,6 @@
 /**
  * Uri to the week
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
  * Uri to the week
- *
- * @author Tim Lochmüller
  */
 class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper {
 

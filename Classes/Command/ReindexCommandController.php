@@ -2,7 +2,6 @@
 /**
  * Reindex the event models
  *
- * @package Calendarize\Command
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\Command;
 
 /**
  * Reindex the event models
- *
- * @author Tim Lochmüller
  */
 class ReindexCommandController extends AbstractCommandController {
 

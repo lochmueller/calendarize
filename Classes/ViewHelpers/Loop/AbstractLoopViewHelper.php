@@ -2,7 +2,6 @@
 /**
  * Abstraction for loop view helper
  *
- * @package Calendarize\ViewHelpers\Loop
  * @author  Tim Lochmüller
  */
 

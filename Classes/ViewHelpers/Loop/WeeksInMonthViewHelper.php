@@ -2,7 +2,6 @@
 /**
  * Weeks in month view helper
  *
- * @package Calendarize\ViewHelpers\Loop
  * @author  Tim Lochmüller
  */
 

@@ -2,7 +2,6 @@
 /**
  * Repository Abstraction
  *
- * @package Calendarize\Domain\Repository
  * @author  Tim Lochmüller
  */
 

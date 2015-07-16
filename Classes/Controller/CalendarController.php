@@ -2,7 +2,6 @@
 /**
  * Calendar
  *
- * @package Calendarize\Controller
  * @author  Tim Lochmüller
  */
 
@@ -20,8 +19,6 @@ use TYPO3\CMS\Extensionmanager\Controller\ActionController;
 
 /**
  * Calendar
- *
- * @author Tim Lochmüller
  */
 class CalendarController extends ActionController {
 

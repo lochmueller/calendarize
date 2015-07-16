@@ -2,7 +2,6 @@
 /**
  * Configuration group repository
  *
- * @package Calendarize\Domain\Repository
  * @author  Tim Lochmüller
  */
 

@@ -2,7 +2,6 @@
 /**
  * Configuration Interface for constants
  *
- * @package Calendarize\Domain\Model
  * @author  Tim Lochmüller
  */
 
@@ -10,8 +9,6 @@ namespace HDNET\Calendarize\Domain\Model;
 
 /**
  * Configuration Interface for constants
- *
- * @author       Tim Lochmüller
  */
 interface ConfigurationInterface {
 

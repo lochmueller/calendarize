@@ -2,7 +2,6 @@
 /**
  * Uri to the day
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 
