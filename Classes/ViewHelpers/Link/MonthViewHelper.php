@@ -2,7 +2,6 @@
 /**
  * Link to the month
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 

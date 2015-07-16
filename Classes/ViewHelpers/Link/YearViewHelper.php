@@ -2,7 +2,6 @@
 /**
  * Link to the year
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 

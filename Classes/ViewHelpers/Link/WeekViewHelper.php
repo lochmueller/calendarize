@@ -2,7 +2,6 @@
 /**
  * Link to the week
  *
- * @package Calendarize\ViewHelpers\Link
  * @author  Tim Lochmüller
  */
 
