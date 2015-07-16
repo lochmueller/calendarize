@@ -45,6 +45,15 @@ class IndexRepository extends AbstractRepository {
 		$this->indexTypes = $types;
 	}
 
+	protected $contentRecord = array();
+
+	/**
+	 * @param array $contentRecord
+	 */
+	public function setContentRecord($contentRecord) {
+		$this->contentRecord = $contentRecord;
+	}
+
 	/**
 	 * Create a default query
 	 *
@@ -212,6 +221,19 @@ class IndexRepository extends AbstractRepository {
 	protected function getDefaultConstraints(QueryInterface $query) {
 		$constraints = array();
 		$constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
+
+		$arguments = array(
+			'indexIds'      => array(),
+			'indexTypes'    => $this->indexTypes,
+			'contentRecord' => $this->contentRecord,
+		);
+		$signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
+		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, $arguments);
+
+		if ($arguments['indexIds']) {
+			$constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
+		}
+
 		return $constraints;
 	}
 
