@@ -106,7 +106,7 @@ class IndexRepository extends AbstractRepository {
 		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 
 		$query = $this->createQuery();
-		$constraints = array();
+		$constraints = $this->getDefaultConstraints($query);
 		if ($arguments['startDate'] instanceof \DateTime) {
 			$constraints[] = $query->greaterThan('start_date', $arguments['startDate']);
 		}
