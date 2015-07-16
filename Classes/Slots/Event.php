@@ -58,9 +58,25 @@ class Event {
 	 * @return array
 	 */
 	public function setIdsByGeneral(array $indexIds, array $indexTypes, array $contentRecord) {
+		$databaseConnection = HelperUtility::getDatabaseConnection();
+		$rows = $databaseConnection->exec_SELECTgetRows('uid_local', 'sys_category_record_mm', 'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']);
+		$categoryIds = array();
+		foreach ($rows as $row) {
+			$categoryIds[] = (int)$row['uid_local'];
+		}
 
-		// @todo reduce by category
-		// DebuggerUtility::var_dump($contentRecord);
+		if (empty($categoryIds)) {
+			return array(
+				'indexIds'      => $indexIds,
+				'indexTypes'    => $indexTypes,
+				'contentRecord' => $contentRecord,
+			);
+		}
+
+		$rows = $databaseConnection->exec_SELECTgetRows('uid_foreign', 'sys_category_record_mm', 'tablenames="tx_calendarize_domain_model_event" AND uid_local IN (' . implode(',', $categoryIds) . ')');
+		foreach ($rows as $row) {
+			$indexIds[] = (int)$row['uid_foreign'];
+		}
 
 		return array(
 			'indexIds'      => $indexIds,
