@@ -20,7 +20,7 @@ class ConfigurationUtility {
 	 *
 	 * @var array
 	 */
-	protected static $configuration;
+	static protected $configuration;
 
 	/**
 	 * Get the given configuration value
@@ -29,7 +29,7 @@ class ConfigurationUtility {
 	 *
 	 * @return mixed
 	 */
-	public static function get($name) {
+	static public function get($name) {
 		self::loadConfiguration();
 		return isset(self::$configuration[$name]) ? self::$configuration[$name] : NULL;
 	}
@@ -37,7 +37,7 @@ class ConfigurationUtility {
 	/**
 	 * Load the current configuration
 	 */
-	protected static function loadConfiguration() {
+	static protected function loadConfiguration() {
 		if (self::$configuration === NULL) {
 			self::$configuration = (array)unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
 		}

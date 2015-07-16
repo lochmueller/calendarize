@@ -27,7 +27,7 @@ class HelperUtility {
 	 *
 	 * @return object
 	 */
-	public static function create($className) {
+	static public function create($className) {
 		$arguments = func_get_args();
 		$objManager = new ObjectManager();
 		return call_user_func_array(array(
@@ -43,7 +43,7 @@ class HelperUtility {
 	 *
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
 	 */
-	public static function getQuery($objectName) {
+	static public function getQuery($objectName) {
 		$objectName = is_object($objectName) ? get_class($objectName) : $objectName;
 		/** @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $manager */
 		static $manager = NULL;
@@ -58,7 +58,7 @@ class HelperUtility {
 	 *
 	 * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
 	 */
-	public static function getSignalSlotDispatcher() {
+	static public function getSignalSlotDispatcher() {
 		return self::create('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
 	}
 
@@ -71,7 +71,7 @@ class HelperUtility {
 	 *
 	 * @throws \TYPO3\CMS\Core\Exception
 	 */
-	public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK) {
+	static public function createFlashMessage($message, $title = '', $mode = FlashMessage::OK) {
 		/** @var FlashMessage $flashMessage */
 		$flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', $message, $title, $mode, TRUE);
 		$class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
