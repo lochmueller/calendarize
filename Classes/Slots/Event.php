@@ -44,4 +44,28 @@ class Event {
 			'customSearch' => $customSearch,
 		);
 	}
+
+	/**
+	 * Set ids by general
+	 *
+	 * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
+	 * @signalName getDefaultConstraints
+	 *
+	 * @param array $indexIds
+	 * @param array $indexTypes
+	 * @param array $contentRecord
+	 *
+	 * @return array
+	 */
+	public function setIdsByGeneral(array $indexIds, array $indexTypes, array $contentRecord) {
+
+		// @todo reduce by category
+		// DebuggerUtility::var_dump($contentRecord);
+
+		return array(
+			'indexIds'      => $indexIds,
+			'indexTypes'    => $indexTypes,
+			'contentRecord' => $contentRecord,
+		);
+	}
 } 
