@@ -16,7 +16,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
  *
  * @author Tim Lochmüller
  */
-class EventSearch {
+class Event {
 
 	/**
 	 * Check if we can reduce the amount of results
