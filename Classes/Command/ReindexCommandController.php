@@ -8,14 +8,12 @@
 
 namespace HDNET\Calendarize\Command;
 
-use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
-
 /**
  * Reindex the event models
  *
  * @author Tim Lochmüller
  */
-class ReindexCommandController extends CommandController {
+class ReindexCommandController extends AbstractCommandController {
 
 	/**
 	 * Run the reindex process
