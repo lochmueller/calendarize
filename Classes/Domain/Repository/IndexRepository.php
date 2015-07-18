@@ -9,6 +9,8 @@ namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -213,6 +215,16 @@ class IndexRepository extends AbstractRepository {
 	protected function getDefaultConstraints(QueryInterface $query) {
 		$constraints = array();
 		$constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
+
+		// storage page selection
+		// @todo please check core API functions again
+		/** @var ConfigurationManagerInterface $configuratioManager */
+		$configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+		$frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$storagePages = isset($frameworkConfiguration['persistence']['storagePid']) ? GeneralUtility::intExplode(',', $frameworkConfiguration['persistence']['storagePid']) : array();
+		if (FALSE && !empty($storagePages)) {
+			$constraints[] = $query->in('pid', $storagePages);
+		}
 
 		$arguments = array(
 			'indexIds'      => array(),
