@@ -222,7 +222,7 @@ class IndexRepository extends AbstractRepository {
 		$configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
 		$frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		$storagePages = isset($frameworkConfiguration['persistence']['storagePid']) ? GeneralUtility::intExplode(',', $frameworkConfiguration['persistence']['storagePid']) : array();
-		if (FALSE && !empty($storagePages)) {
+		if (!empty($storagePages)) {
 			$constraints[] = $query->in('pid', $storagePages);
 		}
 
