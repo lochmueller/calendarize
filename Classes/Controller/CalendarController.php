@@ -48,6 +48,27 @@ class CalendarController extends ActionController {
 	}
 
 	/**
+	 * Latest action
+	 *
+	 * @param \HDNET\Calendarize\Domain\Model\Index $index
+	 * @param \DateTime                             $startDate
+	 * @param \DateTime                             $endDate
+	 * @param array                                 $customSearch *
+	 * @param int                                   $year
+	 * @param int                                   $month
+	 * @param int                                   $week
+	 *
+	 * @ignorevalidation $startDate
+	 * @ignorevalidation $endDate
+	 * @ignorevalidation $customSearch
+	 *
+	 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+	 */
+	public function latestAction(Index $index = NULL, \DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array(), $year = NULL, $month = NULL, $week = NULL) {
+		$this->listAction($index, $startDate, $endDate, $customSearch, $year, $month, $week);
+	}
+
+	/**
 	 * List action
 	 *
 	 * @param \HDNET\Calendarize\Domain\Model\Index $index

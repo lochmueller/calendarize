@@ -1,0 +1,14 @@
+<f:if condition="{settings.hidePagination}">
+	<f:then>
+		<f:for each="{indices}" as="index">
+			<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
+		</f:for>
+	</f:then>
+	<f:else>
+		<f:widget.paginate objects="{indices}" as="paginatedIndices" configuration="{itemsPerPage: 10, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 10}">
+			<f:for each="{paginatedIndices}" as="index">
+				<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
+			</f:for>
+		</f:widget.paginate>
+	</f:else>
+</f:if>

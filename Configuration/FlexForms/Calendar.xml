@@ -41,22 +41,26 @@
 										<numIndex index="1">Calendar->search</numIndex>
 									</numIndex>
 									<numIndex index="5">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.latest</numIndex>
+										<numIndex index="1">Calendar->latest</numIndex>
+									</numIndex>
+									<numIndex index="6">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.special</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
-									<numIndex index="6">
+									<numIndex index="7">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.year</numIndex>
 										<numIndex index="1">Calendar->year</numIndex>
 									</numIndex>
-									<numIndex index="7">
+									<numIndex index="8">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.month</numIndex>
 										<numIndex index="1">Calendar->month</numIndex>
 									</numIndex>
-									<numIndex index="8">
+									<numIndex index="9">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.week</numIndex>
 										<numIndex index="1">Calendar->week</numIndex>
 									</numIndex>
-									<numIndex index="9">
+									<numIndex index="10">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:mode.day</numIndex>
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>

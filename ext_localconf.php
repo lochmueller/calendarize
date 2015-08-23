@@ -17,4 +17,4 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
 	\HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
 }
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar', array('Calendar' => 'list,year,month,week,day,detail,search'), array('Calendar' => 'list,year,month,week,day,detail,search'));
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar', array('Calendar' => 'list,latest,year,month,week,day,detail,search'), array('Calendar' => 'list,year,month,week,day,detail,search'));

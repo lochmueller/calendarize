@@ -41,6 +41,7 @@
 			<label index="mode.list"><![CDATA[List only]]></label>
 			<label index="mode.detail"><![CDATA[Detail only]]></label>
 			<label index="mode.search"><![CDATA[Search]]></label>
+			<label index="mode.latest"><![CDATA[Latest (list but cached)]]></label>
 			<label index="mode.special"><![CDATA[Special Views]]></label>
 			<label index="mode.year"><![CDATA[Year]]></label>
 			<label index="mode.month"><![CDATA[Month]]></label>
