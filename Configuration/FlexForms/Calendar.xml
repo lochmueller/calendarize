@@ -153,6 +153,9 @@
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 									<OR>
 										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+										<OR>
+											<numIndex>FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+										</OR>
 									</OR>
 								</OR>
 							</displayCond>
@@ -173,6 +176,9 @@
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 									<OR>
 										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+										<OR>
+											<numIndex>FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+										</OR>
 									</OR>
 								</OR>
 							</displayCond>
