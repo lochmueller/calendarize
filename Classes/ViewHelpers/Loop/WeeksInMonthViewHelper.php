@@ -46,7 +46,6 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
      * @param \DateTime $date
      *
      * @return array
-     * @todo check $this->weekStartsAt in this loop
      */
     protected function getItems(\DateTime $date)
     {
