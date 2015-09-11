@@ -144,6 +144,8 @@ class Index extends AbstractModel
     }
 
     /**
+     * Get the complete start date
+     *
      * @return \DateTime
      */
     public function getStartDateComplete()
@@ -157,6 +159,8 @@ class Index extends AbstractModel
     }
 
     /**
+     * Get the complete end date
+     *
      * @return \DateTime
      */
     public function getEndDateComplete()
