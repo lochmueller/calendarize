@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Domain\Repository;
 /**
  * Configuration repository
  */
-class ConfigurationRepository extends AbstractRepository {
+class ConfigurationRepository extends AbstractRepository
+{
 
 }

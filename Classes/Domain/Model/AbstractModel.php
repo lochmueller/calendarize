@@ -12,6 +12,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Model Abstraction
  */
-class AbstractModel extends AbstractEntity {
+class AbstractModel extends AbstractEntity
+{
 
 }

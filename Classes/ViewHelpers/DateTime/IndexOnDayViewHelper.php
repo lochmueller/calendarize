@@ -15,32 +15,34 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @author Tim Lochmüller
  */
-class IndexOnDayViewHelper extends AbstractViewHelper {
+class IndexOnDayViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Check if the index or one of the given indices is on the given day
-	 *
-	 * @param \DateTime $day
-	 * @param Index     $index
-	 * @param array     $indices
-	 *
-	 * @return bool
-	 */
-	public function render(\DateTime $day, Index $index = NULL, $indices = array()) {
-		foreach ($indices as $idx) {
-			/** @var $idx Index */
-			if ($idx->getStartDate()
-					->format('d.m.Y') === $day->format('d.m.Y')
-			) {
-				return TRUE;
-			}
-		}
+    /**
+     * Check if the index or one of the given indices is on the given day
+     *
+     * @param \DateTime $day
+     * @param Index     $index
+     * @param array     $indices
+     *
+     * @return bool
+     */
+    public function render(\DateTime $day, Index $index = null, $indices = array())
+    {
+        foreach ($indices as $idx) {
+            /** @var $idx Index */
+            if ($idx->getStartDate()
+                    ->format('d.m.Y') === $day->format('d.m.Y')
+            ) {
+                return true;
+            }
+        }
 
-		if ($index instanceof Index) {
-			return $index->getStartDate()
-				->format('d.m.Y') === $day->format('d.m.Y');
-		}
-		return FALSE;
-	}
+        if ($index instanceof Index) {
+            return $index->getStartDate()
+                ->format('d.m.Y') === $day->format('d.m.Y');
+        }
+        return false;
+    }
 
 }

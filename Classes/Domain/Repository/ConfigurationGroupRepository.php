@@ -12,6 +12,7 @@ namespace HDNET\Calendarize\Domain\Repository;
  *
  * @author Tim Lochmüller
  */
-class ConfigurationGroupRepository extends AbstractRepository {
+class ConfigurationGroupRepository extends AbstractRepository
+{
 
 }

@@ -14,22 +14,24 @@ use HDNET\Calendarize\Register;
  *
  * @author Tim Lochmüller
  */
-class PluginConfiguration {
+class PluginConfiguration
+{
 
-	/**
-	 * Add the configurations to the given Plugin configuration
-	 *
-	 * @param array $config
-	 *
-	 * @return array
-	 */
-	public function addConfig($config) {
-		foreach (Register::getRegister() as $key => $configuration) {
-			$config['items'][] = array(
-				$configuration['title'],
-				$key,
-			);
-		}
-		return $config;
-	}
+    /**
+     * Add the configurations to the given Plugin configuration
+     *
+     * @param array $config
+     *
+     * @return array
+     */
+    public function addConfig($config)
+    {
+        foreach (Register::getRegister() as $key => $configuration) {
+            $config['items'][] = array(
+                $configuration['title'],
+                $key,
+            );
+        }
+        return $config;
+    }
 }

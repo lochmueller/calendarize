@@ -18,77 +18,87 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *
  * @author Tim Lochmüller
  */
-class TcaInformation {
+class TcaInformation
+{
 
-	/**
-	 * Generate the information field
-	 *
-	 * @param array      $configuration
-	 * @param FormEngine $fObj
-	 *
-	 * @return string
-	 */
-	public function informationField($configuration, FormEngine $fObj) {
-		if (!isset($configuration['row']['uid'])) {
-			$content = LocalizationUtility::translate('save.first', 'calendarize');
-		} else {
-			$previewLimit = 10;
-			$count = $this->getIndexCount($configuration['table'], $configuration['row']['uid']);
-			$next = $this->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
-			$content = sprintf(LocalizationUtility::translate('previewLabel', 'calendarize'), $count, $previewLimit) . $this->getEventList($next);
-		}
-		return '<div style="padding: 5px;">' . $content . '</div>';
-	}
+    /**
+     * Generate the information field
+     *
+     * @param array      $configuration
+     * @param FormEngine $fObj
+     *
+     * @return string
+     */
+    public function informationField($configuration, FormEngine $fObj)
+    {
+        if (!isset($configuration['row']['uid'])) {
+            $content = LocalizationUtility::translate('save.first', 'calendarize');
+        } else {
+            $previewLimit = 10;
+            $count = $this->getIndexCount($configuration['table'], $configuration['row']['uid']);
+            $next = $this->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
+            $content = sprintf(LocalizationUtility::translate('previewLabel', 'calendarize'), $count,
+                    $previewLimit) . $this->getEventList($next);
+        }
+        return '<div style="padding: 5px;">' . $content . '</div>';
+    }
 
-	/**
-	 * Get event list
-	 *
-	 * @param $events
-	 *
-	 * @return string
-	 */
-	protected function getEventList($events) {
-		$items = array();
-		foreach ($events as $event) {
-			$entry = date('d.m.Y', $event['start_date']) . ' - ' . date('d.m.Y', $event['end_date']);
-			if (!$event['all_day']) {
-				// @todo the times seems to be COMPLETE timestamps in TYPO3 7.x?!?!
-				$start = BackendUtility::time($event['start_time'], FALSE);
-				$end = BackendUtility::time($event['end_time'], FALSE);
-				$entry .= ' (' . $start . ' - ' . $end . ')';
-			}
-			$items[] = $entry;
-		}
-		if (!sizeof($items)) {
-			$items[] = LocalizationUtility::translate('noEvents', 'calendarize');
-		}
-		return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
-	}
+    /**
+     * Get event list
+     *
+     * @param $events
+     *
+     * @return string
+     */
+    protected function getEventList($events)
+    {
+        $items = array();
+        foreach ($events as $event) {
+            $entry = date('d.m.Y', $event['start_date']) . ' - ' . date('d.m.Y', $event['end_date']);
+            if (!$event['all_day']) {
+                // @todo the times seems to be COMPLETE timestamps in TYPO3 7.x?!?!
+                $start = BackendUtility::time($event['start_time'], false);
+                $end = BackendUtility::time($event['end_time'], false);
+                $entry .= ' (' . $start . ' - ' . $end . ')';
+            }
+            $items[] = $entry;
+        }
+        if (!sizeof($items)) {
+            $items[] = LocalizationUtility::translate('noEvents', 'calendarize');
+        }
+        return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
+    }
 
-	/**
-	 * Get index count
-	 *
-	 * @param $table
-	 * @param $uid
-	 *
-	 * @return mixed
-	 */
-	protected function getIndexCount($table, $uid) {
-		$databaseConnection = HelperUtility::getDatabaseConnection();
-		return $databaseConnection->exec_SELECTcountRows('*', IndexerService::TABLE_NAME, 'foreign_table=' . $databaseConnection->fullQuoteStr($table, IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
-	}
+    /**
+     * Get index count
+     *
+     * @param $table
+     * @param $uid
+     *
+     * @return mixed
+     */
+    protected function getIndexCount($table, $uid)
+    {
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        return $databaseConnection->exec_SELECTcountRows('*', IndexerService::TABLE_NAME,
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table,
+                IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
+    }
 
-	/**
-	 * Get the next events
-	 *
-	 * @param string $table
-	 * @param int    $uid
-	 * @param int    $limit
-	 *
-	 * @return array|NULL
-	 */
-	protected function getNextEvents($table, $uid, $limit = 5) {
-		$databaseConnection = HelperUtility::getDatabaseConnection();
-		return $databaseConnection->exec_SELECTgetRows('*', IndexerService::TABLE_NAME, 'start_date > ' . time() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table, IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
-	}
+    /**
+     * Get the next events
+     *
+     * @param string $table
+     * @param int    $uid
+     * @param int    $limit
+     *
+     * @return array|NULL
+     */
+    protected function getNextEvents($table, $uid, $limit = 5)
+    {
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        return $databaseConnection->exec_SELECTgetRows('*', IndexerService::TABLE_NAME,
+            'start_date > ' . time() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table,
+                IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
+    }
 }

@@ -16,274 +16,286 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 /**
  * Index repository
  */
-class IndexRepository extends AbstractRepository {
+class IndexRepository extends AbstractRepository
+{
 
-	/**
-	 * Default orderings for index records
-	 *
-	 * @var array
-	 */
-	protected $defaultOrderings = array(
-		'start_date' => QueryInterface::ORDER_ASCENDING,
-		'start_time' => QueryInterface::ORDER_ASCENDING,
-	);
+    /**
+     * Default orderings for index records
+     *
+     * @var array
+     */
+    protected $defaultOrderings = array(
+        'start_date' => QueryInterface::ORDER_ASCENDING,
+        'start_time' => QueryInterface::ORDER_ASCENDING,
+    );
 
-	/**
-	 * Index types for selection
-	 *
-	 * @var array
-	 */
-	protected $indexTypes = array();
+    /**
+     * Index types for selection
+     *
+     * @var array
+     */
+    protected $indexTypes = array();
 
-	/**
-	 * Set the index types
-	 *
-	 * @param array $types
-	 */
-	public function setIndexTypes(array $types) {
-		$this->indexTypes = $types;
-	}
+    /**
+     * Set the index types
+     *
+     * @param array $types
+     */
+    public function setIndexTypes(array $types)
+    {
+        $this->indexTypes = $types;
+    }
 
-	/**
-	 * Current content record
-	 *
-	 * @var array
-	 */
-	protected $contentRecord = array();
+    /**
+     * Current content record
+     *
+     * @var array
+     */
+    protected $contentRecord = array();
 
-	/**
-	 * Set the current content record
-	 *
-	 * @param array $contentRecord
-	 */
-	public function setContentRecord($contentRecord) {
-		$this->contentRecord = $contentRecord;
-	}
+    /**
+     * Set the current content record
+     *
+     * @param array $contentRecord
+     */
+    public function setContentRecord($contentRecord)
+    {
+        $this->contentRecord = $contentRecord;
+    }
 
-	/**
-	 * Find List
-	 *
-	 * @param int $limit
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findList($limit = 0) {
-		$query = $this->createQuery();
-		$constraints = $this->getDefaultConstraints($query);
+    /**
+     * Find List
+     *
+     * @param int $limit
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findList($limit = 0)
+    {
+        $query = $this->createQuery();
+        $constraints = $this->getDefaultConstraints($query);
 
-		// time check
-		$orConstraint = array();
-		$orConstraint[] = $query->greaterThanOrEqual('start_date', time());
-		$orConstraint[] = $query->logicalAnd(array(
-			$query->lessThanOrEqual('start_date', time()),
-			$query->greaterThanOrEqual('end_date', time())
-		));
+        // time check
+        $orConstraint = array();
+        $orConstraint[] = $query->greaterThanOrEqual('start_date', time());
+        $orConstraint[] = $query->logicalAnd(array(
+            $query->lessThanOrEqual('start_date', time()),
+            $query->greaterThanOrEqual('end_date', time())
+        ));
 
-		$constraints[] = $query->logicalOr($orConstraint);
-		$query->matching($query->logicalAnd($constraints));
+        $constraints[] = $query->logicalOr($orConstraint);
+        $query->matching($query->logicalAnd($constraints));
 
-		if ($limit > 0) {
-			$query->setLimit($limit);
-		}
+        if ($limit > 0) {
+            $query->setLimit($limit);
+        }
 
-		return $query->execute();
-	}
+        return $query->execute();
+    }
 
-	/**
-	 * Find by custom search
-	 *
-	 * @param \DateTime $startDate
-	 * @param \DateTime $endDate
-	 * @param array     $customSearch
-	 *
-	 * @return array
-	 */
-	public function findBySearch(\DateTime $startDate = NULL, \DateTime $endDate = NULL, array $customSearch = array()) {
-		$arguments = array(
-			'indexIds'     => array(),
-			'startDate'    => $startDate,
-			'endDate'      => $endDate,
-			'customSearch' => $customSearch,
-		);
-		$signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
-		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
+    /**
+     * Find by custom search
+     *
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array     $customSearch
+     *
+     * @return array
+     */
+    public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = array())
+    {
+        $arguments = array(
+            'indexIds'     => array(),
+            'startDate'    => $startDate,
+            'endDate'      => $endDate,
+            'customSearch' => $customSearch,
+        );
+        $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
+        $arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 
-		$query = $this->createQuery();
-		$constraints = $this->getDefaultConstraints($query);
-		if ($arguments['startDate'] instanceof \DateTime) {
-			$constraints[] = $query->greaterThan('start_date', $arguments['startDate']);
-		}
-		if ($arguments['endDate'] instanceof \DateTime) {
-			$constraints[] = $query->lessThan('start_date', $arguments['endDate']);
-		}
-		if ($arguments['indexIds']) {
-			$constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
-		}
-		if ($constraints) {
-			$query->matching($query->logicalAnd($constraints));
-		}
-		$result = array(
-			'result' => $query->execute()
-		);
-		$signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $result);
+        $query = $this->createQuery();
+        $constraints = $this->getDefaultConstraints($query);
+        if ($arguments['startDate'] instanceof \DateTime) {
+            $constraints[] = $query->greaterThan('start_date', $arguments['startDate']);
+        }
+        if ($arguments['endDate'] instanceof \DateTime) {
+            $constraints[] = $query->lessThan('start_date', $arguments['endDate']);
+        }
+        if ($arguments['indexIds']) {
+            $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
+        }
+        if ($constraints) {
+            $query->matching($query->logicalAnd($constraints));
+        }
+        $result = array(
+            'result' => $query->execute()
+        );
+        $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $result);
 
-		return $result['result'];
-	}
+        return $result['result'];
+    }
 
-	/**
-	 * find Year
-	 *
-	 * @param int $year
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findYear($year) {
-		$query = $this->createQuery();
-		$constraints = $this->getDefaultConstraints($query);
-		$this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year), mktime(0, 0, 0, 0, 0, $year + 1));
-		$query->matching($query->logicalAnd($constraints));
-		return $query->execute();
-	}
+    /**
+     * find Year
+     *
+     * @param int $year
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findYear($year)
+    {
+        $query = $this->createQuery();
+        $constraints = $this->getDefaultConstraints($query);
+        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year), mktime(0, 0, 0, 0, 0, $year + 1));
+        $query->matching($query->logicalAnd($constraints));
+        return $query->execute();
+    }
 
-	/**
-	 * find Month
-	 *
-	 * @param int $year
-	 * @param int $month
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findMonth($year, $month) {
-		$query = $this->createQuery();
-		$constraints = $this->getDefaultConstraints($query);
-		$startTime = mktime(0, 0, 0, $month, 0, $year);
-		$endTime = mktime(0, 0, 0, $month + 1, 0, $year);
-		$this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
-		if (sizeof($constraints)) {
-			$query->matching($query->logicalAnd($constraints));
-		}
-		return $query->execute();
-	}
+    /**
+     * find Month
+     *
+     * @param int $year
+     * @param int $month
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findMonth($year, $month)
+    {
+        $query = $this->createQuery();
+        $constraints = $this->getDefaultConstraints($query);
+        $startTime = mktime(0, 0, 0, $month, 0, $year);
+        $endTime = mktime(0, 0, 0, $month + 1, 0, $year);
+        $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
+        if (sizeof($constraints)) {
+            $query->matching($query->logicalAnd($constraints));
+        }
+        return $query->execute();
+    }
 
-	/**
-	 * find Week
-	 *
-	 * @param int $year
-	 * @param int $week
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findWeek($year, $week) {
-		$query = $this->createQuery();
-		$constraints = $this->getDefaultConstraints($query);
+    /**
+     * find Week
+     *
+     * @param int $year
+     * @param int $week
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findWeek($year, $week)
+    {
+        $query = $this->createQuery();
+        $constraints = $this->getDefaultConstraints($query);
 
-		$firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
-		$timeStampStart = $firstDay->getTimestamp();
-		$firstDay->modify('+1 week');
-		$timeStampEnd = $firstDay->getTimestamp();
-		$this->addTimeFrameConstraints($constraints, $query, $timeStampStart, $timeStampEnd);
-		$query->matching($query->logicalAnd($constraints));
-		return $query->execute();
-	}
+        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
+        $timeStampStart = $firstDay->getTimestamp();
+        $firstDay->modify('+1 week');
+        $timeStampEnd = $firstDay->getTimestamp();
+        $this->addTimeFrameConstraints($constraints, $query, $timeStampStart, $timeStampEnd);
+        $query->matching($query->logicalAnd($constraints));
+        return $query->execute();
+    }
 
-	/**
-	 * find day
-	 *
-	 * @param int $year
-	 * @param int $month
-	 * @param int $day
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findDay($year, $month, $day) {
-		$query = $this->createQuery();
-		$constraints = $this->getDefaultConstraints($query);
-		$startTime = mktime(0, 0, 0, $month, $day, $year);
-		$endTime = mktime(0, 0, 0, $month, $day + 1, $year);
-		$this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
-		$query->matching($query->logicalAnd($constraints));
-		return $query->execute();
-	}
+    /**
+     * find day
+     *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findDay($year, $month, $day)
+    {
+        $query = $this->createQuery();
+        $constraints = $this->getDefaultConstraints($query);
+        $startTime = mktime(0, 0, 0, $month, $day, $year);
+        $endTime = mktime(0, 0, 0, $month, $day + 1, $year);
+        $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
+        $query->matching($query->logicalAnd($constraints));
+        return $query->execute();
+    }
 
-	/**
-	 * Get the default constraint for the queries
-	 *
-	 * @param QueryInterface $query
-	 *
-	 * @return array
-	 */
-	protected function getDefaultConstraints(QueryInterface $query) {
-		$constraints = array();
-		$constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
+    /**
+     * Get the default constraint for the queries
+     *
+     * @param QueryInterface $query
+     *
+     * @return array
+     */
+    protected function getDefaultConstraints(QueryInterface $query)
+    {
+        $constraints = array();
+        $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
 
-		// storage page selection
-		// @todo please check core API functions again
-		/** @var ConfigurationManagerInterface $configuratioManager */
-		$configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
-		$frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-		$storagePages = isset($frameworkConfiguration['persistence']['storagePid']) ? GeneralUtility::intExplode(',', $frameworkConfiguration['persistence']['storagePid']) : array();
-		if (!empty($storagePages)) {
-			$constraints[] = $query->in('pid', $storagePages);
-		}
+        // storage page selection
+        // @todo please check core API functions again
+        /** @var ConfigurationManagerInterface $configuratioManager */
+        $configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+        $frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $storagePages = isset($frameworkConfiguration['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
+            $frameworkConfiguration['persistence']['storagePid']) : array();
+        if (!empty($storagePages)) {
+            $constraints[] = $query->in('pid', $storagePages);
+        }
 
-		$arguments = array(
-			'indexIds'      => array(),
-			'indexTypes'    => $this->indexTypes,
-			'contentRecord' => $this->contentRecord,
-		);
-		$signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
-		$arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, $arguments);
+        $arguments = array(
+            'indexIds'      => array(),
+            'indexTypes'    => $this->indexTypes,
+            'contentRecord' => $this->contentRecord,
+        );
+        $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
+        $arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, $arguments);
 
-		if ($arguments['indexIds']) {
-			$constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
-		}
+        if ($arguments['indexIds']) {
+            $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
+        }
 
-		return $constraints;
-	}
+        return $constraints;
+    }
 
-	/**
-	 * Add time frame related queries
-	 *
-	 * @param array          $constraints
-	 * @param QueryInterface $query
-	 * @param int            $startTime
-	 * @param int            $endTime
-	 */
-	protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime) {
-		$orConstraint = array();
+    /**
+     * Add time frame related queries
+     *
+     * @param array          $constraints
+     * @param QueryInterface $query
+     * @param int            $startTime
+     * @param int            $endTime
+     */
+    protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime)
+    {
+        $orConstraint = array();
 
-		// before - in
-		$beforeIn = array(
-			$query->lessThan('start_date', $startTime),
-			$query->greaterThanOrEqual('end_date', $startTime),
-			$query->lessThan('end_date', $endTime),
-		);
-		$orConstraint[] = $query->logicalAnd($beforeIn);
+        // before - in
+        $beforeIn = array(
+            $query->lessThan('start_date', $startTime),
+            $query->greaterThanOrEqual('end_date', $startTime),
+            $query->lessThan('end_date', $endTime),
+        );
+        $orConstraint[] = $query->logicalAnd($beforeIn);
 
-		// in - in
-		$inIn = array(
-			$query->greaterThanOrEqual('start_date', $startTime),
-			$query->lessThan('end_date', $endTime),
-		);
-		$orConstraint[] = $query->logicalAnd($inIn);
+        // in - in
+        $inIn = array(
+            $query->greaterThanOrEqual('start_date', $startTime),
+            $query->lessThan('end_date', $endTime),
+        );
+        $orConstraint[] = $query->logicalAnd($inIn);
 
-		// in - after
-		$inAfter = array(
-			$query->greaterThanOrEqual('start_date', $startTime),
-			$query->lessThan('start_date', $endTime),
-			$query->greaterThanOrEqual('end_date', $endTime),
-		);
-		$orConstraint[] = $query->logicalAnd($inAfter);
+        // in - after
+        $inAfter = array(
+            $query->greaterThanOrEqual('start_date', $startTime),
+            $query->lessThan('start_date', $endTime),
+            $query->greaterThanOrEqual('end_date', $endTime),
+        );
+        $orConstraint[] = $query->logicalAnd($inAfter);
 
-		// before - after
-		$beforeAfter = array(
-			$query->lessThan('start_date', $startTime),
-			$query->greaterThan('end_date', $endTime),
+        // before - after
+        $beforeAfter = array(
+            $query->lessThan('start_date', $startTime),
+            $query->greaterThan('end_date', $endTime),
 
-		);
-		$orConstraint[] = $query->logicalAnd($beforeAfter);
+        );
+        $orConstraint[] = $query->logicalAnd($beforeAfter);
 
-		// finish
-		$constraints[] = $query->logicalOr($orConstraint);
-	}
+        // finish
+        $constraints[] = $query->logicalOr($orConstraint);
+    }
 }

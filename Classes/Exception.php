@@ -10,6 +10,7 @@ namespace HDNET\Calendarize;
 /**
  * Calendarize logical exception
  */
-class Exception extends \Exception {
+class Exception extends \Exception
+{
 
 }

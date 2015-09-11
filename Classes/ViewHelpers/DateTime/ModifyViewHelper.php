@@ -14,25 +14,27 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @author Tim Lochmüller
  */
-class ModifyViewHelper extends AbstractViewHelper {
+class ModifyViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Modify the given datetime by the string modification
-	 *
-	 * @param string    $modification
-	 * @param \DateTime $dateTime
-	 *
-	 * @return string
-	 */
-	public function render($modification, \DateTime $dateTime = NULL) {
-		if ($dateTime === NULL) {
-			$dateTime = $this->renderChildren();
-		}
-		if ($dateTime instanceof \DateTime) {
-			$dateTime->modify($modification);
-			return '';
-		}
-		return '';
-	}
+    /**
+     * Modify the given datetime by the string modification
+     *
+     * @param string    $modification
+     * @param \DateTime $dateTime
+     *
+     * @return string
+     */
+    public function render($modification, \DateTime $dateTime = null)
+    {
+        if ($dateTime === null) {
+            $dateTime = $this->renderChildren();
+        }
+        if ($dateTime instanceof \DateTime) {
+            $dateTime->modify($modification);
+            return '';
+        }
+        return '';
+    }
 
 }

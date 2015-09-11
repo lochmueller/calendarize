@@ -16,26 +16,28 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
  *
  * @hook TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processCmdmapClass
  */
-class ProcessCmdmapClass {
+class ProcessCmdmapClass
+{
 
-	/**
-	 * Run the delete action
-	 *
-	 * @param string      $table
-	 * @param int         $id
-	 * @param             $recordToDelete
-	 * @param             $recordWasDeleted
-	 * @param DataHandler $dataHandler
-	 */
-	public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $dataHandler) {
-		$register = Register::getRegister();
-		foreach ($register as $key => $configuration) {
-			if ($configuration['tableName'] == $table) {
-				$indexer = HelperUtility::create('HDNET\\Calendarize\\Service\\IndexerService');
-				$dataHandler->deleteEl($table, $id);
-				$recordWasDeleted = TRUE;
-				$indexer->reindex($key, $table, $id);
-			}
-		}
-	}
+    /**
+     * Run the delete action
+     *
+     * @param string      $table
+     * @param int         $id
+     * @param             $recordToDelete
+     * @param             $recordWasDeleted
+     * @param DataHandler $dataHandler
+     */
+    public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $dataHandler)
+    {
+        $register = Register::getRegister();
+        foreach ($register as $key => $configuration) {
+            if ($configuration['tableName'] == $table) {
+                $indexer = HelperUtility::create('HDNET\\Calendarize\\Service\\IndexerService');
+                $dataHandler->deleteEl($table, $id);
+                $recordWasDeleted = true;
+                $indexer->reindex($key, $table, $id);
+            }
+        }
+    }
 }

@@ -8,21 +8,21 @@
  */
 
 if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
+    die('Access denied.');
 }
 
 \HDNET\Autoloader\Loader::extTables('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
 
 if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
-	\HDNET\Calendarize\Register::extTables(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
-	\TYPO3\CMS\Core\Category\CategoryRegistry::getInstance()
-		->add('calendarize', 'tx_calendarize_domain_model_event');
+    \HDNET\Calendarize\Register::extTables(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
+    \TYPO3\CMS\Core\Category\CategoryRegistry::getInstance()
+        ->add('calendarize', 'tx_calendarize_domain_model_event');
 }
 
 $pluginName = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('pluginName', 'calendarize');
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'Calendar', $pluginName);
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0.0')) {
-	$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['calendarize_calendar'] .= ',categories';
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['calendarize_calendar'] .= ',categories';
 }
 
 // module icon

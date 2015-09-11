@@ -12,33 +12,36 @@ namespace HDNET\Calendarize\Utility;
  *
  * @author Tim Lochmüller
  */
-class ConfigurationUtility {
+class ConfigurationUtility
+{
 
-	/**
-	 * Configuration cache
-	 *
-	 * @var array
-	 */
-	static protected $configuration;
+    /**
+     * Configuration cache
+     *
+     * @var array
+     */
+    static protected $configuration;
 
-	/**
-	 * Get the given configuration value
-	 *
-	 * @param string $name
-	 *
-	 * @return mixed
-	 */
-	static public function get($name) {
-		self::loadConfiguration();
-		return isset(self::$configuration[$name]) ? self::$configuration[$name] : NULL;
-	}
+    /**
+     * Get the given configuration value
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    static public function get($name)
+    {
+        self::loadConfiguration();
+        return isset(self::$configuration[$name]) ? self::$configuration[$name] : null;
+    }
 
-	/**
-	 * Load the current configuration
-	 */
-	static protected function loadConfiguration() {
-		if (self::$configuration === NULL) {
-			self::$configuration = (array)unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
-		}
-	}
+    /**
+     * Load the current configuration
+     */
+    static protected function loadConfiguration()
+    {
+        if (self::$configuration === null) {
+            self::$configuration = (array)unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+        }
+    }
 }

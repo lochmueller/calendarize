@@ -6,34 +6,33 @@
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Index');
 
-
 $custom = array(
-	'ctrl'    => array(
-		'hideTable' => TRUE,
-		'rootLevel' => -1
-	),
-	'columns' => array(
-		'unique_register_key' => array(
-			'config' => array(
-				'type' => 'none',
-			)
-		),
-		'foreign_uid'         => array(
-			'config' => array(
-				'type' => 'none',
-			),
-		),
-		'start_date'          => array(
-			'config' => array(
-				'eval' => 'required,date',
-			),
-		),
-		'end_date'            => array(
-			'config' => array(
-				'eval' => 'required,date',
-			),
-		),
-	),
+    'ctrl'    => array(
+        'hideTable' => true,
+        'rootLevel' => -1
+    ),
+    'columns' => array(
+        'unique_register_key' => array(
+            'config' => array(
+                'type' => 'none',
+            )
+        ),
+        'foreign_uid'         => array(
+            'config' => array(
+                'type' => 'none',
+            ),
+        ),
+        'start_date'          => array(
+            'config' => array(
+                'eval' => 'required,date',
+            ),
+        ),
+        'end_date'            => array(
+            'config' => array(
+                'eval' => 'required,date',
+            ),
+        ),
+    ),
 );
 
 return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);

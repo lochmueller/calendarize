@@ -14,6 +14,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  *
  * @author Tim Lochmüller
  */
-class AbstractRepository extends Repository {
+class AbstractRepository extends Repository
+{
 
 }

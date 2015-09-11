@@ -10,18 +10,20 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 /**
  * Uri to the week
  */
-class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper {
+class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper
+{
 
-	/**
-	 * Render the uri to the given day
-	 *
-	 * @param \DateTime $date
-	 * @param int       $pageUid
-	 *
-	 * @return string
-	 */
-	public function render(\DateTime $date, $pageUid = NULL) {
-		parent::render($date, $pageUid);
-		return $this->tag->getAttribute('href');
-	}
+    /**
+     * Render the uri to the given day
+     *
+     * @param \DateTime $date
+     * @param int       $pageUid
+     *
+     * @return string
+     */
+    public function render(\DateTime $date, $pageUid = null)
+    {
+        parent::render($date, $pageUid);
+        return $this->tag->getAttribute('href');
+    }
 }

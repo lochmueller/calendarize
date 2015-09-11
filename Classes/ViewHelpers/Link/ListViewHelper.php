@@ -12,16 +12,18 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  *
  * @author Tim Lochmüller
  */
-class ListViewHelper extends AbstractLinkViewHelper {
+class ListViewHelper extends AbstractLinkViewHelper
+{
 
-	/**
-	 * Render the link to the given list
-	 *
-	 * @param int $pageUid
-	 *
-	 * @return string
-	 */
-	public function render($pageUid = NULL) {
-		return parent::render($this->getPageUid($pageUid, 'listPid'));
-	}
+    /**
+     * Render the link to the given list
+     *
+     * @param int $pageUid
+     *
+     * @return string
+     */
+    public function render($pageUid = null)
+    {
+        return parent::render($this->getPageUid($pageUid, 'listPid'));
+    }
 }

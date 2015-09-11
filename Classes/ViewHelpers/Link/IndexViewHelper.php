@@ -14,22 +14,24 @@ use HDNET\Calendarize\Domain\Model\Index;
  *
  * @author Tim Lochmüller
  */
-class IndexViewHelper extends AbstractLinkViewHelper {
+class IndexViewHelper extends AbstractLinkViewHelper
+{
 
-	/**
-	 * Render the link to the given index
-	 *
-	 * @param Index $index
-	 * @param int   $pageUid
-	 *
-	 * @return string
-	 */
-	public function render(Index $index, $pageUid = NULL) {
-		$additionalParams = array(
-			'tx_calendarize_calendar' => array(
-				'index' => $index->getUid()
-			),
-		);
-		return parent::render($this->getPageUid($pageUid, 'detailPid'), $additionalParams);
-	}
+    /**
+     * Render the link to the given index
+     *
+     * @param Index $index
+     * @param int   $pageUid
+     *
+     * @return string
+     */
+    public function render(Index $index, $pageUid = null)
+    {
+        $additionalParams = array(
+            'tx_calendarize_calendar' => array(
+                'index' => $index->getUid()
+            ),
+        );
+        return parent::render($this->getPageUid($pageUid, 'detailPid'), $additionalParams);
+    }
 }
