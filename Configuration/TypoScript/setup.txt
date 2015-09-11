@@ -1,36 +1,24 @@
-/**
- * Configuration
- */
 plugin.tx_calendarize {
 
 	settings {
-		# Limit for the previous button in the day,week,month,year view
-		dateLimitBrowserPrev = 2012-01-01
-
-		# Limit for the next button in the day,week,month,year view
-		dateLimitBrowserNext = 2020-01-01
-
-		# Start of the week - ISO-8601 / http://php.net/manual/de/function.date.php 'N'
-		weekStart = 1
-
-		# date format - http://php.net/manual/de/function.date.php
-		dateFormat = d.m.Y
-
-		# time format - http://php.net/manual/de/function.date.php
-		timeFormat = H:i
+		dateLimitBrowserPrev = {$plugin.tx_calendarize.settings.dateLimitBrowserPrev}
+		dateLimitBrowserNext = {$plugin.tx_calendarize.settings.dateLimitBrowserNext}
+		weekStart = {$plugin.tx_calendarize.settings.weekStart}
+		dateFormat = {$plugin.tx_calendarize.settings.dateFormat}
+		timeFormat = {$plugin.tx_calendarize.settings.timeFormat}
 	}
 
 	mvc.callDefaultActionIfActionCantBeResolved = 1
 
 	view {
 		templateRootPaths {
-			100 = EXT:calendarize/Resources/Private/Templates/
+			100 = {$plugin.tx_calendarize.view.templateRootPaths}
 		}
 		partialRootPaths {
-			100 = EXT:calendarize/Resources/Private/Partials/
+			100 = {$plugin.tx_calendarize.view.partialRootPaths}
 		}
 		layoutRootPaths {
-			100 = EXT:calendarize/Resources/Private/Layouts/
+			100 = {$plugin.tx_calendarize.view.layoutRootPaths}
 		}
 		widget {
 			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
