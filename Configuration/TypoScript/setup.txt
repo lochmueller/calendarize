@@ -6,19 +6,20 @@ plugin.tx_calendarize {
 		weekStart = {$plugin.tx_calendarize.settings.weekStart}
 		dateFormat = {$plugin.tx_calendarize.settings.dateFormat}
 		timeFormat = {$plugin.tx_calendarize.settings.timeFormat}
+		useMomentJsDateAndTimeOutput = {$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}
 	}
 
 	mvc.callDefaultActionIfActionCantBeResolved = 1
 
 	view {
 		templateRootPaths {
-			100 = {$plugin.tx_calendarize.view.templateRootPaths}
+			100 = {$plugin.tx_calendarize.view.templateRootPath}
 		}
 		partialRootPaths {
-			100 = {$plugin.tx_calendarize.view.partialRootPaths}
+			100 = {$plugin.tx_calendarize.view.partialRootPath}
 		}
 		layoutRootPaths {
-			100 = {$plugin.tx_calendarize.view.layoutRootPaths}
+			100 = {$plugin.tx_calendarize.view.layoutRootPath}
 		}
 		widget {
 			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
@@ -31,3 +32,12 @@ plugin.tx_calendarize {
 		skipDefaultArguments = 1
 	}
 }
+
+[globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}]
+page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js
+page.includeJSFooterlibs.moment.external = 1
+page.includeJSFooterlibs.moment.disableCompression = 1
+page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.0/moment-timezone.min.js
+page.includeJSFooterlibs.momentTimezone.external = 1
+page.includeJSFooterlibs.momentTimezone.disableCompression = 1
+[global]
