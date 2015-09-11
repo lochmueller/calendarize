@@ -139,6 +139,30 @@ class Index extends AbstractModel {
 		return NULL;
 	}
 
+    /**
+     * @return \DateTime
+     */
+    public function getStartDateComplete(){
+        $date = $this->getStartDate();
+        if (!$this->isAllDay()) {
+            $time = new \Datetime('@'.$this->getStartTime());
+            $date->setTime($time->format('H'), $time->format('i'), 0);
+        }
+        return $date;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndDateComplete(){
+        $date = $this->getEndDate();
+        if (!$this->isAllDay()) {
+            $time = new \Datetime('@'.$this->getEndTime());
+            $date->setTime($time->format('H'), $time->format('i'), 0);
+        }
+        return $date;
+    }
+
 	/**
 	 * Set foreign uid
 	 *
