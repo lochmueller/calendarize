@@ -35,26 +35,26 @@ class Register
     static protected function createTcaConfiguration($configuration)
     {
         $tableName = $configuration['tableName'];
-        $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = array(
+        $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = [
             'label'  => 'Calendarize',
-            'config' => array(
+            'config' => [
                 'type'          => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
                 'minitems'      => $configuration['required'] ? 1 : 0,
                 'maxitems'      => 99,
-                'behaviour'     => array(
+                'behaviour'     => [
                     'enableCascadingDelete' => true,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
-        $GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = array(
+        $GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = [
             'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tca.information',
-            'config' => array(
+            'config' => [
                 'type'     => 'user',
                 'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
-            ),
-        );
+            ],
+        ];
         ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info');
     }
 
@@ -87,14 +87,14 @@ class Register
      */
     static public function getDefaultAutoloader()
     {
-        return array(
+        return [
             'Hooks',
             'Slots',
             'SmartObjects',
             'FlexForms',
             'CommandController',
             'StaticTyposcript'
-        );
+        ];
     }
 
     /**
@@ -104,7 +104,7 @@ class Register
      */
     static public function getRegister()
     {
-        return is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']) ? $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] : array();
+        return is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']) ? $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] : [];
     }
 
     /**
@@ -116,14 +116,14 @@ class Register
      */
     static public function getDefaultCalendarizeConfiguration()
     {
-        $configuration = array(
+        $configuration = [
             'uniqueRegisterKey' => 'Event',
             'title'             => 'Calendarize Event',
             'modelName'         => 'HDNET\\Calendarize\\Domain\\Model\\Event',
             'partialIdentifier' => 'Event',
             'tableName'         => 'tx_calendarize_domain_model_event',
             'required'          => true,
-        );
+        ];
         return $configuration;
     }
 

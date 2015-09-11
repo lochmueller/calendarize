@@ -24,17 +24,17 @@ class IndexRepository extends AbstractRepository
      *
      * @var array
      */
-    protected $defaultOrderings = array(
+    protected $defaultOrderings = [
         'start_date' => QueryInterface::ORDER_ASCENDING,
         'start_time' => QueryInterface::ORDER_ASCENDING,
-    );
+    ];
 
     /**
      * Index types for selection
      *
      * @var array
      */
-    protected $indexTypes = array();
+    protected $indexTypes = [];
 
     /**
      * Set the index types
@@ -51,7 +51,7 @@ class IndexRepository extends AbstractRepository
      *
      * @var array
      */
-    protected $contentRecord = array();
+    protected $contentRecord = [];
 
     /**
      * Set the current content record
@@ -76,12 +76,12 @@ class IndexRepository extends AbstractRepository
         $constraints = $this->getDefaultConstraints($query);
 
         // time check
-        $orConstraint = array();
+        $orConstraint = [];
         $orConstraint[] = $query->greaterThanOrEqual('start_date', time());
-        $orConstraint[] = $query->logicalAnd(array(
+        $orConstraint[] = $query->logicalAnd([
             $query->lessThanOrEqual('start_date', time()),
             $query->greaterThanOrEqual('end_date', time())
-        ));
+        ]);
 
         $constraints[] = $query->logicalOr($orConstraint);
         $query->matching($query->logicalAnd($constraints));
@@ -102,14 +102,14 @@ class IndexRepository extends AbstractRepository
      *
      * @return array
      */
-    public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = array())
+    public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
-        $arguments = array(
-            'indexIds'     => array(),
+        $arguments = [
+            'indexIds'     => [],
             'startDate'    => $startDate,
             'endDate'      => $endDate,
             'customSearch' => $customSearch,
-        );
+        ];
         $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
         $arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 
@@ -127,9 +127,9 @@ class IndexRepository extends AbstractRepository
         if ($constraints) {
             $query->matching($query->logicalAnd($constraints));
         }
-        $result = array(
+        $result = [
             'result' => $query->execute()
-        );
+        ];
         $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $result);
 
         return $result['result'];
@@ -223,7 +223,7 @@ class IndexRepository extends AbstractRepository
      */
     protected function getDefaultConstraints(QueryInterface $query)
     {
-        $constraints = array();
+        $constraints = [];
         $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
 
         // storage page selection
@@ -232,16 +232,16 @@ class IndexRepository extends AbstractRepository
         $configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
         $frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $storagePages = isset($frameworkConfiguration['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
-            $frameworkConfiguration['persistence']['storagePid']) : array();
+            $frameworkConfiguration['persistence']['storagePid']) : [];
         if (!empty($storagePages)) {
             $constraints[] = $query->in('pid', $storagePages);
         }
 
-        $arguments = array(
-            'indexIds'      => array(),
+        $arguments = [
+            'indexIds'      => [],
             'indexTypes'    => $this->indexTypes,
             'contentRecord' => $this->contentRecord,
-        );
+        ];
         $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
         $arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, $arguments);
 
@@ -262,37 +262,37 @@ class IndexRepository extends AbstractRepository
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime)
     {
-        $orConstraint = array();
+        $orConstraint = [];
 
         // before - in
-        $beforeIn = array(
+        $beforeIn = [
             $query->lessThan('start_date', $startTime),
             $query->greaterThanOrEqual('end_date', $startTime),
             $query->lessThan('end_date', $endTime),
-        );
+        ];
         $orConstraint[] = $query->logicalAnd($beforeIn);
 
         // in - in
-        $inIn = array(
+        $inIn = [
             $query->greaterThanOrEqual('start_date', $startTime),
             $query->lessThan('end_date', $endTime),
-        );
+        ];
         $orConstraint[] = $query->logicalAnd($inIn);
 
         // in - after
-        $inAfter = array(
+        $inAfter = [
             $query->greaterThanOrEqual('start_date', $startTime),
             $query->lessThan('start_date', $endTime),
             $query->greaterThanOrEqual('end_date', $endTime),
-        );
+        ];
         $orConstraint[] = $query->logicalAnd($inAfter);
 
         // before - after
-        $beforeAfter = array(
+        $beforeAfter = [
             $query->lessThan('start_date', $startTime),
             $query->greaterThan('end_date', $endTime),
 
-        );
+        ];
         $orConstraint[] = $query->logicalAnd($beforeAfter);
 
         // finish

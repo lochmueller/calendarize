@@ -49,15 +49,15 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
      */
     protected function getItems(\DateTime $date)
     {
-        $weeks = array();
+        $weeks = [];
         $date->setDate($date->format('Y'), $date->format('n'), 1);
         while ((int)$date->format('t') > (int)$date->format('d')) {
             $week = (int)$date->format('W');
             if (!isset($weeks[$week])) {
-                $weeks[$week] = array(
+                $weeks[$week] = [
                     'week' => $week,
                     'date' => clone $date,
-                );
+                ];
             }
             $date->modify('+1 day');
         }

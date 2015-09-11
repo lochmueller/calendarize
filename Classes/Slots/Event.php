@@ -42,12 +42,12 @@ class Event
         }
         /** @var EventRepository $eventRepository */
         $eventRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\EventRepository');
-        return array(
+        return [
             'indexIds'     => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
             'startDate'    => $startDate,
             'endDate'      => $endDate,
             'customSearch' => $customSearch,
-        );
+        ];
     }
 
     /**
@@ -67,17 +67,17 @@ class Event
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $rows = $databaseConnection->exec_SELECTgetRows('uid_local', 'sys_category_record_mm',
             'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']);
-        $categoryIds = array();
+        $categoryIds = [];
         foreach ($rows as $row) {
             $categoryIds[] = (int)$row['uid_local'];
         }
 
         if (empty($categoryIds)) {
-            return array(
+            return [
                 'indexIds'      => $indexIds,
                 'indexTypes'    => $indexTypes,
                 'contentRecord' => $contentRecord,
-            );
+            ];
         }
 
         $rows = $databaseConnection->exec_SELECTgetRows('uid_foreign', 'sys_category_record_mm',
@@ -86,10 +86,10 @@ class Event
             $indexIds[] = (int)$row['uid_foreign'];
         }
 
-        return array(
+        return [
             'indexIds'      => $indexIds,
             'indexTypes'    => $indexTypes,
             'contentRecord' => $contentRecord,
-        );
+        ];
     }
 } 

@@ -24,7 +24,7 @@ class ProcessDatamapClass
      *
      * @var array
      */
-    protected $indexItems = array();
+    protected $indexItems = [];
 
     /**
      * Hook into the after database operations
@@ -74,7 +74,7 @@ class ProcessDatamapClass
                 }
             }
         }
-        $this->indexItems = array();
+        $this->indexItems = [];
     }
 
 }

@@ -60,14 +60,14 @@ class ExternalTimeTable extends AbstractTimeTable
             if ($endTime === self::DAY_END) {
                 $endTime = 0;
             }
-            $entry = array(
+            $entry = [
                 'pid'        => 0,
                 'start_date' => $event->getStart(),
                 'end_date'   => $event->getEnd(),
                 'start_time' => $startTime,
                 'end_time'   => $endTime,
                 'all_day'    => $endTime === 0,
-            );
+            ];
             $times[] = $entry;
         }
     }

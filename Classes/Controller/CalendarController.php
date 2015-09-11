@@ -72,7 +72,7 @@ class CalendarController extends ActionController
         Index $index = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        array $customSearch = array(),
+        array $customSearch = [],
         $year = null,
         $month = null,
         $week = null
@@ -101,7 +101,7 @@ class CalendarController extends ActionController
         Index $index = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        array $customSearch = array(),
+        array $customSearch = [],
         $year = null,
         $month = null,
         $week = null
@@ -124,10 +124,10 @@ class CalendarController extends ActionController
             $indices = $this->indexRepository->findList((int)$this->settings['limit']);
         }
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'indices'    => $indices,
             'searchMode' => $searchMode
-        ));
+        ]);
     }
 
     /**
@@ -157,10 +157,10 @@ class CalendarController extends ActionController
     {
         $date = DateTimeUtility::normalizeDateTime(1, $month, $year);
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'date'    => $date,
             'indices' => $this->indexRepository->findMonth($date->format('Y'), $date->format('n')),
-        ));
+        ]);
     }
 
     /**
@@ -181,10 +181,10 @@ class CalendarController extends ActionController
         }
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $firstDay->setTime(0, 0, 0);
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'firstDay' => $firstDay,
             'indices'  => $this->indexRepository->findWeek($year, $week),
-        ));
+        ]);
     }
 
     /**
@@ -207,12 +207,12 @@ class CalendarController extends ActionController
         $next = clone $today;
         $next->modify('+1 day');
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'indices'  => $this->indexRepository->findDay($year, $month, $day),
             'today'    => $today,
             'previous' => $previous,
             'next'     => $next,
-        ));
+        ]);
     }
 
     /**
@@ -228,7 +228,7 @@ class CalendarController extends ActionController
             if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
                 return LocalizationUtility::translate('noEventDetailView', 'calendarize');
             }
-            $this->redirect('list', null, null, array(), null, $this->settings['listPid'], 301);
+            $this->redirect('list', null, null, [], null, $this->settings['listPid'], 301);
         }
         $this->view->assign('index', $index);
         // domain for ICS view
@@ -247,7 +247,7 @@ class CalendarController extends ActionController
      * @ignorevalidation $endDate
      * @ignorevalidation $customSearch
      */
-    public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = array())
+    public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
         if (!($startDate instanceof \DateTime)) {
             $startDate = new \DateTime('now', DateTimeUtility::getTimeZone());
@@ -256,12 +256,12 @@ class CalendarController extends ActionController
             $endDate = new \DateTime('+1 month', DateTimeUtility::getTimeZone());
         }
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'startDate'      => $startDate,
             'endDate'        => $endDate,
             'customSearch'   => $customSearch,
             'configurations' => $this->getCurrentConfigurations()
-        ));
+        ]);
     }
 
     /**
@@ -272,11 +272,11 @@ class CalendarController extends ActionController
     protected function getAllowedActions()
     {
         $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $allowedControllerActions = array();
+        $allowedControllerActions = [];
         foreach ($configuration['controllerConfiguration'] as $controllerName => $controllerActions) {
             $allowedControllerActions[$controllerName] = $controllerActions['actions'];
         }
-        return isset($allowedControllerActions['Calendar']) ? $allowedControllerActions['Calendar'] : array();
+        return isset($allowedControllerActions['Calendar']) ? $allowedControllerActions['Calendar'] : [];
     }
 
     /**
@@ -287,7 +287,7 @@ class CalendarController extends ActionController
     protected function getCurrentConfigurations()
     {
         $configurations = GeneralUtility::trimExplode(',', $this->settings['configuration'], true);
-        $return = array();
+        $return = [];
         foreach (Register::getRegister() as $key => $configuration) {
             if (in_array($key, $configurations)) {
                 $return[] = $configuration;

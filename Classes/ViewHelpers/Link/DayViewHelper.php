@@ -25,13 +25,13 @@ class DayViewHelper extends AbstractLinkViewHelper
      */
     public function render(\DateTime $date, $pageUid = null)
     {
-        $additionalParams = array(
-            'tx_calendarize_calendar' => array(
+        $additionalParams = [
+            'tx_calendarize_calendar' => [
                 'year'  => $date->format('Y'),
                 'month' => $date->format('n'),
                 'day'   => $date->format('j'),
-            ),
-        );
+            ],
+        ];
         return parent::render($this->getPageUid($pageUid), $additionalParams);
     }
 }

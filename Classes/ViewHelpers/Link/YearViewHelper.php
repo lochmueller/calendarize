@@ -25,11 +25,11 @@ class YearViewHelper extends AbstractLinkViewHelper
      */
     public function render(\DateTime $date, $pageUid = null)
     {
-        $additionalParams = array(
-            'tx_calendarize_calendar' => array(
+        $additionalParams = [
+            'tx_calendarize_calendar' => [
                 'year' => $date->format('Y'),
-            ),
-        );
+            ],
+        ];
         return parent::render($this->getPageUid($pageUid), $additionalParams);
     }
 }

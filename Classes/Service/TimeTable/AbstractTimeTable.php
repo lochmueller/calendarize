@@ -46,7 +46,7 @@ abstract class AbstractTimeTable extends AbstractService
      */
     protected function buildSingleTimeTableByGroup(ConfigurationGroup $group)
     {
-        $ids = array();
+        $ids = [];
         foreach ($group->getConfigurations() as $configuration) {
             if ($configuration instanceof Configuration) {
                 $ids[] = $configuration->getUid();

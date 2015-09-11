@@ -31,10 +31,10 @@ class HelperUtility
     {
         $arguments = func_get_args();
         $objManager = new ObjectManager();
-        return call_user_func_array(array(
+        return call_user_func_array([
             $objManager,
             'get'
-        ), $arguments);
+        ], $arguments);
     }
 
     /**

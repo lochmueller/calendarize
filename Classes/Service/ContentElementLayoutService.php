@@ -27,7 +27,7 @@ class ContentElementLayoutService extends AbstractService
      *
      * @var array
      */
-    protected $table = array();
+    protected $table = [];
 
     /**
      * Set the title
@@ -37,7 +37,7 @@ class ContentElementLayoutService extends AbstractService
     public function setTitle($title)
     {
         $this->title = $title;
-        $this->table = array();
+        $this->table = [];
     }
 
     /**
@@ -48,10 +48,10 @@ class ContentElementLayoutService extends AbstractService
      */
     public function addRow($label, $value)
     {
-        $this->table[] = array(
+        $this->table[] = [
             $label,
             $value
-        );
+        ];
     }
 
     /**

@@ -53,7 +53,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
         if (!$originalDate) {
             $originalDate = clone $date;
         }
-        $days = array();
+        $days = [];
         $move = (int)($date->format('N') - $this->weekStartsAt);
         $date->modify('-' . $move . ' days');
         $inWeek = false;
@@ -62,10 +62,10 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
             if ($addDate->format('d.m.Y') == $originalDate->format('d.m.Y')) {
                 $inWeek = true;
             }
-            $days[] = array(
+            $days[] = [
                 'day'  => $i,
                 'date' => $addDate,
-            );
+            ];
             $date->modify('+1 day');
         }
 

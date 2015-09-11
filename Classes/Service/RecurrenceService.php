@@ -107,7 +107,7 @@ class RecurrenceService extends AbstractService
      */
     protected function getValidDays($day)
     {
-        $days = array();
+        $days = [];
         switch ($day) {
             case ConfigurationInterface::DAY_MONDAY:
                 $days[] = 1;

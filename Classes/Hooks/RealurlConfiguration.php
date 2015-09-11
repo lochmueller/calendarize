@@ -26,22 +26,22 @@ class RealurlConfiguration
      */
     public function addCalendarizeConfiguration($params, &$pObj)
     {
-        return array_merge_recursive($params['config'], array(
-            'postVarSets' => array(
-                '_DEFAULT' => array(
-                    'event'      => array(
-                        array(
+        return array_merge_recursive($params['config'], [
+            'postVarSets' => [
+                '_DEFAULT' => [
+                    'event'      => [
+                        [
                             'GETvar'   => 'tx_calendarize_calendar[index]',
                             'userFunc' => 'HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
-                        ),
-                    ),
-                    'event-page' => array(
-                        array(
+                        ],
+                    ],
+                    'event-page' => [
+                        [
                             'GETvar' => 'tx_calendarize_calendar[@widget_0][currentPage]',
-                        )
-                    )
-                )
-            )
-        ));
+                        ]
+                    ]
+                ]
+            ]
+        ]);
     }
 }

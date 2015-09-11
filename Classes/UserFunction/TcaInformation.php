@@ -52,7 +52,7 @@ class TcaInformation
      */
     protected function getEventList($events)
     {
-        $items = array();
+        $items = [];
         foreach ($events as $event) {
             $entry = date('d.m.Y', $event['start_date']) . ' - ' . date('d.m.Y', $event['end_date']);
             if (!$event['all_day']) {

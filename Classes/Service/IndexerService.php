@@ -77,7 +77,7 @@ class IndexerService extends AbstractService
             return;
         }
         $configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], true);
-        $neededItems = array();
+        $neededItems = [];
         if ($configurations) {
             $timeTableService = new TimeTableService();
             $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
@@ -106,14 +106,14 @@ class IndexerService extends AbstractService
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $checkProperties = array(
+        $checkProperties = [
             'pid',
             'start_date',
             'end_date',
             'start_time',
             'end_time',
             'all_day'
-        );
+        ];
         $currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperties), self::TABLE_NAME,
             'foreign_table=' . $databaseConnection->fullQuoteStr($tableName,
                 IndexerService::TABLE_NAME) . ' AND foreign_uid=' . $uid);
@@ -168,12 +168,12 @@ class IndexerService extends AbstractService
      */
     protected function addEnableFieldInformation(array &$neededItems, $tableName, array $record)
     {
-        $enableFields = isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']) ? $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] : array();
+        $enableFields = isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']) ? $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] : [];
         if (!$enableFields) {
             return;
         }
 
-        $addFields = array();
+        $addFields = [];
         if (isset($enableFields['disabled'])) {
             $addFields['hidden'] = (int)$record[$enableFields['disabled']];
         }
@@ -222,7 +222,7 @@ class IndexerService extends AbstractService
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
-        $ids = array();
+        $ids = [];
         foreach ($rows as $row) {
             $ids[] = $row['uid'];
         }

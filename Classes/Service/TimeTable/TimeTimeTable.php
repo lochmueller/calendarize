@@ -31,14 +31,14 @@ class TimeTimeTable extends AbstractTimeTable
     {
         $startTime = $configuration->isAllDay() ? null : $configuration->getStartTime();
         $endTime = $configuration->isAllDay() ? null : $configuration->getEndTime();
-        $baseEntry = array(
+        $baseEntry = [
             'pid'        => $configuration->getPid(),
             'start_date' => $configuration->getStartDate(),
             'end_date'   => $configuration->getEndDate(),
             'start_time' => $startTime,
             'end_time'   => $endTime,
             'all_day'    => $configuration->isAllDay(),
-        );
+        ];
         $times[] = $baseEntry;
         $this->addFrequencyItems($times, $configuration, $baseEntry);
         $this->addRecurrenceItems($times, $configuration, $baseEntry);

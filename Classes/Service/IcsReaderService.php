@@ -37,6 +37,6 @@ class IcsReaderService extends AbstractService
         if ($backend->parseFromFile($tempFileName)) {
             return $backend->getEvents();
         }
-        return array();
+        return [];
     }
 }

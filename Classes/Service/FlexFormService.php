@@ -22,7 +22,7 @@ class FlexFormService extends AbstractService
      *
      * @var array
      */
-    protected $flexFormData = array();
+    protected $flexFormData = [];
 
     /**
      * oad the given flex form into the service

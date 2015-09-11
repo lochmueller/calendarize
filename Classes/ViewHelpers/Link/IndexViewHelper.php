@@ -27,11 +27,11 @@ class IndexViewHelper extends AbstractLinkViewHelper
      */
     public function render(Index $index, $pageUid = null)
     {
-        $additionalParams = array(
-            'tx_calendarize_calendar' => array(
+        $additionalParams = [
+            'tx_calendarize_calendar' => [
                 'index' => $index->getUid()
-            ),
-        );
+            ],
+        ];
         return parent::render($this->getPageUid($pageUid, 'detailPid'), $additionalParams);
     }
 }

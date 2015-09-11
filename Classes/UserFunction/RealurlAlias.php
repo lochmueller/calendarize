@@ -40,7 +40,7 @@ class RealurlAlias
      */
     protected function alias2id($value)
     {
-        $matches = array();
+        $matches = [];
         if (preg_match('/^--([0-9]+)--$/', $value, $matches)) {
             return $matches[1];
         }

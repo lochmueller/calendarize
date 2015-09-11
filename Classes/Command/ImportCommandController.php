@@ -142,7 +142,7 @@ class ImportCommandController extends AbstractCommandController
      */
     protected function prepareEvents($icalEvents)
     {
-        $events = array();
+        $events = [];
         foreach ($icalEvents as $icalEvent) {
             $startDateTime = null;
             $endDateTime = null;
@@ -160,13 +160,13 @@ class ImportCommandController extends AbstractCommandController
                     'Warning', FlashMessage::WARNING);
             }
 
-            $events[] = array(
+            $events[] = [
                 'uid'         => $icalEvent['UID'],
                 'start'       => $startDateTime,
                 'end'         => $endDateTime,
                 'title'       => $icalEvent['SUMMARY'],
                 'description' => $icalEvent['DESCRIPTION'],
-            );
+            ];
         }
         return $events;
     }

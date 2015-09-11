@@ -24,15 +24,15 @@ class MonthsInYearViewHelper extends AbstractLoopViewHelper
      */
     protected function getItems(\DateTime $date)
     {
-        $months = array();
+        $months = [];
         $date->setDate($date->format('Y'), $date->format('n'), 1);
         for ($i = 0; $i < 12; $i++) {
-            $months[$date->format('n')] = array(
+            $months[$date->format('n')] = [
                 'week'   => $date->format('n'),
                 'date'   => clone $date,
                 'break3' => $date->format('n') % 3,
                 'break4' => $date->format('n') % 4,
-            );
+            ];
             $date->modify('+1 month');
         }
         return $months;

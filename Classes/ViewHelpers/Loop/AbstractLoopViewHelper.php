@@ -32,11 +32,11 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
 
         $items = $this->getItems($date);
 
-        $iterationData = array(
+        $iterationData = [
             'index' => 0,
             'cycle' => 1,
             'total' => count($items)
-        );
+        ];
 
         $output = '';
         foreach ($items as $item) {

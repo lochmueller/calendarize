@@ -30,7 +30,7 @@ class Database
     public function loadCalendarizeTables(array $sqlString)
     {
         $sqlString[] = $this->getCalendarizeDatabaseString();
-        return array('sqlString' => $sqlString);
+        return ['sqlString' => $sqlString];
     }
 
     /**
@@ -40,7 +40,7 @@ class Database
      */
     protected function getCalendarizeDatabaseString()
     {
-        $sql = array();
+        $sql = [];
         foreach (Register::getRegister() as $configuration) {
             $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (
 			calendarize tinytext
@@ -63,9 +63,9 @@ class Database
     public function updateCalendarizeTables(array $sqlString, $extensionKey)
     {
         $sqlString[] = $this->getCalendarizeDatabaseString();
-        return array(
+        return [
             'sqlString'    => $sqlString,
             'extensionKey' => $extensionKey
-        );
+        ];
     }
 } 

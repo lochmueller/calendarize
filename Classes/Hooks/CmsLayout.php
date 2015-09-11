@@ -83,14 +83,14 @@ class CmsLayout
      */
     protected function addPageIdsToTable()
     {
-        $pageIdsNames = array(
+        $pageIdsNames = [
             'detailPid',
             'listPid',
             'yearPid',
             'monthPid',
             'weekPid',
             'dayPid',
-        );
+        ];
         foreach ($pageIdsNames as $pageIdName) {
             $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
             $pageRow = BackendUtility::getRecord('pages', $pageId);

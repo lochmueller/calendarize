@@ -27,7 +27,7 @@ class IndexOnDayViewHelper extends AbstractViewHelper
      *
      * @return bool
      */
-    public function render(\DateTime $day, Index $index = null, $indices = array())
+    public function render(\DateTime $day, Index $index = null, $indices = [])
     {
         foreach ($indices as $idx) {
             /** @var $idx Index */

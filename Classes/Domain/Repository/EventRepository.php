@@ -23,13 +23,13 @@ class EventRepository extends AbstractRepository
     public function getIdsBySearchTerm($searchTerm)
     {
         $query = $this->createQuery();
-        $constraint = array();
+        $constraint = [];
         $constraint[] = $query->like('title', '%' . $searchTerm . '%');
         $constraint[] = $query->like('description', '%' . $searchTerm . '%');
         $query->matching($query->logicalOr($constraint));
         $rows = $query->execute(true);
 
-        $ids = array();
+        $ids = [];
         foreach ($rows as $row) {
             $ids[] = (int)$row['uid'];
         }

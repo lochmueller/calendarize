@@ -27,10 +27,10 @@ class PluginConfiguration
     public function addConfig($config)
     {
         foreach (Register::getRegister() as $key => $configuration) {
-            $config['items'][] = array(
+            $config['items'][] = [
                 $configuration['title'],
                 $key,
-            );
+            ];
         }
         return $config;
     }
