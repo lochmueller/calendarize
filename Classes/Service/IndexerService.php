@@ -151,8 +151,8 @@ class IndexerService extends AbstractService
     protected function isEqualArray(array $array1, array $array2, array $checkProperties)
     {
         foreach ($checkProperties as $check) {
-            // no type check, because there is also the fe_group field
-            if ($array1[$check] != $array2[$check]) {
+            // @todo type check for the fe_group field??
+            if ((int)$array1[$check] !== (int)$array2[$check]) {
                 return false;
             }
         }
