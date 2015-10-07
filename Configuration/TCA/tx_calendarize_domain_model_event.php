@@ -13,9 +13,12 @@ $custom = array(
         'thumbnail'    => 'images',
     ),
     'columns' => array(
-        'title' => array(
+        'title'     => array(
             'type' => 'text',
             'eval' => 'required'
+        ),
+        'import_id' => array(
+            'readOnly' => true,
         ),
     ),
 );

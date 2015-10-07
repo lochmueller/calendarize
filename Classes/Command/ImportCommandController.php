@@ -31,9 +31,11 @@ class ImportCommandController extends AbstractCommandController
     {
         if ($icsCalendarUri === null || !filter_var($icsCalendarUri, FILTER_VALIDATE_URL)) {
             $this->enqueueMessage('You have to enter a valid URL to the iCalendar ICS', 'Error', FlashMessage::ERROR);
+            return;
         }
         if (!MathUtility::canBeInterpretedAsInteger($pid)) {
             $this->enqueueMessage('You have to enter a valid PID for the new created elements', 'Error', FlashMessage::ERROR);
+            return;
         }
 
         // fetch external URI and write to file

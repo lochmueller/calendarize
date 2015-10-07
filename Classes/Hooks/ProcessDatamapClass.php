@@ -8,7 +8,6 @@
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
