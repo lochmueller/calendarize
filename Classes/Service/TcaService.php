@@ -29,9 +29,10 @@ class TcaService extends AbstractService
     public function configurationTitle(&$params, $object)
     {
         $row = $params['row'];
-        $params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $row['type'],
+        $type = is_array($row['type']) ? $row['type'][0] : $row['type']; // The new FormEngine prepare the select as array
+        $params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $type,
                 'calendarize') . '</b><br />';
-        switch ($row['type']) {
+        switch ($type) {
             case Configuration::TYPE_TIME:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
                 break;
@@ -87,7 +88,8 @@ class TcaService extends AbstractService
             $title .= ' - ' . BackendUtility::time($row['end_time'], false);
         }
 
-        if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
+        $frequency = is_array($row['frequency']) ? $row['frequency'][0] : $row['frequency']; // The new FormEngine prepare the select as array
+        if ($frequency && $frequency !== Configuration::FREQUENCY_NONE) {
             $title .= '<br /><i>' . LocalizationUtility::translate('configuration.frequency.' . $row['frequency'],
                     'calendarize') . '</i>';
         }
