@@ -69,7 +69,7 @@ class TimeTableService extends AbstractService
         if (!class_exists($handler)) {
             return false;
         }
-        return GeneralUtility::makeInstance($handler);
+        return HelperUtility::create($handler);
     }
 
 }
