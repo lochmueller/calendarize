@@ -27,8 +27,8 @@ class IcsReaderService extends AbstractService
      */
     function toArray($paramUrl)
     {
-        $tempFileName = GeneralUtility::getFileAbsFileName('typo3temp/calendarize_temp_' . GeneralUtility::shortMD5($paramUrl));
-        if (filemtime($tempFileName) < (time() - 60 * 60)) {
+        $tempFileName = $this->getCheckedCacheFolder() . GeneralUtility::shortMD5($paramUrl);
+        if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - 60 * 60)) {
             $icsFile = GeneralUtility::getUrl($paramUrl);
             GeneralUtility::writeFile($tempFileName, $icsFile);
         }
@@ -38,5 +38,19 @@ class IcsReaderService extends AbstractService
             return $backend->getEvents();
         }
         return [];
+    }
+
+    /**
+     * Return the cache folder and check if the folder exists
+     *
+     * @return string
+     */
+    protected function getCheckedCacheFolder()
+    {
+        $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/calendarize/');
+        if (!is_dir($cacheFolder)) {
+            GeneralUtility::mkdir_deep($cacheFolder);
+        }
+        return $cacheFolder;
     }
 }
