@@ -49,6 +49,29 @@ class Event extends AbstractModel
     protected $downloads;
 
     /**
+     * Import ID if the item is based on an ICS structure
+     *
+     * @var string
+     * @db
+     */
+    protected $importId;
+
+    /**
+     * Relation field. It is just used by the importer of the default events. You do not need this field, if you don't use the default Event
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
+     */
+    protected $calendarize;
+
+    /**
+     * Build up the object
+     */
+    function __construct()
+    {
+        $this->calendarize = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+    /**
      * Get title
      *
      * @return string
@@ -128,6 +151,50 @@ class Event extends AbstractModel
     public function setImages($images)
     {
         $this->images = $images;
+    }
+
+    /**
+     * Get Import ID
+     *
+     * @return string
+     */
+    public function getImportId()
+    {
+        return $this->importId;
+    }
+
+    /**
+     * Set import ID
+     *
+     * @param string $importId
+     */
+    public function setImportId($importId)
+    {
+        $this->importId = $importId;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getCalendarize()
+    {
+        return $this->calendarize;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $calendarize
+     */
+    public function setCalendarize($calendarize)
+    {
+        $this->calendarize = $calendarize;
+    }
+
+    /**
+     * @param Configuration $calendarize
+     */
+    public function addCalendarize($calendarize)
+    {
+        $this->calendarize->attach($calendarize);
     }
 
 }

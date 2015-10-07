@@ -15,7 +15,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
  *
  * @author Tim Lochmüller
  */
-class Event
+class EventSearch
 {
 
     /**

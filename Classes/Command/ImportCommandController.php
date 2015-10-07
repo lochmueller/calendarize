@@ -7,12 +7,11 @@
 
 namespace HDNET\Calendarize\Command;
 
-use HDNET\Calendarize\Domain\Model\Configuration;
-use HDNET\Calendarize\Domain\Model\Event;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Import
@@ -21,14 +20,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class ImportCommandController extends AbstractCommandController
 {
-
-    /**
-     * Event repository
-     *
-     * @var \HDNET\Calendarize\Domain\Repository\EventRepository
-     * @inject
-     */
-    protected $eventRepository;
 
     /**
      * Import command
@@ -57,80 +48,21 @@ class ImportCommandController extends AbstractCommandController
         $this->enqueueMessage('Found ' . sizeof($icalEvents) . ' events in the given calendar', 'Items', FlashMessage::INFO);
         $events = $this->prepareEvents($icalEvents);
 
-        $this->enqueueMessage('This is just a first draft. There are same missing fields. Will be part of the next release',
-            'Items', FlashMessage::ERROR);
-        return;
+        $this->enqueueMessage('Found ' . sizeof($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
 
+        /** @var Dispatcher $signalSlotDispatcher */
+        $signalSlotDispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+
+        $this->enqueueMessage('Send the ' . __CLASS__ . '::importCommand signal for each event.', 'Signal', FlashMessage::INFO);
         foreach ($events as $event) {
-            $eventObject = $this->eventRepository->findOneByImportId($event['uid']);
-            if ($eventObject instanceof Event) {
-                // update
-                $eventObject->setTitle($event['title']);
-                $eventObject->setDescription($this->nl2br($event['description']));
-                $this->eventRepository->update($eventObject);
-                $this->enqueueMessage('Update Event Meta data: ' . $eventObject->getTitle(), 'Update');
-            } else {
-                // create
-                $eventObject = new Event();
-                $eventObject->setPid($pid);
-                $eventObject->setImportId($event['uid']);
-                $eventObject->setTitle($event['title']);
-                $eventObject->setDescription($this->nl2br($event['description']));
-
-                $configuration = new Configuration();
-                $configuration->setType(Configuration::TYPE_TIME);
-                $configuration->setFrequency(Configuration::FREQUENCY_NONE);
-                /** @var \DateTime $startDate */
-                $startDate = clone $event['start'];
-                $startDate->setTime(0, 0, 0);
-                $configuration->setStartDate($startDate);
-                /** @var \DateTime $endDate */
-                $endDate = clone $event['end'];
-                $endDate->setTime(0, 0, 0);
-                $configuration->setEndDate($endDate);
-
-                $startTime = $this->dateTimeToDaySeconds($event['start']);
-                if ($startTime > 0) {
-                    $configuration->setStartTime($startTime);
-                    $configuration->setEndTime($this->dateTimeToDaySeconds($event['end']));
-                    $configuration->setAllDay(false);
-                } else {
-                    $configuration->setAllDay(true);
-                }
-
-                $eventObject->addCalendarize($configuration);
-
-                $this->eventRepository->add($eventObject);
-                $this->enqueueMessage('Add Event: ' . $eventObject->getTitle(), 'Add');
-            }
+            $arguments = [
+                'event'             => $event,
+                'commandController' => $this,
+                'pid'               => $pid,
+                'handled'           => false,
+            ];
+            $signalSlotDispatcher->dispatch(__CLASS__, 'importCommand', $arguments);
         }
-    }
-
-    /**
-     * Replace new lines
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function nl2br($string)
-    {
-        $string = nl2br((string)$string);
-        return str_replace('\\n', '<br />', $string);
-    }
-
-    /**
-     * DateTime to day seconds
-     *
-     * @param \DateTime $dateTime
-     *
-     * @return int
-     */
-    protected function dateTimeToDaySeconds(\DateTime $dateTime)
-    {
-        $hours = (int)$dateTime->format('G');
-        $minutes = ($hours * 60) + (int)$dateTime->format('i');
-        return ($minutes * 60) + (int)$dateTime->format('s');
     }
 
     /**

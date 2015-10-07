@@ -15,6 +15,10 @@ if (!defined('TYPO3_MODE')) {
 
 if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
     \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
+    /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
+    $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+    $signalSlotDispatcher->connect('HDNET\\Calendarize\\Command\\ImportCommandController', 'importCommand',
+        'HDNET\\Calendarize\\Slots\\EventImport', 'importCommand');
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar',
