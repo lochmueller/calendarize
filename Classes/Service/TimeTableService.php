@@ -11,6 +11,7 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Time table builder service
@@ -68,7 +69,7 @@ class TimeTableService extends AbstractService
         if (!class_exists($handler)) {
             return false;
         }
-        return HelperUtility::create($handler);
+        return GeneralUtility::makeInstance($handler);
     }
 
 }

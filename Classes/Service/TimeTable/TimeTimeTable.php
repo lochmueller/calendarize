@@ -8,8 +8,8 @@
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
-use HDNET\Calendarize\Service\RecurrenceService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Time service
@@ -143,7 +143,7 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
 
-        $recurrenceService = new RecurrenceService();
+        $recurrenceService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\RecurrenceService');
         $amountCounter = $configuration->getCounterAmount();
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();

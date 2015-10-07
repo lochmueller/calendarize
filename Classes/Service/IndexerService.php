@@ -79,7 +79,7 @@ class IndexerService extends AbstractService
         $configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], true);
         $neededItems = [];
         if ($configurations) {
-            $timeTableService = new TimeTableService();
+            $timeTableService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\TimeTableService');
             $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
             foreach ($neededItems as $key => $record) {
 

@@ -22,6 +22,7 @@ class HelperUtility
 
     /**
      * Create a object with the given class name
+     * Please use GeneralUtility::makeInstance if you do not need DI
      *
      * @param string $className
      *

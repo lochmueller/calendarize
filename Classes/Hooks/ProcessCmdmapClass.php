@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Hooks;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Hook for cmd map processing
@@ -33,7 +34,7 @@ class ProcessCmdmapClass
         $register = Register::getRegister();
         foreach ($register as $key => $configuration) {
             if ($configuration['tableName'] == $table) {
-                $indexer = HelperUtility::create('HDNET\\Calendarize\\Service\\IndexerService');
+                $indexer = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
                 $dataHandler->deleteEl($table, $id);
                 $recordWasDeleted = true;
                 $indexer->reindex($key, $table, $id);

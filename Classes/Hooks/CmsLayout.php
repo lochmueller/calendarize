@@ -47,8 +47,8 @@ class CmsLayout
     public function getExtensionSummary(array $params)
     {
         $relIconPath = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ExtensionManagementUtility::siteRelPath('calendarize') . 'ext_icon.png';
-        $this->flexFormService = new FlexFormService();
-        $this->layoutService = new ContentElementLayoutService();
+        $this->flexFormService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\FlexFormService');
+        $this->layoutService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\ContentElementLayoutService');
         $this->layoutService->setTitle('<img src="' . $relIconPath . '" /> Calendarize');
 
         if ($params['row']['list_type'] != 'calendarize_calendar') {

@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
@@ -66,7 +67,8 @@ abstract class AbstractCommandController extends CommandController
      */
     private function enqueueMessageGui($message, $title = '', $severity = FlashMessage::INFO)
     {
-        $message = new FlashMessage(nl2br($message), $title, $severity);
+        /** @var FlashMessage $message */
+        $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', nl2br($message), $title, $severity);
         $this->flashMessageService->getMessageQueueByIdentifier()
             ->enqueue($message);
     }

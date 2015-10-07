@@ -152,7 +152,7 @@ class Index extends AbstractModel
     {
         $date = $this->getStartDate();
         if (!$this->isAllDay()) {
-            $time = new \Datetime('@' . $this->getStartTime());
+            $time = new \DateTime('@' . $this->getStartTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
         return $date;
@@ -167,7 +167,7 @@ class Index extends AbstractModel
     {
         $date = $this->getEndDate();
         if (!$this->isAllDay()) {
-            $time = new \Datetime('@' . $this->getEndTime());
+            $time = new \DateTime('@' . $this->getEndTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
         return $date;
