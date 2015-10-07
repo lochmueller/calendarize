@@ -6,7 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_calendarize_domain_model_event.import_id"><![CDATA[import_id]]></label>
+			<label index="tx_calendarize_domain_model_event.import_id"><![CDATA[Import ID]]></label>
 			<label index="date"><![CDATA[Date]]></label>
 			<label index="time"><![CDATA[Time]]></label>
 			<label index="all_day"><![CDATA[All day]]></label>

@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\UserFunction;
 
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -24,12 +23,12 @@ class TcaInformation
     /**
      * Generate the information field
      *
-     * @param array      $configuration
-     * @param FormEngine $fObj
+     * @param array  $configuration
+     * @param object $fObj
      *
      * @return string
      */
-    public function informationField($configuration, FormEngine $fObj)
+    public function informationField($configuration, $fObj)
     {
         if (!isset($configuration['row']['uid'])) {
             $content = LocalizationUtility::translate('save.first', 'calendarize');

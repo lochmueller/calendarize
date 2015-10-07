@@ -88,7 +88,7 @@ class EventImport
 
         $this->persist();
         $handled = true;
-        
+
         return [
             'event'             => $event,
             'commandController' => $commandController,
