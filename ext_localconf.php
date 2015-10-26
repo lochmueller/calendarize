@@ -22,4 +22,4 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar',
-    ['Calendar' => 'list,latest,year,month,week,day,detail,search'], ['Calendar' => 'list,year,month,week,day,detail,search']);
+    ['Calendar' => 'list,latest,year,month,week,day,detail,search,result'], ['Calendar' => 'search,result']);

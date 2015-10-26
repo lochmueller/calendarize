@@ -42,12 +42,13 @@
 			<label index="mode.list"><![CDATA[List only]]></label>
 			<label index="mode.detail"><![CDATA[Detail only]]></label>
 			<label index="mode.search"><![CDATA[Search]]></label>
-			<label index="mode.latest"><![CDATA[Latest (list but cached)]]></label>
+			<label index="mode.latest"><![CDATA[Latest]]></label>
 			<label index="mode.special"><![CDATA[Special Views]]></label>
 			<label index="mode.year"><![CDATA[Year]]></label>
 			<label index="mode.month"><![CDATA[Month]]></label>
 			<label index="mode.week"><![CDATA[Week]]></label>
 			<label index="mode.day"><![CDATA[Day]]></label>
+			<label index="mode.result"><![CDATA[Search result]]></label>
 			<label index="configuration"><![CDATA[Configuration]]></label>
 			<label index="inherit"><![CDATA[Inherit]]></label>
 			<label index="limit"><![CDATA[Limit]]></label>
@@ -151,6 +152,7 @@
 			<label index="mode.month"><![CDATA[Monat]]></label>
 			<label index="mode.week"><![CDATA[Woche]]></label>
 			<label index="mode.day"><![CDATA[Tag]]></label>
+			<label index="mode.result"><![CDATA[Suchergebnis]]></label>
 			<label index="configuration"><![CDATA[Konfiguration]]></label>
 			<label index="inherit"><![CDATA[Vererbt]]></label>
 			<label index="limit"><![CDATA[Limit]]></label>

@@ -81,6 +81,35 @@ class CalendarController extends ActionController
     }
 
     /**
+     * Result action
+     *
+     * @param \HDNET\Calendarize\Domain\Model\Index $index
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
+     *
+     * @ignorevalidation $startDate
+     * @ignorevalidation $endDate
+     * @ignorevalidation $customSearch
+     *
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     */
+    public function resultAction(
+        Index $index = null,
+        \DateTime $startDate = null,
+        \DateTime $endDate = null,
+        array $customSearch = [],
+        $year = null,
+        $month = null,
+        $week = null
+    ) {
+        $this->listAction($index, $startDate, $endDate, $customSearch, $year, $month, $week);
+    }
+
+    /**
      * List action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
