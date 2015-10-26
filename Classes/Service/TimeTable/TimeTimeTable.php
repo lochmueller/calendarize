@@ -34,7 +34,7 @@ class TimeTimeTable extends AbstractTimeTable
         $baseEntry = [
             'pid'        => $configuration->getPid(),
             'start_date' => $configuration->getStartDate(),
-            'end_date'   => $configuration->getEndDate(),
+            'end_date'   => $configuration->getEndDate() ?: $configuration->getStartDate(),
             'start_time' => $startTime,
             'end_time'   => $endTime,
             'all_day'    => $configuration->isAllDay(),

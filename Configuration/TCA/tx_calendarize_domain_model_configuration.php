@@ -75,7 +75,7 @@ $custom = array(
         ),
         'end_date'         => array(
             'config'      => array(
-                'eval' => 'required,date',
+                'eval' => 'date',
                 'size' => 6,
             ),
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,

@@ -103,7 +103,7 @@
 			<label index="tx_calendarize_domain_model_configuration.all_day"><![CDATA[All day]]></label>
 			<label index="tx_calendarize_domain_model_configuration.end_time"><![CDATA[End time]]></label>
 			<label index="tx_calendarize_domain_model_configuration.start_time"><![CDATA[Start time]]></label>
-			<label index="tx_calendarize_domain_model_configuration.end_date"><![CDATA[End date]]></label>
+			<label index="tx_calendarize_domain_model_configuration.end_date"><![CDATA[End date (optionally)]]></label>
 			<label index="tx_calendarize_domain_model_configuration.start_date"><![CDATA[Start date]]></label>
 			<label index="tx_calendarize_domain_model_index"><![CDATA[Index]]></label>
 			<label index="tx_calendarize_domain_model_event"><![CDATA[Event]]></label>
@@ -189,7 +189,7 @@
 			<label index="tx_calendarize_domain_model_configuration.all_day"><![CDATA[Ganztägig]]></label>
 			<label index="tx_calendarize_domain_model_configuration.end_time"><![CDATA[Endzeit]]></label>
 			<label index="tx_calendarize_domain_model_configuration.start_time"><![CDATA[Startzeit]]></label>
-			<label index="tx_calendarize_domain_model_configuration.end_date"><![CDATA[Enddatum]]></label>
+			<label index="tx_calendarize_domain_model_configuration.end_date"><![CDATA[Enddatum  (optional)]]></label>
 			<label index="tx_calendarize_domain_model_configuration.start_date"><![CDATA[Startdatum]]></label>
 			<label index="tx_calendarize_domain_model_event"><![CDATA[Ereignis]]></label>
 			<label index="tx_calendarize_domain_model_event.description"><![CDATA[Beschreibung]]></label>

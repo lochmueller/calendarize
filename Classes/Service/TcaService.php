@@ -30,8 +30,7 @@ class TcaService extends AbstractService
     {
         $row = $params['row'];
         $type = is_array($row['type']) ? $row['type'][0] : $row['type']; // The new FormEngine prepare the select as array
-        $params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $type,
-                'calendarize') . '</b><br />';
+        $params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $type, 'calendarize') . '</b><br />';
         switch ($type) {
             case Configuration::TYPE_TIME:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
@@ -75,7 +74,7 @@ class TcaService extends AbstractService
         $title = '';
         if ($row['start_date']) {
             $dateStart = date('d.m.Y', $row['start_date']);
-            $dateEnd = date('d.m.Y', $row['end_date']);
+            $dateEnd = date('d.m.Y', $row['end_date'] ?: $row['start_date']);
             $title .= $dateStart;
             if ($dateStart != $dateEnd) {
                 $title .= ' - ' . $dateEnd;

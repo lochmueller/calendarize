@@ -63,7 +63,7 @@ class ExternalTimeTable extends AbstractTimeTable
             $entry = [
                 'pid'        => 0,
                 'start_date' => $event->getStart(),
-                'end_date'   => $event->getEnd(),
+                'end_date'   => $event->getEnd() ?: $event->getStart(),
                 'start_time' => $startTime,
                 'end_time'   => $endTime,
                 'all_day'    => $endTime === 0,
