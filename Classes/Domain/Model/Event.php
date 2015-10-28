@@ -7,6 +7,8 @@
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * Event (Example) for the calendarize function
  *
@@ -68,7 +70,7 @@ class Event extends AbstractModel
      */
     function __construct()
     {
-        $this->calendarize = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->calendarize = new ObjectStorage();
     }
 
     /**
