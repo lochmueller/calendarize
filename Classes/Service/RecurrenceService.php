@@ -31,8 +31,8 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next month
      *
      * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
+     * @param string $recurrence
+     * @param string $day
      *
      * @return \DateTime
      */
@@ -50,8 +50,8 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next year
      *
      * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
+     * @param string $recurrence
+     * @param string $day
      *
      * @return \DateTime
      */
@@ -69,8 +69,8 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the current month
      *
      * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
+     * @param string $recurrence
+     * @param string $day
      *
      * @return \DateTime|FALSE
      */
@@ -135,17 +135,13 @@ class RecurrenceService extends AbstractService
                 $days[] = 6;
                 break;
             case ConfigurationInterface::DAY_SPECIAL_WEEKDAY:
-                // no break!
-                $days[] = 7;
+                $days = range(1, 7);
+                break;
             case ConfigurationInterface::DAY_SPECIAL_BUSINESS:
-                // no break!
-                $days[] = 6;
+                $days = range(1, 6);
+                break;
             case ConfigurationInterface::DAY_SPECIAL_WORKDAY:
-                $days[] = 1;
-                $days[] = 2;
-                $days[] = 3;
-                $days[] = 4;
-                $days[] = 5;
+                $days = range(1, 5);
                 break;
             default:
                 // no day
@@ -158,9 +154,9 @@ class RecurrenceService extends AbstractService
      * Find the modified in the current month
      *
      * @param \DateTime $dateTime
-     * @param string    $direction
-     * @param array     $validDays
-     * @param int       $position
+     * @param string $direction
+     * @param array $validDays
+     * @param int $position
      *
      * @return \DateTime|FALSE
      */

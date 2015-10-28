@@ -25,7 +25,7 @@ class ProcessCmdmapClass extends AbstractHook
      * @param string      $table
      * @param int         $id
      * @param             $recordToDelete
-     * @param             $recordWasDeleted
+     * @param boolean     $recordWasDeleted
      * @param DataHandler $dataHandler
      */
     public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $dataHandler)
