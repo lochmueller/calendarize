@@ -28,6 +28,8 @@ class EventImport
     protected $eventRepository;
 
     /**
+     * Run the import
+     *
      * @param array                   $event
      * @param ImportCommandController $commandController
      * @param int                     $pid

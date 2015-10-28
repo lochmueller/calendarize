@@ -8,7 +8,7 @@
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
  * Check if the given Index is on the given day

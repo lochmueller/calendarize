@@ -12,7 +12,7 @@ namespace HDNET\Calendarize\Hooks;
  *
  * @author Tim Lochmüller
  */
-class RealurlConfiguration
+class RealurlConfiguration extends AbstractHook
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
  * Modify a DateTime@

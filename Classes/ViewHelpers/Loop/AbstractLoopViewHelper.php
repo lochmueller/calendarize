@@ -7,7 +7,7 @@
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
  * Abstraction for loop view helper

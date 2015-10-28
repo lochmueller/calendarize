@@ -174,6 +174,8 @@ class Event extends AbstractModel
     }
 
     /**
+     * Get calendarize
+     *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function getCalendarize()
@@ -182,6 +184,8 @@ class Event extends AbstractModel
     }
 
     /**
+     * Set calendarize
+     *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $calendarize
      */
     public function setCalendarize($calendarize)
@@ -190,6 +194,8 @@ class Event extends AbstractModel
     }
 
     /**
+     * Add one calendarize configuration
+     *
      * @param Configuration $calendarize
      */
     public function addCalendarize($calendarize)

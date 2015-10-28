@@ -19,7 +19,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  *
  * @see News extension (Thanks Georg)
  */
-class CmsLayout
+class CmsLayout extends AbstractHook
 {
 
     /**

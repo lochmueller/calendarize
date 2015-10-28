@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @hook TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processCmdmapClass
  */
-class ProcessCmdmapClass
+class ProcessCmdmapClass extends AbstractHook
 {
 
     /**
