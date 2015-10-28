@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -98,16 +99,16 @@ class IndexRepository extends AbstractRepository
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array     $customSearch
+     * @param array $customSearch
      *
      * @return array
      */
     public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
         $arguments = [
-            'indexIds'     => [],
-            'startDate'    => $startDate,
-            'endDate'      => $endDate,
+            'indexIds' => [],
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'customSearch' => $customSearch,
         ];
         $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -136,6 +137,50 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
+     * Find by traversing information
+     *
+     * @param Index $index
+     * @param bool|true $future
+     * @param bool|false $past
+     * @param int $limit
+     * @param string $sort
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByTraversing(
+        Index $index,
+        $future = true,
+        $past = false,
+        $limit = 100,
+        $sort = QueryInterface::ORDER_ASCENDING
+    ) {
+        if (!$future && !$past) {
+            return [];
+        }
+        $query = $this->createQuery();
+        $constraints = [];
+        $constraints[] = $query->logicalNot($query->equals('uid', $index->getUid()));
+        $constraints[] = $query->equals('foreignTable', $index->getForeignTable());
+        $constraints[] = $query->equals('foreignUid', $index->getForeignUid());
+        if (!$future) {
+            $constraints[] = $query->lessThanOrEqual('startDate', time());
+        }
+        if (!$past) {
+            $constraints[] = $query->greaterThanOrEqual('startDate', time());
+        }
+
+        $query->matching($query->logicalAnd($constraints));
+        $query->setLimit($limit);
+        $sort = $sort === QueryInterface::ORDER_ASCENDING ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+        $query->setOrderings([
+            'start_date' => $sort,
+            'start_time' => $sort,
+        ]);
+        return $query->execute();
+    }
+
+
+    /**
      * find Year
      *
      * @param int $year
@@ -146,7 +191,8 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year), mktime(0, 0, 0, 0, 0, $year + 1));
+        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year),
+            mktime(0, 0, 0, 0, 0, $year + 1));
         $query->matching($query->logicalAnd($constraints));
         return $query->execute();
     }
@@ -238,8 +284,8 @@ class IndexRepository extends AbstractRepository
         }
 
         $arguments = [
-            'indexIds'      => [],
-            'indexTypes'    => $this->indexTypes,
+            'indexIds' => [],
+            'indexTypes' => $this->indexTypes,
             'contentRecord' => $this->contentRecord,
         ];
         $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -255,10 +301,10 @@ class IndexRepository extends AbstractRepository
     /**
      * Add time frame related queries
      *
-     * @param array          $constraints
+     * @param array $constraints
      * @param QueryInterface $query
-     * @param int            $startTime
-     * @param int            $endTime
+     * @param int $startTime
+     * @param int $endTime
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime)
     {
