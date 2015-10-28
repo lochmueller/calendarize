@@ -18,6 +18,26 @@ class DateTimeUtility
 {
 
     /**
+     * One second
+     */
+    const SECONDS_SECOND = 1;
+
+    /**
+     * One minute in seconds
+     */
+    const SECONDS_MINUTE = 60;
+
+    /**
+     * One hour in seconds
+     */
+    const SECONDS_HOUR = 3600;
+
+    /**
+     * One day in seconds
+     */
+    const SECONDS_DAY = 86400;
+
+    /**
      * Convert a Week/Year combination to a DateTime of the first day of week
      *
      * @param int $week

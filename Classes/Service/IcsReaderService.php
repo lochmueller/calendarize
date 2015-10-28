@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use JMBTechnologyLimited\ICalDissect\ICalParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -28,7 +29,7 @@ class IcsReaderService extends AbstractService
     function toArray($paramUrl)
     {
         $tempFileName = $this->getCheckedCacheFolder() . GeneralUtility::shortMD5($paramUrl);
-        if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - 60 * 60)) {
+        if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - DateTimeUtility::SECONDS_HOUR)) {
             $icsFile = GeneralUtility::getUrl($paramUrl);
             GeneralUtility::writeFile($tempFileName, $icsFile);
         }

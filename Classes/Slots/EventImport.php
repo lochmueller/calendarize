@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Slots;
 use HDNET\Calendarize\Command\ImportCommandController;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\Event;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
@@ -69,10 +70,10 @@ class EventImport
         $endDate->setTime(0, 0, 0);
         $configuration->setEndDate($endDate);
 
-        $startTime = $this->dateTimeToDaySeconds($event['start']);
+        $startTime = DateTimeUtility::getDaySecondsOfDateTime($event['start']);
         if ($startTime > 0) {
             $configuration->setStartTime($startTime);
-            $configuration->setEndTime($this->dateTimeToDaySeconds($event['end']));
+            $configuration->setEndTime(DateTimeUtility::getDaySecondsOfDateTime($event['end']));
             $configuration->setAllDay(false);
         } else {
             $configuration->setAllDay(true);
@@ -120,19 +121,5 @@ class EventImport
     {
         $string = nl2br((string)$string);
         return str_replace('\\n', '<br />', $string);
-    }
-
-    /**
-     * DateTime to day seconds
-     *
-     * @param \DateTime $dateTime
-     *
-     * @return int
-     */
-    protected function dateTimeToDaySeconds(\DateTime $dateTime)
-    {
-        $hours = (int)$dateTime->format('G');
-        $minutes = ($hours * 60) + (int)$dateTime->format('i');
-        return ($minutes * 60) + (int)$dateTime->format('s');
     }
 }
