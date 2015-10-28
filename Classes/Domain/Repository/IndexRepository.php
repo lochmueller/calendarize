@@ -85,13 +85,12 @@ class IndexRepository extends AbstractRepository
         ]);
 
         $constraints[] = $query->logicalOr($orConstraint);
-        $query->matching($query->logicalAnd($constraints));
 
         if ($limit > 0) {
             $query->setLimit($limit);
         }
 
-        return $query->execute();
+        return $this->matchAndExecute($query, $constraints);
     }
 
     /**
@@ -125,11 +124,8 @@ class IndexRepository extends AbstractRepository
         if ($arguments['indexIds']) {
             $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
         }
-        if ($constraints) {
-            $query->matching($query->logicalAnd($constraints));
-        }
         $result = [
-            'result' => $query->execute()
+            'result' => $this->matchAndExecute($query, $constraints)
         ];
         $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $result);
 
@@ -169,14 +165,13 @@ class IndexRepository extends AbstractRepository
             $constraints[] = $query->greaterThanOrEqual('startDate', time());
         }
 
-        $query->matching($query->logicalAnd($constraints));
         $query->setLimit($limit);
         $sort = $sort === QueryInterface::ORDER_ASCENDING ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings([
             'start_date' => $sort,
             'start_time' => $sort,
         ]);
-        return $query->execute();
+        return $this->matchAndExecute($query, $constraints);
     }
 
 
@@ -193,8 +188,7 @@ class IndexRepository extends AbstractRepository
         $constraints = $this->getDefaultConstraints($query);
         $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year),
             mktime(0, 0, 0, 0, 0, $year + 1));
-        $query->matching($query->logicalAnd($constraints));
-        return $query->execute();
+        return $this->matchAndExecute($query, $constraints);
     }
 
     /**
@@ -212,10 +206,7 @@ class IndexRepository extends AbstractRepository
         $startTime = mktime(0, 0, 0, $month, 0, $year);
         $endTime = mktime(0, 0, 0, $month + 1, 0, $year);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
-        if (sizeof($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
-        }
-        return $query->execute();
+        return $this->matchAndExecute($query, $constraints);
     }
 
     /**
@@ -236,8 +227,7 @@ class IndexRepository extends AbstractRepository
         $firstDay->modify('+1 week');
         $timeStampEnd = $firstDay->getTimestamp();
         $this->addTimeFrameConstraints($constraints, $query, $timeStampStart, $timeStampEnd);
-        $query->matching($query->logicalAnd($constraints));
-        return $query->execute();
+        return $this->matchAndExecute($query, $constraints);
     }
 
     /**
@@ -256,8 +246,7 @@ class IndexRepository extends AbstractRepository
         $startTime = mktime(0, 0, 0, $month, $day, $year);
         $endTime = mktime(0, 0, 0, $month, $day + 1, $year);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
-        $query->matching($query->logicalAnd($constraints));
-        return $query->execute();
+        return $this->matchAndExecute($query, $constraints);
     }
 
     /**
