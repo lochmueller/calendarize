@@ -30,7 +30,12 @@ class IfDateLowerViewHelper extends IfViewHelper
     {
         $base = DateTimeUtility::normalizeDateTimeSingle($base);
         $check = DateTimeUtility::normalizeDateTimeSingle($check);
-        return parent::render($base > $check);
+        // do not call parent, because the structure of the ViewHelper changed between 6.2 and 7.x
+        if ($base > $check) {
+            return $this->renderThenChild();
+        } else {
+            return $this->renderElseChild();
+        }
     }
 }
 
