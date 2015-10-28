@@ -186,8 +186,8 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 0, 0, $year),
-            mktime(0, 0, 0, 0, 0, $year + 1));
+        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 1, 1, $year),
+            mktime(0, 0, 0, 1, 1, $year + 1));
         return $this->matchAndExecute($query, $constraints);
     }
 
@@ -203,8 +203,8 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $startTime = mktime(0, 0, 0, $month, 0, $year);
-        $endTime = mktime(0, 0, 0, $month + 1, 0, $year);
+        $startTime = mktime(0, 0, 0, $month, 1, $year);
+        $endTime = mktime(0, 0, 0, $month + 1, 1, $year);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
         return $this->matchAndExecute($query, $constraints);
     }
@@ -224,9 +224,7 @@ class IndexRepository extends AbstractRepository
 
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $timeStampStart = $firstDay->getTimestamp();
-        $firstDay->modify('+1 week');
-        $timeStampEnd = $firstDay->getTimestamp();
-        $this->addTimeFrameConstraints($constraints, $query, $timeStampStart, $timeStampEnd);
+        $this->addTimeFrameConstraints($constraints, $query, $timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK);
         return $this->matchAndExecute($query, $constraints);
     }
 
@@ -244,8 +242,7 @@ class IndexRepository extends AbstractRepository
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
         $startTime = mktime(0, 0, 0, $month, $day, $year);
-        $endTime = mktime(0, 0, 0, $month, $day + 1, $year);
-        $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
+        $this->addTimeFrameConstraints($constraints, $query, $startTime, $startTime + DateTimeUtility::SECONDS_DAY);
         return $this->matchAndExecute($query, $constraints);
     }
 

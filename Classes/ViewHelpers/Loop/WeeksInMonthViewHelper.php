@@ -51,7 +51,8 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
     {
         $weeks = [];
         $date->setDate($date->format('Y'), $date->format('n'), 1);
-        while ((int)$date->format('t') > (int)$date->format('d')) {
+        $monthCheck = $date->format('m');
+        while ((int)$monthCheck == (int)$date->format('m')) {
             $week = (int)$date->format('W');
             if (!isset($weeks[$week])) {
                 $weeks[$week] = [

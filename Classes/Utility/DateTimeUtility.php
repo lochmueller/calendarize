@@ -38,6 +38,11 @@ class DateTimeUtility
     const SECONDS_DAY = 86400;
 
     /**
+     * One week in seconds
+     */
+    const SECONDS_WEEK = 604800;
+
+    /**
      * Convert a Week/Year combination to a DateTime of the first day of week
      *
      * @param int $week
