@@ -114,7 +114,10 @@ class ImportCommandController extends AbstractCommandController
      */
     protected function getIcalEvents($absoluteIcalFile)
     {
-        require_once(ExtensionManagementUtility::extPath('calendarize', 'Resources/Private/Php/ics-parser/class.iCalReader.php'));
+        if (!class_exists('ICal')) {
+            GeneralUtility::requireOnce(ExtensionManagementUtility::extPath('calendarize',
+                'Resources/Private/Php/ics-parser/class.iCalReader.php'));
+        }
         return (new \ICal($absoluteIcalFile))->events();
     }
 }
