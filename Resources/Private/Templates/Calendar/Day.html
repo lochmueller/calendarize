@@ -7,17 +7,17 @@
 	<f:if condition="{settings.dayPid}">
 		<div class="browser">
 
-			<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{previous}">
+			<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:previous)}">
 				<c:link.day pageUid="{settings.dayPid}" date="{previous}">
 					&lt; <f:format.date format="{settings.dateFormat}">{previous}</f:format.date>
 				</c:link.day>
-			</c:ifDateUpper>
+			</f:if>
 
-			<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{next}">
+			<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:next)}">
 				<c:link.day pageUid="{settings.dayPid}" date="{next}">
 					<f:format.date format="{settings.dateFormat}">{next}</f:format.date> &gt;
 				</c:link.day>
-			</c:ifDateLower>
+			</f:if>
 
 		</div>
 	</f:if>

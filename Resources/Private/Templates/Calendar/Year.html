@@ -10,11 +10,11 @@
 
 					<f:if condition="{settings.yearPid}">
 						<c:dateTime.modify modification="-1 year">{date}</c:dateTime.modify>
-						<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{date}">
+						<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:date)}">
 							<c:link.year pageUid="{settings.yearPid}" date="{date}">
 								&lt;
 							</c:link.year>
-						</c:ifDateUpper>
+						</f:if>
 						<c:dateTime.modify modification="+1 year">{date}</c:dateTime.modify>
 					</f:if>
 
@@ -22,11 +22,11 @@
 
 					<f:if condition="{settings.yearPid}">
 						<c:dateTime.modify modification="+1 year">{date}</c:dateTime.modify>
-						<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{date}">
+						<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:date)}">
 							<c:link.year pageUid="{settings.yearPid}" date="{date}">
 								&gt;
 							</c:link.year>
-						</c:ifDateLower>
+						</f:if>
 						<c:dateTime.modify modification="-1 year">{date}</c:dateTime.modify>
 					</f:if>
 				</td>

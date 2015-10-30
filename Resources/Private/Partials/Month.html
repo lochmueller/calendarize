@@ -5,23 +5,23 @@
 		<tr>
 			<td colspan="7">
 				<f:if condition="{settings.monthPid}">
-					<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{date}">
+					<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:date)}">
 						<c:dateTime.modify modification="-1 month">{date}</c:dateTime.modify>
 						<c:link.month pageUid="{settings.monthPid}" date="{date}">
 							&lt;
 						</c:link.month>
 						<c:dateTime.modify modification="+1 month">{date}</c:dateTime.modify>
-					</c:ifDateUpper>
+					</f:if>
 				</f:if>
 				<f:format.date format="F Y">{date}</f:format.date>
 				<f:if condition="{settings.monthPid}">
-					<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{date}">
+					<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:date)}">
 						<c:dateTime.modify modification="+1 month">{date}</c:dateTime.modify>
 						<c:link.month pageUid="{settings.monthPid}" date="{date}">
 							&gt;
 						</c:link.month>
 						<c:dateTime.modify modification="-1 month">{date}</c:dateTime.modify>
-					</c:ifDateLower>
+					</f:if>
 				</f:if>
 			</td>
 		</tr>

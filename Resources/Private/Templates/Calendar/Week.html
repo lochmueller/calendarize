@@ -6,19 +6,21 @@
 	<f:if condition="{settings.weekPid}">
 		<div class="browser">
 			<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
-			<c:ifDateUpper base="{settings.dateLimitBrowserPrev}" check="{firstDay}">
+
+			<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:firstDay)}">
 				<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
 					&lt;
 				</c:link.week>
-			</c:ifDateUpper>
+			</f:if>
 			<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
 
 			<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
-			<c:ifDateLower base="{settings.dateLimitBrowserNext}" check="{firstDay}">
+
+			<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:firstDay)}">
 				<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
 					&gt;
 				</c:link.week>
-			</c:ifDateLower>
+			</f:if>
 			<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
 		</div>
 	</f:if>
