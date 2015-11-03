@@ -8,6 +8,7 @@ namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Model\KeSearchIndexInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
@@ -50,47 +51,38 @@ class KeSearchIndexer
 
         /** @var \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository */
         $indexRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\IndexRepository');
+        // @todo select only $indexerConfig['storagepid']
         $indexObjects = $indexRepository->findList()->toArray();
 
         foreach ($indexObjects as $index) {
             /** @var $index Index */
+            /** @var KeSearchIndexInterface $originalObject */
+            $originalObject = $index->getOriginalObject();
+            if (!($originalObject instanceof KeSearchIndexInterface)) {
+                continue;
+            }
 
-            // @todo implement
-            return;
-
-            // compile the information which should go into the index
-            // the field names depend on the table you want to index!
-            $title = strip_tags($record['title']);
-            $abstract = strip_tags($record['short']);
-            $content = strip_tags($record['description']);
+            $title = strip_tags($originalObject->getKeSearchTitle($index));
+            $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
+            $content = strip_tags($originalObject->getKeSearchContent($index));
             $fullContent = $title . "\n" . $abstract . "\n" . $content;
-            $params = '&tx_ttnews[tt_news]=' . $record['uid'];
-            $tags = '#example_tag_1#,#example_tag_2#';
-            $additionalFields = array(
-                'sortdate' => $record['crdate'],
-                'orig_uid' => $record['uid'],
-                'orig_pid' => $record['pid'],
-                'sortdate' => $record['datetime'],
-            );
 
-            // add something to the title, just to identify the entries
-            // in the frontend
-            $title = '[CUSTOM INDEXER] ' . $title;
+            // @todo Add year and month information
+            $additionalFields = [];
 
-            // ... and store the information in the index
             $indexerObject->storeInIndex(
-                $indexerConfig['storagepid'], // storage PID
-                $title, // record title
-                'calendarize', // content type
-                $indexerConfig['targetpid'], // target PID: where is the single view?
-                $fullContent, // indexed content, includes the title (linebreak after title)
-                $tags, // tags for faceted search
-                $params, // typolink params for singleview
-                $abstract, // abstract; shown in result list if not empty
-                $record['sys_language_uid'],
-                $record['starttime'],
-                $record['endtime'],
-                $record['fe_group'],
+                $indexerConfig['storagepid'],
+                $title,
+                'calendarize',
+                $indexerConfig['targetpid'],
+                $fullContent,
+                '',
+                '&tx_calendarize_calendar[index]=' . $index->getUid(),
+                $abstract,
+                0,
+                0,
+                0,
+                '',
                 false,
                 $additionalFields
             );
