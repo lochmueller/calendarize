@@ -78,10 +78,10 @@ class IndexRepository extends AbstractRepository
 
         // time check
         $orConstraint = [];
-        $orConstraint[] = $query->greaterThanOrEqual('start_date', time());
+        $orConstraint[] = $query->greaterThanOrEqual('start_date', $GLOBALS['SIM_ACCESS_TIME']);
         $orConstraint[] = $query->logicalAnd([
-            $query->lessThanOrEqual('start_date', time()),
-            $query->greaterThanOrEqual('end_date', time())
+            $query->lessThanOrEqual('start_date', $GLOBALS['SIM_ACCESS_TIME']),
+            $query->greaterThanOrEqual('end_date', $GLOBALS['SIM_ACCESS_TIME'])
         ]);
 
         $constraints[] = $query->logicalOr($orConstraint);
@@ -159,10 +159,10 @@ class IndexRepository extends AbstractRepository
         $constraints[] = $query->equals('foreignTable', $index->getForeignTable());
         $constraints[] = $query->equals('foreignUid', $index->getForeignUid());
         if (!$future) {
-            $constraints[] = $query->lessThanOrEqual('startDate', time());
+            $constraints[] = $query->lessThanOrEqual('startDate', $GLOBALS['SIM_ACCESS_TIME']);
         }
         if (!$past) {
-            $constraints[] = $query->greaterThanOrEqual('startDate', time());
+            $constraints[] = $query->greaterThanOrEqual('startDate', $GLOBALS['SIM_ACCESS_TIME']);
         }
 
         $query->setLimit($limit);
