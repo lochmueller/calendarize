@@ -36,15 +36,8 @@
 			<tr>
 				<c:loop.monthsInYear date="{date}" iteration="year">
 					<td>
-
-						<f:comment>
-							<f:render partial="Month" arguments="{date: year.calendar.date}"/>
-						</f:comment>
-
-						<f:render partial="Month" arguments="{date: year.calendar.date}" />
-
+						<f:render partial="Month" arguments="{date: year.calendar.date, indices:indices}" />
 					</td>
-
 					{f:if(condition: '{year.calendar.break4} == 0', then: '</tr><tr>')}
 				</c:loop.monthsInYear>
 			</tr>
