@@ -173,7 +173,7 @@ class CalendarController extends ActionController
     {
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
-        $this->view->assign('indices', $this->indexRepository->findYear($year));
+        $this->view->assign('indices', $this->indexRepository->findYear($date->format('Y')));
         $this->view->assign('date', $date);
     }
 
@@ -230,18 +230,18 @@ class CalendarController extends ActionController
      */
     public function dayAction($year = null, $month = null, $day = null)
     {
-        $today = DateTimeUtility::normalizeDateTime($day, $month, $year);
-        $today->modify('+12 hours');
+        $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
+        $date->modify('+12 hours');
 
-        $previous = clone $today;
+        $previous = clone $date;
         $previous->modify('-1 day');
 
-        $next = clone $today;
+        $next = clone $date;
         $next->modify('+1 day');
 
         $this->view->assignMultiple([
-            'indices'  => $this->indexRepository->findDay($year, $month, $day),
-            'today'    => $today,
+            'indices'  => $this->indexRepository->findDay($date->format('Y'), $date->format('n'), $date->format('j')),
+            'today'    => $date,
             'previous' => $previous,
             'next'     => $next,
         ]);
