@@ -87,6 +87,26 @@
 						</TCEforms>
 					</settings.configuration>
 
+					<!-- Calendar configuration -->
+					<settings.sorting>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:sorting</label>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">ASC</numIndex>
+										<numIndex index="1">ASC</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">DESC</numIndex>
+										<numIndex index="1">DESC</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.sorting>
+
 					<!-- startingpoint -->
 					<persistence.storagePid>
 						<TCEforms>

@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="sorting"><![CDATA[Sorting]]></label>
 			<label index="tx_calendarize_domain_model_event.import_id"><![CDATA[Import ID]]></label>
 			<label index="date"><![CDATA[Date]]></label>
 			<label index="time"><![CDATA[Time]]></label>
@@ -112,6 +113,7 @@
 			<label index="tx_calendarize_domain_model_event.title"><![CDATA[Title]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="sorting"><![CDATA[Sortierung]]></label>
 			<label index="date"><![CDATA[Datum]]></label>
 			<label index="time"><![CDATA[Zeit]]></label>
 			<label index="all_day"><![CDATA[ganztägig]]></label>

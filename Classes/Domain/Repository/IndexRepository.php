@@ -98,16 +98,16 @@ class IndexRepository extends AbstractRepository
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array $customSearch
+     * @param array     $customSearch
      *
      * @return array
      */
     public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
         $arguments = [
-            'indexIds' => [],
-            'startDate' => $startDate,
-            'endDate' => $endDate,
+            'indexIds'     => [],
+            'startDate'    => $startDate,
+            'endDate'      => $endDate,
             'customSearch' => $customSearch,
         ];
         $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -135,11 +135,11 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by traversing information
      *
-     * @param Index $index
-     * @param bool|true $future
+     * @param Index      $index
+     * @param bool|true  $future
      * @param bool|false $past
-     * @param int $limit
-     * @param string $sort
+     * @param int        $limit
+     * @param string     $sort
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -167,13 +167,9 @@ class IndexRepository extends AbstractRepository
 
         $query->setLimit($limit);
         $sort = $sort === QueryInterface::ORDER_ASCENDING ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
-        $query->setOrderings([
-            'start_date' => $sort,
-            'start_time' => $sort,
-        ]);
+        $query->setOrderings($this->getSorting($sort));
         return $this->matchAndExecute($query, $constraints);
     }
-
 
     /**
      * find Year
@@ -186,8 +182,7 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 1, 1, $year),
-            mktime(0, 0, 0, 1, 1, $year + 1));
+        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1));
         return $this->matchAndExecute($query, $constraints);
     }
 
@@ -270,8 +265,8 @@ class IndexRepository extends AbstractRepository
         }
 
         $arguments = [
-            'indexIds' => [],
-            'indexTypes' => $this->indexTypes,
+            'indexIds'      => [],
+            'indexTypes'    => $this->indexTypes,
             'contentRecord' => $this->contentRecord,
         ];
         $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -287,10 +282,10 @@ class IndexRepository extends AbstractRepository
     /**
      * Add time frame related queries
      *
-     * @param array $constraints
+     * @param array          $constraints
      * @param QueryInterface $query
-     * @param int $startTime
-     * @param int $endTime
+     * @param int            $startTime
+     * @param int            $endTime
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime)
     {
@@ -329,5 +324,30 @@ class IndexRepository extends AbstractRepository
 
         // finish
         $constraints[] = $query->logicalOr($orConstraint);
+    }
+
+    /**
+     * Set the default sorting direction
+     *
+     * @param string $direction
+     */
+    public function setDefaultSortingDirection($direction)
+    {
+        $this->defaultOrderings = $this->getSorting($direction);
+    }
+
+    /**
+     * Get the sorting
+     *
+     * @param string $direction
+     *
+     * @return array
+     */
+    protected function getSorting($direction)
+    {
+        return [
+            'start_date' => $direction,
+            'start_time' => $direction,
+        ];
     }
 }

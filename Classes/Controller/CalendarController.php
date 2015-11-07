@@ -39,6 +39,9 @@ class CalendarController extends ActionController
     {
         $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration']));
         $this->indexRepository->setContentRecord($this->configurationManager->getContentObject()->data);
+        if (isset($this->settings['sorting'])) {
+            $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
+        }
 
         if (isset($this->arguments['startDate'])) {
             $this->arguments['startDate']->getPropertyMappingConfiguration()
