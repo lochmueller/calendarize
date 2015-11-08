@@ -18,6 +18,9 @@ plugin.tx_calendarize {
 
 		# cat=calendarize//0060; type=boolean; label=Moment.js: Experimental: Use Moment.js fo date and time output
 		useMomentJsDateAndTimeOutput = 0
+
+		# cat=calendarize//0070; type=boolean; label=FullCalendar IO: Experimental: Use FullCalendar IO for the month view. You have to enable the Moment.js function
+		useMomentFullCalendarIo = 0
 	}
 
 	view {

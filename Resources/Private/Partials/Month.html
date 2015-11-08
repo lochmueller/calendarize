@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="regularMonthView">
 		<c:loop.weeksInMonth date="{date}" iteration="week" weekStartsAt="{settings.weekStart}">
 			<tr>
 				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day" weekStartsAt="{settings.weekStart}">
@@ -69,3 +69,25 @@
 		</c:loop.weeksInMonth>
 	</tbody>
 </table>
+
+<f:if condition="{settings.useMomentFullCalendarIo}">
+	<div class="fullCalendarIo">&nbsp;</div>
+
+	<script type="text/javascript">
+		var monthEvents = [];
+		var monthEventsCurrentDate = '<f:format.date format="Y-m-d">{date}</f:format.date>';
+		<f:for each="{indices}" as="index">
+			<![CDATA[tmp = {};]]>
+		    tmp.id = {index.uid};
+			tmp.allDay = false;
+			tmp.title = <c:jsQuote><f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" /></c:jsQuote>;
+			tmp.start = '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}">{index.startDateComplete}</f:format.date>';
+			tmp.end = '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}">{index.endDateComplete}</f:format.date>';
+			<f:if condition="{index.allDay}">
+				tmp.allDay = false;
+			</f:if>
+			tmp.url = '<c:uri.index index="{index}" pageUid="{settings.detailPid}" />';
+			monthEvents.push(tmp);
+		</f:for>
+	</script>
+</f:if>

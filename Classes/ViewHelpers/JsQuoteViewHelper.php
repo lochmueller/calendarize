@@ -1,0 +1,29 @@
+<?php
+/**
+ * Quote JS
+ *
+ * @author  Tim Lochmüller
+ */
+
+namespace HDNET\Calendarize\ViewHelpers;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/**
+ * Quote JS
+ */
+class JsQuoteViewHelper extends AbstractViewHelper
+{
+
+    /**
+     * @param string $content
+     *
+     * @return string
+     */
+    public function render($content = null)
+    {
+        $content = $content === null ? $this->renderChildren() : $content;
+        return GeneralUtility::quoteJSvalue($content);
+    }
+
+}
