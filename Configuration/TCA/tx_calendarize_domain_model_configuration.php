@@ -45,6 +45,7 @@ $custom = array(
         'type'             => array(
             'config' => array(
                 'type'    => 'select',
+                'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
                         LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_TIME, 'calendarize'),
@@ -113,6 +114,7 @@ $custom = array(
         'groups'           => array(
             'config'      => array(
                 'type'          => 'select',
+                'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_calendarize_domain_model_configurationgroup',
                 'minitems'      => '1',
                 'size'          => 5,
@@ -123,6 +125,7 @@ $custom = array(
         'frequency'        => array(
             'config'      => array(
                 'type'    => 'select',
+                'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
                         LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_NONE, 'calendarize'),
@@ -199,6 +202,7 @@ $custom = array(
         'day'              => array(
             'config'      => array(
                 'type'    => 'select',
+                'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
                         LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY, 'calendarize'),
@@ -257,6 +261,7 @@ $custom = array(
         'recurrence'       => array(
             'config'      => array(
                 'type'    => 'select',
+                'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
                         LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_NONE,
