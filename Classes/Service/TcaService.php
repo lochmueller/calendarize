@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -56,6 +57,10 @@ class TcaService extends AbstractService
     {
         $title = '';
         $groups = GeneralUtility::trimExplode(',', $row['groups'], true);
+        foreach ($groups as $key => $id) {
+            $row = BackendUtility::getRecord('tx_calendarize_domain_model_configurationgroup', $id);
+            $groups[$key] = $row['title'] . ' (' . $id . ')';
+        }
         if ($groups) {
             $title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
         }
