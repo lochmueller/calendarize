@@ -26,6 +26,19 @@ abstract class AbstractController extends ActionController
     }
 
     /**
+     * Extend the view by the slot class and name and assign the variable to the view
+     *
+     * @param array  $variables
+     * @param string $slotName
+     * @param string $slotClass
+     */
+    protected function slotExtendedAssignMultiple(array $variables, $slotName, $slotClass)
+    {
+        // @todo call slot
+        $this->view->assignMultiple($variables);
+    }
+
+    /**
      * Check if the static template is included
      */
     protected function checkStaticTemplateIsIncluded()

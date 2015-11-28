@@ -156,10 +156,10 @@ class CalendarController extends AbstractController
             $indices = $this->indexRepository->findList((int)$this->settings['limit']);
         }
 
-        $this->view->assignMultiple([
+        $this->slotExtendedAssignMultiple([
             'indices'    => $indices,
             'searchMode' => $searchMode
-        ]);
+        ], __FUNCTION__, __CLASS__);
     }
 
     /**
@@ -173,8 +173,10 @@ class CalendarController extends AbstractController
     {
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
-        $this->view->assign('indices', $this->indexRepository->findYear($date->format('Y')));
-        $this->view->assign('date', $date);
+        $this->slotExtendedAssignMultiple([
+            'indices' => $this->indexRepository->findYear($date->format('Y')),
+            'date'    => $date
+        ], __FUNCTION__, __CLASS__);
     }
 
     /**
@@ -189,10 +191,10 @@ class CalendarController extends AbstractController
     {
         $date = DateTimeUtility::normalizeDateTime(1, $month, $year);
 
-        $this->view->assignMultiple([
+        $this->slotExtendedAssignMultiple([
             'date'    => $date,
             'indices' => $this->indexRepository->findMonth($date->format('Y'), $date->format('n')),
-        ]);
+        ], __FUNCTION__, __CLASS__);
     }
 
     /**
@@ -213,10 +215,10 @@ class CalendarController extends AbstractController
         }
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $firstDay->setTime(0, 0, 0);
-        $this->view->assignMultiple([
+        $this->slotExtendedAssignMultiple([
             'firstDay' => $firstDay,
             'indices'  => $this->indexRepository->findWeek($year, $week),
-        ]);
+        ], __FUNCTION__, __CLASS__);
     }
 
     /**
@@ -239,12 +241,12 @@ class CalendarController extends AbstractController
         $next = clone $date;
         $next->modify('+1 day');
 
-        $this->view->assignMultiple([
+        $this->slotExtendedAssignMultiple([
             'indices'  => $this->indexRepository->findDay($date->format('Y'), $date->format('n'), $date->format('j')),
             'today'    => $date,
             'previous' => $previous,
             'next'     => $next,
-        ]);
+        ], __FUNCTION__, __CLASS__);
     }
 
     /**
@@ -262,9 +264,12 @@ class CalendarController extends AbstractController
             }
             $this->redirect('list', null, null, [], null, $this->settings['listPid'], 301);
         }
-        $this->view->assign('index', $index);
-        // domain for ICS view
-        $this->view->assign('domain', GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'));
+
+        $this->slotExtendedAssignMultiple([
+            'index'  => $index,
+            'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY')
+        ], __FUNCTION__, __CLASS__);
+
         return $this->view->render();
     }
 
@@ -288,12 +293,12 @@ class CalendarController extends AbstractController
             $endDate = new \DateTime('+1 month', DateTimeUtility::getTimeZone());
         }
 
-        $this->view->assignMultiple([
+        $this->slotExtendedAssignMultiple([
             'startDate'      => $startDate,
             'endDate'        => $endDate,
             'customSearch'   => $customSearch,
             'configurations' => $this->getCurrentConfigurations()
-        ]);
+        ], __FUNCTION__, __CLASS__);
     }
 
     /**
