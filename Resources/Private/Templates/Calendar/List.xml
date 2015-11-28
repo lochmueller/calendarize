@@ -1,0 +1,7 @@
+<f:layout name="Feed" />
+
+<f:section name="items">
+<f:for each="{indices}" as="index">
+	<f:render partial="Feed/Item" arguments="{index:index}" />
+</f:for>
+</f:section>
