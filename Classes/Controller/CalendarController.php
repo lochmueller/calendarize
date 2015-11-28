@@ -159,7 +159,7 @@ class CalendarController extends AbstractController
         $this->slotExtendedAssignMultiple([
             'indices'    => $indices,
             'searchMode' => $searchMode
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
@@ -176,7 +176,7 @@ class CalendarController extends AbstractController
         $this->slotExtendedAssignMultiple([
             'indices' => $this->indexRepository->findYear($date->format('Y')),
             'date'    => $date
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
@@ -194,7 +194,7 @@ class CalendarController extends AbstractController
         $this->slotExtendedAssignMultiple([
             'date'    => $date,
             'indices' => $this->indexRepository->findMonth($date->format('Y'), $date->format('n')),
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
@@ -218,7 +218,7 @@ class CalendarController extends AbstractController
         $this->slotExtendedAssignMultiple([
             'firstDay' => $firstDay,
             'indices'  => $this->indexRepository->findWeek($year, $week),
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
@@ -246,7 +246,7 @@ class CalendarController extends AbstractController
             'today'    => $date,
             'previous' => $previous,
             'next'     => $next,
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
@@ -268,7 +268,7 @@ class CalendarController extends AbstractController
         $this->slotExtendedAssignMultiple([
             'index'  => $index,
             'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY')
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
 
         return $this->view->render();
     }
@@ -298,7 +298,7 @@ class CalendarController extends AbstractController
             'endDate'        => $endDate,
             'customSearch'   => $customSearch,
             'configurations' => $this->getCurrentConfigurations()
-        ], __FUNCTION__, __CLASS__);
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
