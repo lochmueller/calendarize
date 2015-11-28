@@ -1,0 +1,7 @@
+<f:if condition="{index}">BEGIN:VEVENT
+UID:calendarize-{index.uid}@{domain}<f:if condition="{index.tstamp}">
+DTSTAMP:<f:format.date format="%Y%m%d">{index.tstamp}</f:format.date></f:if>
+DTSTART:<f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%S%Z')}">{index.startDateComplete}</f:format.date>
+DTEND:<f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%S%Z')}">{index.endDateComplete}</f:format.date>
+SUMMARY:<f:format.htmlspecialchars>{index.title}</f:format.htmlspecialchars>
+END:VEVENT</f:if>
