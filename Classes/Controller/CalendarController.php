@@ -10,18 +10,16 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Calendar
  */
-class CalendarController extends ActionController
+class CalendarController extends AbstractController
 {
 
     /**
@@ -37,6 +35,7 @@ class CalendarController extends ActionController
      */
     public function initializeAction()
     {
+        parent::initializeAction();
         $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration']));
         $this->indexRepository->setContentRecord($this->configurationManager->getContentObject()->data);
         if (isset($this->settings['sorting'])) {
@@ -142,8 +141,6 @@ class CalendarController extends ActionController
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
         }
-
-        $this->checkConfiguration();
 
         $searchMode = false;
         if ($startDate || $endDate || $customSearch) {
@@ -329,17 +326,6 @@ class CalendarController extends ActionController
             }
         }
         return $return;
-    }
-
-    /**
-     * Check the configuration
-     */
-    protected function checkConfiguration()
-    {
-        if (!isset($this->settings['dateFormat'])) {
-            $this->addFlashMessage('Basic configuration settings are missing. It seems, that the Static Extension TypoScript is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
-                'Configuration Error', FlashMessage::ERROR);
-        }
     }
 
 }
