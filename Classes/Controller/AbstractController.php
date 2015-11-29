@@ -27,6 +27,29 @@ abstract class AbstractController extends ActionController
     }
 
     /**
+     * Calls the specified action method and passes the arguments.
+     *
+     * If the action returns a string, it is appended to the content in the
+     * response object. If the action doesn't return anything and a valid
+     * view exists, the view is rendered automatically.
+     *
+     * @return void
+     * @api
+     */
+    protected function callActionMethod()
+    {
+        parent::callActionMethod();
+        switch ($this->request->getFormat()) {
+            case 'ics':
+                header('Content-type: text/calendar; charset=utf-8');
+                header('Content-Disposition: inline; filename=calendar.ics');
+                echo $this->response->getContent();
+                die();
+                break;
+        }
+    }
+
+    /**
      * Extend the view by the slot class and name and assign the variable to the view
      *
      * @param array  $variables

@@ -4,6 +4,12 @@
 
 	<f:flashMessages />
 
+	<f:comment>
+		<f:link.action action="list" format="xml">RSS</f:link.action>
+		<f:link.action action="list" format="atom">Atom</f:link.action>
+		<f:link.action action="list" format="ics">iCal</f:link.action>
+	</f:comment>
+
 	<f:render partial="List" arguments="{settings: settings, indices: indices}" />
 
 </f:section>
