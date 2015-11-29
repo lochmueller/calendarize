@@ -41,8 +41,20 @@ abstract class AbstractController extends ActionController
         parent::callActionMethod();
         switch ($this->request->getFormat()) {
             case 'ics':
-                header('Content-type: text/calendar; charset=utf-8');
+                header('Content-Type: text/calendar; charset=utf-8');
                 header('Content-Disposition: inline; filename=calendar.ics');
+                echo $this->response->getContent();
+                die();
+                break;
+            case 'xml':
+                header('Content-Type: application/xml; charset=utf-8');
+                header('Content-Disposition: inline; filename=calendar.xml');
+                echo $this->response->getContent();
+                die();
+                break;
+            case 'atom':
+                header('Content-Type: application/rss+xml; charset=utf-8');
+                header('Content-Disposition: inline; filename=calendar.atom');
                 echo $this->response->getContent();
                 die();
                 break;
