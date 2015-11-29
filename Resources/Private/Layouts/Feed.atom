@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title>{settings.feed.title}</title>
-	<id><f:uri.page/></id>
+	<id><f:uri.page absolute="1"/></id>
 	<updated><f:format.date format="c" date="now"/></updated>
 	<f:render section="items" />
 </feed>

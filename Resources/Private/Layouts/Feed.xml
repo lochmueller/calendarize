@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>{settings.feed.title}</title>
-		<link>{settings.xml.link}</link>
-		<description>{settings.xml.description}</description>
-		<language>{settings.xml.language}</language>
+		<link><f:uri.page absolute="1"/></link>
+		<description>{settings.feed.description}</description>
+		<language>{settings.feed.language}</language>
 		<pubDate><f:format.date format="r" date="now" /></pubDate>
 		<lastBuildDate><f:format.date format="r" date="now" /></lastBuildDate>
 		<generator>TYPO3 EXT:calendarize</generator>

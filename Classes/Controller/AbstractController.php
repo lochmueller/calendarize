@@ -60,7 +60,7 @@ abstract class AbstractController extends ActionController
      */
     protected function sendHeaderAndFilename($contentType, $fileExtension)
     {
-        $testMode = true;
+        $testMode = (bool)$this->settings['feed']['debugMode'];
         if ($testMode) {
             header('Content-Type: text/plain; charset=utf-8');
         } else {

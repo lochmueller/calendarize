@@ -8,6 +8,13 @@ plugin.tx_calendarize {
 		timeFormat = {$plugin.tx_calendarize.settings.timeFormat}
 		useMomentJsDateAndTimeOutput = {$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}
 		useMomentFullCalendarIo = {$plugin.tx_calendarize.settings.useMomentFullCalendarIo}
+
+		feed {
+			title = {$plugin.tx_calendarize.settings.feed.title}
+			description = {$plugin.tx_calendarize.settings.feed.description}
+			language = {$plugin.tx_calendarize.settings.feed.language}
+			debugMode = {$plugin.tx_calendarize.settings.feed.debugMode}
+		}
 	}
 
 	mvc.callDefaultActionIfActionCantBeResolved = 1
