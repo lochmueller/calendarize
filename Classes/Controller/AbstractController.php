@@ -41,24 +41,34 @@ abstract class AbstractController extends ActionController
         parent::callActionMethod();
         switch ($this->request->getFormat()) {
             case 'ics':
-                header('Content-Type: text/calendar; charset=utf-8');
-                header('Content-Disposition: inline; filename=calendar.ics');
-                echo $this->response->getContent();
-                die();
+                $this->sendHeaderAndFilename('text/calendar', 'ics');
                 break;
             case 'xml':
-                header('Content-Type: application/xml; charset=utf-8');
-                header('Content-Disposition: inline; filename=calendar.xml');
-                echo $this->response->getContent();
-                die();
+                $this->sendHeaderAndFilename('application/xml', 'xml');
                 break;
             case 'atom':
-                header('Content-Type: application/rss+xml; charset=utf-8');
-                header('Content-Disposition: inline; filename=calendar.atom');
-                echo $this->response->getContent();
-                die();
+                $this->sendHeaderAndFilename('application/rss+xml', 'atom');
                 break;
         }
+    }
+
+    /**
+     * Send the content type header and the right file extension in front of the content
+     *
+     * @param $contentType
+     * @param $fileExtension
+     */
+    protected function sendHeaderAndFilename($contentType, $fileExtension)
+    {
+        $testMode = true;
+        if ($testMode) {
+            header('Content-Type: text/plain; charset=utf-8');
+        } else {
+            header('Content-Type: ' . $contentType . '; charset=utf-8');
+            header('Content-Disposition: inline; filename=calendar.' . $fileExtension);
+        }
+        echo $this->response->getContent();
+        die();
     }
 
     /**
