@@ -75,21 +75,11 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-
-        // time check
-        $orConstraint = [];
-        $orConstraint[] = $query->greaterThanOrEqual('start_date', $GLOBALS['SIM_ACCESS_TIME']);
-        $orConstraint[] = $query->logicalAnd([
-            $query->lessThanOrEqual('start_date', $GLOBALS['SIM_ACCESS_TIME']),
-            $query->greaterThanOrEqual('end_date', $GLOBALS['SIM_ACCESS_TIME'])
-        ]);
-
-        $constraints[] = $query->logicalOr($orConstraint);
-
+        $this->addTimeFrameConstraints($constraints, $query, $GLOBALS['SIM_ACCESS_TIME'],
+            $GLOBALS['SIM_ACCESS_TIME'] + DateTimeUtility::SECONDS_YEAR * 6);
         if ($limit > 0) {
             $query->setLimit($limit);
         }
-
         return $this->matchAndExecute($query, $constraints);
     }
 
