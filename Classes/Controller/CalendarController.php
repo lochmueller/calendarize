@@ -121,6 +121,7 @@ class CalendarController extends AbstractController
      * @param array                                 $customSearch *
      * @param int                                   $year
      * @param int                                   $month
+     * @param int                                   $day
      * @param int                                   $week
      *
      * @ignorevalidation $startDate
@@ -136,6 +137,7 @@ class CalendarController extends AbstractController
         array $customSearch = [],
         $year = null,
         $month = null,
+        $day = null,
         $week = null
     ) {
         $this->checkStaticTemplateIsIncluded();
@@ -147,6 +149,8 @@ class CalendarController extends AbstractController
         if ($startDate || $endDate || $customSearch) {
             $searchMode = true;
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
+        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
+            $indices = $this->indexRepository->findDay($year, $month, $day);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
             $indices = $this->indexRepository->findMonth($year, $month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
