@@ -8,7 +8,7 @@ namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
-use HDNET\Calendarize\Domain\Model\KeSearchIndexInterface;
+use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**

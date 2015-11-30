@@ -4,7 +4,9 @@
  * Index interface for the ke_search extension to index the events
  */
 
-namespace HDNET\Calendarize\Domain\Model;
+namespace HDNET\Calendarize\Features;
+
+use HDNET\Calendarize\Domain\Model\Index;
 
 /**
  * Index interface for the ke_search extension to index the events
