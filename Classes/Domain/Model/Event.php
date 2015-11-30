@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use HDNET\Calendarize\Features\FeedInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -14,7 +15,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @db
  */
-class Event extends AbstractModel
+class Event extends AbstractModel implements FeedInterface
 {
 
     /**
@@ -205,4 +206,33 @@ class Event extends AbstractModel
         $this->calendarize->attach($calendarize);
     }
 
+    /**
+     * Get the feed title
+     *
+     * @return string
+     */
+    public function getFeedTitle()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * Get the feed abstract
+     *
+     * @return string
+     */
+    public function getFeedAbstract()
+    {
+        return $this->getFeedContent();
+    }
+
+    /**
+     * Get the feed content
+     *
+     * @return string
+     */
+    public function getFeedContent()
+    {
+        return $this->getDescription();
+    }
 }

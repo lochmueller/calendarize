@@ -1,13 +1,10 @@
-<f:if condition="{index}">
-	<entry>
-        <id>##id</id>
-        <title>##title</title>
-        <published><f:format.date format="c">{index.datetime}</f:format.date></published>
-        <updated><f:format.date format="c">{index.tstamp}</f:format.date></updated>
-        <link rel="alternate" type="text/html" href="##link##"/>
-        <summary><f:format.stripTags>{index.teaser}</f:format.stripTags></summary>
-        <content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">
-            <f:format.html>{index.bodytext}</f:format.html>
-        </div></content>
-    </entry>
-</f:if>
+<f:if condition="{index}"><entry>
+                <id>calendarize-{index.uid}</id>
+                <title>{index.originalObject.feedTitle}</title>
+                <published><f:format.date format="c">{index.startDateComplete}</f:format.date></published>
+                <updated><f:format.date format="c">{index.startDateComplete}</f:format.date></updated>
+                <summary><f:format.stripTags>{index.originalObject.feedAbstract}</f:format.stripTags></summary>
+                <content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">
+                    <f:format.html>{index.originalObject.feedContent}</f:format.html>
+                </div></content>
+            </entry></f:if>

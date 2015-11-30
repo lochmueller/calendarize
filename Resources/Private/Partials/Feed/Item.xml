@@ -1,10 +1,10 @@
-<f:if condition="{index}">
+{namespace c=HDNET\Calendarize\ViewHelpers}<f:if condition="{index}">
 	<item>
-		<guid isPermaLink="false">index-{index.uid}</guid>
+		<guid isPermaLink="false">calendarize-{index.uid}</guid>
 		<pubDate><f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%S%Z')}">{index.startDateComplete}</f:format.date></pubDate>
-		<title>###</title>
-		<link>###</link>
-		<description>###</description>
-		<content:encoded><f:format.cdata><f:format.html>###</f:format.html></f:format.cdata></content:encoded>
+		<title>{index.originalObject.feedTitle}</title>
+		<link><c:uri.index index="{index}" /></link>
+		<description>{index.originalObject.feedAbstract}</description>
+		<content:encoded><f:format.cdata><f:format.html>{index.originalObject.feedContent}</f:format.html></f:format.cdata></content:encoded>
 	</item>
 </f:if>

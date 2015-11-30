@@ -3,5 +3,5 @@
 	<title>{settings.feed.title}</title>
 	<id><f:uri.page absolute="1"/></id>
 	<updated><f:format.date format="c" date="now"/></updated>
-	<f:render section="items" />
+<f:render section="items" />
 </feed>
