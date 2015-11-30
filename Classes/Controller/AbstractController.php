@@ -22,7 +22,6 @@ abstract class AbstractController extends ActionController
      */
     public function initializeAction()
     {
-        $this->checkStaticTemplateIsIncluded();
         parent::initializeAction();
     }
 

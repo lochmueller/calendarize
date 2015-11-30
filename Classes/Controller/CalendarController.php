@@ -138,6 +138,7 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
+        $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
         }
