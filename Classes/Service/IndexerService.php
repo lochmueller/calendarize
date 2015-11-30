@@ -72,27 +72,12 @@ class IndexerService extends AbstractService
      */
     protected function updateIndex($configurationKey, $tableName, $uid)
     {
-        $rawRecord = BackendUtility::getRecord($tableName, $uid);
-        if (!$rawRecord) {
-            return;
+        /** IndexPreparationService */
+        static $indexPreparationService = null;
+        if ($indexPreparationService === null) {
+            $indexPreparationService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexPreparationService');
         }
-        $configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], true);
-        $neededItems = [];
-        if ($configurations) {
-            $timeTableService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\TimeTableService');
-            $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
-            foreach ($neededItems as $key => $record) {
-
-                $record['foreign_table'] = $tableName;
-                $record['foreign_uid'] = $uid;
-                $record['unique_register_key'] = $configurationKey;
-
-                $this->prepareRecordForDatabase($record);
-                $neededItems[$key] = $record;
-            }
-        }
-
-        $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
+        $neededItems = $indexPreparationService->prepareIndex($configurationKey, $tableName, $uid);
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);
     }
 
@@ -151,65 +136,11 @@ class IndexerService extends AbstractService
     protected function isEqualArray(array $array1, array $array2, array $checkProperties)
     {
         foreach ($checkProperties as $check) {
-            // @todo type check for the fe_group field??
             if ((int)$array1[$check] !== (int)$array2[$check]) {
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * Add the enable field information
-     *
-     * @param array  $neededItems
-     * @param string $tableName
-     * @param array  $record
-     */
-    protected function addEnableFieldInformation(array &$neededItems, $tableName, array $record)
-    {
-        $enableFields = isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']) ? $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] : [];
-        if (!$enableFields) {
-            return;
-        }
-
-        $addFields = [];
-        if (isset($enableFields['disabled'])) {
-            $addFields['hidden'] = (int)$record[$enableFields['disabled']];
-        }
-        if (isset($enableFields['starttime'])) {
-            $addFields['starttime'] = (int)$record[$enableFields['starttime']];
-        }
-        if (isset($enableFields['endtime'])) {
-            $addFields['endtime'] = (int)$record[$enableFields['endtime']];
-        }
-        if (isset($enableFields['fe_group'])) {
-            $addFields['fe_group'] = (string)$record[$enableFields['fe_group']];
-        }
-
-        foreach ($neededItems as $key => $value) {
-            $neededItems[$key] = array_merge($value, $addFields);
-        }
-    }
-
-    /**
-     * Prepare the record for the database insert
-     *
-     * @param $record
-     *
-     * @return void
-     */
-    protected function prepareRecordForDatabase(&$record)
-    {
-        foreach ($record as $key => $value) {
-            if ($value instanceof \DateTime) {
-                $record[$key] = $value->getTimestamp();
-            } elseif (is_bool($value)) {
-                $record[$key] = (int)$value;
-            } elseif ($value === null) {
-                $record[$key] = '';
-            }
-        }
     }
 
     /**
