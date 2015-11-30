@@ -18,12 +18,15 @@ abstract class AbstractController extends ActionController
 {
 
     /**
-     * Init all actions
+     * The feed formats and content types
+     *
+     * @var array
      */
-    public function initializeAction()
-    {
-        parent::initializeAction();
-    }
+    protected $feedFormats = [
+        'ics'  => 'text/calendar',
+        'xml'  => 'application/xml',
+        'atom' => 'application/rss+xml',
+    ];
 
     /**
      * Calls the specified action method and passes the arguments.
@@ -38,16 +41,8 @@ abstract class AbstractController extends ActionController
     protected function callActionMethod()
     {
         parent::callActionMethod();
-        switch ($this->request->getFormat()) {
-            case 'ics':
-                $this->sendHeaderAndFilename('text/calendar', 'ics');
-                break;
-            case 'xml':
-                $this->sendHeaderAndFilename('application/xml', 'xml');
-                break;
-            case 'atom':
-                $this->sendHeaderAndFilename('application/rss+xml', 'atom');
-                break;
+        if (isset($this->feedFormats[$this->request->getFormat()])) {
+            $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
         }
     }
 
