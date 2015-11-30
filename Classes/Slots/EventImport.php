@@ -43,45 +43,15 @@ class EventImport
     {
         $commandController->enqueueMessage('Handle via Default Event Import Slot');
 
-        /** @var Event $eventObject */
-        $update = true;
-        $eventObject = $this->eventRepository->findOneByImportId($event['uid']);
-        if (!($eventObject instanceof Event)) {
-            $update = false;
-            $eventObject = new Event();
-        }
-
-
+        $eventObject = $this->getEvent($event['uid']);
         $eventObject->setPid($pid);
-        $eventObject->setImportId($event['uid']);
         $eventObject->setTitle($event['title']);
         $eventObject->setDescription($this->nl2br($event['description']));
 
-        $configuration = new Configuration();
-        $configuration->setPid($pid);
-        $configuration->setType(Configuration::TYPE_TIME);
-        $configuration->setFrequency(Configuration::FREQUENCY_NONE);
-        /** @var \DateTime $startDate */
-        $startDate = clone $event['start'];
-        $startDate->setTime(0, 0, 0);
-        $configuration->setStartDate($startDate);
-        /** @var \DateTime $endDate */
-        $endDate = clone $event['end'];
-        $endDate->setTime(0, 0, 0);
-        $configuration->setEndDate($endDate);
-
-        $startTime = DateTimeUtility::getDaySecondsOfDateTime($event['start']);
-        if ($startTime > 0) {
-            $configuration->setStartTime($startTime);
-            $configuration->setEndTime(DateTimeUtility::getDaySecondsOfDateTime($event['end']));
-            $configuration->setAllDay(false);
-        } else {
-            $configuration->setAllDay(true);
-        }
-
+        $configuration = $this->getConfiguration($pid, $event['start'], $event['end']);
         $eventObject->addCalendarize($configuration);
 
-        if ($update) {
+        if ($eventObject->getUid() === null) {
             $this->eventRepository->update($eventObject);
             $commandController->enqueueMessage('Update Event Meta data: ' . $eventObject->getTitle(), 'Update');
         } else {
@@ -98,6 +68,53 @@ class EventImport
             'pid'               => $pid,
             'handled'           => $handled,
         ];
+    }
+
+    /**
+     * Get the configuration
+     *
+     * @param int $pid
+     *
+     * @return Configuration
+     */
+    protected function getConfiguration($pid, \DateTime $startDate, \DateTime $endDate)
+    {
+        $configuration = new Configuration();
+        $configuration->setPid($pid);
+        $configuration->setType(Configuration::TYPE_TIME);
+        $configuration->setFrequency(Configuration::FREQUENCY_NONE);
+        $configuration->setAllDay(true);
+
+        $startTime = clone $startDate;
+        $configuration->setStartDate(DateTimeUtility::resetTime($startDate));
+        $endTime = $endDate;
+        $configuration->setEndDate(DateTimeUtility::resetTime($endDate));
+
+        $startTime = DateTimeUtility::getDaySecondsOfDateTime($startTime);
+        if ($startTime > 0) {
+            $configuration->setStartTime($startTime);
+            $configuration->setEndTime(DateTimeUtility::getDaySecondsOfDateTime($endTime));
+            $configuration->setAllDay(false);
+        }
+
+        return $configuration;
+    }
+
+    /**
+     * Get the right event object (or a new one)
+     *
+     * @param string $importId
+     *
+     * @return Event
+     */
+    protected function getEvent($importId)
+    {
+        $eventObject = $this->eventRepository->findOneByImportId($importId);
+        if (!($eventObject instanceof Event)) {
+            $eventObject = new Event();
+        }
+        $eventObject->setImportId($importId);
+        return $eventObject;
     }
 
     /**

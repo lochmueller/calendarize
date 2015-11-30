@@ -108,6 +108,20 @@ class DateTimeUtility
     }
 
     /**
+     * Reset the DateTime
+     *
+     * @param \DateTime $dateTime
+     *
+     * @return \DateTime
+     */
+    static public function resetTime($dateTime = null)
+    {
+        $dateTime = self::normalizeDateTimeSingle($dateTime);
+        $dateTime->setTime(0, 0, 0);
+        return $dateTime;
+    }
+
+    /**
      * Get a normalize date time object
      *
      * @param int|null|\DateTime $dateTimeOrString
