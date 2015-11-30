@@ -170,10 +170,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findYear($year)
     {
-        $query = $this->createQuery();
-        $constraints = $this->getDefaultConstraints($query);
-        $this->addTimeFrameConstraints($constraints, $query, mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1));
-        return $this->matchAndExecute($query, $constraints);
+        return $this->findByTimeSlot(mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1));
     }
 
     /**
@@ -186,12 +183,9 @@ class IndexRepository extends AbstractRepository
      */
     public function findMonth($year, $month)
     {
-        $query = $this->createQuery();
-        $constraints = $this->getDefaultConstraints($query);
         $startTime = mktime(0, 0, 0, $month, 1, $year);
         $endTime = mktime(0, 0, 0, $month + 1, 1, $year);
-        $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
-        return $this->matchAndExecute($query, $constraints);
+        return $this->findByTimeSlot($startTime, $endTime);
     }
 
     /**
@@ -204,13 +198,9 @@ class IndexRepository extends AbstractRepository
      */
     public function findWeek($year, $week)
     {
-        $query = $this->createQuery();
-        $constraints = $this->getDefaultConstraints($query);
-
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $timeStampStart = $firstDay->getTimestamp();
-        $this->addTimeFrameConstraints($constraints, $query, $timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK);
-        return $this->matchAndExecute($query, $constraints);
+        return $this->findByTimeSlot($timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK);
     }
 
     /**
@@ -224,11 +214,35 @@ class IndexRepository extends AbstractRepository
      */
     public function findDay($year, $month, $day)
     {
+        $startTime = mktime(0, 0, 0, $month, $day, $year);
+        return $this->findByTimeSlot($startTime, $startTime + DateTimeUtility::SECONDS_DAY);
+    }
+
+    /**
+     * Set the default sorting direction
+     *
+     * @param string $direction
+     */
+    public function setDefaultSortingDirection($direction)
+    {
+        $this->defaultOrderings = $this->getSorting($direction);
+    }
+
+    /**
+     * Find by time slot
+     *
+     * @param int $startTime
+     * @param int $endTime
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByTimeSlot($startTime, $endTime)
+    {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $startTime = mktime(0, 0, 0, $month, $day, $year);
-        $this->addTimeFrameConstraints($constraints, $query, $startTime, $startTime + DateTimeUtility::SECONDS_DAY);
+        $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
         return $this->matchAndExecute($query, $constraints);
+
     }
 
     /**
@@ -314,16 +328,6 @@ class IndexRepository extends AbstractRepository
 
         // finish
         $constraints[] = $query->logicalOr($orConstraint);
-    }
-
-    /**
-     * Set the default sorting direction
-     *
-     * @param string $direction
-     */
-    public function setDefaultSortingDirection($direction)
-    {
-        $this->defaultOrderings = $this->getSorting($direction);
     }
 
     /**
