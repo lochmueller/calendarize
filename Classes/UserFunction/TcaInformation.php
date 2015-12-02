@@ -8,8 +8,8 @@
 namespace HDNET\Calendarize\UserFunction;
 
 use HDNET\Calendarize\Service\IndexerService;
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -33,9 +33,11 @@ class TcaInformation
         if (!isset($configuration['row']['uid'])) {
             $content = LocalizationUtility::translate('save.first', 'calendarize');
         } else {
+            /** @var IndexerService $indexService */
+            $indexService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
             $previewLimit = 10;
-            $count = $this->getIndexCount($configuration['table'], $configuration['row']['uid']);
-            $next = $this->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
+            $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
+            $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
             $content = sprintf(LocalizationUtility::translate('previewLabel', 'calendarize'), $count,
                     $previewLimit) . $this->getEventList($next);
         }
@@ -65,38 +67,5 @@ class TcaInformation
             $items[] = LocalizationUtility::translate('noEvents', 'calendarize');
         }
         return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
-    }
-
-    /**
-     * Get index count
-     *
-     * @param $table
-     * @param $uid
-     *
-     * @return mixed
-     */
-    protected function getIndexCount($table, $uid)
-    {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        return $databaseConnection->exec_SELECTcountRows('*', IndexerService::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table,
-                IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
-    }
-
-    /**
-     * Get the next events
-     *
-     * @param string $table
-     * @param int    $uid
-     * @param int    $limit
-     *
-     * @return array|NULL
-     */
-    protected function getNextEvents($table, $uid, $limit = 5)
-    {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        return $databaseConnection->exec_SELECTgetRows('*', IndexerService::TABLE_NAME,
-            'start_date > ' . time() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table,
-                IndexerService::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
     }
 }

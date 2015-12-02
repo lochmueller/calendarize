@@ -62,6 +62,39 @@ class IndexerService extends AbstractService
     }
 
     /**
+     * Get index count
+     *
+     * @param $table
+     * @param $uid
+     *
+     * @return mixed
+     */
+    public function getIndexCount($table, $uid)
+    {
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        return $databaseConnection->exec_SELECTcountRows('*', self::TABLE_NAME,
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table,
+                self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
+    }
+
+    /**
+     * Get the next events
+     *
+     * @param string $table
+     * @param int    $uid
+     * @param int    $limit
+     *
+     * @return array|NULL
+     */
+    public function getNextEvents($table, $uid, $limit = 5)
+    {
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        return $databaseConnection->exec_SELECTgetRows('*', self::TABLE_NAME,
+            'start_date > ' . time() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table,
+                self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
+    }
+
+    /**
      * Build the index for one element
      *
      * @param string $configurationKey
