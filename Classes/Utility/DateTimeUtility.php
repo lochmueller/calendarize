@@ -106,7 +106,7 @@ class DateTimeUtility
             $day = date('d');
         }
 
-        $date = new \DateTime('now', DateTimeUtility::getTimeZone());
+        $date = self::getNow();
         $date->setDate($year, $month, $day);
         $date->setTime(0, 0, 0);
         return $date;
@@ -138,8 +138,18 @@ class DateTimeUtility
         if ($dateTimeOrString instanceof \DateTime) {
             return $dateTimeOrString;
         } elseif (!is_string($dateTimeOrString)) {
-            $dateTimeOrString = 'now';
+            return self::getNow();
         }
         return new \DateTime($dateTimeOrString, DateTimeUtility::getTimeZone());
+    }
+
+    /**
+     * Get the current Date (normalized optimized for queries, because SIM_ACCESS_TIME is rounded to minutes)
+     *
+     * @return \DateTime
+     */
+    static public function getNow()
+    {
+        return new \DateTime('@' . $GLOBALS['SIM_ACCESS_TIME'], DateTimeUtility::getTimeZone());
     }
 }

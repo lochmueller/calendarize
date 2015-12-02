@@ -291,11 +291,13 @@ class CalendarController extends AbstractController
      */
     public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
+        $baseDate = DateTimeUtility::getNow();
         if (!($startDate instanceof \DateTime)) {
-            $startDate = new \DateTime('now', DateTimeUtility::getTimeZone());
+            $startDate = clone $baseDate;
         }
         if (!($endDate instanceof \DateTime)) {
-            $endDate = new \DateTime('+1 month', DateTimeUtility::getTimeZone());
+            $baseDate->modify('+1 month');
+            $endDate = $baseDate;
         }
 
         $this->slotExtendedAssignMultiple([

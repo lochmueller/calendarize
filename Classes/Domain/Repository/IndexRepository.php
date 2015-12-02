@@ -75,8 +75,9 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $this->addTimeFrameConstraints($constraints, $query, $GLOBALS['SIM_ACCESS_TIME'],
-            $GLOBALS['SIM_ACCESS_TIME'] + DateTimeUtility::SECONDS_YEAR * 6);
+        $now = DateTimeUtility::getNow()
+            ->getTimestamp();
+        $this->addTimeFrameConstraints($constraints, $query, $now, $now + DateTimeUtility::SECONDS_YEAR * 6);
         if ($limit > 0) {
             $query->setLimit($limit);
         }
@@ -144,15 +145,17 @@ class IndexRepository extends AbstractRepository
             return [];
         }
         $query = $this->createQuery();
+        $now = DateTimeUtility::getNow()
+            ->getTimestamp();
         $constraints = [];
         $constraints[] = $query->logicalNot($query->equals('uid', $index->getUid()));
         $constraints[] = $query->equals('foreignTable', $index->getForeignTable());
         $constraints[] = $query->equals('foreignUid', $index->getForeignUid());
         if (!$future) {
-            $constraints[] = $query->lessThanOrEqual('startDate', $GLOBALS['SIM_ACCESS_TIME']);
+            $constraints[] = $query->lessThanOrEqual('startDate', $now);
         }
         if (!$past) {
-            $constraints[] = $query->greaterThanOrEqual('startDate', $GLOBALS['SIM_ACCESS_TIME']);
+            $constraints[] = $query->greaterThanOrEqual('startDate', $now);
         }
 
         $query->setLimit($limit);
