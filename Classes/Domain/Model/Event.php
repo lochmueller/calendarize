@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Features\FeedInterface;
+use HDNET\Calendarize\Features\RealUrlInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -15,7 +16,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @db
  */
-class Event extends AbstractModel implements FeedInterface
+class Event extends AbstractModel implements FeedInterface, RealUrlInterface
 {
 
     /**
@@ -234,5 +235,15 @@ class Event extends AbstractModel implements FeedInterface
     public function getFeedContent()
     {
         return $this->getDescription();
+    }
+
+    /**
+     * Get the base for the realurl alias
+     *
+     * @return string
+     */
+    public function getRealUrlAliasBase()
+    {
+        return $this->getTitle();
     }
 }
