@@ -1,5 +1,6 @@
 {
   "name": "lochmueller/calendarize",
+  "type": "typo3-cms-extension",
   "description": "Create a structure for timely controlled tables and one plugin for the different output of calendar views. The extension is shipped with one default event table, but the aim of the extension is to 'calendarize' every table/model. It is completely independent and configurable! Use your own models as event items in this calender. We need feedback about the concept! Development on https://github.com/lochmueller/calendarize",
   "autoload": {
     "psr-4": {
@@ -7,12 +8,27 @@
       "JMBTechnologyLimited\\ICalDissect\\": "Resources/Private/Php/ICalDissect/src/JMBTechnologyLimited/ICalDissect/"
     }
   },
-  "type": "typo3-cms-extension",
   "keywords": [
     "TYPO3 CMS",
     "Calendarize",
     "Calendar"
   ],
+  "authors": [
+    {
+      "name": "Tim Lochmüller",
+      "email": "webmaster@fruit-lab.de",
+      "role": "Developer",
+      "homepage": "https://github.com/lochmueller"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.0"
+  },
+  "replace": {
+    "calendarize": "self.version",
+    "typo3-ter/calendarize": "self.version"
+  },
   "homepage": "https://github.com/lochmueller/calendarize",
   "license": "GPL-2.0+",
   "support": {
