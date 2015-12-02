@@ -73,8 +73,7 @@ class IndexerService extends AbstractService
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         return $databaseConnection->exec_SELECTcountRows('*', self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table,
-                self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
     }
 
     /**
@@ -152,8 +151,10 @@ class IndexerService extends AbstractService
         foreach ($currentItems as $item) {
             $databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
         }
-        foreach ($neededItems as $item) {
-            $databaseConnection->exec_INSERTquery(self::TABLE_NAME, $item);
+
+        $neededItems = array_values($neededItems);
+        if ($neededItems) {
+            $databaseConnection->exec_INSERTmultipleRows(self::TABLE_NAME, array_keys($neededItems[0]), $neededItems);
         }
     }
 
