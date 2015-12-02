@@ -25,7 +25,7 @@ class Index extends AbstractModel
      * The unique register key of the used table/model configuration
      *
      * @var string
-     * @db
+     * @db varchar(150) DEFAULT '' NOT NULL
      */
     protected $uniqueRegisterKey;
 
@@ -33,7 +33,7 @@ class Index extends AbstractModel
      * TableName
      *
      * @var string
-     * @db
+     * @db varchar(150) DEFAULT '' NOT NULL
      */
     protected $foreignTable;
 
