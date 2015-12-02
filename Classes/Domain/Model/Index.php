@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
@@ -152,7 +153,7 @@ class Index extends AbstractModel
     {
         $date = $this->getStartDate();
         if (!$this->isAllDay()) {
-            $time = new \DateTime('@' . $this->getStartTime());
+            $time = DateTimeUtility::normalizeDateTimeSingle($this->getStartTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
         return $date;
@@ -167,7 +168,7 @@ class Index extends AbstractModel
     {
         $date = $this->getEndDate();
         if (!$this->isAllDay()) {
-            $time = new \DateTime('@' . $this->getEndTime());
+            $time = DateTimeUtility::normalizeDateTimeSingle($this->getEndTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
         return $date;

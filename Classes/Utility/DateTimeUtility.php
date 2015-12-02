@@ -57,7 +57,7 @@ class DateTimeUtility
      */
     static public function convertWeekYear2DayMonthYear($week, $year)
     {
-        return new \DateTime('@' . strtotime($year . 'W' . $week . '1'), self::getTimeZone());
+        return self::normalizeDateTimeSingle(strtotime($year . 'W' . $week . '1'));
     }
 
     /**
@@ -129,18 +129,20 @@ class DateTimeUtility
     /**
      * Get a normalize date time object
      *
-     * @param int|null|\DateTime $dateTimeOrString
+     * @param int|null|string|\DateTime $dateInformation
      *
      * @return \DateTime
      */
-    static public function normalizeDateTimeSingle($dateTimeOrString)
+    static public function normalizeDateTimeSingle($dateInformation)
     {
-        if ($dateTimeOrString instanceof \DateTime) {
-            return $dateTimeOrString;
-        } elseif (!is_string($dateTimeOrString)) {
+        if ($dateInformation instanceof \DateTime) {
+            return $dateInformation;
+        } elseif (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
+            $dateInformation = '@' . $dateInformation;
+        } elseif (!is_string($dateInformation)) {
             return self::getNow();
         }
-        return new \DateTime($dateTimeOrString, DateTimeUtility::getTimeZone());
+        return new \DateTime($dateInformation, DateTimeUtility::getTimeZone());
     }
 
     /**
@@ -150,6 +152,6 @@ class DateTimeUtility
      */
     static public function getNow()
     {
-        return new \DateTime('@' . $GLOBALS['SIM_ACCESS_TIME'], DateTimeUtility::getTimeZone());
+        return self::normalizeDateTimeSingle((int)$GLOBALS['SIM_ACCESS_TIME']);
     }
 }
