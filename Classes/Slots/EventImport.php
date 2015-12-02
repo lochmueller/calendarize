@@ -73,7 +73,9 @@ class EventImport
     /**
      * Get the configuration
      *
-     * @param int $pid
+     * @param int       $pid
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
      *
      * @return Configuration
      */
