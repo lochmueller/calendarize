@@ -18,24 +18,23 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ProcessCmdmapClass extends AbstractHook
 {
-
     /**
-     * Run the delete action
+     * Handle CMD
      *
-     * @param string      $table
-     * @param int         $id
-     * @param             $recordToDelete
-     * @param boolean     $recordWasDeleted
-     * @param DataHandler $dataHandler
+     * @param string $command
+     * @param string $table
+     * @param int $id
+     * @param $value
+     * @param DataHandler $handler
+     * @param $pasteUpdate
+     * @param $pasteDatamap
      */
-    public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, DataHandler $dataHandler)
+    public function processCmdmap_postProcess($command, $table, $id, $value, $handler, $pasteUpdate, $pasteDatamap)
     {
         $register = Register::getRegister();
         foreach ($register as $key => $configuration) {
             if ($configuration['tableName'] == $table) {
                 $indexer = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
-                $dataHandler->deleteEl($table, $id);
-                $recordWasDeleted = true;
                 $indexer->reindex($key, $table, $id);
             }
         }
