@@ -95,7 +95,7 @@
 			<label index="tx_calendarize_domain_model_index.start_date"><![CDATA[Start date]]></label>
 			<label index="tx_calendarize_domain_model_index.foreign_table"><![CDATA[Foreign table]]></label>
 			<label index="tx_calendarize_domain_model_index.foreign_uid"><![CDATA[Foreign UID]]></label>
-			<label index="tx_calendarize_domain_model_index.unique_register_key"><![CDATA[unique_register_key]]></label>
+			<label index="tx_calendarize_domain_model_index.unique_register_key"><![CDATA[Unique register key]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.configurations"><![CDATA[Configurations]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup"><![CDATA[Configuration group]]></label>
 			<label index="tx_calendarize_domain_model_configurationgroup.title"><![CDATA[Title]]></label>
