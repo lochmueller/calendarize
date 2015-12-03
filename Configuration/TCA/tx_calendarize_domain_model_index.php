@@ -7,29 +7,55 @@
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Index');
 
 $custom = array(
-    'ctrl'    => array(
+    'ctrl' => array(
         'hideTable' => true,
-        'rootLevel' => -1
+        'rootLevel' => -1,
+        'label_alt' => 'start_date',
+        'label_alt_force' => '1',
     ),
     'columns' => array(
         'unique_register_key' => array(
             'config' => array(
-                'type' => 'none',
+                'readOnly' => '1',
             )
         ),
-        'foreign_uid'         => array(
+        'foreign_uid' => array(
             'config' => array(
-                'type' => 'none',
+                'readOnly' => '1',
             ),
         ),
-        'start_date'          => array(
+        'foreign_table' => array(
             'config' => array(
-                'eval' => 'required,date',
+                'readOnly' => '1',
             ),
         ),
-        'end_date'            => array(
+        'start_date' => array(
             'config' => array(
-                'eval' => 'required,date',
+                'readOnly' => '1',
+                'eval' => 'date',
+            ),
+        ),
+        'end_date' => array(
+            'config' => array(
+                'readOnly' => '1',
+                'eval' => 'date',
+            ),
+        ),
+        'start_time' => array(
+            'config' => array(
+                'readOnly' => '1',
+                'eval' => 'time',
+            ),
+        ),
+        'end_time' => array(
+            'config' => array(
+                'readOnly' => '1',
+                'eval' => 'time',
+            ),
+        ),
+        'all_day' => array(
+            'config' => array(
+                'readOnly' => '1',
             ),
         ),
     ),
