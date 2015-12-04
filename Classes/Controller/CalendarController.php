@@ -212,11 +212,12 @@ class CalendarController extends AbstractController
      */
     public function weekAction($year = null, $week = null)
     {
+        $now = DateTimeUtility::getNow();
         if ($year === null) {
-            $year = date('Y');
+            $year = $now->format('Y');
         }
         if ($week === null) {
-            $week = date('W');
+            $week = $now->format('W');
         }
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $firstDay->setTime(0, 0, 0);
