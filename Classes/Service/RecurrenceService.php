@@ -175,9 +175,9 @@ class RecurrenceService extends AbstractService
         while ($dateTime->format('Y-m') == $validMonth) {
             if (in_array($dateTime->format('N'), $validDays)) {
                 $position--;
-            }
-            if ($position === 0) {
-                return $dateTime;
+                if ($position === 0) {
+                    return $dateTime;
+                }
             }
             $dateTime->modify($modify);
         }
