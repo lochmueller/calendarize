@@ -7,13 +7,13 @@
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Render the CMS layout
@@ -47,10 +47,12 @@ class CmsLayout extends AbstractHook
      */
     public function getExtensionSummary(array $params)
     {
-        $relIconPath = GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ExtensionManagementUtility::siteRelPath('calendarize') . 'ext_icon.png';
+        $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
+        $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
         $this->flexFormService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\FlexFormService');
         $this->layoutService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\ContentElementLayoutService');
-        $this->layoutService->setTitle('<img src="' . $relIconPath . '" /> Calendarize');
+        $this->layoutService->setTitle('<img src="' . str_replace('EXT:calendarize/', $extensionRelPath,
+                $extensionIcon) . '" width="32" height="32" /> Calendarize');
 
         if ($params['row']['list_type'] != 'calendarize_calendar') {
             return '';
@@ -67,8 +69,7 @@ class CmsLayout extends AbstractHook
         }, $parts);
         $actionKey = lcfirst(implode('', $parts));
 
-        $this->layoutService->addRow(TranslateUtility::get('mode'),
-            TranslateUtility::get('mode.' . $actionKey));
+        $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
         $this->layoutService->addRow(TranslateUtility::get('configuration'),
             $this->flexFormService->get('settings.configuration', 'main'));
 
@@ -96,8 +97,7 @@ class CmsLayout extends AbstractHook
             $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
             $pageRow = BackendUtility::getRecord('pages', $pageId);
             if ($pageRow) {
-                $this->layoutService->addRow(TranslateUtility::get($pageIdName),
-                    $pageRow['title'] . ' (' . $pageId . ')');
+                $this->layoutService->addRow(TranslateUtility::get($pageIdName), $pageRow['title'] . ' (' . $pageId . ')');
             }
         }
     }
