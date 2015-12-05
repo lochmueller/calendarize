@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2015-12-05T19:16:53Z">
+	<file source-language="en" datatype="plaintext" original="messages" date="2015-12-05T19:23:33Z">
 		<header>
 			<type>database</type>
 			<description>Language file for EXT:calendarize</description>

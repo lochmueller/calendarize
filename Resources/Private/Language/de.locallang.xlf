@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-12-05T19:16:53Z">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-12-05T19:23:33Z">
 		<header>
 			<type>database</type>
 			<description>Language file for EXT:calendarize</description>
@@ -197,6 +197,10 @@
 			<source>Detail only</source>
 			<target>nur Detail</target>
 		</trans-unit>
+		<trans-unit id="mode.latest" approved="yes">
+			<source>Latest</source>
+			<target>Letzter</target>
+		</trans-unit>
 		<trans-unit id="mode.list" approved="yes">
 			<source>List only</source>
 			<target>nur Liste</target>
@@ -259,7 +263,7 @@
 		</trans-unit>
 		<trans-unit id="previewLabel" approved="yes">
 			<source>There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...</source>
-			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind (ignoriert "enable columns")...</target>
+			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind (ignoriert &quot;enable columns&quot;)...</target>
 		</trans-unit>
 		<trans-unit id="save.first" approved="yes">
 			<source>Please save the record first...</source>
@@ -312,6 +316,10 @@
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
 			<source>End time</source>
 			<target>Endzeit</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url" approved="yes">
+			<source>External ICS URL</source>
+			<target>Externe ICS URL</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.frequency" approved="yes">
 			<source>Frequency</source>
@@ -373,6 +381,10 @@
 			<source>Images</source>
 			<target>Bilder</target>
 		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_event.import_id" approved="yes">
+			<source>Import ID</source>
+			<target>Import ID</target>
+		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.title" approved="yes">
 			<source>Title</source>
 			<target>Titel</target>
@@ -408,6 +420,10 @@
 		<trans-unit id="tx_calendarize_domain_model_index.start_time" approved="yes">
 			<source>Start time</source>
 			<target>Startzeit</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_index.unique_register_key" approved="yes">
+			<source>Unique register key</source>
+			<target>Einmaliger Registrierungsschlüssel</target>
 		</trans-unit>
 		<trans-unit id="weekPid" approved="yes">
 			<source>Week PID</source>
