@@ -293,6 +293,11 @@ $custom = array(
                             'calendarize'),
                         Configuration::RECURRENCE_LAST
                     ),
+                    array(
+                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST,
+                            'calendarize'),
+                        Configuration::RECURRENCE_NEXT_TO_LAST
+                    ),
                 ),
                 'default' => Configuration::RECURRENCE_NONE
             ),

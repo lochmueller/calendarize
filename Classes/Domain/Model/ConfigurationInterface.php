@@ -67,4 +67,6 @@ interface ConfigurationInterface
 
     const RECURRENCE_LAST = 'last';
 
+    const RECURRENCE_NEXT_TO_LAST = 'next2last';
+
 }

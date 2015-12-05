@@ -83,6 +83,8 @@ class RecurrenceService extends AbstractService
         }
 
         switch ($recurrence) {
+            case ConfigurationInterface::RECURRENCE_NEXT_TO_LAST:
+                return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_DOWN, $days, 2);
             case ConfigurationInterface::RECURRENCE_LAST:
                 return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_DOWN, $days);
             case ConfigurationInterface::RECURRENCE_FIRST:

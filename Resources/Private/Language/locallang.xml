@@ -33,6 +33,7 @@
 			<label index="configuration.recurrence.third"><![CDATA[Third]]></label>
 			<label index="configuration.recurrence.fourth"><![CDATA[Fourth]]></label>
 			<label index="configuration.recurrence.last"><![CDATA[Last]]></label>
+			<label index="configuration.recurrence.next2last"><![CDATA[Next to last]]></label>
 			<label index="tx_calendarize_domain_model_configuration.recurrence"><![CDATA[Recurrence]]></label>
 			<label index="tx_calendarize_domain_model_configuration.day"><![CDATA[Day]]></label>
 			<label index="general"><![CDATA[General]]></label>
@@ -139,6 +140,7 @@
 			<label index="configuration.recurrence.third"><![CDATA[Third]]></label>
 			<label index="configuration.recurrence.fourth"><![CDATA[Fourth]]></label>
 			<label index="configuration.recurrence.last"><![CDATA[Last]]></label>
+			<label index="configuration.recurrence.next2last"><![CDATA[Vorletzter]]></label>
 			<label index="tx_calendarize_domain_model_configuration.recurrence"><![CDATA[Wiederholung]]></label>
 			<label index="tx_calendarize_domain_model_configuration.day"><![CDATA[Tag]]></label>
 			<label index="general"><![CDATA[Allgemein]]></label>
