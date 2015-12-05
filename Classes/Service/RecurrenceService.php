@@ -38,12 +38,7 @@ class RecurrenceService extends AbstractService
      */
     public function getRecurrenceForNextMonth(\DateTime $date, $recurrence, $day)
     {
-        // clone and reset and move to next month
-        $dateTime = clone $date;
-        $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
-        $dateTime->modify('+1 month');
-
-        return $this->getRecurrenceForCurrentMonth($dateTime, $recurrence, $day);
+        return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+1 month');
     }
 
     /**
@@ -57,12 +52,7 @@ class RecurrenceService extends AbstractService
      */
     public function getRecurrenceForNextYear(\DateTime $date, $recurrence, $day)
     {
-        // clone and reset and move to next month
-        $dateTime = clone $date;
-        $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
-        $dateTime->modify('+1 year');
-
-        return $this->getRecurrenceForCurrentMonth($dateTime, $recurrence, $day);
+        return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+1 year');
     }
 
     /**
@@ -74,9 +64,13 @@ class RecurrenceService extends AbstractService
      *
      * @return \DateTime|FALSE
      */
-    public function getRecurrenceForCurrentMonth(\DateTime $date, $recurrence, $day)
+    protected function getRecurrenceForCurrentMonth(\DateTime $date, $recurrence, $day, $modify)
     {
+        // clone and reset and move to next month
         $dateTime = clone $date;
+        $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
+        $dateTime->modify($modify);
+
         $days = $this->getValidDays($day);
         if (!$days) {
             return false;
