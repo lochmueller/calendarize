@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
+use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -66,13 +67,13 @@ class CmsLayout extends AbstractHook
         }, $parts);
         $actionKey = lcfirst(implode('', $parts));
 
-        $this->layoutService->addRow(LocalizationUtility::translate('mode', 'calendarize'),
-            LocalizationUtility::translate('mode.' . $actionKey, 'calendarize'));
-        $this->layoutService->addRow(LocalizationUtility::translate('configuration', 'calendarize'),
+        $this->layoutService->addRow(TranslateUtility::get('mode'),
+            TranslateUtility::get('mode.' . $actionKey));
+        $this->layoutService->addRow(TranslateUtility::get('configuration'),
             $this->flexFormService->get('settings.configuration', 'main'));
 
         if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
-            $this->layoutService->addRow(LocalizationUtility::translate('hide.pagination.teaser', 'calendarize'), '!!!');
+            $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
         $this->addPageIdsToTable();
         return $this->layoutService->render();
@@ -95,7 +96,7 @@ class CmsLayout extends AbstractHook
             $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
             $pageRow = BackendUtility::getRecord('pages', $pageId);
             if ($pageRow) {
-                $this->layoutService->addRow(LocalizationUtility::translate($pageIdName, 'calendarize'),
+                $this->layoutService->addRow(TranslateUtility::get($pageIdName),
                     $pageRow['title'] . ' (' . $pageId . ')');
             }
         }

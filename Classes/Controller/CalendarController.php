@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -266,7 +267,7 @@ class CalendarController extends AbstractController
     {
         if ($index === null) {
             if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-                return LocalizationUtility::translate('noEventDetailView', 'calendarize');
+                return TranslateUtility::get('noEventDetailView');
             }
             $this->redirect('list', null, null, [], null, $this->settings['listPid'], 301);
         }

@@ -19,8 +19,7 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
         ->add('calendarize', 'tx_calendarize_domain_model_event');
 }
 
-$pluginName = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('pluginName', 'calendarize');
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'Calendar', $pluginName);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'Calendar', \HDNET\Calendarize\Utility\TranslateUtility::get('pluginName'));
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0.0')) {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['calendarize_calendar'] .= ',categories';
 }

@@ -8,8 +8,10 @@
 namespace HDNET\Calendarize\UserFunction;
 
 use HDNET\Calendarize\Service\IndexerService;
+use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -31,14 +33,14 @@ class TcaInformation
     public function informationField($configuration, $fObj)
     {
         if (!isset($configuration['row']['uid'])) {
-            $content = LocalizationUtility::translate('save.first', 'calendarize');
+            $content = TranslateUtility::get('save.first');
         } else {
             /** @var IndexerService $indexService */
             $indexService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
             $previewLimit = 10;
             $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
             $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
-            $content = sprintf(LocalizationUtility::translate('previewLabel', 'calendarize'), $count,
+            $content = sprintf(TranslateUtility::get('previewLabel'), $count,
                     $previewLimit) . $this->getEventList($next);
         }
         return '<div style="padding: 5px;">' . $content . '</div>';
@@ -64,7 +66,7 @@ class TcaInformation
             $items[] = $entry;
         }
         if (!sizeof($items)) {
-            $items[] = LocalizationUtility::translate('noEvents', 'calendarize');
+            $items[] = TranslateUtility::get('noEvents');
         }
         return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
     }

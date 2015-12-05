@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -30,7 +31,7 @@ class TcaService extends AbstractService
     {
         $row = $params['row'];
         $type = is_array($row['type']) ? $row['type'][0] : $row['type']; // The new FormEngine prepare the select as array
-        $params['title'] .= '<b>' . LocalizationUtility::translate('configuration.type.' . $type, 'calendarize') . '</b><br />';
+        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $type) . '</b><br />';
         switch ($type) {
             case Configuration::TYPE_TIME:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
@@ -85,7 +86,7 @@ class TcaService extends AbstractService
             }
         }
         if ($row['all_day']) {
-            $title .= ' ' . LocalizationUtility::translate('tx_calendarize_domain_model_index.all_day', 'calendarize');
+            $title .= ' ' . TranslateUtility::get('tx_calendarize_domain_model_index.all_day');
         } elseif ($row['start_time']) {
             $title .= '<br />' . BackendUtility::time($row['start_time'], false);
             $title .= ' - ' . BackendUtility::time($row['end_time'], false);
@@ -93,8 +94,7 @@ class TcaService extends AbstractService
 
         $frequency = is_array($row['frequency']) ? $row['frequency'][0] : $row['frequency']; // The new FormEngine prepare the select as array
         if ($frequency && $frequency !== Configuration::FREQUENCY_NONE) {
-            $title .= '<br /><i>' . LocalizationUtility::translate('configuration.frequency.' . $row['frequency'],
-                    'calendarize') . '</i>';
+            $title .= '<br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
         }
         return $title;
     }

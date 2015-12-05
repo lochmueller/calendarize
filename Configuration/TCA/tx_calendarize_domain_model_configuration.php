@@ -5,6 +5,7 @@
  */
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -48,19 +49,19 @@ $custom = array(
                 'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
-                        LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_TIME, 'calendarize'),
+                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
                         Configuration::TYPE_TIME
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_INCLUDE_GROUP, 'calendarize'),
+                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_INCLUDE_GROUP),
                         Configuration::TYPE_INCLUDE_GROUP
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_EXCLUDE_GROUP, 'calendarize'),
+                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXCLUDE_GROUP),
                         Configuration::TYPE_EXCLUDE_GROUP
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.type.' . Configuration::TYPE_EXTERNAL, 'calendarize'),
+                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXTERNAL),
                         Configuration::TYPE_EXTERNAL
                     ),
                 ),
@@ -128,27 +129,23 @@ $custom = array(
                 'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
-                        LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_NONE, 'calendarize'),
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_NONE),
                         Configuration::FREQUENCY_NONE
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_DAILY,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_DAILY),
                         Configuration::FREQUENCY_DAILY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_WEEKLY,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_WEEKLY),
                         Configuration::FREQUENCY_WEEKLY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_MONTHLY,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_MONTHLY),
                         Configuration::FREQUENCY_MONTHLY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.frequency.' . Configuration::FREQUENCY_YEARLY,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_YEARLY),
                         Configuration::FREQUENCY_YEARLY
                     ),
                 ),
@@ -205,47 +202,47 @@ $custom = array(
                 'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
                         Configuration::DAY_SPECIAL_WEEKDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS),
                         Configuration::DAY_SPECIAL_BUSINESS
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY),
                         Configuration::DAY_SPECIAL_WORKDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND),
                         Configuration::DAY_SPECIAL_WEEKEND
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_MONDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_MONDAY),
                         Configuration::DAY_MONDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_TUESDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_TUESDAY),
                         Configuration::DAY_TUESDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_WEDNESDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_WEDNESDAY),
                         Configuration::DAY_WEDNESDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_THURSDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_THURSDAY),
                         Configuration::DAY_THURSDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_FRIDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_FRIDAY),
                         Configuration::DAY_FRIDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SATURDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SATURDAY),
                         Configuration::DAY_SATURDAY
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.day.' . Configuration::DAY_SUNDAY, 'calendarize'),
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SUNDAY),
                         Configuration::DAY_SUNDAY
                     ),
                 ),
@@ -264,38 +261,31 @@ $custom = array(
                 'renderType' => 'selectSingle',
                 'items'   => array(
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_NONE,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NONE),
                         Configuration::RECURRENCE_NONE
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_FIRST,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FIRST),
                         Configuration::RECURRENCE_FIRST
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_SECOND,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_SECOND),
                         Configuration::RECURRENCE_SECOND
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_THIRD,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_THIRD),
                         Configuration::RECURRENCE_THIRD
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_FOURTH,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FOURTH),
                         Configuration::RECURRENCE_FOURTH
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_LAST,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_LAST),
                         Configuration::RECURRENCE_LAST
                     ),
                     array(
-                        LocalizationUtility::translate('configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST,
-                            'calendarize'),
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST),
                         Configuration::RECURRENCE_NEXT_TO_LAST
                     ),
                 ),
