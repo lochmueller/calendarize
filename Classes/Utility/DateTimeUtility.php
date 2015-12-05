@@ -96,18 +96,16 @@ class DateTimeUtility
      */
     static public function normalizeDateTime($day = null, $month = null, $year = null)
     {
-        $now = self::getNow();
+        $date = self::getNow();
         if (!MathUtility::canBeInterpretedAsInteger($year)) {
-            $year = $now->format('Y');
+            $year = $date->format('Y');
         }
         if (!MathUtility::canBeInterpretedAsInteger($month)) {
-            $month = $now->format('m');
+            $month = $date->format('m');
         }
         if (!MathUtility::canBeInterpretedAsInteger($day)) {
-            $day = $now->format('d');
+            $day = $date->format('d');
         }
-
-        $date = self::getNow();
         $date->setDate($year, $month, $day);
         $date->setTime(0, 0, 0);
         return $date;
