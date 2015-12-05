@@ -47,20 +47,22 @@ class CmsLayout extends AbstractHook
      */
     public function getExtensionSummary(array $params)
     {
-        $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
-        $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
-        $this->flexFormService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\FlexFormService');
-        $this->layoutService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\ContentElementLayoutService');
-        $this->layoutService->setTitle('<img src="' . str_replace('EXT:calendarize/', $extensionRelPath,
-                $extensionIcon) . '" width="32" height="32" /> Calendarize');
-
         if ($params['row']['list_type'] != 'calendarize_calendar') {
             return '';
         }
+
+        $this->flexFormService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\FlexFormService');
         $this->flexFormService->load($params['row']['pi_flexform']);
         if (!$this->flexFormService->isValid()) {
             return '';
         }
+
+        $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
+        $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
+        $this->layoutService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\ContentElementLayoutService');
+        $this->layoutService->setTitle('<img src="' . str_replace('EXT:calendarize/', $extensionRelPath,
+                $extensionIcon) . '" width="32" height="32" /> Calendarize');
+
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
         $parts = array_map(function ($element) {
