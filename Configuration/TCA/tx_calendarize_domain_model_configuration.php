@@ -10,19 +10,19 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
 
-$timeType = str_replace('--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xml:language;language', '',
+$timeType = str_replace('--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xlf:language;language', '',
     $base['types']['1']['showitem']);
 $timeType = str_replace(',frequency',
-    ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tx_calendarize_domain_model_configuration.frequency,frequency',
+    ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.frequency,frequency',
     $timeType);
 $timeType = str_replace(',external_ics_url', '', $timeType);
 $timeType = str_replace(',groups', '', $timeType);
 $timeType = str_replace(',start_date,end_date',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:date;date', $timeType);
+    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date;date', $timeType);
 $timeType = str_replace(',start_time,end_time,all_day',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:time;time', $timeType);
+    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time;time', $timeType);
 $timeType = str_replace(',counter_interval,recurrence,day',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:frequency_configuration;frequency_configuration',
+    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration;frequency_configuration',
     $timeType);
 
 $extendTab = ',--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';

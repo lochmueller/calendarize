@@ -49,7 +49,7 @@ class Register
         ];
 
         $GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = [
-            'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xml:tca.information',
+            'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
                 'type'     => 'user',
                 'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
