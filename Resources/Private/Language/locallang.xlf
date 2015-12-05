@@ -10,322 +10,322 @@
 		</header>
 		<body>
 		<trans-unit id="all_day">
-			<source><![CDATA[All day]]></source>
+			<source>All day</source>
 		</trans-unit>
 		<trans-unit id="back">
-			<source><![CDATA[back]]></source>
+			<source>back</source>
 		</trans-unit>
 		<trans-unit id="configuration">
-			<source><![CDATA[Configuration]]></source>
+			<source>Configuration</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.">
-			<source><![CDATA[None]]></source>
+			<source>None</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.business">
-			<source><![CDATA[Business day (Mo-Sa)]]></source>
+			<source>Business day (Mo-Sa)</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.friday">
-			<source><![CDATA[Friday]]></source>
+			<source>Friday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.monday">
-			<source><![CDATA[Monday]]></source>
+			<source>Monday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.none">
-			<source><![CDATA[None]]></source>
+			<source>None</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.saturday">
-			<source><![CDATA[Saturday]]></source>
+			<source>Saturday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.sunday">
-			<source><![CDATA[Sunday]]></source>
+			<source>Sunday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.thursday">
-			<source><![CDATA[Thursday]]></source>
+			<source>Thursday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.tuesday">
-			<source><![CDATA[Tuesday]]></source>
+			<source>Tuesday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.wednesday">
-			<source><![CDATA[Wednesday]]></source>
+			<source>Wednesday</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.weekday">
-			<source><![CDATA[Weekday (Mo-So)]]></source>
+			<source>Weekday (Mo-So)</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.weekend">
-			<source><![CDATA[Weekend (Sa-So)]]></source>
+			<source>Weekend (Sa-So)</source>
 		</trans-unit>
 		<trans-unit id="configuration.day.workday">
-			<source><![CDATA[Workday (Mo-Fr)]]></source>
+			<source>Workday (Mo-Fr)</source>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.">
-			<source><![CDATA[None]]></source>
+			<source>None</source>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.daily">
-			<source><![CDATA[Daily]]></source>
+			<source>Daily</source>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.monthly">
-			<source><![CDATA[Monthly]]></source>
+			<source>Monthly</source>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.none">
-			<source><![CDATA[None]]></source>
+			<source>None</source>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.weekly">
-			<source><![CDATA[Weekly]]></source>
+			<source>Weekly</source>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.yearly">
-			<source><![CDATA[Yearly]]></source>
+			<source>Yearly</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.">
-			<source><![CDATA[None]]></source>
+			<source>None</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.first">
-			<source><![CDATA[First]]></source>
+			<source>First</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.fourth">
-			<source><![CDATA[Fourth]]></source>
+			<source>Fourth</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.last">
-			<source><![CDATA[Last]]></source>
+			<source>Last</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.next2last">
-			<source><![CDATA[Next to last]]></source>
+			<source>Next to last</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.none">
-			<source><![CDATA[None]]></source>
+			<source>None</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.second">
-			<source><![CDATA[Second]]></source>
+			<source>Second</source>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.third">
-			<source><![CDATA[Third]]></source>
+			<source>Third</source>
 		</trans-unit>
 		<trans-unit id="configuration.type.exclude">
-			<source><![CDATA[Exclude group]]></source>
+			<source>Exclude group</source>
 		</trans-unit>
 		<trans-unit id="configuration.type.external">
-			<source><![CDATA[External]]></source>
+			<source>External</source>
 		</trans-unit>
 		<trans-unit id="configuration.type.include">
-			<source><![CDATA[Include group]]></source>
+			<source>Include group</source>
 		</trans-unit>
 		<trans-unit id="configuration.type.time">
-			<source><![CDATA[Time]]></source>
+			<source>Time</source>
 		</trans-unit>
 		<trans-unit id="date">
-			<source><![CDATA[Date]]></source>
+			<source>Date</source>
 		</trans-unit>
 		<trans-unit id="dayPid">
-			<source><![CDATA[Day PID]]></source>
+			<source>Day PID</source>
 		</trans-unit>
 		<trans-unit id="detailPid">
-			<source><![CDATA[Detail PID]]></source>
+			<source>Detail PID</source>
 		</trans-unit>
 		<trans-unit id="frequency_configuration">
-			<source><![CDATA[Frequency configuration]]></source>
+			<source>Frequency configuration</source>
 		</trans-unit>
 		<trans-unit id="general">
-			<source><![CDATA[General]]></source>
+			<source>General</source>
 		</trans-unit>
 		<trans-unit id="hide.pagination.teaser">
-			<source><![CDATA[Hide pagination + Teaser mode]]></source>
+			<source>Hide pagination + Teaser mode</source>
 		</trans-unit>
 		<trans-unit id="inherit">
-			<source><![CDATA[Inherit]]></source>
+			<source>Inherit</source>
 		</trans-unit>
 		<trans-unit id="limit">
-			<source><![CDATA[Limit]]></source>
+			<source>Limit</source>
 		</trans-unit>
 		<trans-unit id="listPid">
-			<source><![CDATA[List PID]]></source>
+			<source>List PID</source>
 		</trans-unit>
 		<trans-unit id="mainConfiguration">
-			<source><![CDATA[Main configuration]]></source>
+			<source>Main configuration</source>
 		</trans-unit>
 		<trans-unit id="mode">
-			<source><![CDATA[Mode]]></source>
+			<source>Mode</source>
 		</trans-unit>
 		<trans-unit id="mode.day">
-			<source><![CDATA[Day]]></source>
+			<source>Day</source>
 		</trans-unit>
 		<trans-unit id="mode.detail">
-			<source><![CDATA[Detail only]]></source>
+			<source>Detail only</source>
 		</trans-unit>
 		<trans-unit id="mode.latest">
-			<source><![CDATA[Latest]]></source>
+			<source>Latest</source>
 		</trans-unit>
 		<trans-unit id="mode.list">
-			<source><![CDATA[List only]]></source>
+			<source>List only</source>
 		</trans-unit>
 		<trans-unit id="mode.listDetail">
-			<source><![CDATA[List + Detail]]></source>
+			<source>List + Detail</source>
 		</trans-unit>
 		<trans-unit id="mode.month">
-			<source><![CDATA[Month]]></source>
+			<source>Month</source>
 		</trans-unit>
 		<trans-unit id="mode.normal">
-			<source><![CDATA[Normal]]></source>
+			<source>Normal</source>
 		</trans-unit>
 		<trans-unit id="mode.result">
-			<source><![CDATA[Search result]]></source>
+			<source>Search result</source>
 		</trans-unit>
 		<trans-unit id="mode.search">
-			<source><![CDATA[Search]]></source>
+			<source>Search</source>
 		</trans-unit>
 		<trans-unit id="mode.special">
-			<source><![CDATA[Special Views]]></source>
+			<source>Special Views</source>
 		</trans-unit>
 		<trans-unit id="mode.week">
-			<source><![CDATA[Week]]></source>
+			<source>Week</source>
 		</trans-unit>
 		<trans-unit id="mode.year">
-			<source><![CDATA[Year]]></source>
+			<source>Year</source>
 		</trans-unit>
 		<trans-unit id="monthPid">
-			<source><![CDATA[Month PID]]></source>
+			<source>Month PID</source>
 		</trans-unit>
 		<trans-unit id="noEventDetailView">
-			<source><![CDATA[No Event found! There is no valid fallback PID (list) in the detail plugin]]></source>
+			<source>No Event found! There is no valid fallback PID (list) in the detail plugin</source>
 		</trans-unit>
 		<trans-unit id="noEvents">
-			<source><![CDATA[No events]]></source>
+			<source>No events</source>
 		</trans-unit>
 		<trans-unit id="noEvents.day">
-			<source><![CDATA[There are no events on the current date]]></source>
+			<source>There are no events on the current date</source>
 		</trans-unit>
 		<trans-unit id="pidConfiguration">
-			<source><![CDATA[Page ID configuration]]></source>
+			<source>Page ID configuration</source>
 		</trans-unit>
 		<trans-unit id="pluginName">
-			<source><![CDATA[Calendar]]></source>
+			<source>Calendar</source>
 		</trans-unit>
 		<trans-unit id="previewLabel">
-			<source><![CDATA[There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...]]></source>
+			<source>There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...</source>
 		</trans-unit>
 		<trans-unit id="save.first">
-			<source><![CDATA[Please save the record first...]]></source>
+			<source>Please save the record first...</source>
 		</trans-unit>
 		<trans-unit id="sorting">
-			<source><![CDATA[Sorting]]></source>
+			<source>Sorting</source>
 		</trans-unit>
 		<trans-unit id="tca.information">
-			<source><![CDATA[Calendarize (Information - Save to refresh...)]]></source>
+			<source>Calendarize (Information - Save to refresh...)</source>
 		</trans-unit>
 		<trans-unit id="termination_condition">
-			<source><![CDATA[Termination condition]]></source>
+			<source>Termination condition</source>
 		</trans-unit>
 		<trans-unit id="time">
-			<source><![CDATA[Time]]></source>
+			<source>Time</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration">
-			<source><![CDATA[Configuration]]></source>
+			<source>Configuration</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.all_day">
-			<source><![CDATA[All day]]></source>
+			<source>All day</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.amount">
-			<source><![CDATA[Amount]]></source>
+			<source>Amount</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.counter_amount">
-			<source><![CDATA[Amount]]></source>
+			<source>Amount</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.counter_interval">
-			<source><![CDATA[Interval]]></source>
+			<source>Interval</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.day">
-			<source><![CDATA[Day]]></source>
+			<source>Day</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_date">
-			<source><![CDATA[End date (optionally)]]></source>
+			<source>End date (optionally)</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_time">
-			<source><![CDATA[End time]]></source>
+			<source>End time</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url">
-			<source><![CDATA[External ICS URL]]></source>
+			<source>External ICS URL</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.frequency">
-			<source><![CDATA[Frequency]]></source>
+			<source>Frequency</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.groups">
-			<source><![CDATA[Groups]]></source>
+			<source>Groups</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.interval">
-			<source><![CDATA[Interval]]></source>
+			<source>Interval</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.recurrence">
-			<source><![CDATA[Recurrence]]></source>
+			<source>Recurrence</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.start_date">
-			<source><![CDATA[Start date]]></source>
+			<source>Start date</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.start_time">
-			<source><![CDATA[Start time]]></source>
+			<source>Start time</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.till_date">
-			<source><![CDATA[Till date]]></source>
+			<source>Till date</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.type">
-			<source><![CDATA[Type]]></source>
+			<source>Type</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configurationgroup">
-			<source><![CDATA[Configuration group]]></source>
+			<source>Configuration group</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configurationgroup.configurations">
-			<source><![CDATA[Configurations]]></source>
+			<source>Configurations</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configurationgroup.title">
-			<source><![CDATA[Title]]></source>
+			<source>Title</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event">
-			<source><![CDATA[Event]]></source>
+			<source>Event</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.description">
-			<source><![CDATA[Description]]></source>
+			<source>Description</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.downloads">
-			<source><![CDATA[Downloads]]></source>
+			<source>Downloads</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.images">
-			<source><![CDATA[Images]]></source>
+			<source>Images</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.import_id">
-			<source><![CDATA[Import ID]]></source>
+			<source>Import ID</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.title">
-			<source><![CDATA[Title]]></source>
+			<source>Title</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index">
-			<source><![CDATA[Index]]></source>
+			<source>Index</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.all_day">
-			<source><![CDATA[All day]]></source>
+			<source>All day</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.end_date">
-			<source><![CDATA[End date]]></source>
+			<source>End date</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.end_time">
-			<source><![CDATA[End time]]></source>
+			<source>End time</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.foreign_table">
-			<source><![CDATA[Foreign table]]></source>
+			<source>Foreign table</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.foreign_uid">
-			<source><![CDATA[Foreign UID]]></source>
+			<source>Foreign UID</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.start_date">
-			<source><![CDATA[Start date]]></source>
+			<source>Start date</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.start_time">
-			<source><![CDATA[Start time]]></source>
+			<source>Start time</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.unique_register_key">
-			<source><![CDATA[Unique register key]]></source>
+			<source>Unique register key</source>
 		</trans-unit>
 		<trans-unit id="weekPid">
-			<source><![CDATA[Week PID]]></source>
+			<source>Week PID</source>
 		</trans-unit>
 		<trans-unit id="yearPid">
-			<source><![CDATA[Year PID]]></source>
+			<source>Year PID</source>
 		</trans-unit>
 		</body>
 	</file>

@@ -10,412 +10,412 @@
 		</header>
 		<body>
 		<trans-unit id="all_day" approved="yes">
-			<source><![CDATA[All day]]></source>
-			<target><![CDATA[ganztägig]]></target>
+			<source>All day</source>
+			<target>ganztägig</target>
 		</trans-unit>
 		<trans-unit id="back" approved="yes">
-			<source><![CDATA[back]]></source>
-			<target><![CDATA[zurück]]></target>
+			<source>back</source>
+			<target>zurück</target>
 		</trans-unit>
 		<trans-unit id="configuration" approved="yes">
-			<source><![CDATA[Configuration]]></source>
-			<target><![CDATA[Konfiguration]]></target>
+			<source>Configuration</source>
+			<target>Konfiguration</target>
 		</trans-unit>
 		<trans-unit id="configuration.day." approved="yes">
-			<source><![CDATA[None]]></source>
-			<target><![CDATA[Keinen]]></target>
+			<source>None</source>
+			<target>Keinen</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.business" approved="yes">
-			<source><![CDATA[Business day (Mo-Sa)]]></source>
-			<target><![CDATA[Werktag (Mo-Sa)]]></target>
+			<source>Business day (Mo-Sa)</source>
+			<target>Werktag (Mo-Sa)</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.friday" approved="yes">
-			<source><![CDATA[Friday]]></source>
-			<target><![CDATA[Freitag]]></target>
+			<source>Friday</source>
+			<target>Freitag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.monday" approved="yes">
-			<source><![CDATA[Monday]]></source>
-			<target><![CDATA[Montag]]></target>
+			<source>Monday</source>
+			<target>Montag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.none" approved="yes">
-			<source><![CDATA[None]]></source>
-			<target><![CDATA[Keinen]]></target>
+			<source>None</source>
+			<target>Keinen</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.saturday" approved="yes">
-			<source><![CDATA[Saturday]]></source>
-			<target><![CDATA[Samstag]]></target>
+			<source>Saturday</source>
+			<target>Samstag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.sunday" approved="yes">
-			<source><![CDATA[Sunday]]></source>
-			<target><![CDATA[Sontag]]></target>
+			<source>Sunday</source>
+			<target>Sontag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.thursday" approved="yes">
-			<source><![CDATA[Thursday]]></source>
-			<target><![CDATA[Donnerstag]]></target>
+			<source>Thursday</source>
+			<target>Donnerstag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.tuesday" approved="yes">
-			<source><![CDATA[Tuesday]]></source>
-			<target><![CDATA[Dienstag]]></target>
+			<source>Tuesday</source>
+			<target>Dienstag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.wednesday" approved="yes">
-			<source><![CDATA[Wednesday]]></source>
-			<target><![CDATA[Mittwoch]]></target>
+			<source>Wednesday</source>
+			<target>Mittwoch</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.weekday" approved="yes">
-			<source><![CDATA[Weekday (Mo-So)]]></source>
-			<target><![CDATA[Wochentag (Mo-So)]]></target>
+			<source>Weekday (Mo-So)</source>
+			<target>Wochentag (Mo-So)</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.weekend" approved="yes">
-			<source><![CDATA[Weekend (Sa-So)]]></source>
-			<target><![CDATA[Wochenendtag (Sa-So)]]></target>
+			<source>Weekend (Sa-So)</source>
+			<target>Wochenendtag (Sa-So)</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.workday" approved="yes">
-			<source><![CDATA[Workday (Mo-Fr)]]></source>
-			<target><![CDATA[Arbeitstag (Mo-Fr)]]></target>
+			<source>Workday (Mo-Fr)</source>
+			<target>Arbeitstag (Mo-Fr)</target>
 		</trans-unit>
 		<trans-unit id="configuration.frequency." approved="yes">
-			<source><![CDATA[None]]></source>
-			<target><![CDATA[Keine]]></target>
+			<source>None</source>
+			<target>Keine</target>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.daily" approved="yes">
-			<source><![CDATA[Daily]]></source>
-			<target><![CDATA[Täglich]]></target>
+			<source>Daily</source>
+			<target>Täglich</target>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.monthly" approved="yes">
-			<source><![CDATA[Monthly]]></source>
-			<target><![CDATA[Monatlich]]></target>
+			<source>Monthly</source>
+			<target>Monatlich</target>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.none" approved="yes">
-			<source><![CDATA[None]]></source>
-			<target><![CDATA[Keine]]></target>
+			<source>None</source>
+			<target>Keine</target>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.weekly" approved="yes">
-			<source><![CDATA[Weekly]]></source>
-			<target><![CDATA[Wöchentlich]]></target>
+			<source>Weekly</source>
+			<target>Wöchentlich</target>
 		</trans-unit>
 		<trans-unit id="configuration.frequency.yearly" approved="yes">
-			<source><![CDATA[Yearly]]></source>
-			<target><![CDATA[Jährlich]]></target>
+			<source>Yearly</source>
+			<target>Jährlich</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence." approved="yes">
-			<source><![CDATA[None]]></source>
-			<target><![CDATA[None]]></target>
+			<source>None</source>
+			<target>None</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.first" approved="yes">
-			<source><![CDATA[First]]></source>
-			<target><![CDATA[First]]></target>
+			<source>First</source>
+			<target>First</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.fourth" approved="yes">
-			<source><![CDATA[Fourth]]></source>
-			<target><![CDATA[Fourth]]></target>
+			<source>Fourth</source>
+			<target>Fourth</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.last" approved="yes">
-			<source><![CDATA[Last]]></source>
-			<target><![CDATA[Last]]></target>
+			<source>Last</source>
+			<target>Last</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.next2last" approved="yes">
-			<source><![CDATA[Next to last]]></source>
-			<target><![CDATA[Vorletzter]]></target>
+			<source>Next to last</source>
+			<target>Vorletzter</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.none" approved="yes">
-			<source><![CDATA[None]]></source>
-			<target><![CDATA[None]]></target>
+			<source>None</source>
+			<target>None</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.second" approved="yes">
-			<source><![CDATA[Second]]></source>
-			<target><![CDATA[Second]]></target>
+			<source>Second</source>
+			<target>Second</target>
 		</trans-unit>
 		<trans-unit id="configuration.recurrence.third" approved="yes">
-			<source><![CDATA[Third]]></source>
-			<target><![CDATA[Third]]></target>
+			<source>Third</source>
+			<target>Third</target>
 		</trans-unit>
 		<trans-unit id="configuration.type.exclude" approved="yes">
-			<source><![CDATA[Exclude group]]></source>
-			<target><![CDATA[Ausschließeden Gruppe]]></target>
+			<source>Exclude group</source>
+			<target>Ausschließeden Gruppe</target>
 		</trans-unit>
 		<trans-unit id="configuration.type.external" approved="yes">
-			<source><![CDATA[External]]></source>
-			<target><![CDATA[Extern]]></target>
+			<source>External</source>
+			<target>Extern</target>
 		</trans-unit>
 		<trans-unit id="configuration.type.include" approved="yes">
-			<source><![CDATA[Include group]]></source>
-			<target><![CDATA[Einschließende Gruppe]]></target>
+			<source>Include group</source>
+			<target>Einschließende Gruppe</target>
 		</trans-unit>
 		<trans-unit id="configuration.type.time" approved="yes">
-			<source><![CDATA[Time]]></source>
-			<target><![CDATA[Zeit]]></target>
+			<source>Time</source>
+			<target>Zeit</target>
 		</trans-unit>
 		<trans-unit id="date" approved="yes">
-			<source><![CDATA[Date]]></source>
-			<target><![CDATA[Datum]]></target>
+			<source>Date</source>
+			<target>Datum</target>
 		</trans-unit>
 		<trans-unit id="dayPid" approved="yes">
-			<source><![CDATA[Day PID]]></source>
-			<target><![CDATA[Tages PID]]></target>
+			<source>Day PID</source>
+			<target>Tages PID</target>
 		</trans-unit>
 		<trans-unit id="detailPid" approved="yes">
-			<source><![CDATA[Detail PID]]></source>
-			<target><![CDATA[Detail PID]]></target>
+			<source>Detail PID</source>
+			<target>Detail PID</target>
 		</trans-unit>
 		<trans-unit id="frequency_configuration" approved="yes">
-			<source><![CDATA[Frequency configuration]]></source>
-			<target><![CDATA[Frequenz Konfiguration]]></target>
+			<source>Frequency configuration</source>
+			<target>Frequenz Konfiguration</target>
 		</trans-unit>
 		<trans-unit id="general" approved="yes">
-			<source><![CDATA[General]]></source>
-			<target><![CDATA[Allgemein]]></target>
+			<source>General</source>
+			<target>Allgemein</target>
 		</trans-unit>
 		<trans-unit id="hide.pagination.teaser" approved="yes">
-			<source><![CDATA[Hide pagination + Teaser mode]]></source>
-			<target><![CDATA[Verstecke Pagination + Teaser Modus]]></target>
+			<source>Hide pagination + Teaser mode</source>
+			<target>Verstecke Pagination + Teaser Modus</target>
 		</trans-unit>
 		<trans-unit id="inherit" approved="yes">
-			<source><![CDATA[Inherit]]></source>
-			<target><![CDATA[Vererbt]]></target>
+			<source>Inherit</source>
+			<target>Vererbt</target>
 		</trans-unit>
 		<trans-unit id="limit" approved="yes">
-			<source><![CDATA[Limit]]></source>
-			<target><![CDATA[Limit]]></target>
+			<source>Limit</source>
+			<target>Limit</target>
 		</trans-unit>
 		<trans-unit id="listPid" approved="yes">
-			<source><![CDATA[List PID]]></source>
-			<target><![CDATA[Listen PID]]></target>
+			<source>List PID</source>
+			<target>Listen PID</target>
 		</trans-unit>
 		<trans-unit id="mainConfiguration" approved="yes">
-			<source><![CDATA[Main configuration]]></source>
-			<target><![CDATA[Hauptkonfiguration]]></target>
+			<source>Main configuration</source>
+			<target>Hauptkonfiguration</target>
 		</trans-unit>
 		<trans-unit id="mode" approved="yes">
-			<source><![CDATA[Mode]]></source>
-			<target><![CDATA[Modus]]></target>
+			<source>Mode</source>
+			<target>Modus</target>
 		</trans-unit>
 		<trans-unit id="mode.day" approved="yes">
-			<source><![CDATA[Day]]></source>
-			<target><![CDATA[Tag]]></target>
+			<source>Day</source>
+			<target>Tag</target>
 		</trans-unit>
 		<trans-unit id="mode.detail" approved="yes">
-			<source><![CDATA[Detail only]]></source>
-			<target><![CDATA[nur Detail]]></target>
+			<source>Detail only</source>
+			<target>nur Detail</target>
 		</trans-unit>
 		<trans-unit id="mode.list" approved="yes">
-			<source><![CDATA[List only]]></source>
-			<target><![CDATA[nur Liste]]></target>
+			<source>List only</source>
+			<target>nur Liste</target>
 		</trans-unit>
 		<trans-unit id="mode.listDetail" approved="yes">
-			<source><![CDATA[List + Detail]]></source>
-			<target><![CDATA[Liste + Detail]]></target>
+			<source>List + Detail</source>
+			<target>Liste + Detail</target>
 		</trans-unit>
 		<trans-unit id="mode.month" approved="yes">
-			<source><![CDATA[Month]]></source>
-			<target><![CDATA[Monat]]></target>
+			<source>Month</source>
+			<target>Monat</target>
 		</trans-unit>
 		<trans-unit id="mode.normal" approved="yes">
-			<source><![CDATA[Normal]]></source>
-			<target><![CDATA[Normal]]></target>
+			<source>Normal</source>
+			<target>Normal</target>
 		</trans-unit>
 		<trans-unit id="mode.result" approved="yes">
-			<source><![CDATA[Search result]]></source>
-			<target><![CDATA[Suchergebnis]]></target>
+			<source>Search result</source>
+			<target>Suchergebnis</target>
 		</trans-unit>
 		<trans-unit id="mode.search" approved="yes">
-			<source><![CDATA[Search]]></source>
-			<target><![CDATA[Suche]]></target>
+			<source>Search</source>
+			<target>Suche</target>
 		</trans-unit>
 		<trans-unit id="mode.special" approved="yes">
-			<source><![CDATA[Special Views]]></source>
-			<target><![CDATA[Spezielle Ansichten]]></target>
+			<source>Special Views</source>
+			<target>Spezielle Ansichten</target>
 		</trans-unit>
 		<trans-unit id="mode.week" approved="yes">
-			<source><![CDATA[Week]]></source>
-			<target><![CDATA[Woche]]></target>
+			<source>Week</source>
+			<target>Woche</target>
 		</trans-unit>
 		<trans-unit id="mode.year" approved="yes">
-			<source><![CDATA[Year]]></source>
-			<target><![CDATA[Jahr]]></target>
+			<source>Year</source>
+			<target>Jahr</target>
 		</trans-unit>
 		<trans-unit id="monthPid" approved="yes">
-			<source><![CDATA[Month PID]]></source>
-			<target><![CDATA[Monats PID]]></target>
+			<source>Month PID</source>
+			<target>Monats PID</target>
 		</trans-unit>
 		<trans-unit id="noEventDetailView" approved="yes">
-			<source><![CDATA[No Event found! There is no valid fallback PID (list) in the detail plugin]]></source>
-			<target><![CDATA[Kein Event gefunden! Es gibt keine valide Fallback PID (list) in dem Detail Plugin]]></target>
+			<source>No Event found! There is no valid fallback PID (list) in the detail plugin</source>
+			<target>Kein Event gefunden! Es gibt keine valide Fallback PID (list) in dem Detail Plugin</target>
 		</trans-unit>
 		<trans-unit id="noEvents" approved="yes">
-			<source><![CDATA[No events]]></source>
-			<target><![CDATA[Keine Ereignisse]]></target>
+			<source>No events</source>
+			<target>Keine Ereignisse</target>
 		</trans-unit>
 		<trans-unit id="noEvents.day" approved="yes">
-			<source><![CDATA[There are no events on the current date]]></source>
-			<target><![CDATA[Es gibt keine Ereignisse an dem aktuellen Tag]]></target>
+			<source>There are no events on the current date</source>
+			<target>Es gibt keine Ereignisse an dem aktuellen Tag</target>
 		</trans-unit>
 		<trans-unit id="pidConfiguration" approved="yes">
-			<source><![CDATA[Page ID configuration]]></source>
-			<target><![CDATA[Seiten ID Konfiguration]]></target>
+			<source>Page ID configuration</source>
+			<target>Seiten ID Konfiguration</target>
 		</trans-unit>
 		<trans-unit id="pluginName" approved="yes">
-			<source><![CDATA[Calendar]]></source>
-			<target><![CDATA[Kalendar]]></target>
+			<source>Calendar</source>
+			<target>Kalendar</target>
 		</trans-unit>
 		<trans-unit id="previewLabel" approved="yes">
-			<source><![CDATA[There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...]]></source>
-			<target><![CDATA[Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind (ignoriert "enable columns")...]]></target>
+			<source>There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...</source>
+			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind (ignoriert "enable columns")...</target>
 		</trans-unit>
 		<trans-unit id="save.first" approved="yes">
-			<source><![CDATA[Please save the record first...]]></source>
-			<target><![CDATA[Bite sichere zunächst den Datensatz...]]></target>
+			<source>Please save the record first...</source>
+			<target>Bite sichere zunächst den Datensatz...</target>
 		</trans-unit>
 		<trans-unit id="sorting" approved="yes">
-			<source><![CDATA[Sorting]]></source>
-			<target><![CDATA[Sortierung]]></target>
+			<source>Sorting</source>
+			<target>Sortierung</target>
 		</trans-unit>
 		<trans-unit id="tca.information" approved="yes">
-			<source><![CDATA[Calendarize (Information - Save to refresh...)]]></source>
-			<target><![CDATA[Calendarize (Informationen - Speichern um zu aktualisieren...)]]></target>
+			<source>Calendarize (Information - Save to refresh...)</source>
+			<target>Calendarize (Informationen - Speichern um zu aktualisieren...)</target>
 		</trans-unit>
 		<trans-unit id="termination_condition" approved="yes">
-			<source><![CDATA[Termination condition]]></source>
-			<target><![CDATA[Abbruchbedingung]]></target>
+			<source>Termination condition</source>
+			<target>Abbruchbedingung</target>
 		</trans-unit>
 		<trans-unit id="time" approved="yes">
-			<source><![CDATA[Time]]></source>
-			<target><![CDATA[Zeit]]></target>
+			<source>Time</source>
+			<target>Zeit</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
-			<source><![CDATA[Configuration]]></source>
-			<target><![CDATA[Konfiguration]]></target>
+			<source>Configuration</source>
+			<target>Konfiguration</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.all_day" approved="yes">
-			<source><![CDATA[All day]]></source>
-			<target><![CDATA[Ganztägig]]></target>
+			<source>All day</source>
+			<target>Ganztägig</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.amount" approved="yes">
-			<source><![CDATA[Amount]]></source>
-			<target><![CDATA[Anzahl]]></target>
+			<source>Amount</source>
+			<target>Anzahl</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.counter_amount" approved="yes">
-			<source><![CDATA[Amount]]></source>
-			<target><![CDATA[Anzahl]]></target>
+			<source>Amount</source>
+			<target>Anzahl</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.counter_interval" approved="yes">
-			<source><![CDATA[Interval]]></source>
-			<target><![CDATA[Intervall]]></target>
+			<source>Interval</source>
+			<target>Intervall</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.day" approved="yes">
-			<source><![CDATA[Day]]></source>
-			<target><![CDATA[Tag]]></target>
+			<source>Day</source>
+			<target>Tag</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_date" approved="yes" xml:space="preserve">
-			<source><![CDATA[End date (optionally)]]></source>
-			<target><![CDATA[Enddatum  (optional)]]></target>
+			<source>End date (optionally)</source>
+			<target>Enddatum  (optional)</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
-			<source><![CDATA[End time]]></source>
-			<target><![CDATA[Endzeit]]></target>
+			<source>End time</source>
+			<target>Endzeit</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.frequency" approved="yes">
-			<source><![CDATA[Frequency]]></source>
-			<target><![CDATA[Frequenz]]></target>
+			<source>Frequency</source>
+			<target>Frequenz</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.groups" approved="yes">
-			<source><![CDATA[Groups]]></source>
-			<target><![CDATA[Gruppen]]></target>
+			<source>Groups</source>
+			<target>Gruppen</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.interval" approved="yes">
-			<source><![CDATA[Interval]]></source>
-			<target><![CDATA[Intervall]]></target>
+			<source>Interval</source>
+			<target>Intervall</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.recurrence" approved="yes">
-			<source><![CDATA[Recurrence]]></source>
-			<target><![CDATA[Wiederholung]]></target>
+			<source>Recurrence</source>
+			<target>Wiederholung</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.start_date" approved="yes">
-			<source><![CDATA[Start date]]></source>
-			<target><![CDATA[Startdatum]]></target>
+			<source>Start date</source>
+			<target>Startdatum</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
-			<source><![CDATA[Start time]]></source>
-			<target><![CDATA[Startzeit]]></target>
+			<source>Start time</source>
+			<target>Startzeit</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.till_date" approved="yes">
-			<source><![CDATA[Till date]]></source>
-			<target><![CDATA[Bis Datum]]></target>
+			<source>Till date</source>
+			<target>Bis Datum</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.type" approved="yes">
-			<source><![CDATA[Type]]></source>
-			<target><![CDATA[Typ]]></target>
+			<source>Type</source>
+			<target>Typ</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configurationgroup" approved="yes">
-			<source><![CDATA[Configuration group]]></source>
-			<target><![CDATA[Konfigurationsgruppe]]></target>
+			<source>Configuration group</source>
+			<target>Konfigurationsgruppe</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configurationgroup.configurations" approved="yes">
-			<source><![CDATA[Configurations]]></source>
-			<target><![CDATA[Konfigurationen]]></target>
+			<source>Configurations</source>
+			<target>Konfigurationen</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configurationgroup.title" approved="yes">
-			<source><![CDATA[Title]]></source>
-			<target><![CDATA[Titel]]></target>
+			<source>Title</source>
+			<target>Titel</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event" approved="yes">
-			<source><![CDATA[Event]]></source>
-			<target><![CDATA[Ereignis]]></target>
+			<source>Event</source>
+			<target>Ereignis</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.description" approved="yes">
-			<source><![CDATA[Description]]></source>
-			<target><![CDATA[Beschreibung]]></target>
+			<source>Description</source>
+			<target>Beschreibung</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.downloads" approved="yes">
-			<source><![CDATA[Downloads]]></source>
-			<target><![CDATA[Downloads]]></target>
+			<source>Downloads</source>
+			<target>Downloads</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.images" approved="yes">
-			<source><![CDATA[Images]]></source>
-			<target><![CDATA[Bilder]]></target>
+			<source>Images</source>
+			<target>Bilder</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.title" approved="yes">
-			<source><![CDATA[Title]]></source>
-			<target><![CDATA[Titel]]></target>
+			<source>Title</source>
+			<target>Titel</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index" approved="yes">
-			<source><![CDATA[Index]]></source>
-			<target><![CDATA[Index]]></target>
+			<source>Index</source>
+			<target>Index</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.all_day" approved="yes">
-			<source><![CDATA[All day]]></source>
-			<target><![CDATA[Ganztägig]]></target>
+			<source>All day</source>
+			<target>Ganztägig</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.end_date" approved="yes">
-			<source><![CDATA[End date]]></source>
-			<target><![CDATA[Enddatum]]></target>
+			<source>End date</source>
+			<target>Enddatum</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.end_time" approved="yes">
-			<source><![CDATA[End time]]></source>
-			<target><![CDATA[Endzeit]]></target>
+			<source>End time</source>
+			<target>Endzeit</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.foreign_table" approved="yes">
-			<source><![CDATA[Foreign table]]></source>
-			<target><![CDATA[Fremd Tabelle]]></target>
+			<source>Foreign table</source>
+			<target>Fremd Tabelle</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.foreign_uid" approved="yes">
-			<source><![CDATA[Foreign UID]]></source>
-			<target><![CDATA[Fremd UID]]></target>
+			<source>Foreign UID</source>
+			<target>Fremd UID</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.start_date" approved="yes">
-			<source><![CDATA[Start date]]></source>
-			<target><![CDATA[Startdatum]]></target>
+			<source>Start date</source>
+			<target>Startdatum</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_index.start_time" approved="yes">
-			<source><![CDATA[Start time]]></source>
-			<target><![CDATA[Startzeit]]></target>
+			<source>Start time</source>
+			<target>Startzeit</target>
 		</trans-unit>
 		<trans-unit id="weekPid" approved="yes">
-			<source><![CDATA[Week PID]]></source>
-			<target><![CDATA[Wochen PID]]></target>
+			<source>Week PID</source>
+			<target>Wochen PID</target>
 		</trans-unit>
 		<trans-unit id="yearPid" approved="yes">
-			<source><![CDATA[Year PID]]></source>
-			<target><![CDATA[Jahres PID]]></target>
+			<source>Year PID</source>
+			<target>Jahres PID</target>
 		</trans-unit>
 		</body>
 	</file>
