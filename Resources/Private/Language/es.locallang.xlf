@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="es" datatype="plaintext" original="messages" date="2015-12-05T19:57:06Z">
+		<header>
+			<type>database</type>
+			<description>Language file for EXT:calendarize</description>
+			<authorName>Tim Lochmüller</authorName>
+			<authorEmail>tim@fruit-lab.de</authorEmail>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="back" approved="yes">
+			<source>back</source>
+			<target>espalda</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.friday" approved="yes">
+			<source>Friday</source>
+			<target>Viernes</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.monday" approved="yes">
+			<source>Monday</source>
+			<target>lunes</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.saturday" approved="yes">
+			<source>Saturday</source>
+			<target>Sábado</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.sunday" approved="yes">
+			<source>Sunday</source>
+			<target>Domingo</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

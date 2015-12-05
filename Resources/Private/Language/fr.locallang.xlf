@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2015-12-05T19:55:37Z">
+		<header>
+			<type>database</type>
+			<description>Language file for EXT:calendarize</description>
+			<authorName>Tim Lochmüller</authorName>
+			<authorEmail>tim@fruit-lab.de</authorEmail>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="back" approved="yes">
+			<source>back</source>
+			<target>de retour</target>
+		</trans-unit>
+		<trans-unit id="configuration" approved="yes">
+			<source>Configuration</source>
+			<target>Configuration</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.friday" approved="yes">
+			<source>Friday</source>
+			<target>Vendredi</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.monday" approved="yes">
+			<source>Monday</source>
+			<target>Lundi</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.saturday" approved="yes">
+			<source>Saturday</source>
+			<target>Samedi</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.sunday" approved="yes">
+			<source>Sunday</source>
+			<target>Dimanche</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.tuesday" approved="yes">
+			<source>Tuesday</source>
+			<target>Mardi</target>
+		</trans-unit>
+		<trans-unit id="configuration.day.wednesday" approved="yes">
+			<source>Wednesday</source>
+			<target>Mercredi</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>
