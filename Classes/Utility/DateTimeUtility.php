@@ -48,6 +48,11 @@ class DateTimeUtility
     const SECONDS_YEAR = 31536000;
 
     /**
+     * One decade in seconds (base on a 365 days year)
+     */
+    const SECONDS_DECADE = 315360000;
+
+    /**
      * Convert a Week/Year combination to a DateTime of the first day of week
      *
      * @param int $week
