@@ -262,8 +262,8 @@
 			<target>Kalendar</target>
 		</trans-unit>
 		<trans-unit id="previewLabel" approved="yes">
-			<source>There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...</source>
-			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse sind (ignoriert &quot;enable columns&quot;)...</target>
+			<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today)  are (ignore enable columns)...</source>
+			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse (inkl. heute) sind (ignoriert &quot;enable columns&quot;)...</target>
 		</trans-unit>
 		<trans-unit id="save.first" approved="yes">
 			<source>Please save the record first...</source>

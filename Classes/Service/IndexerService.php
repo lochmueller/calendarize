@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -88,8 +89,10 @@ class IndexerService extends AbstractService
     public function getNextEvents($table, $uid, $limit = 5)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
+        $now = DateTimeUtility::getNow();
+        $now->setTime(0, 0, 0);
         return $databaseConnection->exec_SELECTgetRows('*', self::TABLE_NAME,
-            'start_date > ' . time() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table,
+            'start_date >= ' . $now->getTimestamp() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table,
                 self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
     }
 

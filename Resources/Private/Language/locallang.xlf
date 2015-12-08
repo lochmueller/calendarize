@@ -199,7 +199,7 @@
 			<source>Calendar</source>
 		</trans-unit>
 		<trans-unit id="previewLabel">
-			<source>There is/are %d item/items in the index of the current record. The next %d events are (ignore enable columns)...</source>
+			<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are (ignore enable columns)...</source>
 		</trans-unit>
 		<trans-unit id="save.first">
 			<source>Please save the record first...</source>
