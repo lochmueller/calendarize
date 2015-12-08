@@ -295,6 +295,7 @@ class IndexRepository extends AbstractRepository
      * @param QueryInterface $query
      * @param int            $startTime
      * @param int|null       $endTime
+     * @see IndexUtility::isIndexInRange
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime = null)
     {
