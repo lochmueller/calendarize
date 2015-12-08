@@ -73,16 +73,17 @@ class IndexRepository extends AbstractRepository
      */
     public function findList($limit = 0)
     {
-        $query = $this->createQuery();
-        $constraints = $this->getDefaultConstraints($query);
         $now = DateTimeUtility::getNow();
         $now->setTime(0, 0, 0);
         $nowTimestamp = $now->getTimestamp();
-        $this->addTimeFrameConstraints($constraints, $query, $nowTimestamp, $nowTimestamp + DateTimeUtility::SECONDS_YEAR * 6);
+
+        $result = $this->findByTimeSlot($nowTimestamp);
         if ($limit > 0) {
+            $query = $result->getQuery();
             $query->setLimit($limit);
+            $result = $query->execute();
         }
-        return $this->matchAndExecute($query, $constraints);
+        return $result;
     }
 
     /**
@@ -236,11 +237,11 @@ class IndexRepository extends AbstractRepository
      * Find by time slot
      *
      * @param int $startTime
-     * @param int $endTime
+     * @param int|null $endTime null means open end
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByTimeSlot($startTime, $endTime)
+    public function findByTimeSlot($startTime, $endTime = null)
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -293,10 +294,14 @@ class IndexRepository extends AbstractRepository
      * @param array          $constraints
      * @param QueryInterface $query
      * @param int            $startTime
-     * @param int            $endTime
+     * @param int|null       $endTime
      */
-    protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime)
+    protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime = null)
     {
+        // Simulate end time
+        if($endTime === null) {
+            $endTime = $startTime + DateTimeUtility::SECONDS_YEAR * 10;
+        }
         $orConstraint = [];
 
         // before - in
