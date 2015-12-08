@@ -37,6 +37,7 @@ class Register
         $tableName = $configuration['tableName'];
         $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = [
             'label'  => 'Calendarize',
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type'          => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
