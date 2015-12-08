@@ -75,9 +75,10 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        $now = DateTimeUtility::getNow()
-            ->getTimestamp();
-        $this->addTimeFrameConstraints($constraints, $query, $now, $now + DateTimeUtility::SECONDS_YEAR * 6);
+        $now = DateTimeUtility::getNow();
+        $now->setTime(0, 0, 0);
+        $nowTimestamp = $now->getTimestamp();
+        $this->addTimeFrameConstraints($constraints, $query, $nowTimestamp, $nowTimestamp + DateTimeUtility::SECONDS_YEAR * 6);
         if ($limit > 0) {
             $query->setLimit($limit);
         }
@@ -325,7 +326,6 @@ class IndexRepository extends AbstractRepository
         $beforeAfter = [
             $query->lessThan('start_date', $startTime),
             $query->greaterThan('end_date', $endTime),
-
         ];
         $orConstraint[] = $query->logicalAnd($beforeAfter);
 
