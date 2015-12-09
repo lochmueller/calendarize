@@ -1,0 +1,54 @@
+<?php
+/**
+ * Time shift function
+ *
+ * @author  Tim Lochmüller
+ */
+
+namespace HDNET\Calendarize\Hooks;
+
+/**
+ * Time shift function
+ */
+class TimeShift
+{
+
+    /**
+     * Shift the time variables
+     *
+     * @hook TYPO3_CONF_VARS|SC_OPTIONS|tslib/index_ts.php|preprocessRequest
+     */
+    public function shift()
+    {
+        $defaultTime = $GLOBALS['EXEC_TIME'] - $GLOBALS['EXEC_TIME'] % 60;
+        if ($GLOBALS['SIM_ACCESS_TIME'] !== $defaultTime) {
+            // another process already change the SIM_ACCESS_TIME
+            return;
+        }
+
+        $configuration = $this->getConfiguration();
+        $timeShift = isset($configuration['timeShift']) ? (int)$configuration['timeShift'] : 0;
+        if ($timeShift <= 0) {
+            // shift is disabled
+            return;
+        }
+
+        // set new time
+        $GLOBALS['SIM_ACCESS_TIME'] = $GLOBALS['EXEC_TIME'] - $GLOBALS['EXEC_TIME'] % $timeShift;
+    }
+
+    /**
+     * Get the configuration
+     *
+     * @return array
+     */
+    protected function getConfiguration()
+    {
+        $config = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+        if (is_array($config)) {
+            return $config;
+        }
+        return [];
+
+    }
+}
