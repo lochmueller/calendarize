@@ -220,7 +220,7 @@ class IndexRepository extends AbstractRepository
     public function findDay($year, $month, $day)
     {
         $startTime = mktime(0, 0, 0, $month, $day, $year);
-        return $this->findByTimeSlot($startTime, $startTime + DateTimeUtility::SECONDS_DAY);
+        return $this->findByTimeSlot($startTime, $startTime + DateTimeUtility::SECONDS_DAY - 1);
     }
 
     /**
