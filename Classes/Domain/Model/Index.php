@@ -17,7 +17,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * Index information
  *
  * @db
- * @smartExclude Language,Workspaces
+ * @smartExclude Workspaces
  */
 class Index extends AbstractModel
 {
