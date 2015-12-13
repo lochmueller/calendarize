@@ -236,7 +236,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by time slot
      *
-     * @param int $startTime
+     * @param int      $startTime
      * @param int|null $endTime null means open end
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
@@ -295,12 +295,13 @@ class IndexRepository extends AbstractRepository
      * @param QueryInterface $query
      * @param int            $startTime
      * @param int|null       $endTime
+     *
      * @see IndexUtility::isIndexInRange
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime = null)
     {
         // Simulate end time
-        if($endTime === null) {
+        if ($endTime === null) {
             $endTime = $startTime + DateTimeUtility::SECONDS_YEAR * 10;
         }
         $orConstraint = [];

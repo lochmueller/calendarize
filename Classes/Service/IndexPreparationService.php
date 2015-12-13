@@ -51,7 +51,34 @@ class IndexPreparationService
         }
 
         $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
+        $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
         return $neededItems;
+    }
+
+    /**
+     * Add the language information
+     *
+     * @param array  $neededItems
+     * @param string $tableName
+     * @param array  $record
+     */
+    protected function addLanguageInformation(array &$neededItems, $tableName, array $record)
+    {
+        $languageField = isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] : false;
+        $transOrigPointerField = isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] : false;
+
+        if (!$languageField || !$transOrigPointerField) {
+            return;
+        }
+        if ((int)$record[$transOrigPointerField] > 0) {
+            // no Index for language child elements
+            return;
+        }
+        $language = (int)$record[$languageField];
+
+        foreach ($neededItems as $key => $value) {
+            $neededItems[$key]['sys_language_uid'] = $language;
+        }
     }
 
     /**
