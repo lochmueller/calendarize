@@ -175,7 +175,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findYear($year)
     {
-        return $this->findByTimeSlot(mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1));
+        return $this->findByTimeSlot(mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1) - 1);
     }
 
     /**
@@ -189,7 +189,7 @@ class IndexRepository extends AbstractRepository
     public function findMonth($year, $month)
     {
         $startTime = mktime(0, 0, 0, $month, 1, $year);
-        $endTime = mktime(0, 0, 0, $month + 1, 1, $year);
+        $endTime = mktime(0, 0, 0, $month + 1, 1, $year) - 1;
         return $this->findByTimeSlot($startTime, $endTime);
     }
 
@@ -205,7 +205,7 @@ class IndexRepository extends AbstractRepository
     {
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $timeStampStart = $firstDay->getTimestamp();
-        return $this->findByTimeSlot($timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK);
+        return $this->findByTimeSlot($timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK - 1);
     }
 
     /**
