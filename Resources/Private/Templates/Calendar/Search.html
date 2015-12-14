@@ -9,7 +9,7 @@
 	</div>
 
 	<f:for each="{configurations}" as="configuration">
-		<f:render partial="{configuration.partialIdentifier}/Search" arguments="{customSearch: customSearch}" />
+		<f:render partial="{configuration.partialIdentifier}/Search" arguments="{customSearch: customSearch, extended: extended}" />
 	</f:for>
 
 	<button type="submit" class="btn btn-primary">Search</button>
