@@ -18,9 +18,11 @@
 		<f:translate key="all_day" />
 	</f:then>
 	<f:else>
-		<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
-			-
+		<f:if condition="{index.endTime}">
+			<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
+				-
+			</f:if>
+			<f:format.date format="{settings.timeFormat}">{index.endDateComplete}</f:format.date>
 		</f:if>
-		<f:format.date format="{settings.timeFormat}">{index.endDateComplete}</f:format.date>
 	</f:else>
 </f:if>
