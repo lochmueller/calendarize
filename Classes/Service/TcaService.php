@@ -11,7 +11,6 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * TCA service
@@ -56,10 +55,11 @@ class TcaService extends AbstractService
     protected function getConfigurationGroupTitle($row)
     {
         $title = '';
-        $groups = GeneralUtility::trimExplode(',', $row['groups'], true);
+        $groupData = is_array($row['groups']) ? $row['groups'][0] : $row['groups']; // The new FormEngine prepare the select as array
+        $groups = GeneralUtility::trimExplode(',', $groupData, true);
         foreach ($groups as $key => $id) {
             $row = BackendUtility::getRecord('tx_calendarize_domain_model_configurationgroup', $id);
-            $groups[$key] = $row['title'] . ' (' . $id . ')';
+            $groups[$key] = $row['title'] . ' (#' . $id . ')';
         }
         if ($groups) {
             $title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
