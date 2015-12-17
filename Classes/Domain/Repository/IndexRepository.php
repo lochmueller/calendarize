@@ -316,7 +316,7 @@ class IndexRepository extends AbstractRepository
     {
         // Simulate end time
         if ($endTime === null) {
-            $endTime = $startTime + DateTimeUtility::SECONDS_YEAR * 10;
+            $endTime = $startTime + DateTimeUtility::SECONDS_DECADE;
         }
         $orConstraint = [];
 
