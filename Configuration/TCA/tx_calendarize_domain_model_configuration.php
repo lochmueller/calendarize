@@ -195,6 +195,9 @@ $custom = array(
             'displayCond' => array(
                 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             ),
+            'config'      => array(
+                'eval'    => 'trim,required',
+            ),
         ),
         'day'              => array(
             'config'      => array(
