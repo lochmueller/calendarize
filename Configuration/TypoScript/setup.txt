@@ -8,6 +8,8 @@ plugin.tx_calendarize {
 		timeFormat = {$plugin.tx_calendarize.settings.timeFormat}
 		useMomentJsDateAndTimeOutput = {$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}
 		useMomentFullCalendarIo = {$plugin.tx_calendarize.settings.useMomentFullCalendarIo}
+		listStartTime = {$plugin.tx_calendarize.settings.listStartTime}
+		listStartTimeOffsetHours = {$plugin.tx_calendarize.settings.listStartTimeOffsetHours}
 
 		feed {
 			title = {$plugin.tx_calendarize.settings.feed.title}

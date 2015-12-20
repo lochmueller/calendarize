@@ -81,14 +81,20 @@ class IndexRepository extends AbstractRepository
     /**
      * Find List
      *
-     * @param int $limit
+     * @param int        $limit
+     * @param int|string $listStartTime
+     * @param int        $listStartTimeOffsetHours
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findList($limit = 0)
+    public function findList($limit = 0, $listStartTime = 0, $listStartTimeOffsetHours = 0)
     {
         $now = DateTimeUtility::getNow();
-        $now->setTime(0, 0, 0);
+        if ($listStartTime !== 'now') {
+            $now->setTime(0, 0, 0);
+        }
+        $now->modify($listStartTimeOffsetHours . ' hours');
+
         $nowTimestamp = $now->getTimestamp();
 
         $result = $this->findByTimeSlot($nowTimestamp);

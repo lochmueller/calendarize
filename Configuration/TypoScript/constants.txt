@@ -22,6 +22,12 @@ plugin.tx_calendarize {
 		# cat=calendarize//0070; type=boolean; label=FullCalendar IO: Experimental: Use FullCalendar IO for the month view. You have to enable the Moment.js function
 		useMomentFullCalendarIo = 0
 
+		# cat=calendarize//0080; type=options[00:00:00=0, Now=now]; label=List start time: The start time for the list (also used for latest view)
+		listStartTime = 0
+
+		# cat=calendarize//0090; type=int[-24-24]; label=list start time offset: The offset for the list start time in hours (also used for latest view)
+		listStartTimeOffsetHours = 0
+
 		feed {
 			# cat=calendarize//0080; type=string; label=Title of the Feed: The feed title for atom and xml/rss
 			title = Title of the feed

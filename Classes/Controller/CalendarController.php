@@ -159,7 +159,7 @@ class CalendarController extends AbstractController
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
             $indices = $this->indexRepository->findYear($year);
         } else {
-            $indices = $this->indexRepository->findList((int)$this->settings['limit']);
+            $indices = $this->indexRepository->findList((int)$this->settings['limit'], $this->settings['listStartTime'], (int)$this->settings['listStartTimeOffsetHours']);
         }
 
         $this->slotExtendedAssignMultiple([
