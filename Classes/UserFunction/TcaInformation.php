@@ -8,11 +8,10 @@
 namespace HDNET\Calendarize\UserFunction;
 
 use HDNET\Calendarize\Service\IndexerService;
+use HDNET\Calendarize\Service\TimeTableService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * TCA information
@@ -49,14 +48,24 @@ class TcaInformation
     /**
      * Generate the information field
      *
-     * @param array  $configuration
+     * @param array $configuration
      * @param object $fObj
      *
      * @return string
      */
     public function informationGroupField($configuration, $fObj)
     {
-        return '@todo...';
+        $ids = GeneralUtility::intExplode(',', $configuration['row']['configurations'], true);
+
+        if (!sizeof($ids)) {
+            $content = TranslateUtility::get('save.first');
+        } else {
+            /** @var TimeTableService $timeTableService */
+            $timeTableService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\TimeTableService');
+            $items = $timeTableService->getTimeTablesByConfigurationIds($ids);
+            $content = $this->getEventList($items);
+        }
+        return '<div style="padding: 5px;">' . $content . '</div>';
     }
 
     /**
@@ -70,7 +79,11 @@ class TcaInformation
     {
         $items = [];
         foreach ($events as $event) {
-            $entry = date('d.m.Y', $event['start_date']) . ' - ' . date('d.m.Y', $event['end_date']);
+            $startDate = ($event['start_date'] instanceof \DateTime) ? $event['start_date']->format("d.m.Y") : date('d.m.Y',
+                $event['start_date']);
+            $endDate = ($event['end_date'] instanceof \DateTime) ? $event['end_date']->format("d.m.Y") : date('d.m.Y',
+                $event['end_date']);
+            $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'], false);
                 $end = BackendUtility::time($event['end_time'], false);
