@@ -7,18 +7,31 @@
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\ConfigurationGroup');
 
 $custom = array(
-    'ctrl'    => array(
+    'ctrl' => array(
         'searchFields' => 'uid,title',
     ),
+    'types' => [
+        '1' => [
+            'showitem' => str_replace('configurations,', 'configurations,calendarize_info,',
+                $base['types']['1']['showitem'])
+        ],
+    ],
     'columns' => array(
         'configurations' => array(
             'config' => array(
-                'type'          => 'inline',
+                'type' => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
-                'minitems'      => 1,
-                'maxitems'      => 100,
+                'minitems' => 1,
+                'maxitems' => 100,
             )
         ),
+        'calendarize_info' => [
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
+            'config' => [
+                'type' => 'user',
+                'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationGroupField',
+            ],
+        ],
     ),
 );
 

@@ -47,6 +47,19 @@ class TcaInformation
     }
 
     /**
+     * Generate the information field
+     *
+     * @param array  $configuration
+     * @param object $fObj
+     *
+     * @return string
+     */
+    public function informationGroupField($configuration, $fObj)
+    {
+        return '@todo...';
+    }
+
+    /**
      * Get event list
      *
      * @param $events
