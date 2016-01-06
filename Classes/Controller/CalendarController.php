@@ -190,15 +190,18 @@ class CalendarController extends AbstractController
      *
      * @param int $year
      * @param int $month
+     * @param int $day
      *
      * @return void
      */
-    public function monthAction($year = null, $month = null)
+    public function monthAction($year = null, $month = null, $day = null)
     {
         $date = DateTimeUtility::normalizeDateTime(1, $month, $year);
+        $today = DateTimeUtility::normalizeDateTime(is_null($day) ? 1 : $day, $month, $year);
 
         $this->slotExtendedAssignMultiple([
             'date'    => $date,
+            'today'   => $today,
             'indices' => $this->indexRepository->findMonth($date->format('Y'), $date->format('n')),
         ], __CLASS__, __FUNCTION__);
     }

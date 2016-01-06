@@ -13,7 +13,7 @@
 						<c:dateTime.modify modification="+1 month">{date}</c:dateTime.modify>
 					</f:if>
 				</f:if>
-				<f:format.date format="F Y">{date}</f:format.date>
+				<f:format.date format="%B %Y">{date}</f:format.date>
 				<f:if condition="{settings.monthPid}">
 					<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:date)}">
 						<c:dateTime.modify modification="+1 month">{date}</c:dateTime.modify>
@@ -32,7 +32,7 @@
 				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day" weekStartsAt="{settings.weekStart}">
 					<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
 						<f:then>
-							<td class="hasEvents">
+							<td class="hasEvents{f:if(condition: '{today->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' selectedDay')}">
 								<f:if condition="{settings.dayPid}">
 									<f:then>
 										<c:link.day pageUid="{settings.dayPid}" date="{day.calendar.date}">
