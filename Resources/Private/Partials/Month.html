@@ -32,7 +32,7 @@
 				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day" weekStartsAt="{settings.weekStart}">
 					<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
 						<f:then>
-							<td class="hasEvents{f:if(condition: '{today->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' selectedDay')}">
+							<td class="hasEvents{f:if(condition: '{date->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' selectedDay')}">
 								<f:if condition="{settings.dayPid}">
 									<f:then>
 										<c:link.day pageUid="{settings.dayPid}" date="{day.calendar.date}">
@@ -59,7 +59,7 @@
 							</td>
 						</f:then>
 						<f:else>
-							<td>
+							<td class="{f:if(condition: '{date->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: 'selectedDay')}">
 								<f:format.date format="d">{day.calendar.date}</f:format.date>
 							</td>
 						</f:else>

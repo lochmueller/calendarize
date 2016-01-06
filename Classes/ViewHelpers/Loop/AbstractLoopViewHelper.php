@@ -30,7 +30,8 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
     {
         $templateVariableContainer = $this->renderingContext->getTemplateVariableContainer();
 
-        $items = $this->getItems($date);
+        // clone: take care that the getItems method do not manipulate the original
+        $items = $this->getItems(clone $date);
 
         $iterationData = [
             'index' => 0,
