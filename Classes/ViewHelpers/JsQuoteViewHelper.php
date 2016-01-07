@@ -16,6 +16,8 @@ class JsQuoteViewHelper extends AbstractViewHelper
 {
 
     /**
+     * Render the Quote JS information
+     *
      * @param string $content
      *
      * @return string

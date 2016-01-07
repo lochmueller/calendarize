@@ -110,6 +110,8 @@ class RealurlAlias
     }
 
     /**
+     * Generate the realurl part
+     *
      * @param string $base
      * @param Index  $index
      *

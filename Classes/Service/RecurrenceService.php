@@ -61,6 +61,7 @@ class RecurrenceService extends AbstractService
      * @param \DateTime $date
      * @param string $recurrence
      * @param string $day
+     * @param string $modify
      *
      * @return \DateTime|FALSE
      */
