@@ -16,7 +16,7 @@ class RealurlConfiguration extends AbstractHook
 {
 
     /**
-     * Add the realurl configuration example
+     * Add the realurl configuration
      *
      * @param $params
      * @param $pObj

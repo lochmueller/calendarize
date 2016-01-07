@@ -1,6 +1,6 @@
 <?php
 /**
- * Event (Example) for the calendarize function
+ * Event (Default) for the calendarize function
  *
  * @author  Tim Lochmüller
  */
@@ -12,7 +12,7 @@ use HDNET\Calendarize\Features\RealUrlInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
- * Event (Example) for the calendarize function
+ * Event (Default) for the calendarize function
  *
  * @db
  */
