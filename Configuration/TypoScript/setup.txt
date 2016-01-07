@@ -44,10 +44,10 @@ plugin.tx_calendarize {
 }
 
 [globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}]
-page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js
+page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment-with-locales.min.js
 page.includeJSFooterlibs.moment.external = 1
 page.includeJSFooterlibs.moment.disableCompression = 1
-page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.0/moment-timezone.min.js
+page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone.min.js
 page.includeJSFooterlibs.momentTimezone.external = 1
 page.includeJSFooterlibs.momentTimezone.disableCompression = 1
 page.includeJSFooterlibs.momentReplacement = typo3conf/ext/calendarize/Resources/Public/JavaScript/MomentReplacement.js
