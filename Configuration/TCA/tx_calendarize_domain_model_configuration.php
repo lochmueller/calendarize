@@ -84,7 +84,7 @@ $custom = array(
         ),
         'start_time'       => array(
             'config'      => array(
-                'eval' => 'time',
+                'eval' => 'time,required',
                 'size' => 4,
             ),
             'displayCond' => array(
