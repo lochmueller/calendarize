@@ -83,17 +83,17 @@ class IndexRepository extends AbstractRepository
      *
      * @param int        $limit
      * @param int|string $listStartTime
-     * @param int        $listStartTimeOffsetHours
+     * @param int        $startOffsetHours
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findList($limit = 0, $listStartTime = 0, $listStartTimeOffsetHours = 0)
+    public function findList($limit = 0, $listStartTime = 0, $startOffsetHours = 0)
     {
         $now = DateTimeUtility::getNow();
         if ($listStartTime !== 'now') {
             $now->setTime(0, 0, 0);
         }
-        $now->modify($listStartTimeOffsetHours . ' hours');
+        $now->modify($startOffsetHours . ' hours');
 
         $nowTimestamp = $now->getTimestamp();
 
@@ -286,9 +286,9 @@ class IndexRepository extends AbstractRepository
         // @todo please check core API functions again
         /** @var ConfigurationManagerInterface $configuratioManager */
         $configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
-        $frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $storagePages = isset($frameworkConfiguration['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
-            $frameworkConfiguration['persistence']['storagePid']) : [];
+        $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
+            $frameworkConfig['persistence']['storagePid']) : [];
         if (!empty($storagePages)) {
             $constraints[] = $query->in('pid', $storagePages);
         }

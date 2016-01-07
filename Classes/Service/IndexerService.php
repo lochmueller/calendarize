@@ -108,11 +108,11 @@ class IndexerService extends AbstractService
     protected function updateIndex($configurationKey, $tableName, $uid)
     {
         /** IndexPreparationService */
-        static $indexPreparationService = null;
-        if ($indexPreparationService === null) {
-            $indexPreparationService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexPreparationService');
+        static $preparationService = null;
+        if ($preparationService === null) {
+            $preparationService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexPreparationService');
         }
-        $neededItems = $indexPreparationService->prepareIndex($configurationKey, $tableName, $uid);
+        $neededItems = $preparationService->prepareIndex($configurationKey, $tableName, $uid);
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);
     }
 

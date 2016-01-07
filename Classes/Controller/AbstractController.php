@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Controller;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -62,7 +63,7 @@ abstract class AbstractController extends ActionController
             header('Content-Disposition: inline; filename=calendar.' . $fileExtension);
         }
         echo $this->response->getContent();
-        die();
+        HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_200);
     }
 
     /**

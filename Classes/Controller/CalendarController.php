@@ -319,11 +319,11 @@ class CalendarController extends AbstractController
     protected function getAllowedActions()
     {
         $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $allowedControllerActions = [];
+        $allowedActions = [];
         foreach ($configuration['controllerConfiguration'] as $controllerName => $controllerActions) {
-            $allowedControllerActions[$controllerName] = $controllerActions['actions'];
+            $allowedActions[$controllerName] = $controllerActions['actions'];
         }
-        return isset($allowedControllerActions['Calendar']) ? $allowedControllerActions['Calendar'] : [];
+        return isset($allowedActions['Calendar']) ? $allowedActions['Calendar'] : [];
     }
 
     /**

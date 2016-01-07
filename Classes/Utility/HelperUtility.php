@@ -82,8 +82,8 @@ class HelperUtility
         $class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
         /** @var $flashMessageService \TYPO3\CMS\Core\Messaging\FlashMessageService */
         $flashMessageService = GeneralUtility::makeInstance($class);
-        $defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
-        $defaultFlashMessageQueue->enqueue($flashMessage);
+        $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+        $messageQueue->enqueue($flashMessage);
     }
 
     /**

@@ -28,7 +28,7 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      */
     public function render(\DateTime $date, $iteration)
     {
-        $templateVariableContainer = $this->renderingContext->getTemplateVariableContainer();
+        $variableContainer = $this->renderingContext->getTemplateVariableContainer();
 
         // clone: take care that the getItems method do not manipulate the original
         $items = $this->getItems(clone $date);
@@ -47,11 +47,11 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
             $iterationData['isOdd'] = !$iterationData['isEven'];
             $iterationData['calendar'] = $item;
 
-            $templateVariableContainer->add($iteration, $iterationData);
+            $variableContainer->add($iteration, $iterationData);
 
             $output .= $this->renderChildren();
 
-            $templateVariableContainer->remove($iteration);
+            $variableContainer->remove($iteration);
             $iterationData['index']++;
             $iterationData['cycle']++;
         }

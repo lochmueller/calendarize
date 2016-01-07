@@ -65,12 +65,12 @@ class IndexPreparationService
     protected function addLanguageInformation(array &$neededItems, $tableName, array $record)
     {
         $languageField = isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] : false;
-        $transOrigPointerField = isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] : false;
+        $transPointer = isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] : false;
 
-        if (!$languageField || !$transOrigPointerField) {
+        if (!$languageField || !$transPointer) {
             return;
         }
-        if ((int)$record[$transOrigPointerField] > 0) {
+        if ((int)$record[$transPointer] > 0) {
             // no Index for language child elements
             return;
         }

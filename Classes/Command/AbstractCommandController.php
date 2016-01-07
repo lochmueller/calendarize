@@ -30,8 +30,8 @@ abstract class AbstractCommandController extends CommandController
     /**
      * Adds a message to the FlashMessageQueue or prints it to the CLI
      *
-     * @param mixed   $message
-     * @param string  $title
+     * @param mixed $message
+     * @param string $title
      * @param integer $severity
      *
      * @return void
@@ -49,8 +49,8 @@ abstract class AbstractCommandController extends CommandController
             $message = var_export($message, true);
         }
         if (defined('TYPO3_cliMode') && TYPO3_cliMode) {
-            // @todo not implement
-            // $this->enqueueMessageCli($message, $title, $severity);
+            echo '==' . $title . ' == ' . LF;
+            echo $message . LF;
         } else {
             $this->enqueueMessageGui($message, $title, $severity);
         }
@@ -59,8 +59,8 @@ abstract class AbstractCommandController extends CommandController
     /**
      * Adds a message to the FlashMessageQueue
      *
-     * @param mixed   $message
-     * @param string  $title
+     * @param mixed $message
+     * @param string $title
      * @param integer $severity
      *
      * @return void
@@ -68,7 +68,8 @@ abstract class AbstractCommandController extends CommandController
     private function enqueueMessageGui($message, $title = '', $severity = FlashMessage::INFO)
     {
         /** @var FlashMessage $message */
-        $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', nl2br($message), $title, $severity);
+        $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', nl2br($message), $title,
+            $severity);
         $this->flashMessageService->getMessageQueueByIdentifier()
             ->enqueue($message);
     }
