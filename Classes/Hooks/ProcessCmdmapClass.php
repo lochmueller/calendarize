@@ -23,19 +23,19 @@ class ProcessCmdmapClass extends AbstractHook
      *
      * @param string $command
      * @param string $table
-     * @param int $id
+     * @param int $uid
      * @param $value
      * @param DataHandler $handler
      * @param $pasteUpdate
      * @param $pasteDatamap
      */
-    public function processCmdmap_postProcess($command, $table, $id, $value, $handler, $pasteUpdate, $pasteDatamap)
+    public function processCmdmap_postProcess($command, $table, $uid, $value, $handler, $pasteUpdate, $pasteDatamap)
     {
         $register = Register::getRegister();
         foreach ($register as $key => $configuration) {
             if ($configuration['tableName'] == $table) {
                 $indexer = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
-                $indexer->reindex($key, $table, $id);
+                $indexer->reindex($key, $table, $uid);
             }
         }
     }

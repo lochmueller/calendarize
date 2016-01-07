@@ -44,13 +44,13 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
      * Get items
      *
      * @param \DateTime      $date
-     * @param bool|\DateTime $originalDate
+     * @param null|\DateTime $originalDate
      *
      * @return array
      */
-    protected function getItems(\DateTime $date, $originalDate = false)
+    protected function getItems(\DateTime $date, \DateTime $originalDate = null)
     {
-        if (!$originalDate) {
+        if ($originalDate === null) {
             $originalDate = clone $date;
         }
         $days = [];

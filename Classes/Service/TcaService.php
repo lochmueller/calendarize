@@ -29,9 +29,9 @@ class TcaService extends AbstractService
     public function configurationTitle(&$params, $object)
     {
         $row = $params['row'];
-        $type = is_array($row['type']) ? $row['type'][0] : $row['type']; // The new FormEngine prepare the select as array
-        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $type) . '</b><br />';
-        switch ($type) {
+        $this->migrateFormEngineRow($row);
+        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . '</b><br />';
+        switch ($row['type']) {
             case Configuration::TYPE_TIME:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
                 break;
@@ -46,6 +46,20 @@ class TcaService extends AbstractService
     }
 
     /**
+     * The new FormEngine prepare the select as array
+     * Migrate it to the old behavior
+     *
+     * @param array $row
+     */
+    protected function migrateFormEngineRow(array &$row)
+    {
+        $migrateFields = ['type', 'frequency', 'groups'];
+        foreach ($migrateFields as $field) {
+            $row[$field] = is_array($row[$field]) ? $row[$field][0] : $row[$field];
+        }
+    }
+
+    /**
      * Get group title
      *
      * @param $row
@@ -55,8 +69,7 @@ class TcaService extends AbstractService
     protected function getConfigurationGroupTitle($row)
     {
         $title = '';
-        $groupData = is_array($row['groups']) ? $row['groups'][0] : $row['groups']; // The new FormEngine prepare the select as array
-        $groups = GeneralUtility::trimExplode(',', $groupData, true);
+        $groups = GeneralUtility::trimExplode(',', $row['groups'], true);
         foreach ($groups as $key => $id) {
             $row = BackendUtility::getRecord('tx_calendarize_domain_model_configurationgroup', $id);
             $groups[$key] = $row['title'] . ' (#' . $id . ')';
@@ -91,9 +104,7 @@ class TcaService extends AbstractService
             $title .= '<br />' . BackendUtility::time($row['start_time'], false);
             $title .= ' - ' . BackendUtility::time($row['end_time'], false);
         }
-
-        $frequency = is_array($row['frequency']) ? $row['frequency'][0] : $row['frequency']; // The new FormEngine prepare the select as array
-        if ($frequency && $frequency !== Configuration::FREQUENCY_NONE) {
+        if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
             $title .= '<br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
         }
         return $title;

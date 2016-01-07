@@ -76,7 +76,7 @@ class IndexPreparationService
         }
         $language = (int)$record[$languageField];
 
-        foreach ($neededItems as $key => $value) {
+        foreach (array_keys($neededItems) as $key) {
             $neededItems[$key]['sys_language_uid'] = $language;
         }
     }

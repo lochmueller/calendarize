@@ -24,7 +24,7 @@ class TcaInformation
     /**
      * Generate the information field
      *
-     * @param array  $configuration
+     * @param array $configuration
      * @param object $fObj
      *
      * @return string
@@ -32,17 +32,16 @@ class TcaInformation
     public function informationField($configuration, $fObj)
     {
         if (!isset($configuration['row']['uid'])) {
-            $content = TranslateUtility::get('save.first');
-        } else {
-            /** @var IndexerService $indexService */
-            $indexService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
-            $previewLimit = 10;
-            $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
-            $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
-            $content = sprintf(TranslateUtility::get('previewLabel'), $count,
-                    $previewLimit) . $this->getEventList($next);
+            return $this->wrapContent(TranslateUtility::get('save.first'));
         }
-        return '<div style="padding: 5px;">' . $content . '</div>';
+        /** @var IndexerService $indexService */
+        $indexService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
+        $previewLimit = 10;
+        $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
+        $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
+        $content = sprintf(TranslateUtility::get('previewLabel'), $count,
+                $previewLimit) . $this->getEventList($next);
+        return $this->wrapContent($content);
     }
 
     /**
@@ -56,16 +55,13 @@ class TcaInformation
     public function informationGroupField($configuration, $fObj)
     {
         $ids = GeneralUtility::intExplode(',', $configuration['row']['configurations'], true);
-
         if (!sizeof($ids)) {
-            $content = TranslateUtility::get('save.first');
-        } else {
-            /** @var TimeTableService $timeTableService */
-            $timeTableService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\TimeTableService');
-            $items = $timeTableService->getTimeTablesByConfigurationIds($ids);
-            $content = $this->getEventList($items);
+            return $this->wrapContent(TranslateUtility::get('save.first'));
         }
-        return '<div style="padding: 5px;">' . $content . '</div>';
+        /** @var TimeTableService $timeTableService */
+        $timeTableService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\TimeTableService');
+        $items = $timeTableService->getTimeTablesByConfigurationIds($ids);
+        return $this->wrapContent($this->getEventList($items));
     }
 
     /**
@@ -95,5 +91,16 @@ class TcaInformation
             $items[] = TranslateUtility::get('noEvents');
         }
         return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
+    }
+
+    /**
+     * Wrap the content
+     *
+     * @param string $content
+     * @return string
+     */
+    protected function wrapContent($content)
+    {
+        return '<div style="padding: 5px;">' . $content . '</div>';
     }
 }
