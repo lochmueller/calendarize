@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\UserFunction;
 
 use HDNET\Calendarize\Service\IndexerService;
+use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Service\TimeTableService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -82,7 +83,11 @@ class TcaInformation
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'], false);
-                $end = BackendUtility::time($event['end_time'], false);
+                if((int)$event['end_time'] === AbstractTimeTable::DAY_END) {
+                    $end = '"' . TranslateUtility::get('openEndTime') . '"';
+                } else {
+                    $end = BackendUtility::time($event['end_time'], false);
+                }
                 $entry .= ' (' . $start . ' - ' . $end . ')';
             }
             $items[] = $entry;

@@ -12,6 +12,9 @@
 		<trans-unit id="all_day">
 			<source>All day</source>
 		</trans-unit>
+		<trans-unit id="openEndTime">
+			<source>open end</source>
+		</trans-unit>
 		<trans-unit id="back">
 			<source>back</source>
 		</trans-unit>

@@ -13,6 +13,10 @@
 			<source>All day</source>
 			<target>ganztägig</target>
 		</trans-unit>
+		<trans-unit id="openEndTime" approved="yes">
+			<source>open end</source>
+			<target>offenes Ende</target>
+		</trans-unit>
 		<trans-unit id="back" approved="yes">
 			<source>back</source>
 			<target>zurück</target>
