@@ -56,14 +56,14 @@ page.includeJSFooterlibs.momentReplacement = typo3conf/ext/calendarize/Resources
 [globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentFullCalendarIo}]
 page {
 	includeCSS {
-		fullCalendar = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css
+		fullCalendar = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css
 		fullCalendar {
 			external = 1
 			disableCompression = 1
 			excludeFromConcatenation = 1
 			forceOnTop = 1
 		}
-		fullCalendarPrint = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.print.css
+		fullCalendarPrint = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.print.css
 		fullCalendarPrint {
 			external = 1
 			media = print
@@ -73,7 +73,7 @@ page {
 		}
 	}
 	includeJSFooter {
-		fullCalendar = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js
+		fullCalendar = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js
 		fullCalendar {
 			external = 1
 			disableCompression = 1
