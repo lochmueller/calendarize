@@ -346,8 +346,8 @@
 			<target>Startdatum</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
-			<source>Start time</source>
-			<target>Startzeit</target>
+			<source>Start time (00:00 means "open end")</source>
+			<target>Startzeit (00:00 bedeutet "offenes Ende")</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.till_date" approved="yes">
 			<source>Till date</source>
