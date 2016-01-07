@@ -1,10 +1,12 @@
-{namespace c=HDNET\Calendarize\ViewHelpers}
-<f:layout name="Default" />
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+	 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
-<f:section name="Main">
+	<f:layout name="Default" />
 
-	<table class="table table-bordered">
-		<thead>
+	<f:section name="Main">
+		<table class="table table-bordered">
+			<thead>
 			<tr>
 				<td colspan="4">
 
@@ -31,8 +33,8 @@
 					</f:if>
 				</td>
 			</tr>
-		</thead>
-		<tbody>
+			</thead>
+			<tbody>
 			<tr>
 				<c:loop.monthsInYear date="{date}" iteration="year">
 					<td>
@@ -41,6 +43,7 @@
 					{f:if(condition: '{year.calendar.break4} == 0', then: '</tr><tr>')}
 				</c:loop.monthsInYear>
 			</tr>
-		</tbody>
-	</table>
-</f:section>
+			</tbody>
+		</table>
+	</f:section>
+</div>

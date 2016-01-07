@@ -1,19 +1,24 @@
-{namespace c=HDNET\Calendarize\ViewHelpers}
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+	 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
-<f:layout name="Default" />
+	<f:layout name="Default" />
 
-<f:section name="Main">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<f:render partial="{index.configuration.partialIdentifier}/Detail" arguments="{index: index}" />
-			<div class="btn-group">
-				<c:link.list class="btn btn-default">
-					<span class="glyphicon glyphicon-arrow-left"></span>
-					<f:translate key="back" />
-				</c:link.list>
-				<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal
-				</f:link.action>
+	<f:section name="Main">
+		<f:section name="Main">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<f:render partial="{index.configuration.partialIdentifier}/Detail" arguments="{index: index}" />
+					<div class="btn-group">
+						<c:link.list class="btn btn-default">
+							<span class="glyphicon glyphicon-arrow-left"></span>
+							<f:translate key="back" />
+						</c:link.list>
+						<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal
+						</f:link.action>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-</f:section>
+		</f:section>
+	</f:section>
+</div>

@@ -1,49 +1,50 @@
-{namespace c=HDNET\Calendarize\ViewHelpers}
-<f:layout name="Default" />
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+	 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
-<f:section name="Main">
+	<f:layout name="Default" />
 
-	<f:if condition="{settings.weekPid}">
-		<div class="browser">
-			<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
+	<f:section name="Main">
+		<f:if condition="{settings.weekPid}">
+			<div class="browser">
+				<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
 
-			<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:firstDay)}">
-				<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
-					&lt;
-				</c:link.week>
-			</f:if>
-			<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
+				<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:firstDay)}">
+					<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
+						&lt;
+					</c:link.week>
+				</f:if>
+				<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
 
-			<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
+				<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
 
-			<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:firstDay)}">
-				<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
-					&gt;
-				</c:link.week>
-			</f:if>
-			<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
-		</div>
-	</f:if>
-
-	<h1>
-		<f:format.date format="Y">{firstDay}</f:format.date> week <f:format.date format="W">{firstDay}</f:format.date>
-	</h1>
-
-	<div class="row">
-		<f:for each="{0:2,1:2,2:2,3:2,4:2,5:1,6:1}" key="count" as="cols">
-			<div class="col-md-{cols}">
-				<c:dateTime.modify modification="+1 day">{firstDay}</c:dateTime.modify>
-				<f:format.date format="{settings.dateFormat}">{firstDay}</f:format.date>
-				<f:for each="{indices}" as="index">
-					<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay)}">
-						<li>
-							<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-						</li>
-					</f:if>
-				</f:for>
+				<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:firstDay)}">
+					<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
+						&gt;
+					</c:link.week>
+				</f:if>
+				<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
 			</div>
-		</f:for>
-	</div>
+		</f:if>
 
+		<h1>
+			<f:format.date format="Y">{firstDay}</f:format.date> week <f:format.date format="W">{firstDay}</f:format.date>
+		</h1>
 
-</f:section>
+		<div class="row">
+			<f:for each="{0:2,1:2,2:2,3:2,4:2,5:1,6:1}" key="count" as="cols">
+				<div class="col-md-{cols}">
+					<c:dateTime.modify modification="+1 day">{firstDay}</c:dateTime.modify>
+					<f:format.date format="{settings.dateFormat}">{firstDay}</f:format.date>
+					<f:for each="{indices}" as="index">
+						<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay)}">
+							<li>
+								<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+							</li>
+						</f:if>
+					</f:for>
+				</div>
+			</f:for>
+		</div>
+	</f:section>
+</div>
