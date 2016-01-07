@@ -23,11 +23,6 @@ class ExternalTimeTable extends AbstractTimeTable
 {
 
     /**
-     * Seconds of 23:59:59 that mark the day end in the ICS parser
-     */
-    const DAY_END = 86399;
-
-    /**
      * ICS reader service
      *
      * @var \HDNET\Calendarize\Service\IcsReaderService
