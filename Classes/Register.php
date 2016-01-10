@@ -94,7 +94,8 @@ class Register
             'SmartObjects',
             'FlexForms',
             'CommandController',
-            'StaticTyposcript'
+            'StaticTyposcript',
+            'ExtensionId'
         ];
     }
 
