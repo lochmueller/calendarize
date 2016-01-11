@@ -9,6 +9,10 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_webdav"><source><![CDATA[WebDav configuration]]></source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_webdav.event_storage"><source><![CDATA[Event Storage]]></source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_webdav.user_storage"><source><![CDATA[User Storage]]></source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_webdav.title"><source><![CDATA[Title]]></source></trans-unit>
 		<trans-unit id="all_day">
 			<source>All day</source>
 		</trans-unit>
