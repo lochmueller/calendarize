@@ -7,11 +7,12 @@
 
 namespace HDNET\Calendarize\Service\CalDav;
 
+use HDNET\Calendarize\Domain\Repository\CalDavRepository;
 use HDNET\Calendarize\Service\CalDav;
+use HDNET\Calendarize\Utility\HelperUtility;
 use Sabre\DAV\Auth\Backend\AbstractBasic;
 use Sabre\DAV\Exception;
-use Sabre\DAV\Exception\NotAuthenticated;
-use Sabre\DAV\Server;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -39,12 +40,16 @@ class AuthBackendTypo3 extends AbstractBasic
      */
     protected function validateUserPass($username, $password)
     {
+        $configuration = $this->findMatchingCalDavConfiguration($username);
+        if ($configuration === false) {
+            return false;
+        }
+
         $_GET['logintype'] = 'login';
         $_GET['user'] = $username;
         $_GET['pass'] = $password;
         $_GET['challenge'] = '';
-        // @todo
-        $_GET['pid'] = 118;
+        $_GET['pid'] = $configuration['user_storage'];
         $GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel'] = 'normal';
 
         /** @var CalDav $calDav */
@@ -57,8 +62,7 @@ class AuthBackendTypo3 extends AbstractBasic
             $user = array(
                 'uri'         => 'principals/' . $username,
                 'digestHash'  => md5($username . ':' . 'SabreDAV' . ':' . $username),
-                // @todo
-                'calendar_id' => 1
+                'calendar_id' => $configuration['uid']
             );
 
             if ($feUserObj->user['email']) {
@@ -72,6 +76,22 @@ class AuthBackendTypo3 extends AbstractBasic
     }
 
     /**
+     * @param $username
+     *
+     * @return bool|\HDNET\Calendarize\Domain\Model\CalDav
+     */
+    protected function findMatchingCalDavConfiguration($username)
+    {
+        $userRecord = $this->getUserRow($username);
+        if (!isset($userRecord['pid'])) {
+            return false;
+        }
+        /** @var CalDavRepository $repository */
+        $repository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\CalDavRepository');
+        return $repository->findByUserStorage($userRecord['pid']);
+    }
+
+    /**
      * Returns a users' information
      *
      * @param string $realm
@@ -81,61 +101,40 @@ class AuthBackendTypo3 extends AbstractBasic
      */
     public function getUserInfo($realm, $username)
     {
-        $stmt = $this->pdo->prepare('SELECT username, password, email FROM fe_users WHERE username = ?');
-        $stmt->execute(array($username));
-        $result = $stmt->fetchAll();
-
-        if (!count($result)) {
+        $configuration = $this->findMatchingCalDavConfiguration($username);
+        if ($configuration === false) {
+            return false;
+        }
+        $userRow = $this->getUserRow($username);
+        if (!isset($userRecord['pid'])) {
             return false;
         }
         $user = array(
-            'uri'         => 'principals/' . $result[0]['username'],
-            'digestHash'  => md5($result[0]['username'] . ':' . 'SabreDAV' . ':' . $result[0]['password']),
-            'calendar_id' => $result[0]['tx_cal_calendar']
+            'uri'         => 'principals/' . $userRow['username'],
+            'digestHash'  => md5($userRow['username'] . ':' . 'SabreDAV' . ':' . $userRow['password']),
+            'calendar_id' => $configuration['uid']
         );
         $this->username = $username;
-        if ($result[0]['email']) {
-            $user['{http://sabredav.org/ns}email-address'] = $result[0]['email'];
+        if ($userRow['email']) {
+            $user['{http://sabredav.org/ns}email-address'] = $userRow['email'];
         }
         return $user;
 
     }
 
     /**
-     * Authenticates the user based on the current request.
+     * Get the user record
      *
-     * If authentication is succesful, true must be returned.
-     * If authentication fails, an exception must be thrown.
+     * @param string $userName
      *
-     * @param Server $server
-     * @param        $realm
-     *
-     * @return bool
-     * @throws Exception
-     * @throws NotAuthenticated
+     * @return array|FALSE|NULL
      */
-    public function authenticate(Server $server, $realm)
+    protected function getUserRow($userName)
     {
-        $auth = new \Sabre_HTTP_BasicAuth();
-        $auth->setHTTPRequest($server->httpRequest);
-        $auth->setHTTPResponse($server->httpResponse);
-        $auth->setRealm($realm);
-        $userpass = $auth->getUserPass();
-        if (!$userpass) {
-            $auth->requireLogin();
-            throw new NotAuthenticated('No basic authentication headers were found');
-        }
-
-        // Authenticates the user
-        if (!($userData = $this->validateUserPass($userpass[0], $userpass[1]))) {
-            $auth->requireLogin();
-            throw new NotAuthenticated('Username or password does not match');
-        }
-        if (!isset($userData['uri'])) {
-            throw new Exception('The returned array from validateUserPass must contain at a uri element');
-        }
-        $this->currentUser = $userpass[0];
-        return true;
+        $dbConnection = HelperUtility::getDatabaseConnection();
+        $where = 'username = ' . $dbConnection->fullQuoteStr($userName,
+                'fe_users') . BackendUtility::deleteClause($this->tableName) . BackendUtility::BEenableFields($this->tableName);
+        return $dbConnection->exec_SELECTgetSingleRow('*', 'fe_users', $where);
     }
 
 }

@@ -1,22 +1,20 @@
 <?php
 /**
- * @todo    General file information
+ * PrincipalBackendTypo3
  *
  * @author  Tim Lochmüller
  */
 
-/**
- * @todo General class information
- *
- */
-
 namespace HDNET\Calendarize\Service\CalDav;
-
 
 use Sabre\DAV\Exception;
 use Sabre\DAVACL\PrincipalBackend\BackendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
+/**
+ * PrincipalBackendTypo3
+ */
 class PrincipalBackendTypo3 implements BackendInterface
 {
 
@@ -76,23 +74,18 @@ class PrincipalBackendTypo3 implements BackendInterface
     public function getPrincipalsByPrefix($prefixPath)
     {
         $result = $this->pdo->query('SELECT username, email, name FROM `' . $this->tableName . '`');
-
         $principals = array();
-
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
-
             // Checking if the principal is in the prefix
             list($rowPrefix) = \Sabre\Uri\split('principals/' . $row['username']);
             if ($rowPrefix !== $prefixPath) {
                 continue;
             }
-
             $principals[] = array(
                 'uri'                                   => 'principals/' . $row['username'],
                 '{DAV:}displayname'                     => $row['name'] ? $row['name'] : basename('principals/' . $row['username']),
                 '{http://sabredav.org/ns}email-address' => $row['email'],
             );
-
         }
 
         return $principals;
@@ -115,10 +108,7 @@ class PrincipalBackendTypo3 implements BackendInterface
         $stmt = $this->pdo->prepare('SELECT uid, username, email, name FROM `' . $this->tableName . '` WHERE username = ?');
         $stmt->execute(array($name));
 
-        $users = array();
-
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-
         if (!$row) {
             return;
         }
@@ -128,6 +118,7 @@ class PrincipalBackendTypo3 implements BackendInterface
             '{DAV:}displayname'                     => $row['name'] ? $row['name'] : basename($row['username']),
             '{http://sabredav.org/ns}email-address' => $row['email'],
         );
+
         return $return;
 
     }
@@ -139,6 +130,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function getGroupMemberSet($principal)
     {
+        DebuggerUtility::var_dump('getGroupMemberSet');
         $principal = $this->getPrincipalByPath($principal);
         if (!$principal) {
             throw new Exception('Principal not found');
@@ -160,6 +152,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function getGroupMembership($principal)
     {
+        DebuggerUtility::var_dump('getGroupMembership');
         $principal = $this->getPrincipalByPath($principal);
         if (!$principal) {
             throw new Exception('Principal not found');
@@ -181,8 +174,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function setGroupMemberSet($principal, array $members)
     {
-        //TODO: implement this
-        return;
+        DebuggerUtility::var_dump('setGroupMemberSet');
         // Grabbing the list of principal id's.
         $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . str_repeat(', ? ',
                 count($members)) . ');');
@@ -234,6 +226,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     function updatePrincipal($path, \Sabre\DAV\PropPatch $propPatch)
     {
+        DebuggerUtility::var_dump('updatePrincipal');
         // TODO: Implement updatePrincipal() method.
     }
 
@@ -269,6 +262,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     function searchPrincipals($prefixPath, array $searchProperties, $test = 'allof')
     {
+        DebuggerUtility::var_dump('searchPrincipals');
         // TODO: Implement searchPrincipals() method.
     }
 
@@ -292,6 +286,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     function findByUri($uri, $principalPrefix)
     {
+        DebuggerUtility::var_dump('findByUri');
         // TODO: Implement findByUri() method.
     }
 }
