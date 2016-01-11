@@ -1,16 +1,17 @@
 <?php
 /**
- * WebDav configuration
+ * CalDav configuration
  */
 
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * WebDav configuration
+ * CalDav configuration
+ *
  * @db
  * @smartExclude Workspaces,Languages
  */
-class WebDav extends AbstractModel
+class CalDav extends AbstractModel
 {
 
     /**

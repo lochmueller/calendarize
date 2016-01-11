@@ -1,6 +1,6 @@
 <?php
 /**
- * WebDav repository
+ * CalDav repository
  *
  * @author  Tim Lochmüller
  */
@@ -8,9 +8,9 @@
 namespace HDNET\Calendarize\Domain\Repository;
 
 /**
- * WebDav repository
+ * CalDav repository
  */
-class WebDavRepository extends AbstractRepository
+class CalDavRepository extends AbstractRepository
 {
 
 }
