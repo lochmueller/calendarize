@@ -1,10 +1,6 @@
 <?php
 
-/**
- * Base TCA generation for the model HDNET\\Calendarize\\Domain\\Model\\WebDav
- */
-
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\WebDav');
+$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\CalDav');
 
 $custom = [
     'ctrl'    => [
