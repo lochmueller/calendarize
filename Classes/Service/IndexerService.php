@@ -132,7 +132,8 @@ class IndexerService extends AbstractService
             'end_date',
             'start_time',
             'end_time',
-            'all_day'
+            'all_day',
+            'hidden'
         ];
         $currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperties), self::TABLE_NAME,
             'foreign_table=' . $databaseConnection->fullQuoteStr($tableName,
