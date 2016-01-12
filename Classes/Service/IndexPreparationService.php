@@ -126,7 +126,7 @@ class IndexPreparationService
         foreach ($record as $key => $value) {
             if ($value instanceof \DateTime) {
                 $record[$key] = $value->getTimestamp();
-            } elseif (is_bool($value)) {
+            } elseif (is_bool($value) || $key === 'start_time' || $key === 'end_time') {
                 $record[$key] = (int)$value;
             } elseif ($value === null) {
                 $record[$key] = '';

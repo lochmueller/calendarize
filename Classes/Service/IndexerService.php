@@ -12,6 +12,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Index the given events
@@ -39,7 +40,8 @@ class IndexerService extends AbstractService
         foreach (Register::getRegister() as $key => $configuration) {
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
-            $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+            $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName,
+                '1=1' . BackendUtility::deleteClause($tableName));
             foreach ($rows as $row) {
                 $this->updateIndex($key, $configuration['tableName'], $row['uid']);
             }
@@ -51,7 +53,7 @@ class IndexerService extends AbstractService
      *
      * @param string $configurationKey
      * @param string $tableName
-     * @param int    $uid
+     * @param int $uid
      *
      * @return void
      */
@@ -74,15 +76,16 @@ class IndexerService extends AbstractService
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         return $databaseConnection->exec_SELECTcountRows('*', self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table,
+                self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
     }
 
     /**
      * Get the next events
      *
      * @param string $table
-     * @param int    $uid
-     * @param int    $limit
+     * @param int $uid
+     * @param int $limit
      *
      * @return array|NULL
      */
@@ -101,7 +104,7 @@ class IndexerService extends AbstractService
      *
      * @param string $configurationKey
      * @param string $tableName
-     * @param int    $uid
+     * @param int $uid
      *
      * @return void
      */
@@ -119,28 +122,20 @@ class IndexerService extends AbstractService
     /**
      * Insert and/or update the needed index records
      *
-     * @param array  $neededItems
+     * @param array $neededItems
      * @param string $tableName
-     * @param int    $uid
+     * @param int $uid
      */
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $checkProperties = [
-            'pid',
-            'start_date',
-            'end_date',
-            'start_time',
-            'end_time',
-            'all_day'
-        ];
-        $currentItems = $databaseConnection->exec_SELECTgetRows('uid,' . implode(',', $checkProperties), self::TABLE_NAME,
+        $currentItems = $databaseConnection->exec_SELECTgetRows('*', self::TABLE_NAME,
             'foreign_table=' . $databaseConnection->fullQuoteStr($tableName,
                 IndexerService::TABLE_NAME) . ' AND foreign_uid=' . $uid);
         foreach ($neededItems as $neededKey => $neededItem) {
             $remove = false;
             foreach ($currentItems as $currentKey => $currentItem) {
-                if ($this->isEqualArray($neededItem, $currentItem, $checkProperties)) {
+                if ($this->isEqualArray($neededItem, $currentItem)) {
                     $remove = true;
                     unset($neededItems[$neededKey]);
                     unset($currentItems[$currentKey]);
@@ -164,18 +159,24 @@ class IndexerService extends AbstractService
     /**
      * Check if the properties of the given arrays are equals
      *
-     * @param array $array1
-     * @param array $array2
-     * @param array $checkProperties
+     * @param array $neededItem
+     * @param array $currentItem
      *
      * @return bool
      */
-    protected function isEqualArray(array $array1, array $array2, array $checkProperties)
+    protected function isEqualArray(array $neededItem, array $currentItem)
     {
-        foreach ($checkProperties as $check) {
-            if ((int)$array1[$check] !== (int)$array2[$check]) {
-                return false;
+        foreach ($neededItem as $key => $value) {
+            if (MathUtility::canBeInterpretedAsInteger($value)) {
+                if ((int)$value !== (int)$currentItem[$key]) {
+                    return false;
+                }
+            } else {
+                if ((string)$value !== (string)$currentItem[$key]) {
+                    return false;
+                }
             }
+
         }
         return true;
     }
@@ -189,7 +190,8 @@ class IndexerService extends AbstractService
     protected function removeInvalidRecordIndex($tableName)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+        $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName,
+            '1=1' . BackendUtility::deleteClause($tableName));
         $ids = [];
         foreach ($rows as $row) {
             $ids[] = $row['uid'];
