@@ -8,8 +8,8 @@
  */
 
 $EM_CONF[$_EXTKEY] = array(
-    'title'            => 'Calendarize',
-    'description'      => 'Create a structure for timely controlled tables and one plugin for the different output of calendar views. The extension is shipped with one default event table, but the aim of the extension is to "calendarize" every table/model. It is completely independent and configurable! Use your own models as event items in this calender. We need feedback about the concept! Development on https://github.com/lochmueller/calendarize',
+    'title'            => 'Calendarize - Event Management',
+    'description'      => 'Create a structure for timely controlled tables (e.g. events) and one plugin for the different output of calendar views (list, detail, month, year, day, week...). The extension is shipped with one default event table, but you can also "calendarize" your own table/model. It is completely independent and configurable! Use your own models as event items in this calender. Development on https://github.com/lochmueller/calendarize',
     'category'         => 'fe',
     'version'          => '2.0.1',
     'state'            => 'stable',
