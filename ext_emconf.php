@@ -23,4 +23,10 @@ $EM_CONF[$_EXTKEY] = array(
             'autoloader' => '1.11.2-0.0.0',
         ),
     ),
+    'autoload' => [
+        'psr-4' => [
+            'HDNET\\Calendarize\\' => 'Classes/',
+            'JMBTechnologyLimited\\ICalDissect\\' => 'Resources/Private/Php/ICalDissect/src/JMBTechnologyLimited/ICalDissect/',
+        ],
+    ],
 );
