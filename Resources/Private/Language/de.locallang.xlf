@@ -51,7 +51,7 @@
 		</trans-unit>
 		<trans-unit id="configuration.day.sunday" approved="yes">
 			<source>Sunday</source>
-			<target>Sontag</target>
+			<target>Sonntag</target>
 		</trans-unit>
 		<trans-unit id="configuration.day.thursday" approved="yes">
 			<source>Thursday</source>
