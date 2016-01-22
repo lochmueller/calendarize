@@ -35,6 +35,7 @@ class Register
     static protected function createTcaConfiguration($configuration)
     {
         $tableName = $configuration['tableName'];
+        $typeList = isset($configuration['tcaTypeList']) ? trim($configuration['tcaTypeList']) : '';
         $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = [
             'label'  => 'Calendarize',
             'l10n_mode' => 'exclude',
@@ -56,7 +57,7 @@ class Register
                 'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
             ],
         ];
-        ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info');
+        ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);
     }
 
     /**
@@ -125,6 +126,7 @@ class Register
             'partialIdentifier' => 'Event',
             'tableName'         => 'tx_calendarize_domain_model_event',
             'required'          => true,
+            // 'tcaTypeList'       => '', optional - only for special type elements
         ];
         return $configuration;
     }
