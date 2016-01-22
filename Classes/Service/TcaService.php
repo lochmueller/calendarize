@@ -91,8 +91,8 @@ class TcaService extends AbstractService
     {
         $title = '';
         if ($row['start_date']) {
-            $dateStart = date('d.m.Y', $row['start_date']);
-            $dateEnd = date('d.m.Y', $row['end_date'] ?: $row['start_date']);
+            $dateStart = strftime('%a %d.%m.%G', $row['start_date']);
+            $dateEnd = strftime('%a %d.%m.%G', $row['end_date'] ?: $row['start_date']);
             $title .= $dateStart;
             if ($dateStart != $dateEnd) {
                 $title .= ' - ' . $dateEnd;

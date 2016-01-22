@@ -318,8 +318,8 @@
 			<target>Enddatum  (optional)</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
-			<source>End time</source>
-			<target>Endzeit</target>
+			<source>End time (00:00 means "open end")</source>
+			<target>Endzeit (00:00 bedeutet "offenes Ende")</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url" approved="yes">
 			<source>External ICS URL</source>
@@ -346,8 +346,8 @@
 			<target>Startdatum</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
-			<source>Start time (00:00 means "open end")</source>
-			<target>Startzeit (00:00 bedeutet "offenes Ende")</target>
+			<source>Start time</source>
+			<target>Startzeit</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.till_date" approved="yes">
 			<source>Till date</source>

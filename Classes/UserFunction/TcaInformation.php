@@ -76,10 +76,10 @@ class TcaInformation
     {
         $items = [];
         foreach ($events as $event) {
-            $startDate = ($event['start_date'] instanceof \DateTime) ? $event['start_date']->format("d.m.Y") : date('d.m.Y',
-                $event['start_date']);
-            $endDate = ($event['end_date'] instanceof \DateTime) ? $event['end_date']->format("d.m.Y") : date('d.m.Y',
-                $event['end_date']);
+            $startDateStamp = $event['start_date'] instanceof \DateTime ? $event['start_date']->getTimestamp() : $event['start_date'];
+            $startDate = strftime('%a %d.%m.%G', $startDateStamp);
+            $endDateStamp = $event['end_date'] instanceof \DateTime ? $event['end_date']->getTimestamp() : $event['end_date'];
+            $endDate = strftime('%a %d.%m.%G', $endDateStamp);
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'], false);
