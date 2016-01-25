@@ -11,6 +11,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
@@ -55,6 +56,13 @@ class IndexRepository extends AbstractRepository
     protected $contentRecord = [];
 
     /**
+     * Override page ids
+     *
+     * @var array
+     */
+    protected $overridePageIds = [];
+
+    /**
      * Set the current content record
      *
      * @param array $contentRecord
@@ -62,6 +70,16 @@ class IndexRepository extends AbstractRepository
     public function setContentRecord($contentRecord)
     {
         $this->contentRecord = $contentRecord;
+    }
+
+    /**
+     * Override page IDs
+     *
+     * @param array $overridePageIds
+     */
+    public function setOverridePageIds($overridePageIds)
+    {
+        $this->overridePageIds = $overridePageIds;
     }
 
     /**
@@ -271,6 +289,32 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
+     * storage page selection
+     *
+     * @todo please check core API functions again
+     * @return array
+     */
+    protected function getStoragePageIds()
+    {
+        if (!empty($this->overridePageIds)) {
+            return $this->overridePageIds;
+        }
+
+        /** @var ConfigurationManagerInterface $configuratioManager */
+        $configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+        $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
+            $frameworkConfig['persistence']['storagePid']) : [];
+        if (!empty($storagePages)) {
+            return $storagePages;
+        }
+        if ($frameworkConfig instanceof BackendConfigurationManager) {
+            return GeneralUtility::trimExplode(',', $frameworkConfig->getDefaultBackendStoragePid(), true);
+        }
+        return $storagePages;
+    }
+
+    /**
      * Get the default constraint for the queries
      *
      * @param QueryInterface $query
@@ -281,14 +325,8 @@ class IndexRepository extends AbstractRepository
     {
         $constraints = [];
         $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
-
-        // storage page selection
-        // @todo please check core API functions again
-        /** @var ConfigurationManagerInterface $configuratioManager */
-        $configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
-        $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
-            $frameworkConfig['persistence']['storagePid']) : [];
+        
+        $storagePages = $this->getStoragePageIds();
         if (!empty($storagePages)) {
             $constraints[] = $query->in('pid', $storagePages);
         }
