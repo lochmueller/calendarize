@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Event search service
@@ -65,11 +66,13 @@ class EventSearch
     public function setIdsByGeneral(array $indexIds, array $indexTypes, array $contentRecord)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $rows = $databaseConnection->exec_SELECTgetRows('uid_local', 'sys_category_record_mm',
-            'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']);
         $categoryIds = [];
-        foreach ($rows as $row) {
-            $categoryIds[] = (int)$row['uid_local'];
+        if(isset($contentRecord['uid']) && MathUtility::canBeInterpretedAsInteger($contentRecord['uid'])) {
+            $rows = $databaseConnection->exec_SELECTgetRows('uid_local', 'sys_category_record_mm',
+                'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']);
+            foreach ($rows as $row) {
+                $categoryIds[] = (int)$row['uid_local'];
+            }
         }
 
         if (empty($categoryIds)) {
