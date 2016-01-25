@@ -96,7 +96,8 @@ class Register
             'FlexForms',
             'CommandController',
             'StaticTyposcript',
-            'ExtensionId'
+            'ExtensionId',
+            'ContextSensitiveHelps'
         ];
     }
 

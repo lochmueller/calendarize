@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language file is generate by the Autoloader extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			
+			<label index="type.alttitle"></label>
+			<label index="type.description"></label>
+			
+			<label index="start_date.alttitle"></label>
+			<label index="start_date.description"></label>
+			
+			<label index="end_date.alttitle"></label>
+			<label index="end_date.description"></label>
+			
+			<label index="start_time.alttitle"></label>
+			<label index="start_time.description"></label>
+			
+			<label index="end_time.alttitle"></label>
+			<label index="end_time.description"></label>
+			
+			<label index="all_day.alttitle"></label>
+			<label index="all_day.description"></label>
+			
+			<label index="external_ics_url.alttitle"></label>
+			<label index="external_ics_url.description"></label>
+			
+			<label index="groups.alttitle"></label>
+			<label index="groups.description"></label>
+			
+			<label index="frequency.alttitle">Frequency</label>
+			<label index="frequency.description">Please take care that the first event of the frequency the manually entered event!</label>
+			
+			<label index="till_date.alttitle"></label>
+			<label index="till_date.description"></label>
+			
+			<label index="counter_amount.alttitle"></label>
+			<label index="counter_amount.description"></label>
+			
+			<label index="counter_interval.alttitle"></label>
+			<label index="counter_interval.description"></label>
+			
+			<label index="recurrence.alttitle"></label>
+			<label index="recurrence.description"></label>
+			
+			<label index="day.alttitle"></label>
+			<label index="day.description"></label>
+			
+		</languageKey>
+		<languageKey index="xx" type="array">
+			<!-- more languages -->
+		</languageKey>
+	</data>
+</T3locallang>

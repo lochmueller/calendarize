@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language file is generate by the Autoloader extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			
+			<label index="title.alttitle"></label>
+			<label index="title.description"></label>
+			
+			<label index="user_storage.alttitle"></label>
+			<label index="user_storage.description"></label>
+			
+			<label index="event_storage.alttitle"></label>
+			<label index="event_storage.description"></label>
+			
+		</languageKey>
+		<languageKey index="xx" type="array">
+			<!-- more languages -->
+		</languageKey>
+	</data>
+</T3locallang>

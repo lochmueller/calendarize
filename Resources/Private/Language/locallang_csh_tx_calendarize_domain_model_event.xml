@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language file is generate by the Autoloader extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			
+			<label index="title.alttitle"></label>
+			<label index="title.description"></label>
+			
+			<label index="description.alttitle"></label>
+			<label index="description.description"></label>
+			
+			<label index="images.alttitle"></label>
+			<label index="images.description"></label>
+			
+			<label index="downloads.alttitle"></label>
+			<label index="downloads.description"></label>
+			
+			<label index="import_id.alttitle"></label>
+			<label index="import_id.description"></label>
+			
+		</languageKey>
+		<languageKey index="xx" type="array">
+			<!-- more languages -->
+		</languageKey>
+	</data>
+</T3locallang>
