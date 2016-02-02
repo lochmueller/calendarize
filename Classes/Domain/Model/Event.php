@@ -68,6 +68,13 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface
     protected $calendarize;
 
     /**
+     * Categories
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     */
+    protected $categories;
+
+    /**
      * Build up the object
      */
     function __construct()
@@ -245,5 +252,44 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface
     public function getRealUrlAliasBase()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Adds a Category
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @return void
+     */
+    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category) {
+        $this->categories->attach($category);
+    }
+
+    /**
+     * Removes a Category
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove The Category to be removed
+     * @return void
+     */
+    public function removeCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove) {
+        $this->categories->detach($categoryToRemove);
+    }
+
+    /**
+     * Returns the categories
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     */
+    public function getCategories() {
+        return $this->categories;
+    }
+
+    /**
+     * Sets the categories
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @return void
+     */
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories) {
+        $this->categories = $categories;
     }
 }
