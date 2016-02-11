@@ -12,7 +12,9 @@ use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\RealUrlInterface;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
@@ -120,14 +122,25 @@ class RealurlAlias
     protected function generateRealUrl($base, Index $index)
     {
         $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
-        /** @var \tx_realurl_advanced $realUrl */
-        $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');
-        $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['pagePath'];
-        if (is_array($configuration)) {
-            ObjectAccess::setProperty($realUrl, 'conf', $configuration, true);
+        $title = $base . '-' . $index->getStartDateComplete()
+                ->format($datePart);
+
+        $realUrlVersion = VersionNumberUtility::convertVersionNumberToInteger(ExtensionManagementUtility::getExtensionVersion('realurl'));
+        if ($realUrlVersion >= 2000000) {
+            $class = 'DmitryDulepov\\Realurl\\Encoder\\UrlEncoder';
+            /** @var \DmitryDulepov\Realurl\Encoder\UrlEncoder $realUrl */
+            $realUrl = GeneralUtility::makeInstance($class);
+            $processedTitle = $realUrl->cleanUpAlias([], $title);
+        } else {
+            /** @var \tx_realurl_advanced $realUrl */
+            $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');
+            $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['pagePath'];
+            if (is_array($configuration)) {
+                ObjectAccess::setProperty($realUrl, 'conf', $configuration, true);
+            }
+            $processedTitle = $realUrl->encodeTitle($title);
         }
 
-        return $realUrl->encodeTitle($base . '-' . $index->getStartDateComplete()
-                ->format($datePart));
+        return $processedTitle;
     }
 }
