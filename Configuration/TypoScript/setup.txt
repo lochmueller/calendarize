@@ -23,12 +23,15 @@ plugin.tx_calendarize {
 
 	view {
 		templateRootPaths {
+			50 = EXT:calendarize/Resources/Private/Templates/
 			100 = {$plugin.tx_calendarize.view.templateRootPath}
 		}
 		partialRootPaths {
+			50 = EXT:calendarize/Resources/Private/Partials/
 			100 = {$plugin.tx_calendarize.view.partialRootPath}
 		}
 		layoutRootPaths {
+			50 = EXT:calendarize/Resources/Private/Layouts/
 			100 = {$plugin.tx_calendarize.view.layoutRootPath}
 		}
 		widget {
