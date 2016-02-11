@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Features\FeedInterface;
+use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\RealUrlInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -16,7 +17,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @db
  */
-class Event extends AbstractModel implements FeedInterface, RealUrlInterface
+class Event extends AbstractModel implements FeedInterface, RealUrlInterface, KeSearchIndexInterface
 {
 
     /**
@@ -258,9 +259,11 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface
      * Adds a Category
      *
      * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     *
      * @return void
      */
-    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category) {
+    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category)
+    {
         $this->categories->attach($category);
     }
 
@@ -268,9 +271,11 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface
      * Removes a Category
      *
      * @param \TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove The Category to be removed
+     *
      * @return void
      */
-    public function removeCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove) {
+    public function removeCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove)
+    {
         $this->categories->detach($categoryToRemove);
     }
 
@@ -279,7 +284,8 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         return $this->categories;
     }
 
@@ -287,9 +293,48 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface
      * Sets the categories
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     *
      * @return void
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories) {
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    {
         $this->categories = $categories;
+    }
+
+    /**
+     * Get the title
+     *
+     * @param Index $index
+     *
+     * @return string
+     */
+    public function getKeSearchTitle(Index $index)
+    {
+        return $this->getTitle() . ' - ' . $index->getStartDate()
+            ->format('d.m.Y');
+    }
+
+    /**
+     * Get the abstract
+     *
+     * @param Index $index
+     *
+     * @return string
+     */
+    public function getKeSearchAbstract(Index $index)
+    {
+        return $this->getDescription();
+    }
+
+    /**
+     * Get the content
+     *
+     * @param Index $index
+     *
+     * @return string
+     */
+    public function getKeSearchContent(Index $index)
+    {
+        return $this->getDescription();
     }
 }

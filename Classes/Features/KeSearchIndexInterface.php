@@ -19,7 +19,7 @@ interface KeSearchIndexInterface
      * @param Index $index
      * @return string
      */
-    public function getKeSearchTitle($index);
+    public function getKeSearchTitle(Index $index);
 
     /**
      * Get the abstract
@@ -27,7 +27,7 @@ interface KeSearchIndexInterface
      * @param Index $index
      * @return string
      */
-    public function getKeSearchAbstract($index);
+    public function getKeSearchAbstract(Index $index);
 
     /**
      * Get the content
@@ -35,5 +35,5 @@ interface KeSearchIndexInterface
      * @param Index $index
      * @return string
      */
-    public function getKeSearchContent($index);
+    public function getKeSearchContent(Index $index);
 }
