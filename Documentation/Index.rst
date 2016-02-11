@@ -23,4 +23,6 @@ Calendarize - Flexible TYPO3 Calendar
 .. toctree::
 
    Introduction/Index
+   AdministratorManual/Index
+   DeveloperManual/Index
    ChangeLog/Index

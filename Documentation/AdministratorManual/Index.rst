@@ -1,0 +1,6 @@
+For administrators
+==================
+
+.. toctree::
+
+	Configuration
