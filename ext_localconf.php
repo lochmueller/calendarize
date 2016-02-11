@@ -23,3 +23,5 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar',
     ['Calendar' => 'list,latest,year,month,week,day,detail,search,result'], ['Calendar' => 'search,result']);
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'CalendarBooking', ['Booking' => 'form,send'],
+    ['Booking' => 'form,send']);

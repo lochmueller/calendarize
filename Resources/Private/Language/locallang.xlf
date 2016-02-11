@@ -124,6 +124,9 @@
 		<trans-unit id="dayPid">
 			<source>Day PID</source>
 		</trans-unit>
+		<trans-unit id="bookingPid">
+			<source>Booking PID</source>
+		</trans-unit>
 		<trans-unit id="detailPid">
 			<source>Detail PID</source>
 		</trans-unit>
@@ -204,6 +207,9 @@
 		</trans-unit>
 		<trans-unit id="pluginName">
 			<source>Calendar</source>
+		</trans-unit>
+		<trans-unit id="pluginNameBooking">
+			<source>Calendar Booking</source>
 		</trans-unit>
 		<trans-unit id="previewLabel">
 			<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are (ignore enable columns)...</source>

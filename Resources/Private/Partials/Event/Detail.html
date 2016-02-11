@@ -1,3 +1,5 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
 <f:alias map="{event: index.originalObject}">
 	<h1>
 		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
@@ -24,5 +26,11 @@
 				<a href="{download.originalResource.publicUrl}">{download.originalResource.publicUrl}</a>
 			</f:for>
 		</div>
+	</f:if>
+
+	<f:if condition="{settings.bookingPid}">
+		<c:link.booking index="{index}" class="btn btn-default btn-primary">
+			Booking <span class="glyphicon glyphicon-arrow-right"></span>
+		</c:link.booking>
 	</f:if>
 </f:alias>
