@@ -8,7 +8,6 @@
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * BookingController
@@ -23,7 +22,7 @@ class BookingController extends AbstractController
      */
     public function formAction(Index $index = null)
     {
-        DebuggerUtility::var_dump($index);
+        $this->view->assign('index', $index);
     }
 
     /**
