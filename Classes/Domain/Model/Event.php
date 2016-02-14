@@ -38,6 +38,22 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     protected $description;
 
     /**
+     * Location
+     *
+     * @var string
+     * @db
+     */
+    protected $location;
+
+    /**
+     * Import ID if the item is based on an ICS structure
+     *
+     * @var string
+     * @db
+     */
+    protected $importId;
+
+    /**
      * Images
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
@@ -52,14 +68,6 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
      * @db
      */
     protected $downloads;
-
-    /**
-     * Import ID if the item is based on an ICS structure
-     *
-     * @var string
-     * @db
-     */
-    protected $importId;
 
     /**
      * Relation field. It is just used by the importer of the default events. You do not need this field, if you don't use the default Event
@@ -337,4 +345,21 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     {
         return $this->getDescription();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param mixed $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
 }

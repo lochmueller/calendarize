@@ -9,6 +9,9 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="files"><source><![CDATA[Files]]></source></trans-unit>
+			<trans-unit id="dateOptions"><source><![CDATA[Date options]]></source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.location"><source><![CDATA[Location]]></source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_caldav"><source><![CDATA[CalDav configuration]]></source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_caldav.event_storage"><source><![CDATA[Event Storage]]></source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_caldav.user_storage"><source><![CDATA[User Storage]]></source></trans-unit>

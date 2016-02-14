@@ -9,6 +9,18 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+		<trans-unit id="files" approved="yes">
+			<source>Files</source>
+			<target>Dateien</target>
+		</trans-unit>
+		<trans-unit id="dateOptions" approved="yes">
+			<source>Date options</source>
+			<target>Datum Optionen</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_event.location" approved="yes">
+			<source>Location</source>
+			<target>Ort</target>
+		</trans-unit>
 		<trans-unit id="all_day" approved="yes">
 			<source>All day</source>
 			<target>ganztägig</target>

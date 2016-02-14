@@ -23,4 +23,19 @@ $custom = array(
     ),
 );
 
-return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+$tca = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+
+$search = [
+    'images,downloads,',
+    'language,--div--',
+    'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended'
+];
+$replace = [
+    ',',
+    'language,--div--;' . \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage('files',
+        'calendarize') . ',images,downloads,--div--',
+    \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage('dateOptions', 'calendarize')
+];
+
+$tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);
+return $tca;
