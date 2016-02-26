@@ -6,25 +6,27 @@
 
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Event');
 
-$custom = array(
-    'ctrl' => array(
+$custom = [
+    'ctrl' => [
         'hideTable' => (boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent'),
         'searchFields' => 'uid,title,description',
         'thumbnail' => 'images',
-    ),
-    'columns' => array(
-        'title' => array(
+    ],
+    'columns' => [
+        'title' => [
             'type' => 'text',
             'eval' => 'required'
-        ),
-        'abstract' => array(
-            'config' => ['type' => 'text'],
-        ),
-        'import_id' => array(
+        ],
+        'abstract' => [
+            'config' => [
+                'type' => 'text'
+            ],
+        ],
+        'import_id' => [
             'readOnly' => true,
-        ),
-    ),
-);
+        ],
+    ],
+];
 
 $tca = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
 
