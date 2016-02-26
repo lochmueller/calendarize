@@ -14,8 +14,9 @@ $custom = [
     ],
     'columns' => [
         'title' => [
-            'type' => 'text',
-            'eval' => 'required'
+            'config' => [
+                'eval' => 'required'
+            ],
         ],
         'abstract' => [
             'config' => [
@@ -23,7 +24,9 @@ $custom = [
             ],
         ],
         'import_id' => [
-            'readOnly' => true,
+            'config' => [
+                'readOnly' => true,
+            ],
         ],
     ],
 ];
