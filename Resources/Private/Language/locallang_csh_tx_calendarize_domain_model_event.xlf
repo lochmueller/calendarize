@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-02-26T13:55:07Z">
+		<header>
+			<type>database</type>
+			<description>Language file is generate by the Autoloader extension</description>
+			<authorName>Tim Lochmüller</authorName>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="description.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="description.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="downloads.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="downloads.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="images.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="images.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="import_id.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="import_id.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="title.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="title.description">
+			<source></source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

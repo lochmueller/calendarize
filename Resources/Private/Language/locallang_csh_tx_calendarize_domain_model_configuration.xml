@@ -31,8 +31,8 @@
 			<label index="groups.alttitle"></label>
 			<label index="groups.description"></label>
 			
-			<label index="frequency.alttitle">Frequency</label>
-			<label index="frequency.description">Please take care that the first event of the frequency the manually entered event!</label>
+			<label index="frequency.alttitle"></label>
+			<label index="frequency.description"></label>
 			
 			<label index="till_date.alttitle"></label>
 			<label index="till_date.description"></label>

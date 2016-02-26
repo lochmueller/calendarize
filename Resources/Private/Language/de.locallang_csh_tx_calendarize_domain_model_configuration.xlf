@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-02-26T13:57:57Z">
+		<header>
+			<type>database</type>
+			<description>Language file is generate by the Autoloader extension</description>
+			<authorName>Tim Lochmüller</authorName>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="frequency.alttitle" approved="yes">
+			<source>Frequency</source>
+			<target>Frequenz</target>
+		</trans-unit>
+		<trans-unit id="frequency.description" approved="yes">
+			<source>Please take care that the first event of the frequency the manually entered event!</source>
+			<target>Bitte beachte, dass das erste Event der Frequenz das manuell eingegebene Ereignis ist!</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

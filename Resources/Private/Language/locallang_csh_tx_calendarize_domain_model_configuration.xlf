@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-02-26T13:53:46Z">
+		<header>
+			<type>database</type>
+			<description>Language file is generate by the Autoloader extension</description>
+			<authorName>Tim Lochmüller</authorName>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="all_day.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="all_day.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="counter_amount.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="counter_amount.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="counter_interval.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="counter_interval.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="day.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="day.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_date.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_date.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_time.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_time.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="external_ics_url.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="external_ics_url.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="frequency.alttitle">
+			<source>Frequency</source>
+		</trans-unit>
+		<trans-unit id="frequency.description">
+			<source>Please take care that the first event of the frequency the manually entered event!</source>
+		</trans-unit>
+		<trans-unit id="groups.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="groups.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="recurrence.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="recurrence.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_date.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_date.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_time.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_time.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="till_date.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="till_date.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="type.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="type.description">
+			<source></source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

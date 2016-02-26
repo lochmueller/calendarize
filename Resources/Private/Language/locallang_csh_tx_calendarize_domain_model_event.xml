@@ -10,17 +10,23 @@
 			<label index="title.alttitle"></label>
 			<label index="title.description"></label>
 			
+			<label index="abstract.alttitle"></label>
+			<label index="abstract.description"></label>
+			
 			<label index="description.alttitle"></label>
 			<label index="description.description"></label>
+			
+			<label index="location.alttitle"></label>
+			<label index="location.description"></label>
+			
+			<label index="import_id.alttitle"></label>
+			<label index="import_id.description"></label>
 			
 			<label index="images.alttitle"></label>
 			<label index="images.description"></label>
 			
 			<label index="downloads.alttitle"></label>
 			<label index="downloads.description"></label>
-			
-			<label index="import_id.alttitle"></label>
-			<label index="import_id.description"></label>
 			
 		</languageKey>
 		<languageKey index="xx" type="array">

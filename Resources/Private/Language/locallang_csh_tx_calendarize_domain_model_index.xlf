@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-02-26T13:55:46Z">
+		<header>
+			<type>database</type>
+			<description>Language file is generate by the Autoloader extension</description>
+			<authorName>Tim Lochmüller</authorName>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="all_day.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="all_day.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_date.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_date.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_time.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="end_time.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="foreign_table.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="foreign_table.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="foreign_uid.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="foreign_uid.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_date.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_date.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_time.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="start_time.description">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="unique_register_key.alttitle">
+			<source></source>
+		</trans-unit>
+		<trans-unit id="unique_register_key.description">
+			<source></source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

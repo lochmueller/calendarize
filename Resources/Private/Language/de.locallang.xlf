@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-12-05T19:23:33Z">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-02-26T13:48:52Z">
 		<header>
 			<type>database</type>
 			<description>Language file for EXT:calendarize</description>
@@ -9,29 +9,17 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
-		<trans-unit id="files" approved="yes">
-			<source>Files</source>
-			<target>Dateien</target>
-		</trans-unit>
-		<trans-unit id="dateOptions" approved="yes">
-			<source>Date options</source>
-			<target>Datum Optionen</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.location" approved="yes">
-			<source>Location</source>
-			<target>Ort</target>
-		</trans-unit>
 		<trans-unit id="all_day" approved="yes">
 			<source>All day</source>
 			<target>ganztägig</target>
 		</trans-unit>
-		<trans-unit id="openEndTime" approved="yes">
-			<source>open end</source>
-			<target>offenes Ende</target>
-		</trans-unit>
 		<trans-unit id="back" approved="yes">
 			<source>back</source>
 			<target>zurück</target>
+		</trans-unit>
+		<trans-unit id="bookingPid" approved="yes">
+			<source>Booking PID</source>
+			<target>Buchungs PID</target>
 		</trans-unit>
 		<trans-unit id="configuration" approved="yes">
 			<source>Configuration</source>
@@ -165,6 +153,10 @@
 			<source>Date</source>
 			<target>Datum</target>
 		</trans-unit>
+		<trans-unit id="dateOptions" approved="yes">
+			<source></source>
+			<target>Datum Optionen</target>
+		</trans-unit>
 		<trans-unit id="dayPid" approved="yes">
 			<source>Day PID</source>
 			<target>Tages PID</target>
@@ -172,6 +164,10 @@
 		<trans-unit id="detailPid" approved="yes">
 			<source>Detail PID</source>
 			<target>Detail PID</target>
+		</trans-unit>
+		<trans-unit id="files" approved="yes">
+			<source></source>
+			<target>Dateien</target>
 		</trans-unit>
 		<trans-unit id="frequency_configuration" approved="yes">
 			<source>Frequency configuration</source>
@@ -269,6 +265,10 @@
 			<source>There are no events on the current date</source>
 			<target>Es gibt keine Ereignisse an dem aktuellen Tag</target>
 		</trans-unit>
+		<trans-unit id="openEndTime" approved="yes">
+			<source>open end</source>
+			<target>offenes Ende</target>
+		</trans-unit>
 		<trans-unit id="pidConfiguration" approved="yes">
 			<source>Page ID configuration</source>
 			<target>Seiten ID Konfiguration</target>
@@ -277,8 +277,12 @@
 			<source>Calendar</source>
 			<target>Kalendar</target>
 		</trans-unit>
+		<trans-unit id="pluginNameBooking" approved="yes">
+			<source>Calendar Booking</source>
+			<target>Kalender Buchung</target>
+		</trans-unit>
 		<trans-unit id="previewLabel" approved="yes">
-			<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today)  are (ignore enable columns)...</source>
+			<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are (ignore enable columns)...</source>
 			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse (inkl. heute) sind (ignoriert &quot;enable columns&quot;)...</target>
 		</trans-unit>
 		<trans-unit id="save.first" approved="yes">
@@ -300,6 +304,22 @@
 		<trans-unit id="time" approved="yes">
 			<source>Time</source>
 			<target>Zeit</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav" approved="yes">
+			<source></source>
+			<target>CalDav Konfiguration</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav.event_storage" approved="yes">
+			<source></source>
+			<target>Ereignis Ordner</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav.title" approved="yes">
+			<source></source>
+			<target>Titel</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav.user_storage" approved="yes">
+			<source></source>
+			<target>Benutzer Ordner</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
 			<source>Configuration</source>
@@ -330,8 +350,8 @@
 			<target>Enddatum  (optional)</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
-			<source>End time (00:00 means "open end")</source>
-			<target>Endzeit (00:00 bedeutet "offenes Ende")</target>
+			<source>End time (00:00 means &quot;open end&quot;)</source>
+			<target>Endzeit (00:00 bedeutet &quot;offenes Ende&quot;)</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url" approved="yes">
 			<source>External ICS URL</source>
@@ -385,6 +405,10 @@
 			<source>Event</source>
 			<target>Ereignis</target>
 		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_event.abstract" approved="yes">
+			<source></source>
+			<target>Abstrakt</target>
+		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.description" approved="yes">
 			<source>Description</source>
 			<target>Beschreibung</target>
@@ -400,6 +424,10 @@
 		<trans-unit id="tx_calendarize_domain_model_event.import_id" approved="yes">
 			<source>Import ID</source>
 			<target>Import ID</target>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_event.location" approved="yes">
+			<source></source>
+			<target>Ort</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.title" approved="yes">
 			<source>Title</source>
