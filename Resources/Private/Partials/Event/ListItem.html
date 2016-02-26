@@ -24,9 +24,16 @@
 					</h4>
 
 					<p>
-						<f:format.crop maxCharacters="180" append="&nbsp;[...]">
-							<f:format.stripTags>{event.description}</f:format.stripTags>
-						</f:format.crop>
+						<f:if condition="{event.abstract}">
+							<f:then>
+								<f:format.nl2br>{event.abstract}</f:format.nl2br>
+							</f:then>
+							<f:else>
+								<f:format.crop maxCharacters="180" append="&nbsp;[...]">
+									<f:format.stripTags>{event.description}</f:format.stripTags>
+								</f:format.crop>
+							</f:else>
+						</f:if>
 					</p>
 
 					<c:link.index index="{index}" class="btn btn-default btn-primary">

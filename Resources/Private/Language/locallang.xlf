@@ -9,6 +9,7 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_event.abstract"><source><![CDATA[Abstract]]></source></trans-unit>
 			<trans-unit id="files"><source><![CDATA[Files]]></source></trans-unit>
 			<trans-unit id="dateOptions"><source><![CDATA[Date options]]></source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_event.location"><source><![CDATA[Location]]></source></trans-unit>

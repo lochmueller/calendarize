@@ -29,6 +29,14 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     protected $title;
 
     /**
+     * Abstract / Teaser
+     *
+     * @var string
+     * @db
+     */
+    protected $abstract;
+
+    /**
      * Description
      *
      * @var string
@@ -111,6 +119,26 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * Get abstract
+     *
+     * @return string
+     */
+    public function getAbstract()
+    {
+        return $this->abstract;
+    }
+
+    /**
+     * Set abstract
+     *
+     * @param string $abstract
+     */
+    public function setAbstract($abstract)
+    {
+        $this->abstract = $abstract;
     }
 
     /**

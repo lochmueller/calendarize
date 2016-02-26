@@ -7,15 +7,18 @@
 $base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Event');
 
 $custom = array(
-    'ctrl'    => array(
-        'hideTable'    => (boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent'),
+    'ctrl' => array(
+        'hideTable' => (boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent'),
         'searchFields' => 'uid,title,description',
-        'thumbnail'    => 'images',
+        'thumbnail' => 'images',
     ),
     'columns' => array(
-        'title'     => array(
+        'title' => array(
             'type' => 'text',
             'eval' => 'required'
+        ),
+        'abstract' => array(
+            'config' => ['type' => 'text'],
         ),
         'import_id' => array(
             'readOnly' => true,
