@@ -8,6 +8,9 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="event_storage.alttitle"><source><![CDATA[calendarize ==> LLL:event_storage.alttitle]]></source></trans-unit>
+			<trans-unit id="user_storage.alttitle"><source><![CDATA[calendarize ==> LLL:user_storage.alttitle]]></source></trans-unit>
+			<trans-unit id="title.alttitle"><source><![CDATA[calendarize ==> LLL:title.alttitle]]></source></trans-unit>
 		<trans-unit id="event_storage.alttitle">
 			<source></source>
 		</trans-unit>
