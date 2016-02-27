@@ -211,6 +211,42 @@
 							</config>
 						</TCEforms>
 					</settings.hidePagination>
+
+					<settings.overrideStartdate>
+						<TCEforms>
+							<label>Override startdate</label>
+							<displayCond>
+								<OR>
+									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<OR>
+										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</OR>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<eval>datetime</eval>
+							</config>
+						</TCEforms>
+					</settings.overrideStartdate>
+
+					<settings.overrideEnddate>
+						<TCEforms>
+							<label>Override enddate</label>
+							<displayCond>
+								<OR>
+									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<OR>
+										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</OR>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<eval>datetime</eval>
+							</config>
+						</TCEforms>
+					</settings.overrideEnddate>
 				</el>
 			</ROOT>
 		</main>
