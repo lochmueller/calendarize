@@ -9,6 +9,8 @@ namespace HDNET\Calendarize\Service\CalDav;
 
 use Sabre\CalDAV\Plugin;
 use Sabre\CalDAV\Xml\Property\SupportedCalendarComponentSet;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Backend for events
@@ -55,7 +57,9 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     /**
      * Creates the backend
      *
-     * @param \PDO $pdo
+     * @param \PDO   $pdo
+     * @param string $calendarTableName
+     * @param string $calendarObjectTableName
      */
     public function __construct(\PDO $pdo, $calendarTableName = 'calendars', $calendarObjectTableName = 'calendarobjects')
     {
@@ -132,6 +136,7 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
      * @param array  $properties
      *
      * @return mixed
+     * @throws Sabre_DAV_Exception
      */
     public function createCalendar($principalUri, $calendarUri, array $properties)
     {
@@ -482,6 +487,13 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
         $this->clearCache($calendarRow ['pid']);
     }
 
+    /**
+     * Update cal event
+     *
+     * @param $calendarId
+     * @param $objectUri
+     * @param $calendarData
+     */
     private function updateCalEvent($calendarId, $objectUri, $calendarData)
     {
         var_dump($calendarId);
@@ -491,16 +503,21 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
 
     }
 
+    /**
+     * Clear cache
+     *
+     * @param int $pid
+     */
     private function clearCache($pid)
     {
-        $pageTSConf = \TYPO3\CMS\Backend\Utility\BackendUtility::getPagesTSconfig($pid);
+        $pageTSConf = BackendUtility::getPagesTSconfig($pid);
         $pageIDForPlugin = $pid;
 
         if ($pageTSConf ['TCEMAIN.'] ['clearCacheCmd']) {
             $pageIDForPlugin = $pageTSConf ['TCEMAIN.'] ['clearCacheCmd'];
         }
 
-        $tce = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\DataHandling\\DataHandler');
+        $tce = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\DataHandling\\DataHandler');
         // 		$tce->clear_cacheCmd ( $pageIDForPlugin ); // ID of the page for which to clear the cache
     }
 }

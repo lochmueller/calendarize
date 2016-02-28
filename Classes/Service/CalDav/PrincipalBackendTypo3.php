@@ -44,6 +44,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * @param \PDO   $pdo
      * @param string $tableName
+     * @param string $groupMembersTableName
      */
     public function __construct(\PDO $pdo, $tableName = 'fe_users', $groupMembersTableName = 'fe_groups')
     {
@@ -126,7 +127,10 @@ class PrincipalBackendTypo3 implements BackendInterface
     /**
      * Returns the list of members for a group-principal
      *
+     * @param $principal
+     *
      * @return array
+     * @throws Exception
      */
     public function getGroupMemberSet($principal)
     {
@@ -149,6 +153,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      * @param string $principal
      *
      * @return array
+     * @throws Exception
      */
     public function getGroupMembership($principal)
     {
@@ -170,7 +175,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      * @param string $principal
      * @param array  $members
      *
-     * @return void
+     * @throws Sabre_DAV_Exception
      */
     public function setGroupMemberSet($principal, array $members)
     {

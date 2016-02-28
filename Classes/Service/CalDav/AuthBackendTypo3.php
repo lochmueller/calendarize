@@ -36,7 +36,10 @@ class AuthBackendTypo3 extends AbstractBasic
      *
      * If the credentials are incorrect, this method must return false.
      *
-     * @return bool|array
+     * @param string $username
+     * @param string $password
+     *
+     * @return array|bool
      */
     protected function validateUserPass($username, $password)
     {
@@ -76,7 +79,9 @@ class AuthBackendTypo3 extends AbstractBasic
     }
 
     /**
-     * @param $username
+     * Find matching against CalDav configuration
+     *
+     * @param string $username
      *
      * @return bool|\HDNET\Calendarize\Domain\Model\CalDav
      */

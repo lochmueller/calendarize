@@ -375,7 +375,9 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     }
 
     /**
-     * @return mixed
+     * Get location
+     *
+     * @return string
      */
     public function getLocation()
     {
@@ -383,7 +385,9 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     }
 
     /**
-     * @param mixed $location
+     * Set location
+     *
+     * @param string $location
      */
     public function setLocation($location)
     {
