@@ -10,7 +10,7 @@ namespace HDNET\Calendarize\Hooks;
 /**
  * Time shift function
  */
-class TimeShift
+class TimeShift extends AbstractHook
 {
 
     /**

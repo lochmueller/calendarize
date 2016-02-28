@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @hook TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration
  * @hook TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer
  */
-class KeSearchIndexer
+class KeSearchIndexer extends AbstractHook
 {
     /**
      * Register the indexer configuration
