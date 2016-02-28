@@ -300,7 +300,6 @@ class IndexRepository extends AbstractRepository
     /**
      * storage page selection
      *
-     * @todo please check core API functions again
      * @return array
      */
     protected function getStoragePageIds()
