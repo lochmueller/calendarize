@@ -13,6 +13,18 @@
 			<source>All day</source>
 			<target>ganztägig</target>
 		</trans-unit>
+		<trans-unit id="booking" approved="yes">
+			<source>Booking</source>
+			<target>buchen</target>
+		</trans-unit>
+		<trans-unit id="more" approved="yes">
+			<source>More</source>
+			<target>mehr</target>
+		</trans-unit>
+		<trans-unit id="all_day" approved="yes">
+			<source>All day</source>
+			<target>ganztägig</target>
+		</trans-unit>
 		<trans-unit id="back" approved="yes">
 			<source>back</source>
 			<target>zurück</target>
