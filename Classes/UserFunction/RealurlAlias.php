@@ -130,6 +130,12 @@ class RealurlAlias
             $class = 'DmitryDulepov\\Realurl\\Encoder\\UrlEncoder';
             /** @var \DmitryDulepov\Realurl\Encoder\UrlEncoder $realUrl */
             $realUrl = GeneralUtility::makeInstance($class);
+
+            // Init the internal utility by ObjectAccess because the property is
+            // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
+            $utility = GeneralUtility::makeInstance('DmitryDulepov\\Realurl\\Utility');
+            ObjectAccess::setProperty($realUrl, 'utility', $utility, true);
+
             $processedTitle = $realUrl->cleanUpAlias([], $title);
         } else {
             /** @var \tx_realurl_advanced $realUrl */
