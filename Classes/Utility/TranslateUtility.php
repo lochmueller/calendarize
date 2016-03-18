@@ -25,6 +25,11 @@ class TranslateUtility
      */
     static public function get($key)
     {
+        if(TYPO3_MODE === 'FE' && !is_object($GLOBALS['TSFE'])) {
+            // check wrong eID context. Do not call "LocalizationUtility::translate" in eID context, if there is no
+            // valid TypoScriptFrontendController. Skip this call by returning just the $key!
+            return $key;
+        }
         return LocalizationUtility::translate(self::getLll($key), 'calendarize');
     }
 
