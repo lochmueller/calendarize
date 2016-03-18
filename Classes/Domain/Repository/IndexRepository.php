@@ -107,8 +107,13 @@ class IndexRepository extends AbstractRepository
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findList($limit = 0, $listStartTime = 0, $startOffsetHours = 0, $overrideStartDate = null, $overrideEndDate = null)
-    {
+    public function findList(
+        $limit = 0,
+        $listStartTime = 0,
+        $startOffsetHours = 0,
+        $overrideStartDate = null,
+        $overrideEndDate = null
+    ) {
         if ($overrideStartDate) {
             $startTimestamp = $overrideStartDate;
         } else {
@@ -333,7 +338,7 @@ class IndexRepository extends AbstractRepository
     {
         $constraints = [];
         $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
-        
+
         $storagePages = $this->getStoragePageIds();
         if (!empty($storagePages)) {
             $constraints[] = $query->in('pid', $storagePages);

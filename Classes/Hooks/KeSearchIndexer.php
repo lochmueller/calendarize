@@ -20,10 +20,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class KeSearchIndexer extends AbstractHook
 {
+
     /**
      * Register the indexer configuration
      *
-     * @param array $params
+     * @param array  $params
      * @param object $pObj
      */
     function registerIndexerConfiguration(&$params, $pObj)
@@ -40,8 +41,9 @@ class KeSearchIndexer extends AbstractHook
     /**
      * Calendarize indexer for ke_search
      *
-     * @param array $indexerConfig Configuration from TYPO3 Backend
+     * @param array                $indexerConfig Configuration from TYPO3 Backend
      * @param \tx_kesearch_indexer $indexerObject Reference to indexer class.
+     *
      * @return string|null
      */
     public function customIndexer(&$indexerConfig, &$indexerObject)
@@ -53,7 +55,8 @@ class KeSearchIndexer extends AbstractHook
         /** @var \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository */
         $indexRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\IndexRepository');
         $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['storagepid']));
-        $indexObjects = $indexRepository->findList()->toArray();
+        $indexObjects = $indexRepository->findList()
+            ->toArray();
 
         foreach ($indexObjects as $index) {
             /** @var $index Index */
@@ -71,22 +74,9 @@ class KeSearchIndexer extends AbstractHook
             // @todo Add year and month information
             $additionalFields = [];
 
-            $indexerObject->storeInIndex(
-                $indexerConfig['storagepid'],
-                $title,
-                'calendarize',
-                $indexerConfig['targetpid'],
-                $fullContent,
-                '',
-                '&tx_calendarize_calendar[index]=' . $index->getUid(),
-                $abstract,
-                0,
-                0,
-                0,
-                '',
-                false,
-                $additionalFields
-            );
+            $indexerObject->storeInIndex($indexerConfig['storagepid'], $title, 'calendarize', $indexerConfig['targetpid'],
+                $fullContent, '', '&tx_calendarize_calendar[index]=' . $index->getUid(), $abstract, 0, 0, 0, '', false,
+                $additionalFields);
         }
 
         return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . sizeof($indexObjects) . ' elements have been indexed.</b></p>';

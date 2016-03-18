@@ -161,7 +161,8 @@ class CalendarController extends AbstractController
         } else {
             $overrideStartDate = (int)$this->settings['overrideStartdate'];
             $overrideEndDate = (int)$this->settings['overrideEnddate'];
-            $indices = $this->indexRepository->findList((int)$this->settings['limit'], $this->settings['listStartTime'], (int)$this->settings['listStartTimeOffsetHours'], $overrideStartDate, $overrideEndDate);
+            $indices = $this->indexRepository->findList((int)$this->settings['limit'], $this->settings['listStartTime'],
+                (int)$this->settings['listStartTimeOffsetHours'], $overrideStartDate, $overrideEndDate);
         }
 
         $this->slotExtendedAssignMultiple([

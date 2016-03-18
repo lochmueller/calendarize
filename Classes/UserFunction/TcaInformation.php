@@ -25,7 +25,7 @@ class TcaInformation
     /**
      * Generate the information field
      *
-     * @param array $configuration
+     * @param array  $configuration
      * @param object $fObj
      *
      * @return string
@@ -40,15 +40,14 @@ class TcaInformation
         $previewLimit = 10;
         $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
         $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
-        $content = sprintf(TranslateUtility::get('previewLabel'), $count,
-                $previewLimit) . $this->getEventList($next);
+        $content = sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);
         return $this->wrapContent($content);
     }
 
     /**
      * Generate the information field
      *
-     * @param array $configuration
+     * @param array  $configuration
      * @param object $fObj
      *
      * @return string
@@ -83,7 +82,7 @@ class TcaInformation
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'], false);
-                if((int)$event['end_time'] === AbstractTimeTable::DAY_END) {
+                if ((int)$event['end_time'] === AbstractTimeTable::DAY_END) {
                     $end = '"' . TranslateUtility::get('openEndTime') . '"';
                 } else {
                     $end = BackendUtility::time($event['end_time'], false);
@@ -102,6 +101,7 @@ class TcaInformation
      * Wrap the content
      *
      * @param string $content
+     *
      * @return string
      */
     protected function wrapContent($content)

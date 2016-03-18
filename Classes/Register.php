@@ -37,9 +37,9 @@ class Register
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? trim($configuration['tcaTypeList']) : '';
         $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = [
-            'label'  => 'Calendarize',
+            'label'     => 'Calendarize',
             'l10n_mode' => 'exclude',
-            'config' => [
+            'config'    => [
                 'type'          => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
                 'minitems'      => $configuration['required'] ? 1 : 0,

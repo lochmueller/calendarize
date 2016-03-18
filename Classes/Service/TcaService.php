@@ -23,7 +23,7 @@ class TcaService extends AbstractService
     /**
      * Render the configuration title
      *
-     * @param array $params
+     * @param array  $params
      * @param object $object
      */
     public function configurationTitle(&$params, $object)

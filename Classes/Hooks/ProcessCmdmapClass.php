@@ -18,16 +18,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ProcessCmdmapClass extends AbstractHook
 {
+
     /**
      * Handle CMD
      *
-     * @param string $command
-     * @param string $table
-     * @param int $uid
-     * @param $value
+     * @param string      $command
+     * @param string      $table
+     * @param int         $uid
+     * @param             $value
      * @param DataHandler $handler
-     * @param $pasteUpdate
-     * @param $pasteDatamap
+     * @param             $pasteUpdate
+     * @param             $pasteDatamap
      */
     public function processCmdmap_postProcess($command, $table, $uid, $value, $handler, $pasteUpdate, $pasteDatamap)
     {

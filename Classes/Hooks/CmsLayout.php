@@ -79,11 +79,11 @@ class CmsLayout extends AbstractHook
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
         $overrideStartDate = (int)$this->flexFormService->get('settings.overrideStartdate', 'main');
-        if($overrideStartDate) {
+        if ($overrideStartDate) {
             $this->layoutService->addRow('OverrideStartdate', date('d.m.y H:i', $overrideStartDate));
         }
         $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
-        if($overrideEndDate) {
+        if ($overrideEndDate) {
             $this->layoutService->addRow('OverrideEndDate', date('d.m.y H:i', $overrideEndDate));
         }
 

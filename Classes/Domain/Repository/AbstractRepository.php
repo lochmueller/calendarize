@@ -17,11 +17,13 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class AbstractRepository extends Repository
 {
+
     /**
      * Check the constraint and execute the query
      *
      * @param QueryInterface $query
-     * @param array $constraints
+     * @param array          $constraints
+     *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function matchAndExecute(QueryInterface $query, array $constraints = [])

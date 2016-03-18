@@ -13,10 +13,12 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 interface KeSearchIndexInterface
 {
+
     /**
      * Get the title
      *
      * @param Index $index
+     *
      * @return string
      */
     public function getKeSearchTitle(Index $index);
@@ -25,6 +27,7 @@ interface KeSearchIndexInterface
      * Get the abstract
      *
      * @param Index $index
+     *
      * @return string
      */
     public function getKeSearchAbstract(Index $index);
@@ -33,6 +36,7 @@ interface KeSearchIndexInterface
      * Get the content
      *
      * @param Index $index
+     *
      * @return string
      */
     public function getKeSearchContent(Index $index);

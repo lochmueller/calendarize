@@ -31,8 +31,8 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next month
      *
      * @param \DateTime $date
-     * @param string $recurrence
-     * @param string $day
+     * @param string    $recurrence
+     * @param string    $day
      *
      * @return \DateTime
      */
@@ -45,8 +45,8 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next year
      *
      * @param \DateTime $date
-     * @param string $recurrence
-     * @param string $day
+     * @param string    $recurrence
+     * @param string    $day
      *
      * @return \DateTime
      */
@@ -59,9 +59,9 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the current month
      *
      * @param \DateTime $date
-     * @param string $recurrence
-     * @param string $day
-     * @param string $modify
+     * @param string    $recurrence
+     * @param string    $day
+     * @param string    $modify
      *
      * @return \DateTime|FALSE
      */
@@ -151,9 +151,9 @@ class RecurrenceService extends AbstractService
      * Find the modified in the current month
      *
      * @param \DateTime $dateTime
-     * @param string $direction
-     * @param array $validDays
-     * @param int $position
+     * @param string    $direction
+     * @param array     $validDays
+     * @param int       $position
      *
      * @return \DateTime|FALSE
      */

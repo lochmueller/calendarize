@@ -19,10 +19,10 @@ class IndexTraversingViewHelper extends AbstractViewHelper
     /**
      * Render method
      *
-     * @param Index $index
-     * @param bool $future
-     * @param bool $past
-     * @param int $limit
+     * @param Index  $index
+     * @param bool   $future
+     * @param bool   $past
+     * @param int    $limit
      * @param string $sort
      *
      * @return array

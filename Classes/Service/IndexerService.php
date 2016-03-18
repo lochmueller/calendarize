@@ -40,8 +40,7 @@ class IndexerService extends AbstractService
         foreach (Register::getRegister() as $key => $configuration) {
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
-            $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName,
-                '1=1' . BackendUtility::deleteClause($tableName));
+            $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
             foreach ($rows as $row) {
                 $this->updateIndex($key, $configuration['tableName'], $row['uid']);
             }
@@ -53,7 +52,7 @@ class IndexerService extends AbstractService
      *
      * @param string $configurationKey
      * @param string $tableName
-     * @param int $uid
+     * @param int    $uid
      *
      * @return void
      */
@@ -76,16 +75,15 @@ class IndexerService extends AbstractService
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         return $databaseConnection->exec_SELECTcountRows('*', self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table,
-                self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
     }
 
     /**
      * Get the next events
      *
      * @param string $table
-     * @param int $uid
-     * @param int $limit
+     * @param int    $uid
+     * @param int    $limit
      *
      * @return array|NULL
      */
@@ -104,7 +102,7 @@ class IndexerService extends AbstractService
      *
      * @param string $configurationKey
      * @param string $tableName
-     * @param int $uid
+     * @param int    $uid
      *
      * @return void
      */
@@ -122,9 +120,9 @@ class IndexerService extends AbstractService
     /**
      * Insert and/or update the needed index records
      *
-     * @param array $neededItems
+     * @param array  $neededItems
      * @param string $tableName
-     * @param int $uid
+     * @param int    $uid
      */
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {
@@ -190,8 +188,7 @@ class IndexerService extends AbstractService
     protected function removeInvalidRecordIndex($tableName)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName,
-            '1=1' . BackendUtility::deleteClause($tableName));
+        $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
         $ids = [];
         foreach ($rows as $row) {
             $ids[] = $row['uid'];

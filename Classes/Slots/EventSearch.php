@@ -67,7 +67,7 @@ class EventSearch
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $categoryIds = [];
-        if(isset($contentRecord['uid']) && MathUtility::canBeInterpretedAsInteger($contentRecord['uid'])) {
+        if (isset($contentRecord['uid']) && MathUtility::canBeInterpretedAsInteger($contentRecord['uid'])) {
             $rows = $databaseConnection->exec_SELECTgetRows('uid_local', 'sys_category_record_mm',
                 'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']);
             foreach ($rows as $row) {
