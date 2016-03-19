@@ -7,15 +7,17 @@
 
 namespace HDNET\Calendarize\Service\CalDav;
 
+use Sabre\CalDAV\Backend\AbstractBackend;
 use Sabre\CalDAV\Plugin;
 use Sabre\CalDAV\Xml\Property\SupportedCalendarComponentSet;
+use Sabre\DAV\PropPatch;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Backend for events
  */
-class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
+class BackendTypo3 extends AbstractBackend
 {
 
     /**
@@ -212,11 +214,11 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
      * (424 Failed Dependency) because the request needs to be atomic.
      *
      * @param string               $calendarId
-     * @param \Sabre\DAV\PropPatch $properties
+     * @param PropPatch $properties
      *
      * @return bool|array
      */
-    public function updateCalendar($calendarId, \Sabre\DAV\PropPatch $properties)
+    public function updateCalendar($calendarId, PropPatch $properties)
     {
         $newValues = [];
         $result = [

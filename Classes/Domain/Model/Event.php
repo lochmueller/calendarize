@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Domain\Model;
 use HDNET\Calendarize\Features\FeedInterface;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\RealUrlInterface;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -164,7 +165,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Get downloads
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
     public function getDownloads()
     {
@@ -174,7 +175,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Set downloads
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $downloads
+     * @param ObjectStorage $downloads
      */
     public function setDownloads($downloads)
     {
@@ -184,7 +185,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Get images
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
     public function getImages()
     {
@@ -194,7 +195,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Set images
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+     * @param ObjectStorage $images
      */
     public function setImages($images)
     {
@@ -224,7 +225,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Get calendarize
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
     public function getCalendarize()
     {
@@ -234,7 +235,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Set calendarize
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $calendarize
+     * @param ObjectStorage $calendarize
      */
     public function setCalendarize($calendarize)
     {
@@ -294,11 +295,11 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Adds a Category
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $category
+     * @param Category $category
      *
      * @return void
      */
-    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category)
+    public function addCategory(Category $category)
     {
         $this->categories->attach($category);
     }
@@ -306,11 +307,11 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Removes a Category
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove The Category to be removed
+     * @param Category $categoryToRemove The Category to be removed
      *
      * @return void
      */
-    public function removeCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $categoryToRemove)
+    public function removeCategory(Category $categoryToRemove)
     {
         $this->categories->detach($categoryToRemove);
     }
@@ -318,7 +319,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Returns the categories
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
      */
     public function getCategories()
     {
@@ -328,11 +329,11 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Sets the categories
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $categories
+     * @param ObjectStorage $categories
      *
      * @return void
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
     }

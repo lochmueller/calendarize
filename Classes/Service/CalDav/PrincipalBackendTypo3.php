@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service\CalDav;
 
 use Sabre\DAV\Exception;
+use Sabre\DAV\PropPatch;
 use Sabre\DAVACL\PrincipalBackend\BackendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
@@ -225,11 +226,11 @@ class PrincipalBackendTypo3 implements BackendInterface
      * Read the PropPatch documenation for more info and examples.
      *
      * @param string               $path
-     * @param \Sabre\DAV\PropPatch $propPatch
+     * @param PropPatch $propPatch
      *
      * @return void
      */
-    function updatePrincipal($path, \Sabre\DAV\PropPatch $propPatch)
+    function updatePrincipal($path, PropPatch $propPatch)
     {
         DebuggerUtility::var_dump('updatePrincipal');
         // TODO: Implement updatePrincipal() method.

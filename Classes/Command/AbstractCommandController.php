@@ -36,7 +36,7 @@ abstract class AbstractCommandController extends CommandController
      *
      * @return void
      */
-    protected function enqueueMessage($message, $title = '', $severity = FlashMessage::INFO)
+    public function enqueueMessage($message, $title = '', $severity = FlashMessage::INFO)
     {
         if ($message instanceof \Exception) {
             if ($title === '') {
