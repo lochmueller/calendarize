@@ -46,13 +46,13 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
      *
      * @var array
      */
-    public $propertyMap = array(
+    public $propertyMap = [
         '{DAV:}displayname'                                   => 'title',
         '{urn:ietf:params:xml:ns:caldav}calendar-description' => 'tx_caldav_data',
         '{urn:ietf:params:xml:ns:caldav}calendar-timezone'    => 'timezone',
         '{http://apple.com/ns/ical/}calendar-order'           => 'calendarorder',
         '{http://apple.com/ns/ical/}calendar-color'           => 'calendarcolor'
-    );
+    ];
 
     /**
      * Creates the backend
@@ -90,11 +90,11 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     {
         $principalUriParts = explode("/", $principalUri);
         $stmt = $this->pdo->prepare("SELECT uid, tx_cal_calendar FROM fe_users WHERE username = ? AND deleted=0");
-        $stmt->execute(array(
+        $stmt->execute([
             array_pop($principalUriParts)
-        ));
+        ]);
 
-        $calendars = array();
+        $calendars = [];
 
         while ($user = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
@@ -105,7 +105,7 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
 
                 $components = explode(',', 'VEVENT,VTODO');
 
-                $calendar = array(
+                $calendar = [
                     'id'                                                          => $row ['uid'],
                     'uri'                                                         => $row ['title'],
                     'principaluri'                                                => $principalUri,
@@ -116,7 +116,7 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
                     '{urn:ietf:params:xml:ns:caldav}calendar-timezone'            => null,
                     '{http://apple.com/ns/ical/}calendar-order'                   => 0,
                     '{http://apple.com/ns/ical/}calendar-color'                   => null
-                );
+                ];
 
                 $calendars [] = $calendar;
             }
@@ -140,16 +140,16 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
      */
     public function createCalendar($principalUri, $calendarUri, array $properties)
     {
-        $fieldNames = array(
+        $fieldNames = [
             'principaluri',
             'uri',
             'ctag'
-        );
-        $values = array(
+        ];
+        $values = [
             ':principaluri' => $principalUri,
             ':uri'          => $calendarUri,
             ':ctag'         => 1
-        );
+        ];
 
         // Default value
         $sccs = '{urn:ietf:params:xml:ns:caldav}supported-calendar-component-set';
@@ -218,12 +218,12 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
      */
     public function updateCalendar($calendarId, \Sabre\DAV\PropPatch $properties)
     {
-        $newValues = array();
-        $result = array(
-            200 => array(), // Ok
-            403 => array(), // Forbidden
-            424 => array()  // Failed Dependency
-        );
+        $newValues = [];
+        $result = [
+            200 => [], // Ok
+            403 => [], // Forbidden
+            424 => []  // Failed Dependency
+        ];
 
         $hasError = false;
 
@@ -260,7 +260,7 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
         // Success
 
         // Now we're generating the sql query.
-        $valuesSql = array();
+        $valuesSql = [];
         foreach ($newValues as $fieldName => $value) {
             $valuesSql [] = $fieldName . ' = ?';
         }
@@ -271,9 +271,9 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
         $stmt->execute(array_values($newValues));
 
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_calendar WHERE uid = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $calendarRow = $stmt->fetch();
         $this->clearCache($calendarRow ['pid']);
 
@@ -290,20 +290,20 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     public function deleteCalendar($calendarId)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_calendar WHERE uid = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $calendarRow = $stmt->fetch();
 
         $stmt = $this->pdo->prepare('DELETE FROM tx_cal_event WHERE calendar_id = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
 
         $stmt = $this->pdo->prepare('DELETE FROM tx_cal_calendar WHERE uid = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $this->clearCache($calendarRow ['pid']);
     }
 
@@ -323,44 +323,44 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     public function getCalendarObjects($calendarId)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_event WHERE calendar_id = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $eventArray = $stmt->fetchAll();
-        $preparedArray = Array();
+        $preparedArray = [];
         foreach ($eventArray as $eventRow) {
             if ($eventRow ['tx_caldav_uid'] == '' && $eventRow ['icsUid'] == '') {
                 $eventRow ['tx_caldav_uid'] = 'a1b2c3_' . $eventRow ['calendar_id'] . '_' . $eventRow ['uid'];
                 $eventRow ['icsUid'] = $eventRow ['tx_caldav_uid'];
                 $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET tx_caldav_uid = ?, icsUid = ? WHERE uid = ?");
-                $stmt->execute(Array(
+                $stmt->execute([
                     $eventRow ['tx_caldav_uid'],
                     $eventRow ['icsUid'],
                     $eventRow ['uid']
-                ));
+                ]);
             } else if ($eventRow ['tx_caldav_uid'] == '') {
                 $eventRow ['tx_caldav_uid'] = $eventRow ['icsUid'];
                 $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET tx_caldav_uid = ? WHERE uid = ?");
-                $stmt->execute(Array(
+                $stmt->execute([
                     $eventRow ['tx_caldav_uid'],
                     $eventRow ['uid']
-                ));
+                ]);
             } else if ($eventRow ['icsUid'] == '') {
                 $eventRow ['icsUid'] = $eventRow ['tx_caldav_uid'];
                 $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET icsUid = ? WHERE uid = ?");
-                $stmt->execute(Array(
+                $stmt->execute([
                     $eventRow ['icsUid'],
                     $eventRow ['uid']
-                ));
+                ]);
             }
-            $preparedArray [] = Array(
+            $preparedArray [] = [
                 'id'           => $eventRow ['uid'],
                 'displayname'  => $eventRow ['title'],
                 'calendardata' => $eventRow ['tx_caldav_data'],
                 'uri'          => $eventRow ['tx_caldav_uid'],
                 'calendarid'   => $calendarId,
                 'lastmodified' => $eventRow ['tstamp']
-            );
+            ];
         }
         return $preparedArray;
     }
@@ -376,22 +376,22 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     public function getCalendarObject($calendarId, $objectUri)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_event WHERE calendar_id = ? AND tx_caldav_uid = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId,
             $objectUri
-        ));
+        ]);
         $eventRow = $stmt->fetch();
         if (empty ($eventRow)) {
-            return Array();
+            return [];
         }
-        return Array(
+        return [
             'id'           => $eventRow ['uid'],
             'displayname'  => $eventRow ['title'],
             'calendardata' => $eventRow ['tx_caldav_data'],
             'uri'          => $eventRow ['icsUid'],
             'calendarid'   => $calendarId,
             'lastmodified' => $eventRow ['tstamp']
-        );
+        ];
     }
 
     /**
@@ -406,24 +406,24 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     public function createCalendarObject($calendarId, $objectUri, $calendarData)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_calendar WHERE uid = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $calendarRow = $stmt->fetch();
 
         $stmt = $this->pdo->prepare('INSERT INTO tx_cal_event (pid,calendar_id, tx_caldav_uid, tx_caldav_data, tstamp) VALUES (?,?,?,?,?)');
         $uid = $this->pdo->lastInsertId();
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarRow ['pid'],
             $calendarId,
             $objectUri,
             $calendarData,
             time()
-        ));
+        ]);
         $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET tstamp = tstamp + 1 WHERE uid = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $this->updateCalEvent($calendarId, $objectUri, $calendarData);
         $this->clearCache($calendarRow ['pid']);
     }
@@ -440,21 +440,21 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     public function updateCalendarObject($calendarId, $objectUri, $calendarData)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_event WHERE calendar_id = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $calendarRow = $stmt->fetch();
         $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET tx_caldav_data = ?, tstamp = ? WHERE calendar_id = ? AND icsUid = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarData,
             time(),
             $calendarId,
             $objectUri
-        ));
+        ]);
         $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET tstamp = tstamp + 1 WHERE uid = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $this->updateCalEvent($calendarId, $objectUri, $calendarData);
         $this->clearCache($calendarRow ['pid']);
     }
@@ -470,20 +470,20 @@ class BackendTypo3 extends \Sabre\CalDAV\Backend\AbstractBackend
     public function deleteCalendarObject($calendarId, $objectUri)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_event WHERE calendar_id = ?');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $calendarRow = $stmt->fetch();
 
         $stmt = $this->pdo->prepare('DELETE FROM tx_cal_event WHERE calendar_id = ? AND icsUid = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId,
             $objectUri
-        ));
+        ]);
         $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET tstamp = tstamp + 1 WHERE uid = ? AND deleted = 0');
-        $stmt->execute(array(
+        $stmt->execute([
             $calendarId
-        ));
+        ]);
         $this->clearCache($calendarRow ['pid']);
     }
 

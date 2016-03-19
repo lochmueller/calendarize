@@ -62,11 +62,11 @@ class AuthBackendTypo3 extends AbstractBasic
         $feUserObj = $GLOBALS['TSFE']->fe_user;
 
         if (is_array($feUserObj->user) && $feUserObj->user['uid'] && $feUserObj->user['is_online']) {
-            $user = array(
+            $user = [
                 'uri'         => 'principals/' . $username,
                 'digestHash'  => md5($username . ':' . 'SabreDAV' . ':' . $username),
                 'calendar_id' => $configuration['uid']
-            );
+            ];
 
             if ($feUserObj->user['email']) {
                 $user['{http://sabredav.org/ns}email-address'] = $feUserObj->user['email'];
@@ -114,11 +114,11 @@ class AuthBackendTypo3 extends AbstractBasic
         if (!isset($userRecord['pid'])) {
             return false;
         }
-        $user = array(
+        $user = [
             'uri'         => 'principals/' . $userRow['username'],
             'digestHash'  => md5($userRow['username'] . ':' . 'SabreDAV' . ':' . $userRow['password']),
             'calendar_id' => $configuration['uid']
-        );
+        ];
         $this->username = $username;
         if ($userRow['email']) {
             $user['{http://sabredav.org/ns}email-address'] = $userRow['email'];

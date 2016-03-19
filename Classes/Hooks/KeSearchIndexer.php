@@ -29,11 +29,11 @@ class KeSearchIndexer extends AbstractHook
      */
     function registerIndexerConfiguration(&$params, $pObj)
     {
-        $newArray = array(
+        $newArray = [
             'Calendarize Indexer',
             'calendarize',
             IconUtility::getByExtensionKey('calendarize')
-        );
+        ];
         $params['items'][] = $newArray;
         $GLOBALS['TCA']['tx_kesearch_indexerconfig']['columns']['sysfolder']['displayCond'] .= ',calendarize';
     }

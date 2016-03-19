@@ -75,18 +75,18 @@ class PrincipalBackendTypo3 implements BackendInterface
     public function getPrincipalsByPrefix($prefixPath)
     {
         $result = $this->pdo->query('SELECT username, email, name FROM `' . $this->tableName . '`');
-        $principals = array();
+        $principals = [];
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             // Checking if the principal is in the prefix
             list($rowPrefix) = \Sabre\Uri\split('principals/' . $row['username']);
             if ($rowPrefix !== $prefixPath) {
                 continue;
             }
-            $principals[] = array(
+            $principals[] = [
                 'uri'                                   => 'principals/' . $row['username'],
                 '{DAV:}displayname'                     => $row['name'] ? $row['name'] : basename('principals/' . $row['username']),
                 '{http://sabredav.org/ns}email-address' => $row['email'],
-            );
+            ];
         }
 
         return $principals;
@@ -107,18 +107,18 @@ class PrincipalBackendTypo3 implements BackendInterface
         $pathParts = GeneralUtility::trimExplode('/', $path);
         $name = $pathParts[1];
         $stmt = $this->pdo->prepare('SELECT uid, username, email, name FROM `' . $this->tableName . '` WHERE username = ?');
-        $stmt->execute(array($name));
+        $stmt->execute([$name]);
 
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         if (!$row) {
             return;
         }
-        $return = array(
+        $return = [
             'id'                                    => $row['uid'],
             'uri'                                   => 'principals/' . $row['username'],
             '{DAV:}displayname'                     => $row['name'] ? $row['name'] : basename($row['username']),
             '{http://sabredav.org/ns}email-address' => $row['email'],
-        );
+        ];
 
         return $return;
 
@@ -183,9 +183,9 @@ class PrincipalBackendTypo3 implements BackendInterface
         // Grabbing the list of principal id's.
         $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . str_repeat(', ? ',
                 count($members)) . ');');
-        $stmt->execute(array_merge(array($principal), $members));
+        $stmt->execute(array_merge([$principal], $members));
 
-        $memberIds = array();
+        $memberIds = [];
         $principalId = null;
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -201,12 +201,12 @@ class PrincipalBackendTypo3 implements BackendInterface
 
         // Wiping out old members
         $stmt = $this->pdo->prepare('DELETE FROM `' . $this->groupMembersTableName . '` WHERE principal_id = ?;');
-        $stmt->execute(array($principalId));
+        $stmt->execute([$principalId]);
 
         foreach ($memberIds as $memberId) {
 
             $stmt = $this->pdo->prepare('INSERT INTO `' . $this->groupMembersTableName . '` (principal_id, member_id) VALUES (?, ?);');
-            $stmt->execute(array($principalId, $memberId));
+            $stmt->execute([$principalId, $memberId]);
 
         }
 
