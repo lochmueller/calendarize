@@ -30,11 +30,11 @@ class ModifyViewHelper extends AbstractViewHelper
         if ($dateTime === null) {
             $dateTime = $this->renderChildren();
         }
-        if ($dateTime instanceof \DateTime) {
-            $dateTime->modify($modification);
-            return '';
+        if (!$dateTime instanceof \DateTime) {
+            $dateTime = new \DateTime();
         }
-        return '';
+        $clone = clone $dateTime;
+        return $clone->modify($modification);
     }
 
 }

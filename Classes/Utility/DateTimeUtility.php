@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * DateTime Utility
@@ -113,6 +114,11 @@ class DateTimeUtility
         }
         $date->setDate($year, $month, $day);
         $date->setTime(0, 0, 0);
+        if ($date->format('m') > $month) {
+            $date->modify('last day of last month');
+        } elseif ($date->format('m') < $month) {
+            $date->modify('first day of next month');
+        }
         return $date;
     }
 

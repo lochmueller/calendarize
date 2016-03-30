@@ -7,23 +7,16 @@
 	<f:section name="Main">
 		<f:if condition="{settings.weekPid}">
 			<div class="browser">
-				<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
-
-				<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:firstDay)}">
-					<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
+				<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{firstDay -> c:dateTime.modify(modification: '-7 day')})}">
+					<c:link.week pageUid="{settings.weekPid}" date="{firstDay -> c:dateTime.modify(modification: '-7 day')}">
 						&lt;
 					</c:link.week>
 				</f:if>
-				<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
-
-				<c:dateTime.modify modification="+7 day">{firstDay}</c:dateTime.modify>
-
-				<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:firstDay)}">
-					<c:link.week pageUid="{settings.weekPid}" date="{firstDay}">
+				<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:{firstDay -> c:dateTime.modify(modification: '+7 day')})}">
+					<c:link.week pageUid="{settings.weekPid}" date="{firstDay -> c:dateTime.modify(modification: '+7 day')}">
 						&gt;
 					</c:link.week>
 				</f:if>
-				<c:dateTime.modify modification="-7 day">{firstDay}</c:dateTime.modify>
 			</div>
 		</f:if>
 
@@ -32,10 +25,9 @@
 		</h1>
 
 		<div class="row">
-			<f:for each="{0:2,1:2,2:2,3:2,4:2,5:1,6:1}" key="count" as="cols">
+			<f:for each="{weekConfiguration}" key="modify" as="cols">
 				<div class="col-md-{cols}">
-					<c:dateTime.modify modification="+1 day">{firstDay}</c:dateTime.modify>
-					<f:format.date format="{settings.dateFormat}">{firstDay}</f:format.date>
+					<f:format.date format="{settings.dateFormat}">{firstDay -> c:dateTime.modify(modification: modify)}</f:format.date>
 					<f:for each="{indices}" as="index">
 						<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay)}">
 							<li>

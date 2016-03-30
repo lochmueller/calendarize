@@ -226,9 +226,21 @@ class CalendarController extends AbstractController
         }
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $firstDay->setTime(0, 0, 0);
+
+        $weekConfiguration = [
+            '+0 day'  => 2,
+            '+1 days' => 2,
+            '+2 days' => 2,
+            '+3 days' => 2,
+            '+4 days' => 2,
+            '+5 days' => 1,
+            '+6 days' => 1
+        ];
+
         $this->slotExtendedAssignMultiple([
-            'firstDay' => $firstDay,
-            'indices'  => $this->indexRepository->findWeek($year, $week),
+            'firstDay'          => $firstDay,
+            'indices'           => $this->indexRepository->findWeek($year, $week),
+            'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
     }
 
