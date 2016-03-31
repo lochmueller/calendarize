@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Weeks in month view helper
@@ -50,17 +51,20 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
     protected function getItems(\DateTime $date)
     {
         $weeks = [];
-        $date->setDate($date->format('Y'), $date->format('n'), 1);
-        $monthCheck = $date->format('m');
-        while ((int)$monthCheck == (int)$date->format('m')) {
-            $week = (int)$date->format('W');
+
+        $dateClone = clone $date;
+        $dateClone->modify('first day of this month');
+
+        $monthCheck = $dateClone->format('m');
+        while ((int)$monthCheck == (int)$dateClone->format('m')) {
+            $week = (int)$dateClone->format('W');
             if (!isset($weeks[$week])) {
                 $weeks[$week] = [
                     'week' => $week,
-                    'date' => clone $date,
+                    'date' => clone $dateClone,
                 ];
             }
-            $date->modify('+1 day');
+            $dateClone->modify('+1 day');
         }
         return $weeks;
     }
