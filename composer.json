@@ -1,6 +1,7 @@
 {
   "name": "lochmueller/calendarize",
   "type": "typo3-cms-extension",
+  "version": "2.1.1",
   "description": "Create a structure for timely controlled tables (e.g. events) and one plugin for the different output of calendar views (list, detail, month, year, day, week...). The extension is shipped with one default event table, but you can also 'calendarize' your own table/model. It is completely independent and configurable! Use your own models as event items in this calender. Development on https://github.com/lochmueller/calendarize",
   "autoload": {
     "psr-4": {
@@ -23,7 +24,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.0"
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<9.0"
   },
   "replace": {
     "calendarize": "self.version",
