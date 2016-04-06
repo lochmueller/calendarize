@@ -7,12 +7,15 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -300,6 +303,38 @@ class IndexRepository extends AbstractRepository
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
         return $this->matchAndExecute($query, $constraints);
 
+    }
+
+    /**
+     * Find all indices by the given Event model
+     *
+     * @param AbstractEntity $event
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws Exception
+     */
+    public function findByEvent(AbstractEntity $event)
+    {
+        $query = $this->createQuery();
+        $register = Register::getRegister();
+
+        $uniqueRegisterKey = null;
+        foreach ($register as $configuration) {
+            if ($configuration['modelName'] === get_class($event)) {
+                $uniqueRegisterKey = $configuration['uniqueRegisterKey'];
+                break;
+            }
+        }
+
+        if ($uniqueRegisterKey === null) {
+            throw new Exception('No valid uniqueRegisterKey for: ' . get_class($event), 1236712342);
+        }
+
+        $this->setIndexTypes([$uniqueRegisterKey]);
+        $constraints = $this->getDefaultConstraints($query);
+        $constraints[] = $query->equals('foreignUid', $event->getUid());
+        $query->matching($query->logicalAnd($constraints));
+
+        return $query->execute();
     }
 
     /**
