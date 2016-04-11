@@ -8,8 +8,10 @@
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Model\Request\BookingRequest;
 use SJBR\StaticInfoTables\Domain\Repository\CountryRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * BookingController
@@ -34,10 +36,13 @@ class BookingController extends AbstractController
 
     /**
      * Send action
+     * 
+     * @param BookingRequest $request
      */
-    public function sendAction()
+    public function sendAction(BookingRequest $request)
     {
 
+        DebuggerUtility::var_dump($request);
 
         $this->slotExtendedAssignMultiple([
             'countries' => $this->getCountrySelection(),

@@ -1,46 +1,101 @@
-<f:render partial="BookingInformation" arguments="{index:index}"/>
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+		 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+		 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
-<f:form action="send">
-	<f:form.hidden name="index" value="{index}"/>
-	<fieldset>
-		<label>First name</label>
-		<f:form.textfield name="firstName"/>
+	<f:layout name="Default"/>
 
-		<label>Last name</label>
-		<f:form.textfield name="lastName"/>
+	<!-- Call a "c" View Helper here, to avaoid the removing of the xmlns delaration in the top
+			because PhpStorm do not know the Fluid short syntax! -->
+	<c:link.day date=""/>
 
-		<label>E-Mail</label>
-		<f:form.textfield name="email"/>
+	<f:section name="Main">
 
-		<label>Phone</label>
-		<f:form.textfield name="phone"/>
-
-		<label>Street</label>
-		<f:form.textfield name="street"/>
-
-		<label>House number</label>
-		<f:form.textfield name="houseNumber"/>
-
-		<label>ZIP</label>
-		<f:form.textfield name="zip"/>
-
-		<label>City</label>
-		<f:form.textfield name="city"/>
-
-		<label>Country</label>
-		<f:if condition="{countries -> f:count()}">
+		<f:if condition="{settings.bookingPid}">
 			<f:then>
-				<f:form.select options="{countries}" optionValueField="nameLocalized" optionLabelField="nameLocalized"
-											 sortByOptionLabel="1" prependOptionLabel="Please select" prependOptionValue="0"/>
+				<f:render partial="BookingInformation" arguments="{index:index}"/>
+
+				<f:form actionUri="{c:uri.index(index:index, pageUid: settings.bookingPid)}" name="request">
+					<f:form.hidden name="action" value="send"/>
+					<f:form.hidden name="index" value="{index}"/>
+					<fieldset>
+						<label>
+							First name *
+							<f:render partial="FieldError" arguments="{field: 'request.firstName'}"/>
+						</label>
+						<f:form.textfield property="firstName"/>
+
+						<label>
+							Last name *
+							<f:render partial="FieldError" arguments="{field: 'request.lastName'}"/>
+						</label>
+						<f:form.textfield property="lastName"/>
+
+						<label>
+							E-Mail *
+							<f:render partial="FieldError" arguments="{field: 'request.email'}"/>
+						</label>
+						<f:form.textfield property="email"/>
+
+						<label>
+							Phone
+							<f:render partial="FieldError" arguments="{field: 'request.phone'}"/>
+						</label>
+						<f:form.textfield property="phone"/>
+
+						<label>
+							Street *
+							<f:render partial="FieldError" arguments="{field: 'request.street'}"/>
+						</label>
+						<f:form.textfield property="street"/>
+
+						<label>
+							House number *
+							<f:render partial="FieldError" arguments="{field: 'request.houseNumber'}"/>
+						</label>
+						<f:form.textfield property="houseNumber"/>
+
+						<label>
+							ZIP *
+							<f:render partial="FieldError" arguments="{field: 'request.zip'}"/>
+						</label>
+						<f:form.textfield property="zip"/>
+
+						<label>
+							City *
+							<f:render partial="FieldError" arguments="{field: 'request.city'}"/>
+						</label>
+						<f:form.textfield property="city"/>
+
+						<label>
+							Country *
+							<f:render partial="FieldError" arguments="{field: 'request.country'}"/>
+						</label>
+						<f:if condition="{countries -> f:count()}">
+							<f:then>
+								<f:form.select property="country" options="{countries}" optionValueField="nameLocalized"
+															 optionLabelField="nameLocalized" sortByOptionLabel="1" prependOptionLabel="Please select"
+															 prependOptionValue="0"/>
+							</f:then>
+							<f:else>
+								<f:form.textfield property="country"/>
+							</f:else>
+						</f:if>
+
+						<label>
+							Message
+							<f:render partial="FieldError" arguments="{field: 'request.message'}"/>
+						</label>
+						<f:form.textarea property="message"/>
+
+						<f:form.submit value="send"/>
+					</fieldset>
+				</f:form>
 			</f:then>
 			<f:else>
-				<f:form.textfield name="country"/>
+				Please select the booking page in the plugin configuration of your calendarize Booking plugin
 			</f:else>
 		</f:if>
+	</f:section>
+</div>
 
-		<label>Message</label>
-		<f:form.textarea name="message"/>
 
-		<f:form.submit value="send"/>
-	</fieldset>
-</f:form>

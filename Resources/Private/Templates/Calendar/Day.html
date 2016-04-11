@@ -1,45 +1,45 @@
 <div xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
+		 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+		 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
-	<f:layout name="Default" />
+	<f:layout name="Default"/>
 
 	<f:section name="Main">
-		<f:section name="Main">
 
-			<f:if condition="{settings.dayPid}">
-				<div class="browser">
+		<f:if condition="{settings.dayPid}">
+			<div class="browser">
 
-					<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:previous)}">
-						<c:link.day pageUid="{settings.dayPid}" date="{previous}">
-							&lt; <f:format.date format="{settings.dateFormat}">{previous}</f:format.date>
-						</c:link.day>
-					</f:if>
+				<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:previous)}">
+					<c:link.day pageUid="{settings.dayPid}" date="{previous}">
+						&lt;
+						<f:format.date format="{settings.dateFormat}">{previous}</f:format.date>
+					</c:link.day>
+				</f:if>
 
-					<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:next)}">
-						<c:link.day pageUid="{settings.dayPid}" date="{next}">
-							<f:format.date format="{settings.dateFormat}">{next}</f:format.date> &gt;
-						</c:link.day>
-					</f:if>
+				<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:next)}">
+					<c:link.day pageUid="{settings.dayPid}" date="{next}">
+						<f:format.date format="{settings.dateFormat}">{next}</f:format.date>
+						&gt;
+					</c:link.day>
+				</f:if>
 
-				</div>
-			</f:if>
+			</div>
+		</f:if>
 
-			<h1>
-				<f:format.date format="{settings.dateFormat}">{today}</f:format.date>
-			</h1>
+		<h1>
+			<f:format.date format="{settings.dateFormat}">{today}</f:format.date>
+		</h1>
 
-			<f:if condition="{indices}">
-				<f:then>
-					<f:for each="{indices}" as="index">
-						<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
-					</f:for>
-				</f:then>
-				<f:else>
-					<f:translate key="noEvents.day" />
-				</f:else>
-			</f:if>
+		<f:if condition="{indices}">
+			<f:then>
+				<f:for each="{indices}" as="index">
+					<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}"/>
+				</f:for>
+			</f:then>
+			<f:else>
+				<f:translate key="noEvents.day"/>
+			</f:else>
+		</f:if>
 
-		</f:section>
 	</f:section>
 </div>

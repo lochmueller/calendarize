@@ -1,0 +1,14 @@
+<f:form.validationResults for="{field}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<span class="error">
+			<f:for each="{validationResults.errors}" as="error" iteration="i">
+				<f:if condition="{i.isFirst}">
+					<f:alias map="{message: 'error.{field}.{error.code}: {error}'}">
+						<f:translate key="error.{field}.{error.code}" default="{message}"/>
+					</f:alias>
+				</f:if>
+			</f:for>
+		</span>
+	</f:if>
+</f:form.validationResults>
+
