@@ -20,9 +20,13 @@ class BookingController extends AbstractController
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
      */
-    public function formAction(Index $index = null)
+    public function bookingAction(Index $index = null)
     {
         $this->view->assign('index', $index);
+
+        $this->slotExtendedAssignMultiple([
+            'index' => $index,
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
@@ -31,5 +35,8 @@ class BookingController extends AbstractController
     public function sendAction()
     {
 
+
+        $this->slotExtendedAssignMultiple([
+        ], __CLASS__, __FUNCTION__);
     }
 }

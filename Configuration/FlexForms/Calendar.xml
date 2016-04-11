@@ -68,6 +68,14 @@
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.day</numIndex>
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>
+									<numIndex index="12">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
+										<numIndex index="1">--div--</numIndex>
+									</numIndex>
+									<numIndex index="13">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
+										<numIndex index="1">Booking->booking;Booking->send</numIndex>
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>

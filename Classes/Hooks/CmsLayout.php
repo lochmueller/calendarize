@@ -103,6 +103,7 @@ class CmsLayout extends AbstractHook
             'monthPid',
             'weekPid',
             'dayPid',
+            'bookingPid',
         ];
         foreach ($pageIdsNames as $pageIdName) {
             $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');

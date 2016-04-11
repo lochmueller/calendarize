@@ -15,22 +15,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Calendar
  */
 class CalendarController extends AbstractController
 {
-
-    /**
-     * The index repository
-     *
-     * @var \HDNET\Calendarize\Domain\Repository\IndexRepository
-     * @inject
-     */
-    protected $indexRepository;
-
     /**
      * Init all actions
      */
@@ -59,12 +49,12 @@ class CalendarController extends AbstractController
      * Latest action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $week
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $customSearch *
+     * @param int $year
+     * @param int $month
+     * @param int $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -88,12 +78,12 @@ class CalendarController extends AbstractController
      * Result action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $week
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $customSearch *
+     * @param int $year
+     * @param int $month
+     * @param int $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -117,13 +107,13 @@ class CalendarController extends AbstractController
      * List action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $day
-     * @param int                                   $week
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $customSearch *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -166,7 +156,7 @@ class CalendarController extends AbstractController
         }
 
         $this->slotExtendedAssignMultiple([
-            'indices'    => $indices,
+            'indices' => $indices,
             'searchMode' => $searchMode
         ], __CLASS__, __FUNCTION__);
     }
@@ -184,7 +174,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'indices' => $this->indexRepository->findYear($date->format('Y')),
-            'date'    => $date
+            'date' => $date
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -202,7 +192,7 @@ class CalendarController extends AbstractController
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
 
         $this->slotExtendedAssignMultiple([
-            'date'    => $date,
+            'date' => $date,
             'indices' => $this->indexRepository->findMonth($date->format('Y'), $date->format('n')),
         ], __CLASS__, __FUNCTION__);
     }
@@ -228,7 +218,7 @@ class CalendarController extends AbstractController
         $firstDay->setTime(0, 0, 0);
 
         $weekConfiguration = [
-            '+0 day'  => 2,
+            '+0 day' => 2,
             '+1 days' => 2,
             '+2 days' => 2,
             '+3 days' => 2,
@@ -238,8 +228,8 @@ class CalendarController extends AbstractController
         ];
 
         $this->slotExtendedAssignMultiple([
-            'firstDay'          => $firstDay,
-            'indices'           => $this->indexRepository->findWeek($year, $week),
+            'firstDay' => $firstDay,
+            'indices' => $this->indexRepository->findWeek($year, $week),
             'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
     }
@@ -265,10 +255,10 @@ class CalendarController extends AbstractController
         $next->modify('+1 day');
 
         $this->slotExtendedAssignMultiple([
-            'indices'  => $this->indexRepository->findDay($date->format('Y'), $date->format('n'), $date->format('j')),
-            'today'    => $date,
+            'indices' => $this->indexRepository->findDay($date->format('Y'), $date->format('n'), $date->format('j')),
+            'today' => $date,
             'previous' => $previous,
-            'next'     => $next,
+            'next' => $next,
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -289,7 +279,7 @@ class CalendarController extends AbstractController
         }
 
         $this->slotExtendedAssignMultiple([
-            'index'  => $index,
+            'index' => $index,
             'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY')
         ], __CLASS__, __FUNCTION__);
 
@@ -301,7 +291,7 @@ class CalendarController extends AbstractController
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array     $customSearch
+     * @param array $customSearch
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -319,9 +309,9 @@ class CalendarController extends AbstractController
         }
 
         $this->slotExtendedAssignMultiple([
-            'startDate'      => $startDate,
-            'endDate'        => $endDate,
-            'customSearch'   => $customSearch,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'customSearch' => $customSearch,
             'configurations' => $this->getCurrentConfigurations()
         ], __CLASS__, __FUNCTION__);
     }

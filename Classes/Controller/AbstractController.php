@@ -17,6 +17,13 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 abstract class AbstractController extends ActionController
 {
+    /**
+     * The index repository
+     *
+     * @var \HDNET\Calendarize\Domain\Repository\IndexRepository
+     * @inject
+     */
+    protected $indexRepository;
 
     /**
      * The feed formats and content types

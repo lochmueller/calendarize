@@ -1,0 +1,11 @@
+<f:form action="send">
+	<f:form.hidden name="index" value="{index}"/>
+
+	<f:render partial="BookingInformation" arguments="{index:index}"/>
+
+	<f:form.textfield name="fullName"/>
+
+	<f:form.textfield name="email"/>
+
+	<f:form.submit value="send"/>
+</f:form>

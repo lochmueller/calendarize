@@ -23,9 +23,6 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'Calendar',
     \HDNET\Calendarize\Utility\TranslateUtility::get('pluginName'));
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'CalendarBooking',
-    \HDNET\Calendarize\Utility\TranslateUtility::get('pluginNameBooking'));
-
 
 // module icon
 $extensionIcon = \HDNET\Autoloader\Utility\IconUtility::getByExtensionKey('calendarize', true);

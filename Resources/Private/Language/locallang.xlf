@@ -166,6 +166,12 @@
 		<trans-unit id="mode.detail">
 			<source>Detail only</source>
 		</trans-unit>
+		<trans-unit id="mode.booking">
+			<source>Booking</source>
+		</trans-unit>
+		<trans-unit id="mode.bookingSend">
+			<source>Booking</source>
+		</trans-unit>
 		<trans-unit id="mode.latest">
 			<source>Latest</source>
 		</trans-unit>

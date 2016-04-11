@@ -8,7 +8,6 @@
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * DateTime Utility
