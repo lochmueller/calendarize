@@ -202,6 +202,9 @@
 										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
 										<OR>
 											<numIndex>FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+											<OR>
+												<numIndex>FIELD:switchableControllerActions:=:Calendar->result</numIndex>
+											</OR>
 										</OR>
 									</OR>
 								</OR>
