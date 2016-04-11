@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\UserFunction;
 
+use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\RealUrlInterface;
@@ -127,16 +128,11 @@ class RealurlAlias
 
         $realUrlVersion = VersionNumberUtility::convertVersionNumberToInteger(ExtensionManagementUtility::getExtensionVersion('realurl'));
         if ($realUrlVersion >= 2000000) {
-            $class = 'DmitryDulepov\\Realurl\\Encoder\\UrlEncoder';
-            /** @var \DmitryDulepov\Realurl\Encoder\UrlEncoder $realUrl */
-            $realUrl = GeneralUtility::makeInstance($class);
-
+            $configuration = GeneralUtility::makeInstance('DmitryDulepov\\Realurl\\Configuration\\ConfigurationReader', ConfigurationReader::MODE_ENCODE);
             // Init the internal utility by ObjectAccess because the property is
             // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
-            $utility = GeneralUtility::makeInstance('DmitryDulepov\\Realurl\\Utility');
-            ObjectAccess::setProperty($realUrl, 'utility', $utility, true);
-
-            $processedTitle = $realUrl->cleanUpAlias([], $title);
+            $utility = GeneralUtility::makeInstance('DmitryDulepov\\Realurl\\Utility', $configuration);
+            $processedTitle = $utility->convertToSafeString($title);
         } else {
             /** @var \tx_realurl_advanced $realUrl */
             $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');

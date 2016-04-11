@@ -1,11 +1,46 @@
+<f:render partial="BookingInformation" arguments="{index:index}"/>
+
 <f:form action="send">
 	<f:form.hidden name="index" value="{index}"/>
+	<fieldset>
+		<label>First name</label>
+		<f:form.textfield name="firstName"/>
 
-	<f:render partial="BookingInformation" arguments="{index:index}"/>
+		<label>Last name</label>
+		<f:form.textfield name="lastName"/>
 
-	<f:form.textfield name="fullName"/>
+		<label>E-Mail</label>
+		<f:form.textfield name="email"/>
 
-	<f:form.textfield name="email"/>
+		<label>Phone</label>
+		<f:form.textfield name="phone"/>
 
-	<f:form.submit value="send"/>
+		<label>Street</label>
+		<f:form.textfield name="street"/>
+
+		<label>House number</label>
+		<f:form.textfield name="houseNumber"/>
+
+		<label>ZIP</label>
+		<f:form.textfield name="zip"/>
+
+		<label>City</label>
+		<f:form.textfield name="city"/>
+
+		<label>Country</label>
+		<f:if condition="{countries -> f:count()}">
+			<f:then>
+				<f:form.select options="{countries}" optionValueField="nameLocalized" optionLabelField="nameLocalized"
+											 sortByOptionLabel="1" prependOptionLabel="Please select" prependOptionValue="0"/>
+			</f:then>
+			<f:else>
+				<f:form.textfield name="country"/>
+			</f:else>
+		</f:if>
+
+		<label>Message</label>
+		<f:form.textarea name="message"/>
+
+		<f:form.submit value="send"/>
+	</fieldset>
 </f:form>

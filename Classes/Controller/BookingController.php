@@ -8,6 +8,8 @@
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
+use SJBR\StaticInfoTables\Domain\Repository\CountryRepository;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * BookingController
@@ -26,6 +28,7 @@ class BookingController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'index' => $index,
+            'countries' => $this->getCountrySelection(),
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -37,6 +40,22 @@ class BookingController extends AbstractController
 
 
         $this->slotExtendedAssignMultiple([
+            'countries' => $this->getCountrySelection(),
         ], __CLASS__, __FUNCTION__);
+    }
+
+    /**
+     * Get country selection
+     *
+     * @return array
+     */
+    protected function getCountrySelection()
+    {
+        if (!ExtensionManagementUtility::isLoaded('static_info_tables')) {
+            return [];
+        }
+        /** @var CountryRepository $repository */
+        $repository = $this->objectManager->get('SJBR\\StaticInfoTables\\Domain\\Repository\\CountryRepository');
+        return $repository->findAll();
     }
 }
