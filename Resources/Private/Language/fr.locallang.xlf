@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2015-12-05T19:55:37Z">
+	<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2016-04-11T14:03:06Z">
 		<header>
 			<type>database</type>
-			<description>Language file for EXT:calendarize</description>
 			<authorName>Tim Lochmüller</authorName>
 			<authorEmail>tim@fruit-lab.de</authorEmail>
 			<generator>LFEditor</generator>
