@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-02-26T13:48:52Z">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-04-11T14:12:36Z">
 		<header>
 			<type>database</type>
 			<description>Language file for EXT:calendarize</description>
@@ -13,21 +13,57 @@
 			<source>All day</source>
 			<target>ganztägig</target>
 		</trans-unit>
+		<trans-unit id="back" approved="yes">
+			<source>back</source>
+			<target>zurück</target>
+		</trans-unit>
 		<trans-unit id="booking" approved="yes">
 			<source>Booking</source>
 			<target>buchen</target>
 		</trans-unit>
-		<trans-unit id="more" approved="yes">
-			<source>More</source>
-			<target>mehr</target>
+		<trans-unit id="booking.city" approved="yes">
+			<source>City</source>
+			<target>Stadt</target>
 		</trans-unit>
-		<trans-unit id="all_day" approved="yes">
-			<source>All day</source>
-			<target>ganztägig</target>
+		<trans-unit id="booking.country" approved="yes">
+			<source>Country</source>
+			<target>Land</target>
 		</trans-unit>
-		<trans-unit id="back" approved="yes">
-			<source>back</source>
-			<target>zurück</target>
+		<trans-unit id="booking.email" approved="yes">
+			<source>E-Mail</source>
+			<target>E-Mail</target>
+		</trans-unit>
+		<trans-unit id="booking.firstName" approved="yes">
+			<source>First name</source>
+			<target>Vorname</target>
+		</trans-unit>
+		<trans-unit id="booking.houseNumber" approved="yes">
+			<source>House number</source>
+			<target>Hausnummer</target>
+		</trans-unit>
+		<trans-unit id="booking.lastName" approved="yes">
+			<source>Last name</source>
+			<target>Nachname</target>
+		</trans-unit>
+		<trans-unit id="booking.message" approved="yes">
+			<source>Message</source>
+			<target>Nachricht</target>
+		</trans-unit>
+		<trans-unit id="booking.phone" approved="yes">
+			<source>Phone</source>
+			<target>Telefon</target>
+		</trans-unit>
+		<trans-unit id="booking.send" approved="yes">
+			<source>Send</source>
+			<target>Senden</target>
+		</trans-unit>
+		<trans-unit id="booking.street" approved="yes">
+			<source>Street</source>
+			<target>Straße</target>
+		</trans-unit>
+		<trans-unit id="booking.zip" approved="yes">
+			<source>ZIP</source>
+			<target>PLZ</target>
 		</trans-unit>
 		<trans-unit id="bookingPid" approved="yes">
 			<source>Booking PID</source>
@@ -166,7 +202,7 @@
 			<target>Datum</target>
 		</trans-unit>
 		<trans-unit id="dateOptions" approved="yes">
-			<source></source>
+			<source>Date options</source>
 			<target>Datum Optionen</target>
 		</trans-unit>
 		<trans-unit id="dayPid" approved="yes">
@@ -177,8 +213,44 @@
 			<source>Detail PID</source>
 			<target>Detail PID</target>
 		</trans-unit>
+		<trans-unit id="error.request.city.1221560718" approved="yes">
+			<source>Please enter your city.</source>
+			<target>Bitte gebe deine Stadt ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.country.1221560718" approved="yes">
+			<source>Please enter your country.</source>
+			<target>Bitte gebe dein Land ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.email.1221559976" approved="yes">
+			<source>Please enter a valid E-Mail address.</source>
+			<target>Bitte gebe eine valide E-Mail Adresse ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.email.1221560718" approved="yes">
+			<source>Please enter your E-Mail address.</source>
+			<target>Bitte gebe deine E-Mail Adresse ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.firstName.1221560718" approved="yes">
+			<source>Please enter your first name.</source>
+			<target>Bitte gebe deinen Vornamen ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.houseNumber.1221560718" approved="yes">
+			<source>Please enter your house number.</source>
+			<target>Bitte gebe deine Hausnummer ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.lastName.1221560718" approved="yes">
+			<source>Please enter your last name.</source>
+			<target>Bitte gebe deinen Nachnamen ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.street.1221560718" approved="yes">
+			<source>Please enter your street.</source>
+			<target>Bitte gebe deine Straße ein.</target>
+		</trans-unit>
+		<trans-unit id="error.request.zip.1221560718" approved="yes">
+			<source>Please enter your ZIP.</source>
+			<target>Bitte gebe deine PLZ ein.</target>
+		</trans-unit>
 		<trans-unit id="files" approved="yes">
-			<source></source>
+			<source>Files</source>
 			<target>Dateien</target>
 		</trans-unit>
 		<trans-unit id="frequency_configuration" approved="yes">
@@ -212,6 +284,14 @@
 		<trans-unit id="mode" approved="yes">
 			<source>Mode</source>
 			<target>Modus</target>
+		</trans-unit>
+		<trans-unit id="mode.booking" approved="yes">
+			<source>Booking</source>
+			<target>Buchung</target>
+		</trans-unit>
+		<trans-unit id="mode.bookingSend" approved="yes">
+			<source>Booking</source>
+			<target>Buchung</target>
 		</trans-unit>
 		<trans-unit id="mode.day" approved="yes">
 			<source>Day</source>
@@ -264,6 +344,10 @@
 		<trans-unit id="monthPid" approved="yes">
 			<source>Month PID</source>
 			<target>Monats PID</target>
+		</trans-unit>
+		<trans-unit id="more" approved="yes">
+			<source>More</source>
+			<target>mehr</target>
 		</trans-unit>
 		<trans-unit id="noEventDetailView" approved="yes">
 			<source>No Event found! There is no valid fallback PID (list) in the detail plugin</source>
@@ -318,19 +402,19 @@
 			<target>Zeit</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_caldav" approved="yes">
-			<source></source>
+			<source>CalDav configuration</source>
 			<target>CalDav Konfiguration</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_caldav.event_storage" approved="yes">
-			<source></source>
+			<source>Event Storage</source>
 			<target>Ereignis Ordner</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_caldav.title" approved="yes">
-			<source></source>
+			<source>Title</source>
 			<target>Titel</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_caldav.user_storage" approved="yes">
-			<source></source>
+			<source>User Storage</source>
 			<target>Benutzer Ordner</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
@@ -418,7 +502,7 @@
 			<target>Ereignis</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.abstract" approved="yes">
-			<source></source>
+			<source>Abstract</source>
 			<target>Abstrakt</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.description" approved="yes">
@@ -438,7 +522,7 @@
 			<target>Import ID</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.location" approved="yes">
-			<source></source>
+			<source>Location</source>
 			<target>Ort</target>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.title" approved="yes">

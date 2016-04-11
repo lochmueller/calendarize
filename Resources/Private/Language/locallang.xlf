@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2015-12-05T19:23:33Z">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-04-11T14:06:26Z">
 		<header>
 			<type>database</type>
 			<description>Language file for EXT:calendarize</description>
@@ -9,50 +9,50 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
-
-		<trans-unit id="booking.firstName"><source><![CDATA[First name]]></source></trans-unit>
-		<trans-unit id="error.request.firstName.1221560718"><source><![CDATA[Please enter your first name.]]></source></trans-unit>
-		<trans-unit id="booking.lastName"><source><![CDATA[Last name]]></source></trans-unit>
-		<trans-unit id="error.request.lastName.1221560718"><source><![CDATA[Please enter your last name.]]></source></trans-unit>
-		<trans-unit id="booking.email"><source><![CDATA[E-Mail]]></source></trans-unit>
-		<trans-unit id="error.request.email.1221560718"><source><![CDATA[Please enter your E-Mail address.]]></source></trans-unit>
-		<trans-unit id="error.request.email.1221559976"><source><![CDATA[Please enter a valid E-Mail address.]]></source></trans-unit>
-		<trans-unit id="booking.phone"><source><![CDATA[Phone]]></source></trans-unit>
-		<trans-unit id="booking.street"><source><![CDATA[Street]]></source></trans-unit>
-		<trans-unit id="error.request.street.1221560718"><source><![CDATA[Please enter your street.]]></source></trans-unit>
-		<trans-unit id="booking.houseNumber"><source><![CDATA[House number]]></source></trans-unit>
-		<trans-unit id="error.request.houseNumber.1221560718"><source><![CDATA[Please enter your house number.]]></source></trans-unit>
-		<trans-unit id="booking.zip"><source><![CDATA[ZIP]]></source></trans-unit>
-		<trans-unit id="error.request.zip.1221560718"><source><![CDATA[Please enter your ZIP.]]></source></trans-unit>
-		<trans-unit id="booking.city"><source><![CDATA[City]]></source></trans-unit>
-		<trans-unit id="error.request.city.1221560718"><source><![CDATA[Please enter your city.]]></source></trans-unit>
-		<trans-unit id="booking.country"><source><![CDATA[Country]]></source></trans-unit>
-		<trans-unit id="error.request.country.1221560718"><source><![CDATA[Please enter your country.]]></source></trans-unit>
-		<trans-unit id="booking.message"><source><![CDATA[Message]]></source></trans-unit>
-		<trans-unit id="booking.send"><source><![CDATA[Send]]></source></trans-unit>
-
-
-
-
-
-		<trans-unit id="booking"><source><![CDATA[Booking]]></source></trans-unit>
-		<trans-unit id="more"><source><![CDATA[More]]></source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_event.abstract"><source><![CDATA[Abstract]]></source></trans-unit>
-			<trans-unit id="files"><source><![CDATA[Files]]></source></trans-unit>
-			<trans-unit id="dateOptions"><source><![CDATA[Date options]]></source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_event.location"><source><![CDATA[Location]]></source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_caldav"><source><![CDATA[CalDav configuration]]></source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_caldav.event_storage"><source><![CDATA[Event Storage]]></source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_caldav.user_storage"><source><![CDATA[User Storage]]></source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_caldav.title"><source><![CDATA[Title]]></source></trans-unit>
 		<trans-unit id="all_day">
 			<source>All day</source>
 		</trans-unit>
-		<trans-unit id="openEndTime">
-			<source>open end</source>
-		</trans-unit>
 		<trans-unit id="back">
 			<source>back</source>
+		</trans-unit>
+		<trans-unit id="booking">
+			<source>Booking</source>
+		</trans-unit>
+		<trans-unit id="booking.city">
+			<source>City</source>
+		</trans-unit>
+		<trans-unit id="booking.country">
+			<source>Country</source>
+		</trans-unit>
+		<trans-unit id="booking.email">
+			<source>E-Mail</source>
+		</trans-unit>
+		<trans-unit id="booking.firstName">
+			<source>First name</source>
+		</trans-unit>
+		<trans-unit id="booking.houseNumber">
+			<source>House number</source>
+		</trans-unit>
+		<trans-unit id="booking.lastName">
+			<source>Last name</source>
+		</trans-unit>
+		<trans-unit id="booking.message">
+			<source>Message</source>
+		</trans-unit>
+		<trans-unit id="booking.phone">
+			<source>Phone</source>
+		</trans-unit>
+		<trans-unit id="booking.send">
+			<source>Send</source>
+		</trans-unit>
+		<trans-unit id="booking.street">
+			<source>Street</source>
+		</trans-unit>
+		<trans-unit id="booking.zip">
+			<source>ZIP</source>
+		</trans-unit>
+		<trans-unit id="bookingPid">
+			<source>Booking PID</source>
 		</trans-unit>
 		<trans-unit id="configuration">
 			<source>Configuration</source>
@@ -153,14 +153,44 @@
 		<trans-unit id="date">
 			<source>Date</source>
 		</trans-unit>
+		<trans-unit id="dateOptions">
+			<source>Date options</source>
+		</trans-unit>
 		<trans-unit id="dayPid">
 			<source>Day PID</source>
 		</trans-unit>
-		<trans-unit id="bookingPid">
-			<source>Booking PID</source>
-		</trans-unit>
 		<trans-unit id="detailPid">
 			<source>Detail PID</source>
+		</trans-unit>
+		<trans-unit id="error.request.city.1221560718">
+			<source>Please enter your city.</source>
+		</trans-unit>
+		<trans-unit id="error.request.country.1221560718">
+			<source>Please enter your country.</source>
+		</trans-unit>
+		<trans-unit id="error.request.email.1221559976">
+			<source>Please enter a valid E-Mail address.</source>
+		</trans-unit>
+		<trans-unit id="error.request.email.1221560718">
+			<source>Please enter your E-Mail address.</source>
+		</trans-unit>
+		<trans-unit id="error.request.firstName.1221560718">
+			<source>Please enter your first name.</source>
+		</trans-unit>
+		<trans-unit id="error.request.houseNumber.1221560718">
+			<source>Please enter your house number.</source>
+		</trans-unit>
+		<trans-unit id="error.request.lastName.1221560718">
+			<source>Please enter your last name.</source>
+		</trans-unit>
+		<trans-unit id="error.request.street.1221560718">
+			<source>Please enter your street.</source>
+		</trans-unit>
+		<trans-unit id="error.request.zip.1221560718">
+			<source>Please enter your ZIP.</source>
+		</trans-unit>
+		<trans-unit id="files">
+			<source>Files</source>
 		</trans-unit>
 		<trans-unit id="frequency_configuration">
 			<source>Frequency configuration</source>
@@ -186,17 +216,17 @@
 		<trans-unit id="mode">
 			<source>Mode</source>
 		</trans-unit>
-		<trans-unit id="mode.day">
-			<source>Day</source>
-		</trans-unit>
-		<trans-unit id="mode.detail">
-			<source>Detail only</source>
-		</trans-unit>
 		<trans-unit id="mode.booking">
 			<source>Booking</source>
 		</trans-unit>
 		<trans-unit id="mode.bookingSend">
 			<source>Booking</source>
+		</trans-unit>
+		<trans-unit id="mode.day">
+			<source>Day</source>
+		</trans-unit>
+		<trans-unit id="mode.detail">
+			<source>Detail only</source>
 		</trans-unit>
 		<trans-unit id="mode.latest">
 			<source>Latest</source>
@@ -231,6 +261,9 @@
 		<trans-unit id="monthPid">
 			<source>Month PID</source>
 		</trans-unit>
+		<trans-unit id="more">
+			<source>More</source>
+		</trans-unit>
 		<trans-unit id="noEventDetailView">
 			<source>No Event found! There is no valid fallback PID (list) in the detail plugin</source>
 		</trans-unit>
@@ -239,6 +272,9 @@
 		</trans-unit>
 		<trans-unit id="noEvents.day">
 			<source>There are no events on the current date</source>
+		</trans-unit>
+		<trans-unit id="openEndTime">
+			<source>open end</source>
 		</trans-unit>
 		<trans-unit id="pidConfiguration">
 			<source>Page ID configuration</source>
@@ -267,6 +303,18 @@
 		<trans-unit id="time">
 			<source>Time</source>
 		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav">
+			<source>CalDav configuration</source>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav.event_storage">
+			<source>Event Storage</source>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav.title">
+			<source>Title</source>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_caldav.user_storage">
+			<source>User Storage</source>
+		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration">
 			<source>Configuration</source>
 		</trans-unit>
@@ -289,7 +337,7 @@
 			<source>End date (optionally)</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.end_time">
-			<source>End time (00:00 means "open end")</source>
+			<source>End time (00:00 means &quot;open end&quot;)</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url">
 			<source>External ICS URL</source>
@@ -330,6 +378,9 @@
 		<trans-unit id="tx_calendarize_domain_model_event">
 			<source>Event</source>
 		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_event.abstract">
+			<source>Abstract</source>
+		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.description">
 			<source>Description</source>
 		</trans-unit>
@@ -341,6 +392,9 @@
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.import_id">
 			<source>Import ID</source>
+		</trans-unit>
+		<trans-unit id="tx_calendarize_domain_model_event.location">
+			<source>Location</source>
 		</trans-unit>
 		<trans-unit id="tx_calendarize_domain_model_event.title">
 			<source>Title</source>
