@@ -8,7 +8,7 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
-			<trans-unit id="configurations.alttitle"><source><![CDATA[calendarize ==> LLL:configurations.alttitle]]></source></trans-unit>
+			<trans-unit id="configurations.alttitle"><source></source></trans-unit>
 		<trans-unit id="configurations.alttitle">
 			<source></source>
 		</trans-unit>

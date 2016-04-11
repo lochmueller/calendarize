@@ -8,9 +8,9 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
-			<trans-unit id="location.alttitle"><source><![CDATA[calendarize ==> LLL:location.alttitle]]></source></trans-unit>
-			<trans-unit id="description.alttitle"><source><![CDATA[calendarize ==> LLL:description.alttitle]]></source></trans-unit>
-			<trans-unit id="abstract.alttitle"><source><![CDATA[calendarize ==> LLL:abstract.alttitle]]></source></trans-unit>
+			<trans-unit id="location.alttitle"><source></source></trans-unit>
+			<trans-unit id="description.alttitle"><source></source></trans-unit>
+			<trans-unit id="abstract.alttitle"><source></source></trans-unit>
 		<trans-unit id="description.alttitle">
 			<source></source>
 		</trans-unit>

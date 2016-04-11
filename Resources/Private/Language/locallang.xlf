@@ -9,6 +9,32 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+
+		<trans-unit id="booking.firstName"><source><![CDATA[First name]]></source></trans-unit>
+		<trans-unit id="error.request.firstName.1221560718"><source><![CDATA[Please enter your first name.]]></source></trans-unit>
+		<trans-unit id="booking.lastName"><source><![CDATA[Last name]]></source></trans-unit>
+		<trans-unit id="error.request.lastName.1221560718"><source><![CDATA[Please enter your last name.]]></source></trans-unit>
+		<trans-unit id="booking.email"><source><![CDATA[E-Mail]]></source></trans-unit>
+		<trans-unit id="error.request.email.1221560718"><source><![CDATA[Please enter your E-Mail address.]]></source></trans-unit>
+		<trans-unit id="error.request.email.1221559976"><source><![CDATA[Please enter a valid E-Mail address.]]></source></trans-unit>
+		<trans-unit id="booking.phone"><source><![CDATA[Phone]]></source></trans-unit>
+		<trans-unit id="booking.street"><source><![CDATA[Street]]></source></trans-unit>
+		<trans-unit id="error.request.street.1221560718"><source><![CDATA[Please enter your street.]]></source></trans-unit>
+		<trans-unit id="booking.houseNumber"><source><![CDATA[House number]]></source></trans-unit>
+		<trans-unit id="error.request.houseNumber.1221560718"><source><![CDATA[Please enter your house number.]]></source></trans-unit>
+		<trans-unit id="booking.zip"><source><![CDATA[ZIP]]></source></trans-unit>
+		<trans-unit id="error.request.zip.1221560718"><source><![CDATA[Please enter your ZIP.]]></source></trans-unit>
+		<trans-unit id="booking.city"><source><![CDATA[City]]></source></trans-unit>
+		<trans-unit id="error.request.city.1221560718"><source><![CDATA[Please enter your city.]]></source></trans-unit>
+		<trans-unit id="booking.country"><source><![CDATA[Country]]></source></trans-unit>
+		<trans-unit id="error.request.country.1221560718"><source><![CDATA[Please enter your country.]]></source></trans-unit>
+		<trans-unit id="booking.message"><source><![CDATA[Message]]></source></trans-unit>
+		<trans-unit id="booking.send"><source><![CDATA[Send]]></source></trans-unit>
+
+
+
+
+
 		<trans-unit id="booking"><source><![CDATA[Booking]]></source></trans-unit>
 		<trans-unit id="more"><source><![CDATA[More]]></source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_event.abstract"><source><![CDATA[Abstract]]></source></trans-unit>

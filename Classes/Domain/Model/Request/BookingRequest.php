@@ -42,7 +42,6 @@ class BookingRequest extends AbstractModel
      * Phone
      *
      * @var string
-     * @validate NotEmpty
      */
     protected $phone;
 
