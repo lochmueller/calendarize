@@ -36,7 +36,6 @@ class KeSearchIndexer extends AbstractHook
             IconUtility::getByExtensionKey('calendarize')
         ];
         $params['items'][] = $newArray;
-        $GLOBALS['TCA']['tx_kesearch_indexerconfig']['columns']['sysfolder']['displayCond'] .= ',calendarize';
     }
 
     /**
@@ -55,7 +54,7 @@ class KeSearchIndexer extends AbstractHook
 
         /** @var IndexRepository $indexRepository */
         $indexRepository = HelperUtility::create(IndexRepository::class);
-        $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['storagepid']));
+        $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $indexObjects = $indexRepository->findList()
             ->toArray();
 

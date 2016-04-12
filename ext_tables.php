@@ -21,6 +21,10 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
         ->add('calendarize', 'tx_calendarize_domain_model_event');
 }
 
+if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
+    $GLOBALS['TCA']['tx_kesearch_indexerconfig']['columns']['sysfolder']['displayCond'] .= ',calendarize';
+}
+
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'Calendar',
     \HDNET\Calendarize\Utility\TranslateUtility::get('pluginName'));
 
