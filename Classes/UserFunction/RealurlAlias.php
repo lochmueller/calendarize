@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\UserFunction;
 
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
+use DmitryDulepov\Realurl\Utility;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\RealUrlInterface;
@@ -128,10 +129,10 @@ class RealurlAlias
 
         $realUrlVersion = VersionNumberUtility::convertVersionNumberToInteger(ExtensionManagementUtility::getExtensionVersion('realurl'));
         if ($realUrlVersion >= 2000000) {
-            $configuration = GeneralUtility::makeInstance(\DmitryDulepov\Realurl\Configuration\ConfigurationReader::class, ConfigurationReader::MODE_ENCODE);
+            $configuration = GeneralUtility::makeInstance(ConfigurationReader::class, ConfigurationReader::MODE_ENCODE);
             // Init the internal utility by ObjectAccess because the property is
             // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
-            $utility = GeneralUtility::makeInstance(\DmitryDulepov\Realurl\Utility::class, $configuration);
+            $utility = GeneralUtility::makeInstance(Utility::class, $configuration);
             $processedTitle = $utility->convertToSafeString($title);
         } else {
             /** @var \tx_realurl_advanced $realUrl */

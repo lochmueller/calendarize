@@ -18,6 +18,7 @@ use Sabre\DAV\Server;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Utility\EidUtility;
 
@@ -63,7 +64,7 @@ class CalDav extends AbstractService
         EidUtility::initLanguage();
 
         /** @var TypoScriptFrontendController $TSFE */
-        $TSFE = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
+        $TSFE = GeneralUtility::makeInstance(TypoScriptFrontendController::class,
             $GLOBALS['TYPO3_CONF_VARS'], 0, 0);
         EidUtility::initLanguage();
 
@@ -75,7 +76,7 @@ class CalDav extends AbstractService
         // $TSFE->getConfigArray();
         Bootstrap::getInstance()
             ->loadCachedTca();
-        $TSFE->cObj = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer::class);
+        $TSFE->cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $TSFE->settingLanguage();
         $TSFE->settingLocale();
     }

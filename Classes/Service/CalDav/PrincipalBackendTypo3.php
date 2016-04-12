@@ -111,7 +111,7 @@ class PrincipalBackendTypo3 implements BackendInterface
 
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         if (!$row) {
-            return;
+            return [];
         }
         $return = [
             'id'                                    => $row['uid'],

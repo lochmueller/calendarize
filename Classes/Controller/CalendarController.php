@@ -35,12 +35,12 @@ class CalendarController extends AbstractController
 
         if (isset($this->arguments['startDate'])) {
             $this->arguments['startDate']->getPropertyMappingConfiguration()
-                ->setTypeConverterOption(\TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter::class,
+                ->setTypeConverterOption(DateTimeConverter::class,
                     DateTimeConverter::CONFIGURATION_DATE_FORMAT, $this->settings['dateFormat']);
         }
         if (isset($this->arguments['endDate'])) {
             $this->arguments['endDate']->getPropertyMappingConfiguration()
-                ->setTypeConverterOption(\TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter::class,
+                ->setTypeConverterOption(DateTimeConverter::class,
                     DateTimeConverter::CONFIGURATION_DATE_FORMAT, $this->settings['dateFormat']);
         }
     }

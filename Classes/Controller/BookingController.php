@@ -64,7 +64,7 @@ class BookingController extends AbstractController
             return [];
         }
         /** @var CountryRepository $repository */
-        $repository = $this->objectManager->get(\SJBR\StaticInfoTables\Domain\Repository\CountryRepository::class);
+        $repository = $this->objectManager->get(CountryRepository::class);
         return $repository->findAll();
     }
 }

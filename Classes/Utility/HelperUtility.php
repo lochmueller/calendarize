@@ -12,6 +12,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Helper Utility
@@ -60,11 +61,11 @@ class HelperUtility
     /**
      * Get the signal slot dispatcher
      *
-     * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @return Dispatcher
      */
     static public function getSignalSlotDispatcher()
     {
-        return self::create(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+        return self::create(Dispatcher::class);
     }
 
     /**

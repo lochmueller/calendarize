@@ -111,7 +111,7 @@ class IndexerService extends AbstractService
         /** @var $preparationService IndexPreparationService */
         static $preparationService = null;
         if ($preparationService === null) {
-            $preparationService = GeneralUtility::makeInstance(\HDNET\Calendarize\Service\IndexPreparationService::class);
+            $preparationService = GeneralUtility::makeInstance(IndexPreparationService::class);
         }
         $neededItems = $preparationService->prepareIndex($configurationKey, $tableName, $uid);
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);

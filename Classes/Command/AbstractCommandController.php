@@ -68,7 +68,7 @@ abstract class AbstractCommandController extends CommandController
     private function enqueueMessageGui($message, $title = '', $severity = FlashMessage::INFO)
     {
         /** @var FlashMessage $message */
-        $message = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Messaging\FlashMessage::class, nl2br($message), $title, $severity);
+        $message = GeneralUtility::makeInstance(FlashMessage::class, nl2br($message), $title, $severity);
         $this->flashMessageService->getMessageQueueByIdentifier()
             ->enqueue($message);
     }

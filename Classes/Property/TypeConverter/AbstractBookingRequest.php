@@ -18,16 +18,22 @@ class AbstractBookingRequest extends AbstractTypeConverter
 {
 
     /**
+     * Source types
+     *
      * @var array
      */
     protected $sourceTypes = ['array'];
 
     /**
+     * Target Type
+     *
      * @var string
      */
     protected $targetType = \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest::class;
 
     /**
+     * Priority
+     *
      * @var int
      */
     protected $priority = 1;
@@ -40,6 +46,8 @@ class AbstractBookingRequest extends AbstractTypeConverter
     static protected $configurations = [];
 
     /**
+     * Set configurations
+     * 
      * @param array $configurations
      */
     public static function setConfigurations($configurations)

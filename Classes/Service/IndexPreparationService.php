@@ -38,7 +38,7 @@ class IndexPreparationService
         $neededItems = [];
         if ($configurations) {
             /** @var TimeTableService $timeTableService */
-            $timeTableService = GeneralUtility::makeInstance(\HDNET\Calendarize\Service\TimeTableService::class);
+            $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
             $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
             foreach ($neededItems as $key => $record) {
 

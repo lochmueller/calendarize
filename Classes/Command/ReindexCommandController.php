@@ -7,6 +7,8 @@
 
 namespace HDNET\Calendarize\Command;
 
+use HDNET\Calendarize\Service\IndexerService;
+
 /**
  * Reindex the event models
  */
@@ -20,8 +22,8 @@ class ReindexCommandController extends AbstractCommandController
      */
     public function runCommand()
     {
-        /** @var \HDNET\Calendarize\Service\IndexerService $indexer */
-        $indexer = $this->objectManager->get(\HDNET\Calendarize\Service\IndexerService::class);
+        /** @var IndexerService $indexer */
+        $indexer = $this->objectManager->get(IndexerService::class);
         $indexer->reindexAll();
     }
 

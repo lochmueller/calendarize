@@ -98,7 +98,7 @@ abstract class AbstractController extends ActionController
         $variables['extended'] = [];
 
         /** @var Dispatcher $dispatcher */
-        $dispatcher = $this->objectManager->get(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+        $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
 
         $this->view->assignMultiple($variables);

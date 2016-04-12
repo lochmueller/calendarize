@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Repository\ConfigurationRepository;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -34,8 +35,8 @@ class TimeTableService extends AbstractService
             return $timeTable;
         }
 
-        /** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
-        $configRepository = HelperUtility::create(\HDNET\Calendarize\Domain\Repository\ConfigurationRepository::class);
+        /** @var ConfigurationRepository $configRepository */
+        $configRepository = HelperUtility::create(ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
             $configuration = $configRepository->findByUid($configurationUid);
             if (!($configuration instanceof Configuration)) {

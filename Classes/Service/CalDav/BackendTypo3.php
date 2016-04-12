@@ -12,6 +12,7 @@ use Sabre\CalDAV\Plugin;
 use Sabre\CalDAV\Xml\Property\SupportedCalendarComponentSet;
 use Sabre\DAV\PropPatch;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -519,7 +520,7 @@ class BackendTypo3 extends AbstractBackend
             $pageIDForPlugin = $pageTSConf ['TCEMAIN.'] ['clearCacheCmd'];
         }
 
-        $tce = GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
+        $tce = GeneralUtility::makeInstance(DataHandler::class);
         // 		$tce->clear_cacheCmd ( $pageIDForPlugin ); // ID of the page for which to clear the cache
     }
 }
