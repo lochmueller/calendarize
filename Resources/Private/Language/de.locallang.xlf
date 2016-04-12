@@ -17,6 +17,10 @@
 			<source>Thank you for your booking request. We will contact you shortly.</source>
 			<target>Vielen Dank für Ihre Buchung. Wir werden sie in Kürze kontaktieren.</target>
 		</trans-unit>
+		<trans-unit id="pleaseSelect" approved="yes">
+			<source>Please select</source>
+			<target>Bitte wählen</target>
+		</trans-unit>
 		<trans-unit id="back" approved="yes">
 			<source>back</source>
 			<target>zurück</target>

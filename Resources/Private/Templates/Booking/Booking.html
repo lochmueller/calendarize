@@ -19,61 +19,70 @@
 					<f:form.hidden name="index" value="{index.uid}"/>
 					<fieldset>
 						<label>
-							<f:translate key="booking.firstName" extensionName="Calendarize" />*
+							<f:translate key="booking.firstName" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.firstName'}"/>
 						</label>
 						<f:form.textfield property="firstName"/>
 
 						<label>
-							<f:translate key="booking.lastName" extensionName="Calendarize" />*
+							<f:translate key="booking.lastName" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.lastName'}"/>
 						</label>
 						<f:form.textfield property="lastName"/>
 
 						<label>
-							<f:translate key="booking.email" extensionName="Calendarize" />*
+							<f:translate key="booking.email" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.email'}"/>
 						</label>
 						<f:form.textfield property="email"/>
 
 						<label>
-							<f:translate key="booking.phone" extensionName="Calendarize" />
+							<f:translate key="booking.phone" extensionName="Calendarize"/>
 							<f:render partial="FieldError" arguments="{field: 'request.phone'}"/>
 						</label>
 						<f:form.textfield property="phone"/>
 
 						<label>
-							<f:translate key="booking.street" extensionName="Calendarize" />*
+							<f:translate key="booking.street" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.street'}"/>
 						</label>
 						<f:form.textfield property="street"/>
 
 						<label>
-							<f:translate key="booking.houseNumber" extensionName="Calendarize" />*
+							<f:translate key="booking.houseNumber" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.houseNumber'}"/>
 						</label>
 						<f:form.textfield property="houseNumber"/>
 
 						<label>
-							<f:translate key="booking.zip" extensionName="Calendarize" />*
+							<f:translate key="booking.zip" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.zip'}"/>
 						</label>
 						<f:form.textfield property="zip"/>
 
 						<label>
-							<f:translate key="booking.city" extensionName="Calendarize" />*
+							<f:translate key="booking.city" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.city'}"/>
 						</label>
 						<f:form.textfield property="city"/>
 
 						<label>
-							<f:translate key="booking.country" extensionName="Calendarize" />*
+							<f:translate key="booking.country" extensionName="Calendarize"/>
+							*
 							<f:render partial="FieldError" arguments="{field: 'request.country'}"/>
 						</label>
 						<f:if condition="{countries -> f:count()}">
 							<f:then>
 								<f:form.select property="country" options="{countries}" optionValueField="nameLocalized"
-															 optionLabelField="nameLocalized" sortByOptionLabel="1" prependOptionLabel="Please select"
+															 optionLabelField="nameLocalized" sortByOptionLabel="1"
+															 prependOptionLabel="{f:translate(key: 'pleaseSelect', extensionName: 'Calendarize')}"
 															 prependOptionValue=""/>
 							</f:then>
 							<f:else>
@@ -82,7 +91,7 @@
 						</f:if>
 
 						<label>
-							<f:translate key="booking.message" extensionName="Calendarize" />
+							<f:translate key="booking.message" extensionName="Calendarize"/>
 							<f:render partial="FieldError" arguments="{field: 'request.message'}"/>
 						</label>
 						<f:form.textarea property="message"/>

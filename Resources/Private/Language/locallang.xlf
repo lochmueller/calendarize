@@ -15,6 +15,9 @@
 		<trans-unit id="booking.thankYouMessage">
 			<source>Thank you for your booking request. We will contact you shortly.</source>
 		</trans-unit>
+		<trans-unit id="pleaseSelect">
+			<source>Please select</source>
+		</trans-unit>
 		<trans-unit id="back">
 			<source>back</source>
 		</trans-unit>
