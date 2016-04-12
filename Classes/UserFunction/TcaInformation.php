@@ -36,7 +36,7 @@ class TcaInformation
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
         /** @var IndexerService $indexService */
-        $indexService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
+        $indexService = GeneralUtility::makeInstance(IndexerService::class);
         $previewLimit = 10;
         $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
         $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
@@ -59,7 +59,7 @@ class TcaInformation
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
         /** @var TimeTableService $timeTableService */
-        $timeTableService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\TimeTableService');
+        $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
         $items = $timeTableService->getTimeTablesByConfigurationIds($ids);
         return $this->wrapContent($this->getEventList($items));
     }

@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -35,7 +36,7 @@ class ProcessCmdmapClass extends AbstractHook
         $register = Register::getRegister();
         foreach ($register as $key => $configuration) {
             if ($configuration['tableName'] == $table) {
-                $indexer = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\IndexerService');
+                $indexer = GeneralUtility::makeInstance(IndexerService::class);
                 $indexer->reindex($key, $table, $uid);
             }
         }

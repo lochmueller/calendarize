@@ -349,7 +349,7 @@ class IndexRepository extends AbstractRepository
         }
 
         /** @var ConfigurationManagerInterface $configuratioManager */
-        $configurationManager = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface');
+        $configurationManager = $this->objectManager->get(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::class);
         $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
             $frameworkConfig['persistence']['storagePid']) : [];

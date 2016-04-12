@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
 /**
  * Helper Utility
@@ -48,10 +49,10 @@ class HelperUtility
     static public function getQuery($objectName)
     {
         $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
-        /** @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $manager */
+        /** @var PersistenceManagerInterface $manager */
         static $manager = null;
         if ($manager === null) {
-            $manager = self::create('TYPO3\\CMS\\Extbase\\Persistence\\PersistenceManagerInterface');
+            $manager = self::create(PersistenceManagerInterface::class);
         }
         return $manager->createQueryForType($objectName);
     }
@@ -63,7 +64,7 @@ class HelperUtility
      */
     static public function getSignalSlotDispatcher()
     {
-        return self::create('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        return self::create(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
     }
 
     /**

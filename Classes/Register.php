@@ -54,7 +54,7 @@ class Register
             'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
                 'type'     => 'user',
-                'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TcaInformation->informationField',
+                'userFunc' => \HDNET\Calendarize\UserFunction\TcaInformation::class . '->informationField',
             ],
         ];
         ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);
@@ -124,12 +124,12 @@ class Register
         $configuration = [
             'uniqueRegisterKey' => 'Event',
             'title'             => 'Calendarize Event',
-            'modelName'         => 'HDNET\\Calendarize\\Domain\\Model\\Event',
+            'modelName'         => \HDNET\Calendarize\Domain\Model\Event::class,
             'partialIdentifier' => 'Event',
             'tableName'         => 'tx_calendarize_domain_model_event',
             'required'          => true,
-            // 'tcaTypeList'       => '', optional - only for special type elements
-            // 'overrideBookingRequestModel' => 'NAME\\SPACE\\CLASS\\Name'
+            // 'tcaTypeList'       => '', // optional - only for special type elements
+            // 'overrideBookingRequestModel' => \NAME\SPACE\CLASS\Name::class,
         ];
         return $configuration;
     }

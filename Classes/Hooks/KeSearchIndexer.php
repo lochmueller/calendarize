@@ -8,6 +8,7 @@ namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -52,8 +53,8 @@ class KeSearchIndexer extends AbstractHook
             return null;
         }
 
-        /** @var \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository */
-        $indexRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\IndexRepository');
+        /** @var IndexRepository $indexRepository */
+        $indexRepository = HelperUtility::create(IndexRepository::class);
         $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['storagepid']));
         $indexObjects = $indexRepository->findList()
             ->toArray();

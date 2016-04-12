@@ -51,7 +51,7 @@ class CmsLayout extends AbstractHook
             return '';
         }
 
-        $this->flexFormService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\FlexFormService');
+        $this->flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
         $this->flexFormService->load($params['row']['pi_flexform']);
         if (!$this->flexFormService->isValid()) {
             return '';
@@ -59,7 +59,7 @@ class CmsLayout extends AbstractHook
 
         $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
         $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
-        $this->layoutService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\ContentElementLayoutService');
+        $this->layoutService = GeneralUtility::makeInstance(ContentElementLayoutService::class);
         $this->layoutService->setTitle('<img src="' . str_replace('EXT:calendarize/', $extensionRelPath,
                 $extensionIcon) . '" width="32" height="32" /> Calendarize');
 

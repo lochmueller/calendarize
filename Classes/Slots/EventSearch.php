@@ -42,7 +42,7 @@ class EventSearch
             return null;
         }
         /** @var EventRepository $eventRepository */
-        $eventRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\EventRepository');
+        $eventRepository = HelperUtility::create(EventRepository::class);
         return [
             'indexIds'     => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
             'startDate'    => $startDate,
@@ -95,4 +95,4 @@ class EventSearch
             'contentRecord' => $contentRecord,
         ];
     }
-} 
+}

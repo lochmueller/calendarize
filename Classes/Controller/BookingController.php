@@ -38,11 +38,13 @@ class BookingController extends AbstractController
      *
      * @param Index $index
      * @param \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest $request
+     *
+     * @validate $request \HDNET\Calendarize\Validation\Validator\BookingRequestValidator
      */
     public function sendAction(Index $index, AbstractBookingRequest $request)
     {
         $request->setIndex($index);
-        
+
         // Use the Slot to handle the request
 
         $this->slotExtendedAssignMultiple([
@@ -62,7 +64,7 @@ class BookingController extends AbstractController
             return [];
         }
         /** @var CountryRepository $repository */
-        $repository = $this->objectManager->get('SJBR\\StaticInfoTables\\Domain\\Repository\\CountryRepository');
+        $repository = $this->objectManager->get(\SJBR\StaticInfoTables\Domain\Repository\CountryRepository::class);
         return $repository->findAll();
     }
 }

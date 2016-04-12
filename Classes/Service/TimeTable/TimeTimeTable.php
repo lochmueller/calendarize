@@ -143,7 +143,7 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
 
-        $recurrenceService = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\RecurrenceService');
+        $recurrenceService = GeneralUtility::makeInstance(\HDNET\Calendarize\Service\RecurrenceService::class);
         $amountCounter = $configuration->getCounterAmount();
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();

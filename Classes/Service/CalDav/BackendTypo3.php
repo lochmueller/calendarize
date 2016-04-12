@@ -519,7 +519,7 @@ class BackendTypo3 extends AbstractBackend
             $pageIDForPlugin = $pageTSConf ['TCEMAIN.'] ['clearCacheCmd'];
         }
 
-        $tce = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\DataHandling\\DataHandler');
+        $tce = GeneralUtility::makeInstance(\TYPO3\CMS\Core\DataHandling\DataHandler::class);
         // 		$tce->clear_cacheCmd ( $pageIDForPlugin ); // ID of the page for which to clear the cache
     }
 }

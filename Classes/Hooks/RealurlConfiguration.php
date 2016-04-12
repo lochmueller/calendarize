@@ -7,6 +7,8 @@
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Calendarize\UserFunction\RealurlAlias;
+
 /**
  * Realurl configuration
  *
@@ -32,7 +34,7 @@ class RealurlConfiguration extends AbstractHook
                     'event'      => [
                         [
                             'GETvar'   => 'tx_calendarize_calendar[index]',
-                            'userFunc' => 'HDNET\\Calendarize\\UserFunction\\RealurlAlias->main'
+                            'userFunc' => RealurlAlias::class . '->main'
                         ],
                     ],
                     'event-page' => [

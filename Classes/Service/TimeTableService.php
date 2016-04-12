@@ -35,7 +35,7 @@ class TimeTableService extends AbstractService
         }
 
         /** @var \HDNET\Calendarize\Domain\Repository\ConfigurationRepository $configRepository */
-        $configRepository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\ConfigurationRepository');
+        $configRepository = HelperUtility::create(\HDNET\Calendarize\Domain\Repository\ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
             $configuration = $configRepository->findByUid($configurationUid);
             if (!($configuration instanceof Configuration)) {

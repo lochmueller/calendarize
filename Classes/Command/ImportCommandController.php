@@ -53,7 +53,7 @@ class ImportCommandController extends AbstractCommandController
         $this->enqueueMessage('Found ' . sizeof($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
 
         /** @var Dispatcher $signalSlotDispatcher */
-        $signalSlotDispatcher = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        $signalSlotDispatcher = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
 
         $this->enqueueMessage('Send the ' . __CLASS__ . '::importCommand signal for each event.', 'Signal', FlashMessage::INFO);
         foreach ($events as $event) {

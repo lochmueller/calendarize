@@ -56,7 +56,7 @@ class AuthBackendTypo3 extends AbstractBasic
         $GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel'] = 'normal';
 
         /** @var CalDav $calDav */
-        $calDav = GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\CalDav');
+        $calDav = GeneralUtility::makeInstance(\HDNET\Calendarize\Service\CalDav::class);
         $calDav->buildFrontend();
 
         $feUserObj = $GLOBALS['TSFE']->fe_user;
@@ -92,7 +92,7 @@ class AuthBackendTypo3 extends AbstractBasic
             return false;
         }
         /** @var CalDavRepository $repository */
-        $repository = HelperUtility::create('HDNET\\Calendarize\\Domain\\Repository\\CalDavRepository');
+        $repository = HelperUtility::create(\HDNET\Calendarize\Domain\Repository\CalDavRepository::class);
         return $repository->findByUserStorage($userRecord['pid']);
     }
 

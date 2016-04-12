@@ -25,7 +25,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
     /**
      * @var string
      */
-    protected $targetType = 'HDNET\\Calendarize\\Domain\\Model\\Request\\AbstractBookingRequest';
+    protected $targetType = \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest::class;
 
     /**
      * @var int

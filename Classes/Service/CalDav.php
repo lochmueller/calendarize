@@ -63,7 +63,7 @@ class CalDav extends AbstractService
         EidUtility::initLanguage();
 
         /** @var TypoScriptFrontendController $TSFE */
-        $TSFE = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
+        $TSFE = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class,
             $GLOBALS['TYPO3_CONF_VARS'], 0, 0);
         EidUtility::initLanguage();
 
@@ -75,7 +75,7 @@ class CalDav extends AbstractService
         // $TSFE->getConfigArray();
         Bootstrap::getInstance()
             ->loadCachedTca();
-        $TSFE->cObj = GeneralUtility::makeInstance('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+        $TSFE->cObj = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer::class);
         $TSFE->settingLanguage();
         $TSFE->settingLocale();
     }
@@ -137,7 +137,7 @@ class CalDav extends AbstractService
      */
     protected function checkEnvironment()
     {
-        $class = 'Sabre\\DAV\\Server';
+        $class = \Sabre\DAV\Server::class;
         if (!class_exists($class)) {
             throw new \Exception('No ' . $class . ' class found. So there is no valid CalDav configuration', 2342783462384);
         }

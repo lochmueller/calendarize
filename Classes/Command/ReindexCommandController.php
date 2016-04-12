@@ -21,7 +21,7 @@ class ReindexCommandController extends AbstractCommandController
     public function runCommand()
     {
         /** @var \HDNET\Calendarize\Service\IndexerService $indexer */
-        $indexer = $this->objectManager->get('HDNET\\Calendarize\\Service\\IndexerService');
+        $indexer = $this->objectManager->get(\HDNET\Calendarize\Service\IndexerService::class);
         $indexer->reindexAll();
     }
 
