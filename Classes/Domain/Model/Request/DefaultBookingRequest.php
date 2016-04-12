@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BookingRequest
+ * DefaultBookingRequest
  */
 
 namespace HDNET\Calendarize\Domain\Model\Request;
@@ -9,9 +9,9 @@ namespace HDNET\Calendarize\Domain\Model\Request;
 use HDNET\Calendarize\Domain\Model\AbstractModel;
 
 /**
- * BookingRequest
+ * DefaultBookingRequest
  */
-class BookingRequest extends AbstractModel
+class DefaultBookingRequest extends AbstractBookingRequest
 {
     /**
      * First name

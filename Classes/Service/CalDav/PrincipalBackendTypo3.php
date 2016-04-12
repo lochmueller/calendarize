@@ -11,7 +11,6 @@ use Sabre\DAV\Exception;
 use Sabre\DAV\PropPatch;
 use Sabre\DAVACL\PrincipalBackend\BackendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * PrincipalBackendTypo3
@@ -135,7 +134,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function getGroupMemberSet($principal)
     {
-        DebuggerUtility::var_dump('getGroupMemberSet');
+        var_dump('getGroupMemberSet');
         $principal = $this->getPrincipalByPath($principal);
         if (!$principal) {
             throw new Exception('Principal not found');
@@ -158,7 +157,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function getGroupMembership($principal)
     {
-        DebuggerUtility::var_dump('getGroupMembership');
+        var_dump('getGroupMembership');
         $principal = $this->getPrincipalByPath($principal);
         if (!$principal) {
             throw new Exception('Principal not found');
@@ -180,7 +179,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function setGroupMemberSet($principal, array $members)
     {
-        DebuggerUtility::var_dump('setGroupMemberSet');
+        var_dump('setGroupMemberSet');
         // Grabbing the list of principal id's.
         $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . str_repeat(', ? ',
                 count($members)) . ');');
@@ -232,7 +231,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     function updatePrincipal($path, PropPatch $propPatch)
     {
-        DebuggerUtility::var_dump('updatePrincipal');
+        var_dump('updatePrincipal');
         // TODO: Implement updatePrincipal() method.
     }
 
@@ -268,7 +267,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     function searchPrincipals($prefixPath, array $searchProperties, $test = 'allof')
     {
-        DebuggerUtility::var_dump('searchPrincipals');
+        var_dump('searchPrincipals');
         // TODO: Implement searchPrincipals() method.
     }
 
@@ -292,7 +291,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     function findByUri($uri, $principalPrefix)
     {
-        DebuggerUtility::var_dump('findByUri');
+        var_dump('findByUri');
         // TODO: Implement findByUri() method.
     }
 }

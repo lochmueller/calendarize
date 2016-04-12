@@ -7,7 +7,9 @@
 
 namespace HDNET\Calendarize\Controller;
 
+use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -31,10 +33,20 @@ abstract class AbstractController extends ActionController
      * @var array
      */
     protected $feedFormats = [
-        'ics'  => 'text/calendar',
-        'xml'  => 'application/xml',
+        'ics' => 'text/calendar',
+        'xml' => 'application/xml',
         'atom' => 'application/rss+xml',
     ];
+
+
+    /**
+     * Init all actions
+     */
+    public function initializeAction()
+    {
+        parent::initializeAction();
+        AbstractBookingRequest::setConfigurations(GeneralUtility::trimExplode(',', $this->settings['configuration']));
+    }
 
     /**
      * Calls the specified action method and passes the arguments.
@@ -76,7 +88,7 @@ abstract class AbstractController extends ActionController
     /**
      * Extend the view by the slot class and name and assign the variable to the view
      *
-     * @param array  $variables
+     * @param array $variables
      * @param string $signalClassName
      * @param string $signalName
      */

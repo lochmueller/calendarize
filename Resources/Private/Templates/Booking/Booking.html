@@ -16,7 +16,7 @@
 
 				<f:form actionUri="{c:uri.index(index:index, pageUid: settings.bookingPid)}" name="request">
 					<f:form.hidden name="action" value="send"/>
-					<f:form.hidden name="index" value="{index}"/>
+					<f:form.hidden name="index" value="{index.uid}"/>
 					<fieldset>
 						<label>
 							<f:translate key="booking.firstName" extensionName="Calendarize" />*

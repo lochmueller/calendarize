@@ -97,7 +97,8 @@ class Register
             'CommandController',
             'StaticTyposcript',
             'ExtensionId',
-            'ContextSensitiveHelps'
+            'ContextSensitiveHelps',
+            'TypeConverter',
         ];
     }
 
@@ -128,6 +129,7 @@ class Register
             'tableName'         => 'tx_calendarize_domain_model_event',
             'required'          => true,
             // 'tcaTypeList'       => '', optional - only for special type elements
+            // 'overrideBookingRequestModel' => 'NAME\\SPACE\\CLASS\\Name'
         ];
         return $configuration;
     }

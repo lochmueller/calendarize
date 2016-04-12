@@ -2,10 +2,10 @@
 
 <f:alias map="{event: index.originalObject}">
 	<h1>
-		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}"/>
 	</h1>
 	<h3>
-		<f:render partial="DateInformation" arguments="{index: index}" />
+		<f:render partial="DateInformation" arguments="{index: index}"/>
 	</h3>
 
 	<div class="text">
@@ -15,7 +15,7 @@
 	<f:if condition="{event.images}">
 		<div class="images">
 			<f:for each="{event.images}" as="image" iteration="i">
-				<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200" />
+				<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="200"/>
 			</f:for>
 		</div>
 	</f:if>
@@ -29,8 +29,11 @@
 	</f:if>
 
 	<f:if condition="{settings.bookingPid}">
-		<c:link.booking index="{index}" class="btn btn-default btn-primary">
-			<f:translate key="booking" /> <span class="glyphicon glyphicon-arrow-right"></span>
-		</c:link.booking>
+		<f:if condition="{event.bookable}">
+			<c:link.booking index="{index}" class="btn btn-default btn-primary">
+				<f:translate key="booking"/>
+				<span class="glyphicon glyphicon-arrow-right"></span>
+			</c:link.booking>
+		</f:if>
 	</f:if>
 </f:alias>
