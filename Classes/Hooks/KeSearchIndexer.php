@@ -70,13 +70,35 @@ class KeSearchIndexer extends AbstractHook
             $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
             $content = strip_tags($originalObject->getKeSearchContent($index));
             $fullContent = $title . "\n" . $abstract . "\n" . $content;
+            $tags = [];
+            foreach ($originalObject->getCategories() as $category) {
+                $tags[] = "#syscat{$category->getUid()}#";
+            }
+            $tags = implode(',', $tags);
 
             // @todo Add year and month information
-            $additionalFields = [];
+            $additionalFields = [
+                'sortdate' => $index->getStartDateComplete()->getTimestamp(),
+                'orig_uid' => $index->getUid(),
+                'orig_pid' => $index->getPid(),
+            ];
 
-            $indexerObject->storeInIndex($indexerConfig['storagepid'], $title, 'calendarize', $indexerConfig['targetpid'],
-                $fullContent, '', '&tx_calendarize_calendar[index]=' . $index->getUid(), $abstract, 0, 0, 0, '', false,
-                $additionalFields);
+            $indexerObject->storeInIndex(
+                $indexerConfig['storagepid'],
+                $title,
+                'calendarize',
+                $indexerConfig['targetpid'],
+                $fullContent,
+                $tags,
+                "&tx_calendarize_calendar[index]={$index->getUid()}",
+                $abstract,
+                $index->_getProperty('_languageUid'),
+                0,  // starttime (TYPO3)
+                0,  // endtime (TYPO3)
+                '', // fe_group
+                false,  // debugOnly
+                $additionalFields
+            );
         }
 
         return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . sizeof($indexObjects) . ' elements have been indexed.</b></p>';
