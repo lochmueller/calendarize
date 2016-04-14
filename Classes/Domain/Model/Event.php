@@ -95,7 +95,7 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     /**
      * Build up the object
      */
-    function __construct()
+    public function __construct()
     {
         $this->calendarize = new ObjectStorage();
     }
@@ -373,6 +373,28 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     public function getKeSearchContent(Index $index)
     {
         return $this->getDescription();
+    }
+
+
+    /**
+     * Get the tags
+     *
+     * @param Index $index
+     *
+     * @return string Comma separated list of tags, e.g. '#syscat1#,#syscat2#'
+     */
+    public function getKeSearchTags(Index $index)
+    {
+        if (!property_exists($this, '_keSearchTags'))
+        {
+            $this->_keSearchTags = [];
+            foreach ($this->getCategories() as $category) {
+                $this->_keSearchTags[] = "#syscat{$category->getUid()}#";
+            }
+            $this->_keSearchTags = implode(',', $this->_keSearchTags);
+        }
+
+        return $this->_keSearchTags;
     }
 
     /**

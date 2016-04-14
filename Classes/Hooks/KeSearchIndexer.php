@@ -28,7 +28,7 @@ class KeSearchIndexer extends AbstractHook
      * @param array  $params
      * @param object $pObj
      */
-    function registerIndexerConfiguration(&$params, $pObj)
+    public function registerIndexerConfiguration(&$params, $pObj)
     {
         $newArray = [
             'Calendarize Indexer',
@@ -70,11 +70,6 @@ class KeSearchIndexer extends AbstractHook
             $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
             $content = strip_tags($originalObject->getKeSearchContent($index));
             $fullContent = $title . "\n" . $abstract . "\n" . $content;
-            $tags = [];
-            foreach ($originalObject->getCategories() as $category) {
-                $tags[] = "#syscat{$category->getUid()}#";
-            }
-            $tags = implode(',', $tags);
 
             // @todo Add year and month information
             $additionalFields = [
@@ -89,18 +84,18 @@ class KeSearchIndexer extends AbstractHook
                 'calendarize',
                 $indexerConfig['targetpid'],
                 $fullContent,
-                $tags,
+                $originalObject->getKeSearchTags($index),
                 "&tx_calendarize_calendar[index]={$index->getUid()}",
                 $abstract,
-                $index->_getProperty('_languageUid'),
-                0,  // starttime (TYPO3)
-                0,  // endtime (TYPO3)
-                '', // fe_group
+                $index->_getProperty('_languageUid'),   // $index always has a "_languageUid" - if the $originalObject does not use translations, it is 0
+                $index->_hasProperty('starttime') ? $index->_getProperty('starttime') : 0,
+                $index->_hasProperty('endtime') ? $index->_getProperty('endtime') : 0,
+                $index->_hasProperty('fe_group') ? $index->_getProperty('fe_group') : '',
                 false,  // debugOnly
                 $additionalFields
             );
         }
 
-        return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . sizeof($indexObjects) . ' elements have been indexed.</b></p>';
+        return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . count($indexObjects) . ' elements have been indexed.</b></p>';
     }
 }
