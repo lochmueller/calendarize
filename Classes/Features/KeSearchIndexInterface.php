@@ -40,4 +40,13 @@ interface KeSearchIndexInterface
      * @return string
      */
     public function getKeSearchContent(Index $index);
+
+    /**
+     * Get the tags
+     *
+     * @param Index $index
+     *
+     * @return string Comma separated list of tags, e.g. '#syscat1#,#syscat2#'
+     */
+    public function getKeSearchTags(Index $index);
 }
