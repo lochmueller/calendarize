@@ -47,10 +47,10 @@ class ImportCommandController extends AbstractCommandController
 
         // get Events from file
         $icalEvents = $this->getIcalEvents($absoluteIcalFile);
-        $this->enqueueMessage('Found ' . sizeof($icalEvents) . ' events in the given calendar', 'Items', FlashMessage::INFO);
+        $this->enqueueMessage('Found ' . count($icalEvents) . ' events in the given calendar', 'Items', FlashMessage::INFO);
         $events = $this->prepareEvents($icalEvents);
 
-        $this->enqueueMessage('Found ' . sizeof($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
+        $this->enqueueMessage('Found ' . count($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
 
         /** @var Dispatcher $signalSlotDispatcher */
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);

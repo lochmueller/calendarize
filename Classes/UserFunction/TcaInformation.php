@@ -55,7 +55,7 @@ class TcaInformation
     public function informationGroupField($configuration, $fObj)
     {
         $ids = GeneralUtility::intExplode(',', $configuration['row']['configurations'], true);
-        if (!sizeof($ids)) {
+        if (!$ids) {
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
         /** @var TimeTableService $timeTableService */
@@ -91,7 +91,7 @@ class TcaInformation
             }
             $items[] = $entry;
         }
-        if (!sizeof($items)) {
+        if (!$items) {
             $items[] = TranslateUtility::get('noEvents');
         }
         return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
