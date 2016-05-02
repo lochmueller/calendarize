@@ -138,7 +138,7 @@ class CalDav extends AbstractService
      */
     protected function checkEnvironment()
     {
-        $class = \Sabre\DAV\Server::class;
+        $class = Server::class;
         if (!class_exists($class)) {
             throw new \Exception('No ' . $class . ' class found. So there is no valid CalDav configuration', 2342783462384);
         }
