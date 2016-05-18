@@ -24,7 +24,7 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.14|>=7.4.0,<9.0"
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.2"
   },
   "replace": {
     "calendarize": "self.version",
