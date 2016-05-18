@@ -12,6 +12,9 @@
 		<trans-unit id="all_day">
 			<source>All day</source>
 		</trans-unit>
+		<trans-unit id="no_events">
+			<source>There are no events in the current view.</source>
+		</trans-unit>
 		<trans-unit id="booking.thankYouMessage">
 			<source>Thank you for your booking request. We will contact you shortly.</source>
 		</trans-unit>

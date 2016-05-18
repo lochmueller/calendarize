@@ -13,6 +13,10 @@
 			<source>All day</source>
 			<target>ganztägig</target>
 		</trans-unit>
+		<trans-unit id="no_events" approved="yes">
+			<source>There are no events in the current view.</source>
+			<target>Es gibt keine Ereignisse in der aktuellen Ansicht.</target>
+		</trans-unit>
 		<trans-unit id="booking.thankYouMessage" approved="yes">
 			<source>Thank you for your booking request. We will contact you shortly.</source>
 			<target>Vielen Dank für Ihre Buchung. Wir werden sie in Kürze kontaktieren.</target>
