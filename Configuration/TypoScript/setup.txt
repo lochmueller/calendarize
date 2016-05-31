@@ -84,7 +84,12 @@ plugin.tx_calendarize {
 				disableCompression = 1
 				excludeFromConcatenation = 1
 			}
-
+			fullCalendarLanguage = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.2/lang-all.js
+			fullCalendarLanguage {
+				external = 1
+				disableCompression = 1
+				excludeFromConcatenation = 1
+			}
 			calendarizeFullCalendar = typo3conf/ext/calendarize/Resources/Public/JavaScript/FullCalendar.js
 			calendarizeFullCalendar {
 				excludeFromConcatenation = 1
