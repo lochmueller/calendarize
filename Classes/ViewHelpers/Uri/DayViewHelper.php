@@ -26,6 +26,6 @@ class DayViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\DayViewHelper
     public function render(\DateTime $date, $pageUid = null)
     {
         parent::render($date, $pageUid);
-        return $this->tag->getAttribute('href');
+        return $this->lastHref;
     }
 }

@@ -24,6 +24,6 @@ class YearViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\YearViewHelper
     public function render(\DateTime $date, $pageUid = null)
     {
         parent::render($date, $pageUid);
-        return $this->tag->getAttribute('href');
+        return $this->lastHref;
     }
 }

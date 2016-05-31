@@ -24,6 +24,6 @@ class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper
     public function render(\DateTime $date, $pageUid = null)
     {
         parent::render($date, $pageUid);
-        return $this->tag->getAttribute('href');
+        return $this->lastHref;
     }
 }

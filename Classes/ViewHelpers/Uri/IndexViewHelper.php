@@ -26,6 +26,6 @@ class IndexViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\IndexViewHelpe
     public function render(Index $index, $pageUid = null)
     {
         parent::render($index, $pageUid);
-        return $this->tag->getAttribute('href');
+        return $this->lastHref;
     }
 }

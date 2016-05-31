@@ -20,9 +20,18 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
 {
 
     /**
+     * Tag type
+     *
      * @var string
      */
     protected $tagName = 'a';
+
+    /**
+     * Store the last href to avoid escaping for the URI view Helper
+     *
+     * @var string
+     */
+    protected $lastHref = '';
 
     /**
      * Arguments initialization
@@ -48,12 +57,12 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     public function renderLink($pageUid = null, array $additionalParams = array())
     {
         $uriBuilder = $this->controllerContext->getUriBuilder();
-        $uri = $uriBuilder->reset()
+        $this->lastHref = (string)$uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setArguments($additionalParams)
             ->build();
-        if ((string)$uri !== '') {
-            $this->tag->addAttribute('href', $uri);
+        if ($this->lastHref !== '') {
+            $this->tag->addAttribute('href', $this->lastHref);
             $this->tag->setContent($this->renderChildren());
             $result = $this->tag->render();
         } else {

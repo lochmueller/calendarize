@@ -23,6 +23,6 @@ class ListViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\ListViewHelper
     public function render($pageUid = null)
     {
         parent::render($pageUid);
-        return $this->tag->getAttribute('href');
+        return $this->lastHref;
     }
 }
