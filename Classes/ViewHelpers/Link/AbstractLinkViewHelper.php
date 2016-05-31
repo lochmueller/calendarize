@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
-use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
 
 /**
  * Link to anything ;)
@@ -54,7 +53,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      *
      * @return string Rendered page URI
      */
-    public function renderLink($pageUid = null, array $additionalParams = array())
+    public function renderLink($pageUid = null, array $additionalParams = [])
     {
         $uriBuilder = $this->controllerContext->getUriBuilder();
         $this->lastHref = (string)$uriBuilder->reset()

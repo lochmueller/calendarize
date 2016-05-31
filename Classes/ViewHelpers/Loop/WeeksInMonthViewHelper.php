@@ -7,8 +7,6 @@
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
-use TYPO3\CMS\Core\Utility\MathUtility;
-
 /**
  * Weeks in month view helper
  *

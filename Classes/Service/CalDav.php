@@ -16,7 +16,6 @@ use Sabre\DAV\Auth\Plugin as AuthPlugin;
 use Sabre\DAV\Browser\Plugin as BrowserPlugin;
 use Sabre\DAV\Server;
 use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
