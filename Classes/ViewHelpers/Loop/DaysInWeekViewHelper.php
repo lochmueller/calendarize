@@ -7,8 +7,6 @@
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
-use TYPO3\CMS\Core\Utility\MathUtility;
-
 /**
  * Days in week view helper
  *
@@ -18,26 +16,15 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
 {
 
     /**
-     * The week start at
+     * Initialize all arguments. You need to override this method and call
+     * $this->registerArgument(...) inside this method, to register all your arguments.
      *
-     * @var int
+     * @return void
+     * @api
      */
-    protected $weekStartsAt;
-
-    /**
-     * Render the element
-     *
-     * @param \DateTime $date
-     * @param string    $iteration
-     * @param int       $weekStartsAt
-     *
-     * @return string
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
-     */
-    public function render(\DateTime $date, $iteration, $weekStartsAt)
+    public function initializeArguments()
     {
-        $this->weekStartsAt = MathUtility::forceIntegerInRange((int)$weekStartsAt, 1, 7, 1);
-        return parent::render($date, $iteration);
+        $this->registerArgument('weekStartsAt', 'int', 'Number between 1 and 7', true, 1);
     }
 
     /**
@@ -53,8 +40,9 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
         if ($originalDate === null) {
             $originalDate = clone $date;
         }
+
         $days = [];
-        $move = (int)($date->format('N') - $this->weekStartsAt);
+        $move = (int)($date->format('N') - ((int)$this->arguments['weekStartsAt']));
         $date->modify('-' . $move . ' days');
         $inWeek = false;
         for ($i = 0; $i < 7; $i++) {

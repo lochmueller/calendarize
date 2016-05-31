@@ -31,6 +31,6 @@ class WeekViewHelper extends AbstractLinkViewHelper
                 'week' => $date->format('W'),
             ],
         ];
-        return parent::render($this->getPageUid($pageUid), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
     }
 }

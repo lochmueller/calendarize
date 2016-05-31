@@ -31,6 +31,6 @@ class MonthViewHelper extends AbstractLinkViewHelper
                 'month' => $date->format('n'),
             ],
         ];
-        return parent::render($this->getPageUid($pageUid), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
     }
 }

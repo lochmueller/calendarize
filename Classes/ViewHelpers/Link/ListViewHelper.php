@@ -24,6 +24,6 @@ class ListViewHelper extends AbstractLinkViewHelper
      */
     public function render($pageUid = null)
     {
-        return parent::render($this->getPageUid($pageUid, 'listPid'));
+        return parent::renderLink($this->getPageUid($pageUid, 'listPid'));
     }
 }

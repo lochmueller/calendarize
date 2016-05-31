@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
 
 /**
@@ -15,8 +16,51 @@ use TYPO3\CMS\Fluid\ViewHelpers\Link\PageViewHelper;
  *
  * @author Tim Lochmüller
  */
-abstract class AbstractLinkViewHelper extends PageViewHelper
+abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
 {
+
+    /**
+     * @var string
+     */
+    protected $tagName = 'a';
+
+    /**
+     * Arguments initialization
+     *
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerUniversalTagAttributes();
+        $this->registerTagAttribute('target', 'string', 'Target of link', false);
+        $this->registerTagAttribute('rel', 'string',
+            'Specifies the relationship between the current document and the linked document', false);
+    }
+
+    /**
+     * render the link
+     *
+     * @param int|NULL $pageUid          target page. See TypoLink destination
+     * @param array    $additionalParams query parameters to be attached to the resulting URI
+     *
+     * @return string Rendered page URI
+     */
+    public function renderLink($pageUid = null, array $additionalParams = array())
+    {
+        $uriBuilder = $this->controllerContext->getUriBuilder();
+        $uri = $uriBuilder->reset()
+            ->setTargetPageUid($pageUid)
+            ->setArguments($additionalParams)
+            ->build();
+        if ((string)$uri !== '') {
+            $this->tag->addAttribute('href', $uri);
+            $this->tag->setContent($this->renderChildren());
+            $result = $this->tag->render();
+        } else {
+            $result = $this->renderChildren();
+        }
+        return $result;
+    }
 
     /**
      * Get the right page Uid

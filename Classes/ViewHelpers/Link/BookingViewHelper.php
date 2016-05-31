@@ -32,6 +32,6 @@ class BookingViewHelper extends AbstractLinkViewHelper
                 'index' => $index->getUid()
             ],
         ];
-        return parent::render($this->getPageUid($pageUid, 'bookingPid'), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid, 'bookingPid'), $additionalParams);
     }
 }

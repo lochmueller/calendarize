@@ -32,6 +32,6 @@ class IndexViewHelper extends AbstractLinkViewHelper
                 'index' => $index->getUid()
             ],
         ];
-        return parent::render($this->getPageUid($pageUid, 'detailPid'), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid, 'detailPid'), $additionalParams);
     }
 }

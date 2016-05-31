@@ -32,6 +32,6 @@ class DayViewHelper extends AbstractLinkViewHelper
                 'day'   => $date->format('j'),
             ],
         ];
-        return parent::render($this->getPageUid($pageUid), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
     }
 }

@@ -30,6 +30,6 @@ class YearViewHelper extends AbstractLinkViewHelper
                 'year' => $date->format('Y'),
             ],
         ];
-        return parent::render($this->getPageUid($pageUid), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
     }
 }
