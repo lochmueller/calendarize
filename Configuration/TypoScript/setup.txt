@@ -1,5 +1,4 @@
 plugin.tx_calendarize {
-
 	settings {
 		dateLimitBrowserPrev = {$plugin.tx_calendarize.settings.dateLimitBrowserPrev}
 		dateLimitBrowserNext = {$plugin.tx_calendarize.settings.dateLimitBrowserNext}
@@ -26,14 +25,17 @@ plugin.tx_calendarize {
 			50 = EXT:calendarize/Resources/Private/Templates/
 			100 = {$plugin.tx_calendarize.view.templateRootPath}
 		}
+
 		partialRootPaths {
 			50 = EXT:calendarize/Resources/Private/Partials/
 			100 = {$plugin.tx_calendarize.view.partialRootPath}
 		}
+
 		layoutRootPaths {
 			50 = EXT:calendarize/Resources/Private/Layouts/
 			100 = {$plugin.tx_calendarize.view.layoutRootPath}
 		}
+
 		widget {
 			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
 				templateRootPath = EXT:calendarize/Resources/Private/Templates/
@@ -47,47 +49,46 @@ plugin.tx_calendarize {
 }
 
 [globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}]
-page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment-with-locales.min.js
-page.includeJSFooterlibs.moment.external = 1
-page.includeJSFooterlibs.moment.disableCompression = 1
-page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone.min.js
-page.includeJSFooterlibs.momentTimezone.external = 1
-page.includeJSFooterlibs.momentTimezone.disableCompression = 1
-page.includeJSFooterlibs.momentReplacement = typo3conf/ext/calendarize/Resources/Public/JavaScript/MomentReplacement.js
+	page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment-with-locales.min.js
+	page.includeJSFooterlibs.moment.external = 1
+	page.includeJSFooterlibs.moment.disableCompression = 1
+	page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.4/moment-timezone.min.js
+	page.includeJSFooterlibs.momentTimezone.external = 1
+	page.includeJSFooterlibs.momentTimezone.disableCompression = 1
+	page.includeJSFooterlibs.momentReplacement = typo3conf/ext/calendarize/Resources/Public/JavaScript/MomentReplacement.js
 [global]
 
 [globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentFullCalendarIo}]
-page {
-	includeCSS {
-		fullCalendar = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css
-		fullCalendar {
-			external = 1
-			disableCompression = 1
-			excludeFromConcatenation = 1
-			forceOnTop = 1
+	page {
+		includeCSS {
+			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.2/fullcalendar.min.css
+			fullCalendar {
+				external = 1
+				disableCompression = 1
+				forceOnTop = 1
+			}
+
+			fullCalendarPrint = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.2/fullcalendar.print.css
+			fullCalendarPrint {
+				external = 1
+				media = print
+				disableCompression = 1
+				forceOnTop = 1
+			}
 		}
-		fullCalendarPrint = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.print.css
-		fullCalendarPrint {
-			external = 1
-			media = print
-			disableCompression = 1
-			excludeFromConcatenation = 1
-			forceOnTop = 1
+
+		includeJSFooter {
+			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.2/fullcalendar.min.js
+			fullCalendar {
+				external = 1
+				disableCompression = 1
+				excludeFromConcatenation = 1
+			}
+
+			calendarizeFullCalendar = typo3conf/ext/calendarize/Resources/Public/JavaScript/FullCalendar.js
+			calendarizeFullCalendar {
+				excludeFromConcatenation = 1
+			}
 		}
 	}
-	includeJSFooter {
-		fullCalendar = //cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js
-		fullCalendar {
-			external = 1
-			disableCompression = 1
-			excludeFromConcatenation = 1
-		}
-		calendarizeFullCalendar = typo3conf/ext/calendarize/Resources/Public/JavaScript/FullCalendar.js
-		calendarizeFullCalendar {
-			external = 1
-			disableCompression = 1
-			excludeFromConcatenation = 1
-		}
-	}
-}
 [global]
