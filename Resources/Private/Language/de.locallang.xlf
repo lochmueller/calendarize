@@ -349,6 +349,10 @@
 			<source>Week</source>
 			<target>Woche</target>
 		</trans-unit>
+		<trans-unit id="week" approved="yes">
+			<source>Week</source>
+			<target>Woche</target>
+		</trans-unit>
 		<trans-unit id="mode.year" approved="yes">
 			<source>Year</source>
 			<target>Jahr</target>

@@ -264,6 +264,9 @@
 		<trans-unit id="mode.week">
 			<source>Week</source>
 		</trans-unit>
+		<trans-unit id="week">
+			<source>Week</source>
+		</trans-unit>
 		<trans-unit id="mode.year">
 			<source>Year</source>
 		</trans-unit>
