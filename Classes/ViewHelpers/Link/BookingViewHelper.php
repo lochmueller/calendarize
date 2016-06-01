@@ -28,7 +28,7 @@ class BookingViewHelper extends AbstractLinkViewHelper
     public function render(Index $index, $pageUid = null)
     {
         $additionalParams = [
-            'tx_calendarize_calendarbooking' => [
+            'tx_calendarize_calendar' => [
                 'index' => $index->getUid()
             ],
         ];
