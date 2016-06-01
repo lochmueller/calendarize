@@ -6,3 +6,4 @@ For administrators
 	Installation/Index
 	Configuration/Index
 	Scheduler/Index
+	UrlRewrite/Index

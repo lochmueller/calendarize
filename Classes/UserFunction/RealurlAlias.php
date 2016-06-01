@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\UserFunction;
 
+use Bednarik\Cooluri\Core\Functions;
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
 use DmitryDulepov\Realurl\Utility;
 use HDNET\Calendarize\Domain\Model\Index;
@@ -109,6 +110,39 @@ class RealurlAlias
             'value_id'    => $value,
         ];
         $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
+
+        return $alias;
+    }
+
+    /**
+     * Generate the cooluri segment
+     *
+     * @param string $xml
+     * @param int    $value
+     *
+     * @throws \HDNET\Calendarize\Exception
+     */
+    public function coolUri($xml, $value)
+    {
+        /** @var IndexRepository $indexRepository */
+        $indexRepository = HelperUtility::create(IndexRepository::class);
+        $index = $indexRepository->findByUid((int)$value);
+        if (!($index instanceof Index)) {
+            $alias = 'idx-' . $value;
+        } else {
+            $originalObject = $index->getOriginalObject();
+            if (!($originalObject instanceof RealUrlInterface)) {
+                $alias = 'idx-' . $value;
+            } else {
+                $base = $originalObject->getRealUrlAliasBase();
+                $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
+                $title = $base . '-' . $index->getStartDateComplete()
+                        ->format($datePart);
+                $title = Functions::URLize($title);
+                $alias = Functions::sanitize_title_with_dashes($title);
+
+            }
+        }
 
         return $alias;
     }
