@@ -3,5 +3,5 @@ Introduction
 
 .. toctree::
 
-	WhatDoesItDo
-	Credits
+	WhatDoesItDo/Index
+	Credits/Index

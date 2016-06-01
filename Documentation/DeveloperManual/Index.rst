@@ -3,5 +3,5 @@ For developers
 
 .. toctree::
 
-	OwnEvents
-	Features
+	OwnEvents/Index
+	Features/Index

@@ -3,4 +3,6 @@ For administrators
 
 .. toctree::
 
-	Configuration
+	Installation/Index
+	Configuration/Index
+	Scheduler/Index
