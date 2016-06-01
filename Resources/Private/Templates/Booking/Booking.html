@@ -1,107 +1,133 @@
 <div xmlns="http://www.w3.org/1999/xhtml" lang="en"
-		 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-		 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
+     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+     xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
-	<f:layout name="Default"/>
+	<f:layout name="Default" />
 
 	<!-- Call a "c" View Helper here, to avaoid the removing of the xmlns delaration in the top
 			because PhpStorm do not know the Fluid short syntax! -->
-	<c:link.day date=""/>
+	<c:link.day date="" />
 
 	<f:section name="Main">
 
 		<f:if condition="{settings.bookingPid}">
 			<f:then>
-				<f:render partial="BookingInformation" arguments="{index:index}"/>
+				<f:if condition="{index}">
+					<f:then>
 
-				<f:form actionUri="{c:uri.index(index:index, pageUid: settings.bookingPid)}" name="request">
-					<f:form.hidden name="action" value="send"/>
-					<f:form.hidden name="index" value="{index.uid}"/>
-					<fieldset>
-						<label>
-							<f:translate key="booking.firstName" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.firstName'}"/>
-						</label>
-						<f:form.textfield property="firstName"/>
+						<f:render partial="BookingInformation" arguments="{index:index}" />
 
-						<label>
-							<f:translate key="booking.lastName" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.lastName'}"/>
-						</label>
-						<f:form.textfield property="lastName"/>
+						<f:form actionUri="{c:uri.index(index:index, pageUid: settings.bookingPid)}" name="request" class="form-horizontal">
+							<f:form.hidden name="action" value="send" />
+							<f:form.hidden name="index" value="{index.uid}" />
 
-						<label>
-							<f:translate key="booking.email" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.email'}"/>
-						</label>
-						<f:form.textfield property="email"/>
+							<div class="form-group">
+								<label for="firstName">
+									<f:translate key="booking.firstName" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.firstName'}" />
+								<f:form.textfield property="firstName" id="firstName" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.phone" extensionName="Calendarize"/>
-							<f:render partial="FieldError" arguments="{field: 'request.phone'}"/>
-						</label>
-						<f:form.textfield property="phone"/>
+							<div class="form-group">
+								<label for="lastName">
+									<f:translate key="booking.lastName" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.lastName'}" />
+								<f:form.textfield property="lastName" id="lastName" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.street" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.street'}"/>
-						</label>
-						<f:form.textfield property="street"/>
+							<div class="form-group">
+								<label for="email">
+									<f:translate key="booking.email" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.email'}" />
+								<f:form.textfield property="email" id="email" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.houseNumber" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.houseNumber'}"/>
-						</label>
-						<f:form.textfield property="houseNumber"/>
+							<div class="form-group">
+								<label for="phone">
+									<f:translate key="booking.phone" extensionName="Calendarize" />
+								</label>
+								<f:render partial="FieldError" arguments="{field: 'request.phone'}" />
+								<f:form.textfield property="phone" id="phone" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.zip" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.zip'}"/>
-						</label>
-						<f:form.textfield property="zip"/>
+							<div class="form-group">
+								<label for="street">
+									<f:translate key="booking.street" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.street'}" />
+								<f:form.textfield property="street" id="street" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.city" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.city'}"/>
-						</label>
-						<f:form.textfield property="city"/>
+							<div class="form-group">
+								<label for="houseNumber">
+									<f:translate key="booking.houseNumber" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.houseNumber'}" />
+								<f:form.textfield property="houseNumber" id="houseNumber" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.country" extensionName="Calendarize"/>
-							*
-							<f:render partial="FieldError" arguments="{field: 'request.country'}"/>
-						</label>
-						<f:if condition="{countries -> f:count()}">
-							<f:then>
-								<f:form.select property="country" options="{countries}" optionValueField="nameLocalized"
-															 optionLabelField="nameLocalized" sortByOptionLabel="1"
-															 prependOptionLabel="{f:translate(key: 'pleaseSelect', extensionName: 'Calendarize')}"
-															 prependOptionValue=""/>
-							</f:then>
-							<f:else>
-								<f:form.textfield property="country"/>
-							</f:else>
-						</f:if>
+							<div class="form-group">
+								<label for="zip">
+									<f:translate key="booking.zip" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.zip'}" />
+								<f:form.textfield property="zip" id="zip" class="form-control" />
+							</div>
 
-						<label>
-							<f:translate key="booking.message" extensionName="Calendarize"/>
-							<f:render partial="FieldError" arguments="{field: 'request.message'}"/>
-						</label>
-						<f:form.textarea property="message"/>
+							<div class="form-group">
+								<label for="city">
+									<f:translate key="booking.city" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.city'}" />
+								<f:form.textfield property="city" id="city" class="form-control" />
+							</div>
 
-						<f:form.submit value="{f:translate(key: 'booking.send', extensionName: 'Calendarize')}"/>
-					</fieldset>
-				</f:form>
+							<div class="form-group">
+								<label for="country">
+									<f:translate key="booking.country" extensionName="Calendarize" />
+									* </label>
+								<f:render partial="FieldError" arguments="{field: 'request.country'}" />
+								<f:if condition="{countries -> f:count()}">
+									<f:then>
+										<f:form.select property="country" options="{countries}" optionValueField="nameLocalized"
+										               optionLabelField="nameLocalized" sortByOptionLabel="1"
+										               prependOptionLabel="{f:translate(key: 'pleaseSelect', extensionName: 'Calendarize')}"
+										               prependOptionValue="" class="form-control" />
+									</f:then>
+									<f:else>
+										<f:form.textfield property="country" id="country" class="form-control" />
+									</f:else>
+								</f:if>
+							</div>
+
+							<div class="form-group">
+								<label for="message">
+									<f:translate key="booking.message" extensionName="Calendarize" />
+								</label>
+								<f:render partial="FieldError" arguments="{field: 'request.message'}" />
+								<f:form.textarea property="message" id="message" class="form-control" />
+							</div>
+
+							<div class="form-group">
+								<f:form.submit value="{f:translate(key: 'booking.send', extensionName: 'Calendarize')}" class="btn btn-default" />
+							</div>
+
+						</f:form>
+					</f:then>
+					<f:else>
+						<div class="alert alert-danger" role="alert">
+							Please select a valid event for the booking process
+						</div>
+					</f:else>
+				</f:if>
 			</f:then>
 			<f:else>
-				Please select the booking page in the plugin configuration of your calendarize Booking plugin
+				<div class="alert alert-danger" role="alert">
+					Please select the booking page in the plugin configuration of your calendarize Booking plugin
+				</div>
 			</f:else>
 		</f:if>
 	</f:section>

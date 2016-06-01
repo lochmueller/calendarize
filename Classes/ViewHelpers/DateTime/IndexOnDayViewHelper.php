@@ -25,15 +25,21 @@ class IndexOnDayViewHelper extends AbstractViewHelper
      * @param \DateTime $day
      * @param Index     $index
      * @param array     $indices
+     * @param string    $modification
      *
      * @return bool
      */
-    public function render(\DateTime $day, Index $index = null, $indices = [])
+    public function render(\DateTime $day, Index $index = null, $indices = [], $modification = '')
     {
-        $day->setTime(0, 0, 0);
-        $startTime = clone $day;
-        $day->setTime(23, 59, 59);
-        $endTime = clone $day;
+        $baseDay = clone $day;
+        if ($modification != '') {
+            $baseDay->modify($modification);
+        }
+        
+        $baseDay->setTime(0, 0, 0);
+        $startTime = clone $baseDay;
+        $baseDay->setTime(23, 59, 59);
+        $endTime = clone $baseDay;
 
         if ($index instanceof Index) {
             $indices[] = $index;

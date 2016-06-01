@@ -8,7 +8,7 @@
 		<table class="table table-bordered">
 			<thead>
 			<tr>
-				<td colspan="4">
+				<th colspan="4">
 
 					<f:if condition="{settings.yearPid}">
 						<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{date -> c:dateTime.modify(modification: 'first day of last year')})}">
@@ -27,7 +27,7 @@
 							</c:link.year>
 						</f:if>
 					</f:if>
-				</td>
+				</th>
 			</tr>
 			</thead>
 			<tbody>

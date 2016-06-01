@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" lang="en"
-	 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-	 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
+     xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+     xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
 
 	<f:layout name="Default" />
 
@@ -21,20 +21,25 @@
 		</f:if>
 
 		<h1>
-			<f:format.date format="Y">{firstDay}</f:format.date> <f:translate key="week" /> <f:format.date format="W">{firstDay}</f:format.date>
+			<f:format.date format="Y">{firstDay}</f:format.date>
+			<f:translate key="week" />
+			<f:format.date format="W">{firstDay}</f:format.date>
 		</h1>
-
 		<div class="row">
 			<f:for each="{weekConfiguration}" key="modify" as="cols">
 				<div class="col-md-{cols}">
 					<f:format.date format="{settings.dateFormat}">{firstDay -> c:dateTime.modify(modification: modify)}</f:format.date>
-					<f:for each="{indices}" as="index">
-						<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay)}">
-							<li>
-								<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
-							</li>
-						</f:if>
-					</f:for>
+					<ul>
+						<f:for each="{indices}" as="index">
+							<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay, modification: modify)}">
+								<li>
+									<c:link.index index="{index}">
+										<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+									</c:link.index>
+								</li>
+							</f:if>
+						</f:for>
+					</ul>
 				</div>
 			</f:for>
 		</div>

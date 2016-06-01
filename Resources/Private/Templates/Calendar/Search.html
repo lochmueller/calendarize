@@ -1,11 +1,11 @@
 <f:form pageUid="{settings.listPid}">
 	<div class="form-group">
 		<label for="calendarizeStartDate">Start date</label>
-		<f:form.textfield name="startDate" id="calendarizeStartDate" value="{startDate -> f:format.date(format: settings.dateFormat)}" />
+		<f:form.textfield name="startDate" id="calendarizeStartDate" class="form-control" value="{startDate -> f:format.date(format: settings.dateFormat)}" />
 	</div>
 	<div class="form-group">
 		<label for="calendarizeEndDate">End date</label>
-		<f:form.textfield name="endDate" id="calendarizeEndDate" value="{endDate -> f:format.date(format: settings.dateFormat)}" />
+		<f:form.textfield name="endDate" id="calendarizeEndDate" class="form-control" value="{endDate -> f:format.date(format: settings.dateFormat)}" />
 	</div>
 
 	<f:for each="{configurations}" as="configuration">

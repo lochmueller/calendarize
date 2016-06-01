@@ -3,7 +3,7 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<td colspan="7">
+			<th colspan="7">
 				<f:if condition="{settings.monthPid}">
 					<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{date -> c:dateTime.modify(modification: 'first day of last month')})}">
 						<c:link.month pageUid="{settings.monthPid}" date="{date -> c:dateTime.modify(modification: 'first day of last month')}">
@@ -19,7 +19,7 @@
 						</c:link.month>
 					</f:if>
 				</f:if>
-			</td>
+			</th>
 		</tr>
 	</thead>
 	<tbody class="regularMonthView">
@@ -28,7 +28,7 @@
 				<c:loop.daysInWeek date="{week.calendar.date}" iteration="day" weekStartsAt="{settings.weekStart}">
 					<f:if condition="{c:dateTime.indexOnDay(indices: indices, day:day.calendar.date)}">
 						<f:then>
-							<td class="hasEvents{f:if(condition: '{date->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' selectedDay')}">
+							<td class="active hasEvents{f:if(condition: '{date->f:format.date(format: \'d.m.Y\')} == {day.calendar.date->f:format.date(format: \'d.m.Y\')}', then: ' selectedDay')}">
 								<f:if condition="{settings.dayPid}">
 									<f:then>
 										<c:link.day pageUid="{settings.dayPid}" date="{day.calendar.date}">
