@@ -6,8 +6,10 @@
 namespace HDNET\Calendarize\UserFunction;
 
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -29,11 +31,13 @@ class TimeSelectionWizard
             return '';
         }
         $id = $matches[2];
+        $times = $this->getTimes((int)$params['pid']);
+        if (!$times) {
+            return '';
+        }
 
-        // @todo update origin field (JS)
-        // @todo configuration of field via TsConfig
-
-        return '';
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->loadRequireJsModule('TYPO3/CMS/Calendarize/TimeSelection');
 
         /** @var IconFactory $iconFactory */
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
@@ -42,14 +46,46 @@ class TimeSelectionWizard
     <div class="input-group">
       <div class="input-group-addon">' . $iconFactory->getIcon('actions-document-synchronize',
             Icon::SIZE_SMALL)->render() . '</div>
-      <select class="form-control" data-related="' . $id . '" onChange="$()alert(\'Works\');">
+      <select class="form-control calendarize-time-selection" data-related="' . $id . '">
         <option></option>
-        <option value="9:00">9:00 Uhr</option>
-        <option value="12:00">12:00 Uhr</option>
-        <option value="18:00">18:00 Uhr</option>
-        <option value="20:15">20:15 Uhr</option>
+        ' . $this->renderOptions($times) . '
   </select>
     </div>
   </div>';
+    }
+
+    /**
+     * Render the options
+     *
+     * @param array $options
+     * @return string
+     */
+    protected function renderOptions(array $options)
+    {
+        $renderedOptions = '';
+        foreach ($options as $key => $value) {
+            $renderedOptions .= '<option key="' . $key . '">' . $value . '</option>';
+        }
+        return $renderedOptions;
+    }
+
+    /**
+     * Get the times
+     *
+     * @return array
+     */
+    protected function getTimes($pageUid)
+    {
+
+        $times = [];
+        $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);
+        if (isset($pagesTsConfig['tx_calendarize.']['timeSelectionWizard.']) &&
+            is_array($pagesTsConfig['tx_calendarize.']['timeSelectionWizard.'])
+        ) {
+            $times = array_combine($pagesTsConfig['tx_calendarize.']['timeSelectionWizard.'],
+                $pagesTsConfig['tx_calendarize.']['timeSelectionWizard.']);
+        }
+
+        return $times;
     }
 }
