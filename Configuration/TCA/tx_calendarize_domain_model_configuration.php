@@ -82,9 +82,15 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'start_time'       => [
-            'config'      => [
+            'config' => [
                 'eval' => 'time,required',
                 'size' => 4,
+                'wizards' => [
+                    'time_selection' => [
+                        'type' => 'userFunc',
+                        'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TimeSelectionWizard->renderWizard',
+                    ],
+                ],
             ],
             'displayCond' => [
                 'AND' => [
@@ -97,6 +103,12 @@ $custom = [
             'config'      => [
                 'eval' => 'time',
                 'size' => 4,
+                'wizards' => [
+                    'time_selection' => [
+                        'type' => 'userFunc',
+                        'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TimeSelectionWizard->renderWizard',
+                    ],
+                ],
             ],
             'displayCond' => [
                 'AND' => [
