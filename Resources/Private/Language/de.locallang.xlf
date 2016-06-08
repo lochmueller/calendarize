@@ -17,6 +17,22 @@
 			<source>There are no events in the current view.</source>
 			<target>Es gibt keine Ereignisse in der aktuellen Ansicht.</target>
 		</trans-unit>
+		<trans-unit id="wrong.date" approved="yes">
+			<source>Wrong date</source>
+			<target>Falsches Datum</target>
+		</trans-unit>
+		<trans-unit id="wrong.date.message" approved="yes">
+			<source>The date of one of the date configurations is wrong. It is not "useful" to select a end date in front of a start date!</source>
+			<target>Das Datum von einem der Datumskonfigurationen ist falsch. Es ist nicht "sinnvoll" ein Enddatum vor das Startdatum zu setzen!</target>
+		</trans-unit>
+		<trans-unit id="wrong.time" approved="yes">
+			<source>Wrong time</source>
+			<target>Falsche Zeit</target>
+		</trans-unit>
+		<trans-unit id="wrong.time.message" approved="yes">
+			<source>The time of one of the date configurations is wrong. It is not "useful" to select a end time in front of a start time!</source>
+			<target>Die Zeit von einem der Datumskonfigurationen ist falsch. Es ist nicht "sinnvoll" eine Endzeit vor eine Startzeit zu setzen!</target>
+		</trans-unit>
 		<trans-unit id="booking.thankYouMessage" approved="yes">
 			<source>Thank you for your booking request. We will contact you shortly.</source>
 			<target>Vielen Dank für Ihre Buchung. Wir werden sie in Kürze kontaktieren.</target>

@@ -15,6 +15,18 @@
 		<trans-unit id="no_events">
 			<source>There are no events in the current view.</source>
 		</trans-unit>
+		<trans-unit id="wrong.date">
+			<source>Wrong date</source>
+		</trans-unit>
+		<trans-unit id="wrong.date.message">
+			<source>The date of one of the date configurations is wrong. It is not "useful" to select a end date in front of a start date!</source>
+		</trans-unit>
+		<trans-unit id="wrong.time">
+			<source>Wrong time</source>
+		</trans-unit>
+		<trans-unit id="wrong.time.message">
+			<source>The time of one of the date configurations is wrong. It is not "useful" to select a end time in front of a start time!</source>
+		</trans-unit>
 		<trans-unit id="booking.thankYouMessage">
 			<source>Thank you for your booking request. We will contact you shortly.</source>
 		</trans-unit>
