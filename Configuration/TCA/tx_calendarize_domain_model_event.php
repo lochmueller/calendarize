@@ -40,8 +40,10 @@ $search = [
 ];
 $replace = [
     ',',
-    'language,--div--;' . \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage('files',
-        'calendarize') . ',images,downloads,--div--',
+    'language,--div--;' . \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage(
+        'files',
+        'calendarize'
+    ) . ',images,downloads,--div--',
     \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage('dateOptions', 'calendarize')
 ];
 
