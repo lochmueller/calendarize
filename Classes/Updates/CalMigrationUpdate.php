@@ -71,8 +71,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $database = HelperUtility::getDatabaseConnection();
         $checkImportIds = [];
         $nonMigrated = [];
-        $events = $database->exec_SELECTgetRows('uid', 'tx_cal_event',
-            '1=1' . BackendUtility::deleteClause('tx_cal_event'));
+        $events = $database->exec_SELECTgetRows(
+            'uid',
+            'tx_cal_event',
+            '1=1' . BackendUtility::deleteClause('tx_cal_event')
+        );
         foreach ($events as $event) {
             $checkImportIds[] = '"calMigration:' . $event['uid'] . '"';
             $nonMigrated[(int)$event['uid']] = (int)$event['uid'];
@@ -83,9 +86,14 @@ class CalMigrationUpdate extends AbstractUpdate
             return [];
         }
 
-        $migratedRows = $database->exec_SELECTgetRows('uid,import_id', 'tx_calendarize_domain_model_event',
-            'import_id IN (' . implode(',',
-                $checkImportIds) . ')' . BackendUtility::deleteClause('tx_calendarize_domain_model_event'));
+        $migratedRows = $database->exec_SELECTgetRows(
+            'uid,import_id',
+            'tx_calendarize_domain_model_event',
+            'import_id IN (' . implode(
+                ',',
+                $checkImportIds
+            ) . ')' . BackendUtility::deleteClause('tx_calendarize_domain_model_event')
+        );
 
         foreach ($migratedRows as $migratedRow) {
             $importId = (int)str_replace('calMigration:', '', $migratedRow['import_id']);

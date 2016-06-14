@@ -63,8 +63,12 @@ class CalDav extends AbstractService
         EidUtility::initLanguage();
 
         /** @var TypoScriptFrontendController $TSFE */
-        $TSFE = GeneralUtility::makeInstance(TypoScriptFrontendController::class,
-            $GLOBALS['TYPO3_CONF_VARS'], 0, 0);
+        $TSFE = GeneralUtility::makeInstance(
+            TypoScriptFrontendController::class,
+            $GLOBALS['TYPO3_CONF_VARS'],
+            0,
+            0
+        );
         EidUtility::initLanguage();
 
         // Get FE User Information
@@ -123,8 +127,11 @@ class CalDav extends AbstractService
     protected function getPdoConnection()
     {
         $dbSettings = $GLOBALS['TYPO3_CONF_VARS']['DB'];
-        $pdo = new \PDO('mysql:host=' . $dbSettings['host'] . ';dbname=' . $dbSettings['database'], $dbSettings['username'],
-            $dbSettings['password']);
+        $pdo = new \PDO(
+            'mysql:host=' . $dbSettings['host'] . ';dbname=' . $dbSettings['database'],
+            $dbSettings['username'],
+            $dbSettings['password']
+        );
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return $pdo;
 

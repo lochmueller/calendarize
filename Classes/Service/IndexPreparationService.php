@@ -41,7 +41,6 @@ class IndexPreparationService
             $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
             $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
             foreach ($neededItems as $key => $record) {
-
                 $record['foreign_table'] = $tableName;
                 $record['foreign_uid'] = $uid;
                 $record['unique_register_key'] = $configurationKey;

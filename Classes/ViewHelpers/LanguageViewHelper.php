@@ -30,5 +30,4 @@ class LanguageViewHelper extends AbstractViewHelper
 
         return strtolower($tsfe->sys_language_isocode);
     }
-
 }

@@ -29,5 +29,4 @@ class CalDavRepository extends AbstractRepository
 
         return isset($result[0]) ? $result[0] : false;
     }
-
 }

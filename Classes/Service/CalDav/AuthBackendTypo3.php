@@ -137,9 +137,10 @@ class AuthBackendTypo3 extends AbstractBasic
     protected function getUserRow($userName)
     {
         $dbConnection = HelperUtility::getDatabaseConnection();
-        $where = 'username = ' . $dbConnection->fullQuoteStr($userName,
-                'fe_users') . BackendUtility::deleteClause($this->tableName) . BackendUtility::BEenableFields($this->tableName);
+        $where = 'username = ' . $dbConnection->fullQuoteStr(
+            $userName,
+            'fe_users'
+        ) . BackendUtility::deleteClause($this->tableName) . BackendUtility::BEenableFields($this->tableName);
         return $dbConnection->exec_SELECTgetSingleRow('*', 'fe_users', $where);
     }
-
 }

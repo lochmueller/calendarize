@@ -60,8 +60,11 @@ class CmsLayout extends AbstractHook
         $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
         $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
         $this->layoutService = GeneralUtility::makeInstance(ContentElementLayoutService::class);
-        $this->layoutService->setTitle('<img src="' . str_replace('EXT:calendarize/', $extensionRelPath,
-                $extensionIcon) . '" width="32" height="32" /> Calendarize');
+        $this->layoutService->setTitle('<img src="' . str_replace(
+            'EXT:calendarize/',
+            $extensionRelPath,
+            $extensionIcon
+        ) . '" width="32" height="32" /> Calendarize');
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
@@ -72,8 +75,10 @@ class CmsLayout extends AbstractHook
         $actionKey = lcfirst(implode('', $parts));
 
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
-        $this->layoutService->addRow(TranslateUtility::get('configuration'),
-            $this->flexFormService->get('settings.configuration', 'main'));
+        $this->layoutService->addRow(
+            TranslateUtility::get('configuration'),
+            $this->flexFormService->get('settings.configuration', 'main')
+        );
 
         if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');

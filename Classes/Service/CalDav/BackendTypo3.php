@@ -100,12 +100,10 @@ class BackendTypo3 extends AbstractBackend
         $calendars = [];
 
         while ($user = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-
             $stmt = $this->pdo->prepare("SELECT * FROM tx_cal_calendar WHERE uid in (" . $user ['tx_cal_calendar'] . ")");
             $stmt->execute();
 
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-
                 $components = explode(',', 'VEVENT,VTODO');
 
                 $calendar = [
@@ -113,7 +111,7 @@ class BackendTypo3 extends AbstractBackend
                     'uri'                                                         => $row ['title'],
                     'principaluri'                                                => $principalUri,
                     '{' . Plugin::NS_CALENDARSERVER . '}getctag'                  => $row ['tstamp'] ? $row ['tstamp'] : '0',
-                    '{' . Plugin::NS_CALDAV . '}supported-calendar-component-set' => new SupportedCalendarComponentSet ($components),
+                    '{' . Plugin::NS_CALDAV . '}supported-calendar-component-set' => new SupportedCalendarComponentSet($components),
                     '{DAV:}displayname'                                           => $row ['title'],
                     '{urn:ietf:params:xml:ns:caldav}calendar-description'         => '',
                     '{urn:ietf:params:xml:ns:caldav}calendar-timezone'            => null,
@@ -157,26 +155,27 @@ class BackendTypo3 extends AbstractBackend
         // Default value
         $sccs = '{urn:ietf:params:xml:ns:caldav}supported-calendar-component-set';
         $fieldNames [] = 'components';
-        if (!isset ($properties [$sccs])) {
+        if (!isset($properties [$sccs])) {
             $values [':components'] = 'VEVENT,VTODO';
         } else {
             if (!($properties [$sccs] instanceof Sabre_CalDAV_Property_SupportedCalendarComponentSet)) {
-                throw new Sabre_DAV_Exception ('The ' . $sccs . ' property must be of type: Sabre_CalDAV_Property_SupportedCalendarComponentSet');
+                throw new Sabre_DAV_Exception('The ' . $sccs . ' property must be of type: Sabre_CalDAV_Property_SupportedCalendarComponentSet');
             }
             $values [':components'] = implode(',', $properties [$sccs]->getValue());
         }
 
         foreach ($this->propertyMap as $xmlName => $dbName) {
-            if (isset ($properties [$xmlName])) {
-
+            if (isset($properties [$xmlName])) {
                 $myValue = $properties [$xmlName];
                 $values [':' . $dbName] = $properties [$xmlName];
                 $fieldNames [] = $dbName;
             }
         }
 
-        $stmt = $this->pdo->prepare("INSERT INTO tx_cal_calendar (" . implode(', ', $fieldNames) . ") VALUES (" . implode(', ',
-                array_keys($values)) . ")");
+        $stmt = $this->pdo->prepare("INSERT INTO tx_cal_calendar (" . implode(', ', $fieldNames) . ") VALUES (" . implode(
+            ', ',
+            array_keys($values)
+        ) . ")");
         $stmt->execute($values);
 
         return $this->pdo->lastInsertId();
@@ -231,12 +230,11 @@ class BackendTypo3 extends AbstractBackend
         $hasError = false;
 
         foreach ($properties as $propertyName => $propertyValue) {
-
             // We don't know about this property.
-            if (!isset ($this->propertyMap [$propertyName])) {
+            if (!isset($this->propertyMap [$propertyName])) {
                 $hasError = true;
                 $result [403] [$propertyName] = null;
-                unset ($properties [$propertyName]);
+                unset($properties [$propertyName]);
                 continue;
             }
 
@@ -254,7 +252,7 @@ class BackendTypo3 extends AbstractBackend
             // Removing unused statuscodes for cleanliness
             foreach ($result as $status => $properties) {
                 if (is_array($properties) && count($properties) === 0) {
-                    unset ($result [$status]);
+                    unset($result [$status]);
                 }
             }
             return $result;
@@ -341,14 +339,14 @@ class BackendTypo3 extends AbstractBackend
                     $eventRow ['icsUid'],
                     $eventRow ['uid']
                 ]);
-            } else if ($eventRow ['tx_caldav_uid'] == '') {
+            } elseif ($eventRow ['tx_caldav_uid'] == '') {
                 $eventRow ['tx_caldav_uid'] = $eventRow ['icsUid'];
                 $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET tx_caldav_uid = ? WHERE uid = ?");
                 $stmt->execute([
                     $eventRow ['tx_caldav_uid'],
                     $eventRow ['uid']
                 ]);
-            } else if ($eventRow ['icsUid'] == '') {
+            } elseif ($eventRow ['icsUid'] == '') {
                 $eventRow ['icsUid'] = $eventRow ['tx_caldav_uid'];
                 $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET icsUid = ? WHERE uid = ?");
                 $stmt->execute([
@@ -384,7 +382,7 @@ class BackendTypo3 extends AbstractBackend
             $objectUri
         ]);
         $eventRow = $stmt->fetch();
-        if (empty ($eventRow)) {
+        if (empty($eventRow)) {
             return [];
         }
         return [

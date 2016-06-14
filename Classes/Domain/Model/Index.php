@@ -333,5 +333,4 @@ class Index extends AbstractModel
     {
         return $this->startTime;
     }
-
 }

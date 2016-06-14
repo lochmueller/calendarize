@@ -74,8 +74,11 @@ class IndexerService extends AbstractService
     public function getIndexCount($table, $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        return $databaseConnection->exec_SELECTcountRows('*', self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid);
+        return $databaseConnection->exec_SELECTcountRows(
+            '*',
+            self::TABLE_NAME,
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid
+        );
     }
 
     /**
@@ -92,9 +95,17 @@ class IndexerService extends AbstractService
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $now = DateTimeUtility::getNow();
         $now->setTime(0, 0, 0);
-        return $databaseConnection->exec_SELECTgetRows('*', self::TABLE_NAME,
-            'start_date >= ' . $now->getTimestamp() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr($table,
-                self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid, '', 'start_date ASC, start_time ASC', $limit);
+        return $databaseConnection->exec_SELECTgetRows(
+            '*',
+            self::TABLE_NAME,
+            'start_date >= ' . $now->getTimestamp() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr(
+                $table,
+                self::TABLE_NAME
+            ) . ' AND foreign_uid=' . (int)$uid,
+            '',
+            'start_date ASC, start_time ASC',
+            $limit
+        );
     }
 
     /**
@@ -127,9 +138,14 @@ class IndexerService extends AbstractService
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $currentItems = $databaseConnection->exec_SELECTgetRows('*', self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($tableName,
-                IndexerService::TABLE_NAME) . ' AND foreign_uid=' . $uid);
+        $currentItems = $databaseConnection->exec_SELECTgetRows(
+            '*',
+            self::TABLE_NAME,
+            'foreign_table=' . $databaseConnection->fullQuoteStr(
+                $tableName,
+                IndexerService::TABLE_NAME
+            ) . ' AND foreign_uid=' . $uid
+        );
         foreach ($neededItems as $neededKey => $neededItem) {
             $remove = false;
             foreach ($currentItems as $currentKey => $currentItem) {
@@ -174,7 +190,6 @@ class IndexerService extends AbstractService
                     return false;
                 }
             }
-
         }
         return true;
     }
@@ -213,10 +228,11 @@ class IndexerService extends AbstractService
             foreach ($validKeys as $key => $value) {
                 $validKeys[$key] = $databaseConnection->fullQuoteStr($value, IndexerService::TABLE_NAME);
             }
-            return (bool)$databaseConnection->exec_DELETEquery(self::TABLE_NAME,
-                'unique_register_key NOT IN (' . implode(',', $validKeys) . ')');
+            return (bool)$databaseConnection->exec_DELETEquery(
+                self::TABLE_NAME,
+                'unique_register_key NOT IN (' . implode(',', $validKeys) . ')'
+            );
         }
         return (bool)$databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
     }
-
 }

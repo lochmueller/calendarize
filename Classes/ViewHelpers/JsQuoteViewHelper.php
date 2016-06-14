@@ -27,5 +27,4 @@ class JsQuoteViewHelper extends AbstractViewHelper
         $content = $content === null ? $this->renderChildren() : $content;
         return GeneralUtility::quoteJSvalue($content);
     }
-
 }

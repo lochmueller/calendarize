@@ -41,8 +41,12 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     {
         $this->registerUniversalTagAttributes();
         $this->registerTagAttribute('target', 'string', 'Target of link', false);
-        $this->registerTagAttribute('rel', 'string',
-            'Specifies the relationship between the current document and the linked document', false);
+        $this->registerTagAttribute(
+            'rel',
+            'string',
+            'Specifies the relationship between the current document and the linked document',
+            false
+        );
     }
 
     /**

@@ -68,4 +68,4 @@ class Database
             'extensionKey' => $extensionKey
         ];
     }
-} 
+}

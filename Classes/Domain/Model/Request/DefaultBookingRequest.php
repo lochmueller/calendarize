@@ -289,5 +289,4 @@ class DefaultBookingRequest extends AbstractBookingRequest
     {
         $this->message = $message;
     }
-
 }

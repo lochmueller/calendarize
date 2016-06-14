@@ -66,5 +66,4 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      * @return array
      */
     abstract protected function getItems(\DateTime $date);
-
 }

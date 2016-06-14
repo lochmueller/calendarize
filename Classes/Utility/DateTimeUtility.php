@@ -60,7 +60,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    static public function convertWeekYear2DayMonthYear($week, $year)
+    public static function convertWeekYear2DayMonthYear($week, $year)
     {
         return self::normalizeDateTimeSingle(strtotime($year . 'W' . $week . '1'));
     }
@@ -71,7 +71,7 @@ class DateTimeUtility
      * @return \DateTimeZone
      * @see \TYPO3\CMS\Core\Core\Bootstrap->setDefaultTimezone()
      */
-    static public function getTimeZone()
+    public static function getTimeZone()
     {
         return new \DateTimeZone(date_default_timezone_get());
     }
@@ -83,7 +83,7 @@ class DateTimeUtility
      *
      * @return int
      */
-    static public function getDaySecondsOfDateTime(\DateTime $dateTime)
+    public static function getDaySecondsOfDateTime(\DateTime $dateTime)
     {
         $hours = (int)$dateTime->format('G');
         $minutes = $hours * 60 + (int)$dateTime->format('i');
@@ -99,7 +99,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    static public function normalizeDateTime($day = null, $month = null, $year = null)
+    public static function normalizeDateTime($day = null, $month = null, $year = null)
     {
         $date = self::getNow();
         if (!MathUtility::canBeInterpretedAsInteger($year)) {
@@ -128,7 +128,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    static public function resetTime($dateTime = null)
+    public static function resetTime($dateTime = null)
     {
         $dateTime = self::normalizeDateTimeSingle($dateTime);
         $dateTime->setTime(0, 0, 0);
@@ -142,7 +142,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    static public function normalizeDateTimeSingle($dateInformation)
+    public static function normalizeDateTimeSingle($dateInformation)
     {
         if ($dateInformation instanceof \DateTime) {
             return $dateInformation;
@@ -159,7 +159,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    static public function getNow()
+    public static function getNow()
     {
         return self::normalizeDateTimeSingle((int)$GLOBALS['SIM_ACCESS_TIME']);
     }

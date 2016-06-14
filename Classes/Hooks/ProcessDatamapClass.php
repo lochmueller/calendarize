@@ -77,5 +77,4 @@ class ProcessDatamapClass extends AbstractHook
         }
         $this->indexItems = [];
     }
-
 }

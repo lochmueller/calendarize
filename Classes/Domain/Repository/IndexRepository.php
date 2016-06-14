@@ -351,8 +351,10 @@ class IndexRepository extends AbstractRepository
         /** @var ConfigurationManagerInterface $configuratioManager */
         $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
         $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(',',
-            $frameworkConfig['persistence']['storagePid']) : [];
+        $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(
+            ',',
+            $frameworkConfig['persistence']['storagePid']
+        ) : [];
         if (!empty($storagePages)) {
             return $storagePages;
         }
@@ -372,7 +374,7 @@ class IndexRepository extends AbstractRepository
     protected function getDefaultConstraints(QueryInterface $query)
     {
         $constraints = [];
-        if($this->indexTypes) {
+        if ($this->indexTypes) {
             $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
         }
 

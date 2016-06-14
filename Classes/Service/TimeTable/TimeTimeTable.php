@@ -63,8 +63,7 @@ class TimeTimeTable extends AbstractTimeTable
                 LocalizationUtility::translate('LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date', 'calendarize'),
                 FlashMessage::ERROR
             );
-        } elseif (
-            !$baseEntry['all_day'] &&
+        } elseif (!$baseEntry['all_day'] &&
             $baseEntry['start_date']->format('d.m.Y') == $baseEntry['end_date']->format('d.m.Y') &&
             $baseEntry['start_time'] > $baseEntry['end_time']
         ) {
@@ -191,11 +190,17 @@ class TimeTimeTable extends AbstractTimeTable
 
             $dateTime = false;
             if ($configuration->getFrequency() === Configuration::FREQUENCY_MONTHLY) {
-                $dateTime = $recurrenceService->getRecurrenceForNextMonth($loopEntry['start_date'],
-                    $configuration->getRecurrence(), $configuration->getDay());
+                $dateTime = $recurrenceService->getRecurrenceForNextMonth(
+                    $loopEntry['start_date'],
+                    $configuration->getRecurrence(),
+                    $configuration->getDay()
+                );
             } elseif ($configuration->getFrequency() === Configuration::FREQUENCY_YEARLY) {
-                $dateTime = $recurrenceService->getRecurrenceForNextYear($loopEntry['start_date'],
-                    $configuration->getRecurrence(), $configuration->getDay());
+                $dateTime = $recurrenceService->getRecurrenceForNextYear(
+                    $loopEntry['start_date'],
+                    $configuration->getRecurrence(),
+                    $configuration->getDay()
+                );
             }
             if ($dateTime === false) {
                 break;

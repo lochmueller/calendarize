@@ -47,7 +47,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
 
     /**
      * Set configurations
-     * 
+     *
      * @param array $configurations
      */
     public static function setConfigurations($configurations)

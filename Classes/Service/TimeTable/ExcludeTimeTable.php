@@ -64,5 +64,4 @@ class ExcludeTimeTable extends AbstractTimeTable
 
         return $base;
     }
-
 }

@@ -17,5 +17,4 @@ interface BookingInterface
      * @return boolean
      */
     public function isBookable();
-
 }

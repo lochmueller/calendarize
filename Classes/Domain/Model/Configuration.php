@@ -410,5 +410,4 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     {
         $this->recurrence = $recurrence;
     }
-
 }

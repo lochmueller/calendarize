@@ -39,5 +39,4 @@ abstract class AbstractBookingRequest extends AbstractModel
     {
         $this->index = $index;
     }
-
 }

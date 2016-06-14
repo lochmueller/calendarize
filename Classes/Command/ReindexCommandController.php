@@ -26,5 +26,4 @@ class ReindexCommandController extends AbstractCommandController
         $indexer = $this->objectManager->get(IndexerService::class);
         $indexer->reindexAll();
     }
-
 }

@@ -36,5 +36,4 @@ class ModifyViewHelper extends AbstractViewHelper
         $clone = clone $dateTime;
         return $clone->modify($modification);
     }
-
 }

@@ -31,5 +31,4 @@ class IncludeTimeTable extends AbstractTimeTable
             $times = array_merge($times, $this->buildSingleTimeTableByGroup($group));
         }
     }
-
 }

@@ -42,8 +42,11 @@ class ExternalTimeTable extends AbstractTimeTable
     {
         $url = $configuration->getExternalIcsUrl();
         if (!GeneralUtility::isValidUrl($url)) {
-            HelperUtility::createFlashMessage('Configuration with invalid ICS URL: ' . $url, 'Index ICS URL',
-                FlashMessage::ERROR);
+            HelperUtility::createFlashMessage(
+                'Configuration with invalid ICS URL: ' . $url,
+                'Index ICS URL',
+                FlashMessage::ERROR
+            );
             return;
         }
 
@@ -90,5 +93,4 @@ class ExternalTimeTable extends AbstractTimeTable
 
         return $event->getEnd();
     }
-
 }

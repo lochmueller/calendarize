@@ -35,5 +35,3 @@ class IfDateUpperViewHelper extends AbstractViewHelper
         return $base < $check;
     }
 }
-
-

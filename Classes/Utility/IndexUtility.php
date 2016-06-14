@@ -26,7 +26,7 @@ class IndexUtility
      *
      * @return bool
      */
-    static public function isIndexInRange($index, \DateTime $rangeStart, \DateTime $rangeEnd)
+    public static function isIndexInRange($index, \DateTime $rangeStart, \DateTime $rangeEnd)
     {
         $indexStart = $index->getStartDateComplete();
         $indexEnd = $index->getEndDateComplete();
@@ -48,5 +48,4 @@ class IndexUtility
 
         return false;
     }
-
 }

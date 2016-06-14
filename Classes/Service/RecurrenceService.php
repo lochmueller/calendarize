@@ -178,5 +178,4 @@ class RecurrenceService extends AbstractService
         }
         return false;
     }
-
 }

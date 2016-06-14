@@ -7,7 +7,6 @@
 
 namespace HDNET\Calendarize\Utility;
 
-
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -23,9 +22,9 @@ class TranslateUtility
      *
      * @return NULL|string
      */
-    static public function get($key)
+    public static function get($key)
     {
-        if(TYPO3_MODE === 'FE' && !is_object($GLOBALS['TSFE'])) {
+        if (TYPO3_MODE === 'FE' && !is_object($GLOBALS['TSFE'])) {
             // check wrong eID context. Do not call "LocalizationUtility::translate" in eID context, if there is no
             // valid TypoScriptFrontendController. Skip this call by returning just the $key!
             return $key;
@@ -40,9 +39,8 @@ class TranslateUtility
      *
      * @return string
      */
-    static public function getLll($key)
+    public static function getLll($key)
     {
         return \HDNET\Autoloader\Utility\TranslateUtility::getLllString($key, 'calendarize', 'locallang.xlf');
     }
-
 }

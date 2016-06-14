@@ -97,5 +97,4 @@ class CalDav extends AbstractModel
     {
         $this->eventStorage = $eventStorage;
     }
-
 }

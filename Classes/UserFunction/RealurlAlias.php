@@ -54,10 +54,17 @@ class RealurlAlias
     protected function alias2id($value)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $row = $databaseConnection->exec_SELECTgetSingleRow('value_id', 'tx_realurl_uniqalias',
-            'tablename=' . $databaseConnection->fullQuoteStr(IndexerService::TABLE_NAME,
-                IndexerService::TABLE_NAME) . ' AND value_alias=' . $databaseConnection->fullQuoteStr($value,
-                IndexerService::TABLE_NAME));
+        $row = $databaseConnection->exec_SELECTgetSingleRow(
+            'value_id',
+            'tx_realurl_uniqalias',
+            'tablename=' . $databaseConnection->fullQuoteStr(
+                IndexerService::TABLE_NAME,
+                IndexerService::TABLE_NAME
+            ) . ' AND value_alias=' . $databaseConnection->fullQuoteStr(
+                $value,
+                IndexerService::TABLE_NAME
+            )
+        );
         if (isset($row['value_id'])) {
             return (int)$row['value_id'];
         }
@@ -79,9 +86,14 @@ class RealurlAlias
     protected function id2alias($value)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $row = $databaseConnection->exec_SELECTgetSingleRow('value_alias', 'tx_realurl_uniqalias',
-            'tablename=' . $databaseConnection->fullQuoteStr(IndexerService::TABLE_NAME,
-                IndexerService::TABLE_NAME) . ' AND value_id=' . (int)$value);
+        $row = $databaseConnection->exec_SELECTgetSingleRow(
+            'value_alias',
+            'tx_realurl_uniqalias',
+            'tablename=' . $databaseConnection->fullQuoteStr(
+                IndexerService::TABLE_NAME,
+                IndexerService::TABLE_NAME
+            ) . ' AND value_id=' . (int)$value
+        );
         if (isset($row['value_alias'])) {
             return $row['value_alias'];
         }
@@ -140,7 +152,6 @@ class RealurlAlias
                         ->format($datePart);
                 $title = Functions::URLize($title);
                 $alias = Functions::sanitize_title_with_dashes($title);
-
             }
         }
 

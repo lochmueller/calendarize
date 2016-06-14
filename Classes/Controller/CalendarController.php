@@ -35,13 +35,19 @@ class CalendarController extends AbstractController
 
         if (isset($this->arguments['startDate'])) {
             $this->arguments['startDate']->getPropertyMappingConfiguration()
-                ->setTypeConverterOption(DateTimeConverter::class,
-                    DateTimeConverter::CONFIGURATION_DATE_FORMAT, $this->settings['dateFormat']);
+                ->setTypeConverterOption(
+                    DateTimeConverter::class,
+                    DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                    $this->settings['dateFormat']
+                );
         }
         if (isset($this->arguments['endDate'])) {
             $this->arguments['endDate']->getPropertyMappingConfiguration()
-                ->setTypeConverterOption(DateTimeConverter::class,
-                    DateTimeConverter::CONFIGURATION_DATE_FORMAT, $this->settings['dateFormat']);
+                ->setTypeConverterOption(
+                    DateTimeConverter::class,
+                    DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                    $this->settings['dateFormat']
+                );
         }
     }
 
@@ -151,8 +157,13 @@ class CalendarController extends AbstractController
         } else {
             $overrideStartDate = (int)$this->settings['overrideStartdate'];
             $overrideEndDate = (int)$this->settings['overrideEnddate'];
-            $indices = $this->indexRepository->findList((int)$this->settings['limit'], $this->settings['listStartTime'],
-                (int)$this->settings['listStartTimeOffsetHours'], $overrideStartDate, $overrideEndDate);
+            $indices = $this->indexRepository->findList(
+                (int)$this->settings['limit'],
+                $this->settings['listStartTime'],
+                (int)$this->settings['listStartTimeOffsetHours'],
+                $overrideStartDate,
+                $overrideEndDate
+            );
         }
 
         $this->slotExtendedAssignMultiple([
@@ -347,5 +358,4 @@ class CalendarController extends AbstractController
         }
         return $return;
     }
-
 }

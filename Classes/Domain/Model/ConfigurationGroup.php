@@ -73,5 +73,4 @@ class ConfigurationGroup extends AbstractModel
     {
         $this->configurations = $configurations;
     }
-
 }

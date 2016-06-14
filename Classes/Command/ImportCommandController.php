@@ -90,8 +90,11 @@ class ImportCommandController extends AbstractCommandController
             }
 
             if ($startDateTime === null || $endDateTime === null) {
-                $this->enqueueMessage('Could not convert the date in the right format of "' . $icalEvent['SUMMARY'] . '"',
-                    'Warning', FlashMessage::WARNING);
+                $this->enqueueMessage(
+                    'Could not convert the date in the right format of "' . $icalEvent['SUMMARY'] . '"',
+                    'Warning',
+                    FlashMessage::WARNING
+                );
             }
 
             $events[] = [
@@ -115,8 +118,10 @@ class ImportCommandController extends AbstractCommandController
     protected function getIcalEvents($absoluteIcalFile)
     {
         if (!class_exists('ICal')) {
-            GeneralUtility::requireOnce(ExtensionManagementUtility::extPath('calendarize',
-                'Resources/Private/Php/ics-parser/class.iCalReader.php'));
+            GeneralUtility::requireOnce(ExtensionManagementUtility::extPath(
+                'calendarize',
+                'Resources/Private/Php/ics-parser/class.iCalReader.php'
+            ));
         }
         return (new \ICal($absoluteIcalFile))->events();
     }

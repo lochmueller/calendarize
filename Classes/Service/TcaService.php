@@ -109,5 +109,4 @@ class TcaService extends AbstractService
         }
         return $title;
     }
-
 }

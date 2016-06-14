@@ -45,8 +45,11 @@ class TimeTableService extends AbstractService
 
             $handler = $this->buildConfigurationHandler($configuration);
             if (!$handler) {
-                HelperUtility::createFlashMessage('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(),
-                    'Index invalid', FlashMessage::ERROR);
+                HelperUtility::createFlashMessage(
+                    'There is no TimeTable handler for the given configuration type: ' . $configuration->getType(),
+                    'Index invalid',
+                    FlashMessage::ERROR
+                );
                 continue;
             }
 
@@ -71,5 +74,4 @@ class TimeTableService extends AbstractService
         }
         return HelperUtility::create($handler);
     }
-
 }

@@ -22,7 +22,7 @@ class Register
      *
      * @return void
      */
-    static public function extTables(array $configuration)
+    public static function extTables(array $configuration)
     {
         self::createTcaConfiguration($configuration);
         self::registerItem($configuration);
@@ -33,7 +33,7 @@ class Register
      *
      * @param $configuration
      */
-    static protected function createTcaConfiguration($configuration)
+    protected static function createTcaConfiguration($configuration)
     {
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? trim($configuration['tcaTypeList']) : '';
@@ -66,7 +66,7 @@ class Register
      *
      * @param array $configuration
      */
-    static protected function registerItem(array $configuration)
+    protected static function registerItem(array $configuration)
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
     }
@@ -78,7 +78,7 @@ class Register
      *
      * @return void
      */
-    static public function extLocalconf(array $configuration)
+    public static function extLocalconf(array $configuration)
     {
         self::registerItem($configuration);
     }
@@ -88,7 +88,7 @@ class Register
      *
      * @return array
      */
-    static public function getDefaultAutoloader()
+    public static function getDefaultAutoloader()
     {
         return [
             'Hooks',
@@ -108,7 +108,7 @@ class Register
      *
      * @return array
      */
-    static public function getRegister()
+    public static function getRegister()
     {
         return is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']) ? $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] : [];
     }
@@ -120,7 +120,7 @@ class Register
      *
      * @return array
      */
-    static public function getDefaultCalendarizeConfiguration()
+    public static function getDefaultCalendarizeConfiguration()
     {
         $configuration = [
             'uniqueRegisterKey' => 'Event',
@@ -134,5 +134,4 @@ class Register
         ];
         return $configuration;
     }
-
 }

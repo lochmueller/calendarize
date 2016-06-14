@@ -30,7 +30,7 @@ class HelperUtility
      *
      * @return object
      */
-    static public function create($className)
+    public static function create($className)
     {
         $arguments = func_get_args();
         $objManager = new ObjectManager();
@@ -47,7 +47,7 @@ class HelperUtility
      *
      * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
      */
-    static public function getQuery($objectName)
+    public static function getQuery($objectName)
     {
         $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
         /** @var PersistenceManagerInterface $manager */
@@ -63,7 +63,7 @@ class HelperUtility
      *
      * @return Dispatcher
      */
-    static public function getSignalSlotDispatcher()
+    public static function getSignalSlotDispatcher()
     {
         return self::create(Dispatcher::class);
     }
@@ -77,7 +77,7 @@ class HelperUtility
      *
      * @throws \TYPO3\CMS\Core\Exception
      */
-    static public function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
+    public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
     {
         /** @var FlashMessage $flashMessage */
         $flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', $message, $title, $mode, true);
@@ -93,7 +93,7 @@ class HelperUtility
      *
      * @return DatabaseConnection
      */
-    static public function getDatabaseConnection()
+    public static function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
     }

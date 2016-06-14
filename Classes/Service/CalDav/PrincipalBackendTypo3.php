@@ -181,8 +181,10 @@ class PrincipalBackendTypo3 implements BackendInterface
     {
         var_dump('setGroupMemberSet');
         // Grabbing the list of principal id's.
-        $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . str_repeat(', ? ',
-                count($members)) . ');');
+        $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . str_repeat(
+            ', ? ',
+            count($members)
+        ) . ');');
         $stmt->execute(array_merge([$principal], $members));
 
         $memberIds = [];
@@ -204,10 +206,8 @@ class PrincipalBackendTypo3 implements BackendInterface
         $stmt->execute([$principalId]);
 
         foreach ($memberIds as $memberId) {
-
             $stmt = $this->pdo->prepare('INSERT INTO `' . $this->groupMembersTableName . '` (principal_id, member_id) VALUES (?, ?);');
             $stmt->execute([$principalId, $memberId]);
-
         }
 
     }

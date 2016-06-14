@@ -59,5 +59,4 @@ abstract class AbstractTimeTable extends AbstractService
         }
         return $this->timeTableService->getTimeTablesByConfigurationIds($ids);
     }
-
 }

@@ -72,5 +72,4 @@ class ContentElementLayoutService extends AbstractService
 
         return '<pre style="white-space:normal">' . $content . '</pre>';
     }
-
 }

@@ -68,8 +68,11 @@ class EventSearch
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $categoryIds = [];
         if (isset($contentRecord['uid']) && MathUtility::canBeInterpretedAsInteger($contentRecord['uid'])) {
-            $rows = $databaseConnection->exec_SELECTgetRows('uid_local', 'sys_category_record_mm',
-                'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']);
+            $rows = $databaseConnection->exec_SELECTgetRows(
+                'uid_local',
+                'sys_category_record_mm',
+                'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']
+            );
             foreach ($rows as $row) {
                 $categoryIds[] = (int)$row['uid_local'];
             }
@@ -83,8 +86,11 @@ class EventSearch
             ];
         }
 
-        $rows = $databaseConnection->exec_SELECTgetRows('uid_foreign', 'sys_category_record_mm',
-            'tablenames="tx_calendarize_domain_model_event" AND uid_local IN (' . implode(',', $categoryIds) . ')');
+        $rows = $databaseConnection->exec_SELECTgetRows(
+            'uid_foreign',
+            'sys_category_record_mm',
+            'tablenames="tx_calendarize_domain_model_event" AND uid_local IN (' . implode(',', $categoryIds) . ')'
+        );
         foreach ($rows as $row) {
             $indexIds[] = (int)$row['uid_foreign'];
         }
