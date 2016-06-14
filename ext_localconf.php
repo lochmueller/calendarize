@@ -17,11 +17,17 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
     \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
     /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
     $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
-    $signalSlotDispatcher->connect('HDNET\\Calendarize\\Command\\ImportCommandController', 'importCommand',
-        'HDNET\\Calendarize\\Slots\\EventImport', 'importCommand');
+    $signalSlotDispatcher->connect(
+        'HDNET\\Calendarize\\Command\\ImportCommandController',
+        'importCommand',
+        'HDNET\\Calendarize\\Slots\\EventImport',
+        'importCommand'
+    );
 }
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('HDNET.calendarize', 'Calendar',
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'HDNET.calendarize',
+    'Calendar',
     [
         'Calendar' => 'list,latest,year,month,week,day,detail,search,result',
         'Booking' => 'booking,send'

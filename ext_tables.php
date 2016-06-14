@@ -21,24 +21,31 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
         ->add('calendarize', 'tx_calendarize_domain_model_event');
 }
 
-if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
     $GLOBALS['TCA']['tx_kesearch_indexerconfig']['columns']['sysfolder']['displayCond'] .= ',calendarize';
 }
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('calendarize', 'Calendar',
-    \HDNET\Calendarize\Utility\TranslateUtility::get('pluginName'));
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'calendarize',
+    'Calendar',
+    \HDNET\Calendarize\Utility\TranslateUtility::get('pluginName')
+);
 
 // module icon
 $extensionIcon = \HDNET\Autoloader\Utility\IconUtility::getByExtensionKey('calendarize', true);
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
     /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
-    $iconRegistry->registerIcon('apps-pagetree-folder-contains-calendarize',
-        'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider', ['source' => $extensionIcon]);
+    $iconRegistry->registerIcon(
+        'apps-pagetree-folder-contains-calendarize',
+        'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider',
+        ['source' => $extensionIcon]
+    );
 } else {
     $extensionRelPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('calendarize');
-    \TYPO3\CMS\Backend\Sprite\SpriteManager::addTcaTypeIcon('pages', 'contains-calendar',
-        str_replace('EXT:calendarize/', $extensionRelPath, $extensionIcon));
+    \TYPO3\CMS\Backend\Sprite\SpriteManager::addTcaTypeIcon(
+        'pages',
+        'contains-calendar',
+        str_replace('EXT:calendarize/', $extensionRelPath, $extensionIcon)
+    );
 }
-
-
