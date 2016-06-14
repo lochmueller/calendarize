@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
+use HDNET\Calendarize\ViewHelpers\IfDateUpperViewHelper;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
@@ -14,7 +15,7 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
  *
  * @author Tim Lochmüller
  */
-class IfDateUpperViewHelper extends UnitTestCase
+class IfDateUpperViewHelperTest extends UnitTestCase
 {
 
     /**
@@ -22,8 +23,8 @@ class IfDateUpperViewHelper extends UnitTestCase
      */
     public function testValidCheck()
     {
-        $viewHelper = new \HDNET\Calendarize\ViewHelpers\IfDateUpperViewHelper();
-        $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2010'));
+        $viewHelper = new IfDateUpperViewHelper();
+        $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2026'));
     }
 }
 

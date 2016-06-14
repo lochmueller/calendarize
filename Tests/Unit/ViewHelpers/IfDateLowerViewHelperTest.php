@@ -22,7 +22,7 @@ class IfDateLowerViewHelperTest extends UnitTestCase
     public function testValidCheck()
     {
         $viewHelper = new IfDateLowerViewHelper();
-        $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2024'));
+        $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2004'));
     }
 }
 
