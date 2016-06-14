@@ -30,7 +30,8 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.2"
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.2",
+    "typo3/cms": "^7.6.0"
   },
   "replace": {
     "calendarize": "self.version",
@@ -40,5 +41,22 @@
   "license": "GPL-2.0+",
   "support": {
     "issues": "https://github.com/lochmueller/calendarize/issues"
+  },
+  "require-dev": {
+    "namelesscoder/typo3-repository-client": "1.1.x-dev",
+    "phpunit/phpunit": "~4.8.0"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web",
+      "Package": {
+        "partOfMinimalUsableSystem": true
+      }
+    }
   }
 }

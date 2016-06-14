@@ -1,1 +1,4 @@
+.idea/
+.Build/*
+composer.lock
 /Resources/External/
