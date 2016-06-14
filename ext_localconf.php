@@ -31,3 +31,5 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
         'Booking' => 'booking,send'
     ]
 );
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\HDNET\Calendarize\Updates\CalMigrationUpdate::class] = \HDNET\Calendarize\Updates\CalMigrationUpdate::class;
