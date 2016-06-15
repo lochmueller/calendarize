@@ -30,7 +30,7 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.2",
+    "typo3/cms-core": "~6.2.0||~7.6.0||~8.1.0||dev-master",
     "typo3/cms": "^7.6.0"
   },
   "replace": {
@@ -44,7 +44,9 @@
   },
   "require-dev": {
     "namelesscoder/typo3-repository-client": "1.1.x-dev",
-    "phpunit/phpunit": "~4.8.0"
+    "phpunit/phpunit": "~4.8.0",
+    "squizlabs/php_codesniffer": "^2.6",
+    "phpmd/phpmd": "^2.4"
   },
   "config": {
     "vendor-dir": ".Build/vendor",

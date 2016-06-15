@@ -1,21 +1,26 @@
 language: php
 
 php:
-  - 5.5
-  - 5.6
-  - 7
+- 5.5
+- 5.6
+- 7
 
 env:
-  - TYPO3_VERSION=^6.2.0
-  - TYPO3_VERSION=^7.6.0
-  - TYPO3_VERSION=^8.1.0
+- TYPO3_VERSION=^6.2.0
+- TYPO3_VERSION=^7.6.0
 
 matrix:
+  fast_finish: true
   exclude:
-    - php: 5.5
+    - php: 7
+      env: TYPO3_VERSION=^6.2.0
+  include:
+    - php: 7
       env: TYPO3_VERSION=^8.1.0
-    - php: 5.6
-      env: TYPO3_VERSION=^8.1.0
+    - php: 7
+      env: TYPO3_VERSION=dev-master
+  allow_failures:
+    - env: TYPO3_VERSION=dev-master
 
 sudo: false
 cache:
@@ -33,10 +38,12 @@ before_script:
   - export TYPO3_PATH_WEB="$PWD/.Build/Web"
 
 script:
-  - >
-    echo;
-    echo "Running unit tests";
-    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+- |
+  echo; echo "Running unit tests"; .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+- |
+  echo; echo "Executing PHP mess detector"; .Build/bin/phpmd Classes/ text cleancode,codesize,controversial,design,naming || true
+- |
+  echo; echo "Executing PHP code sniffer"; .Build/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 Classes/
 
 after_script:
   - >
