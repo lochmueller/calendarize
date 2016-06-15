@@ -26,7 +26,7 @@ class IcsReaderService extends AbstractService
      *
      * @return array
      */
-    function toArray($paramUrl)
+    public function toArray($paramUrl)
     {
         $tempFileName = $this->getCheckedCacheFolder() . GeneralUtility::shortMD5($paramUrl);
         if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - DateTimeUtility::SECONDS_HOUR)) {

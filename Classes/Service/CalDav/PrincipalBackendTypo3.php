@@ -229,7 +229,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * @return void
      */
-    function updatePrincipal($path, PropPatch $propPatch)
+    public function updatePrincipal($path, PropPatch $propPatch)
     {
         var_dump('updatePrincipal');
         // TODO: Implement updatePrincipal() method.
@@ -265,7 +265,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * @return array
      */
-    function searchPrincipals($prefixPath, array $searchProperties, $test = 'allof')
+    public function searchPrincipals($prefixPath, array $searchProperties, $test = 'allof')
     {
         var_dump('searchPrincipals');
         // TODO: Implement searchPrincipals() method.
@@ -289,7 +289,7 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * @return string
      */
-    function findByUri($uri, $principalPrefix)
+    public function findByUri($uri, $principalPrefix)
     {
         var_dump('findByUri');
         // TODO: Implement findByUri() method.

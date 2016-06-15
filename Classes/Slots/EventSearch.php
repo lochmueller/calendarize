@@ -36,7 +36,7 @@ class EventSearch
         array $indexIds,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        array $customSearch
+        array $customSearch = []
     ) {
         if (!isset($customSearch['fullText'])) {
             return null;
