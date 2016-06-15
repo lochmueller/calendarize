@@ -86,20 +86,6 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
-     * Returns a query for objects of this repository
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
-     * @api
-     */
-    public function createQuery()
-    {
-        $query = parent::createQuery();
-        $query->getQuerySettings()
-            ->setLanguageMode("content_fallback");
-        return $query;
-    }
-
-    /**
      * Find List
      *
      * @param int        $limit
