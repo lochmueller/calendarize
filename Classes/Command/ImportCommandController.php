@@ -82,19 +82,14 @@ class ImportCommandController extends AbstractCommandController
             $endDateTime = null;
             try {
                 $startDateTime = new \DateTime($icalEvent['DTSTART']);
-            } catch (\Exception $ex) {
-            }
-            try {
                 $endDateTime = new \DateTime($icalEvent['DTEND']);
             } catch (\Exception $ex) {
-            }
-
-            if ($startDateTime === null || $endDateTime === null) {
                 $this->enqueueMessage(
                     'Could not convert the date in the right format of "' . $icalEvent['SUMMARY'] . '"',
                     'Warning',
                     FlashMessage::WARNING
                 );
+                continue;
             }
 
             $events[] = [

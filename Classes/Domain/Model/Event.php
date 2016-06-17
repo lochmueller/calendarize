@@ -385,15 +385,13 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
      */
     public function getKeSearchTags(Index $index)
     {
-        if (!property_exists($this, '_keSearchTags')) {
-            $this->_keSearchTags = [];
+        static $keSearchTags = [];
+        if(empty($keSearchTags)) {
             foreach ($this->getCategories() as $category) {
-                $this->_keSearchTags[] = "#syscat{$category->getUid()}#";
+                $keSearchTags[] = "#syscat{$category->getUid()}#";
             }
-            $this->_keSearchTags = implode(',', $this->_keSearchTags);
         }
-
-        return $this->_keSearchTags;
+        return implode(',', $keSearchTags);
     }
 
     /**

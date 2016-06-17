@@ -143,7 +143,7 @@ class CalendarController extends AbstractController
         }
 
         $searchMode = false;
-        if ($startDate || $endDate || $customSearch) {
+        if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {

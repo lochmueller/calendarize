@@ -497,10 +497,10 @@ class BackendTypo3 extends AbstractBackend
      */
     private function updateCalEvent($calendarId, $objectUri, $calendarData)
     {
-        var_dump($calendarId);
-        var_dump($objectUri);
-        var_dump($calendarData);
-        die();
+        // var_dump($calendarId);
+        // var_dump($objectUri);
+        // var_dump($calendarData);
+        // die();
 
     }
 
