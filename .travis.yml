@@ -22,7 +22,7 @@ matrix:
     - php: 7
       env: TYPO3_VERSION=^8.1.0 COVERAGE=0
     - php: 7
-env: TYPO3_VERSION=dev-master COVERAGE=0
+      env: TYPO3_VERSION=dev-master COVERAGE=0
   allow_failures:
     - env: TYPO3_VERSION=dev-master COVERAGE=0
 
