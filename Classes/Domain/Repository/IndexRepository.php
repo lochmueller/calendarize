@@ -114,21 +114,21 @@ class IndexRepository extends AbstractRepository
         $limit = 0,
         $listStartTime = 0,
         $startOffsetHours = 0,
-        $overrideStartDate = null,
-        $overrideEndDate = null
+        $overrideStartDate = 0,
+        $overrideEndDate = 0
     ) {
-        if ($overrideStartDate) {
+        if ($overrideStartDate > 0) {
             $startTimestamp = $overrideStartDate;
         } else {
             $now = DateTimeUtility::getNow();
-            if ($listStartTime !== 'now') {
+            if ($listStartTime != 'now') {
                 $now->setTime(0, 0, 0);
             }
             $now->modify($startOffsetHours . ' hours');
             $startTimestamp = $now->getTimestamp();
         }
         $endTimestamp = null;
-        if ($overrideEndDate) {
+        if ($overrideEndDate > 0) {
             $endTimestamp = $overrideEndDate;
         }
 
