@@ -374,7 +374,7 @@ class IndexRepository extends AbstractRepository
     protected function getDefaultConstraints(QueryInterface $query)
     {
         $constraints = [];
-        if ($this->indexTypes) {
+        if (!empty($this->indexTypes)) {
             $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
         }
 
