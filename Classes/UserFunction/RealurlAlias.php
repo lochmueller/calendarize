@@ -114,13 +114,15 @@ class RealurlAlias
 
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $entry = [
-            'tstamp'      => time(),
             'tablename'   => IndexerService::TABLE_NAME,
             'field_alias' => 'title',
             'field_id'    => 'uid',
             'value_alias' => $alias,
             'value_id'    => $value,
         ];
+        if (VersionNumberUtility::convertVersionNumberToInteger(ExtensionManagementUtility::getExtensionVersion('realurl')) < 2000000) {
+            $entry['tstamp'] = time();
+        }
         $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
 
         return $alias;
