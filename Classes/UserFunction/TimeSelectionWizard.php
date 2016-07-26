@@ -21,10 +21,10 @@ class TimeSelectionWizard
      * Render the time selection wizard
      *
      * @param array $params
-     * @param AbstractFormElement $pObj
+     * @param object $pObj
      * @return string
      */
-    public function renderWizard(array $params, AbstractFormElement $pObj)
+    public function renderWizard(array $params, $pObj)
     {
         $match = preg_match('/(.*)id="(.*?)"(.*)/', $params['item'], $matches);
         if (!$match) {
