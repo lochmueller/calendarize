@@ -49,6 +49,5 @@ class TimeShift extends AbstractHook
             return $config;
         }
         return [];
-
     }
 }

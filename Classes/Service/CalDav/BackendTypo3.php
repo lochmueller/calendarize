@@ -501,7 +501,6 @@ class BackendTypo3 extends AbstractBackend
         // var_dump($objectUri);
         // var_dump($calendarData);
         // die();
-
     }
 
     /**

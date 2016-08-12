@@ -302,7 +302,6 @@ class IndexRepository extends AbstractRepository
         $constraints = $this->getDefaultConstraints($query);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
         return $this->matchAndExecute($query, $constraints);
-
     }
 
     /**

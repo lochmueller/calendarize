@@ -124,7 +124,6 @@ class AuthBackendTypo3 extends AbstractBasic
             $user['{http://sabredav.org/ns}email-address'] = $userRow['email'];
         }
         return $user;
-
     }
 
     /**

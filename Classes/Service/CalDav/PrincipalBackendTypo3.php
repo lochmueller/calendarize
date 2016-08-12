@@ -52,7 +52,6 @@ class PrincipalBackendTypo3 implements BackendInterface
         $this->pdo = $pdo;
         $this->tableName = $tableName;
         $this->groupMembersTableName = $groupMembersTableName;
-
     }
 
     /**
@@ -90,7 +89,6 @@ class PrincipalBackendTypo3 implements BackendInterface
         }
 
         return $principals;
-
     }
 
     /**
@@ -121,7 +119,6 @@ class PrincipalBackendTypo3 implements BackendInterface
         ];
 
         return $return;
-
     }
 
     /**
@@ -145,7 +142,6 @@ class PrincipalBackendTypo3 implements BackendInterface
         $result[] = $principal['uri'] . '/test';
 
         return $result;
-
     }
 
     /**
@@ -210,7 +206,6 @@ class PrincipalBackendTypo3 implements BackendInterface
             $stmt = $this->pdo->prepare('INSERT INTO `' . $this->groupMembersTableName . '` (principal_id, member_id) VALUES (?, ?);');
             $stmt->execute([$principalId, $memberId]);
         }
-
     }
 
     /**
