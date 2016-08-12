@@ -326,7 +326,7 @@ class IndexRepository extends AbstractRepository
         }
 
         if ($uniqueRegisterKey === null) {
-            throw new Exception('No valid uniqueRegisterKey for: ' . get_class($event), 1236712342);
+            throw new Exception('No valid uniqueRegisterKey for: ' . get_class($event), 1236712);
         }
 
         $this->setIndexTypes([$uniqueRegisterKey]);

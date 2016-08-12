@@ -146,7 +146,7 @@ class CalDav extends AbstractService
     {
         $class = Server::class;
         if (!class_exists($class)) {
-            throw new \Exception('No ' . $class . ' class found. So there is no valid CalDav configuration', 2342783462384);
+            throw new \Exception('No ' . $class . ' class found. So there is no valid CalDav configuration', 278346238);
         }
     }
 }
