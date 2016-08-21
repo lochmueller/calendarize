@@ -74,7 +74,7 @@ class ImportCommandController extends AbstractCommandController
      *
      * @return array
      */
-    protected function prepareEvents($icalEvents)
+    protected function prepareEvents(array $icalEvents)
     {
         $events = [];
         foreach ($icalEvents as $icalEvent) {
@@ -118,6 +118,6 @@ class ImportCommandController extends AbstractCommandController
                 'Resources/Private/Php/ics-parser/class.iCalReader.php'
             ));
         }
-        return (new \ICal($absoluteIcalFile))->events();
+        return (array)(new \ICal($absoluteIcalFile))->events();
     }
 }
