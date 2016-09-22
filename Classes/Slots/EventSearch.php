@@ -20,6 +20,19 @@ class EventSearch
 {
 
     /**
+     * Table name
+     *
+     * Note: This complete class is for the Event Model of the calendarize extension.
+     * If you use a own model with special search criteria you have to register your
+     * own custom Slot. If you only want the category logic for your model, you can
+     * easily register a own slot that is based on this class. Thean you only have
+     * to overwrite the tableName property.
+     *
+     * @var string
+     */
+    protected $tableName = 'tx_calendarize_domain_model_event';
+
+    /**
      * Check if we can reduce the amount of results
      *
      * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
@@ -89,7 +102,7 @@ class EventSearch
         $rows = $databaseConnection->exec_SELECTgetRows(
             'uid_foreign',
             'sys_category_record_mm',
-            'tablenames="tx_calendarize_domain_model_event" AND uid_local IN (' . implode(',', $categoryIds) . ')'
+            'tablenames="' . $this->tableName . '" AND uid_local IN (' . implode(',', $categoryIds) . ')'
         );
         foreach ($rows as $row) {
             $indexIds[] = (int)$row['uid_foreign'];
