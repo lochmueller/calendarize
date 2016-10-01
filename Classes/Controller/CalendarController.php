@@ -283,10 +283,20 @@ class CalendarController extends AbstractController
     public function detailAction(Index $index = null)
     {
         if ($index === null) {
-            if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-                return TranslateUtility::get('noEventDetailView');
+            // handle fallback for "strange language settings"
+            if ($this->request->hasArgument('index')) {
+                $indexId = (int)$this->request->getArgument('index');
+                if ($indexId > 0) {
+                    $index = $this->indexRepository->findByUid($indexId);
+                }
             }
-            $this->redirect('list', null, null, [], null, $this->settings['listPid'], 301);
+
+            if ($index === null) {
+                if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
+                    return TranslateUtility::get('noEventDetailView');
+                }
+                $this->redirect('list', null, null, [], null, $this->settings['listPid'], 301);
+            }
         }
 
         $this->slotExtendedAssignMultiple([
