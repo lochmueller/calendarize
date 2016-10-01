@@ -28,7 +28,7 @@ class ConfigurationGroup extends AbstractModel
      * Configurations
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
-     * @db text NOT NULL
+     * @db text
      */
     protected $configurations;
 
