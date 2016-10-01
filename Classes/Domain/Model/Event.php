@@ -55,6 +55,14 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     protected $location;
 
     /**
+     * Organizer
+     *
+     * @var string
+     * @db
+     */
+    protected $organizer;
+
+    /**
      * Import ID if the item is based on an ICS structure
      *
      * @var string
@@ -79,7 +87,8 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     protected $downloads;
 
     /**
-     * Relation field. It is just used by the importer of the default events. You do not need this field, if you don't use the default Event
+     * Relation field. It is just used by the importer of the default events.
+     * You do not need this field, if you don't use the default Event
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
      */
@@ -412,5 +421,25 @@ class Event extends AbstractModel implements FeedInterface, RealUrlInterface, Ke
     public function setLocation($location)
     {
         $this->location = $location;
+    }
+
+    /**
+     * Get orginzer
+     *
+     * @return string
+     */
+    public function getOrganizer()
+    {
+        return $this->organizer;
+    }
+
+    /**
+     * Set organizer
+     *
+     * @param string $organizer
+     */
+    public function setOrganizer($organizer)
+    {
+        $this->organizer = $organizer;
     }
 }

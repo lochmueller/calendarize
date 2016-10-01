@@ -8,6 +8,7 @@
 			<authorEmail>tim@fruit-lab.de</authorEmail>
 		</header>
 		<body>
+			<trans-unit id="organizer.alttitle"><source><![CDATA[calendarize ==> LLL:organizer.alttitle]]></source></trans-unit>
 		<trans-unit id="abstract.alttitle">
 			<source></source>
 		</trans-unit>

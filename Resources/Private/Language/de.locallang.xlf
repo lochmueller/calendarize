@@ -13,6 +13,11 @@
 			<source>All day</source>
 			<target>ganztägig</target>
 		</trans-unit>
+
+			<trans-unit id="tx_calendarize_domain_model_event.organizer" approved="yes">
+			<source>Organizer</source>
+			<target>Orgainsator</target>
+			</trans-unit>
 		<trans-unit id="no_events" approved="yes">
 			<source>There are no events in the current view.</source>
 			<target>Es gibt keine Ereignisse in der aktuellen Ansicht.</target>

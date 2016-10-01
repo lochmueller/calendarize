@@ -9,6 +9,7 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_event.organizer"><source>Organizer</source></trans-unit>
 		<trans-unit id="all_day">
 			<source>All day</source>
 		</trans-unit>
