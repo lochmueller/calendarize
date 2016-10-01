@@ -197,6 +197,10 @@
 			<source>Next to last</source>
 			<target>Vorletzter</target>
 		</trans-unit>
+		<trans-unit id="configuration.recurrence.thirdLast" approved="yes">
+			<source>Third last</source>
+			<target>Drittletzter</target>
+		</trans-unit>
 		<trans-unit id="configuration.recurrence.none" approved="yes">
 			<source>None</source>
 			<target>None</target>

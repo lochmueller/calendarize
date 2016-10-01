@@ -315,6 +315,10 @@ $custom = [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST),
                         Configuration::RECURRENCE_NEXT_TO_LAST
                     ],
+                    [
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_THIRD_LAST),
+                        Configuration::RECURRENCE_THIRD_LAST
+                    ],
                 ],
                 'default' => Configuration::RECURRENCE_NONE
             ],

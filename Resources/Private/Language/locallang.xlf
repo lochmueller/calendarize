@@ -150,6 +150,9 @@
 		<trans-unit id="configuration.recurrence.next2last">
 			<source>Next to last</source>
 		</trans-unit>
+		<trans-unit id="configuration.recurrence.thirdLast">
+			<source>Third last</source>
+		</trans-unit>
 		<trans-unit id="configuration.recurrence.none">
 			<source>None</source>
 		</trans-unit>
