@@ -16,7 +16,7 @@
 
 			<trans-unit id="tx_calendarize_domain_model_event.organizer" approved="yes">
 			<source>Organizer</source>
-			<target>Orgainsator</target>
+			<target>Organisator</target>
 			</trans-unit>
 		<trans-unit id="no_events" approved="yes">
 			<source>There are no events in the current view.</source>
