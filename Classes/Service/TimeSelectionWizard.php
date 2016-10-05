@@ -5,7 +5,6 @@
 
 namespace HDNET\Calendarize\Service;
 
-use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -73,6 +72,8 @@ class TimeSelectionWizard extends AbstractService
 
     /**
      * Get the times
+     *
+     * @param int $pageUid
      *
      * @return array
      */

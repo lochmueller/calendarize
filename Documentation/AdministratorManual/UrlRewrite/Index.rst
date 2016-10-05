@@ -28,5 +28,5 @@ For cooluri you can use this configuration to get the right title incl. a date::
   </part>
   <part>
     <parameter>tx_calendarize_calendar[index]</parameter>
-    <userfunc>\HDNET\Calendarize\Service\RealurlAlias->coolUri</userfunc>
+    <userfunc>\HDNET\Calendarize\Service\Url\CoolUri->convert</userfunc>
   </part>

@@ -1,18 +1,12 @@
 <?php
 /**
- * RealURL alias
- *
- * @author  Tim Lochmüller
+ * RealUrl
  */
 
-namespace HDNET\Calendarize\Service;
+namespace HDNET\Calendarize\Service\Url;
 
-use Bednarik\Cooluri\Core\Functions;
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
 use DmitryDulepov\Realurl\Utility;
-use HDNET\Calendarize\Domain\Model\Index;
-use HDNET\Calendarize\Domain\Repository\IndexRepository;
-use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -21,12 +15,23 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
- * RealURL alias
- *
- * @author Tim Lochmüller
+ * RealUrl
  */
-class RealurlAlias extends AbstractService
+class RealUrl extends AbstractUrl
 {
+
+    /**
+     * Convert the given information
+     *
+     * @param $param1
+     * @param $param2
+     *
+     * @return string
+     */
+    public function convert($param1, $param2)
+    {
+        return $this->main($param1, $param2);
+    }
 
     /**
      * Build the realurl alias
@@ -98,19 +103,8 @@ class RealurlAlias extends AbstractService
             return $row['value_alias'];
         }
 
-        /** @var IndexRepository $indexRepository */
-        $indexRepository = HelperUtility::create(IndexRepository::class);
-        $index = $indexRepository->findByUid($value);
-        if (!($index instanceof Index)) {
-            $alias = 'idx-' . $value;
-        } else {
-            $originalObject = $index->getOriginalObject();
-            if (!($originalObject instanceof SpeakingUrlInterface)) {
-                $alias = 'idx-' . $value;
-            } else {
-                $alias = $this->generateRealUrl($originalObject->getRealUrlAliasBase(), $index);
-            }
-        }
+        $alias = $this->getIndexBase((int)$value);
+        $alias = $this->cleanUrl($alias);
 
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $entry = [
@@ -120,7 +114,7 @@ class RealurlAlias extends AbstractService
             'value_alias' => $alias,
             'value_id'    => $value,
         ];
-        if (VersionNumberUtility::convertVersionNumberToInteger(ExtensionManagementUtility::getExtensionVersion('realurl')) < 2000000) {
+        if ($this->isOldRealUrlVersion()) {
             $entry['tstamp'] = time();
         }
         $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
@@ -129,68 +123,42 @@ class RealurlAlias extends AbstractService
     }
 
     /**
-     * Generate the cooluri segment
-     *
-     * @param string $xml
-     * @param int    $value
-     *
-     * @throws \HDNET\Calendarize\Exception
-     */
-    public function coolUri($xml, $value)
-    {
-        /** @var IndexRepository $indexRepository */
-        $indexRepository = HelperUtility::create(IndexRepository::class);
-        $index = $indexRepository->findByUid((int)$value);
-        if (!($index instanceof Index)) {
-            $alias = 'idx-' . $value;
-        } else {
-            $originalObject = $index->getOriginalObject();
-            if (!($originalObject instanceof SpeakingUrlInterface)) {
-                $alias = 'idx-' . $value;
-            } else {
-                $base = $originalObject->getRealUrlAliasBase();
-                $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
-                $title = $base . '-' . $index->getStartDateComplete()
-                        ->format($datePart);
-                $title = Functions::URLize($title);
-                $alias = Functions::sanitize_title_with_dashes($title);
-            }
-        }
-
-        return $alias;
-    }
-
-    /**
      * Generate the realurl part
      *
-     * @param string $base
-     * @param Index  $index
+     * @param string $alias
      *
      * @return string
      */
-    protected function generateRealUrl($base, Index $index)
+    protected function cleanUrl($alias)
     {
-        $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
-        $title = $base . '-' . $index->getStartDateComplete()
-                ->format($datePart);
 
-        $realUrlVersion = VersionNumberUtility::convertVersionNumberToInteger(ExtensionManagementUtility::getExtensionVersion('realurl'));
-        if ($realUrlVersion >= 2000000) {
-            $configuration = GeneralUtility::makeInstance(ConfigurationReader::class, ConfigurationReader::MODE_ENCODE);
-            // Init the internal utility by ObjectAccess because the property is
-            // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
-            $utility = GeneralUtility::makeInstance(Utility::class, $configuration);
-            $processedTitle = $utility->convertToSafeString($title);
-        } else {
+        if ($this->isOldRealUrlVersion()) {
             /** @var \tx_realurl_advanced $realUrl */
             $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');
             $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['pagePath'];
             if (is_array($configuration)) {
                 ObjectAccess::setProperty($realUrl, 'conf', $configuration, true);
             }
-            $processedTitle = $realUrl->encodeTitle($title);
+            $processedTitle = $realUrl->encodeTitle($alias);
+        } else {
+            $configuration = GeneralUtility::makeInstance(ConfigurationReader::class, ConfigurationReader::MODE_ENCODE);
+            // Init the internal utility by ObjectAccess because the property is
+            // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
+            $utility = GeneralUtility::makeInstance(Utility::class, $configuration);
+            $processedTitle = $utility->convertToSafeString($alias);
         }
 
         return $processedTitle;
+    }
+
+    /**
+     * Check if this is a old version of realurl < 2.0.0
+     *
+     * @return bool
+     */
+    protected function isOldRealUrlVersion()
+    {
+        $extVersion = ExtensionManagementUtility::getExtensionVersion('realurl');
+        return VersionNumberUtility::convertVersionNumberToInteger($extVersion) < 2000000;
     }
 }

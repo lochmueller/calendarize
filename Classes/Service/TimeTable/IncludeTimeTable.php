@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 
 /**
  * Exclude service
@@ -28,6 +29,7 @@ class IncludeTimeTable extends AbstractTimeTable
     public function handleConfiguration(array &$times, Configuration $configuration)
     {
         foreach ($configuration->getGroups() as $group) {
+            /** @var ConfigurationGroup $group */
             $times = array_merge($times, $this->buildSingleTimeTableByGroup($group));
         }
     }
