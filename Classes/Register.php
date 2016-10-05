@@ -7,6 +7,7 @@
 namespace HDNET\Calendarize;
 
 use HDNET\Calendarize\Domain\Model\Event;
+use HDNET\Calendarize\Service\TcaInformation;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
@@ -55,7 +56,7 @@ class Register
             'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
                 'type'     => 'user',
-                'userFunc' => UserFunction\TcaInformation::class . '->informationField',
+                'userFunc' => TcaInformation::class . '->informationField',
             ],
         ];
         ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);

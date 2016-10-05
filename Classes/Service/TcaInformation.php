@@ -5,7 +5,7 @@
  * @author  Tim Lochmüller
  */
 
-namespace HDNET\Calendarize\UserFunction;
+namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Tim Lochmüller
  */
-class TcaInformation
+class TcaInformation extends AbstractService
 {
 
     /**

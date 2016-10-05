@@ -1,24 +1,26 @@
 <?php
 
-/**
- * TCA Structure for Events
- */
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Autoloader\Utility\TranslateUtility;
+use HDNET\Calendarize\Domain\Model\Event;
+use HDNET\Calendarize\Utility\ConfigurationUtility;
 
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Event');
+$base = ModelUtility::getTcaInformation(Event::class);
 
 $custom = [
-    'ctrl' => [
-        'hideTable' => (boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent'),
+    'ctrl'    => [
+        'hideTable'    => (boolean)ConfigurationUtility::get('disableDefaultEvent'),
         'searchFields' => 'uid,title,description',
-        'thumbnail' => 'images',
+        'thumbnail'    => 'images',
     ],
     'columns' => [
-        'title' => [
+        'title'     => [
             'config' => [
                 'eval' => 'required'
             ],
         ],
-        'abstract' => [
+        'abstract'  => [
             'config' => [
                 'type' => 'text'
             ],
@@ -31,7 +33,7 @@ $custom = [
     ],
 ];
 
-$tca = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+$tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
 
 $search = [
     'images,downloads,',
@@ -40,11 +42,8 @@ $search = [
 ];
 $replace = [
     ',',
-    'language,--div--;' . \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage(
-        'files',
-        'calendarize'
-    ) . ',images,downloads,--div--',
-    \HDNET\Autoloader\Utility\TranslateUtility::getLllOrHelpMessage('dateOptions', 'calendarize')
+    'language,--div--;' . TranslateUtility::getLllOrHelpMessage('files', 'calendarize') . ',images,downloads,--div--',
+    TranslateUtility::getLllOrHelpMessage('dateOptions', 'calendarize')
 ];
 
 $tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);

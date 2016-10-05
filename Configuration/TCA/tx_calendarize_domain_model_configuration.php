@@ -4,11 +4,15 @@
  * TCA Structure for Configurations
  */
 
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Service\TcaService;
+use HDNET\Calendarize\Service\TimeSelectionWizard;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Configuration');
+$base = ModelUtility::getTcaInformation(Configuration::class);
 
 $timeType = str_replace(
     '--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xlf:language;language',
@@ -39,27 +43,28 @@ $timeType = str_replace(
 );
 
 $extendTab = ',--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
+$iconPath = ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/';
 
 $custom = [
     'ctrl'     => [
         'type'                    => 'type',
         'hideTable'               => true,
         'typeicons'               => [
-            Configuration::TYPE_TIME          => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/Configuration.png',
-            Configuration::TYPE_INCLUDE_GROUP => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationInclude.png',
-            Configuration::TYPE_EXCLUDE_GROUP => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationExclude.png',
-            Configuration::TYPE_EXTERNAL      => ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/ConfigurationExternal.png',
+            Configuration::TYPE_TIME          => $iconPath . 'Configuration.png',
+            Configuration::TYPE_INCLUDE_GROUP => $iconPath . 'ConfigurationInclude.png',
+            Configuration::TYPE_EXCLUDE_GROUP => $iconPath . 'ConfigurationExclude.png',
+            Configuration::TYPE_EXTERNAL      => $iconPath . 'ConfigurationExternal.png',
         ],
         'typeicon_column'         => 'type',
         'requestUpdate'           => 'all_day,frequency',
-        'formattedLabel_userFunc' => 'HDNET\\Calendarize\\Service\\TcaService->configurationTitle'
+        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle'
     ],
     'columns'  => [
         'type'             => [
             'config' => [
-                'type'    => 'select',
+                'type'       => 'select',
                 'renderType' => 'selectSingle',
-                'items'   => [
+                'items'      => [
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
                         Configuration::TYPE_TIME
@@ -77,7 +82,7 @@ $custom = [
                         Configuration::TYPE_EXTERNAL
                     ],
                 ],
-                'default' => Configuration::TYPE_TIME
+                'default'    => Configuration::TYPE_TIME
             ]
         ],
         'start_date'       => [
@@ -95,13 +100,13 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'start_time'       => [
-            'config' => [
-                'eval' => 'time,required',
-                'size' => 4,
+            'config'      => [
+                'eval'    => 'time,required',
+                'size'    => 4,
                 'wizards' => [
                     'time_selection' => [
-                        'type' => 'userFunc',
-                        'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TimeSelectionWizard->renderWizard',
+                        'type'     => 'userFunc',
+                        'userFunc' => TimeSelectionWizard::class . '->renderWizard',
                     ],
                 ],
             ],
@@ -114,12 +119,12 @@ $custom = [
         ],
         'end_time'         => [
             'config'      => [
-                'eval' => 'time',
-                'size' => 4,
+                'eval'    => 'time',
+                'size'    => 4,
                 'wizards' => [
                     'time_selection' => [
-                        'type' => 'userFunc',
-                        'userFunc' => 'HDNET\\Calendarize\\UserFunction\\TimeSelectionWizard->renderWizard',
+                        'type'     => 'userFunc',
+                        'userFunc' => TimeSelectionWizard::class . '->renderWizard',
                     ],
                 ],
             ],
@@ -139,7 +144,7 @@ $custom = [
         'groups'           => [
             'config'      => [
                 'type'          => 'select',
-                'renderType' => 'selectMultipleSideBySide',
+                'renderType'    => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_calendarize_domain_model_configurationgroup',
                 'minitems'      => '1',
                 'size'          => 5,
@@ -149,9 +154,9 @@ $custom = [
         ],
         'frequency'        => [
             'config'      => [
-                'type'    => 'select',
+                'type'       => 'select',
                 'renderType' => 'selectSingle',
-                'items'   => [
+                'items'      => [
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_NONE),
                         Configuration::FREQUENCY_NONE
@@ -173,7 +178,7 @@ $custom = [
                         Configuration::FREQUENCY_YEARLY
                     ],
                 ],
-                'default' => Configuration::FREQUENCY_NONE
+                'default'    => Configuration::FREQUENCY_NONE
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -220,14 +225,14 @@ $custom = [
                 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             ],
             'config'      => [
-                'eval'    => 'trim,required',
+                'eval' => 'trim,required',
             ],
         ],
         'day'              => [
             'config'      => [
-                'type'    => 'select',
+                'type'       => 'select',
                 'renderType' => 'selectSingle',
-                'items'   => [
+                'items'      => [
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
                         Configuration::DAY_SPECIAL_WEEKDAY
@@ -273,7 +278,7 @@ $custom = [
                         Configuration::DAY_SUNDAY
                     ],
                 ],
-                'default' => Configuration::DAY_SPECIAL_WEEKDAY
+                'default'    => Configuration::DAY_SPECIAL_WEEKDAY
             ],
             'displayCond' => [
                 'OR' => [
@@ -284,9 +289,9 @@ $custom = [
         ],
         'recurrence'       => [
             'config'      => [
-                'type'    => 'select',
+                'type'       => 'select',
                 'renderType' => 'selectSingle',
-                'items'   => [
+                'items'      => [
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NONE),
                         Configuration::RECURRENCE_NONE
@@ -320,7 +325,7 @@ $custom = [
                         Configuration::RECURRENCE_THIRD_LAST
                     ],
                 ],
-                'default' => Configuration::RECURRENCE_NONE
+                'default'    => Configuration::RECURRENCE_NONE
             ],
             'displayCond' => [
                 'OR' => [
@@ -364,7 +369,7 @@ $custom = [
     ]
 ];
 
-$tca = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+$tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
 unset($tca['types']['1']);
 
 return $tca;

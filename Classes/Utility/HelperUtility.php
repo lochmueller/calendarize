@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
@@ -80,10 +81,9 @@ class HelperUtility
     public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
     {
         /** @var FlashMessage $flashMessage */
-        $flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', $message, $title, $mode, true);
-        $class = 'TYPO3\\CMS\\Core\\Messaging\\FlashMessageService';
-        /** @var $flashMessageService \TYPO3\CMS\Core\Messaging\FlashMessageService */
-        $flashMessageService = GeneralUtility::makeInstance($class);
+        $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, true);
+        /** @var $flashMessageService FlashMessageService */
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->enqueue($flashMessage);
     }

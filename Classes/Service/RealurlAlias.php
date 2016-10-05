@@ -5,7 +5,7 @@
  * @author  Tim Lochmüller
  */
 
-namespace HDNET\Calendarize\UserFunction;
+namespace HDNET\Calendarize\Service;
 
 use Bednarik\Cooluri\Core\Functions;
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
  *
  * @author Tim Lochmüller
  */
-class RealurlAlias
+class RealurlAlias extends AbstractService
 {
 
     /**

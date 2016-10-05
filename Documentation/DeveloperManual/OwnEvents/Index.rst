@@ -23,7 +23,7 @@ The following code show the configuration that should be the same in ext_tables 
 	$configuration = [
         'uniqueRegisterKey' => 'MyEvent', // A unique Key for the register (e.g. you Extension Key + "Event")
         'title'             => 'My Event', // The title for your events (this is shown in the FlexForm configuration of the Plugins)
-        'modelName'         => 'HDNET\\MyExtension\\Domain\\Model\\MyEvent', // the name of your model
+        'modelName'         => \HDNET\MyExtension\Domain\Model\MyEvent::class, // the name of your model
         'partialIdentifier' => 'MyEvent', // the identifier of the partials for your event. In most cases this is also unique
         'tableName'         => 'tx_myextension_domain_model_myevent', // the table name of your event table
         'required'          => true, // set to true, than your event need a least one event configuration

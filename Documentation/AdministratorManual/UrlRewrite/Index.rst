@@ -12,7 +12,7 @@ URL Rewrite
 ===========
 
 Speaking URLs for events are not as simple, because the parameter is the Index ID and the related table is configured in the index table.
-This is the reason, why there are UserFunctions to generate speaking URLs of index IDs. If your are using a own event structure. Please implement the feature interface::
+This is the reason, why there are Services to generate speaking URLs of index IDs. If your are using a own event structure. Please implement the feature interface::
 
   \HDNET\Calendarize\Features\RealUrlInterface
 
@@ -28,5 +28,5 @@ For cooluri you can use this configuration to get the right title incl. a date::
   </part>
   <part>
     <parameter>tx_calendarize_calendar[index]</parameter>
-    <userfunc>\HDNET\Calendarize\UserFunction\RealurlAlias->coolUri</userfunc>
+    <userfunc>\HDNET\Calendarize\Service\RealurlAlias->coolUri</userfunc>
   </part>

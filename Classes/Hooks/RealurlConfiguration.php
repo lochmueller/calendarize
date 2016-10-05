@@ -7,7 +7,7 @@
 
 namespace HDNET\Calendarize\Hooks;
 
-use HDNET\Calendarize\UserFunction\RealurlAlias;
+use HDNET\Calendarize\Service\RealurlAlias;
 
 /**
  * Realurl configuration

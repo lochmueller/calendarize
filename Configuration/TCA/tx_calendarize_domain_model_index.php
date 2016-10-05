@@ -1,16 +1,16 @@
 <?php
 
-/**
- * TCA Structure for Index
- */
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Calendarize\Domain\Model\Index;
 
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\Index');
+$base = ModelUtility::getTcaInformation(Index::class);
 
 $custom = [
-    'ctrl' => [
-        'hideTable' => true,
-        'rootLevel' => -1,
-        'label_alt' => 'start_date',
+    'ctrl'    => [
+        'hideTable'       => true,
+        'rootLevel'       => -1,
+        'label_alt'       => 'start_date',
         'label_alt_force' => '1',
     ],
     'columns' => [
@@ -19,41 +19,41 @@ $custom = [
                 'readOnly' => '1',
             ]
         ],
-        'foreign_uid' => [
+        'foreign_uid'         => [
             'config' => [
                 'readOnly' => '1',
             ],
         ],
-        'foreign_table' => [
+        'foreign_table'       => [
             'config' => [
                 'readOnly' => '1',
             ],
         ],
-        'start_date' => [
+        'start_date'          => [
             'config' => [
                 'readOnly' => '1',
-                'eval' => 'date',
+                'eval'     => 'date',
             ],
         ],
-        'end_date' => [
+        'end_date'            => [
             'config' => [
                 'readOnly' => '1',
-                'eval' => 'date',
+                'eval'     => 'date',
             ],
         ],
-        'start_time' => [
+        'start_time'          => [
             'config' => [
                 'readOnly' => '1',
-                'eval' => 'time',
+                'eval'     => 'time',
             ],
         ],
-        'end_time' => [
+        'end_time'            => [
             'config' => [
                 'readOnly' => '1',
-                'eval' => 'time',
+                'eval'     => 'time',
             ],
         ],
-        'all_day' => [
+        'all_day'             => [
             'config' => [
                 'readOnly' => '1',
             ],
@@ -61,4 +61,4 @@ $custom = [
     ],
 ];
 
-return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+return ArrayUtility::mergeRecursiveDistinct($base, $custom);

@@ -1,6 +1,10 @@
 <?php
 
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Calendarize\\Domain\\Model\\CalDav');
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Calendarize\Domain\Model\CalDav;
+
+$base = ModelUtility::getTcaInformation(CalDav::class);
 
 $custom = [
     'ctrl'    => [
@@ -34,4 +38,4 @@ $custom = [
     ],
 ];
 
-return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+return ArrayUtility::mergeRecursiveDistinct($base, $custom);

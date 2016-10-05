@@ -35,10 +35,10 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
 $extensionIcon = \HDNET\Autoloader\Utility\IconUtility::getByExtensionKey('calendarize', true);
 if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
     /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconRegistry');
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $iconRegistry->registerIcon(
         'apps-pagetree-folder-contains-calendarize',
-        'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider',
+        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
         ['source' => $extensionIcon]
     );
 } else {

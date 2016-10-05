@@ -1,20 +1,20 @@
 <?php
 /**
- * UserFunctions for Plugin configurations
+ * Service for Plugin configurations
  *
  * @author  Tim Lochmüller
  */
 
-namespace HDNET\Calendarize\UserFunction;
+namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
 
 /**
- * UserFunctions for Plugin configurations
+ * Service for Plugin configurations
  *
  * @author Tim Lochmüller
  */
-class PluginConfiguration
+class PluginConfiguration extends AbstractService
 {
 
     /**

@@ -3,7 +3,7 @@
  * TimeSelectionWizard
  */
 
-namespace HDNET\Calendarize\UserFunction;
+namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * TimeSelectionWizard
  */
-class TimeSelectionWizard
+class TimeSelectionWizard extends AbstractService
 {
     /**
      * Render the time selection wizard

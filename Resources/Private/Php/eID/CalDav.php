@@ -1,5 +1,8 @@
 <?php
 
-/** @var \HDNET\Calendarize\Service\CalDav $calDav */
-$calDav = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('HDNET\\Calendarize\\Service\\CalDav');
+use HDNET\Calendarize\Service\CalDav;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/** @var CalDav $calDav */
+$calDav = GeneralUtility::makeInstance(CalDav::class);
 $calDav->runServer();
