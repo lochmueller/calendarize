@@ -10,7 +10,7 @@ namespace HDNET\Calendarize\Features;
 /**
  * RealURL features
  */
-interface RealUrlInterface
+interface SpeakingUrlInterface
 {
 
     /**

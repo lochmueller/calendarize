@@ -14,7 +14,7 @@ URL Rewrite
 Speaking URLs for events are not as simple, because the parameter is the Index ID and the related table is configured in the index table.
 This is the reason, why there are Services to generate speaking URLs of index IDs. If your are using a own event structure. Please implement the feature interface::
 
-  \HDNET\Calendarize\Features\RealUrlInterface
+  \HDNET\Calendarize\Features\SpeakingUrlInterface
 
 For RealURL the extension register the extensionConfiguration hook. There is a user function that generated and cache the right segments. If you want to configure realurl manualle, take a look into::
 

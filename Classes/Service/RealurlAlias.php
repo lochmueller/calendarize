@@ -12,7 +12,7 @@ use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
 use DmitryDulepov\Realurl\Utility;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
-use HDNET\Calendarize\Features\RealUrlInterface;
+use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -105,7 +105,7 @@ class RealurlAlias extends AbstractService
             $alias = 'idx-' . $value;
         } else {
             $originalObject = $index->getOriginalObject();
-            if (!($originalObject instanceof RealUrlInterface)) {
+            if (!($originalObject instanceof SpeakingUrlInterface)) {
                 $alias = 'idx-' . $value;
             } else {
                 $alias = $this->generateRealUrl($originalObject->getRealUrlAliasBase(), $index);
@@ -145,7 +145,7 @@ class RealurlAlias extends AbstractService
             $alias = 'idx-' . $value;
         } else {
             $originalObject = $index->getOriginalObject();
-            if (!($originalObject instanceof RealUrlInterface)) {
+            if (!($originalObject instanceof SpeakingUrlInterface)) {
                 $alias = 'idx-' . $value;
             } else {
                 $base = $originalObject->getRealUrlAliasBase();

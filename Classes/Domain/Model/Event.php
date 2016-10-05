@@ -9,7 +9,7 @@ namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Features\FeedInterface;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
-use HDNET\Calendarize\Features\RealUrlInterface;
+use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @db
  */
-class Event extends AbstractModel implements FeedInterface, RealUrlInterface, KeSearchIndexInterface
+class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {
 
     /**
