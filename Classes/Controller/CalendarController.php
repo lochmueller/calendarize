@@ -295,7 +295,7 @@ class CalendarController extends AbstractController
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
                     return TranslateUtility::get('noEventDetailView');
                 }
-                $this->redirect('list', null, null, [], null, $this->settings['listPid'], 301);
+                $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 301);
             }
         }
 
