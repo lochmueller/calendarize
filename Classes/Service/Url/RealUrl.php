@@ -46,7 +46,28 @@ class RealUrl extends AbstractUrl
         if ($params['decodeAlias']) {
             return $this->alias2id($params['value']);
         }
+        $this->cleanupOldLinks();
         return $this->id2alias($params['value']);
+    }
+
+    /**
+     * Cleanup old URL segments
+     */
+    protected function cleanupOldLinks()
+    {
+        $removeIds = [];
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        $selectInvalidItems = 'SELECT tx_realurl_uniqalias.uid 
+FROM tx_realurl_uniqalias LEFT JOIN tx_calendarize_domain_model_index ON tx_realurl_uniqalias.value_id = tx_calendarize_domain_model_index.uid 
+WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tablename=\'tx_calendarize_domain_model_index\'';
+        $res = $databaseConnection->admin_query($selectInvalidItems);
+        while ($row = $databaseConnection->sql_fetch_assoc($res)) {
+            $removeIds[] = (int)$row['uid'];
+        }
+        if (empty($removeIds)) {
+            return;
+        }
+        $databaseConnection->exec_DELETEquery('tx_realurl_uniqalias', 'uid IN (' . implode(',', $removeIds) . ')');
     }
 
     /**
