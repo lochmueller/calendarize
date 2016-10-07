@@ -8,7 +8,7 @@
 				<f:for each="{event.images}" as="image" iteration="i">
 					<f:if condition="{i.isFirst}">
 						<c:link.index index="{index}">
-							<f:image src="{image.originalResource.publicUrl}" alt="" maxWidth="160" maxHeight="160" class="media-object img-rounded" />
+							<f:image src="{image.uid}" treatIdAsReference="1" alt="" maxWidth="160" maxHeight="160" class="media-object img-rounded" />
 						</c:link.index>
 					</f:if>
 				</f:for>
