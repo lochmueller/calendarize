@@ -51,9 +51,15 @@ class EventSearch
         \DateTime $endDate = null,
         array $customSearch = []
     ) {
+
+        // Filter here for $customSearch['categories'] and take also care of the fullText
+        // ?tx_calendarize_calendar[customSearch][categories]=1
+        // https://github.com/lochmueller/calendarize/issues/89
+
         if (!isset($customSearch['fullText'])) {
             return null;
         }
+
         /** @var EventRepository $eventRepository */
         $eventRepository = HelperUtility::create(EventRepository::class);
         return [
