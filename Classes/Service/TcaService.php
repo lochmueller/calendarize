@@ -33,6 +33,7 @@ class TcaService extends AbstractService
         $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . '</b><br />';
         switch ($row['type']) {
             case Configuration::TYPE_TIME:
+            case Configuration::TYPE_TIME_EXCLUDE:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
                 break;
             case Configuration::TYPE_INCLUDE_GROUP:

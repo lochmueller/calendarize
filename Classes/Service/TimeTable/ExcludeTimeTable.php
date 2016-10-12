@@ -35,35 +35,4 @@ class ExcludeTimeTable extends AbstractTimeTable
         }
         $times = $this->checkAndRemoveTimes($times, $excludeTimes);
     }
-
-    /**
-     * Remove excluded events
-     *
-     * @param $base
-     * @param $remove
-     *
-     * @return mixed
-     */
-    protected function checkAndRemoveTimes($base, $remove)
-    {
-        foreach ($base as $key => $value) {
-            foreach ($remove as $removeValue) {
-                $eventStart = &$value['start_date'];
-                $eventEnd = &$value['end_date'];
-                $removeStart = &$removeValue['start_date'];
-                $removeEnd = &$removeValue['end_date'];
-
-                $startIn = ($eventStart >= $removeStart && $eventStart < $removeEnd);
-                $endIn = ($eventEnd > $removeStart && $eventEnd <= $removeEnd);
-                $envelope = ($eventStart < $removeStart && $eventEnd > $removeEnd);
-
-                if ($startIn || $endIn || $envelope) {
-                    unset($base[$key]);
-                    continue;
-                }
-            }
-        }
-
-        return $base;
-    }
 }

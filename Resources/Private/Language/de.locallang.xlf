@@ -234,6 +234,10 @@
 			<source>Time</source>
 			<target>Zeit</target>
 		</trans-unit>
+		<trans-unit id="configuration.type.timeExclude" approved="yes">
+			<source>Time (exclude)</source>
+			<target>Zeit (ausschließend)</target>
+		</trans-unit>
 		<trans-unit id="date" approved="yes">
 			<source>Date</source>
 			<target>Datum</target>

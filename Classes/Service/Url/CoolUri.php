@@ -41,7 +41,7 @@ class CoolUri extends AbstractUrl
      *
      * @return string
      */
-    static public function convertStatic($param1, $param2)
+    public static function convertStatic($param1, $param2)
     {
         $object = new CoolUri();
         return $object->convert($param1, $param2);

@@ -15,6 +15,8 @@ interface ConfigurationInterface
 
     const TYPE_TIME = 'time';
 
+    const TYPE_TIME_EXCLUDE = 'timeExclude';
+
     const TYPE_INCLUDE_GROUP = 'include';
 
     const TYPE_EXCLUDE_GROUP = 'exclude';

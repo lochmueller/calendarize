@@ -53,6 +53,7 @@ $custom = [
             Configuration::TYPE_TIME          => $iconPath . 'Configuration.png',
             Configuration::TYPE_INCLUDE_GROUP => $iconPath . 'ConfigurationInclude.png',
             Configuration::TYPE_EXCLUDE_GROUP => $iconPath . 'ConfigurationExclude.png',
+            Configuration::TYPE_TIME_EXCLUDE  => $iconPath . 'ConfigurationExclude.png',
             Configuration::TYPE_EXTERNAL      => $iconPath . 'ConfigurationExternal.png',
         ],
         'typeicon_column'         => 'type',
@@ -68,6 +69,10 @@ $custom = [
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
                         Configuration::TYPE_TIME
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME_EXCLUDE),
+                        Configuration::TYPE_TIME_EXCLUDE
                     ],
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_INCLUDE_GROUP),
@@ -90,14 +95,24 @@ $custom = [
                 'eval' => 'required,date',
                 'size' => 6,
             ],
-            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
+            'displayCond' => [
+                'OR' => [
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                ],
+            ],
         ],
         'end_date'         => [
             'config'      => [
                 'eval' => 'date',
                 'size' => 6,
             ],
-            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
+            'displayCond' => [
+                'OR' => [
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                ],
+            ],
         ],
         'start_time'       => [
             'config'      => [
@@ -113,7 +128,10 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:all_day:!=:1',
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'OR' => [
+                        'FIELD:type:=:' . Configuration::TYPE_TIME,
+                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                    ],
                 ],
             ],
         ],
@@ -131,12 +149,20 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:all_day:!=:1',
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'OR' => [
+                        'FIELD:type:=:' . Configuration::TYPE_TIME,
+                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                    ],
                 ],
             ],
         ],
         'all_day'          => [
-            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
+            'displayCond' => [
+                'OR' => [
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                ],
+            ],
             'config'      => [
                 'default' => '0',
             ],
@@ -150,7 +176,12 @@ $custom = [
                 'size'          => 5,
                 'maxitems'      => '99',
             ],
-            'displayCond' => 'FIELD:type:!=:' . Configuration::TYPE_TIME,
+            'displayCond' => [
+                'OR' => [
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                ],
+            ],
         ],
         'frequency'        => [
             'config'      => [
@@ -180,7 +211,12 @@ $custom = [
                 ],
                 'default'    => Configuration::FREQUENCY_NONE
             ],
-            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
+            'displayCond' => [
+                'OR' => [
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                ],
+            ],
         ],
         'till_date'        => [
             'config'      => [
@@ -190,7 +226,10 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'OR' => [
+                        'FIELD:type:=:' . Configuration::TYPE_TIME,
+                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                    ],
                 ],
             ],
         ],
@@ -203,7 +242,10 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'OR' => [
+                        'FIELD:type:=:' . Configuration::TYPE_TIME,
+                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                    ],
                 ],
             ],
         ],
@@ -216,7 +258,10 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'OR' => [
+                        'FIELD:type:=:' . Configuration::TYPE_TIME,
+                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
+                    ],
                 ],
             ],
         ],
@@ -355,6 +400,9 @@ $custom = [
     ],
     'types'    => [
         Configuration::TYPE_TIME          => [
+            'showitem' => $timeType,
+        ],
+        Configuration::TYPE_TIME_EXCLUDE  => [
             'showitem' => $timeType,
         ],
         Configuration::TYPE_INCLUDE_GROUP => [
