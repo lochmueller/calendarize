@@ -27,7 +27,7 @@ class TimeTimeTable extends AbstractTimeTable
     /**
      * Modify the given times via the configuration
      *
-     * @param array $times
+     * @param array         $times
      * @param Configuration $configuration
      *
      * @return void
@@ -37,12 +37,12 @@ class TimeTimeTable extends AbstractTimeTable
         $startTime = $configuration->isAllDay() ? null : $configuration->getStartTime();
         $endTime = $configuration->isAllDay() ? null : $configuration->getEndTime();
         $baseEntry = [
-            'pid' => $configuration->getPid(),
+            'pid'        => $configuration->getPid(),
             'start_date' => $configuration->getStartDate(),
-            'end_date' => $configuration->getEndDate() ?: $configuration->getStartDate(),
+            'end_date'   => $configuration->getEndDate() ?: $configuration->getStartDate(),
             'start_time' => $startTime,
-            'end_time' => $endTime == 0 ? self::DAY_END : $endTime,
-            'all_day' => $configuration->isAllDay(),
+            'end_time'   => $endTime == 0 ? self::DAY_END : $endTime,
+            'all_day'    => $configuration->isAllDay(),
         ];
         $this->validateBaseEntry($baseEntry);
         $times[] = $baseEntry;
@@ -51,6 +51,8 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
+     * Validate the base entry, if there are logica mistakes
+     *
      * @param array $baseEntry
      */
     protected function validateBaseEntry(array $baseEntry)
@@ -59,18 +61,27 @@ class TimeTimeTable extends AbstractTimeTable
         if ($baseEntry['start_date'] > $baseEntry['end_date']) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
-                LocalizationUtility::translate('LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date.message', 'calendarize'),
-                LocalizationUtility::translate('LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date', 'calendarize'),
+                LocalizationUtility::translate(
+                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date.message',
+                    'calendarize'
+                ),
+                LocalizationUtility::translate(
+                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date',
+                    'calendarize'
+                ),
                 FlashMessage::ERROR
             );
-        } elseif (!$baseEntry['all_day'] &&
-            $baseEntry['start_date']->format('d.m.Y') == $baseEntry['end_date']->format('d.m.Y') &&
-            $baseEntry['start_time'] > $baseEntry['end_time']
-        ) {
+        } elseif (!$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') == $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] > $baseEntry['end_time']) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
-                LocalizationUtility::translate('LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.time.message', 'calendarize'),
-                LocalizationUtility::translate('LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.time', 'calendarize'),
+                LocalizationUtility::translate(
+                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.time.message',
+                    'calendarize'
+                ),
+                LocalizationUtility::translate(
+                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.time',
+                    'calendarize'
+                ),
                 FlashMessage::ERROR
             );
         }
@@ -84,9 +95,9 @@ class TimeTimeTable extends AbstractTimeTable
     /**
      * Add frequency items
      *
-     * @param array $times
+     * @param array         $times
      * @param Configuration $configuration
-     * @param array $baseEntry
+     * @param array         $baseEntry
      */
     protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry)
     {
@@ -113,7 +124,7 @@ class TimeTimeTable extends AbstractTimeTable
     /**
      * Create the next loop entry
      *
-     * @param array $loopEntry
+     * @param array  $loopEntry
      * @param string $modification
      *
      * @return mixed
@@ -170,9 +181,9 @@ class TimeTimeTable extends AbstractTimeTable
     /**
      * Add recurrence items
      *
-     * @param array $times
+     * @param array         $times
      * @param Configuration $configuration
-     * @param array $baseEntry
+     * @param array         $baseEntry
      */
     protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry)
     {
