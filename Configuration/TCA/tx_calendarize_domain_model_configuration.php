@@ -358,6 +358,10 @@ $custom = [
                         Configuration::RECURRENCE_FOURTH
                     ],
                     [
+                        TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FIFTH),
+                        Configuration::RECURRENCE_FIFTH
+                    ],
+                    [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_LAST),
                         Configuration::RECURRENCE_LAST
                     ],

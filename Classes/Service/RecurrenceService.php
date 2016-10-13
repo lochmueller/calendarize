@@ -92,6 +92,8 @@ class RecurrenceService extends AbstractService
                 return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_UP, $days, 3);
             case ConfigurationInterface::RECURRENCE_FOURTH:
                 return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_UP, $days, 4);
+            case ConfigurationInterface::RECURRENCE_FIFTH:
+                return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_UP, $days, 5);
             default:
                 return false;
         }

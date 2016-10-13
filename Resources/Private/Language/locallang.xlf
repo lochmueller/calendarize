@@ -145,6 +145,9 @@
 		<trans-unit id="configuration.recurrence.fourth">
 			<source>Fourth</source>
 		</trans-unit>
+		<trans-unit id="configuration.recurrence.fifth">
+			<source>Fifth</source>
+		</trans-unit>
 		<trans-unit id="configuration.recurrence.last">
 			<source>Last</source>
 		</trans-unit>
