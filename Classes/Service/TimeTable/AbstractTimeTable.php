@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
+use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Service\AbstractService;
 
 /**
@@ -72,10 +73,14 @@ abstract class AbstractTimeTable extends AbstractService
     {
         foreach ($base as $key => $value) {
             foreach ($remove as $removeValue) {
-                $eventStart = &$value['start_date'];
-                $eventEnd = &$value['end_date'];
-                $removeStart = &$removeValue['start_date'];
-                $removeEnd = &$removeValue['end_date'];
+                try {
+                    $eventStart = $this->getCompleteDate($value, 'start');
+                    $eventEnd = $this->getCompleteDate($value, 'end');
+                    $removeStart = $this->getCompleteDate($removeValue, 'start');
+                    $removeEnd = $this->getCompleteDate($removeValue, 'end');
+                } catch (Exception $ex) {
+                    continue;
+                }
 
                 $startIn = ($eventStart >= $removeStart && $eventStart < $removeEnd);
                 $endIn = ($eventEnd > $removeStart && $eventEnd <= $removeEnd);
@@ -88,6 +93,29 @@ abstract class AbstractTimeTable extends AbstractService
             }
         }
 
+        return $base;
+    }
+
+    /**
+     * Get the complete day
+     *
+     * @param array  $record
+     * @param string $position
+     *
+     * @return \DateTime
+     * @throws Exception
+     */
+    protected function getCompleteDate(array $record, $position)
+    {
+        if (!($record[$position . '_date'] instanceof \DateTime)) {
+            throw new Exception('no valid record', 1236781);
+        }
+        /** @var \DateTime $base */
+        $base = clone $record[$position . '_date'];
+        if (is_int($record[$position . '_time'])) {
+            $base->setTime(0, 0, 0);
+            $base->modify('+ ' . $record[$position . '_time'] . ' seconds');
+        }
         return $base;
     }
 }
