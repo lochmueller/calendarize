@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\Service\CalDav;
 
+use HDNET\Calendarize\Utility\HelperUtility;
 use Sabre\CalDAV\Backend\AbstractBackend;
 use Sabre\CalDAV\Plugin;
 use Sabre\CalDAV\Xml\Property\SupportedCalendarComponentSet;
@@ -20,13 +21,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class BackendTypo3 extends AbstractBackend
 {
-
-    /**
-     * pdo
-     *
-     * @var \PDO
-     */
-    private $pdo;
 
     /**
      * The table name that will be used for calendars
@@ -60,13 +54,11 @@ class BackendTypo3 extends AbstractBackend
     /**
      * Creates the backend
      *
-     * @param \PDO   $pdo
      * @param string $calendarTableName
      * @param string $calendarObjectTableName
      */
-    public function __construct(\PDO $pdo, $calendarTableName = 'calendars', $calendarObjectTableName = 'calendarobjects')
+    public function __construct($calendarTableName = 'calendars', $calendarObjectTableName = 'calendarobjects')
     {
-        $this->pdo = $pdo;
         $this->calendarTableName = $calendarTableName;
         $this->calendarObjectTableName = $calendarObjectTableName;
     }
@@ -92,6 +84,9 @@ class BackendTypo3 extends AbstractBackend
     public function getCalendarsForUser($principalUri)
     {
         $principalUriParts = explode("/", $principalUri);
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        // $databaseConnection->
+        die('getCalendarsForUser');
         $stmt = $this->pdo->prepare("SELECT uid, tx_cal_calendar FROM fe_users WHERE username = ? AND deleted=0");
         $stmt->execute([
             array_pop($principalUriParts)

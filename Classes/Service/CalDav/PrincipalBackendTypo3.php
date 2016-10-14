@@ -42,11 +42,10 @@ class PrincipalBackendTypo3 implements BackendInterface
     /**
      * Sets up the backend.
      *
-     * @param \PDO   $pdo
      * @param string $tableName
      * @param string $groupMembersTableName
      */
-    public function __construct(\PDO $pdo, $tableName = 'fe_users', $groupMembersTableName = 'fe_groups')
+    public function __construct($tableName = 'fe_users', $groupMembersTableName = 'fe_groups')
     {
 
         $this->pdo = $pdo;

@@ -9,7 +9,7 @@ namespace HDNET\Calendarize\Domain\Model;
  * CalDav configuration
  *
  * @db
- * @smartExclude Workspaces,Languages
+ * @smartExclude Workspaces,Language
  */
 class CalDav extends AbstractModel
 {

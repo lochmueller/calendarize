@@ -7,3 +7,4 @@ For administrators
 	Configuration/Index
 	Scheduler/Index
 	UrlRewrite/Index
+	CalDav/Index
