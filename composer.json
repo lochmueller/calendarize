@@ -30,7 +30,7 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.0||~7.6.0||~8.99.0||dev-master"
+    "typo3/cms-core": "~6.2.0||~7.6.0||<8.99.99||dev-master"
   },
   "replace": {
     "calendarize": "self.version",
