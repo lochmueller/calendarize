@@ -8,14 +8,14 @@
 			<authorEmail>tim@fruit-lab.de</authorEmail>
 		</header>
 		<body>
-			<trans-unit id="frequency.alttitle" approved="yes">
-				<source>Frequency</source>
-				<target>Frequenz</target>
-			</trans-unit>
-			<trans-unit id="frequency.description" approved="yes">
-				<source>Please take care that the first event of the frequency the manually entered event!</source>
-				<target>Bitte beachte, dass das erste Event der Frequenz das manuell eingegebene Ereignis ist!</target>
-			</trans-unit>
+		<trans-unit id="frequency.alttitle" approved="yes">
+			<source>Frequency</source>
+			<target>Frequenz</target>
+		</trans-unit>
+		<trans-unit id="frequency.description" approved="yes">
+			<source>Please take care that the first event of the frequency the manually entered event!</source>
+			<target>Bitte beachte, dass das erste Event der Frequenz das manuell eingegebene Ereignis ist!</target>
+		</trans-unit>
 		</body>
 	</file>
 </xliff>
