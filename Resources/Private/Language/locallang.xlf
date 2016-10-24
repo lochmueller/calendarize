@@ -232,6 +232,12 @@
 		<trans-unit id="hide.pagination.teaser">
 			<source>Hide pagination + Teaser mode</source>
 		</trans-unit>
+		<trans-unit id="override.startdate">
+			<source>Override startdate</source>
+		</trans-unit>
+		<trans-unit id="override.enddate">
+			<source>Override enddate</source>
+		</trans-unit>
 		<trans-unit id="inherit">
 			<source>Inherit</source>
 		</trans-unit>
