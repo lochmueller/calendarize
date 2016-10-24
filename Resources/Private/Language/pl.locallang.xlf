@@ -104,7 +104,7 @@
             </trans-unit>
             <trans-unit id="configuration" approved="yes">
                 <source>Configuration</source>
-                <target>Ustawienia</target>
+                <target>Konfiguracja</target>
             </trans-unit>
             <trans-unit id="configuration.day." approved="yes">
                 <source>None</source>
@@ -310,6 +310,14 @@
                 <source>Hide pagination + Teaser mode</source>
                 <target>Ukryj stronicowanie + Tryb wstępu</target>
             </trans-unit>
+            <trans-unit id="override.startdate" approved="yes">
+                <source>Override startdate</source>
+                <target>Nadpisz datę rozpoczęcia</target>
+            </trans-unit>
+            <trans-unit id="override.enddate" approved="yes">
+                <source>Override enddate</source>
+                <target>Nadpisz datę zakończenia</target>
+            </trans-unit>
             <trans-unit id="inherit" approved="yes">
                 <source>Inherit</source>
                 <target>Dziedziczenie</target>
@@ -448,7 +456,7 @@
             </trans-unit>
             <trans-unit id="time" approved="yes">
                 <source>Time</source>
-                <target>Czas</target>
+                <target>Godzina</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_caldav" approved="yes">
                 <source>CalDav configuration</source>
@@ -468,7 +476,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
                 <source>Configuration</source>
-                <target>Ustawienia</target>
+                <target>Ustawienia wydarzenia</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration.all_day" approved="yes">
                 <source>All day</source>
@@ -496,7 +504,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
                 <source>End time (00:00 means &quot;open end&quot;)</source>
-                <target>Czas zakończenia (00:00 oznacza &quot;otwarty koniec&quot;)</target>
+                <target>Godzina zakończenia (00:00 oznacza &quot;otwarty koniec&quot;)</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url" approved="yes">
                 <source>External ICS URL</source>
@@ -524,7 +532,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
                 <source>Start time</source>
-                <target>Czas rozpoczęcia</target>
+                <target>Godzina rozpoczęcia</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration.till_date" approved="yes">
                 <source>Till date</source>
@@ -536,11 +544,11 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configurationgroup" approved="yes">
                 <source>Configuration group</source>
-                <target>Grupa ustawień</target>
+                <target>Grupa ustawień wydarzenia</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configurationgroup.configurations" approved="yes">
                 <source>Configurations</source>
-                <target>Ustawienia</target>
+                <target>Konfiguracja</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configurationgroup.title" approved="yes">
                 <source>Title</source>
@@ -552,7 +560,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_event.abstract" approved="yes">
                 <source>Abstract</source>
-                <target>Abstrakt</target>
+                <target>Wprowadzenie</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_event.description" approved="yes">
                 <source>Description</source>
@@ -580,7 +588,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_index" approved="yes">
                 <source>Index</source>
-                <target>Indeks</target>
+                <target>Indeks (Calendarize)</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_index.all_day" approved="yes">
                 <source>All day</source>
@@ -592,7 +600,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_index.end_time" approved="yes">
                 <source>End time</source>
-                <target>Czas zakończenia</target>
+                <target>Godzina zakończenia</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_index.foreign_table" approved="yes">
                 <source>Foreign table</source>
@@ -608,7 +616,7 @@
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_index.start_time" approved="yes">
                 <source>Start time</source>
-                <target>Czas rozpoczęcia</target>
+                <target>Godzina rozpoczęcia</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_index.unique_register_key" approved="yes">
                 <source>Unique register key</source>

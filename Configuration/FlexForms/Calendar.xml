@@ -225,7 +225,7 @@
 
 					<settings.overrideStartdate>
 						<TCEforms>
-							<label>Override startdate</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startdate</label>
 							<displayCond>
 								<OR>
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
@@ -243,7 +243,7 @@
 
 					<settings.overrideEnddate>
 						<TCEforms>
-							<label>Override enddate</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.enddate</label>
 							<displayCond>
 								<OR>
 									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
