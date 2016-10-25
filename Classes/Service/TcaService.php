@@ -23,21 +23,21 @@ class TcaService extends AbstractService
     /**
      * Render the configuration title
      *
-     * @param array  $params
+     * @param array $params
      * @param object $object
      */
     public function configurationTitle(&$params, $object)
     {
         $row = $params['row'];
         $this->migrateFormEngineRow($row);
-        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . '</b><br />';
+
+        $handling = is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
+        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br />';
         switch ($row['type']) {
             case Configuration::TYPE_TIME:
-            case Configuration::TYPE_TIME_EXCLUDE:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
                 break;
-            case Configuration::TYPE_INCLUDE_GROUP:
-            case Configuration::TYPE_EXCLUDE_GROUP:
+            case Configuration::TYPE_GROUP:
                 $params['title'] .= $this->getConfigurationGroupTitle($row);
                 break;
             case Configuration::TYPE_EXTERNAL:

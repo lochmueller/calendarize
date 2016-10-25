@@ -42,85 +42,97 @@ $timeType = str_replace(
     $timeType
 );
 
+$baseConfiguration = '--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration;base';
+$timeType = str_replace(
+    'type,handling',
+    $baseConfiguration,
+    $timeType
+);
+
 $extendTab = ',--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
 $iconPath = ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/';
 
 $custom = [
-    'ctrl'     => [
-        'type'                    => 'type',
-        'hideTable'               => true,
-        'typeicons'               => [
-            Configuration::TYPE_TIME          => $iconPath . 'Configuration.png',
-            Configuration::TYPE_INCLUDE_GROUP => $iconPath . 'ConfigurationInclude.png',
-            Configuration::TYPE_EXCLUDE_GROUP => $iconPath . 'ConfigurationExclude.png',
-            Configuration::TYPE_TIME_EXCLUDE  => $iconPath . 'ConfigurationExclude.png',
-            Configuration::TYPE_EXTERNAL      => $iconPath . 'ConfigurationExternal.png',
+    'ctrl' => [
+        'type' => 'type',
+        'hideTable' => true,
+        'typeicons' => [
+            Configuration::TYPE_TIME => $iconPath . 'Configuration.png',
+            Configuration::TYPE_GROUP => $iconPath . 'ConfigurationGroupType.png',
+            Configuration::TYPE_EXTERNAL => $iconPath . 'ConfigurationExternal.png',
         ],
-        'typeicon_column'         => 'type',
-        'requestUpdate'           => 'all_day,frequency',
+        'typeicon_column' => 'type',
+        'requestUpdate' => 'all_day,frequency,handling',
         'formattedLabel_userFunc' => TcaService::class . '->configurationTitle'
     ],
-    'columns'  => [
-        'type'             => [
+    'columns' => [
+        'type' => [
             'config' => [
-                'type'       => 'select',
+                'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items'      => [
+                'items' => [
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
                         Configuration::TYPE_TIME
                     ],
                     [
-                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME_EXCLUDE),
-                        Configuration::TYPE_TIME_EXCLUDE
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_INCLUDE_GROUP),
-                        Configuration::TYPE_INCLUDE_GROUP
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXCLUDE_GROUP),
-                        Configuration::TYPE_EXCLUDE_GROUP
+                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_GROUP),
+                        Configuration::TYPE_GROUP
                     ],
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXTERNAL),
                         Configuration::TYPE_EXTERNAL
                     ],
                 ],
-                'default'    => Configuration::TYPE_TIME
+                'default' => Configuration::TYPE_TIME
             ]
         ],
-        'start_date'       => [
-            'config'      => [
+        'handling' => [
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_INCLUDE),
+                        Configuration::HANDLING_INCLUDE
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_EXCLUDE),
+                        Configuration::HANDLING_EXCLUDE
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_OVERRIDE),
+                        Configuration::HANDLING_OVERRIDE
+                    ],
+                ],
+                'default' => Configuration::HANDLING_INCLUDE
+            ]
+        ],
+        'start_date' => [
+            'config' => [
                 'eval' => 'required,date',
                 'size' => 6,
             ],
             'displayCond' => [
-                'OR' => [
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                ],
+                'FIELD:type:=:' . Configuration::TYPE_TIME,
             ],
         ],
-        'end_date'         => [
-            'config'      => [
+        'end_date' => [
+            'config' => [
                 'eval' => 'date',
                 'size' => 6,
             ],
             'displayCond' => [
-                'OR' => [
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                ],
+                'FIELD:type:=:' . Configuration::TYPE_TIME,
             ],
         ],
-        'start_time'       => [
-            'config'      => [
-                'eval'    => 'time,required',
-                'size'    => 4,
+        'start_time' => [
+            'config' => [
+                'eval' => 'time,required',
+                'size' => 4,
                 'wizards' => [
                     'time_selection' => [
-                        'type'     => 'userFunc',
+                        'type' => 'userFunc',
                         'userFunc' => TimeSelectionWizard::class . '->renderWizard',
                     ],
                 ],
@@ -128,20 +140,17 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:all_day:!=:1',
-                    'OR' => [
-                        'FIELD:type:=:' . Configuration::TYPE_TIME,
-                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                    ],
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
                 ],
             ],
         ],
-        'end_time'         => [
-            'config'      => [
-                'eval'    => 'time',
-                'size'    => 4,
+        'end_time' => [
+            'config' => [
+                'eval' => 'time',
+                'size' => 4,
                 'wizards' => [
                     'time_selection' => [
-                        'type'     => 'userFunc',
+                        'type' => 'userFunc',
                         'userFunc' => TimeSelectionWizard::class . '->renderWizard',
                     ],
                 ],
@@ -149,45 +158,36 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:all_day:!=:1',
-                    'OR' => [
-                        'FIELD:type:=:' . Configuration::TYPE_TIME,
-                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                    ],
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
                 ],
             ],
         ],
-        'all_day'          => [
+        'all_day' => [
             'displayCond' => [
-                'OR' => [
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                ],
+                'FIELD:type:=:' . Configuration::TYPE_TIME,
             ],
-            'config'      => [
+            'config' => [
                 'default' => '0',
             ],
         ],
-        'groups'           => [
-            'config'      => [
-                'type'          => 'select',
-                'renderType'    => 'selectMultipleSideBySide',
+        'groups' => [
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_calendarize_domain_model_configurationgroup',
-                'minitems'      => '1',
-                'size'          => 5,
-                'maxitems'      => '99',
+                'minitems' => '1',
+                'size' => 5,
+                'maxitems' => '99',
             ],
             'displayCond' => [
-                'OR' => [
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                ],
+                'FIELD:type:=:' . Configuration::TYPE_TIME,
             ],
         ],
-        'frequency'        => [
-            'config'      => [
-                'type'       => 'select',
+        'frequency' => [
+            'config' => [
+                'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items'      => [
+                'items' => [
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_NONE),
                         Configuration::FREQUENCY_NONE
@@ -209,59 +209,47 @@ $custom = [
                         Configuration::FREQUENCY_YEARLY
                     ],
                 ],
-                'default'    => Configuration::FREQUENCY_NONE
+                'default' => Configuration::FREQUENCY_NONE
             ],
             'displayCond' => [
-                'OR' => [
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                ],
+                'FIELD:type:=:' . Configuration::TYPE_TIME,
             ],
         ],
-        'till_date'        => [
-            'config'      => [
+        'till_date' => [
+            'config' => [
                 'eval' => 'date',
                 'size' => 8,
             ],
             'displayCond' => [
                 'AND' => [
                     'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'OR' => [
-                        'FIELD:type:=:' . Configuration::TYPE_TIME,
-                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                    ],
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
                 ],
             ],
         ],
-        'counter_amount'   => [
-            'config'      => [
-                'eval'    => 'int',
-                'size'    => 5,
+        'counter_amount' => [
+            'config' => [
+                'eval' => 'int',
+                'size' => 5,
                 'default' => 0,
             ],
             'displayCond' => [
                 'AND' => [
                     'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'OR' => [
-                        'FIELD:type:=:' . Configuration::TYPE_TIME,
-                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                    ],
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
                 ],
             ],
         ],
         'counter_interval' => [
-            'config'      => [
-                'eval'    => 'int,required',
-                'size'    => 5,
+            'config' => [
+                'eval' => 'int,required',
+                'size' => 5,
                 'default' => '1',
             ],
             'displayCond' => [
                 'AND' => [
                     'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'OR' => [
-                        'FIELD:type:=:' . Configuration::TYPE_TIME,
-                        'FIELD:type:=:' . Configuration::TYPE_TIME_EXCLUDE,
-                    ],
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
                 ],
             ],
         ],
@@ -269,15 +257,15 @@ $custom = [
             'displayCond' => [
                 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             ],
-            'config'      => [
+            'config' => [
                 'eval' => 'trim,required',
             ],
         ],
-        'day'              => [
-            'config'      => [
-                'type'       => 'select',
+        'day' => [
+            'config' => [
+                'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items'      => [
+                'items' => [
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
                         Configuration::DAY_SPECIAL_WEEKDAY
@@ -323,7 +311,7 @@ $custom = [
                         Configuration::DAY_SUNDAY
                     ],
                 ],
-                'default'    => Configuration::DAY_SPECIAL_WEEKDAY
+                'default' => Configuration::DAY_SPECIAL_WEEKDAY
             ],
             'displayCond' => [
                 'OR' => [
@@ -332,11 +320,11 @@ $custom = [
                 ],
             ],
         ],
-        'recurrence'       => [
-            'config'      => [
-                'type'       => 'select',
+        'recurrence' => [
+            'config' => [
+                'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items'      => [
+                'items' => [
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NONE),
                         Configuration::RECURRENCE_NONE
@@ -374,7 +362,7 @@ $custom = [
                         Configuration::RECURRENCE_THIRD_LAST
                     ],
                 ],
-                'default'    => Configuration::RECURRENCE_NONE
+                'default' => Configuration::RECURRENCE_NONE
             ],
             'displayCond' => [
                 'OR' => [
@@ -385,38 +373,36 @@ $custom = [
         ],
     ],
     'palettes' => [
-        'date'                    => [
+        'base' => [
             'canNotCollapse' => 1,
-            'showitem'       => 'start_date,end_date',
+            'showitem' => 'type,handling',
         ],
-        'time'                    => [
+        'date' => [
             'canNotCollapse' => 1,
-            'showitem'       => 'start_time,end_time,--linebreak--,all_day',
+            'showitem' => 'start_date,end_date',
         ],
-        'termination_condition'   => [
+        'time' => [
             'canNotCollapse' => 1,
-            'showitem'       => 'till_date,counter_amount',
+            'showitem' => 'start_time,end_time,--linebreak--,all_day',
+        ],
+        'termination_condition' => [
+            'canNotCollapse' => 1,
+            'showitem' => 'till_date,counter_amount',
         ],
         'frequency_configuration' => [
             'canNotCollapse' => 1,
-            'showitem'       => 'counter_interval,recurrence,day',
+            'showitem' => 'counter_interval,recurrence,day',
         ],
     ],
-    'types'    => [
-        Configuration::TYPE_TIME          => [
+    'types' => [
+        Configuration::TYPE_TIME => [
             'showitem' => $timeType,
         ],
-        Configuration::TYPE_TIME_EXCLUDE  => [
-            'showitem' => $timeType,
+        Configuration::TYPE_GROUP => [
+            'showitem' => $baseConfiguration . ',groups' . $extendTab,
         ],
-        Configuration::TYPE_INCLUDE_GROUP => [
-            'showitem' => 'type,groups' . $extendTab,
-        ],
-        Configuration::TYPE_EXCLUDE_GROUP => [
-            'showitem' => 'type,groups' . $extendTab,
-        ],
-        Configuration::TYPE_EXTERNAL      => [
-            'showitem' => 'type,external_ics_url' . $extendTab,
+        Configuration::TYPE_EXTERNAL => [
+            'showitem' => $baseConfiguration . ',external_ics_url' . $extendTab,
         ],
     ]
 ];

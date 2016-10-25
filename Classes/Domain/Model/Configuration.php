@@ -25,6 +25,14 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $type = self::TYPE_TIME;
 
     /**
+     * Handling
+     *
+     * @var string
+     * @db
+     */
+    protected $handling = self::HANDLING_INCLUDE;
+
+    /**
      * Start date
      *
      * @var \DateTime
@@ -409,5 +417,25 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     public function setRecurrence($recurrence)
     {
         $this->recurrence = $recurrence;
+    }
+
+    /**
+     * Get handling
+     *
+     * @return string
+     */
+    public function getHandling()
+    {
+        return $this->handling;
+    }
+
+    /**
+     * Set handling
+     *
+     * @param string $handling
+     */
+    public function setHandling($handling)
+    {
+        $this->handling = $handling;
     }
 }

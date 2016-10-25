@@ -15,13 +15,15 @@ interface ConfigurationInterface
 
     const TYPE_TIME = 'time';
 
-    const TYPE_TIME_EXCLUDE = 'timeExclude';
-
-    const TYPE_INCLUDE_GROUP = 'include';
-
-    const TYPE_EXCLUDE_GROUP = 'exclude';
+    const TYPE_GROUP = 'group';
 
     const TYPE_EXTERNAL = 'external';
+
+    const HANDLING_INCLUDE = 'include';
+
+    const HANDLING_EXCLUDE = 'exclude';
+
+    const HANDLING_OVERRIDE = 'override';
 
     const FREQUENCY_NONE = '';
 

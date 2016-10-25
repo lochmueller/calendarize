@@ -9,6 +9,14 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_configuration.handling"><source>Handling</source></trans-unit>
+			<trans-unit id="configuration.handling.include"><source>Include</source></trans-unit>
+			<trans-unit id="configuration.handling.exclude"><source>Exclude</source></trans-unit>
+			<trans-unit id="configuration.type.group"><source>Group</source></trans-unit>
+			<trans-unit id="configuration.handling.override"><source>Override</source></trans-unit>
+			<trans-unit id="base_configuration"><source>Base</source></trans-unit>
+
+
 			<trans-unit id="tx_calendarize_domain_model_event.organizer"><source>Organizer</source></trans-unit>
 		<trans-unit id="all_day">
 			<source>All day</source>
