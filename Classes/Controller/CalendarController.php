@@ -220,13 +220,17 @@ class CalendarController extends AbstractController
     {
         $now = DateTimeUtility::getNow();
         if ($year === null) {
-            $year = $now->format('Y');
+            $year = $now->format('o'); // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
         }
         if ($week === null) {
             $week = $now->format('W');
         }
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $firstDay->setTime(0, 0, 0);
+
+        // respect Week start
+        $weekStart = (int)$this->settings['weekStart'];
+        $firstDay->modify('+ ' . ($weekStart - 1) . 'days');
 
         $weekConfiguration = [
             '+0 day' => 2,
