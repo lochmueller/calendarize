@@ -57,7 +57,7 @@ class TimeTableService extends AbstractService
 
             if ($configuration->getHandling() === ConfigurationInterface::HANDLING_INCLUDE) {
                 $handler->handleConfiguration($timeTable, $configuration);
-            } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_INCLUDE) {
+            } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_EXCLUDE) {
                 $localTimes = [];
                 $handler->handleConfiguration($localTimes, $configuration);
                 $timeTable = $this->checkAndRemoveTimes($timeTable, $localTimes);
