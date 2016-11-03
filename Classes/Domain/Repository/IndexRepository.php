@@ -11,7 +11,6 @@ use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -52,28 +51,11 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
-     * Current content record
-     *
-     * @var array
-     */
-    protected $contentRecord = [];
-
-    /**
      * Override page ids
      *
      * @var array
      */
     protected $overridePageIds = [];
-
-    /**
-     * Set the current content record
-     *
-     * @param array $contentRecord
-     */
-    public function setContentRecord($contentRecord)
-    {
-        $this->contentRecord = $contentRecord;
-    }
 
     /**
      * Override page IDs
@@ -102,11 +84,11 @@ class IndexRepository extends AbstractRepository
     /**
      * Find List
      *
-     * @param int        $limit
+     * @param int $limit
      * @param int|string $listStartTime
-     * @param int        $startOffsetHours
-     * @param int        $overrideStartDate
-     * @param int        $overrideEndDate
+     * @param int $startOffsetHours
+     * @param int $overrideStartDate
+     * @param int $overrideEndDate
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -146,20 +128,19 @@ class IndexRepository extends AbstractRepository
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array     $customSearch
+     * @param array $customSearch
      *
      * @return array
      */
     public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
         $arguments = [
-            'indexIds'     => [],
-            'startDate'    => $startDate,
-            'endDate'      => $endDate,
+            'indexIds' => [],
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'customSearch' => $customSearch,
         ];
-        $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
-        $arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
+        $arguments = $this->callSignal(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -175,7 +156,8 @@ class IndexRepository extends AbstractRepository
         $result = [
             'result' => $this->matchAndExecute($query, $constraints)
         ];
-        $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', $result);
+
+        $result = $this->callSignal(__CLASS__, __FUNCTION__ . 'Post', $result);
 
         return $result['result'];
     }
@@ -183,11 +165,11 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by traversing information
      *
-     * @param Index      $index
-     * @param bool|true  $future
+     * @param Index $index
+     * @param bool|true $future
      * @param bool|false $past
-     * @param int        $limit
-     * @param string     $sort
+     * @param int $limit
+     * @param string $sort
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -291,7 +273,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by time slot
      *
-     * @param int      $startTime
+     * @param int $startTime
      * @param int|null $endTime null means open end
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
@@ -383,12 +365,10 @@ class IndexRepository extends AbstractRepository
         }
 
         $arguments = [
-            'indexIds'      => [],
-            'indexTypes'    => $this->indexTypes,
-            'contentRecord' => $this->contentRecord,
+            'indexIds' => [],
+            'indexTypes' => $this->indexTypes,
         ];
-        $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
-        $arguments = $signalSlotDispatcher->dispatch(__CLASS__, __FUNCTION__, $arguments);
+        $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
 
         if ($arguments['indexIds']) {
             $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
@@ -400,10 +380,10 @@ class IndexRepository extends AbstractRepository
     /**
      * Add time frame related queries
      *
-     * @param array          $constraints
+     * @param array $constraints
      * @param QueryInterface $query
-     * @param int            $startTime
-     * @param int|null       $endTime
+     * @param int $startTime
+     * @param int|null $endTime
      *
      * @see IndexUtility::isIndexInRange
      */

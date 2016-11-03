@@ -28,7 +28,12 @@ class CalendarController extends AbstractController
     {
         parent::initializeAction();
         $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration']));
-        $this->indexRepository->setContentRecord($this->configurationManager->getContentObject()->data);
+        $additionalSlotArguments = [
+            'contentRecord' => $this->configurationManager->getContentObject()->data,
+            'settings' => $this->settings
+        ];
+        $this->indexRepository->setAdditionalSlotArguments($additionalSlotArguments);
+
         if (isset($this->settings['sorting'])) {
             $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
         }
