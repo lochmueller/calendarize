@@ -13,6 +13,7 @@ $custom = [
         'hideTable'    => (boolean)ConfigurationUtility::get('disableDefaultEvent'),
         'searchFields' => 'uid,title,description',
         'thumbnail'    => 'images',
+        'label_userFunc' => \HDNET\Calendarize\Service\TcaService::class . '->eventTitle',
     ],
     'columns' => [
         'title'     => [

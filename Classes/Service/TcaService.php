@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Utility\HelperUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -26,13 +27,13 @@ class TcaService extends AbstractService
      * @param array $params
      * @param object $object
      */
-    public function configurationTitle(&$params, $object)
+    public function configurationTitle(array &$params, $object)
     {
         $row = $params['row'];
         $this->migrateFormEngineRow($row);
 
         $handling = is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
-        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br />';
+        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
         switch ($row['type']) {
             case Configuration::TYPE_TIME:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
@@ -45,6 +46,49 @@ class TcaService extends AbstractService
                 break;
         }
     }
+
+    /**
+     * Add configurations to event titles
+     *
+     * @param array $params
+     * @param object $object
+     */
+    public function eventTitle(array &$params, $object)
+    {
+        // base title
+        $table = $params['table'];
+        unset($GLOBALS['TCA'][$table]['ctrl']['label_userFunc']);
+        $params['title'] = BackendUtility::getRecordTitle($table, $params['row']);
+        $GLOBALS['TCA'][$table]['ctrl']['label_userFunc'] = self::class . '->eventTitle';
+
+        // base record
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        $fullRow = $databaseConnection->exec_SELECTgetSingleRow('*', $table, 'uid=' . $params['row']['uid']);
+        $configurations = isset($fullRow['calendarize']) ? GeneralUtility::intExplode(
+            ',',
+            $fullRow['calendarize'],
+            true
+        ) : [];
+
+        if (empty($configurations)) {
+            return;
+        }
+
+        foreach ($configurations as $key => $value) {
+            $paramsInternal = [
+                'row' => $databaseConnection->exec_SELECTgetSingleRow(
+                    '*',
+                    'tx_calendarize_domain_model_configuration',
+                    'uid=' . $value
+                ),
+                'title' => '',
+            ];
+            $this->configurationTitle($paramsInternal, null);
+            $configurations[$key] = strip_tags($paramsInternal['title']);
+        }
+        $params['title'] .= ' / ' . implode(' / ', $configurations);
+    }
+
 
     /**
      * The new FormEngine prepare the select as array
@@ -102,11 +146,11 @@ class TcaService extends AbstractService
         if ($row['all_day']) {
             $title .= ' ' . TranslateUtility::get('tx_calendarize_domain_model_index.all_day');
         } elseif ($row['start_time']) {
-            $title .= '<br />' . BackendUtility::time($row['start_time'], false);
+            $title .= ' <br />' . BackendUtility::time($row['start_time'], false);
             $title .= ' - ' . BackendUtility::time($row['end_time'], false);
         }
         if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
-            $title .= '<br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
+            $title .= ' <br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
         }
         return $title;
     }
