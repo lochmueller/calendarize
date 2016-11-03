@@ -96,6 +96,7 @@ abstract class AbstractController extends ActionController
     {
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [];
+        $variables['settings'] = $this->settings;
 
         /** @var Dispatcher $dispatcher */
         $dispatcher = $this->objectManager->get(Dispatcher::class);
