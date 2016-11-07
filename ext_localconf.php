@@ -56,4 +56,3 @@ if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
         );
     }
 }
-

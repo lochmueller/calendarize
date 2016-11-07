@@ -9,6 +9,19 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.model_name"><source>Model Name</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.title"><source>Title</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration"><source><![CDATA[Plugin configuration]]></source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.booking_pid"><source>Booking PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.day_pid"><source>Day PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.week_pid"><source>Week PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.month_pid"><source>Month PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.year_pid"><source>Year PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.list_pid"><source>List PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.detail_pid"><source>Detail PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.recursive"><source>Recursive</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.storage_pid"><source>Storage PID</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.configuration"><source>Configuration</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.handling"><source>Handling</source></trans-unit>
 			<trans-unit id="configuration.handling.include"><source>Include</source></trans-unit>
 			<trans-unit id="configuration.handling.exclude"><source>Exclude</source></trans-unit>
@@ -85,8 +98,12 @@
 			<source>Booking PID</source>
 		</trans-unit>
 		<trans-unit id="configuration">
-			<source>Configuration</source>
+			<source>Configuration (record type)</source>
 		</trans-unit>
+		<trans-unit id="pluginConfiguration">
+			<source>Plugin Configuration</source>
+		</trans-unit>
+
 		<trans-unit id="configuration.day.">
 			<source>None</source>
 		</trans-unit>

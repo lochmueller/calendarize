@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-11-07T12:34:09+00:00" product-name="calendarize">
+		<header/>
+		<body>
+			<trans-unit id="model_name.alttitle"><source><![CDATA[calendarize ==> LLL:model_name.alttitle]]></source></trans-unit>
+			<trans-unit id="record_type.alttitle"><source><![CDATA[calendarize ==> LLL:record_type.alttitle]]></source></trans-unit>
+			<trans-unit id="booking_pid.alttitle"><source><![CDATA[calendarize ==> LLL:booking_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="day_pid.alttitle"><source><![CDATA[calendarize ==> LLL:day_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="week_pid.alttitle"><source><![CDATA[calendarize ==> LLL:week_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="month_pid.alttitle"><source><![CDATA[calendarize ==> LLL:month_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="year_pid.alttitle"><source><![CDATA[calendarize ==> LLL:year_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="list_pid.alttitle"><source><![CDATA[calendarize ==> LLL:list_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="detail_pid.alttitle"><source><![CDATA[calendarize ==> LLL:detail_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="recursive.alttitle"><source><![CDATA[calendarize ==> LLL:recursive.alttitle]]></source></trans-unit>
+			<trans-unit id="storage_pid.alttitle"><source><![CDATA[calendarize ==> LLL:storage_pid.alttitle]]></source></trans-unit>
+			<trans-unit id="configuration.alttitle"><source><![CDATA[calendarize ==> LLL:configuration.alttitle]]></source></trans-unit>
+		</body>
+	</file>
+</xliff>
