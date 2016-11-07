@@ -330,6 +330,9 @@
 		<trans-unit id="pluginName">
 			<source>Calendar</source>
 		</trans-unit>
+		<trans-unit id="pluginName.description">
+			<source>Add a flexible calendar plugin to the current page (incl. different views)</source>
+		</trans-unit>
 		<trans-unit id="pluginNameBooking">
 			<source>Calendar Booking</source>
 		</trans-unit>

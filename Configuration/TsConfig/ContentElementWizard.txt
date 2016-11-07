@@ -1,0 +1,13 @@
+mod.wizards.newContentElement.wizardItems.plugins {
+	elements {
+		calendarize {
+			iconIdentifier = ext-calendarize-wizard-icon
+			title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName
+			description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+			tt_content_defValues {
+				CType = list
+				list_type = calendarize_calendar
+			}
+		}
+	}
+}
