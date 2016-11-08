@@ -165,11 +165,12 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by traversing information
      *
-     * @param Index $index
-     * @param bool|true $future
+     * @param Index      $index
+     * @param bool|true  $future
      * @param bool|false $past
-     * @param int $limit
-     * @param string $sort
+     * @param int        $limit
+     * @param string     $sort
+     * @param bool       $useIndexTime
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -178,14 +179,20 @@ class IndexRepository extends AbstractRepository
         $future = true,
         $past = false,
         $limit = 100,
-        $sort = QueryInterface::ORDER_ASCENDING
+        $sort = QueryInterface::ORDER_ASCENDING,
+        $useIndexTime = false
     ) {
         if (!$future && !$past) {
             return [];
         }
         $query = $this->createQuery();
+
         $now = DateTimeUtility::getNow()
             ->getTimestamp();
+        if ($useIndexTime) {
+            $now = $index->getStartDate()->getTimestamp();
+        }
+
         $constraints = [];
         $constraints[] = $query->logicalNot($query->equals('uid', $index->getUid()));
         $constraints[] = $query->equals('foreignTable', $index->getForeignTable());
