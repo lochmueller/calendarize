@@ -35,7 +35,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
         $count = $databaseConnection->exec_SELECTcountRows(
             '*',
             'tx_calendarize_domain_model_configuration',
-            '(type="timeExclude" OR type="include" OR type="exclude")'
+            '(type="timeExclude" OR type="include" OR type="exclude") AND handling=""'
         );
 
         if ($count > 0) {
