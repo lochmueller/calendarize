@@ -12,6 +12,15 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Index traversing
+ *
+ * == Examples ==
+ *
+ * <code title="Traversing thru future and past occurings of the event">
+ * {namespace c=HDNET\Calendarize\ViewHelpers}
+ * <f:for each="{c:indexTraversing(index:'{index}', future: 'true', past: 'false', limit: 10, sort: 'ASC')}" as="futureEvent">
+ *  <f:debug>{futureEvent}</f:debug>
+ * </f:for>
+ * </code>
  */
 class IndexTraversingViewHelper extends AbstractViewHelper
 {
@@ -23,7 +32,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
      * @param bool   $future
      * @param bool   $past
      * @param int    $limit
-     * @param string $sort
+     * @param string $sort ASC or DESC
      *
      * @return array
      */
@@ -36,6 +45,6 @@ class IndexTraversingViewHelper extends AbstractViewHelper
     ) {
         /** @var IndexRepository $indexRepository */
         $indexRepository = $this->objectManager->get(IndexRepository::class);
-        return $indexRepository->findByTraversing($index, $future, $past, $limit, $sort);
+        return $indexRepository->findByTraversing($index, $future, $past, (int) $limit, $sort);
     }
 }
