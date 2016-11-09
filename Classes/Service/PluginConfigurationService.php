@@ -6,7 +6,6 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -16,15 +15,13 @@ class PluginConfigurationService
 {
 
     /**
-     * @param ConfigurationManagerInterface $configurationManager
-     * @return ConfigurationManagerInterface
+     * @param array $settings
+     * @return array
      */
-    public function respectPluginConfiguration(ConfigurationManagerInterface &$configurationManager)
+    public function respectPluginConfiguration(array $settings)
     {
-        $rawConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-
-        $rawConfiguration['settings']['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)$rawConfiguration['settings']['pluginConfiguration']);
-        if ($rawConfiguration['settings']['pluginConfiguration'] instanceof PluginConfiguration) {
+        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)$settings['pluginConfiguration']);
+        if ($settings['pluginConfiguration'] instanceof PluginConfiguration) {
             $checkFields = [
                 'detailPid',
                 'listPid',
@@ -36,26 +33,20 @@ class PluginConfigurationService
             ];
 
             foreach ($checkFields as $checkField) {
-                if ((int)$rawConfiguration['settings'][$checkField] === 0) {
+                if ((int)$settings[$checkField] === 0) {
                     $function = 'get' . ucfirst($checkField);
-                    $rawConfiguration['settings'][$checkField] = $rawConfiguration['settings']['pluginConfiguration']->$function();
+                    $settings[$checkField] = $settings['pluginConfiguration']->$function();
                 }
             }
-
-
-            $rawConfiguration['persistence']['storagePid'] .= ',' . $rawConfiguration['settings']['pluginConfiguration']->getStoragePid();
         }
 
         /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::create(Dispatcher::class);
         $arguments = [
-            'configurationManager' => $configurationManager,
-            'rawConfiguration' => $rawConfiguration,
+            'settings' => $settings,
         ];
         $arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
-
-        $configurationManager->setConfiguration($arguments['rawConfiguration']);
-        return $configurationManager;
+        return $arguments['settings'];
     }
 
     /**

@@ -89,10 +89,12 @@ $custom = [
 $tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
 
 $search = [
-    ',detail_pid'
+    ',detail_pid',
+    ',storage_pid,recursive' // @todo handle the persistence override in the controller
 ];
 $replace = [
-    ',--div--;PID,detail_pid'
+    ',--div--;PID,detail_pid',
+    '',
 ];
 
 $tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);

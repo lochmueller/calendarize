@@ -17,7 +17,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Calendar
@@ -33,13 +32,11 @@ class CalendarController extends AbstractController
     {
         $this->configurationManager = $configurationManager;
 
+        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
         $objectManager = new ObjectManager();
         $pluginConfigurationService = $objectManager->get(PluginConfigurationService::class);
-        $this->objectManager = $pluginConfigurationService->respectPluginConfiguration($this->configurationManager);
-
-        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-        #DebuggerUtility::var_dump($this->settings);
-        #DebuggerUtility::var_dump($this->configurationManager);
+        $this->settings = $pluginConfigurationService->respectPluginConfiguration($this->settings);
     }
 
     /**
