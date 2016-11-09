@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Hooks;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
+use HDNET\Calendarize\Utility\HelperUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -75,10 +76,27 @@ class CmsLayout extends AbstractHook
         $actionKey = lcfirst(implode('', $parts));
 
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
-        $this->layoutService->addRow(
-            TranslateUtility::get('configuration'),
-            $this->flexFormService->get('settings.configuration', 'main')
-        );
+
+        $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
+        if ($pluginConfiguration) {
+            $table = 'tx_calendarize_domain_model_pluginconfiguration';
+            $row = HelperUtility::getDatabaseConnection()->exec_SELECTgetSingleRow(
+                '*',
+                $table,
+                'uid=' . $pluginConfiguration
+            );
+            $this->layoutService->addRow(
+                TranslateUtility::get('tx_calendarize_domain_model_pluginconfiguration'),
+                BackendUtility::getRecordTitle($table, $row)
+            );
+        }
+
+        if (trim($this->flexFormService->get('settings.configuration', 'general')) !== '') {
+            $this->layoutService->addRow(
+                TranslateUtility::get('configuration'),
+                $this->flexFormService->get('settings.configuration', 'general')
+            );
+        }
 
         if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
@@ -114,7 +132,10 @@ class CmsLayout extends AbstractHook
             $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
             $pageRow = BackendUtility::getRecord('pages', $pageId);
             if ($pageRow) {
-                $this->layoutService->addRow(TranslateUtility::get($pageIdName), $pageRow['title'] . ' (' . $pageId . ')');
+                $this->layoutService->addRow(
+                    TranslateUtility::get($pageIdName),
+                    $pageRow['title'] . ' (' . $pageId . ')'
+                );
             }
         }
     }

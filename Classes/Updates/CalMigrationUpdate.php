@@ -182,7 +182,6 @@ class CalMigrationUpdate extends AbstractUpdate
             $date = new \DateTime($oldFormat);
             return $date->getTimestamp();
         } catch (\Exception $e) {
-
         }
         return '';
     }
@@ -212,9 +211,14 @@ class CalMigrationUpdate extends AbstractUpdate
             return [];
         }
 
-        $migratedRows = $db->exec_SELECTgetRows('uid,import_id', 'tx_calendarize_domain_model_event',
-            'import_id IN (' . implode(',',
-                $checkImportIds) . ')' . BackendUtility::deleteClause('tx_calendarize_domain_model_event'));
+        $migratedRows = $db->exec_SELECTgetRows(
+            'uid,import_id',
+            'tx_calendarize_domain_model_event',
+            'import_id IN (' . implode(
+                ',',
+                $checkImportIds
+            ) . ')' . BackendUtility::deleteClause('tx_calendarize_domain_model_event')
+        );
 
         foreach ($migratedRows as $migratedRow) {
             $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
