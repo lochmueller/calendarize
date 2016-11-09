@@ -32,6 +32,7 @@ class EventSearch
      */
     protected $tableName = 'tx_calendarize_domain_model_event';
 
+
     /**
      * Check if we can reduce the amount of results
      *
@@ -42,6 +43,7 @@ class EventSearch
      * @param \DateTime|NULL $startDate
      * @param \DateTime|NULL $endDate
      * @param array          $customSearch
+     * @param array          $additionalSlotArguments
      *
      * @return array|void
      */
@@ -49,7 +51,8 @@ class EventSearch
         array $indexIds,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        array $customSearch = []
+        array $customSearch = [],
+        array $additionalSlotArguments
     ) {
 
         // Filter here for $customSearch['categories'] and take also care of the fullText
@@ -67,6 +70,7 @@ class EventSearch
             'startDate'    => $startDate,
             'endDate'      => $endDate,
             'customSearch' => $customSearch,
+            'additionalSlotArguments' => $additionalSlotArguments
         ];
     }
 
