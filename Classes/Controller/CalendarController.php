@@ -9,13 +9,11 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
-use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 
 /**
@@ -23,21 +21,6 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
  */
 class CalendarController extends AbstractController
 {
-
-    /**
-     * @param ConfigurationManagerInterface $configurationManager
-     * @return void
-     */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-
-        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-
-        $objectManager = new ObjectManager();
-        $pluginConfigurationService = $objectManager->get(PluginConfigurationService::class);
-        $this->settings = $pluginConfigurationService->respectPluginConfiguration($this->settings);
-    }
 
     /**
      * Init all actions

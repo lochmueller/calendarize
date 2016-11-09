@@ -8,10 +8,13 @@
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
+use HDNET\Calendarize\Service\PluginConfigurationService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -37,6 +40,21 @@ abstract class AbstractController extends ActionController
         'xml' => 'application/xml',
         'atom' => 'application/rss+xml',
     ];
+
+    /**
+     * @param ConfigurationManagerInterface $configurationManager
+     * @return void
+     */
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    {
+        $this->configurationManager = $configurationManager;
+
+        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
+        $objectManager = new ObjectManager();
+        $pluginConfigurationService = $objectManager->get(PluginConfigurationService::class);
+        $this->settings = $pluginConfigurationService->respectPluginConfiguration($this->settings);
+    }
 
 
     /**

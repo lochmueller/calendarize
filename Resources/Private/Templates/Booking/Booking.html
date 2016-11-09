@@ -90,9 +90,9 @@
 									<f:translate key="booking.country" extensionName="Calendarize" />
 									* </label>
 								<f:render partial="FieldError" arguments="{field: 'request.country'}" />
-								<f:if condition="{countries -> f:count()}">
+								<f:if condition="{extended.countries -> f:count()}">
 									<f:then>
-										<f:form.select property="country" options="{countries}" optionValueField="nameLocalized"
+										<f:form.select property="country" options="{extended.countries}" optionValueField="nameLocalized"
 										               optionLabelField="nameLocalized" sortByOptionLabel="1"
 										               prependOptionLabel="{f:translate(key: 'pleaseSelect', extensionName: 'Calendarize')}"
 										               prependOptionValue="" class="form-control" />

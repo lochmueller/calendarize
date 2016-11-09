@@ -23,6 +23,19 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
         \HDNET\Calendarize\Slots\EventImport::class,
         'importCommand'
     );
+
+    $signalSlotDispatcher->connect(
+        \HDNET\Calendarize\Controller\BookingController::class,
+        'bookingAction',
+        \HDNET\Calendarize\Slots\BookingCountries::class,
+        'bookingSlot'
+    );
+    $signalSlotDispatcher->connect(
+        \HDNET\Calendarize\Controller\BookingController::class,
+        'sendAction',
+        \HDNET\Calendarize\Slots\BookingCountries::class,
+        'sendSlot'
+    );
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
