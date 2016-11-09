@@ -4,6 +4,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
+use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -77,5 +78,23 @@ class PluginConfigurationService
         $query->matching($query->equals('uid', $uid));
         return $query->execute()
             ->getFirst();
+    }
+
+    /**
+     * Add the configurations to the given Plugin configuration
+     *
+     * @param array $config
+     *
+     * @return array
+     */
+    public function addConfig($config)
+    {
+        foreach (Register::getRegister() as $key => $configuration) {
+            $config['items'][] = [
+                $configuration['title'],
+                $key,
+            ];
+        }
+        return $config;
     }
 }
