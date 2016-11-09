@@ -36,6 +36,7 @@ $custom = [
             'config' => [
                 'type' => 'select',
                 'itemsProcFunc' => 'HDNET\Calendarize\Service\PluginConfigurationService->addConfig',
+                'renderType' => 'selectCheckBox',
                 'renderMode' => 'checkbox',
                 'minitems' => '1',
                 'maxitems' => '99',
@@ -60,17 +61,19 @@ $custom = [
         'recursive' => [
             'config' => [
                 'type' => 'select',
-                'renderMode' => 'selectSingle',
-                'size' => 1,
+                'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:inherit', ''],
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.0', '0'],
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.1', '1'],
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.2', '2'],
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.3', '3'],
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.4', '4'],
-                    ['LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.5', '250'],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:inherit', ''],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.0', '0'],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.1', '1'],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.2', '2'],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.3', '3'],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.4', '4'],
+                    ['LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.5', '250'],
                 ],
+                'size' => 1,
+                'minitems' => '1',
+                'maxitems' => '1',
             ],
         ],
         'detail_pid' => $defaultPidConfiguration,
@@ -94,4 +97,6 @@ $replace = [
 
 $tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);
 
+
+unset($tca['columns']['recursive']['config']['eval']);
 return $tca;

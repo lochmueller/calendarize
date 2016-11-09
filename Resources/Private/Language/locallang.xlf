@@ -9,6 +9,16 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+
+
+			<trans-unit id="inherit"><source>Inherit</source></trans-unit>
+			<trans-unit id="recursive.I.0"><source>0 levels (only selected page)</source></trans-unit>
+			<trans-unit id="recursive.I.1"><source>1 levels</source></trans-unit>
+			<trans-unit id="recursive.I.2"><source>2 levels</source></trans-unit>
+			<trans-unit id="recursive.I.3"><source>3 levels</source></trans-unit>
+			<trans-unit id="recursive.I.4"><source>4 levels</source></trans-unit>
+			<trans-unit id="recursive.I.5"><source>Infinite</source></trans-unit>
+
 			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.model_name"><source>Model Name</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.title"><source>Title</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration"><source><![CDATA[Plugin configuration]]></source></trans-unit>
