@@ -41,41 +41,49 @@ class PluginConfiguration extends AbstractModel
      * @db
      */
     protected $storagePid;
+
     /**
      * @var int
      * @db
      */
     protected $recursive;
+
     /**
      * @var int
      * @db
      */
     protected $detailPid;
+
     /**
      * @var int
      * @db
      */
     protected $listPid;
+
     /**
      * @var int
      * @db
      */
     protected $yearPid;
+
     /**
      * @var int
      * @db
      */
     protected $monthPid;
+
     /**
      * @var int
      * @db
      */
     protected $weekPid;
+
     /**
      * @var int
      * @db
      */
     protected $dayPid;
+
     /**
      * @var int
      * @db
@@ -101,7 +109,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return string
      */
-    public function getConfiguration(): string
+    public function getConfiguration()
     {
         return $this->configuration;
     }
@@ -109,7 +117,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param string $configuration
      */
-    public function setConfiguration(string $configuration)
+    public function setConfiguration($configuration)
     {
         $this->configuration = $configuration;
     }
@@ -117,7 +125,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return string
      */
-    public function getStoragePid(): string
+    public function getStoragePid()
     {
         return $this->storagePid;
     }
@@ -125,7 +133,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param string $storagePid
      */
-    public function setStoragePid(string $storagePid)
+    public function setStoragePid($storagePid)
     {
         $this->storagePid = $storagePid;
     }
@@ -133,7 +141,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getRecursive(): int
+    public function getRecursive()
     {
         return $this->recursive;
     }
@@ -141,7 +149,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $recursive
      */
-    public function setRecursive(int $recursive)
+    public function setRecursive($recursive)
     {
         $this->recursive = $recursive;
     }
@@ -149,7 +157,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getDetailPid(): int
+    public function getDetailPid()
     {
         return $this->detailPid;
     }
@@ -157,7 +165,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $detailPid
      */
-    public function setDetailPid(int $detailPid)
+    public function setDetailPid($detailPid)
     {
         $this->detailPid = $detailPid;
     }
@@ -165,7 +173,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getListPid(): int
+    public function getListPid()
     {
         return $this->listPid;
     }
@@ -173,7 +181,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $listPid
      */
-    public function setListPid(int $listPid)
+    public function setListPid($listPid)
     {
         $this->listPid = $listPid;
     }
@@ -181,7 +189,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getYearPid(): int
+    public function getYearPid()
     {
         return $this->yearPid;
     }
@@ -189,7 +197,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $yearPid
      */
-    public function setYearPid(int $yearPid)
+    public function setYearPid($yearPid)
     {
         $this->yearPid = $yearPid;
     }
@@ -197,7 +205,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getMonthPid(): int
+    public function getMonthPid()
     {
         return $this->monthPid;
     }
@@ -205,7 +213,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $monthPid
      */
-    public function setMonthPid(int $monthPid)
+    public function setMonthPid($monthPid)
     {
         $this->monthPid = $monthPid;
     }
@@ -213,7 +221,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getWeekPid(): int
+    public function getWeekPid()
     {
         return $this->weekPid;
     }
@@ -221,7 +229,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $weekPid
      */
-    public function setWeekPid(int $weekPid)
+    public function setWeekPid($weekPid)
     {
         $this->weekPid = $weekPid;
     }
@@ -229,7 +237,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getDayPid(): int
+    public function getDayPid()
     {
         return $this->dayPid;
     }
@@ -237,7 +245,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $dayPid
      */
-    public function setDayPid(int $dayPid)
+    public function setDayPid($dayPid)
     {
         $this->dayPid = $dayPid;
     }
@@ -245,7 +253,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return int
      */
-    public function getBookingPid(): int
+    public function getBookingPid()
     {
         return $this->bookingPid;
     }
@@ -253,7 +261,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param int $bookingPid
      */
-    public function setBookingPid(int $bookingPid)
+    public function setBookingPid($bookingPid)
     {
         $this->bookingPid = $bookingPid;
     }
@@ -261,7 +269,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return string
      */
-    public function getModelName(): string
+    public function getModelName()
     {
         return $this->modelName;
     }
@@ -269,7 +277,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param string $modelName
      */
-    public function setModelName(string $modelName)
+    public function setModelName($modelName)
     {
         $this->modelName = $modelName;
     }
