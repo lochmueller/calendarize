@@ -38,15 +38,19 @@ class TimeSelectionWizard extends AbstractService
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadRequireJsModule('TYPO3/CMS/Calendarize/TimeSelection');
 
-        /** @var IconFactory $iconFactory */
-        $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+        $icon = '[TIME]';
+        if (class_exists(IconFactory::class)) {
+            /** @var IconFactory $iconFactory */
+            $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+            $icon = $iconFactory->getIcon(
+                'actions-document-synchronize',
+                Icon::SIZE_SMALL
+            )->render();
+        }
 
         return '<div class="form-group">
     <div class="input-group">
-      <div class="input-group-addon">' . $iconFactory->getIcon(
-            'actions-document-synchronize',
-            Icon::SIZE_SMALL
-        )->render() . '</div>
+      <div class="input-group-addon">' . $icon . '</div>
       <select class="form-control calendarize-time-selection" data-related="' . $id . '">
         <option></option>
         ' . $this->renderOptions($times) . '
