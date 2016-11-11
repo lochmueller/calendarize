@@ -12,6 +12,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\AbstractUpdate;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * CalMigrationUpdate
@@ -23,6 +24,16 @@ class CalMigrationUpdate extends AbstractUpdate
      * Import prefix
      */
     const IMPORT_PREFIX = 'calMigration:';
+
+    /**
+     * Event table
+     */
+    const EVENT_TABLE = 'tx_calendarize_domain_model_event';
+
+    /**
+     * Configuration table
+     */
+    const CONFIGURATION_TABLE = 'tx_calendarize_domain_model_configuration';
 
     /**
      * The human-readable title of the upgrade wizard
@@ -83,16 +94,32 @@ class CalMigrationUpdate extends AbstractUpdate
                 'calendarize' => $this->buildConfigurations($event, $dbQueries)
             ];
 
-            /**
-             * @todo
-             * ["image"]=>
-             * string(1) "0"
-             * ["attachment"]=>
-             * string(1) "0"
-             */
+            $variables = [
+                'calendarizeEventRecord' => $calendarizeEventRecord,
+                'event'                  => $event,
+                'table'                  => self::EVENT_TABLE,
+                'dbQueries'              => $dbQueries
+            ];
 
-            $query = $db->INSERTquery('tx_calendarize_domain_model_event', $calendarizeEventRecord);
+            /** @var Dispatcher $dispatcher */
+            $dispatcher = $this->getDispatcher();
+            $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
+
+            $query = $db->INSERTquery($variables['table'], $variables['calendarizeEventRecord']);
             $db->admin_query($query);
+
+            $variables = [
+                'calendarizeEventRecord' => $calendarizeEventRecord,
+                'event'                  => $event,
+                'table'                  => $variables['table'],
+                'recordId'               => $db->sql_insert_id(),
+                'dbQueries'              => $dbQueries
+            ];
+
+            /** @var Dispatcher $dispatcher */
+            $dispatcher = $this->getDispatcher();
+            $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variables);
+
             $dbQueries[] = $query;
         }
 
@@ -113,7 +140,6 @@ class CalMigrationUpdate extends AbstractUpdate
     protected function buildConfigurations($calEventRow, &$dbQueries)
     {
         $db = HelperUtility::getDatabaseConnection();
-        $table = 'tx_calendarize_domain_model_configuration';
         $configurationRow = [
             'pid'        => $calEventRow['pid'],
             'tstamp'     => $calEventRow['tstamp'],
@@ -128,11 +154,35 @@ class CalMigrationUpdate extends AbstractUpdate
 
         ];
 
-        $query = $db->INSERTquery($table, $configurationRow);
+        $variables = [
+            'table'            => self::CONFIGURATION_TABLE,
+            'configurationRow' => $configurationRow,
+            'calEventRow'      => $calEventRow,
+            'dbQueries'        => $dbQueries
+        ];
+
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = $this->getDispatcher();
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
+
+        $query = $db->INSERTquery($variables['table'], $variables['configurationRow']);
         $db->admin_query($query);
         $dbQueries[] = $query;
+        $recordId = $db->sql_insert_id();
 
-        return $db->sql_insert_id();
+        $variables = [
+            'table'            => $variables['table'],
+            'configurationRow' => $configurationRow,
+            'calEventRow'      => $calEventRow,
+            'recordId'         => $recordId,
+            'dbQueries'        => $dbQueries
+        ];
+
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = $this->getDispatcher();
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variables);
+
+        return $variables['recordId'];
 
         /*
          *
@@ -201,6 +251,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $checkImportIds = [];
         $nonMigrated = [];
         $events = $db->exec_SELECTgetRows('uid', 'tx_cal_event', '1=1' . BackendUtility::deleteClause('tx_cal_event'));
+
         foreach ($events as $event) {
             $checkImportIds[] = '"' . self::IMPORT_PREFIX . $event['uid'] . '"';
             $nonMigrated[(int)$event['uid']] = (int)$event['uid'];
@@ -211,14 +262,16 @@ class CalMigrationUpdate extends AbstractUpdate
             return [];
         }
 
-        $migratedRows = $db->exec_SELECTgetRows(
-            'uid,import_id',
-            'tx_calendarize_domain_model_event',
-            'import_id IN (' . implode(
-                ',',
-                $checkImportIds
-            ) . ')' . BackendUtility::deleteClause('tx_calendarize_domain_model_event')
-        );
+        $variables = [
+            'table' => self::EVENT_TABLE
+        ];
+
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = $this->getDispatcher();
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreSelect', $variables);
+
+        $migratedRows = $db->exec_SELECTgetRows('uid,import_id', $variables['table'],
+            'import_id IN (' . implode(',', $checkImportIds) . ')' . BackendUtility::deleteClause($variables['table']));
 
         foreach ($migratedRows as $migratedRow) {
             $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
@@ -226,6 +279,27 @@ class CalMigrationUpdate extends AbstractUpdate
                 unset($nonMigrated[$importId]);
             }
         }
-        return $nonMigrated;
+
+        $variables = [
+            'table'        => $variables['table'],
+            'migratedRows' => $migratedRows,
+            'nonMigrated'  => $nonMigrated
+        ];
+
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = $this->getDispatcher();
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'ReadyParsed', $variables);
+
+
+        return $variables['nonMigrated'];
+    }
+
+    /**
+     * @return Dispatcher
+     */
+    protected function getDispatcher()
+    {
+        $dispatcher = HelperUtility::create(Dispatcher::class);
+        return $dispatcher;
     }
 }
