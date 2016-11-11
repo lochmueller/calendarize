@@ -89,7 +89,7 @@
 								<type>select</type>
 								<foreign_table>tx_calendarize_domain_model_pluginconfiguration</foreign_table>
 								<minitems>0</minitems>
-								<maxitems>99</maxitems>
+								<maxitems>1</maxitems>
 								<size>1</size>
 								<renderType>selectSingle</renderType>
 								<items>
