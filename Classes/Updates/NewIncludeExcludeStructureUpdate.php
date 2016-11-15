@@ -35,7 +35,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
         $count = $databaseConnection->exec_SELECTcountRows(
             '*',
             'tx_calendarize_domain_model_configuration',
-            '(type="timeExclude" OR type="include" OR type="exclude") AND handling=""'
+            'handling="" OR handling IS NULL'
         );
 
         if ($count > 0) {
@@ -57,38 +57,45 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
     {
 
         $databaseConnection = HelperUtility::getDatabaseConnection();
-        $excludeFields = [
-            'type' => ConfigurationInterface::TYPE_TIME,
-            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
-        ];
         $query = $databaseConnection->UPDATEquery(
             'tx_calendarize_domain_model_configuration',
             'type="timeExclude"',
-            $excludeFields
+            [
+            'type' => ConfigurationInterface::TYPE_TIME,
+            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            ]
         );
         $databaseConnection->admin_query($query);
         $dbQueries[] = $query;
 
-        $excludeFields = [
-            'type' => ConfigurationInterface::TYPE_GROUP,
-            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
-        ];
         $query = $databaseConnection->UPDATEquery(
             'tx_calendarize_domain_model_configuration',
             'type="include"',
-            $excludeFields
+            [
+            'type' => ConfigurationInterface::TYPE_GROUP,
+            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            ]
         );
         $databaseConnection->admin_query($query);
         $dbQueries[] = $query;
 
-        $excludeFields = [
-            'type' => ConfigurationInterface::TYPE_GROUP,
-            'handling' => ConfigurationInterface::HANDLING_EXCLUDE,
-        ];
         $query = $databaseConnection->UPDATEquery(
             'tx_calendarize_domain_model_configuration',
             'type="exclude"',
-            $excludeFields
+            [
+            'type' => ConfigurationInterface::TYPE_GROUP,
+            'handling' => ConfigurationInterface::HANDLING_EXCLUDE,
+            ]
+        );
+        $databaseConnection->admin_query($query);
+        $dbQueries[] = $query;
+
+        $query = $databaseConnection->UPDATEquery(
+            'tx_calendarize_domain_model_configuration',
+            'handling="" OR handling IS NULL',
+            [
+            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            ]
         );
         $databaseConnection->admin_query($query);
         $dbQueries[] = $query;

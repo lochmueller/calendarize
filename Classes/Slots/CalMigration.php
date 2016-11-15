@@ -7,7 +7,6 @@
 
 namespace HDNET\Calendarize\Slots;
 
-
 /**
  * CalMigration
  *
