@@ -565,8 +565,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreSelect', $variables);
 
-        $migratedRows = $db->exec_SELECTgetRows('uid,import_id', $variables['table'],
-            'import_id IN (' . implode(',', $checkImportIds) . ')' . BackendUtility::deleteClause($variables['table']));
+        $migratedRows = $db->exec_SELECTgetRows(
+            'uid,import_id',
+            $variables['table'],
+            'import_id IN (' . implode(',', $checkImportIds) . ')' . BackendUtility::deleteClause($variables['table'])
+        );
 
         foreach ($migratedRows as $migratedRow) {
             $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);

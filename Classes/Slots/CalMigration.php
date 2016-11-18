@@ -60,7 +60,6 @@ class CalMigration
             'dbQueries' => $dbQueries
         ];
 
-
         return $variables;
     }
 }
