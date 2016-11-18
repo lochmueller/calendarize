@@ -87,11 +87,11 @@ class KeSearchIndexer extends AbstractHook
                 $originalObject->getKeSearchTags($index),
                 "&tx_calendarize_calendar[index]={$index->getUid()}",
                 $abstract,
-                $index->_getProperty('_languageUid'),   // $index always has a "_languageUid" - if the $originalObject does not use translations, it is 0
+                $index->_getProperty('_languageUid'), // $index always has a "_languageUid" - if the $originalObject does not use translations, it is 0
                 $index->_hasProperty('starttime') ? $index->_getProperty('starttime') : 0,
                 $index->_hasProperty('endtime') ? $index->_getProperty('endtime') : 0,
                 $index->_hasProperty('fe_group') ? $index->_getProperty('fe_group') : '',
-                false,  // debugOnly
+                false, // debugOnly
                 $additionalFields
             );
         }

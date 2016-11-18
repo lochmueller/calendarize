@@ -33,6 +33,14 @@ class ConfigurationGroup extends AbstractModel
     protected $configurations;
 
     /**
+     * Import ID if the item is based on an ICS structure
+     *
+     * @var string
+     * @db
+     */
+    protected $importId;
+
+    /**
      * Get title
      *
      * @return string
