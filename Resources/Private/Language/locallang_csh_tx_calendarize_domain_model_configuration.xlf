@@ -8,7 +8,8 @@
 			<authorEmail>tim@fruit-lab.de</authorEmail>
 		</header>
 		<body>
-			<trans-unit id="handling.alttitle"><source><![CDATA[calendarize ==> LLL:handling.alttitle]]></source></trans-unit>
+			<trans-unit id="import_id.alttitle"><source><![CDATA[EXT:cal import id]]></source></trans-unit>
+			<trans-unit id="handling.alttitle"><source><![CDATA[EXT:cal import id]]></source></trans-unit>
 		<trans-unit id="all_day.alttitle">
 			<source></source>
 		</trans-unit>

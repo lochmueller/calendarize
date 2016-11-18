@@ -138,6 +138,14 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $day = self::DAY_NONE;
 
     /**
+     * Import ID if the item is based on an ICS structure
+     *
+     * @var string
+     * @db
+     */
+    protected $importId;
+
+    /**
      * Get type
      *
      * @return string
