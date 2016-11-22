@@ -155,12 +155,14 @@ class DateTimeUtility
     }
 
     /**
-     * Get the current Date (normalized optimized for queries, because SIM_ACCESS_TIME is rounded to minutes)
+     * Get the current date (normalized optimized for queries, because SIM_ACCESS_TIME is rounded to minutes)
+     * in the current timezone.
      *
      * @return \DateTime
      */
     public static function getNow()
     {
-        return self::normalizeDateTimeSingle((int)$GLOBALS['SIM_ACCESS_TIME']);
+        // \DateTime::ATOM contains the timezone "T", so the generated \DateTime has a (the current) timezone
+        return new \DateTime(date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
     }
 }
