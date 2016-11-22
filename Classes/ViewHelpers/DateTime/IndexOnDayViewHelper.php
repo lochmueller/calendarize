@@ -31,6 +31,7 @@ class IndexOnDayViewHelper extends AbstractViewHelper
      */
     public function render(\DateTime $day, Index $index = null, $indices = [], $modification = '')
     {
+        $day = DateTimeUtility::normalizeDateTimeSingle($day->format('d.m.Y'));
         $baseDay = clone $day;
         if ($modification != '') {
             $baseDay->modify($modification);
