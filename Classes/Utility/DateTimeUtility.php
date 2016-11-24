@@ -136,7 +136,8 @@ class DateTimeUtility
     }
 
     /**
-     * Get a normalized date time object
+     * Get a normalized date time object. The timezone of the returned object is
+     * UTC for integer parameters and server timezone for everything else.
      *
      * @param int|null|string|\DateTime $dateInformation
      *
@@ -151,7 +152,7 @@ class DateTimeUtility
             // The $timezone parameter and the current timezone are ignored [ie. set to UTC] when the $time parameter [...] is a UNIX timestamp (e.g. @946684800) [...]
             return new \DateTime("@$dateInformation");
         } elseif (is_string($dateInformation)) {
-            return new \DateTime($dateInformation, DateTimeUtility::getTimeZone());
+            return new \DateTime($dateInformation);
         }
         else {  // null
             return self::getNow();
@@ -166,7 +167,8 @@ class DateTimeUtility
      */
     public static function getNow()
     {
-        // \DateTime::ATOM contains the timezone "T", so the generated \DateTime has a (the current) timezone
+        // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
+        // So we create a date string with timezone information first, and a \DateTime in the current servert timezone then.
         return new \DateTime(date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
     }
 }
