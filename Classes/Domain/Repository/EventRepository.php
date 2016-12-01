@@ -7,6 +7,8 @@
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+
 /**
  * Event repository
  */
@@ -34,5 +36,21 @@ class EventRepository extends AbstractRepository
             $ids[] = (int)$row['uid'];
         }
         return $ids;
+    }
+
+    /**
+     * Return the current tablename
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        $query = $this->createQuery();
+        if ($query instanceof Query) {
+            $source = $query->getSource();
+            if (method_exists($source, 'getSelectorName')) {
+                return $source->getSelectorName();
+            }
+        }
     }
 }
