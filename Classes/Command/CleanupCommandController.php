@@ -58,7 +58,8 @@ class CleanupCommandController extends AbstractCommandController
 
         if (!$tableName) {
             $this->enqueueMessage(
-                'No tablename found on your given Repository! [' . $repositoryName . ']', 'Tablename',
+                'No tablename found on your given Repository! [' . $repositoryName . ']',
+                'Tablename',
                 FlashMessage::ERROR
             );
             return false;
@@ -77,7 +78,8 @@ class CleanupCommandController extends AbstractCommandController
 
             if (!($model instanceof Event)) {
                 $this->enqueueMessage(
-                    'Object with uid [' . $uid . '] is not an instance of the event base model.', 'Error',
+                    'Object with uid [' . $uid . '] is not an instance of the event base model.',
+                    'Error',
                     FlashMessage::INFO
                 );
                 continue;
@@ -103,7 +105,7 @@ class CleanupCommandController extends AbstractCommandController
     protected function processEvent(EventRepository $repository, Event $model, $modus)
     {
         // define the function for the delete-modus.
-        $delete = function($repository, $model) {
+        $delete = function ($repository, $model) {
             $repository->remove($model);
         };
 

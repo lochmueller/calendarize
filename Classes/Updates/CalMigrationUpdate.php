@@ -169,7 +169,6 @@ class CalMigrationUpdate extends AbstractUpdate
             /** @var Dispatcher $dispatcher */
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
             $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
-
         }
 
 
@@ -713,7 +712,8 @@ class CalMigrationUpdate extends AbstractUpdate
         foreach ($selectResults as $mm) {
             $eventUid = $this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries, $customMessages);
             $categoryUid = $this->getCalendarizeCategoryUid(
-                self::IMPORT_PREFIX . $mm['uid_foreign'], $dbQueries,
+                self::IMPORT_PREFIX . $mm['uid_foreign'],
+                $dbQueries,
                 $customMessages
             );
 
@@ -939,7 +939,8 @@ class CalMigrationUpdate extends AbstractUpdate
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreSelect', $variables);
 
         $migratedRows = $db->exec_SELECTgetRows(
-            'uid,import_id', $variables['table'],
+            'uid,import_id',
+            $variables['table'],
             'import_id IN (' . implode(',', $checkImportIds) . ')' . BackendUtility::deleteClause($variables['table'])
         );
 
