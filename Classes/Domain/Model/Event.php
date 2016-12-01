@@ -102,6 +102,11 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $categories;
 
     /**
+     * @var bool
+     */
+    protected $hidden = false;
+
+    /**
      * Build up the object
      */
     public function __construct()
@@ -357,7 +362,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     public function getKeSearchTitle(Index $index)
     {
         return $this->getTitle() . ' - ' . $index->getStartDate()
-            ->format('d.m.Y');
+                ->format('d.m.Y');
     }
 
     /**
@@ -441,5 +446,21 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     public function setOrganizer($organizer)
     {
         $this->organizer = $organizer;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param boolean $hidden
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
     }
 }
