@@ -22,11 +22,10 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 class CleanupCommandController extends AbstractCommandController
 {
 
-    const modusHidden = 'hide';
-    const modusDeleted = 'delete';
-    const defaultWaitingPeriod = 14;
-    const defaultCleanupRepository = 'HDNET\\Calendarize\\Domain\\Repository\\EventRepository';
-    const indexTable = 'tx_calendarize_domain_model_index';
+    const MODUS_HIDDEN = 'hide';
+    const MODUS_DELETED = 'delete';
+    const DEFAULT_WAIT_PERIOD = 14;
+    const DEFAULT_CLEANUP_REPOSITORY = 'HDNET\\Calendarize\\Domain\\Repository\\EventRepository';
 
     /**
      * Cleanup the event models.
@@ -39,15 +38,15 @@ class CleanupCommandController extends AbstractCommandController
      * @return void
      */
     public function runCommand(
-        $repositoryName = self::defaultCleanupRepository,
-        $modus = self::modusHidden,
-        $waitingPeriod = self::defaultWaitingPeriod
+        $repositoryName = self::DEFAULT_CLEANUP_REPOSITORY,
+        $modus = self::MODUS_HIDDEN,
+        $waitingPeriod = self::DEFAULT_WAIT_PERIOD
     ) {
-        /** @var AbstractRepository $repository */
+        /** @var EventRepository $repository */
         $repository = HelperUtility::create($repositoryName);
 
         if (!($repository instanceof EventRepository)) {
-            return false;
+            return;
         }
 
         // Index all events to start on a clean slate
@@ -62,7 +61,7 @@ class CleanupCommandController extends AbstractCommandController
                 'Tablename',
                 FlashMessage::ERROR
             );
-            return false;
+            return;
         }
 
         $this->enqueueMessage($tableName, 'Tablename', FlashMessage::INFO);
@@ -116,7 +115,7 @@ class CleanupCommandController extends AbstractCommandController
         };
 
         //
-        if ($modus == self::modusDeleted) {
+        if ($modus === self::MODUS_DELETED) {
             $function = $delete;
         } else {
             $function = $hide;
@@ -153,13 +152,14 @@ class CleanupCommandController extends AbstractCommandController
         $now->sub(new \DateInterval($interval));
 
         // search for outdated events
+        $table = IndexerService::TABLE_NAME;
         $where = 'end_date < ' . $now->getTimestamp() . ' AND foreign_table = \'' . $tableName . '\' ';
         $where .= 'AND foreign_uid NOT IN (';
-        $where .= 'SELECT i2.foreign_uid FROM ' . self::indexTable . ' i2 WHERE i2.end_date > ' . $now->getTimestamp() . ' AND i2.foreign_table = \'' . $tableName . '\'';
-        $where .= ') AND hidden = 0 ' . BackendUtility::deleteClause(self::indexTable);
+        $where .= 'SELECT i2.foreign_uid FROM ' . $table . ' i2 WHERE i2.end_date > ' . $now->getTimestamp() . ' AND i2.foreign_table = \'' . $tableName . '\'';
+        $where .= ') AND hidden = 0 ' . BackendUtility::deleteClause($table);
 
         $db = HelperUtility::getDatabaseConnection();
-        $rows = $db->exec_SELECTquery('foreign_uid', self::indexTable, $where, 'foreign_uid');
+        $rows = $db->exec_SELECTquery('foreign_uid', $table, $where, 'foreign_uid');
 
         $this->enqueueMessage('Just found ' . $rows->num_rows . ' Events ready to process.', 'Events found', FlashMessage::INFO);
 
