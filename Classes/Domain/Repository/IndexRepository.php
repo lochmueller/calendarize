@@ -144,12 +144,9 @@ class IndexRepository extends AbstractRepository
 
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
-        if ($arguments['startDate'] instanceof \DateTime) {
-            $constraints[] = $query->greaterThan('start_date', $arguments['startDate']);
-        }
-        if ($arguments['endDate'] instanceof \DateTime) {
-            $constraints[] = $query->lessThan('start_date', $arguments['endDate']);
-        }
+
+        $this->addTimeFrameConstraints($constraints, $query, $startDate->getTimestamp(), $endDate->getTimestamp());
+
         if ($arguments['indexIds']) {
             $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
         }
@@ -396,6 +393,11 @@ class IndexRepository extends AbstractRepository
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime = null)
     {
+        // Simulate start time
+        if ($startTime === null) {
+            $startTime = DateTimeUtility::getNow() - DateTimeUtility::SECONDS_DECADE;
+        }
+
         // Simulate end time
         if ($endTime === null) {
             $endTime = $startTime + DateTimeUtility::SECONDS_DECADE;
