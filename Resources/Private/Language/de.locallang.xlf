@@ -9,619 +9,635 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
-		<trans-unit id="all_day" approved="yes">
-			<source>All day</source>
-			<target>ganztägig</target>
-		</trans-unit>
+			<trans-unit id="all_day" approved="yes">
+				<source>All day</source>
+				<target>ganztägig</target>
+			</trans-unit>
 
 			<trans-unit id="tx_calendarize_domain_model_event.organizer" approved="yes">
-			<source>Organizer</source>
-			<target>Organisator</target>
+				<source>Organizer</source>
+				<target>Organisator</target>
 			</trans-unit>
-		<trans-unit id="no_events" approved="yes">
-			<source>There are no events in the current view.</source>
-			<target>Es gibt keine Ereignisse in der aktuellen Ansicht.</target>
-		</trans-unit>
-		<trans-unit id="wrong.date" approved="yes">
-			<source>Wrong date</source>
-			<target>Falsches Datum</target>
-		</trans-unit>
-		<trans-unit id="wrong.date.message" approved="yes">
-			<source>The date of one of the date configurations is wrong. It is not "useful" to select a end date in front of a start date!</source>
-			<target>Das Datum von einem der Datumskonfigurationen ist falsch. Es ist nicht "sinnvoll" ein Enddatum vor das Startdatum zu setzen!</target>
-		</trans-unit>
-		<trans-unit id="wrong.time" approved="yes">
-			<source>Wrong time</source>
-			<target>Falsche Zeit</target>
-		</trans-unit>
-		<trans-unit id="wrong.time.message" approved="yes">
-			<source>The time of one of the date configurations is wrong. It is not "useful" to select a end time in front of a start time!</source>
-			<target>Die Zeit von einem der Datumskonfigurationen ist falsch. Es ist nicht "sinnvoll" eine Endzeit vor eine Startzeit zu setzen!</target>
-		</trans-unit>
-		<trans-unit id="booking.thankYouMessage" approved="yes">
-			<source>Thank you for your booking request. We will contact you shortly.</source>
-			<target>Vielen Dank für Ihre Buchung. Wir werden sie in Kürze kontaktieren.</target>
-		</trans-unit>
-		<trans-unit id="pleaseSelect" approved="yes">
-			<source>Please select</source>
-			<target>Bitte wählen</target>
-		</trans-unit>
-		<trans-unit id="back" approved="yes">
-			<source>back</source>
-			<target>zurück</target>
-		</trans-unit>
-		<trans-unit id="booking" approved="yes">
-			<source>Booking</source>
-			<target>buchen</target>
-		</trans-unit>
-		<trans-unit id="booking.city" approved="yes">
-			<source>City</source>
-			<target>Stadt</target>
-		</trans-unit>
-		<trans-unit id="booking.country" approved="yes">
-			<source>Country</source>
-			<target>Land</target>
-		</trans-unit>
-		<trans-unit id="booking.email" approved="yes">
-			<source>E-Mail</source>
-			<target>E-Mail</target>
-		</trans-unit>
-		<trans-unit id="booking.firstName" approved="yes">
-			<source>First name</source>
-			<target>Vorname</target>
-		</trans-unit>
-		<trans-unit id="booking.houseNumber" approved="yes">
-			<source>House number</source>
-			<target>Hausnummer</target>
-		</trans-unit>
-		<trans-unit id="booking.lastName" approved="yes">
-			<source>Last name</source>
-			<target>Nachname</target>
-		</trans-unit>
-		<trans-unit id="booking.message" approved="yes">
-			<source>Message</source>
-			<target>Nachricht</target>
-		</trans-unit>
-		<trans-unit id="booking.phone" approved="yes">
-			<source>Phone</source>
-			<target>Telefon</target>
-		</trans-unit>
-		<trans-unit id="booking.send" approved="yes">
-			<source>Send</source>
-			<target>Senden</target>
-		</trans-unit>
-		<trans-unit id="booking.street" approved="yes">
-			<source>Street</source>
-			<target>Straße</target>
-		</trans-unit>
-		<trans-unit id="booking.zip" approved="yes">
-			<source>ZIP</source>
-			<target>PLZ</target>
-		</trans-unit>
-		<trans-unit id="bookingPid" approved="yes">
-			<source>Booking PID</source>
-			<target>Buchungs PID</target>
-		</trans-unit>
-		<trans-unit id="configuration" approved="yes">
-			<source>Configuration</source>
-			<target>Konfiguration</target>
-		</trans-unit>
-		<trans-unit id="configuration.day." approved="yes">
-			<source>None</source>
-			<target>Keinen</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.business" approved="yes">
-			<source>Business day (Mo-Sa)</source>
-			<target>Werktag (Mo-Sa)</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.friday" approved="yes">
-			<source>Friday</source>
-			<target>Freitag</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.monday" approved="yes">
-			<source>Monday</source>
-			<target>Montag</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.none" approved="yes">
-			<source>None</source>
-			<target>Keinen</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.saturday" approved="yes">
-			<source>Saturday</source>
-			<target>Samstag</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.sunday" approved="yes">
-			<source>Sunday</source>
-			<target>Sonntag</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.thursday" approved="yes">
-			<source>Thursday</source>
-			<target>Donnerstag</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.tuesday" approved="yes">
-			<source>Tuesday</source>
-			<target>Dienstag</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.wednesday" approved="yes">
-			<source>Wednesday</source>
-			<target>Mittwoch</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.weekday" approved="yes">
-			<source>Weekday (Mo-So)</source>
-			<target>Wochentag (Mo-So)</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.weekend" approved="yes">
-			<source>Weekend (Sa-So)</source>
-			<target>Wochenendtag (Sa-So)</target>
-		</trans-unit>
-		<trans-unit id="configuration.day.workday" approved="yes">
-			<source>Workday (Mo-Fr)</source>
-			<target>Arbeitstag (Mo-Fr)</target>
-		</trans-unit>
-		<trans-unit id="configuration.frequency." approved="yes">
-			<source>None</source>
-			<target>Keine</target>
-		</trans-unit>
-		<trans-unit id="configuration.frequency.daily" approved="yes">
-			<source>Daily</source>
-			<target>Täglich</target>
-		</trans-unit>
-		<trans-unit id="configuration.frequency.monthly" approved="yes">
-			<source>Monthly</source>
-			<target>Monatlich</target>
-		</trans-unit>
-		<trans-unit id="configuration.frequency.none" approved="yes">
-			<source>None</source>
-			<target>Keine</target>
-		</trans-unit>
-		<trans-unit id="configuration.frequency.weekly" approved="yes">
-			<source>Weekly</source>
-			<target>Wöchentlich</target>
-		</trans-unit>
-		<trans-unit id="configuration.frequency.yearly" approved="yes">
-			<source>Yearly</source>
-			<target>Jährlich</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence." approved="yes">
-			<source>None</source>
-			<target>Nein</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.first" approved="yes">
-			<source>First</source>
-			<target>Erster</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.fourth" approved="yes">
-			<source>Fourth</source>
-			<target>Vierter</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.fifth" approved="yes">
-			<source>Fifth</source>
-			<target>Fünfter</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.last" approved="yes">
-			<source>Last</source>
-			<target>Letzter</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.next2last" approved="yes">
-			<source>Next to last</source>
-			<target>Vorletzter</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.thirdLast" approved="yes">
-			<source>Third last</source>
-			<target>Drittletzter</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.none" approved="yes">
-			<source>None</source>
-			<target>Nein</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.second" approved="yes">
-			<source>Second</source>
-			<target>Zweiter</target>
-		</trans-unit>
-		<trans-unit id="configuration.recurrence.third" approved="yes">
-			<source>Third</source>
-			<target>Dritter</target>
-		</trans-unit>
-		<trans-unit id="configuration.type.exclude" approved="yes">
-			<source>Exclude group</source>
-			<target>Ausschließeden Gruppe</target>
-		</trans-unit>
-		<trans-unit id="configuration.type.external" approved="yes">
-			<source>External</source>
-			<target>Extern</target>
-		</trans-unit>
-		<trans-unit id="configuration.type.include" approved="yes">
-			<source>Include group</source>
-			<target>Einschließende Gruppe</target>
-		</trans-unit>
-		<trans-unit id="configuration.type.time" approved="yes">
-			<source>Time</source>
-			<target>Zeit</target>
-		</trans-unit>
-		<trans-unit id="configuration.type.timeExclude" approved="yes">
-			<source>Time (exclude)</source>
-			<target>Zeit (ausschließend)</target>
-		</trans-unit>
-		<trans-unit id="date" approved="yes">
-			<source>Date</source>
-			<target>Datum</target>
-		</trans-unit>
-		<trans-unit id="dateOptions" approved="yes">
-			<source>Date options</source>
-			<target>Datum Optionen</target>
-		</trans-unit>
-		<trans-unit id="dayPid" approved="yes">
-			<source>Day PID</source>
-			<target>Tages PID</target>
-		</trans-unit>
-		<trans-unit id="detailPid" approved="yes">
-			<source>Detail PID</source>
-			<target>Detail PID</target>
-		</trans-unit>
-		<trans-unit id="error.request.city.1221560718" approved="yes">
-			<source>Please enter your city.</source>
-			<target>Bitte gebe deine Stadt ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.country.1221560718" approved="yes">
-			<source>Please enter your country.</source>
-			<target>Bitte gebe dein Land ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.email.1221559976" approved="yes">
-			<source>Please enter a valid E-Mail address.</source>
-			<target>Bitte gebe eine valide E-Mail Adresse ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.email.1221560718" approved="yes">
-			<source>Please enter your E-Mail address.</source>
-			<target>Bitte gebe deine E-Mail Adresse ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.firstName.1221560718" approved="yes">
-			<source>Please enter your first name.</source>
-			<target>Bitte gebe deinen Vornamen ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.houseNumber.1221560718" approved="yes">
-			<source>Please enter your house number.</source>
-			<target>Bitte gebe deine Hausnummer ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.lastName.1221560718" approved="yes">
-			<source>Please enter your last name.</source>
-			<target>Bitte gebe deinen Nachnamen ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.street.1221560718" approved="yes">
-			<source>Please enter your street.</source>
-			<target>Bitte gebe deine Straße ein.</target>
-		</trans-unit>
-		<trans-unit id="error.request.zip.1221560718" approved="yes">
-			<source>Please enter your ZIP.</source>
-			<target>Bitte gebe deine PLZ ein.</target>
-		</trans-unit>
-		<trans-unit id="files" approved="yes">
-			<source>Files</source>
-			<target>Dateien</target>
-		</trans-unit>
-		<trans-unit id="frequency_configuration" approved="yes">
-			<source>Frequency configuration</source>
-			<target>Frequenz Konfiguration</target>
-		</trans-unit>
-		<trans-unit id="general" approved="yes">
-			<source>General</source>
-			<target>Allgemein</target>
-		</trans-unit>
-		<trans-unit id="hide.pagination.teaser" approved="yes">
-			<source>Hide pagination + Teaser mode</source>
-			<target>Verstecke Pagination + Teaser Modus</target>
-		</trans-unit>
-		<trans-unit id="inherit" approved="yes">
-			<source>Inherit</source>
-			<target>Vererbt</target>
-		</trans-unit>
-		<trans-unit id="limit" approved="yes">
-			<source>Limit</source>
-			<target>Limit</target>
-		</trans-unit>
-		<trans-unit id="listPid" approved="yes">
-			<source>List PID</source>
-			<target>Listen PID</target>
-		</trans-unit>
-		<trans-unit id="mainConfiguration" approved="yes">
-			<source>Main configuration</source>
-			<target>Hauptkonfiguration</target>
-		</trans-unit>
-		<trans-unit id="mode" approved="yes">
-			<source>Mode</source>
-			<target>Modus</target>
-		</trans-unit>
-		<trans-unit id="mode.booking" approved="yes">
-			<source>Booking</source>
-			<target>Buchung</target>
-		</trans-unit>
-		<trans-unit id="mode.bookingSend" approved="yes">
-			<source>Booking</source>
-			<target>Buchung</target>
-		</trans-unit>
-		<trans-unit id="mode.day" approved="yes">
-			<source>Day</source>
-			<target>Tag</target>
-		</trans-unit>
-		<trans-unit id="mode.detail" approved="yes">
-			<source>Detail only</source>
-			<target>nur Detail</target>
-		</trans-unit>
-		<trans-unit id="mode.latest" approved="yes">
-			<source>Latest</source>
-			<target>Letzter</target>
-		</trans-unit>
-		<trans-unit id="mode.list" approved="yes">
-			<source>List only</source>
-			<target>nur Liste</target>
-		</trans-unit>
-		<trans-unit id="mode.listDetail" approved="yes">
-			<source>List + Detail</source>
-			<target>Liste + Detail</target>
-		</trans-unit>
-		<trans-unit id="mode.month" approved="yes">
-			<source>Month</source>
-			<target>Monat</target>
-		</trans-unit>
-		<trans-unit id="mode.normal" approved="yes">
-			<source>Normal</source>
-			<target>Normal</target>
-		</trans-unit>
-		<trans-unit id="mode.result" approved="yes">
-			<source>Search result</source>
-			<target>Suchergebnis</target>
-		</trans-unit>
-		<trans-unit id="mode.search" approved="yes">
-			<source>Search</source>
-			<target>Suche</target>
-		</trans-unit>
-		<trans-unit id="mode.special" approved="yes">
-			<source>Special Views</source>
-			<target>Spezielle Ansichten</target>
-		</trans-unit>
-		<trans-unit id="mode.week" approved="yes">
-			<source>Week</source>
-			<target>Woche</target>
-		</trans-unit>
-		<trans-unit id="week" approved="yes">
-			<source>Week</source>
-			<target>Woche</target>
-		</trans-unit>
-		<trans-unit id="mode.year" approved="yes">
-			<source>Year</source>
-			<target>Jahr</target>
-		</trans-unit>
-		<trans-unit id="monthPid" approved="yes">
-			<source>Month PID</source>
-			<target>Monats PID</target>
-		</trans-unit>
-		<trans-unit id="more" approved="yes">
-			<source>More</source>
-			<target>mehr</target>
-		</trans-unit>
-		<trans-unit id="noEventDetailView" approved="yes">
-			<source>No Event found! There is no valid fallback PID (list) in the detail plugin</source>
-			<target>Kein Event gefunden! Es gibt keine valide Fallback PID (list) in dem Detail Plugin</target>
-		</trans-unit>
-		<trans-unit id="noEvents" approved="yes">
-			<source>No events</source>
-			<target>Keine Ereignisse</target>
-		</trans-unit>
-		<trans-unit id="noEvents.day" approved="yes">
-			<source>There are no events on the current date</source>
-			<target>Es gibt keine Ereignisse an dem aktuellen Tag</target>
-		</trans-unit>
-		<trans-unit id="openEndTime" approved="yes">
-			<source>open end</source>
-			<target>offenes Ende</target>
-		</trans-unit>
-		<trans-unit id="pidConfiguration" approved="yes">
-			<source>Page ID configuration</source>
-			<target>Seiten ID Konfiguration</target>
-		</trans-unit>
-		<trans-unit id="pluginName" approved="yes">
-			<source>Calendar</source>
-			<target>Kalendar</target>
-		</trans-unit>
-		<trans-unit id="pluginNameBooking" approved="yes">
-			<source>Calendar Booking</source>
-			<target>Kalender Buchung</target>
-		</trans-unit>
-		<trans-unit id="previewLabel" approved="yes">
-			<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are (ignore enable columns)...</source>
-			<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse (inkl. heute) sind (ignoriert &quot;enable columns&quot;)...</target>
-		</trans-unit>
-		<trans-unit id="save.first" approved="yes">
-			<source>Please save the record first...</source>
-			<target>Bite sichere zunächst den Datensatz...</target>
-		</trans-unit>
-		<trans-unit id="sorting" approved="yes">
-			<source>Sorting</source>
-			<target>Sortierung</target>
-		</trans-unit>
-		<trans-unit id="tca.information" approved="yes">
-			<source>Calendarize (Information - Save to refresh...)</source>
-			<target>Calendarize (Informationen - Speichern um zu aktualisieren...)</target>
-		</trans-unit>
-		<trans-unit id="termination_condition" approved="yes">
-			<source>Termination condition</source>
-			<target>Abbruchbedingung</target>
-		</trans-unit>
-		<trans-unit id="time" approved="yes">
-			<source>Time</source>
-			<target>Zeit</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_caldav" approved="yes">
-			<source>CalDav configuration</source>
-			<target>CalDav Konfiguration</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_caldav.event_storage" approved="yes">
-			<source>Event Storage</source>
-			<target>Ereignis Ordner</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_caldav.title" approved="yes">
-			<source>Title</source>
-			<target>Titel</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_caldav.user_storage" approved="yes">
-			<source>User Storage</source>
-			<target>Benutzer Ordner</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
-			<source>Configuration</source>
-			<target>Konfiguration</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.all_day" approved="yes">
-			<source>All day</source>
-			<target>Ganztägig</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.amount" approved="yes">
-			<source>Amount</source>
-			<target>Anzahl</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.counter_amount" approved="yes">
-			<source>Amount</source>
-			<target>Anzahl</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.counter_interval" approved="yes">
-			<source>Interval</source>
-			<target>Intervall</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.day" approved="yes">
-			<source>Day</source>
-			<target>Tag</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.end_date" approved="yes" xml:space="preserve">
+			<trans-unit id="no_events" approved="yes">
+				<source>There are no events in the current view.</source>
+				<target>Es gibt keine Ereignisse in der aktuellen Ansicht.</target>
+			</trans-unit>
+			<trans-unit id="wrong.date" approved="yes">
+				<source>Wrong date</source>
+				<target>Falsches Datum</target>
+			</trans-unit>
+			<trans-unit id="wrong.date.message" approved="yes">
+				<source>The date of one of the date configurations is wrong. It is not "useful" to select a end date in front of a
+					start date!
+				</source>
+				<target>Das Datum von einem der Datumskonfigurationen ist falsch. Es ist nicht "sinnvoll" ein Enddatum vor das
+					Startdatum zu setzen!
+				</target>
+			</trans-unit>
+			<trans-unit id="wrong.time" approved="yes">
+				<source>Wrong time</source>
+				<target>Falsche Zeit</target>
+			</trans-unit>
+			<trans-unit id="wrong.time.message" approved="yes">
+				<source>The time of one of the date configurations is wrong. It is not "useful" to select a end time in front of a
+					start time!
+				</source>
+				<target>Die Zeit von einem der Datumskonfigurationen ist falsch. Es ist nicht "sinnvoll" eine Endzeit vor eine
+					Startzeit zu setzen!
+				</target>
+			</trans-unit>
+			<trans-unit id="booking.thankYouMessage" approved="yes">
+				<source>Thank you for your booking request. We will contact you shortly.</source>
+				<target>Vielen Dank für Ihre Buchung. Wir werden sie in Kürze kontaktieren.</target>
+			</trans-unit>
+			<trans-unit id="pleaseSelect" approved="yes">
+				<source>Please select</source>
+				<target>Bitte wählen</target>
+			</trans-unit>
+			<trans-unit id="back" approved="yes">
+				<source>back</source>
+				<target>zurück</target>
+			</trans-unit>
+			<trans-unit id="booking" approved="yes">
+				<source>Booking</source>
+				<target>buchen</target>
+			</trans-unit>
+			<trans-unit id="booking.city" approved="yes">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>
+			<trans-unit id="booking.country" approved="yes">
+				<source>Country</source>
+				<target>Land</target>
+			</trans-unit>
+			<trans-unit id="booking.email" approved="yes">
+				<source>E-Mail</source>
+				<target>E-Mail</target>
+			</trans-unit>
+			<trans-unit id="booking.firstName" approved="yes">
+				<source>First name</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="booking.houseNumber" approved="yes">
+				<source>House number</source>
+				<target>Hausnummer</target>
+			</trans-unit>
+			<trans-unit id="booking.lastName" approved="yes">
+				<source>Last name</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="booking.message" approved="yes">
+				<source>Message</source>
+				<target>Nachricht</target>
+			</trans-unit>
+			<trans-unit id="booking.phone" approved="yes">
+				<source>Phone</source>
+				<target>Telefon</target>
+			</trans-unit>
+			<trans-unit id="booking.send" approved="yes">
+				<source>Send</source>
+				<target>Senden</target>
+			</trans-unit>
+			<trans-unit id="booking.street" approved="yes">
+				<source>Street</source>
+				<target>Straße</target>
+			</trans-unit>
+			<trans-unit id="booking.zip" approved="yes">
+				<source>ZIP</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="bookingPid" approved="yes">
+				<source>Booking PID</source>
+				<target>Buchungs PID</target>
+			</trans-unit>
+			<trans-unit id="configuration" approved="yes">
+				<source>Configuration</source>
+				<target>Konfiguration</target>
+			</trans-unit>
+			<trans-unit id="configuration.day." approved="yes">
+				<source>None</source>
+				<target>Keinen</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.business" approved="yes">
+				<source>Business day (Mo-Sa)</source>
+				<target>Werktag (Mo-Sa)</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.friday" approved="yes">
+				<source>Friday</source>
+				<target>Freitag</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.monday" approved="yes">
+				<source>Monday</source>
+				<target>Montag</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.none" approved="yes">
+				<source>None</source>
+				<target>Keinen</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.saturday" approved="yes">
+				<source>Saturday</source>
+				<target>Samstag</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.sunday" approved="yes">
+				<source>Sunday</source>
+				<target>Sonntag</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.thursday" approved="yes">
+				<source>Thursday</source>
+				<target>Donnerstag</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.tuesday" approved="yes">
+				<source>Tuesday</source>
+				<target>Dienstag</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.wednesday" approved="yes">
+				<source>Wednesday</source>
+				<target>Mittwoch</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.weekday" approved="yes">
+				<source>Weekday (Mo-So)</source>
+				<target>Wochentag (Mo-So)</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.weekend" approved="yes">
+				<source>Weekend (Sa-So)</source>
+				<target>Wochenendtag (Sa-So)</target>
+			</trans-unit>
+			<trans-unit id="configuration.day.workday" approved="yes">
+				<source>Workday (Mo-Fr)</source>
+				<target>Arbeitstag (Mo-Fr)</target>
+			</trans-unit>
+			<trans-unit id="configuration.frequency." approved="yes">
+				<source>None</source>
+				<target>Keine</target>
+			</trans-unit>
+			<trans-unit id="configuration.frequency.daily" approved="yes">
+				<source>Daily</source>
+				<target>Täglich</target>
+			</trans-unit>
+			<trans-unit id="configuration.frequency.monthly" approved="yes">
+				<source>Monthly</source>
+				<target>Monatlich</target>
+			</trans-unit>
+			<trans-unit id="configuration.frequency.none" approved="yes">
+				<source>None</source>
+				<target>Keine</target>
+			</trans-unit>
+			<trans-unit id="configuration.frequency.weekly" approved="yes">
+				<source>Weekly</source>
+				<target>Wöchentlich</target>
+			</trans-unit>
+			<trans-unit id="configuration.frequency.yearly" approved="yes">
+				<source>Yearly</source>
+				<target>Jährlich</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence." approved="yes">
+				<source>None</source>
+				<target>Nein</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.first" approved="yes">
+				<source>First</source>
+				<target>Erster</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.fourth" approved="yes">
+				<source>Fourth</source>
+				<target>Vierter</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.fifth" approved="yes">
+				<source>Fifth</source>
+				<target>Fünfter</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.last" approved="yes">
+				<source>Last</source>
+				<target>Letzter</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.next2last" approved="yes">
+				<source>Next to last</source>
+				<target>Vorletzter</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.thirdLast" approved="yes">
+				<source>Third last</source>
+				<target>Drittletzter</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.none" approved="yes">
+				<source>None</source>
+				<target>Nein</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.second" approved="yes">
+				<source>Second</source>
+				<target>Zweiter</target>
+			</trans-unit>
+			<trans-unit id="configuration.recurrence.third" approved="yes">
+				<source>Third</source>
+				<target>Dritter</target>
+			</trans-unit>
+			<trans-unit id="configuration.type.exclude" approved="yes">
+				<source>Exclude group</source>
+				<target>Ausschließeden Gruppe</target>
+			</trans-unit>
+			<trans-unit id="configuration.type.external" approved="yes">
+				<source>External</source>
+				<target>Extern</target>
+			</trans-unit>
+			<trans-unit id="configuration.type.include" approved="yes">
+				<source>Include group</source>
+				<target>Einschließende Gruppe</target>
+			</trans-unit>
+			<trans-unit id="configuration.type.time" approved="yes">
+				<source>Time</source>
+				<target>Zeit</target>
+			</trans-unit>
+			<trans-unit id="configuration.type.timeExclude" approved="yes">
+				<source>Time (exclude)</source>
+				<target>Zeit (ausschließend)</target>
+			</trans-unit>
+			<trans-unit id="date" approved="yes">
+				<source>Date</source>
+				<target>Datum</target>
+			</trans-unit>
+			<trans-unit id="dateOptions" approved="yes">
+				<source>Date options</source>
+				<target>Datum Optionen</target>
+			</trans-unit>
+			<trans-unit id="dayPid" approved="yes">
+				<source>Day PID</source>
+				<target>Tages PID</target>
+			</trans-unit>
+			<trans-unit id="detailPid" approved="yes">
+				<source>Detail PID</source>
+				<target>Detail PID</target>
+			</trans-unit>
+			<trans-unit id="error.request.city.1221560718" approved="yes">
+				<source>Please enter your city.</source>
+				<target>Bitte gebe deine Stadt ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.country.1221560718" approved="yes">
+				<source>Please enter your country.</source>
+				<target>Bitte gebe dein Land ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.email.1221559976" approved="yes">
+				<source>Please enter a valid E-Mail address.</source>
+				<target>Bitte gebe eine valide E-Mail Adresse ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.email.1221560718" approved="yes">
+				<source>Please enter your E-Mail address.</source>
+				<target>Bitte gebe deine E-Mail Adresse ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.firstName.1221560718" approved="yes">
+				<source>Please enter your first name.</source>
+				<target>Bitte gebe deinen Vornamen ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.houseNumber.1221560718" approved="yes">
+				<source>Please enter your house number.</source>
+				<target>Bitte gebe deine Hausnummer ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.lastName.1221560718" approved="yes">
+				<source>Please enter your last name.</source>
+				<target>Bitte gebe deinen Nachnamen ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.street.1221560718" approved="yes">
+				<source>Please enter your street.</source>
+				<target>Bitte gebe deine Straße ein.</target>
+			</trans-unit>
+			<trans-unit id="error.request.zip.1221560718" approved="yes">
+				<source>Please enter your ZIP.</source>
+				<target>Bitte gebe deine PLZ ein.</target>
+			</trans-unit>
+			<trans-unit id="files" approved="yes">
+				<source>Files</source>
+				<target>Dateien</target>
+			</trans-unit>
+			<trans-unit id="frequency_configuration" approved="yes">
+				<source>Frequency configuration</source>
+				<target>Frequenz Konfiguration</target>
+			</trans-unit>
+			<trans-unit id="general" approved="yes">
+				<source>General</source>
+				<target>Allgemein</target>
+			</trans-unit>
+			<trans-unit id="hide.pagination.teaser" approved="yes">
+				<source>Hide pagination + Teaser mode</source>
+				<target>Verstecke Pagination + Teaser Modus</target>
+			</trans-unit>
+			<trans-unit id="inherit" approved="yes">
+				<source>Inherit</source>
+				<target>Vererbt</target>
+			</trans-unit>
+			<trans-unit id="limit" approved="yes">
+				<source>Limit</source>
+				<target>Limit</target>
+			</trans-unit>
+			<trans-unit id="listPid" approved="yes">
+				<source>List PID</source>
+				<target>Listen PID</target>
+			</trans-unit>
+			<trans-unit id="mainConfiguration" approved="yes">
+				<source>Main configuration</source>
+				<target>Hauptkonfiguration</target>
+			</trans-unit>
+			<trans-unit id="mode" approved="yes">
+				<source>Mode</source>
+				<target>Modus</target>
+			</trans-unit>
+			<trans-unit id="mode.booking" approved="yes">
+				<source>Booking</source>
+				<target>Buchung</target>
+			</trans-unit>
+			<trans-unit id="mode.bookingSend" approved="yes">
+				<source>Booking</source>
+				<target>Buchung</target>
+			</trans-unit>
+			<trans-unit id="mode.day" approved="yes">
+				<source>Day</source>
+				<target>Tag</target>
+			</trans-unit>
+			<trans-unit id="mode.detail" approved="yes">
+				<source>Detail only</source>
+				<target>nur Detail</target>
+			</trans-unit>
+			<trans-unit id="mode.latest" approved="yes">
+				<source>Latest</source>
+				<target>Letzter</target>
+			</trans-unit>
+			<trans-unit id="mode.list" approved="yes">
+				<source>List only</source>
+				<target>nur Liste</target>
+			</trans-unit>
+			<trans-unit id="mode.listDetail" approved="yes">
+				<source>List + Detail</source>
+				<target>Liste + Detail</target>
+			</trans-unit>
+			<trans-unit id="mode.month" approved="yes">
+				<source>Month</source>
+				<target>Monat</target>
+			</trans-unit>
+			<trans-unit id="mode.normal" approved="yes">
+				<source>Normal</source>
+				<target>Normal</target>
+			</trans-unit>
+			<trans-unit id="mode.result" approved="yes">
+				<source>Search result</source>
+				<target>Suchergebnis</target>
+			</trans-unit>
+			<trans-unit id="mode.search" approved="yes">
+				<source>Search</source>
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="mode.special" approved="yes">
+				<source>Special Views</source>
+				<target>Spezielle Ansichten</target>
+			</trans-unit>
+			<trans-unit id="mode.week" approved="yes">
+				<source>Week</source>
+				<target>Woche</target>
+			</trans-unit>
+			<trans-unit id="week" approved="yes">
+				<source>Week</source>
+				<target>Woche</target>
+			</trans-unit>
+			<trans-unit id="mode.year" approved="yes">
+				<source>Year</source>
+				<target>Jahr</target>
+			</trans-unit>
+			<trans-unit id="monthPid" approved="yes">
+				<source>Month PID</source>
+				<target>Monats PID</target>
+			</trans-unit>
+			<trans-unit id="more" approved="yes">
+				<source>More</source>
+				<target>mehr</target>
+			</trans-unit>
+			<trans-unit id="noEventDetailView" approved="yes">
+				<source>No Event found! There is no valid fallback PID (list) in the detail plugin</source>
+				<target>Kein Event gefunden! Es gibt keine valide Fallback PID (list) in dem Detail Plugin</target>
+			</trans-unit>
+			<trans-unit id="noEvents" approved="yes">
+				<source>No events</source>
+				<target>Keine Ereignisse</target>
+			</trans-unit>
+			<trans-unit id="noEvents.day" approved="yes">
+				<source>There are no events on the current date</source>
+				<target>Es gibt keine Ereignisse an dem aktuellen Tag</target>
+			</trans-unit>
+			<trans-unit id="openEndTime" approved="yes">
+				<source>open end</source>
+				<target>offenes Ende</target>
+			</trans-unit>
+			<trans-unit id="pidConfiguration" approved="yes">
+				<source>Page ID configuration</source>
+				<target>Seiten ID Konfiguration</target>
+			</trans-unit>
+			<trans-unit id="pluginName" approved="yes">
+				<source>Calendar</source>
+				<target>Kalendar</target>
+			</trans-unit>
+			<trans-unit id="pluginNameBooking" approved="yes">
+				<source>Calendar Booking</source>
+				<target>Kalender Buchung</target>
+			</trans-unit>
+			<trans-unit id="previewLabel" approved="yes">
+				<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are
+					(ignore enable columns)...
+				</source>
+				<target>Es gibt %d Eintrag/Einträge im Index des aktuellen Datensatzes. Die nächsten %d Ereignisse (inkl. heute)
+					sind (ignoriert &quot;enable columns&quot;)...
+				</target>
+			</trans-unit>
+			<trans-unit id="save.first" approved="yes">
+				<source>Please save the record first...</source>
+				<target>Bite sichere zunächst den Datensatz...</target>
+			</trans-unit>
+			<trans-unit id="sorting" approved="yes">
+				<source>Sorting</source>
+				<target>Sortierung</target>
+			</trans-unit>
+			<trans-unit id="tca.information" approved="yes">
+				<source>Calendarize (Information - Save to refresh...)</source>
+				<target>Calendarize (Informationen - Speichern um zu aktualisieren...)</target>
+			</trans-unit>
+			<trans-unit id="termination_condition" approved="yes">
+				<source>Termination condition</source>
+				<target>Abbruchbedingung</target>
+			</trans-unit>
+			<trans-unit id="time" approved="yes">
+				<source>Time</source>
+				<target>Zeit</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_caldav" approved="yes">
+				<source>CalDav configuration</source>
+				<target>CalDav Konfiguration</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_caldav.event_storage" approved="yes">
+				<source>Event Storage</source>
+				<target>Ereignis Ordner</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_caldav.title" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_caldav.user_storage" approved="yes">
+				<source>User Storage</source>
+				<target>Benutzer Ordner</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
+				<source>Configuration</source>
+				<target>Konfiguration</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.all_day" approved="yes">
+				<source>All day</source>
+				<target>Ganztägig</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.amount" approved="yes">
+				<source>Amount</source>
+				<target>Anzahl</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.counter_amount" approved="yes">
+				<source>Amount</source>
+				<target>Anzahl</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.counter_interval" approved="yes">
+				<source>Interval</source>
+				<target>Intervall</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.day" approved="yes">
+				<source>Day</source>
+				<target>Tag</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.end_date" approved="yes" xml:space="preserve">
 			<source>End date (optionally)</source>
 			<target>Enddatum  (optional)</target>
 		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
-			<source>End time (00:00 means &quot;open end&quot;)</source>
-			<target>Endzeit (00:00 bedeutet &quot;offenes Ende&quot;)</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url" approved="yes">
-			<source>External ICS URL</source>
-			<target>Externe ICS URL</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.frequency" approved="yes">
-			<source>Frequency</source>
-			<target>Frequenz</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.groups" approved="yes">
-			<source>Groups</source>
-			<target>Gruppen</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.interval" approved="yes">
-			<source>Interval</source>
-			<target>Intervall</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.recurrence" approved="yes">
-			<source>Recurrence</source>
-			<target>Wiederholung</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.start_date" approved="yes">
-			<source>Start date</source>
-			<target>Startdatum</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
-			<source>Start time</source>
-			<target>Startzeit</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.till_date" approved="yes">
-			<source>Till date</source>
-			<target>Bis Datum</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configuration.type" approved="yes">
-			<source>Type</source>
-			<target>Typ</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configurationgroup" approved="yes">
-			<source>Configuration group</source>
-			<target>Konfigurationsgruppe</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configurationgroup.configurations" approved="yes">
-			<source>Configurations</source>
-			<target>Konfigurationen</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_configurationgroup.title" approved="yes">
-			<source>Title</source>
-			<target>Titel</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event" approved="yes">
-			<source>Event</source>
-			<target>Ereignis</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.abstract" approved="yes">
-			<source>Abstract</source>
-			<target>Abstrakt</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.description" approved="yes">
-			<source>Description</source>
-			<target>Beschreibung</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.downloads" approved="yes">
-			<source>Downloads</source>
-			<target>Downloads</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.images" approved="yes">
-			<source>Images</source>
-			<target>Bilder</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.import_id" approved="yes">
-			<source>Import ID</source>
-			<target>Import ID</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.location" approved="yes">
-			<source>Location</source>
-			<target>Ort</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_event.title" approved="yes">
-			<source>Title</source>
-			<target>Titel</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index" approved="yes">
-			<source>Index</source>
-			<target>Index</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.all_day" approved="yes">
-			<source>All day</source>
-			<target>Ganztägig</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.end_date" approved="yes">
-			<source>End date</source>
-			<target>Enddatum</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.end_time" approved="yes">
-			<source>End time</source>
-			<target>Endzeit</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.foreign_table" approved="yes">
-			<source>Foreign table</source>
-			<target>Fremd Tabelle</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.foreign_uid" approved="yes">
-			<source>Foreign UID</source>
-			<target>Fremd UID</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.start_date" approved="yes">
-			<source>Start date</source>
-			<target>Startdatum</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.start_time" approved="yes">
-			<source>Start time</source>
-			<target>Startzeit</target>
-		</trans-unit>
-		<trans-unit id="tx_calendarize_domain_model_index.unique_register_key" approved="yes">
-			<source>Unique register key</source>
-			<target>Einmaliger Registrierungsschlüssel</target>
-		</trans-unit>
-		<trans-unit id="weekPid" approved="yes">
-			<source>Week PID</source>
-			<target>Wochen PID</target>
-		</trans-unit>
-		<trans-unit id="yearPid" approved="yes">
-			<source>Year PID</source>
-			<target>Jahres PID</target>
-		</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.end_time" approved="yes">
+				<source>End time (00:00 means &quot;open end&quot;)</source>
+				<target>Endzeit (00:00 bedeutet &quot;offenes Ende&quot;)</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url" approved="yes">
+				<source>External ICS URL</source>
+				<target>Externe ICS URL</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.frequency" approved="yes">
+				<source>Frequency</source>
+				<target>Frequenz</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.groups" approved="yes">
+				<source>Groups</source>
+				<target>Gruppen</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.interval" approved="yes">
+				<source>Interval</source>
+				<target>Intervall</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.recurrence" approved="yes">
+				<source>Recurrence</source>
+				<target>Wiederholung</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.start_date" approved="yes">
+				<source>Start date</source>
+				<target>Startdatum</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
+				<source>Start time</source>
+				<target>Startzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.till_date" approved="yes">
+				<source>Till date</source>
+				<target>Bis Datum</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.type" approved="yes">
+				<source>Type</source>
+				<target>Typ</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configurationgroup" approved="yes">
+				<source>Configuration group</source>
+				<target>Konfigurationsgruppe</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configurationgroup.configurations" approved="yes">
+				<source>Configurations</source>
+				<target>Konfigurationen</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configurationgroup.title" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event" approved="yes">
+				<source>Event</source>
+				<target>Ereignis</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.abstract" approved="yes">
+				<source>Abstract</source>
+				<target>Abstrakt</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.description" approved="yes">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.downloads" approved="yes">
+				<source>Downloads</source>
+				<target>Downloads</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.images" approved="yes">
+				<source>Images</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.import_id" approved="yes">
+				<source>Import ID</source>
+				<target>Import ID</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.location" approved="yes">
+				<source>Location</source>
+				<target>Ort</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.title" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index" approved="yes">
+				<source>Index</source>
+				<target>Index</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.all_day" approved="yes">
+				<source>All day</source>
+				<target>Ganztägig</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.end_date" approved="yes">
+				<source>End date</source>
+				<target>Enddatum</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.end_time" approved="yes">
+				<source>End time</source>
+				<target>Endzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.foreign_table" approved="yes">
+				<source>Foreign table</source>
+				<target>Fremd Tabelle</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.foreign_uid" approved="yes">
+				<source>Foreign UID</source>
+				<target>Fremd UID</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.start_date" approved="yes">
+				<source>Start date</source>
+				<target>Startdatum</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.start_time" approved="yes">
+				<source>Start time</source>
+				<target>Startzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.unique_register_key" approved="yes">
+				<source>Unique register key</source>
+				<target>Einmaliger Registrierungsschlüssel</target>
+			</trans-unit>
+			<trans-unit id="weekPid" approved="yes">
+				<source>Week PID</source>
+				<target>Wochen PID</target>
+			</trans-unit>
+			<trans-unit id="yearPid" approved="yes">
+				<source>Year PID</source>
+				<target>Jahres PID</target>
+			</trans-unit>
+			<trans-unit id="open_end">
+				<source>Open End</source>
+				<target>Ende offen</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

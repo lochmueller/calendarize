@@ -371,6 +371,11 @@ $custom = [
                 ],
             ],
         ],
+        'import_id' => [
+            'config' => [
+                'readOnly' => true,
+            ],
+        ]
     ],
     'palettes' => [
         'base' => [

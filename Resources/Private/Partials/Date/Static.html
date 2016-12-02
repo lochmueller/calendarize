@@ -20,10 +20,18 @@
 	<f:else>
 		<f:if condition="{index.endTime}">
 			<f:if condition="{index.endTime}!=86399">
-				<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
-					-
-				</f:if>
-				<f:format.date format="{settings.timeFormat}">{index.endDateComplete}</f:format.date>
+				<f:then>
+					<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
+						-
+					</f:if>
+					<f:format.date format="{settings.timeFormat}">{index.endDateComplete}</f:format.date>
+				</f:then>
+				<f:else>
+					<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
+						-
+					</f:if>
+					<f:translate key="open_end" />
+				</f:else>
 			</f:if>
 		</f:if>
 	</f:else>
