@@ -8,43 +8,45 @@
 			<authorEmail>tim@fruit-lab.de</authorEmail>
 		</header>
 		<body>
-			<trans-unit id="organizer.alttitle"><source><![CDATA[calendarize ==> LLL:organizer.alttitle]]></source></trans-unit>
-		<trans-unit id="abstract.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="description.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="description.description">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="downloads.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="downloads.description">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="images.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="images.description">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="import_id.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="import_id.description">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="location.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="title.alttitle">
-			<source></source>
-		</trans-unit>
-		<trans-unit id="title.description">
-			<source></source>
-		</trans-unit>
+			<trans-unit id="organizer.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="abstract.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="description.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="description.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="downloads.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="downloads.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="images.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="images.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="import_id.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="import_id.description">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="location.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="title.alttitle">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="title.description">
+				<source></source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
