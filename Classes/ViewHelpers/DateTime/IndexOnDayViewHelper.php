@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\IndexUtility;
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
@@ -36,7 +37,7 @@ class IndexOnDayViewHelper extends AbstractViewHelper
         if ($modification != '') {
             $baseDay->modify($modification);
         }
-        
+
         $baseDay->setTime(0, 0, 0);
         $startTime = clone $baseDay;
         $baseDay->setTime(23, 59, 59);
