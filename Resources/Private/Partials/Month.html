@@ -72,6 +72,7 @@
 	<script type="text/javascript">
 		var monthEvents = [];
 		var monthEventsCurrentDate = '<f:format.date format="Y-m-d">{date}</f:format.date>';
+		var monthFirstDay = '{settings.weekStart}';
 		<f:for each="{indices}" as="index">
 			<![CDATA[tmp = {};]]>
 		    tmp.id = {index.uid};
@@ -80,7 +81,7 @@
 			tmp.start = '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}">{index.startDateComplete}</f:format.date>';
 			tmp.end = '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}">{index.endDateComplete}</f:format.date>';
 			<f:if condition="{index.allDay}">
-				tmp.allDay = false;
+				tmp.allDay = true;
 			</f:if>
 			tmp.url = '<c:uri.index index="{index}" pageUid="{settings.detailPid}" />';
 			monthEvents.push(tmp);
