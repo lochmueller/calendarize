@@ -145,7 +145,12 @@ class IndexRepository extends AbstractRepository
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
 
-        $this->addTimeFrameConstraints($constraints, $query, $startDate->getTimestamp(), $endDate->getTimestamp());
+        $this->addTimeFrameConstraints(
+            $constraints,
+            $query,
+            $startDate instanceof \DateTime ? $startDate->getTimestamp() : null,
+            $endDate instanceof \DateTime ? $endDate->getTimestamp() : null
+        );
 
         if ($arguments['indexIds']) {
             $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
@@ -391,7 +396,7 @@ class IndexRepository extends AbstractRepository
      *
      * @see IndexUtility::isIndexInRange
      */
-    protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime, $endTime = null)
+    protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime = null, $endTime = null)
     {
         // Simulate start time
         if ($startTime === null) {
