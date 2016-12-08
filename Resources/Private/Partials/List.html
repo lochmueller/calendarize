@@ -1,3 +1,6 @@
+<f:if condition="{searchMode}">
+	<f:render partial="Event/SearchInformation" arguments="{searchParameter: searchParameter, indices: indices}" />
+</f:if>
 
 <f:if condition="{indices -> f:count()}">
 	<f:then>

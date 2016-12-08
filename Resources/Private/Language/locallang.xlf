@@ -585,6 +585,9 @@
 			<trans-unit id="open_end">
 				<source>Open End</source>
 			</trans-unit>
+			<trans-unit id="your_search">
+				<source><![CDATA[Your search in the time from <span class="date-start">%1$s</span> to <span class="date-end">%2$s</span> found these results]]></source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
