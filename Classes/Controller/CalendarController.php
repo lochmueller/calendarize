@@ -56,17 +56,16 @@ class CalendarController extends AbstractController
                 );
         }
     }
-
     /**
      * Latest action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -83,19 +82,37 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
-        $this->listAction($index, $startDate, $endDate, $customSearch, $year, $month, $week);
+        $this->checkStaticTemplateIsIncluded();
+        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
+            $this->forward('detail');
+        }
+
+        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
+
+        $this->slotExtendedAssignMultiple([
+            'indices'         => $search['indices'],
+            'searchMode'      => $search['searchMode'],
+            'searchParameter' => [
+                'startDate'    => $startDate,
+                'endDate'      => $endDate,
+                'customSearch' => $customSearch,
+                'year'         => $year,
+                'month'        => $month,
+                'week'         => $week
+            ]
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
      * Result action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -112,20 +129,38 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
-        $this->listAction($index, $startDate, $endDate, $customSearch, $year, $month, $week);
+        $this->checkStaticTemplateIsIncluded();
+        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
+            $this->forward('detail');
+        }
+
+        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
+
+        $this->slotExtendedAssignMultiple([
+            'indices'         => $search['indices'],
+            'searchMode'      => $search['searchMode'],
+            'searchParameter' => [
+                'startDate'    => $startDate,
+                'endDate'      => $endDate,
+                'customSearch' => $customSearch,
+                'year'         => $year,
+                'month'        => $month,
+                'week'         => $week
+            ]
+        ], __CLASS__, __FUNCTION__);
     }
 
     /**
      * List action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $day
+     * @param int                                   $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -148,6 +183,43 @@ class CalendarController extends AbstractController
             $this->forward('detail');
         }
 
+        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, $day, $week);
+
+        $this->slotExtendedAssignMultiple([
+            'indices'         => $search['indices'],
+            'searchMode'      => $search['searchMode'],
+            'searchParameter' => [
+                'startDate'    => $startDate,
+                'endDate'      => $endDate,
+                'customSearch' => $customSearch,
+                'year'         => $year,
+                'month'        => $month,
+                'day'          => $day,
+                'week'         => $week
+            ]
+        ], __CLASS__, __FUNCTION__);
+    }
+
+    /**
+     * @param \DateTime|null $startDate
+     * @param \DateTime|null $endDate
+     * @param array          $customSearch
+     * @param int            $year
+     * @param int            $month
+     * @param int            $day
+     * @param int            $week
+     *
+     * @return array
+     */
+    protected function determineSearch(
+        \DateTime $startDate = null,
+        \DateTime $endDate = null,
+        array $customSearch = [],
+        $year = null,
+        $month = null,
+        $day = null,
+        $week = null
+    ) {
         $searchMode = false;
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
@@ -164,18 +236,32 @@ class CalendarController extends AbstractController
             $overrideStartDate = (int)$this->settings['overrideStartdate'];
             $overrideEndDate = (int)$this->settings['overrideEnddate'];
             $indices = $this->indexRepository->findList(
-                (int)$this->settings['limit'],
-                $this->settings['listStartTime'],
-                (int)$this->settings['listStartTimeOffsetHours'],
-                $overrideStartDate,
-                $overrideEndDate
+                (int)$this->settings['limit'], $this->settings['listStartTime'],
+                (int)$this->settings['listStartTimeOffsetHours'], $overrideStartDate, $overrideEndDate
             );
         }
 
-        $this->slotExtendedAssignMultiple([
-            'indices' => $indices,
-            'searchMode' => $searchMode
-        ], __CLASS__, __FUNCTION__);
+        // use this variable in your extension to add more custom variables
+        $variables['extended'] = [
+            'indices'    => $indices,
+            'searchMode' => $searchMode,
+            'parameters' => [
+                'startDate'    => $startDate,
+                'endDate'      => $endDate,
+                'customSearch' => $customSearch,
+                'year'         => $year,
+                'month'        => $month,
+                'day'          => $day,
+                'week'         => $week
+            ]
+        ];
+        $variables['settings'] = $this->settings;
+
+        /** @var Dispatcher $dispatcher */
+        $dispatcher = $this->objectManager->get(Dispatcher::class);
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
+
+        return $variables['extended'];
     }
 
     /**

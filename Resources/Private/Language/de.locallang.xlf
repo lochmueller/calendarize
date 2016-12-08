@@ -638,6 +638,10 @@
 				<source>Open End</source>
 				<target>Ende offen</target>
 			</trans-unit>
+			<trans-unit id="your_search">
+				<source><![CDATA[Your search in the time from %s to %s found these results]]></source>
+				<target><![CDATA[Ihre Suche im Zeitraum von <span class="date-start">%1$s</span> bis <span class="date-end">%2$s</span> ergab folgende Treffer]]></target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
