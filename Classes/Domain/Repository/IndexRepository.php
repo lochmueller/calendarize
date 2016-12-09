@@ -130,7 +130,7 @@ class IndexRepository extends AbstractRepository
      * @param \DateTime $endDate
      * @param array $customSearch
      *
-     * @return array
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
