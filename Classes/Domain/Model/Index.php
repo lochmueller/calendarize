@@ -175,6 +175,20 @@ class Index extends AbstractModel
     }
 
     /**
+     * Get the complete end date
+     *
+     * @return \DateTime
+     */
+    public function getEndDateCompleteFullcalendar()
+    {
+        $date = $this->getEndDateComplete();
+        if ($this->isAllDay()) {
+            $date->modify('+1 day');
+        }
+        return $date;
+    }
+
+    /**
      * Set foreign uid
      *
      * @param int $foreignUid
