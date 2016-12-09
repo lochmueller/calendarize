@@ -139,6 +139,7 @@ class IndexRepository extends AbstractRepository
             'startDate' => $startDate,
             'endDate' => $endDate,
             'customSearch' => $customSearch,
+            'indexTypes' => $this->indexTypes,
         ];
         $arguments = $this->callSignal(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 

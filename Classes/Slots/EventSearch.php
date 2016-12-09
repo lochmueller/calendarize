@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Slots;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Event search service
@@ -39,12 +40,13 @@ class EventSearch
      * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
      * @signalName findBySearchPre
      *
-     * @param array          $indexIds
+     * @param array $indexIds
      * @param \DateTime|NULL $startDate
      * @param \DateTime|NULL $endDate
-     * @param array          $customSearch
-     * @param array          $additionalSlotArguments
+     * @param array $customSearch
+     * @param array $additionalSlotArguments
      *
+     * @param array $indexTypes
      * @return array|void
      */
     public function setIdsByCustomSearch(
@@ -52,15 +54,20 @@ class EventSearch
         \DateTime $startDate = null,
         \DateTime $endDate = null,
         array $customSearch = [],
+        array $indexTypes,
         array $additionalSlotArguments
     ) {
 
-        // Filter here for $customSearch['categories'] and take also care of the fullText
+        if (!in_array('Event', $indexTypes)) {
+            return;
+        }
+
+        // @todo Filter here for $customSearch['categories'] and take also care of the fullText
         // ?tx_calendarize_calendar[customSearch][categories]=1
         // https://github.com/lochmueller/calendarize/issues/89
 
         if (!isset($customSearch['fullText'])) {
-            return null;
+            return;
         }
 
         /** @var EventRepository $eventRepository */
@@ -70,7 +77,8 @@ class EventSearch
             'startDate'    => $startDate,
             'endDate'      => $endDate,
             'customSearch' => $customSearch,
-            'additionalSlotArguments' => $additionalSlotArguments
+            'indexTypes' => $indexTypes,
+            'additionalSlotArguments' => $additionalSlotArguments,
         ];
     }
 

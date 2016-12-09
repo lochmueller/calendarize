@@ -116,7 +116,6 @@ abstract class AbstractController extends ActionController
         $variables['extended'] = [];
         $variables['settings'] = $this->settings;
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
 

@@ -15,6 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Calendar
@@ -236,8 +237,11 @@ class CalendarController extends AbstractController
             $overrideStartDate = (int)$this->settings['overrideStartdate'];
             $overrideEndDate = (int)$this->settings['overrideEnddate'];
             $indices = $this->indexRepository->findList(
-                (int)$this->settings['limit'], $this->settings['listStartTime'],
-                (int)$this->settings['listStartTimeOffsetHours'], $overrideStartDate, $overrideEndDate
+                (int)$this->settings['limit'],
+                $this->settings['listStartTime'],
+                (int)$this->settings['listStartTimeOffsetHours'],
+                $overrideStartDate,
+                $overrideEndDate
             );
         }
 
@@ -257,7 +261,6 @@ class CalendarController extends AbstractController
         ];
         $variables['settings'] = $this->settings;
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
