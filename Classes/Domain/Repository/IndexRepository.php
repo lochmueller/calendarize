@@ -245,13 +245,16 @@ class IndexRepository extends AbstractRepository
      *
      * @param int $year
      * @param int $week
+     * @param int $weekStart See documentation for settings.weekStart
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findWeek($year, $week)
+    public function findWeek($year, $week, $weekStart = 1)
     {
+        $weekStart = (int)$weekStart;
+        $daysShift = DateTimeUtility::SECONDS_DAY * ($weekStart - 1);
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
-        $timeStampStart = $firstDay->getTimestamp();
+        $timeStampStart = $firstDay->getTimestamp() + $daysShift;
         return $this->findByTimeSlot($timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK - 1);
     }
 

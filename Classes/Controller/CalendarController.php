@@ -230,7 +230,7 @@ class CalendarController extends AbstractController
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
             $indices = $this->indexRepository->findMonth($year, $month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
-            $indices = $this->indexRepository->findWeek($year, $week);
+            $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
             $indices = $this->indexRepository->findYear($year);
         } else {
@@ -339,7 +339,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'firstDay' => $firstDay,
-            'indices' => $this->indexRepository->findWeek($year, $week),
+            'indices' => $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']),
             'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
     }
