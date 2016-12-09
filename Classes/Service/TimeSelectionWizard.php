@@ -40,7 +40,6 @@ class TimeSelectionWizard extends AbstractService
 
         $icon = '[TIME]';
         if (class_exists(IconFactory::class)) {
-            /** @var IconFactory $iconFactory */
             $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
             $icon = $iconFactory->getIcon(
                 'actions-document-synchronize',

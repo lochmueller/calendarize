@@ -36,7 +36,6 @@ abstract class AbstractUrl extends AbstractService
      */
     protected function getIndexBase($indexUid)
     {
-        /** @var IndexRepository $indexRepository */
         $indexRepository = HelperUtility::create(IndexRepository::class);
         $index = $indexRepository->findByUid((int)$indexUid);
         if (!($index instanceof Index)) {

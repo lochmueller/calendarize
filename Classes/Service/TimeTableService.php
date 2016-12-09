@@ -37,7 +37,6 @@ class TimeTableService extends AbstractService
             return $timeTable;
         }
 
-        /** @var ConfigurationRepository $configRepository */
         $configRepository = HelperUtility::create(ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
             $configuration = $configRepository->findByUid($configurationUid);

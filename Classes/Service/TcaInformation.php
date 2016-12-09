@@ -35,7 +35,6 @@ class TcaInformation extends AbstractService
         if (!isset($configuration['row']['uid'])) {
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
-        /** @var IndexerService $indexService */
         $indexService = GeneralUtility::makeInstance(IndexerService::class);
         $previewLimit = 10;
         $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
@@ -58,7 +57,6 @@ class TcaInformation extends AbstractService
         if (!$ids) {
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
-        /** @var TimeTableService $timeTableService */
         $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
         $items = $timeTableService->getTimeTablesByConfigurationIds($ids);
         return $this->wrapContent($this->getEventList($items));

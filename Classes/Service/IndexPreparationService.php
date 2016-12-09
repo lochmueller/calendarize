@@ -37,7 +37,6 @@ class IndexPreparationService
         $configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], true);
         $neededItems = [];
         if ($configurations) {
-            /** @var TimeTableService $timeTableService */
             $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
             $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations);
             foreach ($neededItems as $key => $record) {

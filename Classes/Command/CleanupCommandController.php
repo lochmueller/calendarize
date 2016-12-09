@@ -130,7 +130,6 @@ class CleanupCommandController extends AbstractCommandController
             'function' => $function
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -172,7 +171,6 @@ class CleanupCommandController extends AbstractCommandController
      */
     protected function reIndex()
     {
-        /** @var IndexerService $indexer */
         $indexer = $this->objectManager->get(IndexerService::class);
         $indexer->reindexAll();
     }

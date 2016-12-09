@@ -22,7 +22,6 @@ class ReindexCommandController extends AbstractCommandController
      */
     public function runCommand()
     {
-        /** @var IndexerService $indexer */
         $indexer = $this->objectManager->get(IndexerService::class);
         $indexer->reindexAll();
     }

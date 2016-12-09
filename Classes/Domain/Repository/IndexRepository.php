@@ -339,7 +339,6 @@ class IndexRepository extends AbstractRepository
             return $this->overridePageIds;
         }
 
-        /** @var ConfigurationManagerInterface $configuratioManager */
         $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
         $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(

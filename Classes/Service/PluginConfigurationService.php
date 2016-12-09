@@ -40,7 +40,6 @@ class PluginConfigurationService
             }
         }
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::create(Dispatcher::class);
         $arguments = [
             'settings' => $settings,

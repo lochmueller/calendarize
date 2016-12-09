@@ -45,7 +45,6 @@ class IndexTraversingViewHelper extends AbstractViewHelper
         $sort = QueryInterface::ORDER_ASCENDING,
         $useIndexTime = false
     ) {
-        /** @var IndexRepository $indexRepository */
         $indexRepository = $this->objectManager->get(IndexRepository::class);
         return $indexRepository->findByTraversing($index, $future, $past, (int) $limit, $sort, $useIndexTime);
     }

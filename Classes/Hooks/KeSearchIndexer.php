@@ -52,7 +52,6 @@ class KeSearchIndexer extends AbstractHook
             return null;
         }
 
-        /** @var IndexRepository $indexRepository */
         $indexRepository = HelperUtility::create(IndexRepository::class);
         $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $indexObjects = $indexRepository->findList()

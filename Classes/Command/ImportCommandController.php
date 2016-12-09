@@ -52,7 +52,6 @@ class ImportCommandController extends AbstractCommandController
 
         $this->enqueueMessage('Found ' . count($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
 
-        /** @var Dispatcher $signalSlotDispatcher */
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
 
         $this->enqueueMessage('Send the ' . __CLASS__ . '::importCommand signal for each event.', 'Signal', FlashMessage::INFO);

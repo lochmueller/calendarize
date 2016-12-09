@@ -60,7 +60,6 @@ class BookingCountries
         if (!ExtensionManagementUtility::isLoaded('static_info_tables')) {
             return [];
         }
-        /** @var CountryRepository $repository */
         $objectManager = new ObjectManager();
         $repository = $objectManager->get(CountryRepository::class);
         return $repository->findAll();

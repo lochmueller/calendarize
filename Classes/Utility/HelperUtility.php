@@ -80,9 +80,7 @@ class HelperUtility
      */
     public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
     {
-        /** @var FlashMessage $flashMessage */
         $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, true);
-        /** @var $flashMessageService FlashMessageService */
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->enqueue($flashMessage);

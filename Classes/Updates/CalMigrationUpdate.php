@@ -149,7 +149,6 @@ class CalMigrationUpdate extends AbstractUpdate
                 'dbQueries'              => $dbQueries
             ];
 
-            /** @var Dispatcher $dispatcher */
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
             $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
@@ -166,13 +165,10 @@ class CalMigrationUpdate extends AbstractUpdate
             ];
 
 
-            /** @var Dispatcher $dispatcher */
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
             $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
         }
 
-
-        /** @var IndexerService $indexer */
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
         $indexer->reindexAll();
 
@@ -370,7 +366,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -400,7 +395,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'eventImportId' => $eventImportId
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -505,7 +499,6 @@ class CalMigrationUpdate extends AbstractUpdate
                     'configurationRow' => $configurationRow
                 ];
 
-                /** @var Dispatcher $dispatcher */
                 $dispatcher = HelperUtility::getSignalSlotDispatcher();
                 $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
@@ -705,7 +698,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries'  => $dbQueries
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -749,7 +741,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -784,7 +775,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -832,7 +822,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries'        => $dbQueries
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
@@ -849,7 +838,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries'        => $dbQueries
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variables);
 
@@ -934,7 +922,6 @@ class CalMigrationUpdate extends AbstractUpdate
             'table' => self::EVENT_TABLE
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreSelect', $variables);
 
@@ -957,10 +944,8 @@ class CalMigrationUpdate extends AbstractUpdate
             'nonMigrated'  => $nonMigrated
         ];
 
-        /** @var Dispatcher $dispatcher */
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'ReadyParsed', $variables);
-
 
         return $variables['nonMigrated'];
     }
