@@ -47,7 +47,7 @@ class CalMigration
             ];
 
             $query = $db->UPDATEquery('sys_file_reference', $updateWhere, $fieldValues);
-            $result = $db->admin_query($query);
+            $db->admin_query($query);
             $dbQueries[] = $query;
         }
 

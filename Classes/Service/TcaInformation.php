@@ -7,9 +7,7 @@
 
 namespace HDNET\Calendarize\Service;
 
-use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
-use HDNET\Calendarize\Service\TimeTableService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

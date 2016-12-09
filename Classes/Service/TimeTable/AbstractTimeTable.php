@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
-use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Service\AbstractService;
 
 /**

@@ -12,7 +12,6 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\AbstractUpdate;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * CalMigrationUpdate
@@ -166,7 +165,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
 
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
-            $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
+            $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
         }
 
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
@@ -295,7 +294,7 @@ class CalMigrationUpdate extends AbstractUpdate
             $dbQueries[] = $updateQuery;
         } else {
             $insertQuery = $db->INSERTquery(self::CONFIGURATION_TABLE, $configuration);
-            $insertResults = $db->admin_query($insertQuery);
+            $db->admin_query($insertQuery);
             $dbQueries[] = $insertQuery;
 
             $configurationId = $db->sql_insert_id();
@@ -503,7 +502,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
                 $query = $db->INSERTquery($variables['table'], $variables['configurationRow']);
-                $result = $db->admin_query($query);
+                $db->admin_query($query);
                 $dbQueries[] = $query;
                 $recordIds[] = (int)$db->sql_insert_id();
             }
