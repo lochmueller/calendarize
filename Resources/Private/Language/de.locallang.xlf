@@ -642,6 +642,22 @@
 				<source><![CDATA[Your search in the time from %s to %s found these results]]></source>
 				<target><![CDATA[Ihre Suche im Zeitraum von <span class="date-start">%1$s</span> bis <span class="date-end">%2$s</span> ergab folgende Treffer]]></target>
 			</trans-unit>
+			<trans-unit id="search.button_label">
+				<source>Search</source>
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="search.end_date">
+				<source>End Date</source>
+				<target>Datum bis</target>
+			</trans-unit>
+			<trans-unit id="search.start_date">
+				<source>Start Date</source>
+				<target>Datum von</target>
+			</trans-unit>
+			<trans-unit id="search.text">
+				<source>Text</source>
+				<target>Suchbegriff</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
