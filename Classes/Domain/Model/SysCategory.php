@@ -22,9 +22,9 @@ class SysCategory extends Category
 
     /**
      * Import ID if the item is based on EXT:cal import or ICS strukture.
-     * @var string
      *
-     * @db
+     * @var string
+     * @db varchar(100) DEFAULT '' NOT NULL
      */
     protected $importId;
 }
