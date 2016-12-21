@@ -149,8 +149,8 @@ class IndexRepository extends AbstractRepository
         $this->addTimeFrameConstraints(
             $constraints,
             $query,
-            $startDate instanceof \DateTime ? $startDate->getTimestamp() : null,
-            $endDate instanceof \DateTime ? $endDate->getTimestamp() : null
+            $arguments['startDate'] instanceof \DateTimeInterface ? $arguments['startDate']->getTimestamp() : null,
+            $arguments['endDate'] instanceof \DateTimeInterface ? $arguments['endDate']->getTimestamp() : null
         );
 
         if ($arguments['indexIds']) {
