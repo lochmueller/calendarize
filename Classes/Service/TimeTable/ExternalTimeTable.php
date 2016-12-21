@@ -81,7 +81,7 @@ class ExternalTimeTable extends AbstractTimeTable
      */
     protected function getEventsFixedEndDate(ICalEvent $event)
     {
-        if (!$event->getEnd() instanceof \DateTime) {
+        if (!$event->getEnd() instanceof \DateTimeInterface) {
             return $event->getStart();
         }
 

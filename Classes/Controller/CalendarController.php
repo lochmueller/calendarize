@@ -420,10 +420,10 @@ class CalendarController extends AbstractController
     public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
         $baseDate = DateTimeUtility::getNow();
-        if (!($startDate instanceof \DateTime)) {
+        if (!($startDate instanceof \DateTimeInterface)) {
             $startDate = clone $baseDate;
         }
-        if (!($endDate instanceof \DateTime)) {
+        if (!($endDate instanceof \DateTimeInterface)) {
             $baseDate->modify('+1 month');
             $endDate = $baseDate;
         }

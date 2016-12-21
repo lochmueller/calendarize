@@ -19,14 +19,14 @@ class IndexUtility
      * Check if the Index is part of the range
      *
      * @param Index     $index
-     * @param \DateTime $rangeStart
-     * @param \DateTime $rangeEnd
+     * @param \DateTimeInterface $rangeStart
+     * @param \DateTimeInterface $rangeEnd
      *
      * @see IndexRepository::addTimeFrameConstraints
      *
      * @return bool
      */
-    public static function isIndexInRange($index, \DateTime $rangeStart, \DateTime $rangeEnd)
+    public static function isIndexInRange($index, \DateTimeInterface $rangeStart, \DateTimeInterface $rangeEnd)
     {
         $indexStart = $index->getStartDateComplete();
         $indexEnd = $index->getEndDateComplete();

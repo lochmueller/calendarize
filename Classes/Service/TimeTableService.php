@@ -118,7 +118,7 @@ class TimeTableService extends AbstractService
      */
     protected function getCompleteDate(array $record, $position)
     {
-        if (!($record[$position . '_date'] instanceof \DateTime)) {
+        if (!($record[$position . '_date'] instanceof \DateTimeInterface)) {
             throw new Exception('no valid record', 1236781);
         }
         /** @var \DateTime $base */

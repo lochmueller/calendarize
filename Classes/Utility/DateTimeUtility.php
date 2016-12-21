@@ -145,7 +145,7 @@ class DateTimeUtility
      */
     public static function normalizeDateTimeSingle($dateInformation)
     {
-        if ($dateInformation instanceof \DateTime) {
+        if ($dateInformation instanceof \DateTimeInterface) {
             return $dateInformation;
         } elseif (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :

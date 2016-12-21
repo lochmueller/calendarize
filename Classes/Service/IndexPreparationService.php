@@ -123,7 +123,7 @@ class IndexPreparationService
     protected function prepareRecordForDatabase(&$record)
     {
         foreach ($record as $key => $value) {
-            if ($value instanceof \DateTime) {
+            if ($value instanceof \DateTimeInterface) {
                 $record[$key] = $value->getTimestamp();
             } elseif (is_bool($value) || $key === 'start_time' || $key === 'end_time') {
                 $record[$key] = (int)$value;

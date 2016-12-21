@@ -112,7 +112,7 @@ class TimeTimeTable extends AbstractTimeTable
         for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
-            if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
+            if ($tillDate instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDate) {
                 break;
             }
 
@@ -223,7 +223,7 @@ class TimeTimeTable extends AbstractTimeTable
 
             $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
 
-            if ($tillDate instanceof \DateTime && $loopEntry['start_date'] > $tillDate) {
+            if ($tillDate instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDate) {
                 break;
             }
 

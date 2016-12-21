@@ -71,9 +71,9 @@ class TcaInformation extends AbstractService
     {
         $items = [];
         foreach ($events as $event) {
-            $startDateStamp = $event['start_date'] instanceof \DateTime ? $event['start_date']->getTimestamp() : $event['start_date'];
+            $startDateStamp = $event['start_date'] instanceof \DateTimeInterface ? $event['start_date']->getTimestamp() : $event['start_date'];
             $startDate = strftime('%a %d.%m.%G', $startDateStamp);
-            $endDateStamp = $event['end_date'] instanceof \DateTime ? $event['end_date']->getTimestamp() : $event['end_date'];
+            $endDateStamp = $event['end_date'] instanceof \DateTimeInterface ? $event['end_date']->getTimestamp() : $event['end_date'];
             $endDate = strftime('%a %d.%m.%G', $endDateStamp);
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
