@@ -1,10 +1,10 @@
 <f:form pageUid="{settings.listPid}">
 	<div class="form-group">
-		<label for="calendarizeStartDate">Start date</label>
+		<label for="calendarizeStartDate"><f:translate key="search.start_date" extensionName="Calendarize" /></label>
 		<f:form.textfield name="startDate" id="calendarizeStartDate" class="form-control" value="{startDate -> f:format.date(format: settings.dateFormat)}" />
 	</div>
 	<div class="form-group">
-		<label for="calendarizeEndDate">End date</label>
+		<label for="calendarizeEndDate"><f:translate key="search.end_date" extensionName="Calendarize" /></label>
 		<f:form.textfield name="endDate" id="calendarizeEndDate" class="form-control" value="{endDate -> f:format.date(format: settings.dateFormat)}" />
 	</div>
 
@@ -12,5 +12,5 @@
 		<f:render partial="{configuration.partialIdentifier}/Search" arguments="{customSearch: customSearch, extended: extended}" />
 	</f:for>
 
-	<button type="submit" class="btn btn-primary">Search</button>
+	<button type="submit" class="btn btn-primary"><f:translate key="search.button_label" extensionName="Calendarize" /></button>
 </f:form>

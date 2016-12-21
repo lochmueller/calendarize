@@ -588,6 +588,18 @@
 			<trans-unit id="your_search">
 				<source><![CDATA[Your search in the time from <span class="date-start">%1$s</span> to <span class="date-end">%2$s</span> found these results]]></source>
 			</trans-unit>
+			<trans-unit id="search.button_label">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="search.end_date">
+				<source>End Date</source>
+			</trans-unit>
+			<trans-unit id="search.start_date">
+				<source>Start Date</source>
+			</trans-unit>
+			<trans-unit id="search.text">
+				<source>Text</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
