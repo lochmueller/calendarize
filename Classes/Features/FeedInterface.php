@@ -33,4 +33,11 @@ interface FeedInterface
      * @return string
      */
     public function getFeedContent();
+
+    /**
+     * Get the feed location
+     *
+     * @return string
+     */
+    public function getFeedLocation();
 }

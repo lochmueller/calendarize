@@ -297,6 +297,16 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Get the feed location
+     *
+     * @return string
+     */
+    public function getFeedLocation()
+    {
+        return $this->getLocation();
+    }
+
+    /**
      * Get the base for the realurl alias
      *
      * @return string
