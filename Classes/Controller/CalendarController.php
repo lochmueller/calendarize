@@ -85,7 +85,7 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
-    
+
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -133,7 +133,7 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
-    
+
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -183,7 +183,7 @@ class CalendarController extends AbstractController
         $day = null,
         $week = null
     ) {
-    
+
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -226,7 +226,7 @@ class CalendarController extends AbstractController
         $day = null,
         $week = null
     ) {
-    
+
         $searchMode = false;
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
@@ -326,12 +326,9 @@ class CalendarController extends AbstractController
         if ($week === null) {
             $week = $now->format('W');
         }
-        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
-        $firstDay->setTime(0, 0, 0);
-
-        // respect Week start
         $weekStart = (int)$this->settings['weekStart'];
-        $firstDay->modify('+ ' . ($weekStart - 1) . 'days');
+        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart);
+        $firstDay->setTime(0, 0, 0);
 
         $weekConfiguration = [
             '+0 day' => 2,

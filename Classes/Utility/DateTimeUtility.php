@@ -57,12 +57,13 @@ class DateTimeUtility
      *
      * @param int $week
      * @param int $year
+     * @param int $startDay
      *
      * @return \DateTime
      */
-    public static function convertWeekYear2DayMonthYear($week, $year)
+    public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1)
     {
-        return self::normalizeDateTimeSingle(strtotime($year . 'W' . $week . '1'));
+        return self::normalizeDateTimeSingle(strtotime($year . '-W' . $week . '-' . $startDay));
     }
 
     /**
@@ -166,7 +167,7 @@ class DateTimeUtility
     public static function getNow()
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
-        // So we create a date string with timezone information first, and a \DateTime in the current servert timezone then.
+        // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
         return new \DateTime(date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
     }
 }
