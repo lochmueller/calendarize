@@ -394,6 +394,14 @@
 			<trans-unit id="mode.special">
 				<source>Special Views</source>
 			</trans-unit>
+			<trans-unit id="mode.single">
+				<source>Sigle</source>
+			</trans-unit>
+			<trans-unit id="singleItems">
+				<source>Sigle items</source>
+			</trans-unit>
+
+
 			<trans-unit id="mode.week">
 				<source>Week</source>
 			</trans-unit>

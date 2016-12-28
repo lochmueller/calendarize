@@ -49,30 +49,34 @@
 										<numIndex index="1">Calendar->latest</numIndex>
 									</numIndex>
 									<numIndex index="7">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.single</numIndex>
+										<numIndex index="1">Calendar->single</numIndex>
+									</numIndex>
+									<numIndex index="8">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.special</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
-									<numIndex index="8">
+									<numIndex index="9">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.year</numIndex>
 										<numIndex index="1">Calendar->year</numIndex>
 									</numIndex>
-									<numIndex index="9">
+									<numIndex index="10">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.month</numIndex>
 										<numIndex index="1">Calendar->month</numIndex>
 									</numIndex>
-									<numIndex index="10">
+									<numIndex index="11">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.week</numIndex>
 										<numIndex index="1">Calendar->week</numIndex>
 									</numIndex>
-									<numIndex index="11">
+									<numIndex index="12">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.day</numIndex>
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>
-									<numIndex index="12">
+									<numIndex index="13">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
-									<numIndex index="13">
+									<numIndex index="14">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
 										<numIndex index="1">Booking->booking;Booking->send</numIndex>
 									</numIndex>
@@ -124,6 +128,19 @@
 							</config>
 						</TCEforms>
 					</settings.limit>
+
+					<settings.singleItems>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:singleItems</label>
+							<displayCond>FIELD:switchableControllerActions:=:Calendar->single</displayCond>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>*</allowed>
+								<prepend_tname>1</prepend_tname>
+							</config>
+						</TCEforms>
+					</settings.singleItems>
 
 					<!-- Hide pagination -->
 					<settings.hidePagination>

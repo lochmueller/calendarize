@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Calendar
@@ -432,6 +433,21 @@ class CalendarController extends AbstractController
             'startDate' => $startDate,
             'endDate' => $endDate,
             'customSearch' => $customSearch,
+            'configurations' => $this->getCurrentConfigurations()
+        ], __CLASS__, __FUNCTION__);
+    }
+
+    /**
+     *
+     */
+    public function singleAction()
+    {
+        $indicies = [];
+
+        // @todo select the singleItems DebuggerUtility::var_dump($this->settings['singleItems']);
+
+        $this->slotExtendedAssignMultiple([
+            'indicies' => $indicies,
             'configurations' => $this->getCurrentConfigurations()
         ], __CLASS__, __FUNCTION__);
     }

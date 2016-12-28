@@ -13,6 +13,10 @@
 				<source>All day</source>
 				<target>ganztägig</target>
 			</trans-unit>
+			<trans-unit id="mode.single" approved="yes">
+				<source>Sigle</source>
+				<target>Einzelansicht</target>
+			</trans-unit>
 
 			<trans-unit id="tx_calendarize_domain_model_event.organizer" approved="yes">
 				<source>Organizer</source>
