@@ -11,12 +11,12 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Calendar
@@ -58,16 +58,17 @@ class CalendarController extends AbstractController
                 );
         }
     }
+
     /**
      * Latest action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $week
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $customSearch *
+     * @param int $year
+     * @param int $month
+     * @param int $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -84,6 +85,7 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
+    
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -92,15 +94,15 @@ class CalendarController extends AbstractController
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
 
         $this->slotExtendedAssignMultiple([
-            'indices'         => $search['indices'],
-            'searchMode'      => $search['searchMode'],
+            'indices' => $search['indices'],
+            'searchMode' => $search['searchMode'],
             'searchParameter' => [
-                'startDate'    => $startDate,
-                'endDate'      => $endDate,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
                 'customSearch' => $customSearch,
-                'year'         => $year,
-                'month'        => $month,
-                'week'         => $week
+                'year' => $year,
+                'month' => $month,
+                'week' => $week
             ]
         ], __CLASS__, __FUNCTION__);
     }
@@ -109,12 +111,12 @@ class CalendarController extends AbstractController
      * Result action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $week
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $customSearch
+     * @param int $year
+     * @param int $month
+     * @param int $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -131,6 +133,7 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
+    
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -139,15 +142,15 @@ class CalendarController extends AbstractController
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
 
         $this->slotExtendedAssignMultiple([
-            'indices'         => $search['indices'],
-            'searchMode'      => $search['searchMode'],
+            'indices' => $search['indices'],
+            'searchMode' => $search['searchMode'],
             'searchParameter' => [
-                'startDate'    => $startDate,
-                'endDate'      => $endDate,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
                 'customSearch' => $customSearch,
-                'year'         => $year,
-                'month'        => $month,
-                'week'         => $week
+                'year' => $year,
+                'month' => $month,
+                'week' => $week
             ]
         ], __CLASS__, __FUNCTION__);
     }
@@ -156,13 +159,13 @@ class CalendarController extends AbstractController
      * List action
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $day
-     * @param int                                   $week
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param array $customSearch *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -180,6 +183,7 @@ class CalendarController extends AbstractController
         $day = null,
         $week = null
     ) {
+    
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -188,16 +192,16 @@ class CalendarController extends AbstractController
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, $day, $week);
 
         $this->slotExtendedAssignMultiple([
-            'indices'         => $search['indices'],
-            'searchMode'      => $search['searchMode'],
+            'indices' => $search['indices'],
+            'searchMode' => $search['searchMode'],
             'searchParameter' => [
-                'startDate'    => $startDate,
-                'endDate'      => $endDate,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
                 'customSearch' => $customSearch,
-                'year'         => $year,
-                'month'        => $month,
-                'day'          => $day,
-                'week'         => $week
+                'year' => $year,
+                'month' => $month,
+                'day' => $day,
+                'week' => $week
             ]
         ], __CLASS__, __FUNCTION__);
     }
@@ -205,11 +209,11 @@ class CalendarController extends AbstractController
     /**
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
-     * @param array          $customSearch
-     * @param int            $year
-     * @param int            $month
-     * @param int            $day
-     * @param int            $week
+     * @param array $customSearch
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $week
      *
      * @return array
      */
@@ -222,6 +226,7 @@ class CalendarController extends AbstractController
         $day = null,
         $week = null
     ) {
+    
         $searchMode = false;
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
@@ -248,16 +253,16 @@ class CalendarController extends AbstractController
 
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [
-            'indices'    => $indices,
+            'indices' => $indices,
             'searchMode' => $searchMode,
             'parameters' => [
-                'startDate'    => $startDate,
-                'endDate'      => $endDate,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
                 'customSearch' => $customSearch,
-                'year'         => $year,
-                'month'        => $month,
-                'day'          => $day,
-                'week'         => $week
+                'year' => $year,
+                'month' => $month,
+                'day' => $day,
+                'week' => $week
             ]
         ];
         $variables['settings'] = $this->settings;
@@ -438,17 +443,45 @@ class CalendarController extends AbstractController
     }
 
     /**
-     *
+     * Render single items
      */
     public function singleAction()
     {
         $indicies = [];
 
-        // @todo select the singleItems DebuggerUtility::var_dump($this->settings['singleItems']);
+        // prepare selection
+        $selection = [];
+        $configurations = $this->getCurrentConfigurations();
+        foreach (GeneralUtility::trimExplode(',', $this->settings['singleItems']) as $item) {
+            list($table, $uid) = BackendUtility::splitTable_Uid($item);
+            foreach ($configurations as $configuration) {
+                if ($configuration['tableName'] === $table) {
+                    $selection[] = [
+                        'configuration' => $configuration,
+                        'uid' => $uid
+                    ];
+                    break;
+                }
+            }
+        }
+
+        // fetch index
+        foreach ($selection as $selection) {
+            $this->indexRepository->setIndexTypes([$selection['configuration']['uniqueRegisterKey']]);
+            $dummyIndex = new Index();
+            $dummyIndex->setForeignTable($selection['configuration']['tableName']);
+            $dummyIndex->setForeignUid($selection['uid']);
+
+            $result = $this->indexRepository->findByTraversing($dummyIndex);
+            $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
+            if (is_object($index)) {
+                $indicies[] = $index;
+            }
+        }
 
         $this->slotExtendedAssignMultiple([
             'indicies' => $indicies,
-            'configurations' => $this->getCurrentConfigurations()
+            'configurations' => $configurations
         ], __CLASS__, __FUNCTION__);
     }
 
