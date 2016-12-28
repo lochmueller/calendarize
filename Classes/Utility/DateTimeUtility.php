@@ -153,10 +153,8 @@ class DateTimeUtility
             return new \DateTime("@$dateInformation");
         } elseif (is_string($dateInformation)) {
             return new \DateTime($dateInformation);
-        } else {
-// null
-            return self::getNow();
         }
+        return self::getNow();
     }
 
     /**
