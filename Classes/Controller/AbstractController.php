@@ -82,7 +82,10 @@ abstract class AbstractController extends ActionController
     {
         parent::callActionMethod();
         if (isset($this->feedFormats[$this->request->getFormat()])) {
-            $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
+            $hmac = $this->request->getArgument('hmac');
+            if ($this->validatePluginHmac($hmac)) {
+                $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
+            }
         }
     }
 
