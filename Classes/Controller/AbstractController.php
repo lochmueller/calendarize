@@ -106,7 +106,7 @@ abstract class AbstractController extends ActionController
     /**
      * Extend the view by the slot class and name and assign the variable to the view
      *
-     * @param array $variables
+     * @param array  $variables
      * @param string $signalClassName
      * @param string $signalName
      */
@@ -114,12 +114,55 @@ abstract class AbstractController extends ActionController
     {
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [];
+        $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
         $variables['settings'] = $this->settings;
 
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
 
         $this->view->assignMultiple($variables);
+    }
+
+    /**
+     * Return the controllerName, pluginName and actionName
+     *
+     * @return string
+     */
+    protected function getStringForPluginHmac()
+    {
+        $actionMethodName = ucfirst($this->request->getControllerActionName());
+        $pluginName = $this->request->getPluginName();
+        $controllerName = $this->request->getControllerName();
+        return $controllerName . $pluginName . $actionMethodName;
+    }
+
+    /**
+     * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
+     * @return string $hmac
+     */
+    protected function calculatePluginHmac()
+    {
+        $string = $this->getStringForPluginHmac();
+
+        /** @var HashService $hashService */
+        $hashService = HelperUtility::create(HashService::class);
+        $hmac = $hashService->generateHmac($string);
+        return $hmac;
+    }
+
+    /**
+     * \TYPO3\CMS\Extbase\Security\Cryptography\HashService::validateHmac()
+     * @param string $hmac
+     *
+     * @return bool
+     */
+    protected function validatePluginHmac($hmac)
+    {
+        $string = $this->getStringForPluginHmac();
+
+        /** @var HashService $hashService */
+        $hashService = HelperUtility::create(HashService::class);
+        return $hashService->validateHmac($string, $hmac);
     }
 
     /**
