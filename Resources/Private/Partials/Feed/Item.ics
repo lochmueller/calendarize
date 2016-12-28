@@ -4,5 +4,5 @@ DTSTAMP:<f:format.date format="%Y%m%d">{index.tstamp}</f:format.date></f:if>
 DTSTART:<f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%SZ')}">{index.startDateComplete}</f:format.date>
 DTEND:<f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%SZ')}">{index.endDateComplete}</f:format.date>
 SUMMARY:<f:format.htmlspecialchars>{index.originalObject.feedTitle}</f:format.htmlspecialchars>
-DESCRIPTION:<f:format.htmlspecialchars>{index.originalObject.abstract}</f:format.htmlspecialchars>
+DESCRIPTION:<f:format.htmlspecialchars>{index.originalObject.feedAbstract}</f:format.htmlspecialchars>
 END:VEVENT</f:if>
