@@ -112,6 +112,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     public function __construct()
     {
         $this->calendarize = new ObjectStorage();
+        $this->images = new ObjectStorage();
+        $this->downloads = new ObjectStorage();
+        $this->categories = new ObjectStorage();
     }
 
     /**
