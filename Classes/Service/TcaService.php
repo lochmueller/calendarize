@@ -55,6 +55,11 @@ class TcaService extends AbstractService
      */
     public function eventTitle(array &$params, $object)
     {
+        // if record has no title
+        if (!MathUtility::canBeInterpretedAsInteger($params['row']['uid'])) {
+            return;
+        }
+
         // base title
         $table = $params['table'];
         unset($GLOBALS['TCA'][$table]['ctrl']['label_userFunc']);
