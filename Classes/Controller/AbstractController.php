@@ -18,6 +18,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Abstract controller
@@ -182,5 +183,18 @@ abstract class AbstractController extends ActionController
                 FlashMessage::ERROR
             );
         }
+    }
+
+    /**
+     * Change the page title
+     *
+     * @param string $title
+     */
+    protected function changePageTitle($title)
+    {
+        /** @var TypoScriptFrontendController $frontendController */
+        $frontendController = $GLOBALS['TSFE'];
+        $frontendController->page['title'] = $title;
+        $frontendController->indexedDocTitle = $title;
     }
 }
