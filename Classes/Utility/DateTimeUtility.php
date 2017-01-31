@@ -170,4 +170,31 @@ class DateTimeUtility
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
         return new \DateTime(date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
     }
+
+    /**
+     * Alias for resetTime.
+     *
+     * @see resetTime()
+     * @param int|null|string|\DateTime $dateInformation
+     *
+     * @return \DateTime
+     */
+    public static function getDayStart($dateInformation)
+    {
+        return self::resetTime($dateInformation);
+    }
+
+    /**
+     * Get the End of the given day.
+     *
+     * @param int|null|string|\DateTime $dateInformation
+     *
+     * @return \DateTime
+     */
+    public static function getDayEnd($dateInformation)
+    {
+        $dateTime = self::getDayStart($dateInformation);
+        $dateTime->setTime(23, 59, 59);
+        return $dateTime;
+    }
 }
