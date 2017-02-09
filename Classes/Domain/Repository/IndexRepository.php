@@ -389,7 +389,7 @@ class IndexRepository extends AbstractRepository
     {
         // Simulate start time
         if ($startTime === null) {
-            $startTime = DateTimeUtility::getNow() - DateTimeUtility::SECONDS_DECADE;
+            $startTime = DateTimeUtility::getNow()->getTimestamp() - DateTimeUtility::SECONDS_DECADE;
         }
 
         // Simulate end time
