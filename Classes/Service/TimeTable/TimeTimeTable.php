@@ -58,6 +58,9 @@ class TimeTimeTable extends AbstractTimeTable
     protected function validateBaseEntry(array $baseEntry)
     {
         $message = null;
+        if (!($baseEntry['start_date'] instanceof \DateTimeInterface) || !($baseEntry['end_date'] instanceof \DateTimeInterface)) {
+            return;
+        }
         if ($baseEntry['start_date'] > $baseEntry['end_date']) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
