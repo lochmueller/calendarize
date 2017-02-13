@@ -14,7 +14,7 @@
 				<target>ganztägig</target>
 			</trans-unit>
 			<trans-unit id="mode.single" approved="yes">
-				<source>Sigle</source>
+				<source>Single</source>
 				<target>Einzelansicht</target>
 			</trans-unit>
 

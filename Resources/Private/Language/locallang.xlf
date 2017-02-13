@@ -395,10 +395,10 @@
 				<source>Special Views</source>
 			</trans-unit>
 			<trans-unit id="mode.single">
-				<source>Sigle</source>
+				<source>Single</source>
 			</trans-unit>
 			<trans-unit id="singleItems">
-				<source>Sigle items</source>
+				<source>Single items</source>
 			</trans-unit>
 
 
