@@ -30,10 +30,11 @@ class PluginConfigurationService
                 'weekPid',
                 'dayPid',
                 'bookingPid',
+                'configuration',
             ];
 
             foreach ($checkFields as $checkField) {
-                if ((int)$settings[$checkField] === 0) {
+                if (in_array(trim($settings[$checkField]), ['', '0'])) {
                     $function = 'get' . ucfirst($checkField);
                     $settings[$checkField] = $settings['pluginConfiguration']->$function();
                 }
