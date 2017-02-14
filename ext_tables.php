@@ -49,3 +49,6 @@ if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
         str_replace('EXT:calendarize/', $extensionRelPath, $extensionIcon)
     );
 }
+
+\TYPO3\CMS\Core\Category\CategoryRegistry::getInstance()
+    ->add('calendarize', 'tx_calendarize_domain_model_pluginconfiguration');
