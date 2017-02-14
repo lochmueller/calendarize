@@ -148,7 +148,8 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Configuration constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->groups = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 

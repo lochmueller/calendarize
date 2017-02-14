@@ -85,6 +85,7 @@ class IndexRepository extends AbstractRepository
         $overrideStartDate = 0,
         $overrideEndDate = 0
     ) {
+    
         if ($overrideStartDate > 0) {
             $startTimestamp = $overrideStartDate;
         } else {
@@ -154,12 +155,12 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by traversing information
      *
-     * @param Index      $index
-     * @param bool|true  $future
+     * @param Index $index
+     * @param bool|true $future
      * @param bool|false $past
-     * @param int        $limit
-     * @param string     $sort
-     * @param bool       $useIndexTime
+     * @param int $limit
+     * @param string $sort
+     * @param bool $useIndexTime
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -171,6 +172,7 @@ class IndexRepository extends AbstractRepository
         $sort = QueryInterface::ORDER_ASCENDING,
         $useIndexTime = false
     ) {
+    
         if (!$future && !$past) {
             return [];
         }
@@ -387,44 +389,53 @@ class IndexRepository extends AbstractRepository
      */
     protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime = null, $endTime = null)
     {
-        // Simulate start time
-        if ($startTime === null) {
-            $startTime = DateTimeUtility::getNow()->getTimestamp() - DateTimeUtility::SECONDS_DECADE;
+        $arguments = [
+            'constraints' => &$constraints,
+            'query' => $query,
+            'startTime' => $startTime,
+            'endTime' => $endTime
+        ];
+        $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
+
+        if ($arguments['startTime'] === null && $arguments['endTime'] === null) {
+            return;
+        } elseif ($arguments['startTime'] === null) {
+            // Simulate start time
+            $arguments['startTime'] = DateTimeUtility::getNow()->getTimestamp() - DateTimeUtility::SECONDS_DECADE;
+        } elseif ($arguments['endTime'] === null) {
+            // Simulate end time
+            $arguments['endTime'] = DateTimeUtility::getNow()->getTimestamp() + DateTimeUtility::SECONDS_DECADE;
         }
 
-        // Simulate end time
-        if ($endTime === null) {
-            $endTime = $startTime + DateTimeUtility::SECONDS_DECADE;
-        }
         $orConstraint = [];
 
         // before - in
         $beforeIn = [
-            $query->lessThan('start_date', $startTime),
-            $query->greaterThanOrEqual('end_date', $startTime),
-            $query->lessThan('end_date', $endTime),
+            $query->lessThan('start_date', $arguments['startTime']),
+            $query->greaterThanOrEqual('end_date', $arguments['startTime']),
+            $query->lessThan('end_date', $arguments['endTime']),
         ];
         $orConstraint[] = $query->logicalAnd($beforeIn);
 
         // in - in
         $inIn = [
-            $query->greaterThanOrEqual('start_date', $startTime),
-            $query->lessThan('end_date', $endTime),
+            $query->greaterThanOrEqual('start_date', $arguments['startTime']),
+            $query->lessThan('end_date', $arguments['endTime']),
         ];
         $orConstraint[] = $query->logicalAnd($inIn);
 
         // in - after
         $inAfter = [
-            $query->greaterThanOrEqual('start_date', $startTime),
-            $query->lessThan('start_date', $endTime),
-            $query->greaterThanOrEqual('end_date', $endTime),
+            $query->greaterThanOrEqual('start_date', $arguments['startTime']),
+            $query->lessThan('start_date', $arguments['endTime']),
+            $query->greaterThanOrEqual('end_date', $arguments['endTime']),
         ];
         $orConstraint[] = $query->logicalAnd($inAfter);
 
         // before - after
         $beforeAfter = [
-            $query->lessThan('start_date', $startTime),
-            $query->greaterThan('end_date', $endTime),
+            $query->lessThan('start_date', $arguments['startTime']),
+            $query->greaterThan('end_date', $arguments['endTime']),
         ];
         $orConstraint[] = $query->logicalAnd($beforeAfter);
 
