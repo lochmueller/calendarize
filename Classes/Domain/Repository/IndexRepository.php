@@ -85,6 +85,7 @@ class IndexRepository extends AbstractRepository
         $overrideStartDate = 0,
         $overrideEndDate = 0
     ) {
+    
 
         if ($overrideStartDate > 0) {
             $startTimestamp = $overrideStartDate;
@@ -172,6 +173,7 @@ class IndexRepository extends AbstractRepository
         $sort = QueryInterface::ORDER_ASCENDING,
         $useIndexTime = false
     ) {
+    
 
         if (!$future && !$past) {
             return [];
@@ -356,7 +358,14 @@ class IndexRepository extends AbstractRepository
     {
         $constraints = [];
         if (!empty($this->indexTypes)) {
-            $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
+            $indexTypes = $this->indexTypes;
+            if (GeneralUtility::compat_version('8.5')) {
+                // @todo check why the 8.5 do not wrap arround string
+                $indexTypes = array_map(function ($item) {
+                    return '"' . $item . '"';
+                }, $indexTypes);
+            }
+            $constraints[] = $query->in('uniqueRegisterKey', $indexTypes);
         }
 
         $storagePages = $this->getStoragePageIds();
