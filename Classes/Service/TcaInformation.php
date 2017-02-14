@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -72,9 +73,9 @@ class TcaInformation extends AbstractService
         $items = [];
         foreach ($events as $event) {
             $startDateStamp = $event['start_date'] instanceof \DateTimeInterface ? $event['start_date']->getTimestamp() : $event['start_date'];
-            $startDate = strftime('%a %d.%m.%G', $startDateStamp);
+            $startDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $startDateStamp);
             $endDateStamp = $event['end_date'] instanceof \DateTimeInterface ? $event['end_date']->getTimestamp() : $event['end_date'];
-            $endDate = strftime('%a %d.%m.%G', $endDateStamp);
+            $endDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $endDateStamp);
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'], false);

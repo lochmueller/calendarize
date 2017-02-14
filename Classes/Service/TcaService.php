@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -142,8 +143,8 @@ class TcaService extends AbstractService
     {
         $title = '';
         if ($row['start_date']) {
-            $dateStart = strftime('%a %d.%m.%G', $row['start_date']);
-            $dateEnd = strftime('%a %d.%m.%G', $row['end_date'] ?: $row['start_date']);
+            $dateStart = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['start_date']);
+            $dateEnd = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['end_date'] ?: $row['start_date']);
             $title .= $dateStart;
             if ($dateStart != $dateEnd) {
                 $title .= ' - ' . $dateEnd;
