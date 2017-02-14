@@ -30,7 +30,7 @@ class CalendarController extends AbstractController
     public function initializeAction()
     {
         parent::initializeAction();
-        $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration']));
+        $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration'], true));
         $additionalSlotArguments = [
             'contentRecord' => $this->configurationManager->getContentObject()->data,
             'settings' => $this->settings
