@@ -20,7 +20,7 @@ matrix:
     - php: 7
       env: TYPO3_VERSION=^7.6.0 COVERAGE=1
     - php: 7
-      env: TYPO3_VERSION=^8.2.0 COVERAGE=0
+      env: TYPO3_VERSION=^8.6.0 COVERAGE=0
     - php: 7
       env: TYPO3_VERSION=dev-master COVERAGE=0
   allow_failures:
@@ -45,13 +45,13 @@ before_script:
   - export TYPO3_PATH_WEB="$PWD/.Build/Web"
 
 script:
-- |
-  echo; echo "Running unit tests";
-  if [[ "$COVERAGE" == "1" ]]; then
-    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover Tests/Unit/
-  else
-    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
-  fi;
+#- |
+#  echo; echo "Running unit tests";
+#  if [[ "$COVERAGE" == "1" ]]; then
+#    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover Tests/Unit/
+#  else
+#    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+#  fi;
 - |
   echo; echo "Executing PHP mess detector"; .Build/bin/phpmd Classes/ text cleancode,codesize,controversial,design,naming || true
 - |
