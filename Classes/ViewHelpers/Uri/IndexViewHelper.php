@@ -20,12 +20,13 @@ class IndexViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\IndexViewHelpe
      *
      * @param Index $index
      * @param int   $pageUid
+     * @param bool  $absolute
      *
      * @return string
      */
-    public function render(Index $index, $pageUid = null)
+    public function render(Index $index, $pageUid = null, $absolute = false)
     {
-        parent::render($index, $pageUid);
+        parent::render($index, $pageUid, (bool) $absolute);
         return $this->lastHref;
     }
 }

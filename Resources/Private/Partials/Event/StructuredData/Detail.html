@@ -1,0 +1,35 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
+<f:comment>
+	StructuredData Markup
+	https://support.google.com/webmasters/answer/3227638?hl=de
+	http://schema.org/Event
+
+	Test Utility
+	https://search.google.com/structured-data/testing-tool
+</f:comment>
+
+<f:alias map="{event: index.originalObject}">
+
+	<script type="application/ld+json">
+		<f:format.raw>{</f:format.raw>
+			"@context": "http://schema.org",
+			"@type": "Event",
+			"name": "{event.title}",
+			"url": "<c:uri.index index="{index}" absolute="true"/>",
+			<f:if condition="{event.images.0}">"image": "<f:uri.page pageUid="{event.images.0.originalResource.publicUrl}" absolute="1"/>",</f:if>
+			<f:if condition="{event.abstract}"><f:then>"description": "{event.abstract}",</f:then>
+							<f:else>"description": "<f:format.crop maxCharacters="180" append=" [...]"><f:format.stripTags>{event.description}</f:format.stripTags></f:format.crop>",</f:else>
+			</f:if>
+			"startDate": "{index.startDateComplete -> f:format.date(format: 'Y-m-d H:i')}",
+			<f:if condition="{index.endTime}"><f:if condition="{index.endTime}!=86399">"endDate": "{index.endDateComplete -> f:format.date(format: 'Y-m-d H:i')}",</f:if></f:if>
+			<f:if condition="{event.location}">
+			<f:format.raw>"location": {</f:format.raw>
+				"@type": "Place",
+				"address": "{event.location}"
+			<f:format.raw>}</f:format.raw>
+			</f:if>
+		<f:format.raw>}</f:format.raw>
+		</script>
+
+</f:alias>
