@@ -22,16 +22,17 @@ class IndexViewHelper extends AbstractLinkViewHelper
      *
      * @param Index $index
      * @param int   $pageUid
+     * @param bool  $absolute
      *
      * @return string
      */
-    public function render(Index $index, $pageUid = null)
+    public function render(Index $index, $pageUid = null, $absolute = false)
     {
         $additionalParams = [
             'tx_calendarize_calendar' => [
                 'index' => $index->getUid()
             ],
         ];
-        return parent::renderLink($this->getPageUid($pageUid, 'detailPid'), $additionalParams);
+        return parent::renderLink($this->getPageUid($pageUid, 'detailPid'), $additionalParams, (bool) $absolute);
     }
 }

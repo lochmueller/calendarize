@@ -54,15 +54,17 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      *
      * @param int|NULL $pageUid          target page. See TypoLink destination
      * @param array    $additionalParams query parameters to be attached to the resulting URI
+     * @param bool $absolute
      *
      * @return string Rendered page URI
      */
-    public function renderLink($pageUid = null, array $additionalParams = [])
+    public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false)
     {
         $uriBuilder = $this->controllerContext->getUriBuilder();
         $this->lastHref = (string)$uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setArguments($additionalParams)
+            ->setCreateAbsoluteUri($absolute)
             ->build();
         if ($this->lastHref !== '') {
             $this->tag->addAttribute('href', $this->lastHref);
