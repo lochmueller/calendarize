@@ -153,8 +153,8 @@ class TcaService extends AbstractService
         if ($row['all_day']) {
             $title .= ' ' . TranslateUtility::get('tx_calendarize_domain_model_index.all_day');
         } elseif ($row['start_time']) {
-            $title .= ' <br />' . BackendUtility::time($row['start_time'], false);
-            $title .= ' - ' . BackendUtility::time($row['end_time'], false);
+            $title .= ' <br />' . BackendUtility::time($row['start_time'] % 86400, false);
+            $title .= ' - ' . BackendUtility::time($row['end_time'] % 86400, false);
         }
         if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
             $title .= ' <br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';

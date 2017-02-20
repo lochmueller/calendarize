@@ -124,8 +124,10 @@ class TimeTableService extends AbstractService
         /** @var \DateTime $base */
         $base = clone $record[$position . '_date'];
         if (is_int($record[$position . '_time'])) {
+            // Fix handling, if the time field contains a complete timestamp
+            $seconds = $record[$position . '_time'] % 86400;
             $base->setTime(0, 0, 0);
-            $base->modify('+ ' . $record[$position . '_time'] . ' seconds');
+            $base->modify('+ ' . $seconds . ' seconds');
         }
         return $base;
     }
