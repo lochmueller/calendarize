@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Domain\Model;
 use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\EventUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
@@ -106,27 +107,9 @@ class Index extends AbstractModel
             if ($configuration === null) {
                 throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
-            $this->originalObject = $this->getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
+            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
         }
         return $this->originalObject;
-    }
-
-    /**
-     * Get the original record by configuration
-     *
-     * @param $configuration
-     * @param $uid
-     *
-     * @return object
-     */
-    protected function getOriginalRecordByConfiguration($configuration, $uid)
-    {
-        $query = HelperUtility::getQuery($configuration['modelName']);
-        $query->getQuerySettings()
-            ->setRespectStoragePage(false);
-        $query->matching($query->equals('uid', $uid));
-        return $query->execute()
-            ->getFirst();
     }
 
     /**

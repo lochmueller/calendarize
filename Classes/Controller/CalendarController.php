@@ -10,6 +10,8 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\EventUtility;
+use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -56,6 +58,25 @@ class CalendarController extends AbstractController
                     DateTimeConverter::CONFIGURATION_DATE_FORMAT,
                     $this->settings['dateFormat']
                 );
+        }
+        if ($this->request->hasArgument('event') && $this->actionMethodName == 'detailAction') {
+            // default configuration
+            $configurationName = $this->settings['configuration'];
+            // configuration overwritten by argument?
+            if ($this->request->hasArgument('extensionConfiguration')) {
+                $configurationName = $this->request->getArgument('extensionConfiguration');
+            }
+            // get the configuration
+            $configuration = ExtensionConfigurationUtility::get($configurationName);
+
+            // get Event by Configuration and Uid
+            $event = EventUtility::getOriginalRecordByConfiguration($configuration, $this->request->getArgument('event'));
+            $index = $this->indexRepository->findByEventTraversing($event, true, false, 1)->getFirst();
+
+            // if there is a valid index in the event
+            if ($index) {
+                $this->redirect('detail', null, null, ['index' => $index]);
+            }
         }
     }
 
