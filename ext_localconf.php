@@ -72,3 +72,5 @@ if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
         );
     }
 }
+
+#$GLOBALS['TYPO3_CONF_VARS']['SYS']['linkHandler']['event'] = \HDNET\Calendarize\LinkHandling\EventLinkHandler::class;
