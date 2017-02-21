@@ -7,9 +7,9 @@
 
 namespace HDNET\Calendarize\Utility;
 
-use HDNET\Calendarize\Domain\Model\AbstractModel;
 use HDNET\Calendarize\Register;
 use Exception;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
 /**
  * ExtensionConfiguration Utility
@@ -42,12 +42,12 @@ class ExtensionConfigurationUtility
     /**
      * Return the Unique Register Key by the given EventModel.
      *
-     * @param AbstractModel $event
+     * @param DomainObjectInterface $event
      *
      * @return string
      * @throws Exception
      */
-    public static function getUniqueRegisterKeyForModel(AbstractModel $event)
+    public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event)
     {
         self::loadConfiguration();
 

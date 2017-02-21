@@ -135,7 +135,7 @@ class Index extends AbstractModel
     public function getStartDateComplete()
     {
         $date = $this->getStartDate();
-        if (!$this->isAllDay()) {
+        if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getStartTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
@@ -150,7 +150,7 @@ class Index extends AbstractModel
     public function getEndDateComplete()
     {
         $date = $this->getEndDate();
-        if (!$this->isAllDay()) {
+        if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getEndTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
