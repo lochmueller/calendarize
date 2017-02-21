@@ -8,14 +8,14 @@
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
-use HDNET\Calendarize\Domain\Model\AbstractModel;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -207,7 +207,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by traversing information
      *
-     * @param AbstractModel $event
+     * @param DomainObjectInterface $event
      * @param bool|true      $future
      * @param bool|false     $past
      * @param int            $limit
@@ -217,7 +217,7 @@ class IndexRepository extends AbstractRepository
      * @throws Exception
      */
     public function findByEventTraversing(
-        AbstractModel $event,
+        DomainObjectInterface $event,
         $future = true,
         $past = false,
         $limit = 100,
@@ -228,7 +228,7 @@ class IndexRepository extends AbstractRepository
         }
         $query = $this->createQuery();
 
-        $uniqueRegisterKey = Register::getUniqueRegisterKeyForModel($event);
+        $uniqueRegisterKey = ExtensionConfigurationUtility::getUniqueRegisterKeyForModel($event);
 
         $this->setIndexTypes([$uniqueRegisterKey]);
 
@@ -340,15 +340,15 @@ class IndexRepository extends AbstractRepository
     /**
      * Find all indices by the given Event model
      *
-     * @param AbstractEntity $event
+     * @param DomainObjectInterface $event
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws Exception
      */
-    public function findByEvent(AbstractEntity $event)
+    public function findByEvent(DomainObjectInterface $event)
     {
         $query = $this->createQuery();
 
-        $uniqueRegisterKey = $uniqueRegisterKey = Register::getUniqueRegisterKeyForModel($event);
+        $uniqueRegisterKey = ExtensionConfigurationUtility::getUniqueRegisterKeyForModel($event);
 
         $this->setIndexTypes([$uniqueRegisterKey]);
         $constraints = $this->getDefaultConstraints($query);
