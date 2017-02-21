@@ -8,6 +8,7 @@
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
+use HDNET\Calendarize\Domain\Model\AbstractModel;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -85,7 +86,7 @@ class IndexRepository extends AbstractRepository
         $overrideStartDate = 0,
         $overrideEndDate = 0
     ) {
-    
+
 
         if ($overrideStartDate > 0) {
             $startTimestamp = $overrideStartDate;
@@ -173,7 +174,7 @@ class IndexRepository extends AbstractRepository
         $sort = QueryInterface::ORDER_ASCENDING,
         $useIndexTime = false
     ) {
-    
+
 
         if (!$future && !$past) {
             return [];
@@ -190,6 +191,53 @@ class IndexRepository extends AbstractRepository
         $constraints[] = $query->logicalNot($query->equals('uid', $index->getUid()));
         $constraints[] = $query->equals('foreignTable', $index->getForeignTable());
         $constraints[] = $query->equals('foreignUid', $index->getForeignUid());
+        if (!$future) {
+            $constraints[] = $query->lessThanOrEqual('startDate', $now);
+        }
+        if (!$past) {
+            $constraints[] = $query->greaterThanOrEqual('startDate', $now);
+        }
+
+        $query->setLimit($limit);
+        $sort = $sort === QueryInterface::ORDER_ASCENDING ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+        $query->setOrderings($this->getSorting($sort));
+        return $this->matchAndExecute($query, $constraints);
+    }
+
+    /**
+     * Find by traversing information
+     *
+     * @param AbstractModel $event
+     * @param bool|true      $future
+     * @param bool|false     $past
+     * @param int            $limit
+     * @param string         $sort
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws Exception
+     */
+    public function findByEventTraversing(
+        AbstractModel $event,
+        $future = true,
+        $past = false,
+        $limit = 100,
+        $sort = QueryInterface::ORDER_ASCENDING
+    ) {
+        if (!$future && !$past) {
+            return [];
+        }
+        $query = $this->createQuery();
+
+        $uniqueRegisterKey = Register::getUniqueRegisterKeyForModel($event);
+
+        $this->setIndexTypes([$uniqueRegisterKey]);
+
+        $now = DateTimeUtility::getNow()
+            ->getTimestamp();
+
+        $constraints = [];
+
+        $constraints[] = $query->equals('foreignUid', $event->getUid());
         if (!$future) {
             $constraints[] = $query->lessThanOrEqual('startDate', $now);
         }
@@ -299,19 +347,8 @@ class IndexRepository extends AbstractRepository
     public function findByEvent(AbstractEntity $event)
     {
         $query = $this->createQuery();
-        $register = Register::getRegister();
 
-        $uniqueRegisterKey = null;
-        foreach ($register as $configuration) {
-            if ($configuration['modelName'] === get_class($event)) {
-                $uniqueRegisterKey = $configuration['uniqueRegisterKey'];
-                break;
-            }
-        }
-
-        if ($uniqueRegisterKey === null) {
-            throw new Exception('No valid uniqueRegisterKey for: ' . get_class($event), 1236712);
-        }
+        $uniqueRegisterKey = $uniqueRegisterKey = Register::getUniqueRegisterKeyForModel($event);
 
         $this->setIndexTypes([$uniqueRegisterKey]);
         $constraints = $this->getDefaultConstraints($query);

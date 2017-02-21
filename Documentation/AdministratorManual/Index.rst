@@ -8,3 +8,4 @@ For administrators
 	Scheduler/Index
 	UrlRewrite/Index
 	CalDav/Index
+	Linkhandler/Index

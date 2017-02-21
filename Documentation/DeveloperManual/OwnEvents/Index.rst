@@ -1,6 +1,8 @@
 Own events
 ----------
 
+.. _ownevents:
+
 The concept of the calendarize extension is the creation of own models and tables that should be part of the calendar output.
 
 .. code-block:: php
