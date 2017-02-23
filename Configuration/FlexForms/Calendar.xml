@@ -112,13 +112,9 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:limit</label>
 							<displayCond>
 								<OR>
-									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<OR>
-										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-										<OR>
-											<numIndex>FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
-										</OR>
-									</OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -148,16 +144,10 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:hide.pagination.teaser</label>
 							<displayCond>
 								<OR>
-									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<OR>
-										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-										<OR>
-											<numIndex>FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
-											<OR>
-												<numIndex>FIELD:switchableControllerActions:=:Calendar->result</numIndex>
-											</OR>
-										</OR>
-									</OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->result</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -171,10 +161,8 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startdate</label>
 							<displayCond>
 								<OR>
-									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<OR>
-										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-									</OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -189,10 +177,8 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.enddate</label>
 							<displayCond>
 								<OR>
-									<numIndex>FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<OR>
-										<numIndex>FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-									</OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
 								</OR>
 							</displayCond>
 							<config>
