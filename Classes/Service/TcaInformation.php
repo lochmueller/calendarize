@@ -34,8 +34,13 @@ class TcaInformation extends AbstractService
         if (!isset($configuration['row']['uid'])) {
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
-        $indexService = GeneralUtility::makeInstance(IndexerService::class);
+
         $previewLimit = 10;
+        if (isset($configuration['fieldConf']['config']['items'])) {
+            $previewLimit = (int) $configuration['fieldConf']['config']['items'];
+        }
+
+        $indexService = GeneralUtility::makeInstance(IndexerService::class);
         $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
         $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
         $content = sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);

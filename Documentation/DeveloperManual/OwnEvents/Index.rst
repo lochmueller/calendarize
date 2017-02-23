@@ -30,3 +30,10 @@ The following code show the configuration that should be the same in ext_tables 
         'tableName'         => 'tx_myextension_domain_model_myevent', // the table name of your event table
         'required'          => true, // set to true, than your event need a least one event configuration
     ];
+
+To modify the amount of items shown in the preview you can change the amount in the ext_tables.php after calling the Register::extTables method.
+The default value is 10 items.
+
+.. code-block:: php
+	// in ext_tables.php
+	$GLOBALS['TCA']['tx_myextension_domain_model_myevent']['columns']['calendarize_info']['config']['items'] = 25;
