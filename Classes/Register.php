@@ -57,6 +57,7 @@ class Register
             'config' => [
                 'type'     => 'user',
                 'userFunc' => TcaInformation::class . '->informationField',
+                'items' => 10
             ],
         ];
         ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);
