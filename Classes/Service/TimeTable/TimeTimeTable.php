@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Service\TimeTable;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\RecurrenceService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -74,7 +75,7 @@ class TimeTimeTable extends AbstractTimeTable
                 ),
                 FlashMessage::ERROR
             );
-        } elseif (!$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') == $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] > $baseEntry['end_time']) {
+        } elseif (!$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') == $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(

@@ -12,6 +12,7 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Domain\Repository\ConfigurationRepository;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 
@@ -125,7 +126,7 @@ class TimeTableService extends AbstractService
         $base = clone $record[$position . '_date'];
         if (is_int($record[$position . '_time']) && (int)$record[$position . '_time'] > 0) {
             // Fix handling, if the time field contains a complete timestamp
-            $seconds = $record[$position . '_time'] % 86400;
+            $seconds = $record[$position . '_time'] % DateTimeUtility::SECONDS_DAY;
             $base->setTime(0, 0, 0);
             $base->modify('+ ' . $seconds . ' seconds');
         }

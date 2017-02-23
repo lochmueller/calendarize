@@ -78,11 +78,11 @@ class TcaInformation extends AbstractService
             $endDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $endDateStamp);
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
-                $start = BackendUtility::time($event['start_time'] % 86400, false);
+                $start = BackendUtility::time($event['start_time'] % DateTimeUtility::SECONDS_DAY, false);
                 if ((int)$event['end_time'] === AbstractTimeTable::DAY_END) {
                     $end = '"' . TranslateUtility::get('openEndTime') . '"';
                 } else {
-                    $end = BackendUtility::time($event['end_time'] % 86400, false);
+                    $end = BackendUtility::time($event['end_time'] % DateTimeUtility::SECONDS_DAY, false);
                 }
                 $entry .= ' (' . $start . ' - ' . $end . ')';
             }

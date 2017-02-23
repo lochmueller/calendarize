@@ -92,8 +92,8 @@ class DateTimeUtility
     public static function getDaySecondsOfDateTime(\DateTime $dateTime)
     {
         $hours = (int)$dateTime->format('G');
-        $minutes = $hours * 60 + (int)$dateTime->format('i');
-        return $minutes * 60 + (int)$dateTime->format('s');
+        $minutes = $hours * self::SECONDS_MINUTE + (int)$dateTime->format('i');
+        return $minutes * self::SECONDS_MINUTE + (int)$dateTime->format('s');
     }
 
     /**

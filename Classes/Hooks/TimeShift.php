@@ -7,6 +7,8 @@
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Calendarize\Utility\DateTimeUtility;
+
 /**
  * Time shift function
  */
@@ -20,7 +22,7 @@ class TimeShift extends AbstractHook
      */
     public function shift()
     {
-        $defaultTime = $GLOBALS['EXEC_TIME'] - $GLOBALS['EXEC_TIME'] % 60;
+        $defaultTime = $GLOBALS['EXEC_TIME'] - $GLOBALS['EXEC_TIME'] % DateTimeUtility::SECONDS_MINUTE;
         if ($GLOBALS['SIM_ACCESS_TIME'] !== $defaultTime) {
             // another process already change the SIM_ACCESS_TIME
             return;
