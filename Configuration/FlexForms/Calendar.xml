@@ -258,7 +258,6 @@
 								<size>3</size>
 								<maxitems>50</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -329,7 +328,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -350,7 +348,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -371,7 +368,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -392,7 +388,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -413,7 +408,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -434,7 +428,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>
@@ -455,7 +448,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<show_thumbs>1</show_thumbs>
 								<wizards>
 									<suggest>
 										<type>suggest</type>

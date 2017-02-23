@@ -13,7 +13,6 @@ $defaultPidConfiguration = [
         'size' => '1',
         'maxitems' => '1',
         'minitems' => '0',
-        'show_thumbs' => '1',
         'wizards' => [
             'suggest' => [
                 'type' => 'suggest'
@@ -27,6 +26,7 @@ $custom = [
         'model_name' => [
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['Default', \HDNET\Calendarize\Domain\Model\PluginConfiguration::class]
                 ],
@@ -50,7 +50,6 @@ $custom = [
                 'size' => '3',
                 'maxitems' => '50',
                 'minitems' => '0',
-                'show_thumbs' => '1',
                 'wizards' => [
                     'suggest' => [
                         'type' => 'suggest'
