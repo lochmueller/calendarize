@@ -113,18 +113,14 @@ $custom = [
                 'eval' => 'required,date',
                 'size' => 6,
             ],
-            'displayCond' => [
-                'FIELD:type:=:' . Configuration::TYPE_TIME,
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'end_date' => [
             'config' => [
                 'eval' => 'date',
                 'size' => 6,
             ],
-            'displayCond' => [
-                'FIELD:type:=:' . Configuration::TYPE_TIME,
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'start_time' => [
             'config' => [
@@ -163,9 +159,7 @@ $custom = [
             ],
         ],
         'all_day' => [
-            'displayCond' => [
-                'FIELD:type:=:' . Configuration::TYPE_TIME,
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
                 'default' => '0',
             ],
@@ -179,9 +173,7 @@ $custom = [
                 'size' => 5,
                 'maxitems' => '99',
             ],
-            'displayCond' => [
-                'FIELD:type:=:' . Configuration::TYPE_TIME,
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'frequency' => [
             'config' => [
@@ -211,9 +203,7 @@ $custom = [
                 ],
                 'default' => Configuration::FREQUENCY_NONE
             ],
-            'displayCond' => [
-                'FIELD:type:=:' . Configuration::TYPE_TIME,
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_date' => [
             'config' => [
@@ -254,9 +244,7 @@ $custom = [
             ],
         ],
         'external_ics_url' => [
-            'displayCond' => [
-                'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             'config' => [
                 'eval' => 'trim,required',
             ],
