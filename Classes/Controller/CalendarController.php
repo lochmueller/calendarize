@@ -273,17 +273,19 @@ class CalendarController extends AbstractController
         }
 
         // use this variable in your extension to add more custom variables
-        $variables['extended'] = [
-            'indices' => $indices,
-            'searchMode' => $searchMode,
-            'parameters' => [
-                'startDate' => $startDate,
-                'endDate' => $endDate,
-                'customSearch' => $customSearch,
-                'year' => $year,
-                'month' => $month,
-                'day' => $day,
-                'week' => $week
+        $variables = [
+            'extended' => [
+                'indices' => $indices,
+                'searchMode' => $searchMode,
+                'parameters' => [
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'customSearch' => $customSearch,
+                    'year' => $year,
+                    'month' => $month,
+                    'day' => $day,
+                    'week' => $week
+                ]
             ]
         ];
         $variables['settings'] = $this->settings;
@@ -348,7 +350,7 @@ class CalendarController extends AbstractController
             $week = $now->format('W');
         }
         $weekStart = (int)$this->settings['weekStart'];
-        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart);
+        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int)$week, $year, $weekStart);
         $firstDay->setTime(0, 0, 0);
 
         $weekConfiguration = [
@@ -416,7 +418,7 @@ class CalendarController extends AbstractController
 
             if ($index === null) {
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-                    return TranslateUtility::get('noEventDetailView');
+                    return (string)TranslateUtility::get('noEventDetailView');
                 }
                 $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 301);
             }
@@ -440,6 +442,8 @@ class CalendarController extends AbstractController
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
      * @ignorevalidation $customSearch
+     *
+     * @return void
      */
     public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
@@ -462,6 +466,8 @@ class CalendarController extends AbstractController
 
     /**
      * Render single items
+     *
+     * @return void
      */
     public function singleAction()
     {

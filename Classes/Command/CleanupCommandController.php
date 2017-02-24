@@ -160,7 +160,7 @@ class CleanupCommandController extends AbstractCommandController
         $db = HelperUtility::getDatabaseConnection();
         $rows = $db->exec_SELECTquery('foreign_uid', $table, $where, 'foreign_uid');
 
-        $this->enqueueMessage('Just found ' . $rows->num_rows . ' Events ready to process.', 'Events found', FlashMessage::INFO);
+        $this->enqueueMessage('Just found ' . sizeof($rows) . ' Events ready to process.', 'Events found', FlashMessage::INFO);
 
         return $rows;
     }
