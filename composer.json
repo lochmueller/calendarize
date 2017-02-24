@@ -29,8 +29,8 @@
     }
   ],
   "require": {
-    "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.0||~7.6.0||~8.6.0||~8.7.0||dev-master"
+    "php": ">=7.0.0",
+    "typo3/cms-core": "~7.6.0||~8.6.0||~8.7.0||dev-master"
   },
   "replace": {
     "calendarize": "self.version",
@@ -41,9 +41,12 @@
   "support": {
     "issues": "https://github.com/lochmueller/calendarize/issues"
   },
+  "suggest": {
+    "cabi/microformat": "Output of microformat information for besser Google Search Result User Experience"
+  },
   "require-dev": {
-    "namelesscoder/typo3-repository-client": "1.2.0",
-    "phpunit/phpunit": "~4.8.0",
+    "namelesscoder/typo3-repository-client": "2.0.0",
+    "phpunit/phpunit": "~5.0.0",
     "squizlabs/php_codesniffer": "^2.6",
     "phpmd/phpmd": "^2.4",
     "scrutinizer/ocular": "^1.3.0"
