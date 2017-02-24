@@ -28,5 +28,29 @@ class TimezoneTest  extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($timeZone, $parser->getTimeZoneIdentifier());
 	}
 
+    function testTimeZoneFromFileToEvent1() {
+        $parser = new ICalParser();
+        $this->assertTrue($parser->parseFromFile(dirname(__FILE__)."/data/TimeZone1.ics"));
+        $events = $parser->getEvents();
+        $this->assertEquals(1, count($events));
+        $event = $events[0];
+
+        $this->assertEquals('2016-10-11T16:30:00+00:00', $event->getStart()->format('c'));
+        $this->assertEquals('2016-10-11T20:00:00+00:00', $event->getEnd()->format('c'));
+
+    }
+
+    function testTimeZoneFromMeetupToEvent1() {
+        $parser = new ICalParser();
+        $this->assertTrue($parser->parseFromFile(dirname(__FILE__)."/data/Meetup1.ics"));
+        $events = $parser->getEvents();
+        $this->assertEquals(1, count($events));
+        $event = $events[0];
+
+        $this->assertEquals('2013-10-17T18:00:00+00:00', $event->getStart()->format('c'));
+        $this->assertEquals('2013-10-17T21:00:00+00:00', $event->getEnd()->format('c'));
+
+    }
+
 }
 
