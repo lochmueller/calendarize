@@ -50,4 +50,6 @@
 	</f:if>
 </f:alias>
 
-<f:render partial="{index.configuration.partialIdentifier}/StructuredData/Detail" arguments="{index: index}"/>
+<c:ifExtensionLoaded extensionKey="microformat">
+	<f:render partial="{index.configuration.partialIdentifier}/StructuredData/Detail" arguments="{index: index}"/>
+</c:ifExtensionLoaded>
