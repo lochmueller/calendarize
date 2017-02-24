@@ -25,11 +25,12 @@ class TimeSelectionWizard extends AbstractService
      */
     public function renderWizard(array $params, $pObj)
     {
+        $name = isset($params['itemName']) ? trim($params['itemName']) : '';
         $match = preg_match('/(.*)id="(.*?)"(.*)/', $params['item'], $matches);
-        if (!$match) {
+        $id = $match && isset($matches[2]) ? trim($matches[2]) : '';
+        if ($id === '' && $name === '') {
             return '';
         }
-        $id = $matches[2];
         $times = $this->getTimes((int)$params['pid']);
         if (!$times) {
             return '';
@@ -38,19 +39,16 @@ class TimeSelectionWizard extends AbstractService
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadRequireJsModule('TYPO3/CMS/Calendarize/TimeSelection');
 
-        $icon = '[TIME]';
-        if (class_exists(IconFactory::class)) {
-            $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-            $icon = $iconFactory->getIcon(
-                'actions-document-synchronize',
-                Icon::SIZE_SMALL
-            )->render();
-        }
+        $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+        $icon = $iconFactory->getIcon(
+            'actions-document-synchronize',
+            Icon::SIZE_SMALL
+        )->render();
 
         return '<div class="form-group">
     <div class="input-group">
       <div class="input-group-addon">' . $icon . '</div>
-      <select class="form-control calendarize-time-selection" data-related="' . $id . '">
+      <select class="form-control calendarize-time-selection" data-related-id="' . $id . '" data-related-name="' . $name . '">
         <option></option>
         ' . $this->renderOptions($times) . '
   </select>
