@@ -7,6 +7,7 @@
 
 namespace HDNET\Calendarize\Slots;
 
+use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -56,6 +57,7 @@ class EventSearch
         array $indexTypes,
         array $additionalSlotArguments
     ) {
+    
 
         if (!in_array('Event', $indexTypes)) {
             return;
@@ -71,9 +73,9 @@ class EventSearch
 
         $eventRepository = HelperUtility::create(EventRepository::class);
         return [
-            'indexIds'     => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
-            'startDate'    => $startDate,
-            'endDate'      => $endDate,
+            'indexIds' => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'customSearch' => $customSearch,
             'indexTypes' => $indexTypes,
             'additionalSlotArguments' => $additionalSlotArguments,
@@ -88,31 +90,39 @@ class EventSearch
      *
      * @param array $indexIds
      * @param array $indexTypes
-     * @param array $contentRecord
+     * @param array $additionalSlotArguments
      *
-     * @return array
+     * @return array|null
      */
-    public function setIdsByGeneral(array $indexIds, array $indexTypes, array $contentRecord)
+    public function setIdsByGeneral(array $indexIds, array $indexTypes, array $additionalSlotArguments)
     {
+        if (!in_array('Event', $indexTypes)) {
+            return null;
+        }
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $categoryIds = [];
-        if (isset($contentRecord['uid']) && MathUtility::canBeInterpretedAsInteger($contentRecord['uid'])) {
+        if (isset($additionalSlotArguments['contentRecord']['uid']) && MathUtility::canBeInterpretedAsInteger($additionalSlotArguments['contentRecord']['uid'])) {
             $rows = $databaseConnection->exec_SELECTgetRows(
                 'uid_local',
                 'sys_category_record_mm',
-                'tablenames="tt_content" AND uid_foreign=' . $contentRecord['uid']
+                'tablenames="tt_content" AND uid_foreign=' . $additionalSlotArguments['contentRecord']['uid']
             );
             foreach ($rows as $row) {
                 $categoryIds[] = (int)$row['uid_local'];
             }
         }
 
+        if (isset($additionalSlotArguments['settings']['pluginConfiguration']) && $additionalSlotArguments['settings']['pluginConfiguration'] instanceof PluginConfiguration) {
+            /** @var PluginConfiguration $pluginConfiguration */
+            $pluginConfiguration = $additionalSlotArguments['settings']['pluginConfiguration'];
+            $categories = $pluginConfiguration->getCategories();
+            foreach ($categories as $category) {
+                $categoryIds[] = $category->getUid();
+            }
+        }
+
         if (empty($categoryIds)) {
-            return [
-                'indexIds'      => $indexIds,
-                'indexTypes'    => $indexTypes,
-                'contentRecord' => $contentRecord,
-            ];
+            return null;
         }
 
         $rows = $databaseConnection->exec_SELECTgetRows(
@@ -125,9 +135,9 @@ class EventSearch
         }
 
         return [
-            'indexIds'      => $indexIds,
-            'indexTypes'    => $indexTypes,
-            'contentRecord' => $contentRecord,
+            'indexIds' => $indexIds,
+            'indexTypes' => $indexTypes,
+            'additionalSlotArguments' => $additionalSlotArguments,
         ];
     }
 }

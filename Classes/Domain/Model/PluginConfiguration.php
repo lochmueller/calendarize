@@ -91,6 +91,13 @@ class PluginConfiguration extends AbstractModel
     protected $bookingPid;
 
     /**
+     * Categories
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     */
+    protected $categories;
+
+    /**
      * @return mixed
      */
     public function getTitle()
@@ -280,5 +287,21 @@ class PluginConfiguration extends AbstractModel
     public function setModelName($modelName)
     {
         $this->modelName = $modelName;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     */
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    {
+        $this->categories = $categories;
     }
 }
