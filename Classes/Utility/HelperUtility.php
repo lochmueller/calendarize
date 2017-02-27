@@ -95,4 +95,13 @@ class HelperUtility
     {
         return $GLOBALS['TYPO3_DB'];
     }
+
+    /**
+     * Persist all data
+     */
+    public static function persistAll() {
+        /** @var $persist \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager */
+        $persist = self::create('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        $persist->persistAll();
+    }
 }
