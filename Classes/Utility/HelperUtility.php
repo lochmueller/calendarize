@@ -12,6 +12,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -100,8 +101,8 @@ class HelperUtility
      * Persist all data
      */
     public static function persistAll() {
-        /** @var $persist \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager */
-        $persist = self::create('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\PersistenceManager');
+        /** @var $persist PersistenceManager */
+        $persist = self::create(PersistenceManager::class);
         $persist->persistAll();
     }
 }
