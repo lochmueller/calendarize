@@ -292,6 +292,8 @@ class IndexRepository extends AbstractRepository
         $weekStart = (int)$weekStart;
         $daysShift = DateTimeUtility::SECONDS_DAY * ($weekStart - 1);
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
+        $timezone = DateTimeUtility::getTimeZone();
+        $firstDay->setTimezone($timezone);
         $timeStampStart = $firstDay->getTimestamp() + $daysShift;
         return $this->findByTimeSlot($timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK - 1);
     }
