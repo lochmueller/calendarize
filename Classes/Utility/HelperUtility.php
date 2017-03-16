@@ -100,7 +100,8 @@ class HelperUtility
     /**
      * Persist all data
      */
-    public static function persistAll() {
+    public static function persistAll()
+    {
         /** @var $persist PersistenceManager */
         $persist = self::create(PersistenceManager::class);
         $persist->persistAll();

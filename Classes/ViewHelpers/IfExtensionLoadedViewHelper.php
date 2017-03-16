@@ -36,6 +36,4 @@ class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
         }
         return ExtensionManagementUtility::isLoaded($arguments['extensionKey']);
     }
-
-
 }
