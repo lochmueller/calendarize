@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
-use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -129,6 +128,7 @@ class IndexRepository extends AbstractRepository
             'endDate' => $endDate,
             'customSearch' => $customSearch,
             'indexTypes' => $this->indexTypes,
+            'emptyPreResult' => false,
         ];
         $arguments = $this->callSignal(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
 
@@ -146,7 +146,7 @@ class IndexRepository extends AbstractRepository
             $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
         }
         $result = [
-            'result' => $this->matchAndExecute($query, $constraints)
+            'result' => $arguments['emptyPreResult'] ? [] : $this->matchAndExecute($query, $constraints)
         ];
 
         $result = $this->callSignal(__CLASS__, __FUNCTION__ . 'Post', $result);
