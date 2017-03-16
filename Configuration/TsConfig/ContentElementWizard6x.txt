@@ -1,8 +1,0 @@
-mod.wizards.newContentElement.wizardItems.plugins {
-	elements {
-		calendarize {
-			iconIdentifier >
-			icon = ../typo3conf/ext/calendarize/ext_icon.png
-		}
-	}
-}

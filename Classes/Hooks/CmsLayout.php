@@ -60,10 +60,6 @@ class CmsLayout extends AbstractHook
 
         $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
         $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
-        if (!\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.0')) {
-            // < 7.0 only - fix rel path
-            $extensionRelPath = '../../../'.$extensionRelPath;
-        }
         $this->layoutService = GeneralUtility::makeInstance(ContentElementLayoutService::class);
         $this->layoutService->setTitle('<img src="' . str_replace(
             'EXT:calendarize/',
