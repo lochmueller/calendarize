@@ -68,4 +68,8 @@ foreach ($icons as $identifier => $path) {
     );
 }
 
+if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_services')) {
+    \FRUIT\GoogleServices\Service\SitemapProvider::addProvider(\HDNET\Calendarize\Service\SitemapProvider\Events::class);
+}
+
 #$GLOBALS['TYPO3_CONF_VARS']['SYS']['linkHandler']['event'] = \HDNET\Calendarize\LinkHandling\EventLinkHandler::class;
