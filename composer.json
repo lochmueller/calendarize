@@ -42,7 +42,7 @@
     "issues": "https://github.com/lochmueller/calendarize/issues"
   },
   "suggest": {
-    "cabi/microformat": "Output of microformat information for besser Google Search Result User Experience"
+    "cabi/microformat": "Output of microformat information for better Google Search Result User Experience"
   },
   "require-dev": {
     "namelesscoder/typo3-repository-client": "2.0.0",
