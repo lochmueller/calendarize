@@ -28,7 +28,6 @@ class Events implements SitemapProviderInterface
     {
         $nodes = [];
         foreach ($this->getIndizies() as $index) {
-
             $additionalParams = [
                 'tx_calendarize_calendar' => [
                     'index' => $index->getUid()

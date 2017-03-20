@@ -68,7 +68,7 @@ foreach ($icons as $identifier => $path) {
     );
 }
 
-if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_services')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_services')) {
     \FRUIT\GoogleServices\Service\SitemapProvider::addProvider(\HDNET\Calendarize\Service\SitemapProvider\Events::class);
 }
 
