@@ -8,10 +8,10 @@
 
 ---
 conf.py:
-  copyright: 2016
+  copyright: 2017
   project: Calendarize
-  version: 2.3.0
-  release: 2.3.0
+  version: 3.0.1
+  release: 3.0.1
   intersphinx_mapping:
     t3tsref:
     - http://docs.typo3.org/typo3cms/TyposcriptReference/
