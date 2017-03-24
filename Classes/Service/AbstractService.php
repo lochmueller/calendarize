@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Core\SingletonInterface;
@@ -16,5 +15,4 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class AbstractService implements SingletonInterface
 {
-
 }

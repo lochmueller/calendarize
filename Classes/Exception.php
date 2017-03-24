@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize;
 
 /**
@@ -12,5 +11,4 @@ namespace HDNET\Calendarize;
  */
 class Exception extends \Exception
 {
-
 }

@@ -3,7 +3,6 @@
 /**
  * AbstractViewHelper
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 /**
@@ -11,5 +10,4 @@ namespace HDNET\Calendarize\ViewHelpers;
  */
 abstract class AbstractViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
-
 }

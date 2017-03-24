@@ -3,7 +3,6 @@
 /**
  * NewIncludeExcludeStructureUpdate
  */
-
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
@@ -55,7 +54,6 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      */
     public function performUpdate(array &$dbQueries, &$customMessages)
     {
-
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $query = $databaseConnection->UPDATEquery(
             'tx_calendarize_domain_model_configuration',

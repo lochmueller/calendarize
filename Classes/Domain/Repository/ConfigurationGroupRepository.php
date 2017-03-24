@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 /**
@@ -14,5 +13,4 @@ namespace HDNET\Calendarize\Domain\Repository;
  */
 class ConfigurationGroupRepository extends AbstractRepository
 {
-
 }

@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Register;

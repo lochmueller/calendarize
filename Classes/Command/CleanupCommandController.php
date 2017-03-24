@@ -4,7 +4,6 @@
  *
  * @author  Carsten Biebricher
  */
-
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Domain\Model\Event;
@@ -21,7 +20,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 class CleanupCommandController extends AbstractCommandController
 {
-
     const MODUS_HIDDEN = 'hide';
     const MODUS_DELETED = 'delete';
     const DEFAULT_WAIT_PERIOD = 14;
@@ -160,7 +158,7 @@ class CleanupCommandController extends AbstractCommandController
         $db = HelperUtility::getDatabaseConnection();
         $rows = $db->exec_SELECTquery('foreign_uid', $table, $where, 'foreign_uid');
 
-        $this->enqueueMessage('Just found ' . sizeof($rows) . ' Events ready to process.', 'Events found', FlashMessage::INFO);
+        $this->enqueueMessage('Just found ' . count($rows) . ' Events ready to process.', 'Events found', FlashMessage::INFO);
 
         return $rows;
     }

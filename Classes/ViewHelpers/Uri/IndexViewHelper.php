@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 use HDNET\Calendarize\Domain\Model\Index;

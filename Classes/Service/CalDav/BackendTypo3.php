@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -83,11 +82,11 @@ class BackendTypo3 extends AbstractBackend
      */
     public function getCalendarsForUser($principalUri)
     {
-        $principalUriParts = explode("/", $principalUri);
+        $principalUriParts = explode('/', $principalUri);
         $databaseConnection = HelperUtility::getDatabaseConnection();
         // $databaseConnection->
         die('getCalendarsForUser');
-        $stmt = $this->pdo->prepare("SELECT uid, tx_cal_calendar FROM fe_users WHERE username = ? AND deleted=0");
+        $stmt = $this->pdo->prepare('SELECT uid, tx_cal_calendar FROM fe_users WHERE username = ? AND deleted=0');
         $stmt->execute([
             array_pop($principalUriParts)
         ]);
@@ -95,7 +94,7 @@ class BackendTypo3 extends AbstractBackend
         $calendars = [];
 
         while ($user = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $stmt = $this->pdo->prepare("SELECT * FROM tx_cal_calendar WHERE uid in (" . $user ['tx_cal_calendar'] . ")");
+            $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_calendar WHERE uid in (' . $user ['tx_cal_calendar'] . ')');
             $stmt->execute();
 
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
@@ -167,10 +166,10 @@ class BackendTypo3 extends AbstractBackend
             }
         }
 
-        $stmt = $this->pdo->prepare("INSERT INTO tx_cal_calendar (" . implode(', ', $fieldNames) . ") VALUES (" . implode(
+        $stmt = $this->pdo->prepare('INSERT INTO tx_cal_calendar (' . implode(', ', $fieldNames) . ') VALUES (' . implode(
             ', ',
             array_keys($values)
-        ) . ")");
+        ) . ')');
         $stmt->execute($values);
 
         return $this->pdo->lastInsertId();
@@ -262,7 +261,7 @@ class BackendTypo3 extends AbstractBackend
         }
         $valuesSql [] = time();
 
-        $stmt = $this->pdo->prepare("UPDATE tx_cal_calendar SET " . implode(', ', $valuesSql) . " WHERE id = ?");
+        $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET ' . implode(', ', $valuesSql) . ' WHERE id = ?');
         $newValues ['id'] = $calendarId;
         $stmt->execute(array_values($newValues));
 
@@ -328,7 +327,7 @@ class BackendTypo3 extends AbstractBackend
             if ($eventRow ['tx_caldav_uid'] == '' && $eventRow ['icsUid'] == '') {
                 $eventRow ['tx_caldav_uid'] = 'a1b2c3_' . $eventRow ['calendar_id'] . '_' . $eventRow ['uid'];
                 $eventRow ['icsUid'] = $eventRow ['tx_caldav_uid'];
-                $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET tx_caldav_uid = ?, icsUid = ? WHERE uid = ?");
+                $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET tx_caldav_uid = ?, icsUid = ? WHERE uid = ?');
                 $stmt->execute([
                     $eventRow ['tx_caldav_uid'],
                     $eventRow ['icsUid'],
@@ -336,14 +335,14 @@ class BackendTypo3 extends AbstractBackend
                 ]);
             } elseif ($eventRow ['tx_caldav_uid'] == '') {
                 $eventRow ['tx_caldav_uid'] = $eventRow ['icsUid'];
-                $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET tx_caldav_uid = ? WHERE uid = ?");
+                $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET tx_caldav_uid = ? WHERE uid = ?');
                 $stmt->execute([
                     $eventRow ['tx_caldav_uid'],
                     $eventRow ['uid']
                 ]);
             } elseif ($eventRow ['icsUid'] == '') {
                 $eventRow ['icsUid'] = $eventRow ['tx_caldav_uid'];
-                $stmt = $this->pdo->prepare("UPDATE tx_cal_event SET icsUid = ? WHERE uid = ?");
+                $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET icsUid = ? WHERE uid = ?');
                 $stmt->execute([
                     $eventRow ['icsUid'],
                     $eventRow ['uid']

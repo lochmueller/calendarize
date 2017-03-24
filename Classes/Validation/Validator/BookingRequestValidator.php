@@ -2,7 +2,6 @@
 /**
  * BookingRequestValidator
  */
-
 namespace HDNET\Calendarize\Validation\Validator;
 
 use HDNET\Calendarize\Utility\HelperUtility;

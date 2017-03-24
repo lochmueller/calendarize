@@ -3,7 +3,6 @@
 /**
  * PluginConfiguration
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**

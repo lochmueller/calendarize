@@ -4,11 +4,10 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Utility;
 
-use HDNET\Calendarize\Register;
 use Exception;
+use HDNET\Calendarize\Register;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
 /**

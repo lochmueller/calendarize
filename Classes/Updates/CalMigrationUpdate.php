@@ -3,7 +3,6 @@
 /**
  * CalMigrationUpdate
  */
-
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Service\IndexerService;
@@ -84,8 +83,8 @@ class CalMigrationUpdate extends AbstractUpdate
         if ($count === 0) {
             return false;
         }
-        $description = "There " . ($count > 1 ? 'are ' . $count : 'is ' . $count) . " non migrated EXT:cal event
-        " . ($count > 1 ? 's' : '') . ". Run the update process to migrate the events to EXT:calendarize events.";
+        $description = 'There ' . ($count > 1 ? 'are ' . $count : 'is ' . $count) . ' non migrated EXT:cal event
+        ' . ($count > 1 ? 's' : '') . '. Run the update process to migrate the events to EXT:calendarize events.';
         return true;
     }
 

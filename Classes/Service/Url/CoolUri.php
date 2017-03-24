@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Service\Url;
 
 use Bednarik\Cooluri\Core\Functions;
@@ -43,7 +42,7 @@ class CoolUri extends AbstractUrl
      */
     public static function convertStatic($param1, $param2)
     {
-        $object = new CoolUri();
+        $object = new self();
         return $object->convert($param1, $param2);
     }
 

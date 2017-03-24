@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;

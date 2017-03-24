@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\ViewHelpers\IfDateLowerViewHelper;
@@ -25,5 +24,3 @@ class IfDateLowerViewHelperTest extends UnitTestCase
         $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2004'));
     }
 }
-
-

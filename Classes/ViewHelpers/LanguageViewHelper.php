@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;

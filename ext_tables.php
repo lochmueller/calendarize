@@ -4,7 +4,6 @@
  *
  * @author   Tim Lochmüller
  */
-
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
@@ -42,11 +41,11 @@ $iconRegistry->registerIcon(
 \TYPO3\CMS\Core\Category\CategoryRegistry::getInstance()
     ->add('calendarize', 'tx_calendarize_domain_model_pluginconfiguration');
 
-#\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
-#    TCEMAIN.linkHandler {
-#        event {
-#            handler = HDNET\\Calendarize\\LinkHandling\\EventSelectionLinkHandler
-#            label = Events
-#        }
-#    }
-#');
+//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
+//    TCEMAIN.linkHandler {
+//        event {
+//            handler = HDNET\\Calendarize\\LinkHandling\\EventSelectionLinkHandler
+//            label = Events
+//        }
+//    }
+//');

@@ -3,7 +3,6 @@
 /**
  * Index traversing
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Domain\Model\Index;

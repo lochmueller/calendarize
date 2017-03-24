@@ -4,14 +4,12 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Domain\Repository\CalDavRepository;
 use HDNET\Calendarize\Service\CalDav;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Sabre\DAV\Auth\Backend\AbstractBasic;
-use Sabre\DAV\Exception;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

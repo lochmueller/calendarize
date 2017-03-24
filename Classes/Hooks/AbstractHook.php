@@ -3,7 +3,6 @@
 /**
  * Abstraction of hooks
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 /**
@@ -11,5 +10,4 @@ namespace HDNET\Calendarize\Hooks;
  */
 abstract class AbstractHook
 {
-
 }
