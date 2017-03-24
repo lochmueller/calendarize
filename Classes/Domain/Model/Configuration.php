@@ -32,6 +32,14 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $handling = self::HANDLING_INCLUDE;
 
     /**
+     * State
+     *
+     * @var string
+     * @db
+     */
+    protected $state = self::STATE_DEFAULT;
+
+    /**
      * Start date
      *
      * @var \DateTime
@@ -453,4 +461,25 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     {
         $this->handling = $handling;
     }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return trim($this->state);
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
 }

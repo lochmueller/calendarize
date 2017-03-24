@@ -107,6 +107,23 @@ $custom = [
                 'default' => Configuration::HANDLING_INCLUDE
             ]
         ],
+        'state' => [
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        '',
+                        Configuration::STATE_DEFAULT
+                    ],
+                    [
+                        'Canceled',
+                        Configuration::STATE_CANCELED
+                    ],
+                ],
+                'default' => Configuration::STATE_DEFAULT
+            ],
+        ],
         'start_date' => [
             'config' => [
                 'eval' => 'required,date',
@@ -367,7 +384,7 @@ $custom = [
     'palettes' => [
         'base' => [
             'canNotCollapse' => 1,
-            'showitem' => 'type,handling',
+            'showitem' => 'type,handling,state',
         ],
         'date' => [
             'canNotCollapse' => 1,

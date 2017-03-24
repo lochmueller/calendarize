@@ -5,8 +5,15 @@
 		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}"/>
 		<c:titleTag><f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}"/></c:titleTag>
 	</h1>
-	<h3>
-		<f:render partial="DateInformation" arguments="{index: index}"/>
+	<h3 class="state-{index.state}">
+		<f:if condition="{index.state}=='canceled'">
+			<f:then>
+				<f:translate key="canceled" />
+			</f:then>
+			<f:else>
+				<f:render partial="DateInformation" arguments="{index: index}"/>
+			</f:else>
+		</f:if>
 	</h3>
 
 	<div class="text">

@@ -43,6 +43,7 @@ class TimeTimeTable extends AbstractTimeTable
             'start_time' => $startTime,
             'end_time'   => $endTime == 0 ? self::DAY_END : $endTime,
             'all_day'    => $configuration->isAllDay(),
+            'state'      => $configuration->getState()
         ];
         $this->validateBaseEntry($baseEntry);
         $times[] = $baseEntry;

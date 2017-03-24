@@ -86,6 +86,14 @@ class Index extends AbstractModel
     protected $allDay;
 
     /**
+     * State
+     *
+     * @var string
+     * @db
+     */
+    protected $state;
+
+    /**
      * The original object
      *
      * @var AbstractEntity
@@ -314,4 +322,25 @@ class Index extends AbstractModel
     {
         return $this->startTime;
     }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
 }

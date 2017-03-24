@@ -1,7 +1,7 @@
 {namespace c=HDNET\Calendarize\ViewHelpers}
 
 <f:alias map="{event: index.originalObject}">
-	<div class="panel panel-default">
+	<div class="panel panel-default state-{index.state}">
 		<div class="panel-body">
 
 			<div class="media calendarize-item">
@@ -20,7 +20,14 @@
 						</c:link.index>
 					</h2>
 					<h4>
-						<f:render partial="DateInformation" arguments="{index: index}" />
+						<f:if condition="{index.state}=='canceled'">
+							<f:then>
+								<f:translate key="canceled" />
+							</f:then>
+							<f:else>
+								<f:render partial="DateInformation" arguments="{index: index}"/>
+							</f:else>
+						</f:if>
 					</h4>
 
 					<p>

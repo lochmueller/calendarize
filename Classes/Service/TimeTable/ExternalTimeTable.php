@@ -65,6 +65,7 @@ class ExternalTimeTable extends AbstractTimeTable
                 'start_time' => $startTime,
                 'end_time'   => $endTime,
                 'all_day'    => $endTime === 0,
+                'state'      => $configuration->getState()
             ];
             $times[] = $entry;
         }

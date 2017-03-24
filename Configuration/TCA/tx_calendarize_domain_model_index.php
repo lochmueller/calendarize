@@ -58,6 +58,11 @@ $custom = [
                 'readOnly' => '1',
             ],
         ],
+        'state'             => [
+            'config' => [
+                'readOnly' => '1',
+            ],
+        ],
     ],
 ];
 

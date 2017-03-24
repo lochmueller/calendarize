@@ -9,6 +9,10 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+
+			<trans-unit id="canceled"><source>Canceled</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.state"><source>State</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.state"><source>State</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configurationgroup.import_id">
 				<source>import_id</source>
 			</trans-unit>
