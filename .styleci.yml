@@ -1,7 +1,6 @@
 preset: psr2
 
 enabled:
-    - alpha_ordered_imports
     - no_leading_import_slash
     - no_trailing_comma_in_singleline_array
     - no_singleline_whitespace_before_semicolons
@@ -10,7 +9,6 @@ enabled:
     - no_whitespace_in_blank_line
     - ordered_imports
     - single_quote
-    - no_extra_consecutive_blank_lines
     - phpdoc_no_package
     - phpdoc_scalar
     - no_blank_lines_after_phpdoc
