@@ -2,8 +2,6 @@
 /**
  * General ext_localconf file
  *
- * @category Extension
- * @package  Calendarize
  * @author   Tim Lochmüller
  */
 
@@ -72,4 +70,4 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_service
     \FRUIT\GoogleServices\Service\SitemapProvider::addProvider(\HDNET\Calendarize\Service\SitemapProvider\Events::class);
 }
 
-#$GLOBALS['TYPO3_CONF_VARS']['SYS']['linkHandler']['event'] = \HDNET\Calendarize\LinkHandling\EventLinkHandler::class;
+// $GLOBALS['TYPO3_CONF_VARS']['SYS']['linkHandler']['event'] = \HDNET\Calendarize\LinkHandling\EventLinkHandler::class;

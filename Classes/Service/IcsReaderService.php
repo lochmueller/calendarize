@@ -10,7 +10,6 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use JMBTechnologyLimited\ICalDissect\ICalParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * ICS Service

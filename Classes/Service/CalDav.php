@@ -61,8 +61,8 @@ class CalDav extends AbstractService
         $authPlugin = new AuthPlugin(new AuthBackendTypo3());
         $server->addPlugin($authPlugin);
 
-        #$aclPlugin = new \Sabre\DAVACL\Plugin();
-        #$server->addPlugin($aclPlugin);
+        // $aclPlugin = new \Sabre\DAVACL\Plugin();
+        // $server->addPlugin($aclPlugin);
 
         $caldavPlugin = new Plugin();
         $server->addPlugin($caldavPlugin);

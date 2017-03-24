@@ -12,7 +12,6 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 /**
  * Class SysFileReference
  *
- * @package HDNET\Calendarize\Domain\Model
  * @author  Carsten Biebricher <carsten.biebricher@hdnet.de>
  *
  * @db sys_file_reference

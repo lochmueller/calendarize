@@ -178,7 +178,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Is all day
      *
-     * @return boolean
+     * @return bool
      */
     public function isAllDay()
     {

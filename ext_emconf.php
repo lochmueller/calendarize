@@ -2,8 +2,6 @@
 /**
  * $EM_CONF
  *
- * @category Extension
- * @package  Calendarize
  * @author   Tim Lochmüller
  */
 

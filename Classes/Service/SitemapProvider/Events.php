@@ -18,7 +18,7 @@ class Events implements SitemapProviderInterface
     /**
      * Get the Records
      *
-     * @param integer $startPage
+     * @param int $startPage
      * @param array $basePages
      * @param SitemapController $obj
      *

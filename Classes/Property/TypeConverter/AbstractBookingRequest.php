@@ -43,7 +43,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
      *
      * @var array
      */
-    static protected $configurations = [];
+    protected static $configurations = [];
 
     /**
      * Set configurations

@@ -24,7 +24,7 @@ class ExtensionConfigurationUtility
      *
      * @var array
      */
-    static protected $configuration;
+    protected static $configuration;
 
     /**
      * Get the given configuration value

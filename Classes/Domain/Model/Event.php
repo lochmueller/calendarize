@@ -462,7 +462,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHidden()
     {

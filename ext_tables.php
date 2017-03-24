@@ -2,8 +2,6 @@
 /**
  * General ext_tables file
  *
- * @category Extension
- * @package  Calendarize
  * @author   Tim Lochmüller
  */
 

@@ -32,7 +32,7 @@ abstract class AbstractCommandController extends CommandController
      *
      * @param mixed   $message
      * @param string  $title
-     * @param integer $severity
+     * @param int $severity
      *
      * @return void
      */
@@ -61,7 +61,7 @@ abstract class AbstractCommandController extends CommandController
      *
      * @param mixed   $message
      * @param string  $title
-     * @param integer $severity
+     * @param int $severity
      *
      * @return void
      */

@@ -143,7 +143,7 @@ class IndexerService extends AbstractService
             self::TABLE_NAME,
             'foreign_table=' . $databaseConnection->fullQuoteStr(
                 $tableName,
-                IndexerService::TABLE_NAME
+                self::TABLE_NAME
             ) . ' AND foreign_uid=' . $uid
         );
         foreach ($neededItems as $neededKey => $neededItem) {
@@ -208,7 +208,7 @@ class IndexerService extends AbstractService
         foreach ($rows as $row) {
             $ids[] = $row['uid'];
         }
-        $where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, IndexerService::TABLE_NAME);
+        $where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, self::TABLE_NAME);
         if ($ids) {
             $where .= ' AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
         }
@@ -226,7 +226,7 @@ class IndexerService extends AbstractService
         $databaseConnection = HelperUtility::getDatabaseConnection();
         if ($validKeys) {
             foreach ($validKeys as $key => $value) {
-                $validKeys[$key] = $databaseConnection->fullQuoteStr($value, IndexerService::TABLE_NAME);
+                $validKeys[$key] = $databaseConnection->fullQuoteStr($value, self::TABLE_NAME);
             }
             return (bool)$databaseConnection->exec_DELETEquery(
                 self::TABLE_NAME,

@@ -11,7 +11,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Tree\View\ElementBrowserPageTreeView;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Recordlist\LinkHandler\AbstractLinkHandler;
 use TYPO3\CMS\Recordlist\LinkHandler\LinkHandlerInterface;
 use TYPO3\CMS\Recordlist\LinkHandler\PageLinkHandler;
@@ -40,9 +39,6 @@ class EventSelectionLinkHandler extends PageLinkHandler
      */
     public function canHandleLink(array $linkParts)
     {
-        #DebuggerUtility::var_dump($linkParts);
-
-
         $this->linkParts = $linkParts;
         return true;
     }

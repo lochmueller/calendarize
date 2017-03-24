@@ -14,7 +14,7 @@ interface BookingInterface
     /**
      * Is the given event is bookable
      *
-     * @return boolean
+     * @return bool
      */
     public function isBookable();
 }

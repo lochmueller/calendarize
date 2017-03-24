@@ -230,7 +230,7 @@ class Index extends AbstractModel
     /**
      * Is all day
      *
-     * @return boolean
+     * @return bool
      */
     public function isAllDay()
     {
