@@ -4,14 +4,12 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\EventUtility;
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -82,7 +80,7 @@ class Index extends AbstractModel
     /**
      * AllDay
      *
-     * @var boolean
+     * @var bool
      * @db
      */
     protected $allDay;
@@ -220,7 +218,7 @@ class Index extends AbstractModel
     /**
      * Set all day
      *
-     * @param boolean $allDay
+     * @param bool $allDay
      */
     public function setAllDay($allDay)
     {

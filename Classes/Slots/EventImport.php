@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Command\ImportCommandController;
@@ -34,7 +33,7 @@ class EventImport
      * @param array                   $event
      * @param ImportCommandController $commandController
      * @param int                     $pid
-     * @param boolean                 $handled
+     * @param bool                 $handled
      *
      * @return array
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException

@@ -2,7 +2,6 @@
 /**
  * RealUrl
  */
-
 namespace HDNET\Calendarize\Service\Url;
 
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
@@ -152,7 +151,6 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      */
     protected function cleanUrl($alias)
     {
-
         if ($this->isOldRealUrlVersion()) {
             /** @var \tx_realurl_advanced $realUrl */
             $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');

@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\LinkHandling;
 
 use TYPO3\CMS\Core\LinkHandling\LinkHandlingInterface;

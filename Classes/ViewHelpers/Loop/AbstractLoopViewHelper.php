@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
@@ -24,7 +23,7 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      *
      * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
      *
-     * @var boolean
+     * @var bool
      * @api
      */
     protected $escapeChildren = false;
@@ -33,7 +32,7 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
      * @see isOutputEscapingEnabled()
      *
-     * @var boolean
+     * @var bool
      * @api
      */
     protected $escapeOutput = false;

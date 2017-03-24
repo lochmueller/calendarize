@@ -2,7 +2,6 @@
 /**
  * AbstractBookingRequest
  */
-
 namespace HDNET\Calendarize\Property\TypeConverter;
 
 use HDNET\Calendarize\Domain\Model\Request\DefaultBookingRequest;

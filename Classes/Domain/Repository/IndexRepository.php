@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
@@ -85,8 +84,6 @@ class IndexRepository extends AbstractRepository
         $overrideStartDate = 0,
         $overrideEndDate = 0
     ) {
-
-
         if ($overrideStartDate > 0) {
             $startTimestamp = $overrideStartDate;
         } else {
@@ -174,8 +171,6 @@ class IndexRepository extends AbstractRepository
         $sort = QueryInterface::ORDER_ASCENDING,
         $useIndexTime = false
     ) {
-
-
         if (!$future && !$past) {
             return [];
         }

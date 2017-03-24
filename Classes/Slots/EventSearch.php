@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
@@ -57,8 +56,6 @@ class EventSearch
         array $indexTypes,
         array $additionalSlotArguments
     ) {
-    
-
         if (!in_array('Event', $indexTypes)) {
             return;
         }

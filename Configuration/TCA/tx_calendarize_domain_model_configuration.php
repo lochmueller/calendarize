@@ -3,7 +3,6 @@
 /**
  * TCA Structure for Configurations
  */
-
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\Configuration;

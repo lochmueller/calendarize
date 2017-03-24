@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -106,7 +105,6 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
-
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -154,7 +152,6 @@ class CalendarController extends AbstractController
         $month = null,
         $week = null
     ) {
-
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -204,7 +201,6 @@ class CalendarController extends AbstractController
         $day = null,
         $week = null
     ) {
-
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
             $this->forward('detail');
@@ -247,7 +243,6 @@ class CalendarController extends AbstractController
         $day = null,
         $week = null
     ) {
-
         $searchMode = false;
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;

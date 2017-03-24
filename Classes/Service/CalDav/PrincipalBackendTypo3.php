@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Service\CalDav;
 
 use Sabre\DAV\Exception;
@@ -47,7 +46,6 @@ class PrincipalBackendTypo3 implements BackendInterface
      */
     public function __construct($tableName = 'fe_users', $groupMembersTableName = 'fe_groups')
     {
-
         $this->pdo = $pdo;
         $this->tableName = $tableName;
         $this->groupMembersTableName = $groupMembersTableName;

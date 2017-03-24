@@ -2,7 +2,6 @@
 /**
  * TimeSelectionWizard
  */
-
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -80,7 +79,6 @@ class TimeSelectionWizard extends AbstractService
      */
     protected function getTimes($pageUid)
     {
-
         $times = [];
         $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);
         if (isset($pagesTsConfig['tx_calendarize.']['timeSelectionWizard.']) &&

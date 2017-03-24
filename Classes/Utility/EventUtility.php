@@ -4,11 +4,9 @@
  *
  * @author  Carsten Biebricher
  */
-
 namespace HDNET\Calendarize\Utility;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
-use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
  * Event utility

@@ -3,7 +3,6 @@
 /**
  * Booking interface
  */
-
 namespace HDNET\Calendarize\Features;
 
 /**

@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -85,7 +84,7 @@ class ExternalTimeTable extends AbstractTimeTable
             return $event->getStart();
         }
 
-        $end = clone($event->getEnd());
+        $end = clone $event->getEnd();
         $end->sub(new \DateInterval('P1D'));
         if ($end->format('Ymd') === $event->getStart()->format('Ymd')) {
             return $end;

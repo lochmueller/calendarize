@@ -1,7 +1,5 @@
 <?php
 
-use HDNET\Autoloader\Utility\IconUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 $icon = 'apps-pagetree-folder-contains-calendarize';
 

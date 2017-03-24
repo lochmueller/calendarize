@@ -3,7 +3,6 @@
 /**
  * KE Search Indexer
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;

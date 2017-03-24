@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
@@ -67,7 +66,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * AllDay
      *
-     * @var boolean
+     * @var bool
      * @db
      */
     protected $allDay;
@@ -188,7 +187,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set all day
      *
-     * @param boolean $allDay
+     * @param bool $allDay
      */
     public function setAllDay($allDay)
     {

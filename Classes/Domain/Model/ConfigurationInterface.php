@@ -4,7 +4,6 @@
  *
  * @author  Tim Lochmüller
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
@@ -12,7 +11,6 @@ namespace HDNET\Calendarize\Domain\Model;
  */
 interface ConfigurationInterface
 {
-
     const TYPE_TIME = 'time';
 
     const TYPE_GROUP = 'group';

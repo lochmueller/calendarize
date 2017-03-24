@@ -4,7 +4,6 @@
  *
  * @author  Carsten Biebricher <cabi@lernziel.de>
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Updates\CalMigrationUpdate;

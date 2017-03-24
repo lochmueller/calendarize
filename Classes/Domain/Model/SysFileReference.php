@@ -4,7 +4,6 @@
  *
  * Enhance the core SysFileReference.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;

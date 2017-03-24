@@ -3,7 +3,6 @@
 /**
  * Wrapper for the Cal Dav structure
  */
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\CalDav\AuthBackendTypo3;
@@ -16,11 +15,7 @@ use Sabre\CalDAV\Principal\Collection;
 use Sabre\DAV\Auth\Plugin as AuthPlugin;
 use Sabre\DAV\Browser\Plugin as BrowserPlugin;
 use Sabre\DAV\Server;
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Frontend\Utility\EidUtility;
 
 /**
  * Wrapper for the Cal Dav structure
