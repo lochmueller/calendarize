@@ -481,5 +481,4 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     {
         $this->state = $state;
     }
-
 }

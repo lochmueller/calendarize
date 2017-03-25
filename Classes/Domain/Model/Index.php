@@ -342,5 +342,4 @@ class Index extends AbstractModel
     {
         $this->state = $state;
     }
-
 }

@@ -78,5 +78,4 @@ interface ConfigurationInterface
     const STATE_DEFAULT = 'default';
 
     const STATE_CANCELED = 'canceled';
-
 }
