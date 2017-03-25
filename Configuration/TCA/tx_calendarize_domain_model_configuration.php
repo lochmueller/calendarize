@@ -43,7 +43,7 @@ $timeType = str_replace(
 
 $baseConfiguration = '--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration;base';
 $timeType = str_replace(
-    'type,handling',
+    'type,handling,state',
     $baseConfiguration,
     $timeType
 );
