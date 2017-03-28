@@ -50,6 +50,9 @@ class IndexPreparationService
 
         $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
         $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
+
+        // @todo Handle Workspace IDs?
+
         return $neededItems;
     }
 
