@@ -189,7 +189,7 @@ $custom = [
                 'size' => 5,
                 'maxitems' => '99',
             ],
-            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_GROUP,
         ],
         'frequency' => [
             'config' => [
