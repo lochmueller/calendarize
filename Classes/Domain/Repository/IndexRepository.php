@@ -88,7 +88,7 @@ class IndexRepository extends AbstractRepository
             $startTimestamp = $overrideStartDate;
         } else {
             $now = DateTimeUtility::getNow();
-            if ($listStartTime != 'now') {
+            if ($listStartTime != $now) {
                 $now->setTime(0, 0, 0);
             }
             $now->modify($startOffsetHours . ' hours');
