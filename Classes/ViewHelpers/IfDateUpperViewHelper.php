@@ -23,7 +23,7 @@ class IfDateUpperViewHelper extends AbstractViewHelper
      * This VH just return a boolean evaluation value
      *
      * @param string|\DateTime $base
-     * @param string|\DateTime $check
+     * @param \DateTime $check
      *
      * @return string
      */
