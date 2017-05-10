@@ -46,7 +46,7 @@ class TimeTimeTable extends AbstractTimeTable
             'state'      => $configuration->getState()
         ];
         $this->validateBaseEntry($baseEntry);
-        $times[] = $baseEntry;
+        $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
         $this->addFrequencyItems($times, $configuration, $baseEntry);
         $this->addRecurrenceItems($times, $configuration, $baseEntry);
     }
@@ -121,7 +121,7 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $lastLoop = $loopEntry;
-            $times[] = $loopEntry;
+            $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
         }
     }
 
@@ -232,7 +232,7 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $lastLoop = $loopEntry;
-            $times[] = $loopEntry;
+            $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
         }
     }
 

@@ -58,4 +58,18 @@ abstract class AbstractTimeTable extends AbstractService
         }
         return $this->timeTableService->getTimeTablesByConfigurationIds($ids);
     }
+
+    /**
+     * Calculate a hash for the key of the given entry.
+     * This prevent double entries in the index.
+     *
+     * @param array $entry
+     *
+     * @return string
+     */
+    protected function calculateEntryKey(array $entry)
+    {
+        // crc32 may be faster but have more collision-potential
+        return \hash('md5', \json_encode($entry));
+    }
 }
