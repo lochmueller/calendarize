@@ -393,12 +393,6 @@ class IndexRepository extends AbstractRepository
         $constraints = [];
         if (!empty($this->indexTypes)) {
             $indexTypes = $this->indexTypes;
-            if (GeneralUtility::compat_version('8.5')) {
-                // @todo check why the 8.5 do not wrap arround string
-                $indexTypes = array_map(function ($item) {
-                    return '"' . $item . '"';
-                }, $indexTypes);
-            }
             $constraints[] = $query->in('uniqueRegisterKey', $indexTypes);
         }
 
