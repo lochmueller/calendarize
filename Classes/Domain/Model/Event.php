@@ -16,6 +16,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * Event (Default) for the calendarize function
  *
  * @db
+ * @smartExclude Workspaces
  */
 class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {
