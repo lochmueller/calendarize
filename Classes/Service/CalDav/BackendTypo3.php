@@ -259,7 +259,8 @@ class BackendTypo3 extends AbstractBackend
         foreach ($newValues as $fieldName => $value) {
             $valuesSql [] = $fieldName . ' = ?';
         }
-        $valuesSql [] = time();
+        $now = new \DateTime();
+        $valuesSql [] = $now->getTimestamp();
 
         $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET ' . implode(', ', $valuesSql) . ' WHERE id = ?');
         $newValues ['id'] = $calendarId;
@@ -400,6 +401,7 @@ class BackendTypo3 extends AbstractBackend
      */
     public function createCalendarObject($calendarId, $objectUri, $calendarData)
     {
+        $now = new \DateTime();
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_calendar WHERE uid = ?');
         $stmt->execute([
             $calendarId
@@ -413,7 +415,7 @@ class BackendTypo3 extends AbstractBackend
             $calendarId,
             $objectUri,
             $calendarData,
-            time()
+            $now->getTimestamp();
         ]);
         $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET tstamp = tstamp + 1 WHERE uid = ? AND deleted = 0');
         $stmt->execute([
@@ -434,6 +436,7 @@ class BackendTypo3 extends AbstractBackend
      */
     public function updateCalendarObject($calendarId, $objectUri, $calendarData)
     {
+        $now = new \DateTime();
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_event WHERE calendar_id = ?');
         $stmt->execute([
             $calendarId
@@ -442,7 +445,7 @@ class BackendTypo3 extends AbstractBackend
         $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET tx_caldav_data = ?, tstamp = ? WHERE calendar_id = ? AND icsUid = ? AND deleted = 0');
         $stmt->execute([
             $calendarData,
-            time(),
+            $now->getTimeStamp(),
             $calendarId,
             $objectUri
         ]);

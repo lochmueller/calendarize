@@ -135,7 +135,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             'value_id'    => $value,
         ];
         if ($this->isOldRealUrlVersion()) {
-            $entry['tstamp'] = time();
+            $entry['tstamp'] = (new \DateTime())->getTimestamp();
         }
         $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
 

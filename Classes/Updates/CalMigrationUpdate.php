@@ -227,6 +227,7 @@ class CalMigrationUpdate extends AbstractUpdate
     public function performLinkEventToConfigurationGroup($calIds, &$dbQueries, &$customMessages)
     {
         $db = HelperUtility::getDatabaseConnection();
+        $now = new \DateTime();
 
         $variables = [
             'table'     => self::CONFIGURATION_GROUP_TABLE,
@@ -258,8 +259,8 @@ class CalMigrationUpdate extends AbstractUpdate
                 $eventImportId = self::IMPORT_PREFIX . (int)$eventUid['uid_local'];
                 $configurationRow = [
                     'pid'      => (int)$group['pid'],
-                    'tstamp'   => time(),
-                    'crdate'   => time(),
+                    'tstamp'   => $now->getTimestamp(),
+                    'crdate'   => $now->getTimestamp(),
                     'type'     => 'group',
                     'handling' => 'exclude',
                     'groups'   => $group['uid']
