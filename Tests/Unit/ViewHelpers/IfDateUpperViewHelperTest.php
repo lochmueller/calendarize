@@ -6,15 +6,15 @@
  */
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
+use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\ViewHelpers\IfDateUpperViewHelper;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
  * Check if a date is upper
  *
  * @author Tim Lochmüller
  */
-class IfDateUpperViewHelperTest extends UnitTestCase
+class IfDateUpperViewHelperTest extends AbstractUnitTest
 {
 
     /**

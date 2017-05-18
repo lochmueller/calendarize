@@ -17,8 +17,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "HDNET\\Calendarize\\Tests\\": "Tests",
-      "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
+      "HDNET\\Calendarize\\Tests\\": "Tests"
     }
   },
   "keywords": [

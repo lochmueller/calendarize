@@ -6,13 +6,13 @@
  */
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
+use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\ViewHelpers\IfDateLowerViewHelper;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
  * Check if a date is lower
  */
-class IfDateLowerViewHelperTest extends UnitTestCase
+class IfDateLowerViewHelperTest extends AbstractUnitTest
 {
 
     /**
