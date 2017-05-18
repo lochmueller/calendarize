@@ -25,5 +25,4 @@ class DateTimeUtilityTest extends AbstractUnitTest
 
         $this->assertEquals($expected, DateTimeUtility::getDaySecondsOfDateTime($dateTime), 'The seconds of the date do not match!');
     }
-
 }

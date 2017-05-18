@@ -74,5 +74,4 @@ class IndexUtilityTest extends AbstractUnitTest
 
         $this->assertFalse(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
     }
-
 }
