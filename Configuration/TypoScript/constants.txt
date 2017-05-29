@@ -28,6 +28,9 @@ plugin.tx_calendarize {
 		# cat=calendarize//0090; type=int[-24-24]; label=list start time offset: The offset for the list start time in hours (also used for latest view)
 		listStartTimeOffsetHours = 0
 
+		# cat=calendarize//0100; type=string; label=Search end modifier: The modifier for the search end date in the search form
+		searchEndModifier = +1 month
+
 		feed {
 			# cat=calendarize//0080; type=string; label=Title of the Feed: The feed title for atom and xml/rss
 			title = Title of the feed

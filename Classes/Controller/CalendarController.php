@@ -449,7 +449,7 @@ class CalendarController extends AbstractController
             $startDate = clone $baseDate;
         }
         if (!($endDate instanceof \DateTimeInterface)) {
-            $baseDate->modify('+1 month');
+            $baseDate->modify($this->settings['searchEndModifier']);
             $endDate = $baseDate;
         }
 
