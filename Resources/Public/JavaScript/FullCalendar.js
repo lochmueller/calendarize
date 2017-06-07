@@ -14,7 +14,7 @@ if (window.jQuery) {
 
 			jQuery('.regularMonthView').hide();
 			$monthCalendar.fullCalendar({
-				lang: language, firstDay: monthFirstDay, header: {
+				locale: language, firstDay: monthFirstDay, header: {
 					left: '', center: '', right: ''
 				}, defaultDate: monthEventsCurrentDate, events: monthEvents
 			});
