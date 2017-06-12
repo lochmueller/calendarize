@@ -3,7 +3,6 @@
 /**
  * IndexUtilityTest
  */
-
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -20,7 +19,6 @@ class IndexUtilityTest extends AbstractUnitTest
      */
     public function testIndexInRange()
     {
-
         $index = new Index();
         $startDate = new \DateTime('23.04.1988 04:36:34');
         $endDate = clone $startDate;
@@ -40,7 +38,6 @@ class IndexUtilityTest extends AbstractUnitTest
      */
     public function testIndexBeforeRange()
     {
-
         $index = new Index();
         $startDate = new \DateTime('23.04.1980 04:36:34');
         $endDate = clone $startDate;
@@ -60,7 +57,6 @@ class IndexUtilityTest extends AbstractUnitTest
      */
     public function testIndexAfterRange()
     {
-
         $index = new Index();
         $startDate = new \DateTime('23.04.1990 04:36:34');
         $endDate = clone $startDate;

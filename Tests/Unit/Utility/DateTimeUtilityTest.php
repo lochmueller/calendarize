@@ -3,7 +3,6 @@
 /**
  * DateTimeUtilityTest
  */
-
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
@@ -19,7 +18,6 @@ class DateTimeUtilityTest extends AbstractUnitTest
      */
     public function testDaySecondsOfDateTime()
     {
-
         $dateTime = new \DateTime('23.04.1987 04:36:34');
         $expected = 16594;
 
