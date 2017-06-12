@@ -415,7 +415,7 @@ class BackendTypo3 extends AbstractBackend
             $calendarId,
             $objectUri,
             $calendarData,
-            $now->getTimestamp();
+            $now->getTimestamp()
         ]);
         $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET tstamp = tstamp + 1 WHERE uid = ? AND deleted = 0');
         $stmt->execute([
