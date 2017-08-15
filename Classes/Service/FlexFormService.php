@@ -2,7 +2,6 @@
 /**
  * Work on flex forms
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
@@ -11,7 +10,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Work on flex forms
  *
- * @author Tim Lochmüller
  */
 class FlexFormService extends AbstractService
 {

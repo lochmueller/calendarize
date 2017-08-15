@@ -2,7 +2,6 @@
 /**
  * Helper Utility
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Utility;
 
@@ -18,7 +17,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 /**
  * Helper Utility
  *
- * @author Tim Lochmüller
  */
 class HelperUtility
 {

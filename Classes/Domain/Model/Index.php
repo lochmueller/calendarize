@@ -2,7 +2,6 @@
 /**
  * Index information
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Domain\Model;
 

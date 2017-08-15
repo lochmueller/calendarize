@@ -2,7 +2,6 @@
 /**
  * Index the given events
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
@@ -16,7 +15,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * Index the given events
  *
- * @author Tim Lochmüller
  */
 class IndexerService extends AbstractService
 {

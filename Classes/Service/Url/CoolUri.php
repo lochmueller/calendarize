@@ -2,7 +2,6 @@
 /**
  * CoolUri
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\Url;
 

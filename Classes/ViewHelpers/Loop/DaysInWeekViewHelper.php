@@ -2,14 +2,12 @@
 /**
  * Days in week view helper
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
  * Days in week view helper
  *
- * @author Tim Lochmüller
  */
 class DaysInWeekViewHelper extends AbstractLoopViewHelper
 {

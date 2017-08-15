@@ -2,14 +2,12 @@
 /**
  * Uri to the day
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
  * Uri to the day
  *
- * @author Tim Lochmüller
  */
 class DayViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\DayViewHelper
 {

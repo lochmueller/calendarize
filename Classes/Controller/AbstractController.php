@@ -2,7 +2,6 @@
 /**
  * Abstract controller
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Controller;
 

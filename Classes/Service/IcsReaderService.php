@@ -2,7 +2,6 @@
 /**
  * ICS Service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
@@ -13,7 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * ICS Service
  *
- * @author Tim Lochmüller
  */
 class IcsReaderService extends AbstractService
 {

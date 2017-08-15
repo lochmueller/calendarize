@@ -2,7 +2,6 @@
 /**
  * Link to the booking page
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Domain\Model\Index;
 /**
  * Link to the booking page
  *
- * @author Tim Lochmüller
  */
 class BookingViewHelper extends AbstractLinkViewHelper
 {

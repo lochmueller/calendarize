@@ -2,7 +2,6 @@
 /**
  * Modify a DateTime
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 /**
  * Modify a DateTime@
  *
- * @author Tim Lochmüller
  */
 class ModifyViewHelper extends AbstractViewHelper
 {

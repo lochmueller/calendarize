@@ -2,7 +2,6 @@
 /**
  * Command controller abstraction
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Command;
 
@@ -13,7 +12,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 /**
  * Command controller abstraction
  *
- * @author Tim Lochmüller
  */
 abstract class AbstractCommandController extends CommandController
 {

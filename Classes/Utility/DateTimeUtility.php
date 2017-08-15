@@ -2,7 +2,6 @@
 /**
  * DateTime Utility
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Utility;
 
@@ -11,7 +10,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * DateTime Utility
  *
- * @author Tim Lochmüller
  */
 class DateTimeUtility
 {

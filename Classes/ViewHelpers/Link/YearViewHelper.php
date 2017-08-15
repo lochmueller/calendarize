@@ -2,14 +2,12 @@
 /**
  * Link to the year
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
  * Link to the year
  *
- * @author Tim Lochmüller
  */
 class YearViewHelper extends AbstractLinkViewHelper
 {

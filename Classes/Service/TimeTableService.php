@@ -2,7 +2,6 @@
 /**
  * Time table builder service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
@@ -18,7 +17,6 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 /**
  * Time table builder service
  *
- * @author Tim Lochmüller
  */
 class TimeTableService extends AbstractService
 {

@@ -2,7 +2,6 @@
 /**
  * Link to anything ;)
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
@@ -12,7 +11,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 /**
  * Link to anything ;)
  *
- * @author Tim Lochmüller
  */
 abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
 {

@@ -11,7 +11,6 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 /**
  * Class SysFileReference
  *
- * @author  Carsten Biebricher <carsten.biebricher@hdnet.de>
  *
  * @db sys_category
  */

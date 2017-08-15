@@ -2,7 +2,6 @@
 /**
  * Recurrence service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 /**
  * Recurrence service
  *
- * @author Tim Lochmüller
  */
 class RecurrenceService extends AbstractService
 {

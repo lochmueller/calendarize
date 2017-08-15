@@ -2,7 +2,6 @@
 /**
  * Time service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\TimeTable;
 
@@ -19,7 +18,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Time service
  *
- * @author Tim Lochmüller
  */
 class TimeTimeTable extends AbstractTimeTable
 {

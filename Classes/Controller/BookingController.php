@@ -2,7 +2,6 @@
 /**
  * BookingController
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Controller;
 

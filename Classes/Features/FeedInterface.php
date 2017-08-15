@@ -2,7 +2,6 @@
 /**
  * Feed interface
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Features;
 

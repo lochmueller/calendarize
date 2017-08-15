@@ -2,7 +2,6 @@
 /**
  * Check if a date is lower
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 

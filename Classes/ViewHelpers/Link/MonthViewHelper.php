@@ -2,14 +2,12 @@
 /**
  * Link to the month
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
  * Link to the month
  *
- * @author Tim Lochmüller
  */
 class MonthViewHelper extends AbstractLinkViewHelper
 {

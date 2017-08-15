@@ -2,14 +2,12 @@
 /**
  * Weeks in month view helper
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
  * Weeks in month view helper
  *
- * @author Tim Lochmüller
  */
 class WeeksInMonthViewHelper extends AbstractLoopViewHelper
 {

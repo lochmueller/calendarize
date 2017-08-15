@@ -2,7 +2,6 @@
 /**
  * Check if the given Index is on the given day
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
@@ -14,7 +13,6 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 /**
  * Check if the given Index is on the given day
  *
- * @author Tim Lochmüller
  */
 class IndexOnDayViewHelper extends AbstractViewHelper
 {

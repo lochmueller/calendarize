@@ -2,7 +2,6 @@
 /**
  * Check if a date is upper
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 /**
  * Check if a date is upper
  *
- * @author Tim Lochmüller
  */
 class IfDateUpperViewHelper extends AbstractViewHelper
 {

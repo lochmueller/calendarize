@@ -2,7 +2,6 @@
 /**
  * TCA service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
@@ -17,7 +16,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * TCA service
  *
- * @author Tim Lochmüller
  */
 class TcaService extends AbstractService
 {

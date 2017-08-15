@@ -2,14 +2,12 @@
 /**
  * Link to the day
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
  * Link to the day
  *
- * @author Tim Lochmüller
  */
 class DayViewHelper extends AbstractLinkViewHelper
 {

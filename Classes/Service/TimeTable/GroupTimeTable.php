@@ -2,7 +2,6 @@
 /**
  * Group service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\TimeTable;
 
@@ -12,7 +11,6 @@ use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 /**
  * Group service
  *
- * @author Tim Lochmüller
  */
 class GroupTimeTable extends AbstractTimeTable
 {

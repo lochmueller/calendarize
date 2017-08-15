@@ -2,7 +2,6 @@
 /**
  * Event utility
  *
- * @author  Carsten Biebricher
  */
 namespace HDNET\Calendarize\Utility;
 

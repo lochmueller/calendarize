@@ -2,7 +2,6 @@
 /**
  * Cleanup the event models
  *
- * @author  Carsten Biebricher
  */
 namespace HDNET\Calendarize\Command;
 

@@ -2,7 +2,6 @@
 /**
  * Uri to the week
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 

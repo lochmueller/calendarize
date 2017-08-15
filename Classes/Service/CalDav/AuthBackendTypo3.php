@@ -2,7 +2,6 @@
 /**
  * TYPO3 Auth backend
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\CalDav;
 

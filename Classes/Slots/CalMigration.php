@@ -2,7 +2,6 @@
 /**
  * CalMigration
  *
- * @author  Carsten Biebricher <cabi@lernziel.de>
  */
 namespace HDNET\Calendarize\Slots;
 
@@ -12,7 +11,6 @@ use HDNET\Calendarize\Utility\HelperUtility;
 /**
  * CalMigration
  *
- * @author Carsten Biebricher <cabi@lernziel.de>
  */
 class CalMigration
 {

@@ -2,7 +2,6 @@
 /**
  * PrincipalBackendTypo3
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\CalDav;
 

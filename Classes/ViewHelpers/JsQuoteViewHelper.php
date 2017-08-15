@@ -2,7 +2,6 @@
 /**
  * Quote JS
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers;
 

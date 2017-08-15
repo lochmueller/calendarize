@@ -2,7 +2,6 @@
 /**
  * Render the CMS layout
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Hooks;
 

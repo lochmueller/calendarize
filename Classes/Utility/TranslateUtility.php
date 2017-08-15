@@ -2,7 +2,6 @@
 /**
  * Translate helper
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Utility;
 

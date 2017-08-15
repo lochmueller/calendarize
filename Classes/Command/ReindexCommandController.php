@@ -2,7 +2,6 @@
 /**
  * Reindex the event models
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Command;
 

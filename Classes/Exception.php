@@ -2,7 +2,6 @@
 /**
  * Calendarize logical exception
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize;
 

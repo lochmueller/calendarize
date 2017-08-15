@@ -2,14 +2,12 @@
 /**
  * Months in year view Helper
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
  * Months in year view Helper
  *
- * @author Tim Lochmüller
  */
 class MonthsInYearViewHelper extends AbstractLoopViewHelper
 {

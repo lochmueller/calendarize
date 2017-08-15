@@ -2,14 +2,12 @@
 /**
  * Configuration Utility
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Utility;
 
 /**
  * Configuration Utility
  *
- * @author Tim Lochmüller
  */
 class ConfigurationUtility
 {

@@ -2,7 +2,6 @@
 /**
  * Backend for events
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\CalDav;
 

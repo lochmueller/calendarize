@@ -2,7 +2,6 @@
 /**
  * Abstract time table service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\TimeTable;
 
@@ -13,7 +12,6 @@ use HDNET\Calendarize\Service\AbstractService;
 /**
  * Abstract time table service
  *
- * @author Tim Lochmüller
  */
 abstract class AbstractTimeTable extends AbstractService
 {

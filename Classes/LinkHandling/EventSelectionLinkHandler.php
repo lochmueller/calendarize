@@ -2,7 +2,6 @@
 /**
  * EventSelectionLinkHandler
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\LinkHandling;
 

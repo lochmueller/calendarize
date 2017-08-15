@@ -2,7 +2,6 @@
 /**
  * Hook for data map processing
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Hooks;
 

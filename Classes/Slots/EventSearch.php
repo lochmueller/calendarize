@@ -2,7 +2,6 @@
 /**
  * Event search service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Slots;
 
@@ -14,7 +13,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * Event search service
  *
- * @author Tim Lochmüller
  */
 class EventSearch
 {

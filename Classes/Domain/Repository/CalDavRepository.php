@@ -2,7 +2,6 @@
 /**
  * CalDav repository
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Domain\Repository;
 

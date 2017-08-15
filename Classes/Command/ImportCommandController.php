@@ -2,7 +2,6 @@
 /**
  * Import
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Command;
 
@@ -15,7 +14,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 /**
  * Import
  *
- * @author Tim Lochmüller
  */
 class ImportCommandController extends AbstractCommandController
 {

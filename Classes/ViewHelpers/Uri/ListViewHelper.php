@@ -2,7 +2,6 @@
 /**
  * Uri to the list
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 

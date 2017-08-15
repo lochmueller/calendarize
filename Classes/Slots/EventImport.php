@@ -2,7 +2,6 @@
 /**
  * Import default events
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Slots;
 

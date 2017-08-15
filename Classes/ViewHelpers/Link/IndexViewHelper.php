@@ -2,7 +2,6 @@
 /**
  * Link to the index
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Domain\Model\Index;
 /**
  * Link to the index
  *
- * @author Tim Lochmüller
  */
 class IndexViewHelper extends AbstractLinkViewHelper
 {

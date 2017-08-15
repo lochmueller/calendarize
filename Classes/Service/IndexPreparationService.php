@@ -3,7 +3,6 @@
  * Helper class for the IndexService
  * Prepare the index
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 

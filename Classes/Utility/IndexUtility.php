@@ -2,7 +2,6 @@
 /**
  * Index utility
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Utility;
 

@@ -2,7 +2,6 @@
 /**
  * Create the needed database fields
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Slots;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Register;
 /**
  * Create the needed database fields
  *
- * @author Tim Lochmüller
  */
 class Database
 {

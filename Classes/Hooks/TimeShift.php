@@ -2,7 +2,6 @@
 /**
  * Time shift function
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Hooks;
 

@@ -2,7 +2,6 @@
 /**
  * Realurl configuration
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Hooks;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Service\Url\RealUrl;
 /**
  * Realurl configuration
  *
- * @author Tim Lochmüller
  */
 class RealurlConfiguration extends AbstractHook
 {

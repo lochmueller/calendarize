@@ -2,7 +2,6 @@
 /**
  * Hook for cmd map processing
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Hooks;
 

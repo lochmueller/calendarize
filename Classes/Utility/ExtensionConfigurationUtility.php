@@ -2,7 +2,6 @@
 /**
  * ExtensionConfiguration Utility
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Utility;
 
@@ -13,7 +12,6 @@ use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 /**
  * ExtensionConfiguration Utility
  *
- * @author Tim Lochmüller
  */
 class ExtensionConfigurationUtility
 {

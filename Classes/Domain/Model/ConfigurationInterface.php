@@ -2,7 +2,6 @@
 /**
  * Configuration Interface for constants
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Domain\Model;
 

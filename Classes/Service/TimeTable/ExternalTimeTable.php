@@ -2,7 +2,6 @@
 /**
  * External service
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service\TimeTable;
 
@@ -16,7 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * External service
  *
- * @author Tim Lochmüller
  */
 class ExternalTimeTable extends AbstractTimeTable
 {

@@ -11,7 +11,6 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 /**
  * Class SysFileReference
  *
- * @author  Carsten Biebricher <carsten.biebricher@hdnet.de>
  *
  * @db sys_file_reference
  */

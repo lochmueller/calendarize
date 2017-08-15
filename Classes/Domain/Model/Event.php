@@ -2,7 +2,6 @@
 /**
  * Event (Default) for the calendarize function
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Domain\Model;
 

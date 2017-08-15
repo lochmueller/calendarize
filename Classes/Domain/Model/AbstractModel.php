@@ -2,7 +2,6 @@
 /**
  * Model Abstraction
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Domain\Model;
 

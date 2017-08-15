@@ -2,14 +2,12 @@
 /**
  * Link to the week
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
  * Link to the week
  *
- * @author Tim Lochmüller
  */
 class WeekViewHelper extends AbstractLinkViewHelper
 {

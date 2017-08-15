@@ -2,7 +2,6 @@
 /**
  * Check if a date is lower
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers;
 
@@ -11,7 +10,6 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 /**
  * Check if a date is lower
  *
- * @author Tim Lochmüller
  */
 class IfDateLowerViewHelper extends AbstractViewHelper
 {

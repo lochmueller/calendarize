@@ -2,7 +2,6 @@
 /**
  * LanguageViewHelper
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\ViewHelpers;
 

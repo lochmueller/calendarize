@@ -2,7 +2,6 @@
 /**
  * Register the calendarize objects
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize;
 

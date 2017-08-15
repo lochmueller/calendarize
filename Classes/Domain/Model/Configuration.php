@@ -2,7 +2,6 @@
 /**
  * Configuration for time options
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Domain\Model;
 

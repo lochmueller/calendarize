@@ -2,14 +2,12 @@
 /**
  * Layout for BE content elements
  *
- * @author  Tim Lochmüller
  */
 namespace HDNET\Calendarize\Service;
 
 /**
  * Layout for BE content elements
  *
- * @author Tim Lochmüller
  */
 class ContentElementLayoutService extends AbstractService
 {
