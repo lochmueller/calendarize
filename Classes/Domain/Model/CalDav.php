@@ -2,7 +2,6 @@
 /**
  * CalDav configuration.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**

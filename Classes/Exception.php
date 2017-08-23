@@ -2,7 +2,6 @@
 /**
  * Calendarize logical exception.
  */
-
 namespace HDNET\Calendarize;
 
 /**

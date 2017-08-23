@@ -2,7 +2,6 @@
 /**
  * DateTime Utility.
  */
-
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Utility\MathUtility;

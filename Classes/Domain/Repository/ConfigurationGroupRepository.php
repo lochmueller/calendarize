@@ -2,7 +2,6 @@
 /**
  * Configuration group repository.
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 /**

@@ -2,7 +2,6 @@
 /**
  * Index information.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Exception;

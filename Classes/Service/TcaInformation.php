@@ -2,7 +2,6 @@
 /**
  * TCA information.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;

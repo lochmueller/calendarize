@@ -2,7 +2,6 @@
 /**
  * Quote JS.
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;

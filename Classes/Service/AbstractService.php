@@ -2,7 +2,6 @@
 /**
  * Service abstraction.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Core\SingletonInterface;

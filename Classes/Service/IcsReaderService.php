@@ -2,7 +2,6 @@
 /**
  * ICS Service.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;

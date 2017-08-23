@@ -2,7 +2,6 @@
 /**
  * Helper Utility.
  */
-
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;

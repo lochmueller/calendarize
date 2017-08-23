@@ -2,7 +2,6 @@
 /**
  * Check if the given Index is on the given day.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;

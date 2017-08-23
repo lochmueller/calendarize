@@ -2,7 +2,6 @@
 /**
  * Time shift function.
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;

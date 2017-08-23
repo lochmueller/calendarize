@@ -2,7 +2,6 @@
 /**
  * Uri to the month.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**

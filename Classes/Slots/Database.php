@@ -2,7 +2,6 @@
 /**
  * Create the needed database fields.
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Register;

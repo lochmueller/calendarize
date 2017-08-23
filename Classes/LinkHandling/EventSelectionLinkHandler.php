@@ -2,7 +2,6 @@
 /**
  * EventSelectionLinkHandler.
  */
-
 namespace HDNET\Calendarize\LinkHandling;
 
 use Psr\Http\Message\ServerRequestInterface;

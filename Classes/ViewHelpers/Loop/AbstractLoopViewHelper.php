@@ -2,7 +2,6 @@
 /**
  * Abstraction for loop view helper.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;

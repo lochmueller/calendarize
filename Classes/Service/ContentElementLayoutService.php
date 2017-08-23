@@ -2,7 +2,6 @@
 /**
  * Layout for BE content elements.
  */
-
 namespace HDNET\Calendarize\Service;
 
 /**

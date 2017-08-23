@@ -2,7 +2,6 @@
 /**
  * Link to the list.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**

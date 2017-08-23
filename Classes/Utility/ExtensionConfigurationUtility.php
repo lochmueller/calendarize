@@ -2,7 +2,6 @@
 /**
  * ExtensionConfiguration Utility.
  */
-
 namespace HDNET\Calendarize\Utility;
 
 use Exception;

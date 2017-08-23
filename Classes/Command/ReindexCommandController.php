@@ -2,7 +2,6 @@
 /**
  * Reindex the event models.
  */
-
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Service\IndexerService;

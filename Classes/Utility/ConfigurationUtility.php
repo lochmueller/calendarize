@@ -2,7 +2,6 @@
 /**
  * Configuration Utility.
  */
-
 namespace HDNET\Calendarize\Utility;
 
 /**

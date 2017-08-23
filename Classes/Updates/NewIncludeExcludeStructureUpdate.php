@@ -3,7 +3,6 @@
 /**
  * NewIncludeExcludeStructureUpdate.
  */
-
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;

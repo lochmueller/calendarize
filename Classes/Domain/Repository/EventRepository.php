@@ -2,7 +2,6 @@
 /**
  * Event repository.
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;

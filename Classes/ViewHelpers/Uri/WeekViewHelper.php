@@ -2,7 +2,6 @@
 /**
  * Uri to the week.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**

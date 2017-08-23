@@ -2,7 +2,6 @@
 /**
  * Group service.
  */
-
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;

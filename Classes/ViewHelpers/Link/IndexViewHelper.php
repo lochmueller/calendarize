@@ -2,7 +2,6 @@
 /**
  * Link to the index.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use HDNET\Calendarize\Domain\Model\Index;

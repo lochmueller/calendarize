@@ -2,7 +2,6 @@
 /**
  * Event (Default) for the calendarize function.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Features\FeedInterface;

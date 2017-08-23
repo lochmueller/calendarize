@@ -2,7 +2,6 @@
 /**
  * RealUrl.
  */
-
 namespace HDNET\Calendarize\Service\Url;
 
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;

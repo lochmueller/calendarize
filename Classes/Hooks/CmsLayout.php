@@ -2,7 +2,6 @@
 /**
  * Render the CMS layout.
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;

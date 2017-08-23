@@ -2,7 +2,6 @@
 /**
  * Link to the day.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**

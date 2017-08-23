@@ -3,7 +3,6 @@
  * Helper class for the IndexService
  * Prepare the index.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;

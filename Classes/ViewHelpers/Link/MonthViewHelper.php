@@ -2,7 +2,6 @@
 /**
  * Link to the month.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**

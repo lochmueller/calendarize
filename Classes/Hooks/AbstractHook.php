@@ -3,7 +3,6 @@
 /**
  * Abstraction of hooks.
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 /**

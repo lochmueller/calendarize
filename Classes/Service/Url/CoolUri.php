@@ -2,7 +2,6 @@
 /**
  * CoolUri.
  */
-
 namespace HDNET\Calendarize\Service\Url;
 
 use Bednarik\Cooluri\Core\Functions;

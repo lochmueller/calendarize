@@ -2,7 +2,6 @@
 /**
  * Configuration repository.
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 /**

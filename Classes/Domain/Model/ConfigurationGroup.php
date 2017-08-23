@@ -2,7 +2,6 @@
 /**
  * Logical configuration group.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**

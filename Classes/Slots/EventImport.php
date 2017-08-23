@@ -2,7 +2,6 @@
 /**
  * Import default events.
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Command\ImportCommandController;

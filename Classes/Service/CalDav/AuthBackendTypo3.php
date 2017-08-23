@@ -2,7 +2,6 @@
 /**
  * TYPO3 Auth backend.
  */
-
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Domain\Repository\CalDavRepository;

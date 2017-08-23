@@ -2,7 +2,6 @@
 /**
  * Check if a date is upper.
  */
-
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
