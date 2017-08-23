@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Wrapper for the Cal Dav structure
+ * Wrapper for the Cal Dav structure.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\CalDav\AuthBackendTypo3;
@@ -18,13 +19,12 @@ use Sabre\DAV\Server;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Wrapper for the Cal Dav structure
+ * Wrapper for the Cal Dav structure.
  */
 class CalDav extends AbstractService
 {
-
     /**
-     * Build up the Cal DAV wrapper
+     * Build up the Cal DAV wrapper.
      *
      * @throws \Exception
      */
@@ -34,7 +34,7 @@ class CalDav extends AbstractService
     }
 
     /**
-     * Run the server
+     * Run the server.
      */
     public function runServer($calendarId)
     {
@@ -74,17 +74,18 @@ class CalDav extends AbstractService
     /**
      * @param $calendarId
      *
-     * @return array|FALSE|NULL
+     * @return array|false|null
      */
     protected function getConfiguration($calendarId)
     {
         $db = HelperUtility::getDatabaseConnection();
         $table = 'tx_calendarize_domain_model_caldav';
+
         return $db->exec_SELECTgetSingleRow('*', $table, 'title=' . $db->fullQuoteStr($calendarId, $table));
     }
 
     /**
-     * Check the environment
+     * Check the environment.
      *
      * @throws \Exception
      */

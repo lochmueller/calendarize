@@ -1,21 +1,19 @@
 <?php
 /**
- * Create the needed database fields
- *
+ * Create the needed database fields.
  */
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Register;
 
 /**
- * Create the needed database fields
- *
+ * Create the needed database fields.
  */
 class Database
 {
-
     /**
-     * Add the smart object SQL string the the signal below
+     * Add the smart object SQL string the the signal below.
      *
      * @signalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
      * @signalName tablesDefinitionIsBeingBuilt
@@ -27,11 +25,12 @@ class Database
     public function loadCalendarizeTables(array $sqlString)
     {
         $sqlString[] = $this->getCalendarizeDatabaseString();
+
         return ['sqlString' => $sqlString];
     }
 
     /**
-     * Get  the calendarize string for the registered tables
+     * Get  the calendarize string for the registered tables.
      *
      * @return string
      */
@@ -43,11 +42,12 @@ class Database
 			calendarize tinytext
 			);';
         }
+
         return implode(LF, $sql);
     }
 
     /**
-     * Add the smart object SQL string the the signal below
+     * Add the smart object SQL string the the signal below.
      *
      * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
      * @signalName tablesDefinitionIsBeingBuilt
@@ -60,9 +60,10 @@ class Database
     public function updateCalendarizeTables(array $sqlString, $extensionKey)
     {
         $sqlString[] = $this->getCalendarizeDatabaseString();
+
         return [
-            'sqlString'    => $sqlString,
-            'extensionKey' => $extensionKey
+            'sqlString' => $sqlString,
+            'extensionKey' => $extensionKey,
         ];
     }
 }

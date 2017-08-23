@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TCA Structure for Configurations
+ * TCA Structure for Configurations.
  */
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
@@ -62,7 +62,7 @@ $custom = [
         ],
         'typeicon_column' => 'type',
         'requestUpdate' => 'all_day,frequency,handling',
-        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle'
+        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle',
     ],
     'columns' => [
         'type' => [
@@ -72,19 +72,19 @@ $custom = [
                 'items' => [
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
-                        Configuration::TYPE_TIME
+                        Configuration::TYPE_TIME,
                     ],
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_GROUP),
-                        Configuration::TYPE_GROUP
+                        Configuration::TYPE_GROUP,
                     ],
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXTERNAL),
-                        Configuration::TYPE_EXTERNAL
+                        Configuration::TYPE_EXTERNAL,
                     ],
                 ],
-                'default' => Configuration::TYPE_TIME
-            ]
+                'default' => Configuration::TYPE_TIME,
+            ],
         ],
         'handling' => [
             'config' => [
@@ -93,19 +93,19 @@ $custom = [
                 'items' => [
                     [
                         TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_INCLUDE),
-                        Configuration::HANDLING_INCLUDE
+                        Configuration::HANDLING_INCLUDE,
                     ],
                     [
                         TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_EXCLUDE),
-                        Configuration::HANDLING_EXCLUDE
+                        Configuration::HANDLING_EXCLUDE,
                     ],
                     [
                         TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_OVERRIDE),
-                        Configuration::HANDLING_OVERRIDE
+                        Configuration::HANDLING_OVERRIDE,
                     ],
                 ],
-                'default' => Configuration::HANDLING_INCLUDE
-            ]
+                'default' => Configuration::HANDLING_INCLUDE,
+            ],
         ],
         'state' => [
             'config' => [
@@ -114,14 +114,14 @@ $custom = [
                 'items' => [
                     [
                         '',
-                        Configuration::STATE_DEFAULT
+                        Configuration::STATE_DEFAULT,
                     ],
                     [
                         'Canceled',
-                        Configuration::STATE_CANCELED
+                        Configuration::STATE_CANCELED,
                     ],
                 ],
-                'default' => Configuration::STATE_DEFAULT
+                'default' => Configuration::STATE_DEFAULT,
             ],
         ],
         'start_date' => [
@@ -198,26 +198,26 @@ $custom = [
                 'items' => [
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_NONE),
-                        Configuration::FREQUENCY_NONE
+                        Configuration::FREQUENCY_NONE,
                     ],
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_DAILY),
-                        Configuration::FREQUENCY_DAILY
+                        Configuration::FREQUENCY_DAILY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_WEEKLY),
-                        Configuration::FREQUENCY_WEEKLY
+                        Configuration::FREQUENCY_WEEKLY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_MONTHLY),
-                        Configuration::FREQUENCY_MONTHLY
+                        Configuration::FREQUENCY_MONTHLY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_YEARLY),
-                        Configuration::FREQUENCY_YEARLY
+                        Configuration::FREQUENCY_YEARLY,
                     ],
                 ],
-                'default' => Configuration::FREQUENCY_NONE
+                'default' => Configuration::FREQUENCY_NONE,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -272,50 +272,50 @@ $custom = [
                 'items' => [
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
-                        Configuration::DAY_SPECIAL_WEEKDAY
+                        Configuration::DAY_SPECIAL_WEEKDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS),
-                        Configuration::DAY_SPECIAL_BUSINESS
+                        Configuration::DAY_SPECIAL_BUSINESS,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY),
-                        Configuration::DAY_SPECIAL_WORKDAY
+                        Configuration::DAY_SPECIAL_WORKDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND),
-                        Configuration::DAY_SPECIAL_WEEKEND
+                        Configuration::DAY_SPECIAL_WEEKEND,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_MONDAY),
-                        Configuration::DAY_MONDAY
+                        Configuration::DAY_MONDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_TUESDAY),
-                        Configuration::DAY_TUESDAY
+                        Configuration::DAY_TUESDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_WEDNESDAY),
-                        Configuration::DAY_WEDNESDAY
+                        Configuration::DAY_WEDNESDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_THURSDAY),
-                        Configuration::DAY_THURSDAY
+                        Configuration::DAY_THURSDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_FRIDAY),
-                        Configuration::DAY_FRIDAY
+                        Configuration::DAY_FRIDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SATURDAY),
-                        Configuration::DAY_SATURDAY
+                        Configuration::DAY_SATURDAY,
                     ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SUNDAY),
-                        Configuration::DAY_SUNDAY
+                        Configuration::DAY_SUNDAY,
                     ],
                 ],
-                'default' => Configuration::DAY_SPECIAL_WEEKDAY
+                'default' => Configuration::DAY_SPECIAL_WEEKDAY,
             ],
             'displayCond' => [
                 'OR' => [
@@ -331,42 +331,42 @@ $custom = [
                 'items' => [
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NONE),
-                        Configuration::RECURRENCE_NONE
+                        Configuration::RECURRENCE_NONE,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FIRST),
-                        Configuration::RECURRENCE_FIRST
+                        Configuration::RECURRENCE_FIRST,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_SECOND),
-                        Configuration::RECURRENCE_SECOND
+                        Configuration::RECURRENCE_SECOND,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_THIRD),
-                        Configuration::RECURRENCE_THIRD
+                        Configuration::RECURRENCE_THIRD,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FOURTH),
-                        Configuration::RECURRENCE_FOURTH
+                        Configuration::RECURRENCE_FOURTH,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FIFTH),
-                        Configuration::RECURRENCE_FIFTH
+                        Configuration::RECURRENCE_FIFTH,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_LAST),
-                        Configuration::RECURRENCE_LAST
+                        Configuration::RECURRENCE_LAST,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST),
-                        Configuration::RECURRENCE_NEXT_TO_LAST
+                        Configuration::RECURRENCE_NEXT_TO_LAST,
                     ],
                     [
                         TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_THIRD_LAST),
-                        Configuration::RECURRENCE_THIRD_LAST
+                        Configuration::RECURRENCE_THIRD_LAST,
                     ],
                 ],
-                'default' => Configuration::RECURRENCE_NONE
+                'default' => Configuration::RECURRENCE_NONE,
             ],
             'displayCond' => [
                 'OR' => [
@@ -379,7 +379,7 @@ $custom = [
             'config' => [
                 'readOnly' => true,
             ],
-        ]
+        ],
     ],
     'palettes' => [
         'base' => [
@@ -413,7 +413,7 @@ $custom = [
         Configuration::TYPE_EXTERNAL => [
             'showitem' => $baseConfiguration . ',external_ics_url' . $extendTab,
         ],
-    ]
+    ],
 ];
 
 $tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);

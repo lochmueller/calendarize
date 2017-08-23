@@ -1,21 +1,20 @@
 <?php
 /**
- * Configuration for time options
- *
+ * Configuration for time options.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * Configuration for time options
+ * Configuration for time options.
  *
  * @db
  * @smartExclude Language
  */
 class Configuration extends AbstractModel implements ConfigurationInterface
 {
-
     /**
-     * Type
+     * Type.
      *
      * @var string
      * @db
@@ -23,7 +22,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $type = self::TYPE_TIME;
 
     /**
-     * Handling
+     * Handling.
      *
      * @var string
      * @db
@@ -31,7 +30,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $handling = self::HANDLING_INCLUDE;
 
     /**
-     * State
+     * State.
      *
      * @var string
      * @db
@@ -39,7 +38,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $state = self::STATE_DEFAULT;
 
     /**
-     * Start date
+     * Start date.
      *
      * @var \DateTime
      * @db
@@ -47,7 +46,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $startDate;
 
     /**
-     * End date
+     * End date.
      *
      * @var \DateTime
      * @db
@@ -55,7 +54,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $endDate;
 
     /**
-     * Start time
+     * Start time.
      *
      * @var int
      * @db
@@ -63,7 +62,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $startTime;
 
     /**
-     * End time
+     * End time.
      *
      * @var int
      * @db
@@ -71,7 +70,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $endTime;
 
     /**
-     * AllDay
+     * AllDay.
      *
      * @var bool
      * @db
@@ -79,7 +78,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $allDay;
 
     /**
-     * External ICS url
+     * External ICS url.
      *
      * @var string
      * @db
@@ -87,7 +86,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $externalIcsUrl;
 
     /**
-     * Groups
+     * Groups.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\ConfigurationGroup>
      * @db text
@@ -96,7 +95,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $groups;
 
     /**
-     * Frequency
+     * Frequency.
      *
      * @var string
      * @db
@@ -104,7 +103,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $frequency = self::FREQUENCY_NONE;
 
     /**
-     * Till date
+     * Till date.
      *
      * @var \DateTime
      * @db
@@ -112,15 +111,15 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $tillDate;
 
     /**
-     * Counter amount
+     * Counter amount.
      *
-     * @var  int
+     * @var int
      * @db
      */
     protected $counterAmount;
 
     /**
-     * Counter interval
+     * Counter interval.
      *
      * @var int
      * @db
@@ -128,7 +127,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $counterInterval;
 
     /**
-     * Recurrence
+     * Recurrence.
      *
      * @var string
      * @db
@@ -136,7 +135,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $recurrence = self::RECURRENCE_NONE;
 
     /**
-     * Day property
+     * Day property.
      *
      * @var string
      * @db
@@ -144,7 +143,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $day = self::DAY_NONE;
 
     /**
-     * Import ID if the item is based on an ICS structure
+     * Import ID if the item is based on an ICS structure.
      *
      * @var string
      * @db
@@ -160,7 +159,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -170,11 +169,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
-     *
-     * @return void
      */
     public function setType($type)
     {
@@ -182,27 +179,27 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Is all day
+     * Is all day.
      *
      * @return bool
      */
     public function isAllDay()
     {
-        return (bool)$this->allDay;
+        return (bool) $this->allDay;
     }
 
     /**
-     * Set all day
+     * Set all day.
      *
      * @param bool $allDay
      */
     public function setAllDay($allDay)
     {
-        $this->allDay = (bool)$allDay;
+        $this->allDay = (bool) $allDay;
     }
 
     /**
-     * Get end date
+     * Get end date.
      *
      * @return \DateTime
      */
@@ -212,7 +209,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set end date
+     * Set end date.
      *
      * @param \DateTime $endDate
      */
@@ -222,7 +219,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get end time
+     * Get end time.
      *
      * @return int
      */
@@ -232,7 +229,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set end time
+     * Set end time.
      *
      * @param int $endTime
      */
@@ -242,7 +239,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get start date
+     * Get start date.
      *
      * @return \DateTime
      */
@@ -252,7 +249,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set start date
+     * Set start date.
      *
      * @param \DateTime $startDate
      */
@@ -262,7 +259,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get start time
+     * Get start time.
      *
      * @return int
      */
@@ -272,7 +269,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set start time
+     * Set start time.
      *
      * @param int $startTime
      */
@@ -282,7 +279,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get groups
+     * Get groups.
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
@@ -292,7 +289,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set groups
+     * Set groups.
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $groups
      */
@@ -302,7 +299,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get frequency
+     * Get frequency.
      *
      * @return string
      */
@@ -312,7 +309,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set frequency
+     * Set frequency.
      *
      * @param string $frequency
      */
@@ -322,7 +319,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get till date
+     * Get till date.
      *
      * @return \DateTime
      */
@@ -332,7 +329,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set till date
+     * Set till date.
      *
      * @param \DateTime $tillDate
      */
@@ -342,7 +339,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get counter amount
+     * Get counter amount.
      *
      * @return int
      */
@@ -352,7 +349,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set counter amount
+     * Set counter amount.
      *
      * @param int $counterAmount
      */
@@ -362,7 +359,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get counter interval
+     * Get counter interval.
      *
      * @return int
      */
@@ -372,7 +369,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set counter interval
+     * Set counter interval.
      *
      * @param int $counterInterval
      */
@@ -382,7 +379,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get external ICS URL
+     * Get external ICS URL.
      *
      * @return string
      */
@@ -392,7 +389,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set external ICS URL
+     * Set external ICS URL.
      *
      * @param string $externalIcsUrl
      */
@@ -402,7 +399,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get day
+     * Get day.
      *
      * @return string
      */
@@ -412,7 +409,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set day
+     * Set day.
      *
      * @param string $day
      */
@@ -422,7 +419,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get recurrence
+     * Get recurrence.
      *
      * @return string
      */
@@ -432,7 +429,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set recurrence
+     * Set recurrence.
      *
      * @param string $recurrence
      */
@@ -442,7 +439,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get handling
+     * Get handling.
      *
      * @return string
      */
@@ -452,7 +449,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set handling
+     * Set handling.
      *
      * @param string $handling
      */
@@ -462,7 +459,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Get state
+     * Get state.
      *
      * @return string
      */
@@ -472,7 +469,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     }
 
     /**
-     * Set state
+     * Set state.
      *
      * @param string $state
      */

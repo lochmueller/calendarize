@@ -1,20 +1,19 @@
 <?php
 /**
- * Quote JS
- *
+ * Quote JS.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Quote JS
+ * Quote JS.
  */
 class JsQuoteViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Render the Quote JS information
+     * Render the Quote JS information.
      *
      * @param string $content
      *
@@ -23,6 +22,7 @@ class JsQuoteViewHelper extends AbstractViewHelper
     public function render($content = null)
     {
         $content = $content === null ? $this->renderChildren() : $content;
+
         return GeneralUtility::quoteJSvalue($content);
     }
 }

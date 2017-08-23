@@ -1,20 +1,20 @@
 <?php
 
 /**
- * TitleTagViewHelper
+ * TitleTagViewHelper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 /**
- * TitleTagViewHelper
+ * TitleTagViewHelper.
  *
  * @see https://github.com/georgringer/news/blob/master/Classes/ViewHelpers/TitleTagViewHelper.php
  */
 class TitleTagViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Render
+     * Render.
      */
     public function render()
     {

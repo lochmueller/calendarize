@@ -1,27 +1,25 @@
 <?php
 /**
- * Check if a date is lower
- *
+ * Check if a date is lower.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
- * Check if a date is lower
- *
+ * Check if a date is lower.
  */
 class IfDateLowerViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Render the view helper
+     * Render the view helper.
      *
      * Note: You have to wrap this view helper in an f:if ViewHelper.
      * This VH just return a boolean evaluation value
      *
      * @param string|\DateTime $base
-     * @param \DateTime $check
+     * @param \DateTime        $check
      *
      * @return string
      */
@@ -29,6 +27,7 @@ class IfDateLowerViewHelper extends AbstractViewHelper
     {
         $base = DateTimeUtility::normalizeDateTimeSingle($base);
         $check = DateTimeUtility::normalizeDateTimeSingle($check);
+
         return $base > $check;
     }
 }

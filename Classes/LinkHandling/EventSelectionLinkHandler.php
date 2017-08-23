@@ -1,8 +1,8 @@
 <?php
 /**
- * EventSelectionLinkHandler
- *
+ * EventSelectionLinkHandler.
  */
+
 namespace HDNET\Calendarize\LinkHandling;
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,20 +12,19 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Recordlist\LinkHandler\PageLinkHandler;
 
 /**
- * EventSelectionLinkHandler
+ * EventSelectionLinkHandler.
  */
 class EventSelectionLinkHandler extends PageLinkHandler
 {
-
     /**
-     * Parts of the current link
+     * Parts of the current link.
      *
      * @var array
      */
     protected $linkParts = [];
 
     /**
-     * Checks if this is the handler for the given link
+     * Checks if this is the handler for the given link.
      *
      * The handler may store this information locally for later usage.
      *
@@ -36,11 +35,12 @@ class EventSelectionLinkHandler extends PageLinkHandler
     public function canHandleLink(array $linkParts)
     {
         $this->linkParts = $linkParts;
+
         return true;
     }
 
     /**
-     * Format the current link for HTML output
+     * Format the current link for HTML output.
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class EventSelectionLinkHandler extends PageLinkHandler
     }
 
     /**
-     * Render the link handler
+     * Render the link handler.
      *
      * @param ServerRequestInterface $request
      *
@@ -60,7 +60,7 @@ class EventSelectionLinkHandler extends PageLinkHandler
     {
         GeneralUtility::makeInstance(PageRenderer::class)->loadRequireJsModule('TYPO3/CMS/Recordlist/PageLinkHandler');
 
-        $this->expandPage = isset($request->getQueryParams()['expandPage']) ? (int)$request->getQueryParams()['expandPage'] : 0;
+        $this->expandPage = isset($request->getQueryParams()['expandPage']) ? (int) $request->getQueryParams()['expandPage'] : 0;
         $this->setTemporaryDbMounts();
 
         $backendUser = $this->getBackendUser();
@@ -68,14 +68,15 @@ class EventSelectionLinkHandler extends PageLinkHandler
         /** @var ElementBrowserPageTreeView $pageTree */
         $pageTree = GeneralUtility::makeInstance(ElementBrowserPageTreeView::class);
         $pageTree->setLinkParameterProvider($this);
-        $pageTree->ext_showNavTitle = (bool)$backendUser->getTSConfigVal('options.pageTree.showNavTitle');
-        $pageTree->ext_showPageId = (bool)$backendUser->getTSConfigVal('options.pageTree.showPageIdWithTitle');
-        $pageTree->ext_showPathAboveMounts = (bool)$backendUser->getTSConfigVal('options.pageTree.showPathAboveMounts');
+        $pageTree->ext_showNavTitle = (bool) $backendUser->getTSConfigVal('options.pageTree.showNavTitle');
+        $pageTree->ext_showPageId = (bool) $backendUser->getTSConfigVal('options.pageTree.showPageIdWithTitle');
+        $pageTree->ext_showPathAboveMounts = (bool) $backendUser->getTSConfigVal('options.pageTree.showPathAboveMounts');
         $pageTree->addField('nav_title');
 
         $this->view->assign('temporaryTreeMountCancelLink', $this->getTemporaryTreeMountCancelNotice());
         $this->view->assign('tree', $pageTree->getBrowsableTree());
         $this->getRecordsOnExpandedPage($this->expandPage);
+
         return $this->view->render('Page');
     }
 

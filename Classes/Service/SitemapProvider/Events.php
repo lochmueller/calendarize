@@ -10,16 +10,15 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * Events
+ * Events.
  */
 class Events implements SitemapProviderInterface
 {
-
     /**
-     * Get the Records
+     * Get the Records.
      *
-     * @param int $startPage
-     * @param array $basePages
+     * @param int               $startPage
+     * @param array             $basePages
      * @param SitemapController $obj
      *
      * @return array of Node objects
@@ -30,7 +29,7 @@ class Events implements SitemapProviderInterface
         foreach ($this->getIndizies() as $index) {
             $additionalParams = [
                 'tx_calendarize_calendar' => [
-                    'index' => $index->getUid()
+                    'index' => $index->getUid(),
                 ],
             ];
 
@@ -61,6 +60,7 @@ class Events implements SitemapProviderInterface
         $objectManager = new ObjectManager();
         $indexRepository = $objectManager->get(IndexRepository::class);
         $now = new \DateTime();
+
         return $indexRepository->findByTimeSlot($now->getTimestamp(), $now->getTimestamp() + DateTimeUtility::SECONDS_YEAR);
     }
 }

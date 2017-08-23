@@ -1,20 +1,20 @@
 <?php
 
 /**
- * PluginConfiguration
+ * PluginConfiguration.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * PluginConfiguration
+ * PluginConfiguration.
  *
  * @db
  */
 class PluginConfiguration extends AbstractModel
 {
-
     /**
-     * Title
+     * Title.
      *
      * @var string
      * @db
@@ -28,7 +28,7 @@ class PluginConfiguration extends AbstractModel
     protected $modelName;
 
     /**
-     * Configuration / Element Type / Record Type
+     * Configuration / Element Type / Record Type.
      *
      * @var string
      * @db
@@ -90,7 +90,7 @@ class PluginConfiguration extends AbstractModel
     protected $bookingPid;
 
     /**
-     * Categories
+     * Categories.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      */

@@ -1,26 +1,27 @@
 <?php
 
 /**
- * AbstractBookingRequest
+ * AbstractBookingRequest.
  */
+
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use HDNET\Calendarize\Domain\Model\AbstractModel;
 
 /**
- * AbstractBookingRequest
+ * AbstractBookingRequest.
  */
 abstract class AbstractBookingRequest extends AbstractModel
 {
     /**
-     * Index
+     * Index.
      *
      * @var \HDNET\Calendarize\Domain\Model\Index
      */
     protected $index;
 
     /**
-     * Get index
+     * Get index.
      *
      * @return \HDNET\Calendarize\Domain\Model\Index
      */
@@ -30,7 +31,7 @@ abstract class AbstractBookingRequest extends AbstractModel
     }
 
     /**
-     * Set index
+     * Set index.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
      */

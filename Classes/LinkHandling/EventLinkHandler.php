@@ -1,29 +1,29 @@
 <?php
 /**
- * EventLinkHandler
- *
+ * EventLinkHandler.
  */
+
 namespace HDNET\Calendarize\LinkHandling;
 
 use TYPO3\CMS\Core\LinkHandling\LinkHandlingInterface;
 
 /**
- * EventLinkHandler
+ * EventLinkHandler.
  */
 class EventLinkHandler implements LinkHandlingInterface
 {
-
     /**
-     * The Base URN for this link handling to act on
+     * The Base URN for this link handling to act on.
      *
      * @var string
      */
     protected $baseUrn = 't3://event';
 
     /**
-     * Returns all valid parameters for linking to a TYPO3 page as a string
+     * Returns all valid parameters for linking to a TYPO3 page as a string.
      *
      * @param array $parameters
+     *
      * @return string
      */
     public function asString(array $parameters): string
@@ -49,9 +49,10 @@ class EventLinkHandler implements LinkHandlingInterface
     }
 
     /**
-     * Returns all relevant information built in the link to a page (see asString())
+     * Returns all relevant information built in the link to a page (see asString()).
      *
      * @param array $data
+     *
      * @return array
      */
     public function resolveHandlerData(array $data): array

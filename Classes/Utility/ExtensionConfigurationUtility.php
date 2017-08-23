@@ -1,8 +1,8 @@
 <?php
 /**
- * ExtensionConfiguration Utility
- *
+ * ExtensionConfiguration Utility.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 use Exception;
@@ -10,21 +10,19 @@ use HDNET\Calendarize\Register;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
 /**
- * ExtensionConfiguration Utility
- *
+ * ExtensionConfiguration Utility.
  */
 class ExtensionConfigurationUtility
 {
-
     /**
-     * Configuration cache
+     * Configuration cache.
      *
      * @var array
      */
     protected static $configuration;
 
     /**
-     * Get the given configuration value
+     * Get the given configuration value.
      *
      * @param string $name
      *
@@ -33,6 +31,7 @@ class ExtensionConfigurationUtility
     public static function get($name)
     {
         self::loadConfiguration();
+
         return isset(self::$configuration[$name]) ? self::$configuration[$name] : null;
     }
 
@@ -42,6 +41,7 @@ class ExtensionConfigurationUtility
      * @param DomainObjectInterface $event
      *
      * @return string
+     *
      * @throws Exception
      */
     public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event)
@@ -64,7 +64,7 @@ class ExtensionConfigurationUtility
     }
 
     /**
-     * Load the current configuration
+     * Load the current configuration.
      */
     protected static function loadConfiguration()
     {

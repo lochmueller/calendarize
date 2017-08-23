@@ -1,8 +1,8 @@
 <?php
 /**
- * TCA information
- *
+ * TCA information.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
@@ -12,14 +12,12 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * TCA information
- *
+ * TCA information.
  */
 class TcaInformation extends AbstractService
 {
-
     /**
-     * Generate the information field
+     * Generate the information field.
      *
      * @param array  $configuration
      * @param object $fObj
@@ -41,11 +39,12 @@ class TcaInformation extends AbstractService
         $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
         $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
         $content = sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);
+
         return $this->wrapContent($content);
     }
 
     /**
-     * Generate the information field
+     * Generate the information field.
      *
      * @param array  $configuration
      * @param object $fObj
@@ -60,11 +59,12 @@ class TcaInformation extends AbstractService
         }
         $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
         $items = $timeTableService->getTimeTablesByConfigurationIds($ids);
+
         return $this->wrapContent($this->getEventList($items));
     }
 
     /**
-     * Get event list
+     * Get event list.
      *
      * @param $events
      *
@@ -81,7 +81,7 @@ class TcaInformation extends AbstractService
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'] % DateTimeUtility::SECONDS_DAY, false);
-                if ((int)$event['end_time'] === AbstractTimeTable::DAY_END) {
+                if ((int) $event['end_time'] === AbstractTimeTable::DAY_END) {
                     $end = '"' . TranslateUtility::get('openEndTime') . '"';
                 } else {
                     $end = BackendUtility::time($event['end_time'] % DateTimeUtility::SECONDS_DAY, false);
@@ -93,11 +93,12 @@ class TcaInformation extends AbstractService
         if (!$items) {
             $items[] = TranslateUtility::get('noEvents');
         }
+
         return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
     }
 
     /**
-     * Wrap the content
+     * Wrap the content.
      *
      * @param string $content
      *

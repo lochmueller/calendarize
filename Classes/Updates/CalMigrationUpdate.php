@@ -1,8 +1,9 @@
 <?php
 
 /**
- * CalMigrationUpdate
+ * CalMigrationUpdate.
  */
+
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Service\IndexerService;
@@ -13,7 +14,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\AbstractUpdate;
 
 /**
- * CalMigrationUpdate
+ * CalMigrationUpdate.
  *
  * If using the slots please use the m with func_get_args!
  * Example:
@@ -21,6 +22,7 @@ use TYPO3\CMS\Install\Updates\AbstractUpdate;
  *  * @signalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
  *  * @signalName getCalendarizeEventUid
  *  *
+ *
  *  *@return array
  *  *
  * public function getCalendarizeEventUid()
@@ -35,33 +37,31 @@ use TYPO3\CMS\Install\Updates\AbstractUpdate;
  *
  *    return $variables;
  * }
- *
  */
 class CalMigrationUpdate extends AbstractUpdate
 {
-
     /**
-     * Import prefix
+     * Import prefix.
      */
     const IMPORT_PREFIX = 'calMigration:';
 
     /**
-     * Event table
+     * Event table.
      */
     const EVENT_TABLE = 'tx_calendarize_domain_model_event';
 
     /**
-     * Configuration table
+     * Configuration table.
      */
     const CONFIGURATION_TABLE = 'tx_calendarize_domain_model_configuration';
 
     /**
-     * ConfigurationGroup table
+     * ConfigurationGroup table.
      */
     const CONFIGURATION_GROUP_TABLE = 'tx_calendarize_domain_model_configurationgroup';
 
     /**
-     * The human-readable title of the upgrade wizard
+     * The human-readable title of the upgrade wizard.
      *
      * @var string
      */
@@ -85,6 +85,7 @@ class CalMigrationUpdate extends AbstractUpdate
         }
         $description = 'There ' . ($count > 1 ? 'are ' . $count : 'is ' . $count) . ' non migrated EXT:cal event
         ' . ($count > 1 ? 's' : '') . '. Run the update process to migrate the events to EXT:calendarize events.';
+
         return true;
     }
 
@@ -123,28 +124,28 @@ class CalMigrationUpdate extends AbstractUpdate
         $events = $db->exec_SELECTgetRows('*', 'tx_cal_event', 'uid IN (' . implode(',', $calIds) . ')');
         foreach ($events as $event) {
             $calendarizeEventRecord = [
-                'pid'         => $event['pid'],
-                'import_id'   => self::IMPORT_PREFIX . (int)$event['uid'],
-                'tstamp'      => $event['tstamp'],
-                'crdate'      => $event['crdate'],
-                'hidden'      => $event['hidden'],
-                'starttime'   => $event['starttime'],
-                'endtime'     => $event['endtime'],
-                'title'       => $event['title'],
-                'organizer'   => $event['organizer'],
-                'location'    => $event['location'],
-                'abstract'    => $event['teaser'],
+                'pid' => $event['pid'],
+                'import_id' => self::IMPORT_PREFIX . (int) $event['uid'],
+                'tstamp' => $event['tstamp'],
+                'crdate' => $event['crdate'],
+                'hidden' => $event['hidden'],
+                'starttime' => $event['starttime'],
+                'endtime' => $event['endtime'],
+                'title' => $event['title'],
+                'organizer' => $event['organizer'],
+                'location' => $event['location'],
+                'abstract' => $event['teaser'],
                 'description' => $event['description'],
-                'images'      => $event['image'],
-                'downloads'   => $event['attachment'],
-                'calendarize' => $this->buildConfigurations($event, $dbQueries)
+                'images' => $event['image'],
+                'downloads' => $event['attachment'],
+                'calendarize' => $this->buildConfigurations($event, $dbQueries),
             ];
 
             $variables = [
                 'calendarizeEventRecord' => $calendarizeEventRecord,
-                'event'                  => $event,
-                'table'                  => self::EVENT_TABLE,
-                'dbQueries'              => $dbQueries
+                'event' => $event,
+                'table' => self::EVENT_TABLE,
+                'dbQueries' => $dbQueries,
             ];
 
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -156,12 +157,11 @@ class CalMigrationUpdate extends AbstractUpdate
 
             $variablesPostInsert = [
                 'calendarizeEventRecord' => $calendarizeEventRecord,
-                'event'                  => $event,
-                'table'                  => $variables['table'],
-                'recordId'               => $db->sql_insert_id(),
-                'dbQueries'              => $dbQueries
+                'event' => $event,
+                'table' => $variables['table'],
+                'recordId' => $db->sql_insert_id(),
+                'dbQueries' => $dbQueries,
             ];
-
 
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
             $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
@@ -185,9 +185,9 @@ class CalMigrationUpdate extends AbstractUpdate
         // ConfigurationGroup für jede ExceptionGroup
         $db = HelperUtility::getDatabaseConnection();
         $variables = [
-            'table'     => 'tx_cal_exception_event_group',
+            'table' => 'tx_cal_exception_event_group',
             'dbQueries' => $dbQueries,
-            'calIds'    => $calIds
+            'calIds' => $calIds,
         ];
 
         $selectWhere = '1 = 1 ' . BackendUtility::deleteClause($variables['table']);
@@ -197,14 +197,14 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($selectResults as $selectResult) {
             $group = [
-                'pid'            => $selectResult['pid'],
-                'tstamp'         => $selectResult['tstamp'],
-                'crdate'         => $selectResult['crdate'],
-                'cruser_id'      => $selectResult['cruser_id'],
-                'title'          => $selectResult['title'],
+                'pid' => $selectResult['pid'],
+                'tstamp' => $selectResult['tstamp'],
+                'crdate' => $selectResult['crdate'],
+                'cruser_id' => $selectResult['cruser_id'],
+                'title' => $selectResult['title'],
                 'configurations' => $this->getExceptionConfigurationForExceptionGroup($selectResult['uid']), // get Configuration
-                'hidden'         => $selectResult['hidden'],
-                'import_id'      => self::IMPORT_PREFIX . $selectResult['uid']
+                'hidden' => $selectResult['hidden'],
+                'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
             ];
 
             $insertQuery = $db->INSERTquery(self::CONFIGURATION_GROUP_TABLE, $group);
@@ -230,9 +230,9 @@ class CalMigrationUpdate extends AbstractUpdate
         $now = new \DateTime();
 
         $variables = [
-            'table'     => self::CONFIGURATION_GROUP_TABLE,
+            'table' => self::CONFIGURATION_GROUP_TABLE,
             'dbQueries' => $dbQueries,
-            'calIds'    => $calIds
+            'calIds' => $calIds,
         ];
 
         $selectWhere = '1 = 1';
@@ -242,12 +242,12 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($selectResults as $group) {
             $importId = explode(':', $group['import_id']);
-            $groupId = (int)$importId[1];
+            $groupId = (int) $importId[1];
 
             $variables = [
-                'table'     => 'tx_cal_exception_event_mm',
+                'table' => 'tx_cal_exception_event_mm',
                 'dbQueries' => $dbQueries,
-                'calIds'    => $calIds
+                'calIds' => $calIds,
             ];
 
             $selectWhere = 'tablenames = \'tx_cal_exception_event_group\' AND uid_foreign = ' . $groupId;
@@ -256,19 +256,20 @@ class CalMigrationUpdate extends AbstractUpdate
             $dbQueries[] = $selectQuery;
 
             foreach ($selectResults as $eventUid) {
-                $eventImportId = self::IMPORT_PREFIX . (int)$eventUid['uid_local'];
+                $eventImportId = self::IMPORT_PREFIX . (int) $eventUid['uid_local'];
                 $configurationRow = [
-                    'pid'      => (int)$group['pid'],
-                    'tstamp'   => $now->getTimestamp(),
-                    'crdate'   => $now->getTimestamp(),
-                    'type'     => 'group',
+                    'pid' => (int) $group['pid'],
+                    'tstamp' => $now->getTimestamp(),
+                    'crdate' => $now->getTimestamp(),
+                    'type' => 'group',
                     'handling' => 'exclude',
-                    'groups'   => $group['uid']
+                    'groups' => $group['uid'],
                 ];
 
                 $this->updateEventWithConfiguration($eventImportId, $configurationRow, $dbQueries, $customMessages);
             }
         }
+
         return true;
     }
 
@@ -287,7 +288,7 @@ class CalMigrationUpdate extends AbstractUpdate
         if ($configurationRow) {
             $configurationRow['groups'] = $this->addValueToCsv($configurationRow['groups'], $configuration['groups']);
 
-            $updateWhere = 'uid = ' . (int)$configurationRow['uid'];
+            $updateWhere = 'uid = ' . (int) $configurationRow['uid'];
             unset($configurationRow['uid']);
             $updateQuery = $db->UPDATEquery(self::CONFIGURATION_TABLE, $updateWhere, $configurationRow);
             $results = $db->admin_query($updateQuery);
@@ -359,16 +360,16 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection();
 
         $variables = [
-            'table'     => self::EVENT_TABLE,
-            'eventId'   => (int)$eventId,
-            'values'    => $values,
-            'dbQueries' => $dbQueries
+            'table' => self::EVENT_TABLE,
+            'eventId' => (int) $eventId,
+            'values' => $values,
+            'dbQueries' => $dbQueries,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
-        $updateWhere = 'uid = ' . (int)$eventId;
+        $updateWhere = 'uid = ' . (int) $eventId;
         unset($values['uid']);
         $updateQuery = $db->UPDATEquery($variables['table'], $updateWhere, $variables['values']);
         $updateResults = $db->admin_query($updateQuery);
@@ -389,9 +390,9 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection();
 
         $variables = [
-            'table'         => self::EVENT_TABLE,
-            'dbQueries'     => $dbQueries,
-            'eventImportId' => $eventImportId
+            'table' => self::EVENT_TABLE,
+            'dbQueries' => $dbQueries,
+            'eventImportId' => $eventImportId,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -428,9 +429,9 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection();
 
         $variables = [
-            'table'     => self::CONFIGURATION_TABLE,
+            'table' => self::CONFIGURATION_TABLE,
             'dbQueries' => $dbQueries,
-            'event'     => $event
+            'event' => $event,
         ];
 
         $configurationWhere = 'type = \'group\' AND handling = \'exclude\' AND uid IN (\'' . $variables['event']['calendarize'] . '\')';
@@ -439,6 +440,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $configurationQuery;
 
         $configuration = $db->sql_fetch_assoc($configurationResults);
+
         return $configuration;
     }
 
@@ -454,48 +456,48 @@ class CalMigrationUpdate extends AbstractUpdate
         $recordIds = [];
         $db = HelperUtility::getDatabaseConnection();
         $variables = [
-            'table'     => ' tx_cal_exception_event_group_mm',
-            'dbQueries' => $dbQueries
+            'table' => ' tx_cal_exception_event_group_mm',
+            'dbQueries' => $dbQueries,
         ];
 
-        $mmWhere = 'uid_local = ' . (int)$groupId;
+        $mmWhere = 'uid_local = ' . (int) $groupId;
         $mmQuery = $db->SELECTquery('*', $variables['table'], $mmWhere);
         $mmResults = $db->admin_query($mmQuery);
         $dbQueries[] = $mmQuery;
 
         foreach ($mmResults as $mmResult) {
             $variables = [
-                'table'     => ' tx_cal_exception_event',
-                'dbQueries' => $dbQueries
+                'table' => ' tx_cal_exception_event',
+                'dbQueries' => $dbQueries,
             ];
 
-            $selectWhere = 'uid = ' . (int)$mmResult['uid_foreign'];
+            $selectWhere = 'uid = ' . (int) $mmResult['uid_foreign'];
             $selectQuery = $db->SELECTquery('*', $variables['table'], $selectWhere);
             $selectResults = $db->admin_query($selectQuery);
             $dbQueries[] = $selectQuery;
 
             foreach ($selectResults as $selectResult) {
                 $configurationRow = [
-                    'pid'              => $selectResult['pid'],
-                    'tstamp'           => $selectResult['tstamp'],
-                    'crdate'           => $selectResult['crdate'],
-                    'type'             => 'time',
-                    'handling'         => 'include',
-                    'start_date'       => $this->migrateDate($selectResult['start_date']),
-                    'end_date'         => $this->migrateDate($selectResult['end_date']),
-                    'start_time'       => (int)$selectResult['start_time'],
-                    'end_time'         => (int)$selectResult['end_time'],
-                    'all_day'          => ($selectResult['start_time'] == null && $selectResult['end_time'] == null) ? 1 : 0,
-                    'frequency'        => $this->mapFrequency($selectResult['freq']),
-                    'till_date'        => $this->migrateDate($selectResult['until']),
-                    'counter_amount'   => (int)$selectResult['cnt'],
-                    'counter_interval' => (int)$selectResult['interval'],
-                    'import_id'        => self::IMPORT_PREFIX . $selectResult['uid']
+                    'pid' => $selectResult['pid'],
+                    'tstamp' => $selectResult['tstamp'],
+                    'crdate' => $selectResult['crdate'],
+                    'type' => 'time',
+                    'handling' => 'include',
+                    'start_date' => $this->migrateDate($selectResult['start_date']),
+                    'end_date' => $this->migrateDate($selectResult['end_date']),
+                    'start_time' => (int) $selectResult['start_time'],
+                    'end_time' => (int) $selectResult['end_time'],
+                    'all_day' => ($selectResult['start_time'] == null && $selectResult['end_time'] == null) ? 1 : 0,
+                    'frequency' => $this->mapFrequency($selectResult['freq']),
+                    'till_date' => $this->migrateDate($selectResult['until']),
+                    'counter_amount' => (int) $selectResult['cnt'],
+                    'counter_interval' => (int) $selectResult['interval'],
+                    'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
                 ];
 
                 $variables = [
-                    'table'            => self::CONFIGURATION_TABLE,
-                    'configurationRow' => $configurationRow
+                    'table' => self::CONFIGURATION_TABLE,
+                    'configurationRow' => $configurationRow,
                 ];
 
                 $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -504,7 +506,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 $query = $db->INSERTquery($variables['table'], $variables['configurationRow']);
                 $db->admin_query($query);
                 $dbQueries[] = $query;
-                $recordIds[] = (int)$db->sql_insert_id();
+                $recordIds[] = (int) $db->sql_insert_id();
             }
         }
 
@@ -519,11 +521,11 @@ class CalMigrationUpdate extends AbstractUpdate
     protected function mapFrequency($calFrequency)
     {
         $freq = [
-            'none'  => null,
-            'day'   => 'daily',
-            'week'  => 'weekly',
+            'none' => null,
+            'day' => 'daily',
+            'week' => 'weekly',
             'month' => 'monthly',
-            'year'  => 'yearly'
+            'year' => 'yearly',
         ];
 
         if (!isset($freq[$calFrequency])) {
@@ -546,10 +548,10 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection();
 
         $variables = [
-            'table'      => 'tx_cal_event',
+            'table' => 'tx_cal_event',
             'fieldnames' => ['image', 'attachment'],
-            'dbQueries'  => $dbQueries,
-            'calIds'     => $calIds
+            'dbQueries' => $dbQueries,
+            'calIds' => $calIds,
         ];
 
         // select all not migrated entries
@@ -562,11 +564,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $selectQuery;
 
         $variables = [
-            'table'         => self::EVENT_TABLE,
-            'fieldnames'    => $variables['fieldnames'],
-            'dbQueries'     => $dbQueries,
-            'calIds'        => $calIds,
-            'selectResults' => $selectResults
+            'table' => self::EVENT_TABLE,
+            'fieldnames' => $variables['fieldnames'],
+            'dbQueries' => $dbQueries,
+            'calIds' => $calIds,
+            'selectResults' => $selectResults,
         ];
 
         // create new entry with import_id
@@ -596,9 +598,9 @@ class CalMigrationUpdate extends AbstractUpdate
 
         // first migrate from tx_cal_category to sys_category
         $variables = [
-            'table'     => 'tx_cal_category',
+            'table' => 'tx_cal_category',
             'dbQueries' => $dbQueries,
-            'calIds'    => $calIds
+            'calIds' => $calIds,
         ];
 
         $selectWhere = '1 = 1 ' . BackendUtility::deleteClause($variables['table']);
@@ -608,21 +610,21 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($selectResults as $category) {
             $sysCategoryRecord = [
-                'pid'              => $category['pid'],
-                'tstamp'           => $category['tstamp'],
-                'crdate'           => $category['crdate'],
-                'cruser_id'        => $category['cruser_id'],
-                'deleted'          => $category['deleted'],
-                'hidden'           => $category['hidden'],
-                'starttime'        => $category['starttime'],
-                'endtime'          => $category['endtime'],
+                'pid' => $category['pid'],
+                'tstamp' => $category['tstamp'],
+                'crdate' => $category['crdate'],
+                'cruser_id' => $category['cruser_id'],
+                'deleted' => $category['deleted'],
+                'hidden' => $category['hidden'],
+                'starttime' => $category['starttime'],
+                'endtime' => $category['endtime'],
                 'sys_language_uid' => $category['sys_language_uid'],
-                'l10n_parent'      => $category['l18n_parent'],
-                'l10n_diffsource'  => $category['l18n_diffsource'],
-                'title'            => $category['title'],
-                'parent'           => (int)$category['parent_category'],
-                'import_id'        => self::IMPORT_PREFIX . (int)$category['uid'],
-                'sorting'          => $category['sorting']
+                'l10n_parent' => $category['l18n_parent'],
+                'l10n_diffsource' => $category['l18n_diffsource'],
+                'title' => $category['title'],
+                'parent' => (int) $category['parent_category'],
+                'import_id' => self::IMPORT_PREFIX . (int) $category['uid'],
+                'sorting' => $category['sorting'],
             ];
 
             $query = $db->INSERTquery('sys_category', $sysCategoryRecord);
@@ -632,9 +634,9 @@ class CalMigrationUpdate extends AbstractUpdate
 
         // second rewrite the tree
         $variables = [
-            'table'     => 'sys_category',
+            'table' => 'sys_category',
             'dbQueries' => $dbQueries,
-            'calIds'    => $calIds
+            'calIds' => $calIds,
         ];
 
         $selectWhere = 'import_id != \'\'';
@@ -645,7 +647,7 @@ class CalMigrationUpdate extends AbstractUpdate
         foreach ($selectResults as $sysCategory) {
             // update parent, because there are just the old uids
             $updateRecord = [
-                'parent' => $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int)$sysCategory['parent'])
+                'parent' => $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int) $sysCategory['parent']),
             ];
             $query = $db->UPDATEquery('sys_category', 'uid = ' . $sysCategory['uid'], $updateRecord);
             $db->admin_query($query);
@@ -670,7 +672,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $selectQuery;
 
         $result = $db->sql_fetch_assoc($selectResults);
-        $uid = (int)$result['uid'];
+        $uid = (int) $result['uid'];
 
         return $uid;
     }
@@ -693,8 +695,8 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $variables = [
             'tablenames' => self::EVENT_TABLE,
-            'fieldname'  => 'categories',
-            'dbQueries'  => $dbQueries
+            'fieldname' => 'categories',
+            'dbQueries' => $dbQueries,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -709,10 +711,10 @@ class CalMigrationUpdate extends AbstractUpdate
             );
 
             $insertValues = [
-                'uid_local'   => $categoryUid,
+                'uid_local' => $categoryUid,
                 'uid_foreign' => $eventUid,
-                'tablenames'  => $variables['tablenames'],
-                'fieldname'   => $variables['fieldname']
+                'tablenames' => $variables['tablenames'],
+                'fieldname' => $variables['fieldname'],
             ];
 
             $insertQuery = $db->INSERTquery('sys_category_record_mm ', $insertValues);
@@ -736,8 +738,8 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection();
 
         $variables = [
-            'table'     => self::EVENT_TABLE,
-            'dbQueries' => $dbQueries
+            'table' => self::EVENT_TABLE,
+            'dbQueries' => $dbQueries,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -749,7 +751,8 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $selectQuery;
 
         $result = $db->sql_fetch_assoc($selectResults);
-        $uid = (int)$result['uid'];
+        $uid = (int) $result['uid'];
+
         return $uid;
     }
 
@@ -770,8 +773,8 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection();
 
         $variables = [
-            'table'     => 'sys_category',
-            'dbQueries' => $dbQueries
+            'table' => 'sys_category',
+            'dbQueries' => $dbQueries,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -783,7 +786,8 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $selectQuery;
 
         $result = $db->sql_fetch_assoc($selectResults);
-        $uid = (int)$result['uid'];
+        $uid = (int) $result['uid'];
+
         return $uid;
     }
 
@@ -797,28 +801,27 @@ class CalMigrationUpdate extends AbstractUpdate
     {
         $db = HelperUtility::getDatabaseConnection();
         $configurationRow = [
-            'pid'              => $calEventRow['pid'],
-            'tstamp'           => $calEventRow['tstamp'],
-            'crdate'           => $calEventRow['crdate'],
-            'type'             => 'time',
-            'handling'         => 'include',
-            'start_date'       => $this->migrateDate($calEventRow['start_date']),
-            'end_date'         => $this->migrateDate($calEventRow['end_date']),
-            'start_time'       => $calEventRow['start_time'],
-            'end_time'         => $calEventRow['end_time'],
-            'all_day'          => $calEventRow['allday'],
-            'frequency'        => $this->mapFrequency($calEventRow['freq']),
-            'till_date'        => $this->migrateDate($calEventRow['until']),
-            'counter_amount'   => (int)$calEventRow['cnt'],
-            'counter_interval' => (int)$calEventRow['interval'],
-
+            'pid' => $calEventRow['pid'],
+            'tstamp' => $calEventRow['tstamp'],
+            'crdate' => $calEventRow['crdate'],
+            'type' => 'time',
+            'handling' => 'include',
+            'start_date' => $this->migrateDate($calEventRow['start_date']),
+            'end_date' => $this->migrateDate($calEventRow['end_date']),
+            'start_time' => $calEventRow['start_time'],
+            'end_time' => $calEventRow['end_time'],
+            'all_day' => $calEventRow['allday'],
+            'frequency' => $this->mapFrequency($calEventRow['freq']),
+            'till_date' => $this->migrateDate($calEventRow['until']),
+            'counter_amount' => (int) $calEventRow['cnt'],
+            'counter_interval' => (int) $calEventRow['interval'],
         ];
 
         $variables = [
-            'table'            => self::CONFIGURATION_TABLE,
+            'table' => self::CONFIGURATION_TABLE,
             'configurationRow' => $configurationRow,
-            'calEventRow'      => $calEventRow,
-            'dbQueries'        => $dbQueries
+            'calEventRow' => $calEventRow,
+            'dbQueries' => $dbQueries,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -830,11 +833,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $recordId = $db->sql_insert_id();
 
         $variables = [
-            'table'            => $variables['table'],
+            'table' => $variables['table'],
             'configurationRow' => $configurationRow,
-            'calEventRow'      => $calEventRow,
-            'recordId'         => $recordId,
-            'dbQueries'        => $dbQueries
+            'calEventRow' => $calEventRow,
+            'recordId' => $recordId,
+            'dbQueries' => $dbQueries,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -885,14 +888,16 @@ class CalMigrationUpdate extends AbstractUpdate
     {
         try {
             $date = new \DateTime($oldFormat);
+
             return $date->getTimestamp();
         } catch (\Exception $e) {
         }
+
         return '';
     }
 
     /**
-     * Get the non migrated cal IDs
+     * Get the non migrated cal IDs.
      *
      * @return array
      */
@@ -909,7 +914,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($events as $event) {
             $checkImportIds[] = '"' . self::IMPORT_PREFIX . $event['uid'] . '"';
-            $nonMigrated[(int)$event['uid']] = (int)$event['uid'];
+            $nonMigrated[(int) $event['uid']] = (int) $event['uid'];
         }
 
         $countOriginal = count($checkImportIds);
@@ -918,7 +923,7 @@ class CalMigrationUpdate extends AbstractUpdate
         }
 
         $variables = [
-            'table' => self::EVENT_TABLE
+            'table' => self::EVENT_TABLE,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
@@ -931,16 +936,16 @@ class CalMigrationUpdate extends AbstractUpdate
         );
 
         foreach ($migratedRows as $migratedRow) {
-            $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
+            $importId = (int) str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
             if (isset($nonMigrated[$importId])) {
                 unset($nonMigrated[$importId]);
             }
         }
 
         $variables = [
-            'table'        => $variables['table'],
+            'table' => $variables['table'],
             'migratedRows' => $migratedRows,
-            'nonMigrated'  => $nonMigrated
+            'nonMigrated' => $nonMigrated,
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();

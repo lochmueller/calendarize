@@ -1,8 +1,8 @@
 <?php
 /**
- * Calendar
- *
+ * Calendar.
  */
+
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -19,13 +19,12 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Calendar
+ * Calendar.
  */
 class CalendarController extends AbstractController
 {
-
     /**
-     * Init all actions
+     * Init all actions.
      */
     public function initializeAction()
     {
@@ -33,7 +32,7 @@ class CalendarController extends AbstractController
         $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration'], true));
         $additionalSlotArguments = [
             'contentRecord' => $this->configurationManager->getContentObject()->data,
-            'settings' => $this->settings
+            'settings' => $this->settings,
         ];
         $this->indexRepository->setAdditionalSlotArguments($additionalSlotArguments);
 
@@ -79,15 +78,15 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * Latest action
+     * Latest action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -120,21 +119,21 @@ class CalendarController extends AbstractController
                 'customSearch' => $customSearch,
                 'year' => $year,
                 'month' => $month,
-                'week' => $week
-            ]
+                'week' => $week,
+            ],
         ], __CLASS__, __FUNCTION__);
     }
 
     /**
-     * Result action
+     * Result action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch
-     * @param int $year
-     * @param int $month
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -167,22 +166,22 @@ class CalendarController extends AbstractController
                 'customSearch' => $customSearch,
                 'year' => $year,
                 'month' => $month,
-                'week' => $week
-            ]
+                'week' => $week,
+            ],
         ], __CLASS__, __FUNCTION__);
     }
 
     /**
-     * List action
+     * List action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $day
+     * @param int                                   $week
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
@@ -217,19 +216,19 @@ class CalendarController extends AbstractController
                 'year' => $year,
                 'month' => $month,
                 'day' => $day,
-                'week' => $week
-            ]
+                'week' => $week,
+            ],
         ], __CLASS__, __FUNCTION__);
     }
 
     /**
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
-     * @param array $customSearch
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $week
+     * @param array          $customSearch
+     * @param int            $year
+     * @param int            $month
+     * @param int            $day
+     * @param int            $week
      *
      * @return array
      */
@@ -255,12 +254,12 @@ class CalendarController extends AbstractController
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
             $indices = $this->indexRepository->findYear($year);
         } else {
-            $overrideStartDate = (int)$this->settings['overrideStartdate'];
-            $overrideEndDate = (int)$this->settings['overrideEnddate'];
+            $overrideStartDate = (int) $this->settings['overrideStartdate'];
+            $overrideEndDate = (int) $this->settings['overrideEnddate'];
             $indices = $this->indexRepository->findList(
-                (int)$this->settings['limit'],
+                (int) $this->settings['limit'],
                 $this->settings['listStartTime'],
-                (int)$this->settings['listStartTimeOffsetHours'],
+                (int) $this->settings['listStartTimeOffsetHours'],
                 $overrideStartDate,
                 $overrideEndDate
             );
@@ -278,9 +277,9 @@ class CalendarController extends AbstractController
                     'year' => $year,
                     'month' => $month,
                     'day' => $day,
-                    'week' => $week
-                ]
-            ]
+                    'week' => $week,
+                ],
+            ],
         ];
         $variables['settings'] = $this->settings;
 
@@ -291,11 +290,9 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * Year action
+     * Year action.
      *
      * @param int $year
-     *
-     * @return void
      */
     public function yearAction($year = null)
     {
@@ -303,18 +300,16 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'indices' => $this->indexRepository->findYear($date->format('Y')),
-            'date' => $date
+            'date' => $date,
         ], __CLASS__, __FUNCTION__);
     }
 
     /**
-     * Month action
+     * Month action.
      *
      * @param int $year
      * @param int $month
      * @param int $day
-     *
-     * @return void
      */
     public function monthAction($year = null, $month = null, $day = null)
     {
@@ -327,12 +322,10 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * Week action
+     * Week action.
      *
      * @param int $year
      * @param int $week
-     *
-     * @return void
      */
     public function weekAction($year = null, $week = null)
     {
@@ -343,8 +336,8 @@ class CalendarController extends AbstractController
         if ($week === null) {
             $week = $now->format('W');
         }
-        $weekStart = (int)$this->settings['weekStart'];
-        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int)$week, $year, $weekStart);
+        $weekStart = (int) $this->settings['weekStart'];
+        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int) $week, $year, $weekStart);
         $timezone = DateTimeUtility::getTimeZone();
         $firstDay->setTimezone($timezone);
         $firstDay->setTime(0, 0, 0);
@@ -356,7 +349,7 @@ class CalendarController extends AbstractController
             '+3 days' => 2,
             '+4 days' => 2,
             '+5 days' => 1,
-            '+6 days' => 1
+            '+6 days' => 1,
         ];
 
         $this->slotExtendedAssignMultiple([
@@ -367,13 +360,11 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * Day action
+     * Day action.
      *
      * @param int $year
      * @param int $month
      * @param int $day
-     *
-     * @return void
      */
     public function dayAction($year = null, $month = null, $day = null)
     {
@@ -395,7 +386,7 @@ class CalendarController extends AbstractController
     }
 
     /**
-     * Detail action
+     * Detail action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
      *
@@ -406,7 +397,7 @@ class CalendarController extends AbstractController
         if ($index === null) {
             // handle fallback for "strange language settings"
             if ($this->request->hasArgument('index')) {
-                $indexId = (int)$this->request->getArgument('index');
+                $indexId = (int) $this->request->getArgument('index');
                 if ($indexId > 0) {
                     $index = $this->indexRepository->findByUid($indexId);
                 }
@@ -414,7 +405,7 @@ class CalendarController extends AbstractController
 
             if ($index === null) {
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-                    return (string)TranslateUtility::get('noEventDetailView');
+                    return (string) TranslateUtility::get('noEventDetailView');
                 }
                 $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 301);
             }
@@ -422,24 +413,22 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'index' => $index,
-            'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY')
+            'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'),
         ], __CLASS__, __FUNCTION__);
 
         return $this->view->render();
     }
 
     /**
-     * Render the search view
+     * Render the search view.
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array $customSearch
+     * @param array     $customSearch
      *
      * @ignorevalidation $startDate
      * @ignorevalidation $endDate
      * @ignorevalidation $customSearch
-     *
-     * @return void
      */
     public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
@@ -456,14 +445,12 @@ class CalendarController extends AbstractController
             'startDate' => $startDate,
             'endDate' => $endDate,
             'customSearch' => $customSearch,
-            'configurations' => $this->getCurrentConfigurations()
+            'configurations' => $this->getCurrentConfigurations(),
         ], __CLASS__, __FUNCTION__);
     }
 
     /**
-     * Render single items
-     *
-     * @return void
+     * Render single items.
      */
     public function singleAction()
     {
@@ -478,7 +465,7 @@ class CalendarController extends AbstractController
                 if ($configuration['tableName'] === $table) {
                     $selection[] = [
                         'configuration' => $configuration,
-                        'uid' => $uid
+                        'uid' => $uid,
                     ];
                     break;
                 }
@@ -501,12 +488,12 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'indicies' => $indicies,
-            'configurations' => $configurations
+            'configurations' => $configurations,
         ], __CLASS__, __FUNCTION__);
     }
 
     /**
-     * Get the allowed actions
+     * Get the allowed actions.
      *
      * @return array
      */
@@ -517,11 +504,12 @@ class CalendarController extends AbstractController
         foreach ($configuration['controllerConfiguration'] as $controllerName => $controllerActions) {
             $allowedActions[$controllerName] = $controllerActions['actions'];
         }
-        return isset($allowedActions['Calendar']) ? $allowedActions['Calendar'] : [];
+
+        return $allowedActions['Calendar'] ?? [];
     }
 
     /**
-     * Get the current configurations
+     * Get the current configurations.
      *
      * @return array
      */
@@ -534,6 +522,7 @@ class CalendarController extends AbstractController
                 $return[] = $configuration;
             }
         }
+
         return $return;
     }
 }

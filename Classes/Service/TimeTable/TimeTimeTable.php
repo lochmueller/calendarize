@@ -1,8 +1,8 @@
 <?php
 /**
- * Time service
- *
+ * Time service.
  */
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -16,32 +16,28 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Time service
- *
+ * Time service.
  */
 class TimeTimeTable extends AbstractTimeTable
 {
-
     /**
-     * Modify the given times via the configuration
+     * Modify the given times via the configuration.
      *
      * @param array         $times
      * @param Configuration $configuration
-     *
-     * @return void
      */
     public function handleConfiguration(array &$times, Configuration $configuration)
     {
         $startTime = $configuration->isAllDay() ? null : $configuration->getStartTime();
         $endTime = $configuration->isAllDay() ? null : $configuration->getEndTime();
         $baseEntry = [
-            'pid'        => $configuration->getPid(),
+            'pid' => $configuration->getPid(),
             'start_date' => $configuration->getStartDate(),
-            'end_date'   => $configuration->getEndDate() ?: $configuration->getStartDate(),
+            'end_date' => $configuration->getEndDate() ?: $configuration->getStartDate(),
             'start_time' => $startTime,
-            'end_time'   => $endTime == 0 ? self::DAY_END : $endTime,
-            'all_day'    => $configuration->isAllDay(),
-            'state'      => $configuration->getState()
+            'end_time' => $endTime == 0 ? self::DAY_END : $endTime,
+            'all_day' => $configuration->isAllDay(),
+            'state' => $configuration->getState(),
         ];
         $this->validateBaseEntry($baseEntry);
         $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
@@ -50,7 +46,7 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
-     * Validate the base entry, if there are logica mistakes
+     * Validate the base entry, if there are logica mistakes.
      *
      * @param array $baseEntry
      */
@@ -95,7 +91,7 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
-     * Add frequency items
+     * Add frequency items.
      *
      * @param array         $times
      * @param Configuration $configuration
@@ -111,7 +107,7 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
-        for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
+        for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); ++$i) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
             if ($tillDate instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDate) {
@@ -124,7 +120,7 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
-     * Create the next loop entry
+     * Create the next loop entry.
      *
      * @param array  $loopEntry
      * @param string $modification
@@ -142,11 +138,12 @@ class TimeTimeTable extends AbstractTimeTable
         $endDate = clone $loopEntry['end_date'];
         $endDate->modify($modification);
         $loopEntry['end_date'] = $endDate;
+
         return $loopEntry;
     }
 
     /**
-     * Get the frequency date increment
+     * Get the frequency date increment.
      *
      * @param Configuration $configuration
      *
@@ -177,11 +174,12 @@ class TimeTimeTable extends AbstractTimeTable
             default:
                 $intervalValue = false;
         }
+
         return $intervalValue;
     }
 
     /**
-     * Add recurrence items
+     * Add recurrence items.
      *
      * @param array         $times
      * @param Configuration $configuration
@@ -198,7 +196,7 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
-        for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); $i++) {
+        for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); ++$i) {
             $loopEntry = $lastLoop;
 
             $dateTime = false;
@@ -235,16 +233,17 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
-     * Get the limit of the frequency
+     * Get the limit of the frequency.
      *
      * @return int
      */
     protected function getFrequencyLimitPerItem()
     {
-        $maxLimit = (int)ConfigurationUtility::get('frequencyLimitPerItem');
+        $maxLimit = (int) ConfigurationUtility::get('frequencyLimitPerItem');
         if ($maxLimit <= 0) {
             $maxLimit = 300;
         }
+
         return $maxLimit;
     }
 }

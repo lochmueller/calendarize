@@ -1,20 +1,19 @@
 <?php
 /**
- * Time shift function
- *
+ * Time shift function.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
- * Time shift function
+ * Time shift function.
  */
 class TimeShift extends AbstractHook
 {
-
     /**
-     * Shift the time variables
+     * Shift the time variables.
      *
      * @hook TYPO3_CONF_VARS|SC_OPTIONS|tslib/index_ts.php|preprocessRequest
      */
@@ -27,7 +26,7 @@ class TimeShift extends AbstractHook
         }
 
         $configuration = $this->getConfiguration();
-        $timeShift = isset($configuration['timeShift']) ? (int)$configuration['timeShift'] : 0;
+        $timeShift = isset($configuration['timeShift']) ? (int) $configuration['timeShift'] : 0;
         if ($timeShift <= 0) {
             // shift is disabled
             return;
@@ -38,7 +37,7 @@ class TimeShift extends AbstractHook
     }
 
     /**
-     * Get the configuration
+     * Get the configuration.
      *
      * @return array
      */
@@ -48,6 +47,7 @@ class TimeShift extends AbstractHook
         if (is_array($config)) {
             return $config;
         }
+
         return [];
     }
 }

@@ -1,19 +1,17 @@
 <?php
 /**
- * Months in year view Helper
- *
+ * Months in year view Helper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
- * Months in year view Helper
- *
+ * Months in year view Helper.
  */
 class MonthsInYearViewHelper extends AbstractLoopViewHelper
 {
-
     /**
-     * Get the items
+     * Get the items.
      *
      * @param \DateTime $date
      *
@@ -23,15 +21,16 @@ class MonthsInYearViewHelper extends AbstractLoopViewHelper
     {
         $months = [];
         $date->setDate($date->format('Y'), $date->format('n'), 1);
-        for ($i = 0; $i < 12; $i++) {
+        for ($i = 0; $i < 12; ++$i) {
             $months[$date->format('n')] = [
-                'week'   => $date->format('n'),
-                'date'   => clone $date,
+                'week' => $date->format('n'),
+                'date' => clone $date,
                 'break3' => $date->format('n') % 3,
                 'break4' => $date->format('n') % 4,
             ];
             $date->modify('+1 month');
         }
+
         return $months;
     }
 }

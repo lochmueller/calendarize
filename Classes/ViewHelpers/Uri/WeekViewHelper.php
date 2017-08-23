@@ -1,18 +1,17 @@
 <?php
 /**
- * Uri to the week
- *
+ * Uri to the week.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
- * Uri to the week
+ * Uri to the week.
  */
 class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper
 {
-
     /**
-     * Render the uri to the given day
+     * Render the uri to the given day.
      *
      * @param \DateTime $date
      * @param int       $pageUid
@@ -22,6 +21,7 @@ class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper
     public function render(\DateTime $date, $pageUid = null)
     {
         parent::render($date, $pageUid);
+
         return $this->lastHref;
     }
 }

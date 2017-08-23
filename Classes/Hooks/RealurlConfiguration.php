@@ -1,21 +1,19 @@
 <?php
 /**
- * Realurl configuration
- *
+ * Realurl configuration.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Service\Url\RealUrl;
 
 /**
- * Realurl configuration
- *
+ * Realurl configuration.
  */
 class RealurlConfiguration extends AbstractHook
 {
-
     /**
-     * Add the realurl configuration
+     * Add the realurl configuration.
      *
      * @param $params
      * @param $pObj
@@ -28,19 +26,19 @@ class RealurlConfiguration extends AbstractHook
         return array_merge_recursive($params['config'], [
             'postVarSets' => [
                 '_DEFAULT' => [
-                    'event'      => [
+                    'event' => [
                         [
-                            'GETvar'   => 'tx_calendarize_calendar[index]',
-                            'userFunc' => RealUrl::class . '->convert'
+                            'GETvar' => 'tx_calendarize_calendar[index]',
+                            'userFunc' => RealUrl::class . '->convert',
                         ],
                     ],
                     'event-page' => [
                         [
                             'GETvar' => 'tx_calendarize_calendar[@widget_0][currentPage]',
-                        ]
-                    ]
-                ]
-            ]
+                        ],
+                    ],
+                ],
+            ],
         ]);
     }
 }

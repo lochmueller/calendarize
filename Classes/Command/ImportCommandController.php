@@ -1,8 +1,8 @@
 <?php
 /**
- * Import
- *
+ * Import.
  */
+
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -12,14 +12,12 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Import
- *
+ * Import.
  */
 class ImportCommandController extends AbstractCommandController
 {
-
     /**
-     * Import command
+     * Import command.
      *
      * @param string $icsCalendarUri
      * @param int    $pid
@@ -28,10 +26,12 @@ class ImportCommandController extends AbstractCommandController
     {
         if ($icsCalendarUri === null || !filter_var($icsCalendarUri, FILTER_VALIDATE_URL)) {
             $this->enqueueMessage('You have to enter a valid URL to the iCalendar ICS', 'Error', FlashMessage::ERROR);
+
             return;
         }
         if (!MathUtility::canBeInterpretedAsInteger($pid)) {
             $this->enqueueMessage('You have to enter a valid PID for the new created elements', 'Error', FlashMessage::ERROR);
+
             return;
         }
 
@@ -54,17 +54,17 @@ class ImportCommandController extends AbstractCommandController
         $this->enqueueMessage('Send the ' . __CLASS__ . '::importCommand signal for each event.', 'Signal', FlashMessage::INFO);
         foreach ($events as $event) {
             $arguments = [
-                'event'             => $event,
+                'event' => $event,
                 'commandController' => $this,
-                'pid'               => $pid,
-                'handled'           => false,
+                'pid' => $pid,
+                'handled' => false,
             ];
             $signalSlotDispatcher->dispatch(__CLASS__, 'importCommand', $arguments);
         }
     }
 
     /**
-     * Prepare the events
+     * Prepare the events.
      *
      * @param array $icalEvents
      *
@@ -89,18 +89,19 @@ class ImportCommandController extends AbstractCommandController
             }
 
             $events[] = [
-                'uid'         => $icalEvent['UID'],
-                'start'       => $startDateTime,
-                'end'         => $endDateTime,
-                'title'       => $icalEvent['SUMMARY'],
+                'uid' => $icalEvent['UID'],
+                'start' => $startDateTime,
+                'end' => $endDateTime,
+                'title' => $icalEvent['SUMMARY'],
                 'description' => $icalEvent['DESCRIPTION'],
             ];
         }
+
         return $events;
     }
 
     /**
-     * Get the events from the given ical file
+     * Get the events from the given ical file.
      *
      * @param string $absoluteIcalFile
      *
@@ -114,6 +115,7 @@ class ImportCommandController extends AbstractCommandController
                 'Resources/Private/Php/ics-parser/class.iCalReader.php'
             ));
         }
-        return (array)(new \ICal($absoluteIcalFile))->events();
+
+        return (array) (new \ICal($absoluteIcalFile))->events();
     }
 }

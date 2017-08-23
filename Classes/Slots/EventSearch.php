@@ -1,8 +1,8 @@
 <?php
 /**
- * Event search service
- *
+ * Event search service.
  */
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
@@ -11,14 +11,12 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * Event search service
- *
+ * Event search service.
  */
 class EventSearch
 {
-
     /**
-     * Table name
+     * Table name.
      *
      * Note: This complete class is for the Event Model of the calendarize extension.
      * If you use a own model with special search criteria you have to register your
@@ -30,20 +28,19 @@ class EventSearch
      */
     protected $tableName = 'tx_calendarize_domain_model_event';
 
-
     /**
-     * Check if we can reduce the amount of results
+     * Check if we can reduce the amount of results.
      *
      * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
      * @signalName findBySearchPre
      *
-     * @param array $indexIds
-     * @param \DateTime|NULL $startDate
-     * @param \DateTime|NULL $endDate
-     * @param array $customSearch
-     * @param array $additionalSlotArguments
+     * @param array          $indexIds
+     * @param \DateTime|null $startDate
+     * @param \DateTime|null $endDate
+     * @param array          $customSearch
+     * @param array          $additionalSlotArguments
+     * @param array          $indexTypes
      *
-     * @param array $indexTypes
      * @return array|void
      */
     public function setIdsByCustomSearch(
@@ -67,6 +64,7 @@ class EventSearch
         }
 
         $eventRepository = HelperUtility::create(EventRepository::class);
+
         return [
             'indexIds' => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
             'startDate' => $startDate,
@@ -78,7 +76,7 @@ class EventSearch
     }
 
     /**
-     * Set ids by general
+     * Set ids by general.
      *
      * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
      * @signalName getDefaultConstraints
@@ -103,7 +101,7 @@ class EventSearch
                 'tablenames="tt_content" AND uid_foreign=' . $additionalSlotArguments['contentRecord']['uid']
             );
             foreach ($rows as $row) {
-                $categoryIds[] = (int)$row['uid_local'];
+                $categoryIds[] = (int) $row['uid_local'];
             }
         }
 
@@ -126,7 +124,7 @@ class EventSearch
             'tablenames="' . $this->tableName . '" AND uid_local IN (' . implode(',', $categoryIds) . ')'
         );
         foreach ($rows as $row) {
-            $indexIds[] = (int)$row['uid_foreign'];
+            $indexIds[] = (int) $row['uid_foreign'];
         }
 
         return [

@@ -1,16 +1,15 @@
 <?php
 /**
- * CalMigration
- *
+ * CalMigration.
  */
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Updates\CalMigrationUpdate;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
- * CalMigration
- *
+ * CalMigration.
  */
 class CalMigration
 {
@@ -40,7 +39,7 @@ class CalMigration
             $updateWhere = ' import_id = \'' . CalMigrationUpdate::IMPORT_PREFIX . $selectResult['uid'] . '\'';
             $fieldValues = [
                 'uid_foreign' => (int) $recordId,
-                'tablenames' => $table
+                'tablenames' => $table,
             ];
 
             $query = $db->UPDATEquery('sys_file_reference', $updateWhere, $fieldValues);
@@ -53,7 +52,7 @@ class CalMigration
             'event' => $event,
             'table' => $table,
             'recordId' => $recordId,
-            'dbQueries' => $dbQueries
+            'dbQueries' => $dbQueries,
         ];
 
         return $variables;

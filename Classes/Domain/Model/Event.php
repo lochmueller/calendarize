@@ -1,8 +1,8 @@
 <?php
 /**
- * Event (Default) for the calendarize function
- *
+ * Event (Default) for the calendarize function.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Features\FeedInterface;
@@ -12,16 +12,15 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
- * Event (Default) for the calendarize function
+ * Event (Default) for the calendarize function.
  *
  * @db
  * @smartExclude Workspaces
  */
 class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {
-
     /**
-     * Title
+     * Title.
      *
      * @var string
      * @db
@@ -29,7 +28,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $title;
 
     /**
-     * Abstract / Teaser
+     * Abstract / Teaser.
      *
      * @var string
      * @db
@@ -37,7 +36,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $abstract;
 
     /**
-     * Description
+     * Description.
      *
      * @var string
      * @db
@@ -46,7 +45,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $description;
 
     /**
-     * Location
+     * Location.
      *
      * @var string
      * @db
@@ -54,7 +53,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $location;
 
     /**
-     * Organizer
+     * Organizer.
      *
      * @var string
      * @db
@@ -62,7 +61,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $organizer;
 
     /**
-     * Import ID if the item is based on an ICS structure
+     * Import ID if the item is based on an ICS structure.
      *
      * @var string
      * @db
@@ -70,7 +69,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $importId;
 
     /**
-     * Images
+     * Images.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      * @db
@@ -78,7 +77,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $images;
 
     /**
-     * Downloads
+     * Downloads.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      * @db
@@ -87,14 +86,14 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
 
     /**
      * Relation field. It is just used by the importer of the default events.
-     * You do not need this field, if you don't use the default Event
+     * You do not need this field, if you don't use the default Event.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
      */
     protected $calendarize;
 
     /**
-     * Categories
+     * Categories.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      */
@@ -106,7 +105,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $hidden = false;
 
     /**
-     * Build up the object
+     * Build up the object.
      */
     public function __construct()
     {
@@ -117,7 +116,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -127,11 +126,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
-     *
-     * @return void
      */
     public function setTitle($title)
     {
@@ -139,7 +136,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get abstract
+     * Get abstract.
      *
      * @return string
      */
@@ -149,7 +146,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set abstract
+     * Set abstract.
      *
      * @param string $abstract
      */
@@ -159,7 +156,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -169,7 +166,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      */
@@ -179,7 +176,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get downloads
+     * Get downloads.
      *
      * @return ObjectStorage
      */
@@ -189,7 +186,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set downloads
+     * Set downloads.
      *
      * @param ObjectStorage $downloads
      */
@@ -199,7 +196,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get images
+     * Get images.
      *
      * @return ObjectStorage
      */
@@ -209,7 +206,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set images
+     * Set images.
      *
      * @param ObjectStorage $images
      */
@@ -219,7 +216,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get Import ID
+     * Get Import ID.
      *
      * @return string
      */
@@ -229,7 +226,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set import ID
+     * Set import ID.
      *
      * @param string $importId
      */
@@ -239,7 +236,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get calendarize
+     * Get calendarize.
      *
      * @return ObjectStorage
      */
@@ -249,7 +246,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set calendarize
+     * Set calendarize.
      *
      * @param ObjectStorage $calendarize
      */
@@ -259,7 +256,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Add one calendarize configuration
+     * Add one calendarize configuration.
      *
      * @param Configuration $calendarize
      */
@@ -269,7 +266,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the feed title
+     * Get the feed title.
      *
      * @return string
      */
@@ -279,7 +276,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the feed abstract
+     * Get the feed abstract.
      *
      * @return string
      */
@@ -289,7 +286,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the feed content
+     * Get the feed content.
      *
      * @return string
      */
@@ -299,7 +296,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the feed location
+     * Get the feed location.
      *
      * @return string
      */
@@ -309,7 +306,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the base for the realurl alias
+     * Get the base for the realurl alias.
      *
      * @return string
      */
@@ -319,11 +316,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Adds a Category
+     * Adds a Category.
      *
      * @param Category $category
-     *
-     * @return void
      */
     public function addCategory(Category $category)
     {
@@ -331,11 +326,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Removes a Category
+     * Removes a Category.
      *
      * @param Category $categoryToRemove The Category to be removed
-     *
-     * @return void
      */
     public function removeCategory(Category $categoryToRemove)
     {
@@ -343,7 +336,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Returns the categories
+     * Returns the categories.
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
      */
@@ -353,11 +346,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Sets the categories
+     * Sets the categories.
      *
      * @param ObjectStorage $categories
-     *
-     * @return void
      */
     public function setCategories(ObjectStorage $categories)
     {
@@ -365,7 +356,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the title
+     * Get the title.
      *
      * @param Index $index
      *
@@ -378,7 +369,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the abstract
+     * Get the abstract.
      *
      * @param Index $index
      *
@@ -390,7 +381,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get the content
+     * Get the content.
      *
      * @param Index $index
      *
@@ -401,9 +392,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
         return $this->getDescription();
     }
 
-
     /**
-     * Get the tags
+     * Get the tags.
      *
      * @param Index $index
      *
@@ -417,11 +407,12 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
                 $keSearchTags[] = "#syscat{$category->getUid()}#";
             }
         }
+
         return implode(',', $keSearchTags);
     }
 
     /**
-     * Get location
+     * Get location.
      *
      * @return string
      */
@@ -431,7 +422,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set location
+     * Set location.
      *
      * @param string $location
      */
@@ -441,7 +432,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Get orginzer
+     * Get orginzer.
      *
      * @return string
      */
@@ -451,7 +442,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
-     * Set organizer
+     * Set organizer.
      *
      * @param string $organizer
      */

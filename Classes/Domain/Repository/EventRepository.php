@@ -1,20 +1,19 @@
 <?php
 /**
- * Event repository
- *
+ * Event repository.
  */
+
 namespace HDNET\Calendarize\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 
 /**
- * Event repository
+ * Event repository.
  */
 class EventRepository extends AbstractRepository
 {
-
     /**
-     * Get the IDs of the given search term
+     * Get the IDs of the given search term.
      *
      * @param string $searchTerm
      *
@@ -31,13 +30,14 @@ class EventRepository extends AbstractRepository
 
         $ids = [];
         foreach ($rows as $row) {
-            $ids[] = (int)$row['uid'];
+            $ids[] = (int) $row['uid'];
         }
+
         return $ids;
     }
 
     /**
-     * Return the current tablename
+     * Return the current tablename.
      *
      * @return string
      */

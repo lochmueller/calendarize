@@ -15,8 +15,8 @@ $defaultPidConfiguration = [
         'minitems' => '0',
         'wizards' => [
             'suggest' => [
-                'type' => 'suggest'
-            ]
+                'type' => 'suggest',
+            ],
         ],
     ],
 ];
@@ -28,7 +28,7 @@ $custom = [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['Default', \HDNET\Calendarize\Domain\Model\PluginConfiguration::class]
+                    ['Default', \HDNET\Calendarize\Domain\Model\PluginConfiguration::class],
                 ],
             ],
         ],
@@ -52,8 +52,8 @@ $custom = [
                 'minitems' => '0',
                 'wizards' => [
                     'suggest' => [
-                        'type' => 'suggest'
-                    ]
+                        'type' => 'suggest',
+                    ],
                 ],
             ],
         ],
@@ -89,7 +89,7 @@ $tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
 
 $search = [
     ',detail_pid',
-    ',storage_pid,recursive' // @todo handle the persistence override in the controller
+    ',storage_pid,recursive', // @todo handle the persistence override in the controller
 ];
 $replace = [
     ',--div--;PID,detail_pid',
@@ -98,6 +98,6 @@ $replace = [
 
 $tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);
 
-
 unset($tca['columns']['recursive']['config']['eval']);
+
 return $tca;

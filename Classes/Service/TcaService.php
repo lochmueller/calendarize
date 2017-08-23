@@ -1,8 +1,8 @@
 <?php
 /**
- * TCA service
- *
+ * TCA service.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -14,16 +14,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * TCA service
- *
+ * TCA service.
  */
 class TcaService extends AbstractService
 {
-
     /**
-     * Render the configuration title
+     * Render the configuration title.
      *
-     * @param array $params
+     * @param array  $params
      * @param object $object
      */
     public function configurationTitle(array &$params, $object)
@@ -47,9 +45,9 @@ class TcaService extends AbstractService
     }
 
     /**
-     * Add configurations to event titles
+     * Add configurations to event titles.
      *
-     * @param array $params
+     * @param array  $params
      * @param object $object
      */
     public function eventTitle(array &$params, $object)
@@ -93,10 +91,9 @@ class TcaService extends AbstractService
         $params['title'] .= ' / ' . implode(' / ', $configurations);
     }
 
-
     /**
      * The new FormEngine prepare the select as array
-     * Migrate it to the old behavior
+     * Migrate it to the old behavior.
      *
      * @param array $row
      */
@@ -109,7 +106,7 @@ class TcaService extends AbstractService
     }
 
     /**
-     * Get group title
+     * Get group title.
      *
      * @param $row
      *
@@ -126,11 +123,12 @@ class TcaService extends AbstractService
         if ($groups) {
             $title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
         }
+
         return $title;
     }
 
     /**
-     * Get the title for a configuration time
+     * Get the title for a configuration time.
      *
      * @param $row
      *
@@ -156,6 +154,7 @@ class TcaService extends AbstractService
         if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
             $title .= ' <br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
         }
+
         return $title;
     }
 }

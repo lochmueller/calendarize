@@ -1,17 +1,18 @@
 <?php
 
 /**
- * DefaultBookingRequest
+ * DefaultBookingRequest.
  */
+
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 /**
- * DefaultBookingRequest
+ * DefaultBookingRequest.
  */
 class DefaultBookingRequest extends AbstractBookingRequest
 {
     /**
-     * First name
+     * First name.
      *
      * @var string
      * @validate NotEmpty
@@ -19,7 +20,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $firstName;
 
     /**
-     * Last name
+     * Last name.
      *
      * @var string
      * @validate NotEmpty
@@ -27,7 +28,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $lastName;
 
     /**
-     * E-Mail
+     * E-Mail.
      *
      * @var string
      * @validate NotEmpty
@@ -36,14 +37,14 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $email;
 
     /**
-     * Phone
+     * Phone.
      *
      * @var string
      */
     protected $phone;
 
     /**
-     * Street
+     * Street.
      *
      * @var string
      * @validate NotEmpty
@@ -51,7 +52,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $street;
 
     /**
-     * House number
+     * House number.
      *
      * @var string
      * @validate NotEmpty
@@ -59,7 +60,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $houseNumber;
 
     /**
-     * ZIP
+     * ZIP.
      *
      * @var string
      * @validate NotEmpty
@@ -67,7 +68,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $zip;
 
     /**
-     * City
+     * City.
      *
      * @var string
      * @validate NotEmpty
@@ -75,7 +76,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $city;
 
     /**
-     * Country
+     * Country.
      *
      * @var string
      * @validate NotEmpty
@@ -83,14 +84,14 @@ class DefaultBookingRequest extends AbstractBookingRequest
     protected $country;
 
     /**
-     * Message
+     * Message.
      *
      * @var string
      */
     protected $message;
 
     /**
-     * Get first name
+     * Get first name.
      *
      * @return string
      */
@@ -100,7 +101,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set first name
+     * Set first name.
      *
      * @param string $firstName
      */
@@ -110,7 +111,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get last name
+     * Get last name.
      *
      * @return string
      */
@@ -120,7 +121,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set last name
+     * Set last name.
      *
      * @param string $lastName
      */
@@ -130,7 +131,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get E-Mail
+     * Get E-Mail.
      *
      * @return string
      */
@@ -140,7 +141,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set E-Mail
+     * Set E-Mail.
      *
      * @param string $email
      */
@@ -150,7 +151,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get phone
+     * Get phone.
      *
      * @return string
      */
@@ -160,7 +161,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set phone
+     * Set phone.
      *
      * @param string $phone
      */
@@ -170,7 +171,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get street
+     * Get street.
      *
      * @return string
      */
@@ -180,7 +181,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set street
+     * Set street.
      *
      * @param string $street
      */
@@ -190,7 +191,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get house number
+     * Get house number.
      *
      * @return string
      */
@@ -200,7 +201,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set house number
+     * Set house number.
      *
      * @param string $houseNumber
      */
@@ -210,7 +211,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get ZIP
+     * Get ZIP.
      *
      * @return string
      */
@@ -220,7 +221,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set ZIP
+     * Set ZIP.
      *
      * @param string $zip
      */
@@ -230,7 +231,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get city
+     * Get city.
      *
      * @return string
      */
@@ -240,7 +241,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set city
+     * Set city.
      *
      * @param string $city
      */
@@ -250,7 +251,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get country
+     * Get country.
      *
      * @return string
      */
@@ -260,7 +261,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set country
+     * Set country.
      *
      * @param string $country
      */
@@ -270,7 +271,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return string
      */
@@ -280,7 +281,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     }
 
     /**
-     * Set message
+     * Set message.
      *
      * @param string $message
      */

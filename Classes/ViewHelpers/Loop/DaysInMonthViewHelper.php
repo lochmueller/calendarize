@@ -1,19 +1,17 @@
 <?php
 /**
- * Days in month view helper
- *
+ * Days in month view helper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
- * Days in month view helper
- *
+ * Days in month view helper.
  */
 class DaysInMonthViewHelper extends AbstractLoopViewHelper
 {
-
     /**
-     * Get items
+     * Get items.
      *
      * @param \DateTime $date
      *
@@ -23,16 +21,17 @@ class DaysInMonthViewHelper extends AbstractLoopViewHelper
     {
         $daysInMonth = $date->format('t');
         $days = [];
-        $move = (int)($date->format('j') - 1);
+        $move = (int) ($date->format('j') - 1);
         $date->modify('-' . $move . ' days');
 
-        for ($i = 0; $i < $daysInMonth; $i++) {
+        for ($i = 0; $i < $daysInMonth; ++$i) {
             $days[] = [
-                'day'  => $i,
+                'day' => $i,
                 'date' => clone $date,
             ];
             $date->modify('+1 day');
         }
+
         return $days;
     }
 }

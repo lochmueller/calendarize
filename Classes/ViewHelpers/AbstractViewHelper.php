@@ -1,12 +1,13 @@
 <?php
 
 /**
- * AbstractViewHelper
+ * AbstractViewHelper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 /**
- * AbstractViewHelper
+ * AbstractViewHelper.
  */
 abstract class AbstractViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {

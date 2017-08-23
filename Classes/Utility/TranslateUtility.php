@@ -1,24 +1,23 @@
 <?php
 /**
- * Translate helper
- *
+ * Translate helper.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Translate helper
+ * Translate helper.
  */
 class TranslateUtility
 {
-
     /**
-     * Set the right path and extension for translations in PHP
+     * Set the right path and extension for translations in PHP.
      *
      * @param string $key
      *
-     * @return NULL|string
+     * @return null|string
      */
     public static function get($key)
     {
@@ -27,11 +26,12 @@ class TranslateUtility
             // valid TypoScriptFrontendController. Skip this call by returning just the $key!
             return $key;
         }
+
         return LocalizationUtility::translate(self::getLll($key), 'calendarize');
     }
 
     /**
-     * Get the LLL string
+     * Get the LLL string.
      *
      * @param string $key
      *

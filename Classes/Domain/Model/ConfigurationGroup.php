@@ -1,21 +1,20 @@
 <?php
 /**
- * Logical configuration group
- *
+ * Logical configuration group.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * Logical configuration group
+ * Logical configuration group.
  *
  * @db
  * @smartExclude Language
  */
 class ConfigurationGroup extends AbstractModel
 {
-
     /**
-     * Title
+     * Title.
      *
      * @var string
      * @db
@@ -23,7 +22,7 @@ class ConfigurationGroup extends AbstractModel
     protected $title;
 
     /**
-     * Configurations
+     * Configurations.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
      * @db text
@@ -31,7 +30,7 @@ class ConfigurationGroup extends AbstractModel
     protected $configurations;
 
     /**
-     * Import ID if the item is based on an ICS structure
+     * Import ID if the item is based on an ICS structure.
      *
      * @var string
      * @db
@@ -39,7 +38,7 @@ class ConfigurationGroup extends AbstractModel
     protected $importId;
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -49,11 +48,9 @@ class ConfigurationGroup extends AbstractModel
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
-     *
-     * @return void
      */
     public function setTitle($title)
     {
@@ -61,7 +58,7 @@ class ConfigurationGroup extends AbstractModel
     }
 
     /**
-     * Get configurations
+     * Get configurations.
      *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
@@ -71,7 +68,7 @@ class ConfigurationGroup extends AbstractModel
     }
 
     /**
-     * Set configurations
+     * Set configurations.
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $configurations
      */

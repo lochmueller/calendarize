@@ -1,9 +1,9 @@
 <?php
 /**
  * Helper class for the IndexService
- * Prepare the index
- *
+ * Prepare the index.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -11,14 +11,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Helper class for the IndexService
- * Prepare the index
- *
+ * Prepare the index.
  */
 class IndexPreparationService
 {
-
     /**
-     * Build the index for one element
+     * Build the index for one element.
      *
      * @param string $configurationKey
      * @param string $tableName
@@ -56,7 +54,7 @@ class IndexPreparationService
     }
 
     /**
-     * Add the language information
+     * Add the language information.
      *
      * @param array  $neededItems
      * @param string $tableName
@@ -64,17 +62,17 @@ class IndexPreparationService
      */
     protected function addLanguageInformation(array &$neededItems, $tableName, array $record)
     {
-        $languageField = isset($GLOBALS['TCA'][$tableName]['ctrl']['languageField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] : false;
-        $transPointer = isset($GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField']) ? $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] : false;
+        $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] ?? false;
+        $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false;
 
         if (!$languageField || !$transPointer) {
             return;
         }
-        if ((int)$record[$transPointer] > 0) {
+        if ((int) $record[$transPointer] > 0) {
             // no Index for language child elements
             return;
         }
-        $language = (int)$record[$languageField];
+        $language = (int) $record[$languageField];
 
         foreach (array_keys($neededItems) as $key) {
             $neededItems[$key]['sys_language_uid'] = $language;
@@ -82,7 +80,7 @@ class IndexPreparationService
     }
 
     /**
-     * Add the enable field information
+     * Add the enable field information.
      *
      * @param array  $neededItems
      * @param string $tableName
@@ -90,23 +88,23 @@ class IndexPreparationService
      */
     protected function addEnableFieldInformation(array &$neededItems, $tableName, array $record)
     {
-        $enableFields = isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']) ? $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] : [];
+        $enableFields = $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] ?? [];
         if (!$enableFields) {
             return;
         }
 
         $addFields = [];
         if (isset($enableFields['disabled'])) {
-            $addFields['hidden'] = (int)$record[$enableFields['disabled']];
+            $addFields['hidden'] = (int) $record[$enableFields['disabled']];
         }
         if (isset($enableFields['starttime'])) {
-            $addFields['starttime'] = (int)$record[$enableFields['starttime']];
+            $addFields['starttime'] = (int) $record[$enableFields['starttime']];
         }
         if (isset($enableFields['endtime'])) {
-            $addFields['endtime'] = (int)$record[$enableFields['endtime']];
+            $addFields['endtime'] = (int) $record[$enableFields['endtime']];
         }
         if (isset($enableFields['fe_group'])) {
-            $addFields['fe_group'] = (string)$record[$enableFields['fe_group']];
+            $addFields['fe_group'] = (string) $record[$enableFields['fe_group']];
         }
 
         foreach ($neededItems as $key => $value) {
@@ -115,11 +113,9 @@ class IndexPreparationService
     }
 
     /**
-     * Prepare the record for the database insert
+     * Prepare the record for the database insert.
      *
      * @param $record
-     *
-     * @return void
      */
     protected function prepareRecordForDatabase(&$record)
     {
@@ -127,7 +123,7 @@ class IndexPreparationService
             if ($value instanceof \DateTimeInterface) {
                 $record[$key] = $value->getTimestamp();
             } elseif (is_bool($value) || $key === 'start_time' || $key === 'end_time') {
-                $record[$key] = (int)$value;
+                $record[$key] = (int) $value;
             } elseif ($value === null) {
                 $record[$key] = '';
             }

@@ -1,61 +1,59 @@
 <?php
 /**
- * DateTime Utility
- *
+ * DateTime Utility.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * DateTime Utility
- *
+ * DateTime Utility.
  */
 class DateTimeUtility
 {
-
     /**
-     * One second
+     * One second.
      */
     const SECONDS_SECOND = 1;
 
     /**
-     * One minute in seconds
+     * One minute in seconds.
      */
     const SECONDS_MINUTE = 60;
 
     /**
-     * One hour in seconds
+     * One hour in seconds.
      */
     const SECONDS_HOUR = 3600;
 
     /**
-     * One day in seconds
+     * One day in seconds.
      */
     const SECONDS_DAY = 86400;
 
     /**
-     * One week in seconds
+     * One week in seconds.
      */
     const SECONDS_WEEK = 604800;
 
     /**
-     * One year in seconds (365 days)
+     * One year in seconds (365 days).
      */
     const SECONDS_YEAR = 31536000;
 
     /**
-     * One decade in seconds (base on a 365 days year)
+     * One decade in seconds (base on a 365 days year).
      */
     const SECONDS_DECADE = 315360000;
 
     /**
-     * Format date (Backend)
+     * Format date (Backend).
      */
     const FORMAT_DATE_BACKEND = '%a %d.%m.%Y';
 
     /**
-     * Convert a Week/Year combination to a DateTime of the first day of week
+     * Convert a Week/Year combination to a DateTime of the first day of week.
      *
      * @param int $week
      * @param int $year
@@ -69,9 +67,10 @@ class DateTimeUtility
     }
 
     /**
-     * Time zone is set by the TYPO3 core
+     * Time zone is set by the TYPO3 core.
      *
      * @return \DateTimeZone
+     *
      * @see \TYPO3\CMS\Core\Core\Bootstrap->setDefaultTimezone()
      */
     public static function getTimeZone()
@@ -80,7 +79,7 @@ class DateTimeUtility
     }
 
     /**
-     * Get the time seconds of the given date (TYPO3 Backend style)
+     * Get the time seconds of the given date (TYPO3 Backend style).
      *
      * @param \DateTime $dateTime
      *
@@ -88,13 +87,14 @@ class DateTimeUtility
      */
     public static function getDaySecondsOfDateTime(\DateTime $dateTime)
     {
-        $hours = (int)$dateTime->format('G');
-        $minutes = $hours * self::SECONDS_MINUTE + (int)$dateTime->format('i');
-        return $minutes * self::SECONDS_MINUTE + (int)$dateTime->format('s');
+        $hours = (int) $dateTime->format('G');
+        $minutes = $hours * self::SECONDS_MINUTE + (int) $dateTime->format('i');
+
+        return $minutes * self::SECONDS_MINUTE + (int) $dateTime->format('s');
     }
 
     /**
-     * Get a normalize date time object
+     * Get a normalize date time object.
      *
      * @param int|null $day
      * @param int|null $month
@@ -121,11 +121,12 @@ class DateTimeUtility
         } elseif ($date->format('m') < $month) {
             $date->modify('first day of next month');
         }
+
         return $date;
     }
 
     /**
-     * Reset the DateTime
+     * Reset the DateTime.
      *
      * @param \DateTime $dateTime
      *
@@ -135,6 +136,7 @@ class DateTimeUtility
     {
         $dateTime = self::normalizeDateTimeSingle($dateTime);
         $dateTime->setTime(0, 0, 0);
+
         return $dateTime;
     }
 
@@ -157,6 +159,7 @@ class DateTimeUtility
         } elseif (is_string($dateInformation)) {
             return new \DateTime($dateInformation);
         }
+
         return self::getNow();
     }
 
@@ -177,6 +180,7 @@ class DateTimeUtility
      * Alias for resetTime.
      *
      * @see resetTime()
+     *
      * @param int|null|string|\DateTime $dateInformation
      *
      * @return \DateTime
@@ -197,6 +201,7 @@ class DateTimeUtility
     {
         $dateTime = self::getDayStart($dateInformation);
         $dateTime->setTime(23, 59, 59);
+
         return $dateTime;
     }
 }

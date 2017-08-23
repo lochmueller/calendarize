@@ -1,39 +1,38 @@
 <?php
 /**
- * Feed interface
- *
+ * Feed interface.
  */
+
 namespace HDNET\Calendarize\Features;
 
 /**
- * Feed interface
+ * Feed interface.
  */
 interface FeedInterface
 {
-
     /**
-     * Get the feed title
+     * Get the feed title.
      *
      * @return string
      */
     public function getFeedTitle();
 
     /**
-     * Get the feed abstract
+     * Get the feed abstract.
      *
      * @return string
      */
     public function getFeedAbstract();
 
     /**
-     * Get the feed content
+     * Get the feed content.
      *
      * @return string
      */
     public function getFeedContent();
 
     /**
-     * Get the feed location
+     * Get the feed location.
      *
      * @return string
      */

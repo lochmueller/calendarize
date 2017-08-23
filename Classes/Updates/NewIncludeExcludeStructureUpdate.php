@@ -1,8 +1,9 @@
 <?php
 
 /**
- * NewIncludeExcludeStructureUpdate
+ * NewIncludeExcludeStructureUpdate.
  */
+
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
@@ -10,13 +11,12 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Install\Updates\AbstractUpdate;
 
 /**
- * NewIncludeExcludeStructureUpdate
+ * NewIncludeExcludeStructureUpdate.
  */
 class NewIncludeExcludeStructureUpdate extends AbstractUpdate
 {
-
     /**
-     * The human-readable title of the upgrade wizard
+     * The human-readable title of the upgrade wizard.
      *
      * @var string
      */
@@ -26,6 +26,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      * Checks whether updates are required.
      *
      * @param string &$description The description for the update
+     *
      * @return bool Whether an update is required (TRUE) or not (FALSE)
      */
     public function checkForUpdate(&$description)
@@ -39,6 +40,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
 
         if ($count > 0) {
             $description = 'We will update ' . $count . ' calendarize configurations';
+
             return true;
         }
 
@@ -48,8 +50,9 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
     /**
      * Performs the accordant updates.
      *
-     * @param array &$dbQueries Queries done in this update
+     * @param array &$dbQueries      Queries done in this update
      * @param mixed &$customMessages Custom messages
+     *
      * @return bool Whether everything went smoothly or not
      */
     public function performUpdate(array &$dbQueries, &$customMessages)

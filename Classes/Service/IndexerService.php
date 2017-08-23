@@ -1,8 +1,8 @@
 <?php
 /**
- * Index the given events
- *
+ * Index the given events.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
@@ -13,21 +13,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * Index the given events
- *
+ * Index the given events.
  */
 class IndexerService extends AbstractService
 {
-
     /**
-     * Index table name
+     * Index table name.
      */
     const TABLE_NAME = 'tx_calendarize_domain_model_index';
 
     /**
-     * Reindex all elements
-     *
-     * @return void
+     * Reindex all elements.
      */
     public function reindexAll()
     {
@@ -45,13 +41,11 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Reindex the given element
+     * Reindex the given element.
      *
      * @param string $configurationKey
      * @param string $tableName
      * @param int    $uid
-     *
-     * @return void
      */
     public function reindex($configurationKey, $tableName, $uid)
     {
@@ -61,7 +55,7 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Get index count
+     * Get index count.
      *
      * @param $table
      * @param $uid
@@ -71,34 +65,36 @@ class IndexerService extends AbstractService
     public function getIndexCount($table, $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
+
         return $databaseConnection->exec_SELECTcountRows(
             '*',
             self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int)$uid
+            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int) $uid
         );
     }
 
     /**
-     * Get the next events
+     * Get the next events.
      *
      * @param string $table
      * @param int    $uid
      * @param int    $limit
      *
-     * @return array|NULL
+     * @return array|null
      */
     public function getNextEvents($table, $uid, $limit = 5)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $now = DateTimeUtility::getNow();
         $now->setTime(0, 0, 0);
+
         return $databaseConnection->exec_SELECTgetRows(
             '*',
             self::TABLE_NAME,
             'start_date >= ' . $now->getTimestamp() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr(
                 $table,
                 self::TABLE_NAME
-            ) . ' AND foreign_uid=' . (int)$uid,
+            ) . ' AND foreign_uid=' . (int) $uid,
             '',
             'start_date ASC, start_time ASC',
             $limit
@@ -106,13 +102,11 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Build the index for one element
+     * Build the index for one element.
      *
      * @param string $configurationKey
      * @param string $tableName
      * @param int    $uid
-     *
-     * @return void
      */
     protected function updateIndex($configurationKey, $tableName, $uid)
     {
@@ -127,11 +121,12 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Insert and/or update the needed index records
+     * Insert and/or update the needed index records.
      *
      * @param array  $neededItems
      * @param string $tableName
      * @param int    $uid
+     *
      * @todo Handle Workspace IDs?
      */
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
@@ -170,7 +165,7 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Check if the properties of the given arrays are equals
+     * Check if the properties of the given arrays are equals.
      *
      * @param array $neededItem
      * @param array $currentItem
@@ -181,15 +176,16 @@ class IndexerService extends AbstractService
     {
         foreach ($neededItem as $key => $value) {
             if (MathUtility::canBeInterpretedAsInteger($value)) {
-                if ((int)$value !== (int)$currentItem[$key]) {
+                if ((int) $value !== (int) $currentItem[$key]) {
                     return false;
                 }
             } else {
-                if ((string)$value !== (string)$currentItem[$key]) {
+                if ((string) $value !== (string) $currentItem[$key]) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 
@@ -215,7 +211,7 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Remove index Items of configurations that are not valid anymore
+     * Remove index Items of configurations that are not valid anymore.
      *
      * @return bool
      */
@@ -227,11 +223,13 @@ class IndexerService extends AbstractService
             foreach ($validKeys as $key => $value) {
                 $validKeys[$key] = $databaseConnection->fullQuoteStr($value, self::TABLE_NAME);
             }
-            return (bool)$databaseConnection->exec_DELETEquery(
+
+            return (bool) $databaseConnection->exec_DELETEquery(
                 self::TABLE_NAME,
                 'unique_register_key NOT IN (' . implode(',', $validKeys) . ')'
             );
         }
-        return (bool)$databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
+
+        return (bool) $databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
     }
 }

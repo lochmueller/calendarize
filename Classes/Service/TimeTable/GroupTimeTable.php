@@ -1,27 +1,23 @@
 <?php
 /**
- * Group service
- *
+ * Group service.
  */
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 
 /**
- * Group service
- *
+ * Group service.
  */
 class GroupTimeTable extends AbstractTimeTable
 {
-
     /**
-     * Modify the given times via the configuration
+     * Modify the given times via the configuration.
      *
      * @param array         $times
      * @param Configuration $configuration
-     *
-     * @return void
      */
     public function handleConfiguration(array &$times, Configuration $configuration)
     {

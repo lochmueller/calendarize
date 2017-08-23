@@ -1,12 +1,12 @@
 <?php
 /**
- * Configuration repository
- *
+ * Configuration repository.
  */
+
 namespace HDNET\Calendarize\Domain\Repository;
 
 /**
- * Configuration repository
+ * Configuration repository.
  */
 class ConfigurationRepository extends AbstractRepository
 {

@@ -1,15 +1,16 @@
 <?php
 
 /**
- * DateTimeUtilityTest
+ * DateTimeUtilityTest.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
- * DateTimeUtilityTest
+ * DateTimeUtilityTest.
  */
 class DateTimeUtilityTest extends AbstractUnitTest
 {

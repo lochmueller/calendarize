@@ -1,8 +1,8 @@
 <?php
 /**
- * ICS Service
- *
+ * ICS Service.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -10,14 +10,12 @@ use JMBTechnologyLimited\ICalDissect\ICalParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * ICS Service
- *
+ * ICS Service.
  */
 class IcsReaderService extends AbstractService
 {
-
     /**
-     * Get the ICS events in an array
+     * Get the ICS events in an array.
      *
      * @param string $paramUrl
      *
@@ -35,11 +33,12 @@ class IcsReaderService extends AbstractService
         if ($backend->parseFromFile($tempFileName)) {
             return $backend->getEvents();
         }
+
         return [];
     }
 
     /**
-     * Return the cache folder and check if the folder exists
+     * Return the cache folder and check if the folder exists.
      *
      * @return string
      */
@@ -49,6 +48,7 @@ class IcsReaderService extends AbstractService
         if (!is_dir($cacheFolder)) {
             GeneralUtility::mkdir_deep($cacheFolder);
         }
+
         return $cacheFolder;
     }
 }

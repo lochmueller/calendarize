@@ -1,22 +1,21 @@
 <?php
 /**
- * Index utility
- *
+ * Index utility.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 use HDNET\Calendarize\Domain\Model\Index;
 
 /**
- * Index utility
+ * Index utility.
  */
 class IndexUtility
 {
-
     /**
-     * Check if the Index is part of the range
+     * Check if the Index is part of the range.
      *
-     * @param Index     $index
+     * @param Index              $index
      * @param \DateTimeInterface $rangeStart
      * @param \DateTimeInterface $rangeEnd
      *

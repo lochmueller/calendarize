@@ -1,26 +1,24 @@
 <?php
 /**
- * Configuration Utility
- *
+ * Configuration Utility.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 /**
- * Configuration Utility
- *
+ * Configuration Utility.
  */
 class ConfigurationUtility
 {
-
     /**
-     * Configuration cache
+     * Configuration cache.
      *
      * @var array
      */
     protected static $configuration;
 
     /**
-     * Get the given configuration value
+     * Get the given configuration value.
      *
      * @param string $name
      *
@@ -29,16 +27,17 @@ class ConfigurationUtility
     public static function get($name)
     {
         self::loadConfiguration();
+
         return isset(self::$configuration[$name]) ? self::$configuration[$name] : null;
     }
 
     /**
-     * Load the current configuration
+     * Load the current configuration.
      */
     protected static function loadConfiguration()
     {
         if (self::$configuration === null) {
-            self::$configuration = (array)unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+            self::$configuration = (array) unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
         }
     }
 }

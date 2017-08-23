@@ -1,33 +1,31 @@
 <?php
 /**
- * Layout for BE content elements
- *
+ * Layout for BE content elements.
  */
+
 namespace HDNET\Calendarize\Service;
 
 /**
- * Layout for BE content elements
- *
+ * Layout for BE content elements.
  */
 class ContentElementLayoutService extends AbstractService
 {
-
     /**
-     * Title of the element
+     * Title of the element.
      *
      * @var string
      */
     protected $title = '';
 
     /**
-     * Table information
+     * Table information.
      *
      * @var array
      */
     protected $table = [];
 
     /**
-     * Set the title
+     * Set the title.
      *
      * @param string $title
      */
@@ -38,7 +36,7 @@ class ContentElementLayoutService extends AbstractService
     }
 
     /**
-     * Add one row to the table
+     * Add one row to the table.
      *
      * @param string $label
      * @param mixed  $value
@@ -47,13 +45,13 @@ class ContentElementLayoutService extends AbstractService
     {
         $this->table[] = [
             $label,
-            $value
+            $value,
         ];
     }
 
     /**
      * Render the settings as table for Web>Page module
-     * System settings are displayed in mono font
+     * System settings are displayed in mono font.
      *
      * @return string
      */

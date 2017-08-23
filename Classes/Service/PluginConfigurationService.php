@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
@@ -9,18 +8,18 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * PluginConfigurationService
+ * PluginConfigurationService.
  */
 class PluginConfigurationService
 {
-
     /**
      * @param array $settings
+     *
      * @return array
      */
     public function respectPluginConfiguration(array $settings)
     {
-        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)$settings['pluginConfiguration']);
+        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int) $settings['pluginConfiguration']);
         if ($settings['pluginConfiguration'] instanceof PluginConfiguration) {
             $checkFields = [
                 'detailPid',
@@ -46,19 +45,21 @@ class PluginConfigurationService
             'settings' => $settings,
         ];
         $arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
+
         return $arguments['settings'];
     }
 
     /**
-     * Build the plugin configuration object
+     * Build the plugin configuration object.
      *
      * @param int $uid
+     *
      * @return null|object
      */
     protected function buildPluginConfigurationObject($uid)
     {
         $db = HelperUtility::getDatabaseConnection();
-        $row = $db->exec_SELECTgetSingleRow('*', 'tx_calendarize_domain_model_pluginconfiguration', 'uid=' . (int)$uid);
+        $row = $db->exec_SELECTgetSingleRow('*', 'tx_calendarize_domain_model_pluginconfiguration', 'uid=' . (int) $uid);
         if (!isset($row['model_name'])) {
             return null;
         }
@@ -67,12 +68,13 @@ class PluginConfigurationService
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
         $query->matching($query->equals('uid', $uid));
+
         return $query->execute()
             ->getFirst();
     }
 
     /**
-     * Add the configurations to the given Plugin configuration
+     * Add the configurations to the given Plugin configuration.
      *
      * @param array $config
      *
@@ -86,6 +88,7 @@ class PluginConfigurationService
                 $key,
             ];
         }
+
         return $config;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * Index information
- *
+ * Index information.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Exception;
@@ -12,16 +12,15 @@ use HDNET\Calendarize\Utility\EventUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Index information
+ * Index information.
  *
  * @db
  * @smartExclude Workspaces
  */
 class Index extends AbstractModel
 {
-
     /**
-     * The unique register key of the used table/model configuration
+     * The unique register key of the used table/model configuration.
      *
      * @var string
      * @db varchar(150) DEFAULT '' NOT NULL
@@ -29,7 +28,7 @@ class Index extends AbstractModel
     protected $uniqueRegisterKey;
 
     /**
-     * TableName
+     * TableName.
      *
      * @var string
      * @db varchar(150) DEFAULT '' NOT NULL
@@ -37,7 +36,7 @@ class Index extends AbstractModel
     protected $foreignTable;
 
     /**
-     * The Id of the foreign element
+     * The Id of the foreign element.
      *
      * @var int
      * @db
@@ -45,7 +44,7 @@ class Index extends AbstractModel
     protected $foreignUid;
 
     /**
-     * Start date
+     * Start date.
      *
      * @var \DateTime
      * @db
@@ -53,7 +52,7 @@ class Index extends AbstractModel
     protected $startDate;
 
     /**
-     * End date
+     * End date.
      *
      * @var \DateTime
      * @db
@@ -61,7 +60,7 @@ class Index extends AbstractModel
     protected $endDate;
 
     /**
-     * Start time
+     * Start time.
      *
      * @var int
      * @db
@@ -69,7 +68,7 @@ class Index extends AbstractModel
     protected $startTime;
 
     /**
-     * End time
+     * End time.
      *
      * @var int
      * @db
@@ -77,7 +76,7 @@ class Index extends AbstractModel
     protected $endTime;
 
     /**
-     * AllDay
+     * AllDay.
      *
      * @var bool
      * @db
@@ -85,7 +84,7 @@ class Index extends AbstractModel
     protected $allDay;
 
     /**
-     * State
+     * State.
      *
      * @var string
      * @db
@@ -93,16 +92,17 @@ class Index extends AbstractModel
     protected $state;
 
     /**
-     * The original object
+     * The original object.
      *
      * @var AbstractEntity
      */
     protected $originalObject;
 
     /**
-     * Get the original record for the current index
+     * Get the original record for the current index.
      *
      * @return AbstractEntity
+     *
      * @throws Exception
      */
     public function getOriginalObject()
@@ -114,11 +114,12 @@ class Index extends AbstractModel
             }
             $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
         }
+
         return $this->originalObject;
     }
 
     /**
-     * Get the current configuration
+     * Get the current configuration.
      *
      * @return null|array
      */
@@ -129,11 +130,12 @@ class Index extends AbstractModel
                 return $configuration;
             }
         }
+
         return null;
     }
 
     /**
-     * Get the complete start date
+     * Get the complete start date.
      *
      * @return \DateTime
      */
@@ -144,11 +146,12 @@ class Index extends AbstractModel
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getStartTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
+
         return $date;
     }
 
     /**
-     * Get the complete end date
+     * Get the complete end date.
      *
      * @return \DateTime
      */
@@ -159,11 +162,12 @@ class Index extends AbstractModel
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getEndTime());
             $date->setTime($time->format('H'), $time->format('i'), 0);
         }
+
         return $date;
     }
 
     /**
-     * Set foreign uid
+     * Set foreign uid.
      *
      * @param int $foreignUid
      */
@@ -173,7 +177,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get foreign uid
+     * Get foreign uid.
      *
      * @return int
      */
@@ -183,7 +187,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set unique register key
+     * Set unique register key.
      *
      * @param string $uniqueRegisterKey
      */
@@ -193,7 +197,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get unique register key
+     * Get unique register key.
      *
      * @return string
      */
@@ -203,7 +207,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set foreign table
+     * Set foreign table.
      *
      * @param string $foreignTable
      */
@@ -213,7 +217,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get foreign table
+     * Get foreign table.
      *
      * @return string
      */
@@ -223,7 +227,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set all day
+     * Set all day.
      *
      * @param bool $allDay
      */
@@ -233,17 +237,17 @@ class Index extends AbstractModel
     }
 
     /**
-     * Is all day
+     * Is all day.
      *
      * @return bool
      */
     public function isAllDay()
     {
-        return (bool)$this->allDay;
+        return (bool) $this->allDay;
     }
 
     /**
-     * Set end date
+     * Set end date.
      *
      * @param \DateTime $endDate
      */
@@ -253,7 +257,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get end date
+     * Get end date.
      *
      * @return \DateTime
      */
@@ -263,7 +267,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set end time
+     * Set end time.
      *
      * @param int $endTime
      */
@@ -273,7 +277,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get end time
+     * Get end time.
      *
      * @return int
      */
@@ -283,7 +287,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set start date
+     * Set start date.
      *
      * @param \DateTime $startDate
      */
@@ -293,7 +297,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get start date
+     * Get start date.
      *
      * @return \DateTime
      */
@@ -303,7 +307,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set start time
+     * Set start time.
      *
      * @param int $startTime
      */
@@ -313,7 +317,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get start time
+     * Get start time.
      *
      * @return int
      */
@@ -323,7 +327,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Get state
+     * Get state.
      *
      * @return string
      */
@@ -333,7 +337,7 @@ class Index extends AbstractModel
     }
 
     /**
-     * Set state
+     * Set state.
      *
      * @param string $state
      */

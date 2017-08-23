@@ -1,8 +1,8 @@
 <?php
 /**
- * Time table builder service
- *
+ * Time table builder service.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use Exception;
@@ -15,14 +15,12 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
- * Time table builder service
- *
+ * Time table builder service.
  */
 class TimeTableService extends AbstractService
 {
-
     /**
-     * Build the timetable for the given configuration matrix (sorted)
+     * Build the timetable for the given configuration matrix (sorted).
      *
      * @param array $ids
      *
@@ -69,9 +67,8 @@ class TimeTableService extends AbstractService
         return $timeTable;
     }
 
-
     /**
-     * Remove excluded events
+     * Remove excluded events.
      *
      * @param array $base
      * @param $remove
@@ -106,12 +103,13 @@ class TimeTableService extends AbstractService
     }
 
     /**
-     * Get the complete day
+     * Get the complete day.
      *
-     * @param array $record
+     * @param array  $record
      * @param string $position
      *
      * @return \DateTime
+     *
      * @throws Exception
      */
     protected function getCompleteDate(array $record, $position)
@@ -121,17 +119,18 @@ class TimeTableService extends AbstractService
         }
         /** @var \DateTime $base */
         $base = clone $record[$position . '_date'];
-        if (is_int($record[$position . '_time']) && (int)$record[$position . '_time'] > 0) {
+        if (is_int($record[$position . '_time']) && (int) $record[$position . '_time'] > 0) {
             // Fix handling, if the time field contains a complete timestamp
             $seconds = $record[$position . '_time'] % DateTimeUtility::SECONDS_DAY;
             $base->setTime(0, 0, 0);
             $base->modify('+ ' . $seconds . ' seconds');
         }
+
         return $base;
     }
 
     /**
-     * Build the configuration handler
+     * Build the configuration handler.
      *
      * @param Configuration $configuration
      *
@@ -143,6 +142,7 @@ class TimeTableService extends AbstractService
         if (!class_exists($handler)) {
             return false;
         }
+
         return HelperUtility::create($handler);
     }
 }

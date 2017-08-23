@@ -1,7 +1,8 @@
 <?php
 /**
- * TimeSelectionWizard
+ * TimeSelectionWizard.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -11,15 +12,16 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * TimeSelectionWizard
+ * TimeSelectionWizard.
  */
 class TimeSelectionWizard extends AbstractService
 {
     /**
-     * Render the time selection wizard
+     * Render the time selection wizard.
      *
-     * @param array $params
+     * @param array  $params
      * @param object $pObj
+     *
      * @return string
      */
     public function renderWizard(array $params, $pObj)
@@ -30,7 +32,7 @@ class TimeSelectionWizard extends AbstractService
         if ($id === '' && $name === '') {
             return '';
         }
-        $times = $this->getTimes((int)$params['pid']);
+        $times = $this->getTimes((int) $params['pid']);
         if (!$times) {
             return '';
         }
@@ -56,9 +58,10 @@ class TimeSelectionWizard extends AbstractService
     }
 
     /**
-     * Render the options
+     * Render the options.
      *
      * @param array $options
+     *
      * @return string
      */
     protected function renderOptions(array $options)
@@ -67,11 +70,12 @@ class TimeSelectionWizard extends AbstractService
         foreach ($options as $key => $value) {
             $renderedOptions .= '<option key="' . $key . '">' . $value . '</option>';
         }
+
         return $renderedOptions;
     }
 
     /**
-     * Get the times
+     * Get the times.
      *
      * @param int $pageUid
      *

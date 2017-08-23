@@ -1,8 +1,8 @@
 <?php
 /**
- * Render the CMS layout
- *
+ * Render the CMS layout.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
@@ -15,29 +15,28 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Render the CMS layout
+ * Render the CMS layout.
  *
  * @see News extension (Thanks Georg)
  */
 class CmsLayout extends AbstractHook
 {
-
     /**
-     * Flex form service
+     * Flex form service.
      *
      * @var FlexFormService
      */
     protected $flexFormService;
 
     /**
-     * Content element data
+     * Content element data.
      *
      * @var ContentElementLayoutService
      */
     protected $layoutService;
 
     /**
-     * Returns information about this extension plugin
+     * Returns information about this extension plugin.
      *
      * @param array $params Parameters to the hook
      *
@@ -69,13 +68,14 @@ class CmsLayout extends AbstractHook
         $parts = GeneralUtility::trimExplode(';', $actions, true);
         $parts = array_map(function ($element) {
             $split = explode('->', $element);
+
             return ucfirst($split[1]);
         }, $parts);
         $actionKey = lcfirst(implode('', $parts));
 
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
 
-        $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
+        $pluginConfiguration = (int) $this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {
             $table = 'tx_calendarize_domain_model_pluginconfiguration';
             $row = HelperUtility::getDatabaseConnection()->exec_SELECTgetSingleRow(
@@ -96,24 +96,25 @@ class CmsLayout extends AbstractHook
             );
         }
 
-        if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
+        if ((bool) $this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
-        $overrideStartDate = (int)$this->flexFormService->get('settings.overrideStartdate', 'main');
+        $overrideStartDate = (int) $this->flexFormService->get('settings.overrideStartdate', 'main');
         if ($overrideStartDate) {
             $this->layoutService->addRow('OverrideStartdate', date('d.m.y H:i', $overrideStartDate));
         }
-        $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
+        $overrideEndDate = (int) $this->flexFormService->get('settings.overrideEnddate', 'main');
         if ($overrideEndDate) {
             $this->layoutService->addRow('OverrideEndDate', date('d.m.y H:i', $overrideEndDate));
         }
 
         $this->addPageIdsToTable();
+
         return $this->layoutService->render();
     }
 
     /**
-     * Add page IDs to the preview of the element
+     * Add page IDs to the preview of the element.
      */
     protected function addPageIdsToTable()
     {
@@ -127,7 +128,7 @@ class CmsLayout extends AbstractHook
             'bookingPid',
         ];
         foreach ($pageIdsNames as $pageIdName) {
-            $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
+            $pageId = (int) $this->flexFormService->get('settings.' . $pageIdName, 'pages');
             $pageRow = BackendUtility::getRecord('pages', $pageId);
             if ($pageRow) {
                 $this->layoutService->addRow(

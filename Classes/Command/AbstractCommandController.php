@@ -1,8 +1,8 @@
 <?php
 /**
- * Command controller abstraction
- *
+ * Command controller abstraction.
  */
+
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -10,14 +10,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
- * Command controller abstraction
- *
+ * Command controller abstraction.
  */
 abstract class AbstractCommandController extends CommandController
 {
-
     /**
-     * Flash message service
+     * Flash message service.
      *
      * @var \TYPO3\CMS\Core\Messaging\FlashMessageService
      * @inject
@@ -25,13 +23,11 @@ abstract class AbstractCommandController extends CommandController
     protected $flashMessageService;
 
     /**
-     * Adds a message to the FlashMessageQueue or prints it to the CLI
+     * Adds a message to the FlashMessageQueue or prints it to the CLI.
      *
-     * @param mixed   $message
-     * @param string  $title
-     * @param int $severity
-     *
-     * @return void
+     * @param mixed  $message
+     * @param string $title
+     * @param int    $severity
      */
     public function enqueueMessage($message, $title = '', $severity = FlashMessage::INFO)
     {
@@ -41,6 +37,7 @@ abstract class AbstractCommandController extends CommandController
             }
             $message = '"' . $message->getMessage() . '"' . LF . 'In ' . $message->getFile() . ' at line ' . $message->getLine() . '!';
             $this->enqueueMessage($message, $title, FlashMessage::ERROR);
+
             return;
         } elseif (!is_scalar($message)) {
             $message = var_export($message, true);
@@ -54,13 +51,11 @@ abstract class AbstractCommandController extends CommandController
     }
 
     /**
-     * Adds a message to the FlashMessageQueue
+     * Adds a message to the FlashMessageQueue.
      *
-     * @param mixed   $message
-     * @param string  $title
-     * @param int $severity
-     *
-     * @return void
+     * @param mixed  $message
+     * @param string $title
+     * @param int    $severity
      */
     private function enqueueMessageGui($message, $title = '', $severity = FlashMessage::INFO)
     {

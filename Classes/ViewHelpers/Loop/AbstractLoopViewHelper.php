@@ -1,47 +1,49 @@
 <?php
 /**
- * Abstraction for loop view helper
- *
+ * Abstraction for loop view helper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
- * Abstraction for loop view helper
- *
+ * Abstraction for loop view helper.
  */
 abstract class AbstractLoopViewHelper extends AbstractViewHelper
 {
-
-
     /**
-     * Specifies whether the escaping interceptors should be disabled or enabled for the result of renderChildren() calls within this ViewHelper
+     * Specifies whether the escaping interceptors should be disabled or enabled for the result of renderChildren() calls within this ViewHelper.
+     *
      * @see isChildrenEscapingEnabled()
      *
      * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
      *
      * @var bool
+     *
      * @api
      */
     protected $escapeChildren = false;
 
     /**
-     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper
+     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper.
+     *
      * @see isOutputEscapingEnabled()
      *
      * @var bool
+     *
      * @api
      */
     protected $escapeOutput = false;
 
     /**
-     * Render the element
+     * Render the element.
      *
      * @param \DateTime $date
      * @param string    $iteration
      *
      * @return string
+     *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      */
     public function render(\DateTime $date, $iteration)
@@ -54,7 +56,7 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
         $iterationData = [
             'index' => 0,
             'cycle' => 1,
-            'total' => count($items)
+            'total' => count($items),
         ];
 
         $output = '';
@@ -70,14 +72,15 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
             $output .= $this->renderChildren();
 
             $variableContainer->remove($iteration);
-            $iterationData['index']++;
-            $iterationData['cycle']++;
+            ++$iterationData['index'];
+            ++$iterationData['cycle'];
         }
+
         return $output;
     }
 
     /**
-     * Get the items
+     * Get the items.
      *
      * @param \DateTime $date
      *

@@ -1,8 +1,8 @@
 <?php
 /**
- * Hook for cmd map processing
- *
+ * Hook for cmd map processing.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
@@ -11,15 +11,14 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Hook for cmd map processing
+ * Hook for cmd map processing.
  *
  * @hook TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processCmdmapClass
  */
 class ProcessCmdmapClass extends AbstractHook
 {
-
     /**
-     * Handle CMD
+     * Handle CMD.
      *
      * @param string      $command
      * @param string      $table

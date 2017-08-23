@@ -1,8 +1,8 @@
 <?php
 /**
- * Helper Utility
- *
+ * Helper Utility.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;
@@ -15,15 +15,13 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Helper Utility
- *
+ * Helper Utility.
  */
 class HelperUtility
 {
-
     /**
      * Create a object with the given class name
-     * Please use GeneralUtility::makeInstance if you do not need DI
+     * Please use GeneralUtility::makeInstance if you do not need DI.
      *
      * @param string $className
      *
@@ -33,14 +31,15 @@ class HelperUtility
     {
         $arguments = func_get_args();
         $objManager = new ObjectManager();
+
         return call_user_func_array([
             $objManager,
-            'get'
+            'get',
         ], $arguments);
     }
 
     /**
-     * Get the query for the given class name oder object
+     * Get the query for the given class name oder object.
      *
      * @param string|object $objectName
      *
@@ -54,11 +53,12 @@ class HelperUtility
         if ($manager === null) {
             $manager = self::create(PersistenceManagerInterface::class);
         }
+
         return $manager->createQueryForType($objectName);
     }
 
     /**
-     * Get the signal slot dispatcher
+     * Get the signal slot dispatcher.
      *
      * @return Dispatcher
      */
@@ -68,7 +68,7 @@ class HelperUtility
     }
 
     /**
-     * Create a flash message
+     * Create a flash message.
      *
      * @param string $message
      * @param string $title
@@ -85,7 +85,7 @@ class HelperUtility
     }
 
     /**
-     * Get the database connection
+     * Get the database connection.
      *
      * @return DatabaseConnection
      */
@@ -95,7 +95,7 @@ class HelperUtility
     }
 
     /**
-     * Persist all data
+     * Persist all data.
      */
     public static function persistAll()
     {

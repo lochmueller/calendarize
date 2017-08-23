@@ -1,8 +1,8 @@
 <?php
 /**
- * Check if the given Index is on the given day
- *
+ * Check if the given Index is on the given day.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -11,14 +11,12 @@ use HDNET\Calendarize\Utility\IndexUtility;
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
- * Check if the given Index is on the given day
- *
+ * Check if the given Index is on the given day.
  */
 class IndexOnDayViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Check if the index or one of the given indices is on the given day
+     * Check if the index or one of the given indices is on the given day.
      *
      * @param \DateTime $day
      * @param Index     $index

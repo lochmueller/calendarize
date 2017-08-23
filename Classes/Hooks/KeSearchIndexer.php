@@ -1,8 +1,9 @@
 <?php
 
 /**
- * KE Search Indexer
+ * KE Search Indexer.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
@@ -13,16 +14,15 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * KE Search Indexer
+ * KE Search Indexer.
  *
  * @hook TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration
  * @hook TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer
  */
 class KeSearchIndexer extends AbstractHook
 {
-
     /**
-     * Register the indexer configuration
+     * Register the indexer configuration.
      *
      * @param array  $params
      * @param object $pObj
@@ -32,16 +32,16 @@ class KeSearchIndexer extends AbstractHook
         $newArray = [
             'Calendarize Indexer',
             'calendarize',
-            IconUtility::getByExtensionKey('calendarize')
+            IconUtility::getByExtensionKey('calendarize'),
         ];
         $params['items'][] = $newArray;
     }
 
     /**
-     * Calendarize indexer for ke_search
+     * Calendarize indexer for ke_search.
      *
      * @param array                $indexerConfig Configuration from TYPO3 Backend
-     * @param \tx_kesearch_indexer $indexerObject Reference to indexer class.
+     * @param \tx_kesearch_indexer $indexerObject reference to indexer class
      *
      * @return string|null
      */

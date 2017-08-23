@@ -1,21 +1,19 @@
 <?php
 /**
- * Link to the index
- *
+ * Link to the index.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use HDNET\Calendarize\Domain\Model\Index;
 
 /**
- * Link to the index
- *
+ * Link to the index.
  */
 class IndexViewHelper extends AbstractLinkViewHelper
 {
-
     /**
-     * Render the link to the given index
+     * Render the link to the given index.
      *
      * @param Index $index
      * @param int   $pageUid
@@ -27,9 +25,10 @@ class IndexViewHelper extends AbstractLinkViewHelper
     {
         $additionalParams = [
             'tx_calendarize_calendar' => [
-                'index' => $index->getUid()
+                'index' => $index->getUid(),
             ],
         ];
+
         return parent::renderLink($this->getPageUid($pageUid, 'detailPid'), $additionalParams, (bool) $absolute);
     }
 }

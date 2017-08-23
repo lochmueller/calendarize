@@ -1,8 +1,8 @@
 <?php
 /**
- * Import default events
- *
+ * Import default events.
  */
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Command\ImportCommandController;
@@ -13,13 +13,12 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
- * Import default events
+ * Import default events.
  */
 class EventImport
 {
-
     /**
-     * Event repository
+     * Event repository.
      *
      * @var \HDNET\Calendarize\Domain\Repository\EventRepository
      * @inject
@@ -27,14 +26,15 @@ class EventImport
     protected $eventRepository;
 
     /**
-     * Run the import
+     * Run the import.
      *
      * @param array                   $event
      * @param ImportCommandController $commandController
      * @param int                     $pid
-     * @param bool                 $handled
+     * @param bool                    $handled
      *
      * @return array
+     *
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      */
     public function importCommand(array $event, $commandController, $pid, $handled)
@@ -61,15 +61,15 @@ class EventImport
         $handled = true;
 
         return [
-            'event'             => $event,
+            'event' => $event,
             'commandController' => $commandController,
-            'pid'               => $pid,
-            'handled'           => $handled,
+            'pid' => $pid,
+            'handled' => $handled,
         ];
     }
 
     /**
-     * Get the configuration
+     * Get the configuration.
      *
      * @param int       $pid
      * @param \DateTime $startDate
@@ -101,7 +101,7 @@ class EventImport
     }
 
     /**
-     * Get the right event object (or a new one)
+     * Get the right event object (or a new one).
      *
      * @param string $importId
      *
@@ -114,11 +114,12 @@ class EventImport
             $eventObject = new Event();
         }
         $eventObject->setImportId($importId);
+
         return $eventObject;
     }
 
     /**
-     * Store to the DB
+     * Store to the DB.
      */
     protected function persist()
     {
@@ -127,7 +128,7 @@ class EventImport
     }
 
     /**
-     * Replace new lines
+     * Replace new lines.
      *
      * @param string $string
      *
@@ -135,7 +136,8 @@ class EventImport
      */
     protected function nl2br($string)
     {
-        $string = nl2br((string)$string);
+        $string = nl2br((string) $string);
+
         return str_replace('\\n', '<br />', $string);
     }
 }

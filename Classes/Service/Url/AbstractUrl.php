@@ -1,8 +1,8 @@
 <?php
 /**
- * AbstractUrl
- *
+ * AbstractUrl.
  */
+
 namespace HDNET\Calendarize\Service\Url;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -12,13 +12,12 @@ use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
- * AbstractUrl
+ * AbstractUrl.
  */
 abstract class AbstractUrl extends AbstractService
 {
-
     /**
-     * Convert the given information
+     * Convert the given information.
      *
      * @param $param1
      * @param $param2
@@ -26,7 +25,7 @@ abstract class AbstractUrl extends AbstractService
     abstract public function convert($param1, $param2);
 
     /**
-     * Build the speaking base
+     * Build the speaking base.
      *
      * @param int $indexUid
      *
@@ -35,7 +34,7 @@ abstract class AbstractUrl extends AbstractService
     protected function getIndexBase($indexUid)
     {
         $indexRepository = HelperUtility::create(IndexRepository::class);
-        $index = $indexRepository->findByUid((int)$indexUid);
+        $index = $indexRepository->findByUid((int) $indexUid);
         if (!($index instanceof Index)) {
             return 'idx-' . $indexUid;
         }
@@ -47,6 +46,7 @@ abstract class AbstractUrl extends AbstractService
 
         $base = $originalObject->getRealUrlAliasBase();
         $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
+
         return $base . '-' . $index->getStartDateComplete()
             ->format($datePart);
     }

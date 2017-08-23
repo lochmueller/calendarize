@@ -1,8 +1,8 @@
 <?php
 /**
- * Cleanup the event models
- *
+ * Cleanup the event models.
  */
+
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Domain\Model\Event;
@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Cleanup the event models
+ * Cleanup the event models.
  */
 class CleanupCommandController extends AbstractCommandController
 {
@@ -30,9 +30,7 @@ class CleanupCommandController extends AbstractCommandController
      *
      * @param string $repositoryName repository of the event to clean up. Default: 'HDNET\Calendarize\Domain\Repository\EventRepository'
      * @param string $modus          What to do with cleaned Events? Set them 'hide' or 'delete'. Default: 'hide'
-     * @param int    $waitingPeriod  How many days to wait after ending the Event before 'hide/delete' it.
-     *
-     * @return void
+     * @param int    $waitingPeriod  how many days to wait after ending the Event before 'hide/delete' it
      */
     public function runCommand(
         $repositoryName = self::DEFAULT_CLEANUP_REPOSITORY,
@@ -58,6 +56,7 @@ class CleanupCommandController extends AbstractCommandController
                 'Tablename',
                 FlashMessage::ERROR
             );
+
             return;
         }
 
@@ -68,7 +67,7 @@ class CleanupCommandController extends AbstractCommandController
 
         // climb thru the events and hide/delete them
         foreach ($events as $event) {
-            $uid = (int)$event['foreign_uid'];
+            $uid = (int) $event['foreign_uid'];
 
             $model = $repository->findByUid($uid);
 
@@ -95,8 +94,8 @@ class CleanupCommandController extends AbstractCommandController
      * Process the found Event and delete or hide it.
      *
      * @param EventRepository $repository
-     * @param Event $model
-     * @param string $modus
+     * @param Event           $model
+     * @param string          $modus
      */
     protected function processEvent(EventRepository $repository, Event $model, $modus)
     {
@@ -111,7 +110,6 @@ class CleanupCommandController extends AbstractCommandController
             $repository->update($model);
         };
 
-        //
         if ($modus === self::MODUS_DELETED) {
             $function = $delete;
         } else {
@@ -124,7 +122,7 @@ class CleanupCommandController extends AbstractCommandController
             'modus' => $modus,
             'repository' => $repository,
             'model' => $model,
-            'function' => $function
+            'function' => $function,
         ];
 
         $dispatcher = $this->objectManager->get(Dispatcher::class);
@@ -143,7 +141,7 @@ class CleanupCommandController extends AbstractCommandController
     protected function findOutdatedEvents($tableName, $waitingPeriod)
     {
         // calculate the waiting time
-        $interval = 'P' . (int)$waitingPeriod . 'D';
+        $interval = 'P' . (int) $waitingPeriod . 'D';
         $now = DateTimeUtility::getNow();
         $now->sub(new \DateInterval($interval));
 

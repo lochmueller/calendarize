@@ -1,38 +1,34 @@
 <?php
 /**
- * Link to anything ;)
- *
+ * Link to anything ;).
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
- * Link to anything ;)
- *
+ * Link to anything ;).
  */
 abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
 {
-
     /**
-     * Tag type
+     * Tag type.
      *
      * @var string
      */
     protected $tagName = 'a';
 
     /**
-     * Store the last href to avoid escaping for the URI view Helper
+     * Store the last href to avoid escaping for the URI view Helper.
      *
      * @var string
      */
     protected $lastHref = '';
 
     /**
-     * Arguments initialization
-     *
-     * @return void
+     * Arguments initialization.
      */
     public function initializeArguments()
     {
@@ -47,18 +43,18 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     }
 
     /**
-     * render the link
+     * render the link.
      *
-     * @param int|NULL $pageUid          target page. See TypoLink destination
+     * @param int|null $pageUid          target page. See TypoLink destination
      * @param array    $additionalParams query parameters to be attached to the resulting URI
-     * @param bool $absolute
+     * @param bool     $absolute
      *
      * @return string Rendered page URI
      */
     public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false)
     {
         $uriBuilder = $this->controllerContext->getUriBuilder();
-        $this->lastHref = (string)$uriBuilder->reset()
+        $this->lastHref = (string) $uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setArguments($additionalParams)
             ->setCreateAbsoluteUri($absolute)
@@ -70,31 +66,32 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         } else {
             $result = $this->renderChildren();
         }
+
         return $result;
     }
 
     /**
-     * Get the right page Uid
+     * Get the right page Uid.
      *
      * @param int         $pageUid
-     * @param string|NULL $contextName
+     * @param string|null $contextName
      *
      * @return int
      */
     protected function getPageUid($pageUid, $contextName = null)
     {
         if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
-            return (int)$pageUid;
+            return (int) $pageUid;
         }
 
         // by settings
         if ($contextName && $this->templateVariableContainer->exists('settings')) {
             $settings = $this->templateVariableContainer->get('settings');
             if (isset($settings[$contextName]) && MathUtility::canBeInterpretedAsInteger($settings[$contextName])) {
-                return (int)$settings[$contextName];
+                return (int) $settings[$contextName];
             }
         }
 
-        return (int)$GLOBALS['TSFE']->id;
+        return (int) $GLOBALS['TSFE']->id;
     }
 }

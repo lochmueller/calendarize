@@ -1,20 +1,21 @@
 <?php
 
 /**
- * IfExtensionLoadedViewHelper
+ * IfExtensionLoadedViewHelper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
- * IfExtensionLoadedViewHelper
+ * IfExtensionLoadedViewHelper.
  */
 class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
 {
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {
@@ -23,9 +24,10 @@ class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
     }
 
     /**
-     * Add the condition
+     * Add the condition.
      *
      * @param array|null $arguments
+     *
      * @return bool
      */
     public static function evaluateCondition($arguments = null)
@@ -33,6 +35,7 @@ class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
         if (!isset($arguments['extensionKey'])) {
             return false;
         }
+
         return ExtensionManagementUtility::isLoaded($arguments['extensionKey']);
     }
 }

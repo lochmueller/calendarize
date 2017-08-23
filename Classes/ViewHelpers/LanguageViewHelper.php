@@ -1,20 +1,19 @@
 <?php
 /**
- * LanguageViewHelper
- *
+ * LanguageViewHelper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * LanguageViewHelper
+ * LanguageViewHelper.
  */
 class LanguageViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Get the current language ISO code
+     * Get the current language ISO code.
      *
      * @return string
      */

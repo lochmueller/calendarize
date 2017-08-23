@@ -1,28 +1,26 @@
 <?php
 /**
- * Work on flex forms
- *
+ * Work on flex forms.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Work on flex forms
- *
+ * Work on flex forms.
  */
 class FlexFormService extends AbstractService
 {
-
     /**
-     * Flex form data
+     * Flex form data.
      *
      * @var array
      */
     protected $flexFormData = [];
 
     /**
-     * oad the given flex form into the service
+     * oad the given flex form into the service.
      *
      * @param string $xml
      */
@@ -33,12 +31,12 @@ class FlexFormService extends AbstractService
 
     /**
      * Get field value from flex form configuration,
-     * including checks if flex form configuration is available
+     * including checks if flex form configuration is available.
      *
      * @param string $key   name of the key
      * @param string $sheet name of the sheet
      *
-     * @return string|NULL if nothing found, value if found
+     * @return string|null if nothing found, value if found
      */
     public function get($key, $sheet = 'sDEF')
     {
@@ -49,11 +47,12 @@ class FlexFormService extends AbstractService
         if (is_array($flexFormData) && is_array($flexFormData[$sheet]) && is_array($flexFormData[$sheet]['lDEF']) && is_array($flexFormData[$sheet]['lDEF'][$key]) && isset($flexFormData[$sheet]['lDEF'][$key]['vDEF'])) {
             return $flexFormData[$sheet]['lDEF'][$key]['vDEF'];
         }
+
         return null;
     }
 
     /**
-     * Check if the flex form get valid data
+     * Check if the flex form get valid data.
      *
      * @return bool
      */

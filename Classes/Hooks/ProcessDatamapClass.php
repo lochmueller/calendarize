@@ -1,8 +1,8 @@
 <?php
 /**
- * Hook for data map processing
- *
+ * Hook for data map processing.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
@@ -11,30 +11,27 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Hook for data map processing
+ * Hook for data map processing.
  *
  * @hook   TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processDatamapClass
  */
 class ProcessDatamapClass extends AbstractHook
 {
-
     /**
-     * Index the given items
+     * Index the given items.
      *
      * @var array
      */
     protected $indexItems = [];
 
     /**
-     * Hook into the after database operations
+     * Hook into the after database operations.
      *
      * @param             $status
      * @param             $table
      * @param             $identifier
      * @param             $fieldArray
      * @param DataHandler $dataHandler
-     *
-     * @return void
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $identifier, $fieldArray, DataHandler $dataHandler)
     {
@@ -50,11 +47,9 @@ class ProcessDatamapClass extends AbstractHook
     }
 
     /**
-     * Process the reindex after all operations
+     * Process the reindex after all operations.
      *
      * @param DataHandler $dataHandler
-     *
-     * @return void
      */
     public function processDatamap_afterAllOperations(DataHandler $dataHandler)
     {

@@ -1,7 +1,8 @@
 <?php
 /**
- * RealUrl
+ * RealUrl.
  */
+
 namespace HDNET\Calendarize\Service\Url;
 
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
@@ -14,13 +15,12 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
- * RealUrl
+ * RealUrl.
  */
 class RealUrl extends AbstractUrl
 {
-
     /**
-     * Convert the given information
+     * Convert the given information.
      *
      * @param $param1
      * @param $param2
@@ -33,7 +33,7 @@ class RealUrl extends AbstractUrl
     }
 
     /**
-     * Build the realurl alias
+     * Build the realurl alias.
      *
      * @param $params
      * @param $ref
@@ -46,11 +46,12 @@ class RealUrl extends AbstractUrl
             return $this->alias2id($params['value']);
         }
         $this->cleanupOldLinks();
+
         return $this->id2alias($params['value']);
     }
 
     /**
-     * Cleanup old URL segments
+     * Cleanup old URL segments.
      */
     protected function cleanupOldLinks()
     {
@@ -61,7 +62,7 @@ FROM tx_realurl_uniqalias LEFT JOIN tx_calendarize_domain_model_index ON tx_real
 WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tablename=\'tx_calendarize_domain_model_index\'';
         $res = $databaseConnection->admin_query($selectInvalidItems);
         while ($row = $databaseConnection->sql_fetch_assoc($res)) {
-            $removeIds[] = (int)$row['uid'];
+            $removeIds[] = (int) $row['uid'];
         }
         if (empty($removeIds)) {
             return;
@@ -70,11 +71,9 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
     }
 
     /**
-     * Handle the alias to index ID convert
+     * Handle the alias to index ID convert.
      *
      * @param $value
-     *
-     * @return null
      */
     protected function alias2id($value)
     {
@@ -91,18 +90,19 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             )
         );
         if (isset($row['value_id'])) {
-            return (int)$row['value_id'];
+            return (int) $row['value_id'];
         }
 
         $matches = [];
         if (preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
             return $matches[1];
         }
+
         return null;
     }
 
     /**
-     * Handle the index ID to alias convert
+     * Handle the index ID to alias convert.
      *
      * @param $value
      *
@@ -117,22 +117,22 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             'tablename=' . $databaseConnection->fullQuoteStr(
                 IndexerService::TABLE_NAME,
                 IndexerService::TABLE_NAME
-            ) . ' AND value_id=' . (int)$value
+            ) . ' AND value_id=' . (int) $value
         );
         if (isset($row['value_alias'])) {
             return $row['value_alias'];
         }
 
-        $alias = $this->getIndexBase((int)$value);
+        $alias = $this->getIndexBase((int) $value);
         $alias = $this->cleanUrl($alias);
 
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $entry = [
-            'tablename'   => IndexerService::TABLE_NAME,
+            'tablename' => IndexerService::TABLE_NAME,
             'field_alias' => 'title',
-            'field_id'    => 'uid',
+            'field_id' => 'uid',
             'value_alias' => $alias,
-            'value_id'    => $value,
+            'value_id' => $value,
         ];
         if ($this->isOldRealUrlVersion()) {
             $entry['tstamp'] = (new \DateTime())->getTimestamp();
@@ -143,7 +143,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
     }
 
     /**
-     * Generate the realurl part
+     * Generate the realurl part.
      *
      * @param string $alias
      *
@@ -171,13 +171,14 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
     }
 
     /**
-     * Check if this is a old version of realurl < 2.0.0
+     * Check if this is a old version of realurl < 2.0.0.
      *
      * @return bool
      */
     protected function isOldRealUrlVersion()
     {
         $extVersion = ExtensionManagementUtility::getExtensionVersion('realurl');
+
         return VersionNumberUtility::convertVersionNumberToInteger($extVersion) < 2000000;
     }
 }

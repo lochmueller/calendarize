@@ -1,19 +1,17 @@
 <?php
 /**
- * Link to the month
- *
+ * Link to the month.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
- * Link to the month
- *
+ * Link to the month.
  */
 class MonthViewHelper extends AbstractLinkViewHelper
 {
-
     /**
-     * Render the link to the given day
+     * Render the link to the given day.
      *
      * @param \DateTime $date
      * @param int       $pageUid
@@ -24,10 +22,11 @@ class MonthViewHelper extends AbstractLinkViewHelper
     {
         $additionalParams = [
             'tx_calendarize_calendar' => [
-                'year'  => $date->format('Y'),
+                'year' => $date->format('Y'),
                 'month' => $date->format('n'),
             ],
         ];
+
         return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * TYPO3 Auth backend
- *
+ * TYPO3 Auth backend.
  */
+
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Domain\Repository\CalDavRepository;
@@ -13,20 +13,19 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * TYPO3 Auth backend
+ * TYPO3 Auth backend.
  */
 class AuthBackendTypo3 extends AbstractBasic
 {
-
     /**
-     * PDO table name we'll be using
+     * PDO table name we'll be using.
      *
      * @var string
      */
     public $tableName = 'fe_users';
 
     /**
-     * Validates a username and password
+     * Validates a username and password.
      *
      * If the username and password were correct, this method must return
      * an array with at least a 'uri' key.
@@ -60,9 +59,9 @@ class AuthBackendTypo3 extends AbstractBasic
 
         if (is_array($feUserObj->user) && $feUserObj->user['uid'] && $feUserObj->user['is_online']) {
             $user = [
-                'uri'         => 'principals/' . $username,
-                'digestHash'  => md5($username . ':' . 'SabreDAV' . ':' . $username),
-                'calendar_id' => $configuration['uid']
+                'uri' => 'principals/' . $username,
+                'digestHash' => md5($username . ':' . 'SabreDAV' . ':' . $username),
+                'calendar_id' => $configuration['uid'],
             ];
 
             if ($feUserObj->user['email']) {
@@ -76,7 +75,7 @@ class AuthBackendTypo3 extends AbstractBasic
     }
 
     /**
-     * Find matching against CalDav configuration
+     * Find matching against CalDav configuration.
      *
      * @param string $username
      *
@@ -90,11 +89,12 @@ class AuthBackendTypo3 extends AbstractBasic
         }
         /** @var CalDavRepository $repository */
         $repository = HelperUtility::create(CalDavRepository::class);
+
         return $repository->findByUserStorage($userRecord['pid']);
     }
 
     /**
-     * Returns a users' information
+     * Returns a users' information.
      *
      * @param string $realm
      * @param string $username
@@ -112,23 +112,24 @@ class AuthBackendTypo3 extends AbstractBasic
             return false;
         }
         $user = [
-            'uri'         => 'principals/' . $userRow['username'],
-            'digestHash'  => md5($userRow['username'] . ':' . 'SabreDAV' . ':' . $userRow['password']),
-            'calendar_id' => $configuration['uid']
+            'uri' => 'principals/' . $userRow['username'],
+            'digestHash' => md5($userRow['username'] . ':' . 'SabreDAV' . ':' . $userRow['password']),
+            'calendar_id' => $configuration['uid'],
         ];
         $this->username = $username;
         if ($userRow['email']) {
             $user['{http://sabredav.org/ns}email-address'] = $userRow['email'];
         }
+
         return $user;
     }
 
     /**
-     * Get the user record
+     * Get the user record.
      *
      * @param string $userName
      *
-     * @return array|FALSE|NULL
+     * @return array|false|null
      */
     protected function getUserRow($userName)
     {
@@ -137,6 +138,7 @@ class AuthBackendTypo3 extends AbstractBasic
             $userName,
             'fe_users'
         ) . BackendUtility::deleteClause($this->tableName) . BackendUtility::BEenableFields($this->tableName);
+
         return $dbConnection->exec_SELECTgetSingleRow('*', 'fe_users', $where);
     }
 }

@@ -1,19 +1,18 @@
 <?php
 /**
- * Check if a date is lower
- *
+ * Check if a date is lower.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\ViewHelpers\IfDateLowerViewHelper;
 
 /**
- * Check if a date is lower
+ * Check if a date is lower.
  */
 class IfDateLowerViewHelperTest extends AbstractUnitTest
 {
-
     /**
      * @test
      */

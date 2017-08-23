@@ -1,31 +1,29 @@
 <?php
 /**
- * Recurrence service
- *
+ * Recurrence service.
  */
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 
 /**
- * Recurrence service
- *
+ * Recurrence service.
  */
 class RecurrenceService extends AbstractService
 {
-
     /**
-     * direction up
+     * direction up.
      */
     const DIRECTION_UP = 'up';
 
     /**
-     * direction down
+     * direction down.
      */
     const DIRECTION_DOWN = 'down';
 
     /**
-     * Get the date if the configuration of the next month
+     * Get the date if the configuration of the next month.
      *
      * @param \DateTime $date
      * @param string    $recurrence
@@ -39,7 +37,7 @@ class RecurrenceService extends AbstractService
     }
 
     /**
-     * Get the date if the configuration of the next year
+     * Get the date if the configuration of the next year.
      *
      * @param \DateTime $date
      * @param string    $recurrence
@@ -53,14 +51,14 @@ class RecurrenceService extends AbstractService
     }
 
     /**
-     * Get the date if the configuration of the current month
+     * Get the date if the configuration of the current month.
      *
      * @param \DateTime $date
      * @param string    $recurrence
      * @param string    $day
      * @param string    $modify
      *
-     * @return \DateTime|FALSE
+     * @return \DateTime|false
      */
     protected function getRecurrenceForCurrentMonth(\DateTime $date, $recurrence, $day, $modify)
     {
@@ -97,7 +95,7 @@ class RecurrenceService extends AbstractService
     }
 
     /**
-     * Numbers are match against the date format 'N' 1 => mon till 7 => sun
+     * Numbers are match against the date format 'N' 1 => mon till 7 => sun.
      *
      * @param string $day
      *
@@ -145,18 +143,19 @@ class RecurrenceService extends AbstractService
                 // no day
                 break;
         }
+
         return $days;
     }
 
     /**
-     * Find the modified in the current month
+     * Find the modified in the current month.
      *
      * @param \DateTime $dateTime
      * @param string    $direction
      * @param array     $validDays
      * @param int       $position
      *
-     * @return \DateTime|FALSE
+     * @return \DateTime|false
      */
     protected function findDayInCurrentMonth($dateTime, $direction, $validDays, $position = 1)
     {
@@ -170,13 +169,14 @@ class RecurrenceService extends AbstractService
         $validMonth = $dateTime->format('Y-m');
         while ($dateTime->format('Y-m') == $validMonth) {
             if (in_array($dateTime->format('N'), $validDays)) {
-                $position--;
+                --$position;
                 if ($position === 0) {
                     return $dateTime;
                 }
             }
             $dateTime->modify($modify);
         }
+
         return false;
     }
 }

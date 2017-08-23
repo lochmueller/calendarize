@@ -1,19 +1,17 @@
 <?php
 /**
- * Link to the week
- *
+ * Link to the week.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
- * Link to the week
- *
+ * Link to the week.
  */
 class WeekViewHelper extends AbstractLinkViewHelper
 {
-
     /**
-     * Render the link to the given day
+     * Render the link to the given day.
      *
      * @param \DateTime $date
      * @param int       $pageUid
@@ -28,6 +26,7 @@ class WeekViewHelper extends AbstractLinkViewHelper
                 'week' => $date->format('W'),
             ],
         ];
+
         return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
     }
 }

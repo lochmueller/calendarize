@@ -1,20 +1,20 @@
 <?php
 /**
- * CalDav configuration
+ * CalDav configuration.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * CalDav configuration
+ * CalDav configuration.
  *
  * @db
  * @smartExclude Workspaces,Language
  */
 class CalDav extends AbstractModel
 {
-
     /**
-     * Title
+     * Title.
      *
      * @var string
      * @db
@@ -22,7 +22,7 @@ class CalDav extends AbstractModel
     protected $title;
 
     /**
-     * User storage
+     * User storage.
      *
      * @var string
      * @db
@@ -30,7 +30,7 @@ class CalDav extends AbstractModel
     protected $userStorage;
 
     /**
-     * Event storage
+     * Event storage.
      *
      * @var string
      * @db
@@ -38,7 +38,7 @@ class CalDav extends AbstractModel
     protected $eventStorage;
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -48,7 +48,7 @@ class CalDav extends AbstractModel
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      */
@@ -58,7 +58,7 @@ class CalDav extends AbstractModel
     }
 
     /**
-     * Get user storage
+     * Get user storage.
      *
      * @return string
      */
@@ -68,7 +68,7 @@ class CalDav extends AbstractModel
     }
 
     /**
-     * Set user storage
+     * Set user storage.
      *
      * @param string $userStorage
      */
@@ -78,7 +78,7 @@ class CalDav extends AbstractModel
     }
 
     /**
-     * Get event storage
+     * Get event storage.
      *
      * @return string
      */
@@ -88,7 +88,7 @@ class CalDav extends AbstractModel
     }
 
     /**
-     * Set event storage
+     * Set event storage.
      *
      * @param string $eventStorage
      */

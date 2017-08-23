@@ -1,7 +1,8 @@
 <?php
 /**
- * AbstractBookingRequest
+ * AbstractBookingRequest.
  */
+
 namespace HDNET\Calendarize\Property\TypeConverter;
 
 use HDNET\Calendarize\Domain\Model\Request\DefaultBookingRequest;
@@ -11,41 +12,40 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
- * AbstractBookingRequest
+ * AbstractBookingRequest.
  */
 class AbstractBookingRequest extends AbstractTypeConverter
 {
-
     /**
-     * Source types
+     * Source types.
      *
      * @var array
      */
     protected $sourceTypes = ['array'];
 
     /**
-     * Target Type
+     * Target Type.
      *
      * @var string
      */
     protected $targetType = \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest::class;
 
     /**
-     * Priority
+     * Priority.
      *
      * @var int
      */
     protected $priority = 1;
 
     /**
-     * Current configurations
+     * Current configurations.
      *
      * @var array
      */
     protected static $configurations = [];
 
     /**
-     * Set configurations
+     * Set configurations.
      *
      * @param array $configurations
      */
@@ -65,13 +65,15 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * - An instance of \TYPO3\CMS\Extbase\Error\Error -- This will be a user-visible error message later on.
      * Furthermore, it should throw an Exception if an unexpected failure (like a security error) occurred or a configuration issue happened.
      *
-     * @param mixed $source
-     * @param string $targetType
-     * @param array $convertedChildProperties
+     * @param mixed                                 $source
+     * @param string                                $targetType
+     * @param array                                 $convertedChildProperties
      * @param PropertyMappingConfigurationInterface $configuration
      *
      * @return mixed|\TYPO3\CMS\Extbase\Error\Error the target type, or an error object if a user-error occurred
+     *
      * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
+     *
      * @api
      */
     public function convertFrom(
@@ -84,11 +86,12 @@ class AbstractBookingRequest extends AbstractTypeConverter
         foreach ($source as $key => $value) {
             ObjectAccess::setProperty($bookingRequest, $key, $value);
         }
+
         return $bookingRequest;
     }
 
     /**
-     * Get the right request model
+     * Get the right request model.
      *
      * @return \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest
      */
@@ -100,11 +103,13 @@ class AbstractBookingRequest extends AbstractTypeConverter
                 if ($key === $configurationKey) {
                     if (isset($configuration['overrideBookingRequestModel']) && class_exists($configuration['overrideBookingRequestModel'])) {
                         $class = $configuration['overrideBookingRequestModel'];
+
                         return new $class();
                     }
                 }
             }
         }
+
         return new DefaultBookingRequest();
     }
 }

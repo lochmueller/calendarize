@@ -1,8 +1,8 @@
 <?php
 /**
- * External service
- *
+ * External service.
  */
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -13,14 +13,12 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * External service
- *
+ * External service.
  */
 class ExternalTimeTable extends AbstractTimeTable
 {
-
     /**
-     * ICS reader service
+     * ICS reader service.
      *
      * @var \HDNET\Calendarize\Service\IcsReaderService
      * @inject
@@ -28,12 +26,10 @@ class ExternalTimeTable extends AbstractTimeTable
     protected $icsReaderService;
 
     /**
-     * Modify the given times via the configuration
+     * Modify the given times via the configuration.
      *
      * @param array         $times
      * @param Configuration $configuration
-     *
-     * @return void
      */
     public function handleConfiguration(array &$times, Configuration $configuration)
     {
@@ -44,6 +40,7 @@ class ExternalTimeTable extends AbstractTimeTable
                 'Index ICS URL',
                 FlashMessage::ERROR
             );
+
             return;
         }
 
@@ -57,13 +54,13 @@ class ExternalTimeTable extends AbstractTimeTable
             }
 
             $entry = [
-                'pid'        => 0,
+                'pid' => 0,
                 'start_date' => $event->getStart(),
-                'end_date'   => $this->getEventsFixedEndDate($event),
+                'end_date' => $this->getEventsFixedEndDate($event),
                 'start_time' => $startTime,
-                'end_time'   => $endTime,
-                'all_day'    => $endTime === 0,
-                'state'      => $configuration->getState()
+                'end_time' => $endTime,
+                'all_day' => $endTime === 0,
+                'state' => $configuration->getState(),
             ];
             $times[$this->calculateEntryKey($entry)] = $entry;
         }
@@ -75,6 +72,7 @@ class ExternalTimeTable extends AbstractTimeTable
      * longer than it should be.
      *
      * @param ICalEvent $event
+     *
      * @return \DateTime
      */
     protected function getEventsFixedEndDate(ICalEvent $event)

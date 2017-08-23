@@ -1,21 +1,19 @@
 <?php
 /**
- * Modify a DateTime
- *
+ * Modify a DateTime.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
- * Modify a DateTime@
- *
+ * Modify a DateTime@.
  */
 class ModifyViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Modify the given datetime by the string modification
+     * Modify the given datetime by the string modification.
      *
      * @param string    $modification
      * @param \DateTime $dateTime
@@ -31,6 +29,7 @@ class ModifyViewHelper extends AbstractViewHelper
             $dateTime = new \DateTime();
         }
         $clone = clone $dateTime;
+
         return $clone->modify($modification);
     }
 }

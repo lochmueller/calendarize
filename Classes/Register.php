@@ -1,8 +1,8 @@
 <?php
 /**
- * Register the calendarize objects
- *
+ * Register the calendarize objects.
  */
+
 namespace HDNET\Calendarize;
 
 use HDNET\Calendarize\Domain\Model\Event;
@@ -10,17 +10,14 @@ use HDNET\Calendarize\Service\TcaInformation;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * Register the calendarize objects
+ * Register the calendarize objects.
  */
 class Register
 {
-
     /**
-     * Register in the extTables
+     * Register in the extTables.
      *
      * @param array $configuration
-     *
-     * @return void
      */
     public static function extTables(array $configuration)
     {
@@ -29,7 +26,7 @@ class Register
     }
 
     /**
-     * Add the calendarize to the given TCA
+     * Add the calendarize to the given TCA.
      *
      * @param $configuration
      */
@@ -38,32 +35,32 @@ class Register
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? trim($configuration['tcaTypeList']) : '';
         $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = [
-            'label'     => 'Calendarize',
+            'label' => 'Calendarize',
             'l10n_mode' => 'exclude',
-            'config'    => [
-                'type'          => 'inline',
+            'config' => [
+                'type' => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
-                'minitems'      => $configuration['required'] ? 1 : 0,
-                'maxitems'      => 99,
-                'behaviour'     => [
+                'minitems' => $configuration['required'] ? 1 : 0,
+                'maxitems' => 99,
+                'behaviour' => [
                     'enableCascadingDelete' => true,
                 ],
             ],
         ];
 
         $GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = [
-            'label'  => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
-                'type'     => 'user',
+                'type' => 'user',
                 'userFunc' => TcaInformation::class . '->informationField',
-                'items' => 10
+                'items' => 10,
             ],
         ];
         ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);
     }
 
     /**
-     * Internal register
+     * Internal register.
      *
      * @param array $configuration
      */
@@ -73,11 +70,9 @@ class Register
     }
 
     /**
-     * Register in the extLocalconf
+     * Register in the extLocalconf.
      *
      * @param array $configuration
-     *
-     * @return void
      */
     public static function extLocalconf(array $configuration)
     {
@@ -85,7 +80,7 @@ class Register
     }
 
     /**
-     * Get the EXT:autoloader default configuration
+     * Get the EXT:autoloader default configuration.
      *
      * @return array
      */
@@ -105,7 +100,7 @@ class Register
     }
 
     /**
-     * Get the register
+     * Get the register.
      *
      * @return array
      */
@@ -125,14 +120,15 @@ class Register
     {
         $configuration = [
             'uniqueRegisterKey' => 'Event',
-            'title'             => 'Calendarize Event',
-            'modelName'         => Event::class,
+            'title' => 'Calendarize Event',
+            'modelName' => Event::class,
             'partialIdentifier' => 'Event',
-            'tableName'         => 'tx_calendarize_domain_model_event',
-            'required'          => true,
+            'tableName' => 'tx_calendarize_domain_model_event',
+            'required' => true,
             // 'tcaTypeList'       => '', // optional - only for special type elements
             // 'overrideBookingRequestModel' => \NAME\SPACE\CLASS\Name::class,
         ];
+
         return $configuration;
     }
 }

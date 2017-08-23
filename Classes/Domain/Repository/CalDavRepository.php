@@ -1,20 +1,19 @@
 <?php
 /**
- * CalDav repository
- *
+ * CalDav repository.
  */
+
 namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Domain\Model\CalDav;
 
 /**
- * CalDav repository
+ * CalDav repository.
  */
 class CalDavRepository extends AbstractRepository
 {
-
     /**
-     * Find the right CalDav configuration
+     * Find the right CalDav configuration.
      *
      * @param int $pageId
      *
@@ -25,6 +24,6 @@ class CalDavRepository extends AbstractRepository
         $query = $this->createQuery();
         $result = $query->execute(true);
 
-        return isset($result[0]) ? $result[0] : false;
+        return $result[0] ?? false;
     }
 }

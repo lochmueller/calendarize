@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Abstraction of hooks
+ * Abstraction of hooks.
  */
+
 namespace HDNET\Calendarize\Hooks;
 
 /**
- * Abstraction of hooks
+ * Abstraction of hooks.
  */
 abstract class AbstractHook
 {

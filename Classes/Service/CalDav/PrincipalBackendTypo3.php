@@ -1,8 +1,8 @@
 <?php
 /**
- * PrincipalBackendTypo3
- *
+ * PrincipalBackendTypo3.
  */
+
 namespace HDNET\Calendarize\Service\CalDav;
 
 use Sabre\DAV\Exception;
@@ -11,27 +11,26 @@ use Sabre\DAVACL\PrincipalBackend\BackendInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * PrincipalBackendTypo3
+ * PrincipalBackendTypo3.
  */
 class PrincipalBackendTypo3 implements BackendInterface
 {
-
     /**
-     * pdo
+     * pdo.
      *
      * @var \PDO
      */
     protected $pdo;
 
     /**
-     * PDO table name for 'principals'
+     * PDO table name for 'principals'.
      *
      * @var string
      */
     protected $tableName;
 
     /**
-     * PDO table name for 'group members'
+     * PDO table name for 'group members'.
      *
      * @var string
      */
@@ -78,8 +77,8 @@ class PrincipalBackendTypo3 implements BackendInterface
                 continue;
             }
             $principals[] = [
-                'uri'                                   => 'principals/' . $row['username'],
-                '{DAV:}displayname'                     => $row['name'] ? $row['name'] : basename('principals/' . $row['username']),
+                'uri' => 'principals/' . $row['username'],
+                '{DAV:}displayname' => $row['name'] ? $row['name'] : basename('principals/' . $row['username']),
                 '{http://sabredav.org/ns}email-address' => $row['email'],
             ];
         }
@@ -108,9 +107,9 @@ class PrincipalBackendTypo3 implements BackendInterface
             return [];
         }
         $return = [
-            'id'                                    => $row['uid'],
-            'uri'                                   => 'principals/' . $row['username'],
-            '{DAV:}displayname'                     => $row['name'] ? $row['name'] : basename($row['username']),
+            'id' => $row['uid'],
+            'uri' => 'principals/' . $row['username'],
+            '{DAV:}displayname' => $row['name'] ? $row['name'] : basename($row['username']),
             '{http://sabredav.org/ns}email-address' => $row['email'],
         ];
 
@@ -118,11 +117,12 @@ class PrincipalBackendTypo3 implements BackendInterface
     }
 
     /**
-     * Returns the list of members for a group-principal
+     * Returns the list of members for a group-principal.
      *
      * @param $principal
      *
      * @return array
+     *
      * @throws Exception
      */
     public function getGroupMemberSet($principal)
@@ -141,11 +141,12 @@ class PrincipalBackendTypo3 implements BackendInterface
     }
 
     /**
-     * Returns the list of groups a principal is a member of
+     * Returns the list of groups a principal is a member of.
      *
      * @param string $principal
      *
      * @return array
+     *
      * @throws Exception
      */
     public function getGroupMembership($principal)
@@ -157,6 +158,7 @@ class PrincipalBackendTypo3 implements BackendInterface
         }
         $result = [];
         $result[] = $principal['uri'];
+
         return $result;
     }
 
@@ -216,10 +218,8 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * Read the PropPatch documenation for more info and examples.
      *
-     * @param string               $path
+     * @param string    $path
      * @param PropPatch $propPatch
-     *
-     * @return void
      */
     public function updatePrincipal($path, PropPatch $propPatch)
     {

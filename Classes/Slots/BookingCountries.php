@@ -1,8 +1,9 @@
 <?php
 
 /**
- * BookingCountries
+ * BookingCountries.
  */
+
 namespace HDNET\Calendarize\Slots;
 
 use SJBR\StaticInfoTables\Domain\Repository\CountryRepository;
@@ -10,11 +11,10 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
- * BookingCountries
+ * BookingCountries.
  */
 class BookingCountries
 {
-
     /**
      * @param $index
      * @param $extended
@@ -25,6 +25,7 @@ class BookingCountries
     public function bookingSlot($index, $extended, $settings)
     {
         $extended['countries'] = $this->getCountrySelection();
+
         return [
             'index' => $index,
             'extended' => $extended,
@@ -42,6 +43,7 @@ class BookingCountries
     public function sendSlot($request, $extended, $settings)
     {
         $extended['countries'] = $this->getCountrySelection();
+
         return [
             'request' => $request,
             'extended' => $extended,
@@ -50,7 +52,7 @@ class BookingCountries
     }
 
     /**
-     * Get country selection
+     * Get country selection.
      *
      * @return array
      */
@@ -61,6 +63,7 @@ class BookingCountries
         }
         $objectManager = new ObjectManager();
         $repository = $objectManager->get(CountryRepository::class);
+
         return $repository->findAll();
     }
 }

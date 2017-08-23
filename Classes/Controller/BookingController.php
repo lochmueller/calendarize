@@ -1,21 +1,20 @@
 <?php
 /**
- * BookingController
- *
+ * BookingController.
  */
+
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest;
 
 /**
- * BookingController
+ * BookingController.
  */
 class BookingController extends AbstractController
 {
-
     /**
-     * Form action
+     * Form action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
      */
@@ -29,9 +28,9 @@ class BookingController extends AbstractController
     }
 
     /**
-     * Send action
+     * Send action.
      *
-     * @param Index $index
+     * @param Index                                                          $index
      * @param \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest $request
      *
      * @validate $request \HDNET\Calendarize\Validation\Validator\BookingRequestValidator

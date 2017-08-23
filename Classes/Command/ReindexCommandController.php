@@ -1,22 +1,19 @@
 <?php
 /**
- * Reindex the event models
- *
+ * Reindex the event models.
  */
+
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Service\IndexerService;
 
 /**
- * Reindex the event models
+ * Reindex the event models.
  */
 class ReindexCommandController extends AbstractCommandController
 {
-
     /**
-     * Run the reindex process
-     *
-     * @return void
+     * Run the reindex process.
      */
     public function runCommand()
     {

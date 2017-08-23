@@ -1,22 +1,22 @@
 <?php
 /**
- * Event utility
- *
+ * Event utility.
  */
+
 namespace HDNET\Calendarize\Utility;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 
 /**
- * Event utility
+ * Event utility.
  */
 class EventUtility
 {
     /**
-     * Get the original record by configuration
+     * Get the original record by configuration.
      *
      * @param PluginConfiguration|array $configuration
-     * @param int $uid
+     * @param int                       $uid
      *
      * @return object
      */
@@ -33,6 +33,7 @@ class EventUtility
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
         $query->matching($query->equals('uid', $uid));
+
         return $query->execute()
             ->getFirst();
     }

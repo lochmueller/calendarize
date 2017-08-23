@@ -1,12 +1,12 @@
 <?php
 /**
- * Configuration Interface for constants
- *
+ * Configuration Interface for constants.
  */
+
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
- * Configuration Interface for constants
+ * Configuration Interface for constants.
  */
 interface ConfigurationInterface
 {

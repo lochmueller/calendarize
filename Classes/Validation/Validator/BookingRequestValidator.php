@@ -1,7 +1,8 @@
 <?php
 /**
- * BookingRequestValidator
+ * BookingRequestValidator.
  */
+
 namespace HDNET\Calendarize\Validation\Validator;
 
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -10,7 +11,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
 use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 
 /**
- * BookingRequestValidator
+ * BookingRequestValidator.
  */
 class BookingRequestValidator extends AbstractValidator
 {
@@ -19,7 +20,6 @@ class BookingRequestValidator extends AbstractValidator
      * to result.
      *
      * @param mixed $value
-     * @return void
      */
     protected function isValid($value)
     {

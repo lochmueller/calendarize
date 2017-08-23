@@ -1,22 +1,19 @@
 <?php
 /**
- * Weeks in month view helper
- *
+ * Weeks in month view helper.
  */
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
- * Weeks in month view helper
- *
+ * Weeks in month view helper.
  */
 class WeeksInMonthViewHelper extends AbstractLoopViewHelper
 {
-
     /**
      * Initialize all arguments. You need to override this method and call
      * $this->registerArgument(...) inside this method, to register all your arguments.
      *
-     * @return void
      * @api
      */
     public function initializeArguments()
@@ -25,7 +22,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
     }
 
     /**
-     * Get the items
+     * Get the items.
      *
      * @param \DateTime $date
      *
@@ -39,8 +36,8 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
         $dateClone->modify('first day of this month');
 
         $monthCheck = $dateClone->format('m');
-        while ((int)$monthCheck == (int)$dateClone->format('m')) {
-            $week = (int)$dateClone->format('W');
+        while ((int) $monthCheck == (int) $dateClone->format('m')) {
+            $week = (int) $dateClone->format('W');
             if (!isset($weeks[$week])) {
                 $weeks[$week] = [
                     'week' => $week,
@@ -49,6 +46,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
             }
             $dateClone->modify('+1 day');
         }
+
         return $weeks;
     }
 }

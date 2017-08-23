@@ -1,8 +1,8 @@
 <?php
 /**
- * Abstract controller
- *
+ * Abstract controller.
  */
+
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
@@ -19,12 +19,12 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
- * Abstract controller
+ * Abstract controller.
  */
 abstract class AbstractController extends ActionController
 {
     /**
-     * The index repository
+     * The index repository.
      *
      * @var \HDNET\Calendarize\Domain\Repository\IndexRepository
      * @inject
@@ -32,7 +32,7 @@ abstract class AbstractController extends ActionController
     protected $indexRepository;
 
     /**
-     * The feed formats and content types
+     * The feed formats and content types.
      *
      * @var array
      */
@@ -44,7 +44,6 @@ abstract class AbstractController extends ActionController
 
     /**
      * @param ConfigurationManagerInterface $configurationManager
-     * @return void
      */
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
@@ -57,9 +56,8 @@ abstract class AbstractController extends ActionController
         $this->settings = $pluginConfigurationService->respectPluginConfiguration($this->settings);
     }
 
-
     /**
-     * Init all actions
+     * Init all actions.
      */
     public function initializeAction()
     {
@@ -74,7 +72,6 @@ abstract class AbstractController extends ActionController
      * response object. If the action doesn't return anything and a valid
      * view exists, the view is rendered automatically.
      *
-     * @return void
      * @api
      */
     protected function callActionMethod()
@@ -87,6 +84,7 @@ abstract class AbstractController extends ActionController
                 if ($this->validatePluginHmac($hmac)) {
                     $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
                 }
+
                 return;
             }
             $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
@@ -94,14 +92,14 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * Send the content type header and the right file extension in front of the content
+     * Send the content type header and the right file extension in front of the content.
      *
      * @param $contentType
      * @param $fileExtension
      */
     protected function sendHeaderAndFilename($contentType, $fileExtension)
     {
-        $testMode = (bool)$this->settings['feed']['debugMode'];
+        $testMode = (bool) $this->settings['feed']['debugMode'];
         if ($testMode) {
             header('Content-Type: text/plain; charset=utf-8');
         } else {
@@ -113,7 +111,7 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * Extend the view by the slot class and name and assign the variable to the view
+     * Extend the view by the slot class and name and assign the variable to the view.
      *
      * @param array  $variables
      * @param string $signalClassName
@@ -133,7 +131,7 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * Return the controllerName, pluginName and actionName
+     * Return the controllerName, pluginName and actionName.
      *
      * @return string
      */
@@ -142,11 +140,13 @@ abstract class AbstractController extends ActionController
         $actionMethodName = ucfirst($this->request->getControllerActionName());
         $pluginName = $this->request->getPluginName();
         $controllerName = $this->request->getControllerName();
+
         return $controllerName . $pluginName . $actionMethodName;
     }
 
     /**
      * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
+     *
      * @return string $hmac
      */
     protected function calculatePluginHmac()
@@ -156,11 +156,13 @@ abstract class AbstractController extends ActionController
         /** @var HashService $hashService */
         $hashService = HelperUtility::create(HashService::class);
         $hmac = $hashService->generateHmac($string);
+
         return $hmac;
     }
 
     /**
-     * \TYPO3\CMS\Extbase\Security\Cryptography\HashService::validateHmac()
+     * \TYPO3\CMS\Extbase\Security\Cryptography\HashService::validateHmac().
+     *
      * @param string $hmac
      *
      * @return bool
@@ -171,11 +173,12 @@ abstract class AbstractController extends ActionController
 
         /** @var HashService $hashService */
         $hashService = HelperUtility::create(HashService::class);
+
         return $hashService->validateHmac($string, $hmac);
     }
 
     /**
-     * Check if the static template is included
+     * Check if the static template is included.
      */
     protected function checkStaticTemplateIsIncluded()
     {
@@ -189,7 +192,7 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * Change the page title
+     * Change the page title.
      *
      * @param string $title
      */
