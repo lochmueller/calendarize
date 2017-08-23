@@ -3,7 +3,6 @@
 /**
  * AbstractViewHelper.
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 /**

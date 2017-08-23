@@ -2,7 +2,6 @@
 /**
  * Weeks in month view helper.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**

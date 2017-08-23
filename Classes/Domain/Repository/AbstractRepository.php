@@ -2,7 +2,6 @@
 /**
  * Repository Abstraction.
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Utility\HelperUtility;

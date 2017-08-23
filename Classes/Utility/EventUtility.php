@@ -2,7 +2,6 @@
 /**
  * Event utility.
  */
-
 namespace HDNET\Calendarize\Utility;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;

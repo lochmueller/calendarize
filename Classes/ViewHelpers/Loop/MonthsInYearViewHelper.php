@@ -2,7 +2,6 @@
 /**
  * Months in year view Helper.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**

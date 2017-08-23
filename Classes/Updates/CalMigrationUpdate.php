@@ -3,7 +3,6 @@
 /**
  * CalMigrationUpdate.
  */
-
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Service\IndexerService;

@@ -2,7 +2,6 @@
 /**
  * Configuration Interface for constants.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**

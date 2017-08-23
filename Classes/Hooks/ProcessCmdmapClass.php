@@ -2,7 +2,6 @@
 /**
  * Hook for cmd map processing.
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;

@@ -2,7 +2,6 @@
 /**
  * TCA service.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;

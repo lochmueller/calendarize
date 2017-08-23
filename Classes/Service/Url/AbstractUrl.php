@@ -2,7 +2,6 @@
 /**
  * AbstractUrl.
  */
-
 namespace HDNET\Calendarize\Service\Url;
 
 use HDNET\Calendarize\Domain\Model\Index;

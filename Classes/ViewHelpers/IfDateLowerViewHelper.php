@@ -2,7 +2,6 @@
 /**
  * Check if a date is lower.
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;

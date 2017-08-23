@@ -2,7 +2,6 @@
 /**
  * Configuration for time options.
  */
-
 namespace HDNET\Calendarize\Domain\Model;
 
 /**

@@ -2,7 +2,6 @@
 /**
  * Feed interface.
  */
-
 namespace HDNET\Calendarize\Features;
 
 /**

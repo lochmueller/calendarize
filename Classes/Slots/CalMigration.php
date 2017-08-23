@@ -2,7 +2,6 @@
 /**
  * CalMigration.
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Updates\CalMigrationUpdate;

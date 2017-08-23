@@ -2,7 +2,6 @@
 /**
  * Uri to the year.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**

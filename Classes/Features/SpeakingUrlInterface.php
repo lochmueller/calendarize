@@ -2,7 +2,6 @@
 /**
  * RealURL features.
  */
-
 namespace HDNET\Calendarize\Features;
 
 /**

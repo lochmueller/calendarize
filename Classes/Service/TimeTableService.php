@@ -2,7 +2,6 @@
 /**
  * Time table builder service.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use Exception;

@@ -2,7 +2,6 @@
 /**
  * Backend for events.
  */
-
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Utility\HelperUtility;

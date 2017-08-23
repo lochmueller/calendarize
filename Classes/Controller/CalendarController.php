@@ -2,7 +2,6 @@
 /**
  * Calendar.
  */
-
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;

@@ -2,7 +2,6 @@
 /**
  * Realurl configuration.
  */
-
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Service\Url\RealUrl;

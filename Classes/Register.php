@@ -2,7 +2,6 @@
 /**
  * Register the calendarize objects.
  */
-
 namespace HDNET\Calendarize;
 
 use HDNET\Calendarize\Domain\Model\Event;

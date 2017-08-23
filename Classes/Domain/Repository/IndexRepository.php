@@ -2,7 +2,6 @@
 /**
  * Index repository.
  */
-
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;

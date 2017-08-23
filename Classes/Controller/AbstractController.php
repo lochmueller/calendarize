@@ -2,7 +2,6 @@
 /**
  * Abstract controller.
  */
-
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;

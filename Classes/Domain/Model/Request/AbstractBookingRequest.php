@@ -3,7 +3,6 @@
 /**
  * AbstractBookingRequest.
  */
-
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use HDNET\Calendarize\Domain\Model\AbstractModel;

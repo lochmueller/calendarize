@@ -2,7 +2,6 @@
 /**
  * TimeSelectionWizard.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;

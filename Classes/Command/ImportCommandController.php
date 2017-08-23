@@ -2,7 +2,6 @@
 /**
  * Import.
  */
-
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;

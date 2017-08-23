@@ -3,7 +3,6 @@
 /**
  * TitleTagViewHelper.
  */
-
 namespace HDNET\Calendarize\ViewHelpers;
 
 /**

@@ -2,7 +2,6 @@
 /**
  * PrincipalBackendTypo3.
  */
-
 namespace HDNET\Calendarize\Service\CalDav;
 
 use Sabre\DAV\Exception;

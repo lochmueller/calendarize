@@ -2,7 +2,6 @@
 /**
  * Index the given events.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;

@@ -2,7 +2,6 @@
 /**
  * Link to the year.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**

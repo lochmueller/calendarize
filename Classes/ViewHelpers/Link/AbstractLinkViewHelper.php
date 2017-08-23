@@ -2,7 +2,6 @@
 /**
  * Link to anything ;).
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\MathUtility;

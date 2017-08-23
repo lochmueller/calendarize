@@ -2,7 +2,6 @@
 /**
  * Work on flex forms.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;

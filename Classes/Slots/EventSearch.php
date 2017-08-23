@@ -2,7 +2,6 @@
 /**
  * Event search service.
  */
-
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;

@@ -3,7 +3,6 @@
 /**
  * Wrapper for the Cal Dav structure.
  */
-
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\CalDav\AuthBackendTypo3;

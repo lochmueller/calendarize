@@ -2,7 +2,6 @@
 /**
  * Cleanup the event models.
  */
-
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Domain\Model\Event;

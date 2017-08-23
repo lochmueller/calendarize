@@ -2,7 +2,6 @@
 /**
  * Translate helper.
  */
-
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
