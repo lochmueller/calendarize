@@ -38,6 +38,7 @@ class EventSearch
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
      * @param array          $customSearch
+     * @param bool           $emptyPreResult
      * @param array          $additionalSlotArguments
      * @param array          $indexTypes
      *
@@ -49,6 +50,7 @@ class EventSearch
         \DateTime $endDate = null,
         array $customSearch = [],
         array $indexTypes,
+        bool $emptyPreResult,
         array $additionalSlotArguments
     ) {
         if (!in_array('Event', $indexTypes)) {
@@ -71,6 +73,7 @@ class EventSearch
             'endDate' => $endDate,
             'customSearch' => $customSearch,
             'indexTypes' => $indexTypes,
+            'emptyPreResult' => $emptyPreResult,
             'additionalSlotArguments' => $additionalSlotArguments,
         ];
     }
