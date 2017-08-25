@@ -39,6 +39,18 @@ class IndexPreparationService
                 $record['foreign_uid'] = $uid;
                 $record['unique_register_key'] = $configurationKey;
 
+                // UTC fix
+                $record['start_date'] = \DateTime::createFromFormat(
+                    'Y-m-d',
+                    $record['start_date']->format('Y-m-d'),
+                    new \DateTimeZone('UTC')
+                );
+                $record['end_date'] = \DateTime::createFromFormat(
+                    'Y-m-d',
+                    $record['end_date']->format('Y-m-d'),
+                    new \DateTimeZone('UTC')
+                );
+
                 $this->prepareRecordForDatabase($record);
                 $neededItems[$key] = $record;
             }
