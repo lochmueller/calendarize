@@ -98,10 +98,6 @@
                 <source>ZIP</source>
                 <target>Kod pocztowy</target>
             </trans-unit>
-            <trans-unit id="bookingPid" approved="yes">
-                <source>Booking PID</source>
-                <target>ID strony z widokiem rezerwacji</target>
-            </trans-unit>
             <trans-unit id="configuration" approved="yes">
                 <source>Configuration</source>
                 <target>Konfiguracja</target>
@@ -254,10 +250,6 @@
                 <source>Day PID</source>
                 <target>ID strony z widokiem dnia</target>
             </trans-unit>
-            <trans-unit id="detailPid" approved="yes">
-                <source>Detail PID</source>
-                <target>ID strony z widokiem szczegółów</target>
-            </trans-unit>
             <trans-unit id="error.request.city.1221560718" approved="yes">
                 <source>Please enter your city.</source>
                 <target>Proszę podać miasto.</target>
@@ -326,10 +318,6 @@
                 <source>Limit</source>
                 <target>Limit</target>
             </trans-unit>
-            <trans-unit id="listPid" approved="yes">
-                <source>List PID</source>
-                <target>ID strony z widokiem listy</target>
-            </trans-unit>
             <trans-unit id="mainConfiguration" approved="yes">
                 <source>Main configuration</source>
                 <target>Główne ustawienia</target>
@@ -397,10 +385,6 @@
             <trans-unit id="mode.year" approved="yes">
                 <source>Year</source>
                 <target>Rok</target>
-            </trans-unit>
-            <trans-unit id="monthPid" approved="yes">
-                <source>Month PID</source>
-                <target>ID strony z widokiem miesiąca</target>
             </trans-unit>
             <trans-unit id="more" approved="yes">
                 <source>More</source>
@@ -477,10 +461,6 @@
             <trans-unit id="tx_calendarize_domain_model_configuration" approved="yes">
                 <source>Configuration</source>
                 <target>Ustawienia wydarzenia</target>
-            </trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_configuration.all_day" approved="yes">
-                <source>All day</source>
-                <target>Cały dzień</target>
             </trans-unit>
             <trans-unit id="tx_calendarize_domain_model_configuration.amount" approved="yes">
                 <source>Amount</source>
@@ -621,14 +601,6 @@
             <trans-unit id="tx_calendarize_domain_model_index.unique_register_key" approved="yes">
                 <source>Unique register key</source>
                 <target>Unikatowy klucz rejestru</target>
-            </trans-unit>
-            <trans-unit id="weekPid" approved="yes">
-                <source>Week PID</source>
-                <target>ID strony z widokiem tygodnia</target>
-            </trans-unit>
-            <trans-unit id="yearPid" approved="yes">
-                <source>Year PID</source>
-                <target>ID strony z widokiem roku</target>
             </trans-unit>
 		</body>
 	</file>
