@@ -143,7 +143,7 @@ class Index extends AbstractModel
         $date = $this->getStartDate();
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getStartTime());
-            $date->setTime($time->format('H'), $time->format('i'), 0);
+            return \DateTime::createFromFormat('Y-m-d H:i', $date->format('Y-m-d') . ' ' . $time->format('H:i'));
         }
 
         return $date;
@@ -159,7 +159,7 @@ class Index extends AbstractModel
         $date = $this->getEndDate();
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getEndTime());
-            $date->setTime($time->format('H'), $time->format('i'), 0);
+            return \DateTime::createFromFormat('Y-m-d H:i', $date->format('Y-m-d') . ' ' . $time->format('H:i'));
         }
 
         return $date;
