@@ -4,6 +4,8 @@
  */
 namespace HDNET\Calendarize\Domain\Model;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Logical configuration group.
  *
@@ -23,7 +25,7 @@ class ConfigurationGroup extends AbstractModel
     /**
      * Configurations.
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
+     * @var string
      * @db text
      */
     protected $configurations;
@@ -59,20 +61,10 @@ class ConfigurationGroup extends AbstractModel
     /**
      * Get configurations.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return int[]
      */
-    public function getConfigurations()
+    public function getConfigurationIds()
     {
-        return $this->configurations;
-    }
-
-    /**
-     * Set configurations.
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $configurations
-     */
-    public function setConfigurations($configurations)
-    {
-        $this->configurations = $configurations;
+        return GeneralUtility::intExplode(',', $this->configurations);
     }
 }
