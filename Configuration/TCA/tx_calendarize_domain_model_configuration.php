@@ -103,6 +103,10 @@ $custom = [
                         TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_OVERRIDE),
                         Configuration::HANDLING_OVERRIDE,
                     ],
+                    [
+                        TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_CUTOUT),
+                        Configuration::HANDLING_CUTOUT,
+                    ],
                 ],
                 'default' => Configuration::HANDLING_INCLUDE,
             ],

@@ -103,6 +103,9 @@
 			<trans-unit id="configuration.handling.override">
 				<source>Override</source>
 			</trans-unit>
+			<trans-unit id="configuration.handling.cutout">
+				<source>Cut out</source>
+			</trans-unit>
 			<trans-unit id="base_configuration">
 				<source>Base</source>
 			</trans-unit>

@@ -19,7 +19,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      *
      * @var string
      */
-    protected $title = 'Migrate the calendarize configurations to the new include/exclude/override structure';
+    protected $title = 'Migrate the calendarize configurations to the new include/exclude/override/cutout structure';
 
     /**
      * Checks whether updates are required.
