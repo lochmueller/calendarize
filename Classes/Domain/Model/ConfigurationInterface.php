@@ -21,6 +21,8 @@ interface ConfigurationInterface
 
     const HANDLING_OVERRIDE = 'override';
 
+    const HANDLING_CUTOUT = 'cutout';
+
     const FREQUENCY_NONE = '';
 
     const FREQUENCY_DAILY = 'daily';

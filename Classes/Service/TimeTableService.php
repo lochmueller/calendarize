@@ -52,18 +52,66 @@ class TimeTableService extends AbstractService
             if ($configuration->getHandling() === ConfigurationInterface::HANDLING_INCLUDE) {
                 $handler->handleConfiguration($timeTable, $configuration);
             } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_EXCLUDE) {
-                $localTimes = [];
-                $handler->handleConfiguration($localTimes, $configuration);
-                $timeTable = $this->checkAndRemoveTimes($timeTable, $localTimes);
+                $timesToExclude = [];
+                $handler->handleConfiguration($timesToExclude, $configuration);
+                $timeTable = $this->checkAndRemoveTimes($timeTable, $timesToExclude);
             } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_OVERRIDE) {
-                $localTimes = [];
-                $handler->handleConfiguration($localTimes, $configuration);
-                $timeTable = $this->checkAndRemoveTimes($timeTable, $localTimes);
+                // first remove overridden times
+                $timesToOverride = [];
+                $handler->handleConfiguration($timesToOverride, $configuration);
+                $timeTable = $this->checkAndRemoveTimes($timeTable, $timesToOverride);
+                // then add new times
                 $handler->handleConfiguration($timeTable, $configuration);
+            } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_CUTOUT) {
+                $timesToSelectBy = [];
+                $handler->handleConfiguration($timesToSelectBy, $configuration);
+                $timeTable = $this->selectTimesBy($timeTable, $timesToSelectBy);
             }
         }
 
         return $timeTable;
+    }
+
+    /**
+     * Selects events by given times.
+     *
+     * @param array $base
+     * @param array $selectBy
+     *
+     * @return array
+     */
+    public function selectTimesBy($base, $selectBy)
+    {
+        $timeTableSelection = [];
+
+        foreach ($base as $baseValue) {
+            try {
+                $eventStart = $this->getCompleteDate($baseValue, 'start');
+                $eventEnd = $this->getCompleteDate($baseValue, 'end');
+            } catch (Exception $ex) {
+                continue;
+            }
+
+            foreach ($selectBy as $selectByValue) {
+                try {
+                    $selectionStart = $this->getCompleteDate($selectByValue, 'start');
+                    $selectionEnd = $this->getCompleteDate($selectByValue, 'end');
+                } catch (Exception $ex) {
+                    continue;
+                }
+
+                $startIn = ($eventStart >= $selectionStart && $eventStart < $selectionEnd);
+                $endIn = ($eventEnd > $selectionStart && $eventEnd <= $selectionEnd);
+                $envelope = ($eventStart < $selectionStart && $eventEnd > $selectionEnd);
+
+                if ($startIn && $endIn || $envelope) {
+                    $timeTableSelection[] = $baseValue;
+                    break;
+                }
+            }
+        }
+
+        return $timeTableSelection;
     }
 
     /**
@@ -77,10 +125,15 @@ class TimeTableService extends AbstractService
     public function checkAndRemoveTimes($base, $remove)
     {
         foreach ($base as $key => $value) {
+            try {
+                $eventStart = $this->getCompleteDate($value, 'start');
+                $eventEnd = $this->getCompleteDate($value, 'end');
+            } catch (Exception $ex) {
+                continue;
+            }
+
             foreach ($remove as $removeValue) {
                 try {
-                    $eventStart = $this->getCompleteDate($value, 'start');
-                    $eventEnd = $this->getCompleteDate($value, 'end');
                     $removeStart = $this->getCompleteDate($removeValue, 'start');
                     $removeEnd = $this->getCompleteDate($removeValue, 'end');
                 } catch (Exception $ex) {
