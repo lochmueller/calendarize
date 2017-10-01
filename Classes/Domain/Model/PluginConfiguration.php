@@ -98,7 +98,8 @@ class PluginConfiguration extends AbstractModel
     /**
      * Build up the plugin configuration
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
