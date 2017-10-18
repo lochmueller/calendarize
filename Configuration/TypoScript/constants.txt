@@ -16,7 +16,7 @@ plugin.tx_calendarize {
 		# cat=calendarize//0050; type=string; label=Time format: time format - http://php.net/manual/de/function.date.php
 		timeFormat = H:i
 
-		# cat=calendarize//0060; type=boolean; label=Moment.js: Experimental: Use Moment.js fo date and time output
+		# cat=calendarize//0060; type=boolean; label=Moment.js: Experimental: Use Moment.js for date and time output
 		useMomentJsDateAndTimeOutput = 0
 
 		# cat=calendarize//0070; type=boolean; label=FullCalendar IO: Experimental: Use FullCalendar IO for the month view. You have to enable the Moment.js function
