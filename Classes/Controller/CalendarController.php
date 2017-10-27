@@ -406,7 +406,7 @@ class CalendarController extends AbstractController
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
                     return (string) TranslateUtility::get('noEventDetailView');
                 }
-                $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 301);
+                $this->slottedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
             }
         }
 
@@ -523,5 +523,43 @@ class CalendarController extends AbstractController
         }
 
         return $return;
+    }
+
+    /**
+     * A redirect that have a slot included.
+     *
+     * @param string $signalClassName name of the signal class: __CLASS__
+     * @param string $signalName name of the signal: __FUNCTION__
+     * @param array $variables optional: if not set use the defaults
+     */
+    protected function slottedRedirect($signalClassName, $signalName, $variables = null)
+    {
+        // set default variables for the redirect
+        if ($variables === null) {
+            $variables['extended'] = [
+                'actionName'     => 'list',
+                'controllerName' => null,
+                'extensionName'  => null,
+                'arguments'      => [],
+                'pageUid'        => $this->settings['listPid'],
+                'delay'          => 0,
+                'statusCode'     => 301
+            ];
+            $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
+            $variables['settings'] = $this->settings;
+        }
+
+        $dispatcher = $this->objectManager->get(Dispatcher::class);
+        $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
+
+        $this->redirect(
+            $variables['extended']['actionName'],
+            $variables['extended']['controllerName'],
+            $variables['extended']['extensionName'],
+            $variables['extended']['arguments'],
+            $variables['extended']['pageUid'],
+            $variables['extended']['delay'],
+            $variables['extended']['statusCode']
+        );
     }
 }
