@@ -2,7 +2,6 @@
 /**
  * Uri to the index.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
