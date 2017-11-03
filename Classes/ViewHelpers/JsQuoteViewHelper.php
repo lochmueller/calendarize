@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class JsQuoteViewHelper extends AbstractViewHelper
 {
+
     /**
      * Init arguments
      */
@@ -28,7 +29,6 @@ class JsQuoteViewHelper extends AbstractViewHelper
     public function render()
     {
         $content = $this->arguments['content'] === null || trim((string)$this->arguments['content']) === '' ? $this->renderChildren() : $this->arguments['content'];
-
         return GeneralUtility::quoteJSvalue($content);
     }
 }

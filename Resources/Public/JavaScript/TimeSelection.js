@@ -1,9 +1,9 @@
 define(['jquery'], function ($) {
 	$('.calendarize-time-selection').on("change", function () {
-		var currentField = $(this);
-		var name = currentField.data('related-name');
-		var id = currentField.data('related-id');
-		var originalField = null;
+		let currentField = $(this);
+		let name = currentField.data('related-name');
+		let id = currentField.data('related-id');
+		let originalField = null;
 		if (name.length) {
 			originalField = $("input[name='" + name + "']");
 		} else if (id.length) {
