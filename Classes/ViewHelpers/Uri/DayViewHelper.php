@@ -2,7 +2,6 @@
 /**
  * Uri to the day.
  */
-
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
