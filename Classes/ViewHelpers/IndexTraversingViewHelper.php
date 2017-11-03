@@ -3,6 +3,7 @@
 /**
  * Index traversing.
  */
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -23,28 +24,37 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class IndexTraversingViewHelper extends AbstractViewHelper
 {
+
+    /**
+     * Init arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('index', Index::class, '', true);
+        $this->registerArgument('future', 'bool', '', false, true);
+        $this->registerArgument('past', 'bool', '', false, false);
+        $this->registerArgument('limit', 'int', '', false, 100);
+        $this->registerArgument('sort', 'string', '', false, QueryInterface::ORDER_ASCENDING);
+        $this->registerArgument('useIndexTime', 'string', '', false, '');
+    }
+
     /**
      * Render method.
      *
-     * @param Index  $index
-     * @param bool   $future
-     * @param bool   $past
-     * @param int    $limit
-     * @param string $sort         ASC or DESC
-     * @param bool   $useIndexTime use the Index-timestamp as base to look in the future or past
-     *
      * @return array
      */
-    public function render(
-        Index $index,
-        $future = true,
-        $past = false,
-        $limit = 100,
-        $sort = QueryInterface::ORDER_ASCENDING,
-        $useIndexTime = false
-    ) {
+    public function render()
+    {
         $indexRepository = $this->objectManager->get(IndexRepository::class);
 
-        return $indexRepository->findByTraversing($index, $future, $past, (int) $limit, $sort, $useIndexTime);
+        return $indexRepository->findByTraversing(
+            $this->arguments['index'],
+            $this->arguments['future'],
+            $this->arguments['past'],
+            (int)$this->arguments['limit'],
+            $this->arguments['sort'],
+            $this->arguments['useIndexTime']
+        );
     }
 }

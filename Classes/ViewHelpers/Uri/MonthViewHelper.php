@@ -12,14 +12,11 @@ class MonthViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\MonthViewHelpe
     /**
      * Render the uri to the given day.
      *
-     * @param \DateTime $date
-     * @param int       $pageUid
-     *
      * @return string
      */
-    public function render(\DateTime $date, $pageUid = null)
+    public function render()
     {
-        parent::render($date, $pageUid);
+        parent::render();
 
         return $this->lastHref;
     }

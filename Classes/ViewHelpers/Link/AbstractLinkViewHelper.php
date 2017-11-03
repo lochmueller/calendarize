@@ -79,7 +79,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      */
     protected function getPageUid($pageUid, $contextName = null)
     {
-        if (MathUtility::canBeInterpretedAsInteger($pageUid)) {
+        if (MathUtility::canBeInterpretedAsInteger($pageUid) && $pageUid > 0) {
             return (int) $pageUid;
         }
 

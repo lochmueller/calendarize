@@ -12,15 +12,22 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class JsQuoteViewHelper extends AbstractViewHelper
 {
     /**
+     * Init arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('content', 'string', 'Override content', false);
+    }
+
+    /**
      * Render the Quote JS information.
-     *
-     * @param string $content
      *
      * @return string
      */
-    public function render($content = null)
+    public function render()
     {
-        $content = $content === null ? $this->renderChildren() : $content;
+        $content = $this->arguments['content'] === null || trim((string)$this->arguments['content']) === '' ? $this->renderChildren() : $this->arguments['content'];
 
         return GeneralUtility::quoteJSvalue($content);
     }

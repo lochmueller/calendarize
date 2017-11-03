@@ -10,14 +10,21 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 class ListViewHelper extends AbstractLinkViewHelper
 {
     /**
+     * Init arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('pageUid', 'int', '', false, 0);
+    }
+
+    /**
      * Render the link to the given list.
-     *
-     * @param int $pageUid
      *
      * @return string
      */
-    public function render($pageUid = null)
+    public function render()
     {
-        return parent::renderLink($this->getPageUid($pageUid, 'listPid'));
+        return parent::renderLink($this->getPageUid($this->arguments['pageUid'], 'listPid'));
     }
 }

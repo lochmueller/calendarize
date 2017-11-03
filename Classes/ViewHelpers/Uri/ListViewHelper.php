@@ -12,13 +12,11 @@ class ListViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\ListViewHelper
     /**
      * Render the uri to the given list.
      *
-     * @param int $pageUid
-     *
      * @return string
      */
-    public function render($pageUid = null)
+    public function render()
     {
-        parent::render($pageUid);
+        parent::render();
 
         return $this->lastHref;
     }

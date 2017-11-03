@@ -10,15 +10,23 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 class WeekViewHelper extends AbstractLinkViewHelper
 {
     /**
+     * Init arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('date', \DateTime::class, '', true);
+        $this->registerArgument('pageUid', 'int', '', false, 0);
+    }
+
+    /**
      * Render the link to the given day.
-     *
-     * @param \DateTime $date
-     * @param int       $pageUid
      *
      * @return string
      */
-    public function render(\DateTime $date, $pageUid = null)
+    public function render()
     {
+        $date = $this->arguments['date'];
         $additionalParams = [
             'tx_calendarize_calendar' => [
                 'year' => $date->format('Y'),
@@ -26,6 +34,6 @@ class WeekViewHelper extends AbstractLinkViewHelper
             ],
         ];
 
-        return parent::renderLink($this->getPageUid($pageUid), $additionalParams);
+        return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams);
     }
 }

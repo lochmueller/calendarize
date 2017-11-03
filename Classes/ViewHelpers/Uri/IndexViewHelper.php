@@ -2,9 +2,8 @@
 /**
  * Uri to the index.
  */
-namespace HDNET\Calendarize\ViewHelpers\Uri;
 
-use HDNET\Calendarize\Domain\Model\Index;
+namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
  * Uri to the index.
@@ -14,15 +13,11 @@ class IndexViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\IndexViewHelpe
     /**
      * Render the uri to the given index.
      *
-     * @param Index $index
-     * @param int   $pageUid
-     * @param bool  $absolute
-     *
      * @return string
      */
-    public function render(Index $index, $pageUid = null, $absolute = false)
+    public function render()
     {
-        parent::render($index, $pageUid, (bool) $absolute);
+        parent::render();
 
         return $this->lastHref;
     }

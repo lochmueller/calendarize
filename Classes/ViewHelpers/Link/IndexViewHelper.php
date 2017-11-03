@@ -12,22 +12,29 @@ use HDNET\Calendarize\Domain\Model\Index;
 class IndexViewHelper extends AbstractLinkViewHelper
 {
     /**
+     * Init arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('index', Index::class, '', true);
+        $this->registerArgument('pageUid', 'int', '', false, 0);
+        $this->registerArgument('absolute', 'bool', '', false, false);
+    }
+
+    /**
      * Render the link to the given index.
-     *
-     * @param Index $index
-     * @param int   $pageUid
-     * @param bool  $absolute
      *
      * @return string
      */
-    public function render(Index $index, $pageUid = null, $absolute = false)
+    public function render()
     {
         $additionalParams = [
             'tx_calendarize_calendar' => [
-                'index' => $index->getUid(),
+                'index' => $this->arguments['index']->getUid(),
             ],
         ];
 
-        return parent::renderLink($this->getPageUid($pageUid, 'detailPid'), $additionalParams, (bool) $absolute);
+        return parent::renderLink($this->getPageUid($this->arguments['pageUid'], 'detailPid'), $additionalParams, (bool) $this->arguments['absolute']);
     }
 }
