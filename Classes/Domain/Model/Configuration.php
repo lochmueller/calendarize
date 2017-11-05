@@ -204,6 +204,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getEndDate()
     {
+        $this->endDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         return $this->endDate;
     }
 
@@ -244,6 +245,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getStartDate()
     {
+        $this->startDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         return $this->startDate;
     }
 
