@@ -3,6 +3,7 @@
  * Configuration for time options.
  */
 namespace HDNET\Calendarize\Domain\Model;
+namespace HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
  * Configuration for time options.
@@ -204,7 +205,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getEndDate()
     {
-        $this->endDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $this->endDate->setTimezone(DateTimeUtility::getTimeZone());
         return $this->endDate;
     }
 
@@ -245,7 +246,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getStartDate()
     {
-        $this->startDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $this->startDate->setTimezone(DateTimeUtility::getTimeZone());
         return $this->startDate;
     }
 
