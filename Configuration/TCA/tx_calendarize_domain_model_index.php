@@ -33,12 +33,14 @@ $custom = [
             'config' => [
                 'readOnly' => '1',
                 'eval' => 'datetime',
+                'format' => 'date',
             ],
         ],
         'end_date' => [
             'config' => [
                 'readOnly' => '1',
                 'eval' => 'datetime',
+                'format' => 'date',
             ],
         ],
         'start_time' => [
