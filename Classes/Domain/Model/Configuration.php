@@ -3,7 +3,8 @@
  * Configuration for time options.
  */
 namespace HDNET\Calendarize\Domain\Model;
-namespace HDNET\Calendarize\Utility\DateTimeUtility;
+
+use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
  * Configuration for time options.
