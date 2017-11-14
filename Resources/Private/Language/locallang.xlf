@@ -459,6 +459,9 @@
 			<trans-unit id="sorting">
 				<source>Sorting</source>
 			</trans-unit>
+			<trans-unit id="sortBy">
+				<source>Sort by</source>
+			</trans-unit>
 			<trans-unit id="tca.information">
 				<source>Calendarize (Information - Save to refresh...)</source>
 			</trans-unit>

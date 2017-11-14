@@ -214,6 +214,26 @@
 					</settings.configuration>
 
 					<!-- Calendar configuration -->
+					<settings.sortBy>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sortBy</label>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.start_date</numIndex>
+										<numIndex index="1">start</numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.end_date</numIndex>
+										<numIndex index="1">end</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.sortBy>
+
+					<!-- Calendar configuration -->
 					<settings.sorting>
 						<TCEforms>
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sorting</label>

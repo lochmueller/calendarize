@@ -316,10 +316,11 @@ class IndexRepository extends AbstractRepository
      * Set the default sorting direction.
      *
      * @param string $direction
+     * @param string $field
      */
-    public function setDefaultSortingDirection($direction)
+    public function setDefaultSortingDirection($direction, $field = '')
     {
-        $this->defaultOrderings = $this->getSorting($direction);
+        $this->defaultOrderings = $this->getSorting($direction, $field);
     }
 
     /**
@@ -492,14 +493,18 @@ class IndexRepository extends AbstractRepository
      * Get the sorting.
      *
      * @param string $direction
+     * @param string $field
      *
      * @return array
      */
-    protected function getSorting($direction)
+    protected function getSorting($direction, $field = '')
     {
+        if ($field !== 'end') {
+            $field = 'start';
+        }
         return [
-            'start_date' => $direction,
-            'start_time' => $direction,
+            $field.'_date' => $direction,
+            $field.'_time' => $direction,
         ];
     }
 }
