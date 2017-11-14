@@ -36,7 +36,11 @@ class CalendarController extends AbstractController
         $this->indexRepository->setAdditionalSlotArguments($additionalSlotArguments);
 
         if (isset($this->settings['sorting'])) {
-            $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
+            if (isset($this->settings['sortBy'])) {
+                $this->indexRepository->setDefaultSortingDirection($this->settings['sorting'], $this->settings['sortBy']);
+            } else {
+                $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
+            }
         }
 
         if (isset($this->arguments['startDate'])) {
