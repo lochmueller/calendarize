@@ -503,8 +503,8 @@ class IndexRepository extends AbstractRepository
             $field = 'start';
         }
         return [
-            $field.'_date' => $direction,
-            $field.'_time' => $direction,
+            $field . '_date' => $direction,
+            $field . '_time' => $direction,
         ];
     }
 }
