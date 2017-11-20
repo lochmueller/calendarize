@@ -41,13 +41,13 @@ class IndexPreparationService
 
                 // UTC fix
                 $record['start_date'] = \DateTime::createFromFormat(
-                    'Y-m-d',
-                    $record['start_date']->format('Y-m-d'),
+                    'Y-m-d H:i:s',
+                    $record['start_date']->format('Y-m-d') . '00:00:00',
                     new \DateTimeZone('UTC')
                 );
                 $record['end_date'] = \DateTime::createFromFormat(
-                    'Y-m-d',
-                    $record['end_date']->format('Y-m-d'),
+                    'Y-m-d H:i:s',
+                    $record['end_date']->format('Y-m-d') . '00:00:00',
                     new \DateTimeZone('UTC')
                 );
 
