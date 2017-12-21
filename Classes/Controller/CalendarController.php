@@ -431,6 +431,8 @@ class CalendarController extends AbstractController
     }
 
     /**
+     * Build the search structure.
+     *
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
      * @param array          $customSearch

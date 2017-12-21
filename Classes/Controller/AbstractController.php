@@ -45,6 +45,8 @@ abstract class AbstractController extends ActionController
     ];
 
     /**
+     * Inject the configuration manager.
+     *
      * @param ConfigurationManagerInterface $configurationManager
      */
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
@@ -137,7 +139,7 @@ abstract class AbstractController extends ActionController
      *
      * @return string
      */
-    protected function getStringForPluginHmac()
+    protected function getStringForPluginHmac(): string
     {
         $actionMethodName = \ucfirst($this->request->getControllerActionName());
         $pluginName = $this->request->getPluginName();
@@ -147,6 +149,8 @@ abstract class AbstractController extends ActionController
     }
 
     /**
+     * Calculate the plugin Hmac.
+     *
      * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
      *
      * @return string $hmac
@@ -169,7 +173,7 @@ abstract class AbstractController extends ActionController
      *
      * @return bool
      */
-    protected function validatePluginHmac($hmac)
+    protected function validatePluginHmac(string $hmac): bool
     {
         $string = $this->getStringForPluginHmac();
 

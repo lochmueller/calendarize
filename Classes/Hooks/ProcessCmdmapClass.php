@@ -11,6 +11,7 @@ use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Hook for cmd map processing.
@@ -38,6 +39,11 @@ class ProcessCmdmapClass extends AbstractHook
                 $indexer = GeneralUtility::makeInstance(IndexerService::class);
                 $indexer->reindex($key, $table, $uid);
             }
+        }
+
+        if ('tx_calendarize_domain_model_index' === $table) {
+            DebuggerUtility::var_dump($table);
+            die();
         }
     }
 }

@@ -140,8 +140,8 @@ class TcaService extends AbstractService
     {
         $title = '';
         if ($row['start_date']) {
-            $dateStart = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['start_date']);
-            $dateEnd = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['end_date'] ?: $row['start_date']);
+            $dateStart = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int) $row['start_date']);
+            $dateEnd = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int) ($row['end_date'] ?: $row['start_date']));
             $title .= $dateStart;
             if ($dateStart !== $dateEnd) {
                 $title .= ' - ' . $dateEnd;
