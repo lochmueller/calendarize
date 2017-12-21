@@ -1,7 +1,10 @@
 <?php
+
 /**
  * DateTime Utility.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -62,7 +65,7 @@ class DateTimeUtility
      */
     public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1)
     {
-        return self::normalizeDateTimeSingle(strtotime($year . '-W' . $week . '-' . $startDay));
+        return self::normalizeDateTimeSingle(\strtotime($year . '-W' . $week . '-' . $startDay));
     }
 
     /**
@@ -74,7 +77,7 @@ class DateTimeUtility
      */
     public static function getTimeZone()
     {
-        return new \DateTimeZone(date_default_timezone_get());
+        return new \DateTimeZone(\date_default_timezone_get());
     }
 
     /**
@@ -151,11 +154,13 @@ class DateTimeUtility
     {
         if ($dateInformation instanceof \DateTimeInterface) {
             return $dateInformation;
-        } elseif (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
+        }
+        if (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :
             // The $timezone parameter and the current timezone are ignored [ie. set to UTC] when the $time parameter [...] is a UNIX timestamp (e.g. @946684800) [...]
             return new \DateTime("@$dateInformation");
-        } elseif (is_string($dateInformation)) {
+        }
+        if (\is_string($dateInformation)) {
             return new \DateTime($dateInformation);
         }
 
@@ -172,7 +177,7 @@ class DateTimeUtility
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
-        return new \DateTime(date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
+        return new \DateTime(\date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
     }
 
     /**

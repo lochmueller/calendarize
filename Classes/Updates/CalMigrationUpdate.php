@@ -3,6 +3,8 @@
 /**
  * CalMigrationUpdate.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Service\IndexerService;
@@ -78,8 +80,8 @@ class CalMigrationUpdate extends AbstractUpdate
     public function checkForUpdate(&$description)
     {
         $nonMigratedCalIds = $this->getNonMigratedCalIds();
-        $count = count($nonMigratedCalIds);
-        if ($count === 0) {
+        $count = \count($nonMigratedCalIds);
+        if (0 === $count) {
             return false;
         }
         $description = 'There ' . ($count > 1 ? 'are ' . $count : 'is ' . $count) . ' non migrated EXT:cal event
@@ -120,7 +122,7 @@ class CalMigrationUpdate extends AbstractUpdate
     {
         $db = HelperUtility::getDatabaseConnection();
 
-        $events = $db->exec_SELECTgetRows('*', 'tx_cal_event', 'uid IN (' . implode(',', $calIds) . ')');
+        $events = $db->exec_SELECTgetRows('*', 'tx_cal_event', 'uid IN (' . \implode(',', $calIds) . ')');
         foreach ($events as $event) {
             $calendarizeEventRecord = [
                 'pid' => $event['pid'],
@@ -240,7 +242,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $selectQuery;
 
         foreach ($selectResults as $group) {
-            $importId = explode(':', $group['import_id']);
+            $importId = \explode(':', $group['import_id']);
             $groupId = (int) $importId[1];
 
             $variables = [
@@ -270,6 +272,101 @@ class CalMigrationUpdate extends AbstractUpdate
         }
 
         return true;
+    }
+
+    /**
+     * Migrate the 'sys_file_reference' entries from 'tx_cal_event' to 'tx_calendarize_domain_model_event'.
+     * Mark the imported entries with the import-id.
+     *
+     * @param       $calIds
+     * @param array $dbQueries
+     * @param       $customMessages
+     */
+    public function performSysFileReferenceUpdate($calIds, array &$dbQueries, &$customMessages)
+    {
+        $db = HelperUtility::getDatabaseConnection();
+
+        $variables = [
+            'table' => 'tx_cal_event',
+            'fieldnames' => ['image', 'attachment'],
+            'dbQueries' => $dbQueries,
+            'calIds' => $calIds,
+        ];
+
+        // select all not migrated entries
+        $fieldnames = 'fieldname = \'' . \implode('\' OR fieldname = \'', $variables['fieldnames']) . '\'';
+        $selectWhere = 'tablenames = \'' . $variables['table'] . '\' AND (' . $fieldnames . ')';
+        $selectWhere .= ' AND NOT EXISTS (SELECT NULL FROM sys_file_reference sfr2 WHERE sfr2.import_id = CONCAT(\'' . self::IMPORT_PREFIX . '\', sfr1.uid))';
+
+        $selectQuery = $db->SELECTquery('*', 'sys_file_reference sfr1', $selectWhere);
+        $selectResults = $db->admin_query($selectQuery);
+        $dbQueries[] = $selectQuery;
+
+        $variables = [
+            'table' => self::EVENT_TABLE,
+            'fieldnames' => $variables['fieldnames'],
+            'dbQueries' => $dbQueries,
+            'calIds' => $calIds,
+            'selectResults' => $selectResults,
+        ];
+
+        // create new entry with import_id
+        foreach ($variables['selectResults'] as $selectResult) {
+            $selectResult['tablenames'] = $variables['table'];
+            $selectResult['import_id'] = self::IMPORT_PREFIX . $selectResult['uid'];
+            $selectResult['fieldname'] = ('image' === $selectResult['fieldname']) ? 'images' : 'downloads';
+            unset($selectResult['uid_foreign'], $selectResult['uid']);
+
+            $insertQuery = $db->INSERTquery('sys_file_reference', $selectResult);
+            $db->admin_query($insertQuery);
+            $dbQueries[] = $insertQuery;
+        }
+    }
+
+    /**
+     * Link the Events to the migrated Categories.
+     * This build up the 'sys_category_record_mm' table on base of the 'tx_cal_event_category_mm' table.
+     *
+     * @param       $calIds
+     * @param array $dbQueries
+     * @param array $customMessages
+     */
+    public function performLinkEventToCategory($calIds, &$dbQueries, &$customMessages)
+    {
+        $db = HelperUtility::getDatabaseConnection();
+
+        $selectQuery = $db->SELECTquery('*', 'tx_cal_event_category_mm', '1 = 1');
+        $selectResults = $db->admin_query($selectQuery);
+        $dbQueries[] = $selectQuery;
+
+        $variables = [
+            'tablenames' => self::EVENT_TABLE,
+            'fieldname' => 'categories',
+            'dbQueries' => $dbQueries,
+        ];
+
+        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
+
+        foreach ($selectResults as $mm) {
+            $eventUid = $this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries, $customMessages);
+            $categoryUid = $this->getCalendarizeCategoryUid(
+                self::IMPORT_PREFIX . $mm['uid_foreign'],
+                $dbQueries,
+                $customMessages
+            );
+
+            $insertValues = [
+                'uid_local' => $categoryUid,
+                'uid_foreign' => $eventUid,
+                'tablenames' => $variables['tablenames'],
+                'fieldname' => $variables['fieldname'],
+            ];
+
+            $insertQuery = $db->INSERTquery('sys_category_record_mm ', $insertValues);
+            $db->admin_query($insertQuery);
+            $dbQueries[] = $insertQuery;
+        }
     }
 
     /**
@@ -316,12 +413,12 @@ class CalMigrationUpdate extends AbstractUpdate
         $csvArray = GeneralUtility::trimExplode(',', $csv);
 
         // check for doubles
-        $values = array_flip($csvArray);
+        $values = \array_flip($csvArray);
         if (isset($values[$value])) {
             return $csv;
         }
         $csvArray[] = $value;
-        $csv = implode(',', $csvArray);
+        $csv = \implode(',', $csvArray);
 
         return $csv;
     }
@@ -486,7 +583,7 @@ class CalMigrationUpdate extends AbstractUpdate
                     'end_date' => $this->migrateDate($selectResult['end_date']),
                     'start_time' => (int) $selectResult['start_time'],
                     'end_time' => (int) $selectResult['end_time'],
-                    'all_day' => ($selectResult['start_time'] == null && $selectResult['end_time'] == null) ? 1 : 0,
+                    'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
                     'frequency' => $this->mapFrequency($selectResult['freq']),
                     'till_date' => $this->migrateDate($selectResult['until']),
                     'counter_amount' => (int) $selectResult['cnt'],
@@ -509,7 +606,7 @@ class CalMigrationUpdate extends AbstractUpdate
             }
         }
 
-        return implode(',', $recordIds);
+        return \implode(',', $recordIds);
     }
 
     /**
@@ -532,56 +629,6 @@ class CalMigrationUpdate extends AbstractUpdate
         }
 
         return $freq[$calFrequency];
-    }
-
-    /**
-     * Migrate the 'sys_file_reference' entries from 'tx_cal_event' to 'tx_calendarize_domain_model_event'.
-     * Mark the imported entries with the import-id.
-     *
-     * @param       $calIds
-     * @param array $dbQueries
-     * @param       $customMessages
-     */
-    public function performSysFileReferenceUpdate($calIds, array &$dbQueries, &$customMessages)
-    {
-        $db = HelperUtility::getDatabaseConnection();
-
-        $variables = [
-            'table' => 'tx_cal_event',
-            'fieldnames' => ['image', 'attachment'],
-            'dbQueries' => $dbQueries,
-            'calIds' => $calIds,
-        ];
-
-        // select all not migrated entries
-        $fieldnames = 'fieldname = \'' . implode('\' OR fieldname = \'', $variables['fieldnames']) . '\'';
-        $selectWhere = 'tablenames = \'' . $variables['table'] . '\' AND (' . $fieldnames . ')';
-        $selectWhere .= ' AND NOT EXISTS (SELECT NULL FROM sys_file_reference sfr2 WHERE sfr2.import_id = CONCAT(\'' . self::IMPORT_PREFIX . '\', sfr1.uid))';
-
-        $selectQuery = $db->SELECTquery('*', 'sys_file_reference sfr1', $selectWhere);
-        $selectResults = $db->admin_query($selectQuery);
-        $dbQueries[] = $selectQuery;
-
-        $variables = [
-            'table' => self::EVENT_TABLE,
-            'fieldnames' => $variables['fieldnames'],
-            'dbQueries' => $dbQueries,
-            'calIds' => $calIds,
-            'selectResults' => $selectResults,
-        ];
-
-        // create new entry with import_id
-        foreach ($variables['selectResults'] as $selectResult) {
-            $selectResult['tablenames'] = $variables['table'];
-            $selectResult['import_id'] = self::IMPORT_PREFIX . $selectResult['uid'];
-            $selectResult['fieldname'] = ($selectResult['fieldname'] == 'image') ? 'images' : 'downloads';
-            unset($selectResult['uid_foreign']);
-            unset($selectResult['uid']);
-
-            $insertQuery = $db->INSERTquery('sys_file_reference', $selectResult);
-            $db->admin_query($insertQuery);
-            $dbQueries[] = $insertQuery;
-        }
     }
 
     /**
@@ -674,52 +721,6 @@ class CalMigrationUpdate extends AbstractUpdate
         $uid = (int) $result['uid'];
 
         return $uid;
-    }
-
-    /**
-     * Link the Events to the migrated Categories.
-     * This build up the 'sys_category_record_mm' table on base of the 'tx_cal_event_category_mm' table.
-     *
-     * @param       $calIds
-     * @param array $dbQueries
-     * @param array $customMessages
-     */
-    public function performLinkEventToCategory($calIds, &$dbQueries, &$customMessages)
-    {
-        $db = HelperUtility::getDatabaseConnection();
-
-        $selectQuery = $db->SELECTquery('*', 'tx_cal_event_category_mm', '1 = 1');
-        $selectResults = $db->admin_query($selectQuery);
-        $dbQueries[] = $selectQuery;
-
-        $variables = [
-            'tablenames' => self::EVENT_TABLE,
-            'fieldname' => 'categories',
-            'dbQueries' => $dbQueries,
-        ];
-
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
-        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
-
-        foreach ($selectResults as $mm) {
-            $eventUid = $this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries, $customMessages);
-            $categoryUid = $this->getCalendarizeCategoryUid(
-                self::IMPORT_PREFIX . $mm['uid_foreign'],
-                $dbQueries,
-                $customMessages
-            );
-
-            $insertValues = [
-                'uid_local' => $categoryUid,
-                'uid_foreign' => $eventUid,
-                'tablenames' => $variables['tablenames'],
-                'fieldname' => $variables['fieldname'],
-            ];
-
-            $insertQuery = $db->INSERTquery('sys_category_record_mm ', $insertValues);
-            $db->admin_query($insertQuery);
-            $dbQueries[] = $insertQuery;
-        }
     }
 
     /**
@@ -916,8 +917,8 @@ class CalMigrationUpdate extends AbstractUpdate
             $nonMigrated[(int) $event['uid']] = (int) $event['uid'];
         }
 
-        $countOriginal = count($checkImportIds);
-        if ($countOriginal === 0) {
+        $countOriginal = \count($checkImportIds);
+        if (0 === $countOriginal) {
             return [];
         }
 
@@ -931,11 +932,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $migratedRows = $db->exec_SELECTgetRows(
             'uid,import_id',
             $variables['table'],
-            'import_id IN (' . implode(',', $checkImportIds) . ')' . BackendUtility::deleteClause($variables['table'])
+            'import_id IN (' . \implode(',', $checkImportIds) . ')' . BackendUtility::deleteClause($variables['table'])
         );
 
         foreach ($migratedRows as $migratedRow) {
-            $importId = (int) str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
+            $importId = (int) \str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
             if (isset($nonMigrated[$importId])) {
                 unset($nonMigrated[$importId]);
             }

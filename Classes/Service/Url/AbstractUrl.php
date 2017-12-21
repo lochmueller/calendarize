@@ -1,7 +1,10 @@
 <?php
+
 /**
  * AbstractUrl.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\Url;
 
 use HDNET\Calendarize\Domain\Model\Index;

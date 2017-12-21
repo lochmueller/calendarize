@@ -1,7 +1,10 @@
 <?php
+
 /**
  * AbstractBookingRequest.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Property\TypeConverter;
 
 use HDNET\Calendarize\Domain\Model\Request\DefaultBookingRequest;
@@ -69,9 +72,9 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * @param array                                 $convertedChildProperties
      * @param PropertyMappingConfigurationInterface $configuration
      *
-     * @return mixed|\TYPO3\CMS\Extbase\Error\Error the target type, or an error object if a user-error occurred
-     *
      * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
+     *
+     * @return mixed|\TYPO3\CMS\Extbase\Error\Error the target type, or an error object if a user-error occurred
      *
      * @api
      */
@@ -100,7 +103,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
         foreach (self::$configurations as $configurationKey) {
             foreach ($register as $key => $configuration) {
                 if ($key === $configurationKey) {
-                    if (isset($configuration['overrideBookingRequestModel']) && class_exists($configuration['overrideBookingRequestModel'])) {
+                    if (isset($configuration['overrideBookingRequestModel']) && \class_exists($configuration['overrideBookingRequestModel'])) {
                         $class = $configuration['overrideBookingRequestModel'];
 
                         return new $class();

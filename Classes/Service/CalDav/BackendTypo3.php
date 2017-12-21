@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Backend for events.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -19,20 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class BackendTypo3 extends AbstractBackend
 {
     /**
-     * The table name that will be used for calendars.
-     *
-     * @var string
-     */
-    protected $calendarTableName;
-
-    /**
-     * The table name that will be used for calendar objects.
-     *
-     * @var string
-     */
-    protected $calendarObjectTableName;
-
-    /**
      * List of CalDAV properties, and how they map to database fieldnames.
      *
      * Add your own properties by simply adding on to this array
@@ -46,6 +35,19 @@ class BackendTypo3 extends AbstractBackend
         '{http://apple.com/ns/ical/}calendar-order' => 'calendarorder',
         '{http://apple.com/ns/ical/}calendar-color' => 'calendarcolor',
     ];
+    /**
+     * The table name that will be used for calendars.
+     *
+     * @var string
+     */
+    protected $calendarTableName;
+
+    /**
+     * The table name that will be used for calendar objects.
+     *
+     * @var string
+     */
+    protected $calendarObjectTableName;
 
     /**
      * Creates the backend.
@@ -79,13 +81,13 @@ class BackendTypo3 extends AbstractBackend
      */
     public function getCalendarsForUser($principalUri)
     {
-        $principalUriParts = explode('/', $principalUri);
+        $principalUriParts = \explode('/', $principalUri);
         $databaseConnection = HelperUtility::getDatabaseConnection();
         // $databaseConnection->
         die('getCalendarsForUser');
         $stmt = $this->pdo->prepare('SELECT uid, tx_cal_calendar FROM fe_users WHERE username = ? AND deleted=0');
         $stmt->execute([
-            array_pop($principalUriParts),
+            \array_pop($principalUriParts),
         ]);
 
         $calendars = [];
@@ -95,7 +97,7 @@ class BackendTypo3 extends AbstractBackend
             $stmt->execute();
 
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-                $components = explode(',', 'VEVENT,VTODO');
+                $components = \explode(',', 'VEVENT,VTODO');
 
                 $calendar = [
                     'id' => $row['uid'],
@@ -127,9 +129,9 @@ class BackendTypo3 extends AbstractBackend
      * @param string $calendarUri
      * @param array  $properties
      *
-     * @return mixed
-     *
      * @throws Sabre_DAV_Exception
+     *
+     * @return mixed
      */
     public function createCalendar($principalUri, $calendarUri, array $properties)
     {
@@ -153,7 +155,7 @@ class BackendTypo3 extends AbstractBackend
             if (!($properties[$sccs] instanceof Sabre_CalDAV_Property_SupportedCalendarComponentSet)) {
                 throw new Sabre_DAV_Exception('The ' . $sccs . ' property must be of type: Sabre_CalDAV_Property_SupportedCalendarComponentSet');
             }
-            $values[':components'] = implode(',', $properties[$sccs]->getValue());
+            $values[':components'] = \implode(',', $properties[$sccs]->getValue());
         }
 
         foreach ($this->propertyMap as $xmlName => $dbName) {
@@ -164,9 +166,9 @@ class BackendTypo3 extends AbstractBackend
             }
         }
 
-        $stmt = $this->pdo->prepare('INSERT INTO tx_cal_calendar (' . implode(', ', $fieldNames) . ') VALUES (' . implode(
+        $stmt = $this->pdo->prepare('INSERT INTO tx_cal_calendar (' . \implode(', ', $fieldNames) . ') VALUES (' . \implode(
             ', ',
-            array_keys($values)
+            \array_keys($values)
         ) . ')');
         $stmt->execute($values);
 
@@ -243,7 +245,7 @@ class BackendTypo3 extends AbstractBackend
 
             // Removing unused statuscodes for cleanliness
             foreach ($result as $status => $properties) {
-                if (is_array($properties) && count($properties) === 0) {
+                if (\is_array($properties) && 0 === \count($properties)) {
                     unset($result[$status]);
                 }
             }
@@ -261,9 +263,9 @@ class BackendTypo3 extends AbstractBackend
         $now = new \DateTime();
         $valuesSql[] = $now->getTimestamp();
 
-        $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET ' . implode(', ', $valuesSql) . ' WHERE id = ?');
+        $stmt = $this->pdo->prepare('UPDATE tx_cal_calendar SET ' . \implode(', ', $valuesSql) . ' WHERE id = ?');
         $newValues['id'] = $calendarId;
-        $stmt->execute(array_values($newValues));
+        $stmt->execute(\array_values($newValues));
 
         $stmt = $this->pdo->prepare('SELECT * FROM tx_cal_calendar WHERE uid = ?');
         $stmt->execute([
@@ -322,7 +324,7 @@ class BackendTypo3 extends AbstractBackend
         $eventArray = $stmt->fetchAll();
         $preparedArray = [];
         foreach ($eventArray as $eventRow) {
-            if ($eventRow['tx_caldav_uid'] == '' && $eventRow['icsUid'] == '') {
+            if ('' === $eventRow['tx_caldav_uid'] && '' === $eventRow['icsUid']) {
                 $eventRow['tx_caldav_uid'] = 'a1b2c3_' . $eventRow['calendar_id'] . '_' . $eventRow['uid'];
                 $eventRow['icsUid'] = $eventRow['tx_caldav_uid'];
                 $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET tx_caldav_uid = ?, icsUid = ? WHERE uid = ?');
@@ -331,14 +333,14 @@ class BackendTypo3 extends AbstractBackend
                     $eventRow['icsUid'],
                     $eventRow['uid'],
                 ]);
-            } elseif ($eventRow['tx_caldav_uid'] == '') {
+            } elseif ('' === $eventRow['tx_caldav_uid']) {
                 $eventRow['tx_caldav_uid'] = $eventRow['icsUid'];
                 $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET tx_caldav_uid = ? WHERE uid = ?');
                 $stmt->execute([
                     $eventRow['tx_caldav_uid'],
                     $eventRow['uid'],
                 ]);
-            } elseif ($eventRow['icsUid'] == '') {
+            } elseif ('' === $eventRow['icsUid']) {
                 $eventRow['icsUid'] = $eventRow['tx_caldav_uid'];
                 $stmt = $this->pdo->prepare('UPDATE tx_cal_event SET icsUid = ? WHERE uid = ?');
                 $stmt->execute([

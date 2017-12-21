@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Base TCA generation for the table sys_file_reference.
- */
-$GLOBALS['TCA']['sys_file_reference'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('calendarize', 'sys_file_reference');
+declare(strict_types=1);
 
-// custom manipulation calls here
+$GLOBALS['TCA']['sys_file_reference'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('calendarize', 'sys_file_reference');
 
 $custom = [];
 

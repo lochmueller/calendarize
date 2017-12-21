@@ -1,7 +1,10 @@
 <?php
+
 /**
  * External service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -48,7 +51,7 @@ class ExternalTimeTable extends AbstractTimeTable
             /** @var $event ICalEvent */
             $startTime = DateTimeUtility::getDaySecondsOfDateTime($event->getStart());
             $endTime = DateTimeUtility::getDaySecondsOfDateTime($event->getEnd());
-            if ($endTime === self::DAY_END) {
+            if (self::DAY_END === $endTime) {
                 $endTime = 0;
             }
 
@@ -58,7 +61,7 @@ class ExternalTimeTable extends AbstractTimeTable
                 'end_date' => $this->getEventsFixedEndDate($event),
                 'start_time' => $startTime,
                 'end_time' => $endTime,
-                'all_day' => $endTime === 0,
+                'all_day' => 0 === $endTime,
                 'state' => $configuration->getState(),
             ];
             $times[$this->calculateEntryKey($entry)] = $entry;

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Calendar.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -59,7 +62,7 @@ class CalendarController extends AbstractController
                     $this->settings['dateFormat']
                 );
         }
-        if ($this->request->hasArgument('event') && $this->actionMethodName == 'detailAction') {
+        if ($this->request->hasArgument('event') && 'detailAction' === $this->actionMethodName) {
             // default configuration
             $configurationName = $this->settings['configuration'];
             // configuration overwritten by argument?
@@ -107,7 +110,7 @@ class CalendarController extends AbstractController
         $week = null
     ) {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
+        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             $this->forward('detail');
         }
 
@@ -154,7 +157,7 @@ class CalendarController extends AbstractController
         $week = null
     ) {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
+        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             $this->forward('detail');
         }
 
@@ -203,7 +206,7 @@ class CalendarController extends AbstractController
         $week = null
     ) {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions())) {
+        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             $this->forward('detail');
         }
 
@@ -222,74 +225,6 @@ class CalendarController extends AbstractController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
-    }
-
-    /**
-     * @param \DateTime|null $startDate
-     * @param \DateTime|null $endDate
-     * @param array          $customSearch
-     * @param int            $year
-     * @param int            $month
-     * @param int            $day
-     * @param int            $week
-     *
-     * @return array
-     */
-    protected function determineSearch(
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
-        array $customSearch = [],
-        $year = null,
-        $month = null,
-        $day = null,
-        $week = null
-    ) {
-        $searchMode = false;
-        if ($startDate || $endDate || !empty($customSearch)) {
-            $searchMode = true;
-            $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
-            $indices = $this->indexRepository->findDay($year, $month, $day);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
-            $indices = $this->indexRepository->findMonth($year, $month);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
-            $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
-            $indices = $this->indexRepository->findYear($year);
-        } else {
-            $overrideStartDate = (int) $this->settings['overrideStartdate'];
-            $overrideEndDate = (int) $this->settings['overrideEnddate'];
-            $indices = $this->indexRepository->findList(
-                (int) $this->settings['limit'],
-                $this->settings['listStartTime'],
-                (int) $this->settings['listStartTimeOffsetHours'],
-                $overrideStartDate,
-                $overrideEndDate
-            );
-        }
-
-        // use this variable in your extension to add more custom variables
-        $variables = [
-            'extended' => [
-                'indices' => $indices,
-                'searchMode' => $searchMode,
-                'parameters' => [
-                    'startDate' => $startDate,
-                    'endDate' => $endDate,
-                    'customSearch' => $customSearch,
-                    'year' => $year,
-                    'month' => $month,
-                    'day' => $day,
-                    'week' => $week,
-                ],
-            ],
-        ];
-        $variables['settings'] = $this->settings;
-
-        $dispatcher = $this->objectManager->get(Dispatcher::class);
-        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
-
-        return $variables['extended'];
     }
 
     /**
@@ -333,10 +268,10 @@ class CalendarController extends AbstractController
     public function weekAction($year = null, $week = null)
     {
         $now = DateTimeUtility::getNow();
-        if ($year === null) {
+        if (null === $year) {
             $year = $now->format('o'); // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
         }
-        if ($week === null) {
+        if (null === $week) {
             $week = $now->format('W');
         }
         $weekStart = (int) $this->settings['weekStart'];
@@ -397,7 +332,7 @@ class CalendarController extends AbstractController
      */
     public function detailAction(Index $index = null)
     {
-        if ($index === null) {
+        if (null === $index) {
             // handle fallback for "strange language settings"
             if ($this->request->hasArgument('index')) {
                 $indexId = (int) $this->request->getArgument('index');
@@ -406,7 +341,7 @@ class CalendarController extends AbstractController
                 }
             }
 
-            if ($index === null) {
+            if (null === $index) {
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
                     return (string) TranslateUtility::get('noEventDetailView');
                 }
@@ -484,7 +419,7 @@ class CalendarController extends AbstractController
 
             $result = $this->indexRepository->findByTraversing($dummyIndex);
             $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
-            if (is_object($index)) {
+            if (\is_object($index)) {
                 $indicies[] = $index;
             }
         }
@@ -493,6 +428,74 @@ class CalendarController extends AbstractController
             'indicies' => $indicies,
             'configurations' => $configurations,
         ], __CLASS__, __FUNCTION__);
+    }
+
+    /**
+     * @param \DateTime|null $startDate
+     * @param \DateTime|null $endDate
+     * @param array          $customSearch
+     * @param int            $year
+     * @param int            $month
+     * @param int            $day
+     * @param int            $week
+     *
+     * @return array
+     */
+    protected function determineSearch(
+        \DateTime $startDate = null,
+        \DateTime $endDate = null,
+        array $customSearch = [],
+        $year = null,
+        $month = null,
+        $day = null,
+        $week = null
+    ) {
+        $searchMode = false;
+        if ($startDate || $endDate || !empty($customSearch)) {
+            $searchMode = true;
+            $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
+        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
+            $indices = $this->indexRepository->findDay($year, $month, $day);
+        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
+            $indices = $this->indexRepository->findMonth($year, $month);
+        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
+            $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
+        } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
+            $indices = $this->indexRepository->findYear($year);
+        } else {
+            $overrideStartDate = (int) $this->settings['overrideStartdate'];
+            $overrideEndDate = (int) $this->settings['overrideEnddate'];
+            $indices = $this->indexRepository->findList(
+                (int) $this->settings['limit'],
+                $this->settings['listStartTime'],
+                (int) $this->settings['listStartTimeOffsetHours'],
+                $overrideStartDate,
+                $overrideEndDate
+            );
+        }
+
+        // use this variable in your extension to add more custom variables
+        $variables = [
+            'extended' => [
+                'indices' => $indices,
+                'searchMode' => $searchMode,
+                'parameters' => [
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'customSearch' => $customSearch,
+                    'year' => $year,
+                    'month' => $month,
+                    'day' => $day,
+                    'week' => $week,
+                ],
+            ],
+        ];
+        $variables['settings'] = $this->settings;
+
+        $dispatcher = $this->objectManager->get(Dispatcher::class);
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
+
+        return $variables['extended'];
     }
 
     /**
@@ -521,7 +524,7 @@ class CalendarController extends AbstractController
         $configurations = GeneralUtility::trimExplode(',', $this->settings['configuration'], true);
         $return = [];
         foreach (Register::getRegister() as $key => $configuration) {
-            if (in_array($key, $configurations)) {
+            if (\in_array($key, $configurations, true)) {
                 $return[] = $configuration;
             }
         }
@@ -533,21 +536,21 @@ class CalendarController extends AbstractController
      * A redirect that have a slot included.
      *
      * @param string $signalClassName name of the signal class: __CLASS__
-     * @param string $signalName name of the signal: __FUNCTION__
-     * @param array $variables optional: if not set use the defaults
+     * @param string $signalName      name of the signal: __FUNCTION__
+     * @param array  $variables       optional: if not set use the defaults
      */
     protected function slottedRedirect($signalClassName, $signalName, $variables = null)
     {
         // set default variables for the redirect
-        if ($variables === null) {
+        if (null === $variables) {
             $variables['extended'] = [
-                'actionName'     => 'list',
+                'actionName' => 'list',
                 'controllerName' => null,
-                'extensionName'  => null,
-                'arguments'      => [],
-                'pageUid'        => $this->settings['listPid'],
-                'delay'          => 0,
-                'statusCode'     => 301
+                'extensionName' => null,
+                'arguments' => [],
+                'pageUid' => $this->settings['listPid'],
+                'delay' => 0,
+                'statusCode' => 301,
             ];
             $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
             $variables['settings'] = $this->settings;

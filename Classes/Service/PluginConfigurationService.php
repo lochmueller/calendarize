@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * PluginConfigurationService.
+ */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
@@ -33,8 +38,8 @@ class PluginConfigurationService
             ];
 
             foreach ($checkFields as $checkField) {
-                if (in_array(trim($settings[$checkField]), ['', '0'])) {
-                    $function = 'get' . ucfirst($checkField);
+                if (\in_array(\trim($settings[$checkField]), ['', '0'], true)) {
+                    $function = 'get' . \ucfirst($checkField);
                     $settings[$checkField] = $settings['pluginConfiguration']->$function();
                 }
             }
@@ -47,30 +52,6 @@ class PluginConfigurationService
         $arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
 
         return $arguments['settings'];
-    }
-
-    /**
-     * Build the plugin configuration object.
-     *
-     * @param int $uid
-     *
-     * @return null|object
-     */
-    protected function buildPluginConfigurationObject($uid)
-    {
-        $db = HelperUtility::getDatabaseConnection();
-        $row = $db->exec_SELECTgetSingleRow('*', 'tx_calendarize_domain_model_pluginconfiguration', 'uid=' . (int) $uid);
-        if (!isset($row['model_name'])) {
-            return null;
-        }
-
-        $query = HelperUtility::getQuery($row['model_name']);
-        $query->getQuerySettings()
-            ->setRespectStoragePage(false);
-        $query->matching($query->equals('uid', $uid));
-
-        return $query->execute()
-            ->getFirst();
     }
 
     /**
@@ -90,5 +71,29 @@ class PluginConfigurationService
         }
 
         return $config;
+    }
+
+    /**
+     * Build the plugin configuration object.
+     *
+     * @param int $uid
+     *
+     * @return null|object
+     */
+    protected function buildPluginConfigurationObject($uid)
+    {
+        $db = HelperUtility::getDatabaseConnection();
+        $row = $db->exec_SELECTgetSingleRow('*', 'tx_calendarize_domain_model_pluginconfiguration', 'uid=' . (int) $uid);
+        if (!isset($row['model_name'])) {
+            return;
+        }
+
+        $query = HelperUtility::getQuery($row['model_name']);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
+        $query->matching($query->equals('uid', $uid));
+
+        return $query->execute()
+            ->getFirst();
     }
 }

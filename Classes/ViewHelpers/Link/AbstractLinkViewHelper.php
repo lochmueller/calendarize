@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Link to anything ;).
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -58,7 +61,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
             ->setArguments($additionalParams)
             ->setCreateAbsoluteUri($absolute)
             ->build();
-        if ($this->lastHref !== '') {
+        if ('' !== $this->lastHref) {
             $this->tag->addAttribute('href', $this->lastHref);
             $this->tag->setContent($this->renderChildren());
             $result = $this->tag->render();

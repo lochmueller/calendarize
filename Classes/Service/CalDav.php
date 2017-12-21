@@ -3,6 +3,8 @@
 /**
  * Wrapper for the Cal Dav structure.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Service\CalDav\AuthBackendTypo3;
@@ -34,11 +36,13 @@ class CalDav extends AbstractService
 
     /**
      * Run the server.
+     *
+     * @param mixed $calendarId
      */
     public function runServer($calendarId)
     {
         $configuration = $this->getConfiguration($calendarId);
-        if (!is_array($configuration)) {
+        if (!\is_array($configuration)) {
             throw new \Exception('Invalid configuration key', 123176283);
         }
         $principalBackend = new PrincipalBackendTypo3();
@@ -91,7 +95,7 @@ class CalDav extends AbstractService
     protected function checkEnvironment()
     {
         $class = Server::class;
-        if (!class_exists($class)) {
+        if (!\class_exists($class)) {
             throw new \Exception('No ' . $class . ' class found. 
             So there is no valid CalDav framework. 
             Please run "composer require sabre/dav ~3.2.0" in your installation', 278346238);

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Event (Default) for the calendarize function.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Features\FeedInterface;
@@ -407,7 +410,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
             }
         }
 
-        return implode(',', $keSearchTags);
+        return \implode(',', $keSearchTags);
     }
 
     /**

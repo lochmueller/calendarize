@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Quote JS.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -11,9 +14,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class JsQuoteViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {
@@ -28,7 +30,8 @@ class JsQuoteViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $content = $this->arguments['content'] === null || trim((string)$this->arguments['content']) === '' ? $this->renderChildren() : $this->arguments['content'];
+        $content = null === $this->arguments['content'] || '' === \trim((string) $this->arguments['content']) ? $this->renderChildren() : $this->arguments['content'];
+
         return GeneralUtility::quoteJSvalue($content);
     }
 }

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Import default events.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Command\ImportCommandController;
@@ -32,9 +35,9 @@ class EventImport
      * @param int                     $pid
      * @param bool                    $handled
      *
-     * @return array
-     *
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     *
+     * @return array
      */
     public function importCommand(array $event, $commandController, $pid, $handled)
     {
@@ -48,7 +51,7 @@ class EventImport
         $configuration = $this->getConfiguration($pid, $event['start'], $event['end']);
         $eventObject->addCalendarize($configuration);
 
-        if ($eventObject->getUid() === null) {
+        if (null === $eventObject->getUid()) {
             $this->eventRepository->update($eventObject);
             $commandController->enqueueMessage('Update Event Meta data: ' . $eventObject->getTitle(), 'Update');
         } else {
@@ -135,8 +138,8 @@ class EventImport
      */
     protected function nl2br($string)
     {
-        $string = nl2br((string) $string);
+        $string = \nl2br((string) $string);
 
-        return str_replace('\\n', '<br />', $string);
+        return \str_replace('\\n', '<br />', $string);
     }
 }

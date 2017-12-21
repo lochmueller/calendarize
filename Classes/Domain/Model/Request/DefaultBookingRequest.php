@@ -3,6 +3,8 @@
 /**
  * DefaultBookingRequest.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 /**

@@ -3,6 +3,8 @@
 /**
  * KE Search Indexer.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
@@ -46,8 +48,8 @@ class KeSearchIndexer extends AbstractHook
      */
     public function customIndexer(&$indexerConfig, &$indexerObject)
     {
-        if ($indexerConfig['type'] !== 'calendarize') {
-            return null;
+        if ('calendarize' !== $indexerConfig['type']) {
+            return;
         }
 
         $indexRepository = HelperUtility::create(IndexRepository::class);
@@ -63,9 +65,9 @@ class KeSearchIndexer extends AbstractHook
                 continue;
             }
 
-            $title = strip_tags($originalObject->getKeSearchTitle($index));
-            $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
-            $content = strip_tags($originalObject->getKeSearchContent($index));
+            $title = \strip_tags($originalObject->getKeSearchTitle($index));
+            $abstract = \strip_tags($originalObject->getKeSearchAbstract($index));
+            $content = \strip_tags($originalObject->getKeSearchContent($index));
             $fullContent = $title . "\n" . $abstract . "\n" . $content;
 
             // @todo Add year and month information
@@ -93,6 +95,6 @@ class KeSearchIndexer extends AbstractHook
             );
         }
 
-        return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . count($indexObjects) . ' elements have been indexed.</b></p>';
+        return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . \count($indexObjects) . ' elements have been indexed.</b></p>';
     }
 }

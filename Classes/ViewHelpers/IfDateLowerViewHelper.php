@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Check if a date is lower.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * BookingController.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;

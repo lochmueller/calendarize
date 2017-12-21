@@ -1,7 +1,10 @@
 <?php
+
 /**
  * PrincipalBackendTypo3.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\CalDav;
 
 use Sabre\DAV\Exception;
@@ -77,7 +80,7 @@ class PrincipalBackendTypo3 implements BackendInterface
             }
             $principals[] = [
                 'uri' => 'principals/' . $row['username'],
-                '{DAV:}displayname' => $row['name'] ? $row['name'] : basename('principals/' . $row['username']),
+                '{DAV:}displayname' => $row['name'] ? $row['name'] : \basename('principals/' . $row['username']),
                 '{http://sabredav.org/ns}email-address' => $row['email'],
             ];
         }
@@ -108,7 +111,7 @@ class PrincipalBackendTypo3 implements BackendInterface
         $return = [
             'id' => $row['uid'],
             'uri' => 'principals/' . $row['username'],
-            '{DAV:}displayname' => $row['name'] ? $row['name'] : basename($row['username']),
+            '{DAV:}displayname' => $row['name'] ? $row['name'] : \basename($row['username']),
             '{http://sabredav.org/ns}email-address' => $row['email'],
         ];
 
@@ -120,9 +123,9 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * @param $principal
      *
-     * @return array
-     *
      * @throws Exception
+     *
+     * @return array
      */
     public function getGroupMemberSet($principal)
     {
@@ -144,9 +147,9 @@ class PrincipalBackendTypo3 implements BackendInterface
      *
      * @param string $principal
      *
-     * @return array
-     *
      * @throws Exception
+     *
+     * @return array
      */
     public function getGroupMembership($principal)
     {
@@ -175,17 +178,17 @@ class PrincipalBackendTypo3 implements BackendInterface
     {
         // var_dump('setGroupMemberSet');
         // Grabbing the list of principal id's.
-        $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . str_repeat(
+        $stmt = $this->pdo->prepare('SELECT id, uri FROM `' . $this->tableName . '` WHERE uri IN (? ' . \str_repeat(
             ', ? ',
-            count($members)
+            \count($members)
         ) . ');');
-        $stmt->execute(array_merge([$principal], $members));
+        $stmt->execute(\array_merge([$principal], $members));
 
         $memberIds = [];
         $principalId = null;
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($row['uri'] == $principal) {
+            if ($row['uri'] === $principal) {
                 $principalId = $row['id'];
             } else {
                 $memberIds[] = $row['id'];

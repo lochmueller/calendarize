@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Recurrence service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
@@ -130,13 +133,13 @@ class RecurrenceService extends AbstractService
                 $days[] = 6;
                 break;
             case ConfigurationInterface::DAY_SPECIAL_WEEKDAY:
-                $days = range(1, 7);
+                $days = \range(1, 7);
                 break;
             case ConfigurationInterface::DAY_SPECIAL_BUSINESS:
-                $days = range(1, 6);
+                $days = \range(1, 6);
                 break;
             case ConfigurationInterface::DAY_SPECIAL_WORKDAY:
-                $days = range(1, 5);
+                $days = \range(1, 5);
                 break;
             default:
                 // no day
@@ -158,7 +161,7 @@ class RecurrenceService extends AbstractService
      */
     protected function findDayInCurrentMonth($dateTime, $direction, $validDays, $position = 1)
     {
-        if ($direction === self::DIRECTION_UP) {
+        if (self::DIRECTION_UP === $direction) {
             $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
             $modify = '+1 day';
         } else {
@@ -166,10 +169,10 @@ class RecurrenceService extends AbstractService
             $modify = '-1 day';
         }
         $validMonth = $dateTime->format('Y-m');
-        while ($dateTime->format('Y-m') == $validMonth) {
-            if (in_array($dateTime->format('N'), $validDays)) {
+        while ($dateTime->format('Y-m') === $validMonth) {
+            if (\in_array($dateTime->format('N'), $validDays, true)) {
                 --$position;
-                if ($position === 0) {
+                if (0 === $position) {
                     return $dateTime;
                 }
             }

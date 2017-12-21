@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Base TCA generation for the table sys_category.
- */
-$GLOBALS['TCA']['sys_category'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('calendarize', 'sys_category');
+declare(strict_types=1);
 
-// custom manipulation calls here
+$GLOBALS['TCA']['sys_category'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('calendarize', 'sys_category');
 
 $custom = [];
 

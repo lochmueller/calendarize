@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Link to the day.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
@@ -9,9 +12,8 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class DayViewHelper extends AbstractLinkViewHelper
 {
-
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {

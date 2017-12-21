@@ -1,7 +1,10 @@
 <?php
+
 /**
  * TCA service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -28,7 +31,7 @@ class TcaService extends AbstractService
         $row = $params['row'];
         $this->migrateFormEngineRow($row);
 
-        $handling = is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
+        $handling = \is_array($row['handling']) ? \array_shift($row['handling']) : $row['handling'];
         $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
         switch ($row['type']) {
             case Configuration::TYPE_TIME:
@@ -85,9 +88,9 @@ class TcaService extends AbstractService
                 'title' => '',
             ];
             $this->configurationTitle($paramsInternal, null);
-            $configurations[$key] = strip_tags($paramsInternal['title']);
+            $configurations[$key] = \strip_tags($paramsInternal['title']);
         }
-        $params['title'] .= ' / ' . implode(' / ', $configurations);
+        $params['title'] .= ' / ' . \implode(' / ', $configurations);
     }
 
     /**
@@ -100,7 +103,7 @@ class TcaService extends AbstractService
     {
         $migrateFields = ['type', 'frequency', 'groups'];
         foreach ($migrateFields as $field) {
-            $row[$field] = is_array($row[$field]) ? $row[$field][0] : $row[$field];
+            $row[$field] = \is_array($row[$field]) ? $row[$field][0] : $row[$field];
         }
     }
 
@@ -120,7 +123,7 @@ class TcaService extends AbstractService
             $groups[$key] = $row['title'] . ' (#' . $id . ')';
         }
         if ($groups) {
-            $title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
+            $title .= '<ul><li>' . \implode('</li><li>', $groups) . '</li></ul>';
         }
 
         return $title;
@@ -137,10 +140,10 @@ class TcaService extends AbstractService
     {
         $title = '';
         if ($row['start_date']) {
-            $dateStart = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['start_date']);
-            $dateEnd = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['end_date'] ?: $row['start_date']);
+            $dateStart = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['start_date']);
+            $dateEnd = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, $row['end_date'] ?: $row['start_date']);
             $title .= $dateStart;
-            if ($dateStart != $dateEnd) {
+            if ($dateStart !== $dateEnd) {
                 $title .= ' - ' . $dateEnd;
             }
         }
@@ -150,7 +153,7 @@ class TcaService extends AbstractService
             $title .= ' <br />' . BackendUtility::time($row['start_time'] % DateTimeUtility::SECONDS_DAY, false);
             $title .= ' - ' . BackendUtility::time($row['end_time'] % DateTimeUtility::SECONDS_DAY, false);
         }
-        if ($row['frequency'] && $row['frequency'] !== Configuration::FREQUENCY_NONE) {
+        if ($row['frequency'] && Configuration::FREQUENCY_NONE !== $row['frequency']) {
             $title .= ' <br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
         }
 

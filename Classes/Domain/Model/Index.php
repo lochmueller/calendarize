@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Index information.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Calendarize\Exception;
@@ -100,15 +103,15 @@ class Index extends AbstractModel
     /**
      * Get the original record for the current index.
      *
-     * @return AbstractEntity
-     *
      * @throws Exception
+     *
+     * @return AbstractEntity
      */
     public function getOriginalObject()
     {
-        if ($this->originalObject === null) {
+        if (null === $this->originalObject) {
             $configuration = $this->getConfiguration();
-            if ($configuration === null) {
+            if (null === $configuration) {
                 throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
             $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
@@ -125,12 +128,10 @@ class Index extends AbstractModel
     public function getConfiguration()
     {
         foreach (Register::getRegister() as $key => $configuration) {
-            if ($this->getUniqueRegisterKey() == $key) {
+            if ($this->getUniqueRegisterKey() === $key) {
                 return $configuration;
             }
         }
-
-        return null;
     }
 
     /**
@@ -143,6 +144,7 @@ class Index extends AbstractModel
         $date = $this->getStartDate();
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getStartTime());
+
             return \DateTime::createFromFormat('Y-m-d H:i', $date->format('Y-m-d') . ' ' . $time->format('H:i'));
         }
 
@@ -159,6 +161,7 @@ class Index extends AbstractModel
         $date = $this->getEndDate();
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             $time = DateTimeUtility::normalizeDateTimeSingle($this->getEndTime());
+
             return \DateTime::createFromFormat('Y-m-d H:i', $date->format('Y-m-d') . ' ' . $time->format('H:i'));
         }
 

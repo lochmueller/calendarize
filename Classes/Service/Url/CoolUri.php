@@ -1,7 +1,10 @@
 <?php
+
 /**
  * CoolUri.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\Url;
 
 use Bednarik\Cooluri\Core\Functions;
@@ -50,9 +53,9 @@ class CoolUri extends AbstractUrl
      * @param string $xml
      * @param int    $value
      *
-     * @return string
-     *
      * @throws \HDNET\Calendarize\Exception
+     *
+     * @return string
      */
     public function coolUri($xml, $value)
     {

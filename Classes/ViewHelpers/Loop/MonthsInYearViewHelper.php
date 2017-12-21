@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Months in year view Helper.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**

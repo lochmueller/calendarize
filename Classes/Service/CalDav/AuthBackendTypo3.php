@@ -1,7 +1,10 @@
 <?php
+
 /**
  * TYPO3 Auth backend.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\CalDav;
 
 use HDNET\Calendarize\Domain\Repository\CalDavRepository;
@@ -24,6 +27,37 @@ class AuthBackendTypo3 extends AbstractBasic
     public $tableName = 'fe_users';
 
     /**
+     * Returns a users' information.
+     *
+     * @param string $realm
+     * @param string $username
+     *
+     * @return string
+     */
+    public function getUserInfo($realm, $username)
+    {
+        $configuration = $this->findMatchingCalDavConfiguration($username);
+        if (false === $configuration) {
+            return false;
+        }
+        $userRow = $this->getUserRow($username);
+        if (!isset($userRecord['pid'])) {
+            return false;
+        }
+        $user = [
+            'uri' => 'principals/' . $userRow['username'],
+            'digestHash' => \md5($userRow['username'] . ':' . 'SabreDAV' . ':' . $userRow['password']),
+            'calendar_id' => $configuration['uid'],
+        ];
+        $this->username = $username;
+        if ($userRow['email']) {
+            $user['{http://sabredav.org/ns}email-address'] = $userRow['email'];
+        }
+
+        return $user;
+    }
+
+    /**
      * Validates a username and password.
      *
      * If the username and password were correct, this method must return
@@ -39,7 +73,7 @@ class AuthBackendTypo3 extends AbstractBasic
     protected function validateUserPass($username, $password)
     {
         $configuration = $this->findMatchingCalDavConfiguration($username);
-        if ($configuration === false) {
+        if (false === $configuration) {
             return false;
         }
 
@@ -56,10 +90,10 @@ class AuthBackendTypo3 extends AbstractBasic
 
         $feUserObj = $GLOBALS['TSFE']->fe_user;
 
-        if (is_array($feUserObj->user) && $feUserObj->user['uid'] && $feUserObj->user['is_online']) {
+        if (\is_array($feUserObj->user) && $feUserObj->user['uid'] && $feUserObj->user['is_online']) {
             $user = [
                 'uri' => 'principals/' . $username,
-                'digestHash' => md5($username . ':' . 'SabreDAV' . ':' . $username),
+                'digestHash' => \md5($username . ':' . 'SabreDAV' . ':' . $username),
                 'calendar_id' => $configuration['uid'],
             ];
 
@@ -68,9 +102,9 @@ class AuthBackendTypo3 extends AbstractBasic
             }
 
             return $user;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -90,37 +124,6 @@ class AuthBackendTypo3 extends AbstractBasic
         $repository = HelperUtility::create(CalDavRepository::class);
 
         return $repository->findByUserStorage($userRecord['pid']);
-    }
-
-    /**
-     * Returns a users' information.
-     *
-     * @param string $realm
-     * @param string $username
-     *
-     * @return string
-     */
-    public function getUserInfo($realm, $username)
-    {
-        $configuration = $this->findMatchingCalDavConfiguration($username);
-        if ($configuration === false) {
-            return false;
-        }
-        $userRow = $this->getUserRow($username);
-        if (!isset($userRecord['pid'])) {
-            return false;
-        }
-        $user = [
-            'uri' => 'principals/' . $userRow['username'],
-            'digestHash' => md5($userRow['username'] . ':' . 'SabreDAV' . ':' . $userRow['password']),
-            'calendar_id' => $configuration['uid'],
-        ];
-        $this->username = $username;
-        if ($userRow['email']) {
-            $user['{http://sabredav.org/ns}email-address'] = $userRow['email'];
-        }
-
-        return $user;
     }
 
     /**

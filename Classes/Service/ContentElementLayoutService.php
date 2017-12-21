@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Layout for BE content elements.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 /**

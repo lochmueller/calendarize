@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Time service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -34,7 +37,7 @@ class TimeTimeTable extends AbstractTimeTable
             'start_date' => $configuration->getStartDate(),
             'end_date' => $configuration->getEndDate() ?: $configuration->getStartDate(),
             'start_time' => $startTime,
-            'end_time' => $endTime == 0 ? self::DAY_END : $endTime,
+            'end_time' => 0 === $endTime ? self::DAY_END : $endTime,
             'all_day' => $configuration->isAllDay(),
             'state' => $configuration->getState(),
         ];
@@ -68,7 +71,7 @@ class TimeTimeTable extends AbstractTimeTable
                 ),
                 FlashMessage::ERROR
             );
-        } elseif (!$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') == $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY) {
+        } elseif (!$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(
@@ -106,7 +109,7 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
-        for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); ++$i) {
+        for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
             if ($tillDate instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDate) {
@@ -159,13 +162,13 @@ class TimeTimeTable extends AbstractTimeTable
                 $intervalValue = '+' . $interval . ' weeks';
                 break;
             case Configuration::FREQUENCY_MONTHLY:
-                if ($configuration->getRecurrence() !== Configuration::RECURRENCE_NONE) {
+                if (Configuration::RECURRENCE_NONE !== $configuration->getRecurrence()) {
                     return false;
                 }
                 $intervalValue = '+' . $interval . ' months';
                 break;
             case Configuration::FREQUENCY_YEARLY:
-                if ($configuration->getRecurrence() !== Configuration::RECURRENCE_NONE) {
+                if (Configuration::RECURRENCE_NONE !== $configuration->getRecurrence()) {
                     return false;
                 }
                 $intervalValue = '+' . $interval . ' years';
@@ -186,7 +189,7 @@ class TimeTimeTable extends AbstractTimeTable
      */
     protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry)
     {
-        if ($configuration->getRecurrence() === Configuration::RECURRENCE_NONE || $configuration->getDay() === Configuration::DAY_NONE) {
+        if (Configuration::RECURRENCE_NONE === $configuration->getRecurrence() || Configuration::DAY_NONE === $configuration->getDay()) {
             return;
         }
 
@@ -195,24 +198,24 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
-        for ($i = 0; $i < $maxLimit && ($amountCounter === 0 || $i < $amountCounter); ++$i) {
+        for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $lastLoop;
 
             $dateTime = false;
-            if ($configuration->getFrequency() === Configuration::FREQUENCY_MONTHLY) {
+            if (Configuration::FREQUENCY_MONTHLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextMonth(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
                     $configuration->getDay()
                 );
-            } elseif ($configuration->getFrequency() === Configuration::FREQUENCY_YEARLY) {
+            } elseif (Configuration::FREQUENCY_YEARLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextYear(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
                     $configuration->getDay()
                 );
             }
-            if ($dateTime === false) {
+            if (false === $dateTime) {
                 break;
             }
 

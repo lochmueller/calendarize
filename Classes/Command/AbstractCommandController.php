@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Command controller abstraction.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -31,17 +34,18 @@ abstract class AbstractCommandController extends CommandController
     public function enqueueMessage($message, $title = '', $severity = FlashMessage::INFO)
     {
         if ($message instanceof \Exception) {
-            if ($title === '') {
+            if ('' === $title) {
                 $title = 'Exception: ' . $message->getCode();
             }
             $message = '"' . $message->getMessage() . '"' . LF . 'In ' . $message->getFile() . ' at line ' . $message->getLine() . '!';
             $this->enqueueMessage($message, $title, FlashMessage::ERROR);
 
             return;
-        } elseif (!is_scalar($message)) {
-            $message = var_export($message, true);
         }
-        if (defined('TYPO3_cliMode') && TYPO3_cliMode) {
+        if (!\is_scalar($message)) {
+            $message = \var_export($message, true);
+        }
+        if (\defined('TYPO3_cliMode') && TYPO3_cliMode) {
             echo '==' . $title . ' == ' . LF;
             echo $message . LF;
         } else {
@@ -58,7 +62,7 @@ abstract class AbstractCommandController extends CommandController
      */
     private function enqueueMessageGui($message, $title = '', $severity = FlashMessage::INFO)
     {
-        $message = GeneralUtility::makeInstance(FlashMessage::class, nl2br($message), $title, $severity);
+        $message = GeneralUtility::makeInstance(FlashMessage::class, \nl2br($message), $title, $severity);
         $this->flashMessageService->getMessageQueueByIdentifier()
             ->enqueue($message);
     }

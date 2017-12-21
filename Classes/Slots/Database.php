@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Create the needed database fields.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Register;
@@ -29,23 +32,6 @@ class Database
     }
 
     /**
-     * Get  the calendarize string for the registered tables.
-     *
-     * @return string
-     */
-    protected function getCalendarizeDatabaseString()
-    {
-        $sql = [];
-        foreach (Register::getRegister() as $configuration) {
-            $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (
-			calendarize tinytext
-			);';
-        }
-
-        return implode(LF, $sql);
-    }
-
-    /**
      * Add the smart object SQL string the the signal below.
      *
      * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
@@ -64,5 +50,22 @@ class Database
             'sqlString' => $sqlString,
             'extensionKey' => $extensionKey,
         ];
+    }
+
+    /**
+     * Get  the calendarize string for the registered tables.
+     *
+     * @return string
+     */
+    protected function getCalendarizeDatabaseString()
+    {
+        $sql = [];
+        foreach (Register::getRegister() as $configuration) {
+            $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (
+			calendarize tinytext
+			);';
+        }
+
+        return \implode(LF, $sql);
     }
 }

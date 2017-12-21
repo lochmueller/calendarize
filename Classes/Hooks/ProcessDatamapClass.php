@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Hook for data map processing.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
@@ -36,8 +39,8 @@ class ProcessDatamapClass extends AbstractHook
     {
         $register = Register::getRegister();
         foreach ($register as $configuration) {
-            if ($configuration['tableName'] == $table) {
-                if ($status == 'new' && isset($dataHandler->substNEWwithIDs[$identifier])) {
+            if ($configuration['tableName'] === $table) {
+                if ('new' === $status && isset($dataHandler->substNEWwithIDs[$identifier])) {
                     $identifier = $dataHandler->substNEWwithIDs[$identifier];
                 }
                 $this->indexItems[$table][] = $identifier;

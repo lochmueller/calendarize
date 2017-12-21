@@ -1,8 +1,7 @@
 <?php
 
-/**
- * TCA Structure for Configurations.
- */
+declare(strict_types=1);
+
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -13,36 +12,36 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 $base = ModelUtility::getTcaInformation(Configuration::class);
 
-$timeType = str_replace(
+$timeType = \str_replace(
     '--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xlf:language;language',
     '',
     $base['types']['1']['showitem']
 );
-$timeType = str_replace(
+$timeType = \str_replace(
     ',frequency',
     ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.frequency,frequency',
     $timeType
 );
-$timeType = str_replace(',external_ics_url', '', $timeType);
-$timeType = str_replace(',groups', '', $timeType);
-$timeType = str_replace(
+$timeType = \str_replace(',external_ics_url', '', $timeType);
+$timeType = \str_replace(',groups', '', $timeType);
+$timeType = \str_replace(
     ',start_date,end_date',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date;date',
     $timeType
 );
-$timeType = str_replace(
+$timeType = \str_replace(
     ',start_time,end_time,all_day',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time;time',
     $timeType
 );
-$timeType = str_replace(
+$timeType = \str_replace(
     ',counter_interval,recurrence,day',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration;frequency_configuration',
     $timeType
 );
 
 $baseConfiguration = '--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration;base';
-$timeType = str_replace(
+$timeType = \str_replace(
     'type,handling,state',
     $baseConfiguration,
     $timeType

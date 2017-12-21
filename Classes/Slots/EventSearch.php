@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Event search service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
@@ -47,12 +50,12 @@ class EventSearch
         array $indexIds,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
-        array $customSearch = [],
+        array $customSearch,
         array $indexTypes,
         bool $emptyPreResult,
         array $additionalSlotArguments
     ) {
-        if (!in_array('Event', $indexTypes)) {
+        if (!\in_array('Event', $indexTypes, true)) {
             return;
         }
 
@@ -91,8 +94,8 @@ class EventSearch
      */
     public function setIdsByGeneral(array $indexIds, array $indexTypes, array $additionalSlotArguments)
     {
-        if (!in_array('Event', $indexTypes)) {
-            return null;
+        if (!\in_array('Event', $indexTypes, true)) {
+            return;
         }
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $categoryIds = [];
@@ -117,13 +120,13 @@ class EventSearch
         }
 
         if (empty($categoryIds)) {
-            return null;
+            return;
         }
 
         $rows = $databaseConnection->exec_SELECTgetRows(
             'uid_foreign',
             'sys_category_record_mm',
-            'tablenames="' . $this->tableName . '" AND uid_local IN (' . implode(',', $categoryIds) . ')'
+            'tablenames="' . $this->tableName . '" AND uid_local IN (' . \implode(',', $categoryIds) . ')'
         );
         foreach ($rows as $row) {
             $indexIds[] = (int) $row['uid_foreign'];

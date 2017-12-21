@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Days in week view helper.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
@@ -30,7 +33,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
      */
     protected function getItems(\DateTime $date, \DateTime $originalDate = null)
     {
-        if ($originalDate === null) {
+        if (null === $originalDate) {
             $originalDate = clone $date;
         }
 
@@ -40,7 +43,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
         $inWeek = false;
         for ($i = 0; $i < 7; ++$i) {
             $addDate = clone $date;
-            if ($addDate->format('d.m.Y') == $originalDate->format('d.m.Y')) {
+            if ($addDate->format('d.m.Y') === $originalDate->format('d.m.Y')) {
                 $inWeek = true;
             }
             $days[] = [

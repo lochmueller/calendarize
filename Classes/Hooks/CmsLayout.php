@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Render the CMS layout.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Utility\IconUtility;
@@ -44,7 +47,7 @@ class CmsLayout extends AbstractHook
      */
     public function getExtensionSummary(array $params)
     {
-        if ($params['row']['list_type'] != 'calendarize_calendar') {
+        if ($params['row']['list_type'] !== 'calendarize_calendar') {
             return '';
         }
 
@@ -57,7 +60,7 @@ class CmsLayout extends AbstractHook
         $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
         $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
         $this->layoutService = GeneralUtility::makeInstance(ContentElementLayoutService::class);
-        $this->layoutService->setTitle('<img src="' . str_replace(
+        $this->layoutService->setTitle('<img src="' . \str_replace(
             'EXT:calendarize/',
             $extensionRelPath,
             $extensionIcon
@@ -65,12 +68,12 @@ class CmsLayout extends AbstractHook
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
-        $parts = array_map(function ($element) {
-            $split = explode('->', $element);
+        $parts = \array_map(function ($element) {
+            $split = \explode('->', $element);
 
-            return ucfirst($split[1]);
+            return \ucfirst($split[1]);
         }, $parts);
-        $actionKey = lcfirst(implode('', $parts));
+        $actionKey = \lcfirst(\implode('', $parts));
 
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
 
@@ -88,7 +91,7 @@ class CmsLayout extends AbstractHook
             );
         }
 
-        if (trim($this->flexFormService->get('settings.configuration', 'general')) !== '') {
+        if ('' !== \trim($this->flexFormService->get('settings.configuration', 'general'))) {
             $this->layoutService->addRow(
                 TranslateUtility::get('configuration'),
                 $this->flexFormService->get('settings.configuration', 'general')
@@ -100,11 +103,11 @@ class CmsLayout extends AbstractHook
         }
         $overrideStartDate = (int) $this->flexFormService->get('settings.overrideStartdate', 'main');
         if ($overrideStartDate) {
-            $this->layoutService->addRow('OverrideStartdate', date('d.m.y H:i', $overrideStartDate));
+            $this->layoutService->addRow('OverrideStartdate', \date('d.m.y H:i', $overrideStartDate));
         }
         $overrideEndDate = (int) $this->flexFormService->get('settings.overrideEnddate', 'main');
         if ($overrideEndDate) {
-            $this->layoutService->addRow('OverrideEndDate', date('d.m.y H:i', $overrideEndDate));
+            $this->layoutService->addRow('OverrideEndDate', \date('d.m.y H:i', $overrideEndDate));
         }
 
         $this->addPageIdsToTable();

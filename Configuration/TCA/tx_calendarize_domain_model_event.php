@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Autoloader\Utility\TranslateUtility;
@@ -84,6 +86,6 @@ $replace = [
     TranslateUtility::getLllOrHelpMessage('dateOptions', 'calendarize'),
 ];
 
-$tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);
+$tca['types']['1']['showitem'] = \str_replace($search, $replace, $tca['types']['1']['showitem']);
 
 return $tca;

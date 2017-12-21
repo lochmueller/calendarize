@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Helper Utility.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Utility;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;
@@ -28,10 +31,10 @@ class HelperUtility
      */
     public static function create($className)
     {
-        $arguments = func_get_args();
+        $arguments = \func_get_args();
         $objManager = new ObjectManager();
 
-        return call_user_func_array([
+        return \call_user_func_array([
             $objManager,
             'get',
         ], $arguments);
@@ -46,10 +49,10 @@ class HelperUtility
      */
     public static function getQuery($objectName)
     {
-        $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
+        $objectName = \is_object($objectName) ? \get_class($objectName) : $objectName;
         /** @var PersistenceManagerInterface $manager */
         static $manager = null;
-        if ($manager === null) {
+        if (null === $manager) {
             $manager = self::create(PersistenceManagerInterface::class);
         }
 

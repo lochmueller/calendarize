@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Import.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -23,7 +26,7 @@ class ImportCommandController extends AbstractCommandController
      */
     public function importCommand($icsCalendarUri = null, $pid = null)
     {
-        if ($icsCalendarUri === null || !filter_var($icsCalendarUri, FILTER_VALIDATE_URL)) {
+        if (null === $icsCalendarUri || !\filter_var($icsCalendarUri, FILTER_VALIDATE_URL)) {
             $this->enqueueMessage('You have to enter a valid URL to the iCalendar ICS', 'Error', FlashMessage::ERROR);
 
             return;
@@ -43,10 +46,10 @@ class ImportCommandController extends AbstractCommandController
 
         // get Events from file
         $icalEvents = $this->getIcalEvents($absoluteIcalFile);
-        $this->enqueueMessage('Found ' . count($icalEvents) . ' events in the given calendar', 'Items', FlashMessage::INFO);
+        $this->enqueueMessage('Found ' . \count($icalEvents) . ' events in the given calendar', 'Items', FlashMessage::INFO);
         $events = $this->prepareEvents($icalEvents);
 
-        $this->enqueueMessage('Found ' . count($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
+        $this->enqueueMessage('Found ' . \count($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
 
@@ -108,7 +111,7 @@ class ImportCommandController extends AbstractCommandController
      */
     protected function getIcalEvents($absoluteIcalFile)
     {
-        if (!class_exists('ICal')) {
+        if (!\class_exists('ICal')) {
             GeneralUtility::requireOnce(ExtensionManagementUtility::extPath(
                 'calendarize',
                 'Resources/Private/Php/ics-parser/class.iCalReader.php'

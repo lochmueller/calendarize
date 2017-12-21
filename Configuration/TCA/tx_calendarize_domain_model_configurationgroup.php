@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
@@ -13,7 +15,7 @@ $custom = [
     ],
     'types' => [
         '1' => [
-            'showitem' => str_replace('configurations,', 'configurations,calendarize_info,', $base['types']['1']['showitem']),
+            'showitem' => \str_replace('configurations,', 'configurations,calendarize_info,', $base['types']['1']['showitem']),
         ],
     ],
     'columns' => [

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Configuration Utility.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Utility;
 
 /**
@@ -35,8 +38,8 @@ class ConfigurationUtility
      */
     protected static function loadConfiguration()
     {
-        if (self::$configuration === null) {
-            self::$configuration = (array) unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+        if (null === self::$configuration) {
+            self::$configuration = (array) \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
         }
     }
 }

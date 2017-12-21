@@ -1,7 +1,10 @@
 <?php
+
 /**
  * ExtensionConfiguration Utility.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Utility;
 
 use Exception;
@@ -39,9 +42,9 @@ class ExtensionConfigurationUtility
      *
      * @param DomainObjectInterface $event
      *
-     * @return string
-     *
      * @throws Exception
+     *
+     * @return string
      */
     public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event)
     {
@@ -49,14 +52,14 @@ class ExtensionConfigurationUtility
 
         $uniqueRegisterKey = null;
         foreach (self::$configuration as $configuration) {
-            if ($configuration['modelName'] === get_class($event)) {
+            if ($configuration['modelName'] === \get_class($event)) {
                 $uniqueRegisterKey = $configuration['uniqueRegisterKey'];
                 break;
             }
         }
 
-        if ($uniqueRegisterKey === null) {
-            throw new Exception('No valid uniqueRegisterKey for: ' . get_class($event), 1236712);
+        if (null === $uniqueRegisterKey) {
+            throw new Exception('No valid uniqueRegisterKey for: ' . \get_class($event), 1236712);
         }
 
         return $uniqueRegisterKey;
@@ -67,7 +70,7 @@ class ExtensionConfigurationUtility
      */
     protected static function loadConfiguration()
     {
-        if (self::$configuration === null) {
+        if (null === self::$configuration) {
             self::$configuration = Register::getRegister();
         }
     }

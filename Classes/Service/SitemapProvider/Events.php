@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Events.
+ */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\SitemapProvider;
 
 use FRUIT\GoogleServices\Controller\SitemapController;

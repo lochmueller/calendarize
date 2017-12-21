@@ -3,6 +3,8 @@
 /**
  * TitleTagViewHelper.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 /**
@@ -17,7 +19,7 @@ class TitleTagViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $content = trim($this->renderChildren());
+        $content = \trim($this->renderChildren());
         if (!empty($content)) {
             $GLOBALS['TSFE']->altPageTitle = $content;
             $GLOBALS['TSFE']->indexedDocTitle = $content;

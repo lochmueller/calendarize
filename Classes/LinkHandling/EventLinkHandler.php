@@ -1,7 +1,10 @@
 <?php
+
 /**
  * EventLinkHandler.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\LinkHandling;
 
 use TYPO3\CMS\Core\LinkHandling\LinkHandlingInterface;
@@ -28,17 +31,17 @@ class EventLinkHandler implements LinkHandlingInterface
     public function asString(array $parameters): string
     {
         $urn = $this->baseUrn;
-        if (isset($parameters['pagealias']) && $parameters['pagealias'] !== 'current') {
+        if (isset($parameters['pagealias']) && 'current' !== $parameters['pagealias']) {
             $urn .= '?alias=' . $parameters['pagealias'];
         } else {
             $urn .= '?uid=' . $parameters['pageuid'];
         }
-        $urn = rtrim($urn, ':');
+        $urn = \rtrim($urn, ':');
         if (!empty($parameters['pagetype'])) {
             $urn .= '&type=' . $parameters['pagetype'];
         }
         if (!empty($parameters['parameters'])) {
-            $urn .= '&' . ltrim($parameters['parameters'], '?&');
+            $urn .= '&' . \ltrim($parameters['parameters'], '?&');
         }
         if (!empty($parameters['fragment'])) {
             $urn .= '#' . $parameters['fragment'];
@@ -70,7 +73,7 @@ class EventLinkHandler implements LinkHandlingInterface
             unset($data['type']);
         }
         if (!empty($data)) {
-            $result['parameters'] = http_build_query($data);
+            $result['parameters'] = \http_build_query($data);
         }
         if (empty($result)) {
             $result['pageuid'] = 'current';

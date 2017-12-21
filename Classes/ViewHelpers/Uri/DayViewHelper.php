@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Uri to the day.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
@@ -17,6 +20,7 @@ class DayViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\DayViewHelper
     public function render()
     {
         parent::render();
+
         return $this->lastHref;
     }
 }

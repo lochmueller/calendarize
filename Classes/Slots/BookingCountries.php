@@ -3,6 +3,8 @@
 /**
  * BookingCountries.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Slots;
 
 use SJBR\StaticInfoTables\Domain\Repository\CountryRepository;

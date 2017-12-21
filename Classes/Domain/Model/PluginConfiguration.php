@@ -3,6 +3,8 @@
 /**
  * PluginConfiguration.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Model;
 
 /**
@@ -96,7 +98,7 @@ class PluginConfiguration extends AbstractModel
     protected $categories;
 
     /**
-     * Build up the plugin configuration
+     * Build up the plugin configuration.
      */
     public function __construct()
     {

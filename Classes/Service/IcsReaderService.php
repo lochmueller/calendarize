@@ -1,7 +1,10 @@
 <?php
+
 /**
  * ICS Service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -22,8 +25,8 @@ class IcsReaderService extends AbstractService
      */
     public function toArray($paramUrl)
     {
-        $tempFileName = $this->getCheckedCacheFolder() . md5($paramUrl);
-        if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - DateTimeUtility::SECONDS_HOUR)) {
+        $tempFileName = $this->getCheckedCacheFolder() . \md5($paramUrl);
+        if (!\is_file($tempFileName) || \filemtime($tempFileName) < (\time() - DateTimeUtility::SECONDS_HOUR)) {
             $icsFile = GeneralUtility::getUrl($paramUrl);
             GeneralUtility::writeFile($tempFileName, $icsFile);
         }
@@ -44,7 +47,7 @@ class IcsReaderService extends AbstractService
     protected function getCheckedCacheFolder()
     {
         $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/calendarize/');
-        if (!is_dir($cacheFolder)) {
+        if (!\is_dir($cacheFolder)) {
             GeneralUtility::mkdir_deep($cacheFolder);
         }
 

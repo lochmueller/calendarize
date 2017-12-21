@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Configuration group repository.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Repository;
 
 /**

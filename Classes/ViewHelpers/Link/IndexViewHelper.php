@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Link to the index.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -12,7 +15,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 class IndexViewHelper extends AbstractLinkViewHelper
 {
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {

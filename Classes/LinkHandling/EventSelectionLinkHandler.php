@@ -1,7 +1,10 @@
 <?php
+
 /**
  * EventSelectionLinkHandler.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\LinkHandling;
 
 use Psr\Http\Message\ServerRequestInterface;

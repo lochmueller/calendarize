@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Helper class for the IndexService
  * Prepare the index.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -85,7 +88,7 @@ class IndexPreparationService
         }
         $language = (int) $record[$languageField];
 
-        foreach (array_keys($neededItems) as $key) {
+        foreach (\array_keys($neededItems) as $key) {
             $neededItems[$key]['sys_language_uid'] = $language;
         }
     }
@@ -119,7 +122,7 @@ class IndexPreparationService
         }
 
         foreach ($neededItems as $key => $value) {
-            $neededItems[$key] = array_merge($value, $addFields);
+            $neededItems[$key] = \array_merge($value, $addFields);
         }
     }
 
@@ -133,9 +136,9 @@ class IndexPreparationService
         foreach ($record as $key => $value) {
             if ($value instanceof \DateTimeInterface) {
                 $record[$key] = $value->getTimestamp();
-            } elseif (is_bool($value) || $key === 'start_time' || $key === 'end_time') {
+            } elseif (\is_bool($value) || 'start_time' === $key || 'end_time' === $key) {
                 $record[$key] = (int) $value;
-            } elseif ($value === null) {
+            } elseif (null === $value) {
                 $record[$key] = '';
             }
         }

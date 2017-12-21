@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Link to the week.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 /**
@@ -10,7 +13,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 class WeekViewHelper extends AbstractLinkViewHelper
 {
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Group service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
@@ -22,7 +25,7 @@ class GroupTimeTable extends AbstractTimeTable
     {
         foreach ($configuration->getGroups() as $group) {
             /** @var ConfigurationGroup $group */
-            $times = array_merge($times, $this->buildSingleTimeTableByGroup($group));
+            $times = \array_merge($times, $this->buildSingleTimeTableByGroup($group));
         }
     }
 }

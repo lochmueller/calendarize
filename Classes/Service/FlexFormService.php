@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Work on flex forms.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -40,14 +43,12 @@ class FlexFormService extends AbstractService
     public function get($key, $sheet = 'sDEF')
     {
         if (!$this->isValid()) {
-            return null;
+            return;
         }
         $flexFormData = $this->flexFormData['data'];
-        if (is_array($flexFormData) && is_array($flexFormData[$sheet]) && is_array($flexFormData[$sheet]['lDEF']) && is_array($flexFormData[$sheet]['lDEF'][$key]) && isset($flexFormData[$sheet]['lDEF'][$key]['vDEF'])) {
+        if (\is_array($flexFormData) && \is_array($flexFormData[$sheet]) && \is_array($flexFormData[$sheet]['lDEF']) && \is_array($flexFormData[$sheet]['lDEF'][$key]) && isset($flexFormData[$sheet]['lDEF'][$key]['vDEF'])) {
             return $flexFormData[$sheet]['lDEF'][$key]['vDEF'];
         }
-
-        return null;
     }
 
     /**
@@ -57,6 +58,6 @@ class FlexFormService extends AbstractService
      */
     public function isValid()
     {
-        return is_array($this->flexFormData) && isset($this->flexFormData['data']);
+        return \is_array($this->flexFormData) && isset($this->flexFormData['data']);
     }
 }

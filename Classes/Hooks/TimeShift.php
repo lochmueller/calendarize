@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Time shift function.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -42,8 +45,8 @@ class TimeShift extends AbstractHook
      */
     protected function getConfiguration()
     {
-        $config = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
-        if (is_array($config)) {
+        $config = \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+        if (\is_array($config)) {
             return $config;
         }
 

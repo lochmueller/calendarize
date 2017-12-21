@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Index repository.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
@@ -37,6 +40,13 @@ class IndexRepository extends AbstractRepository
     protected $indexTypes = [];
 
     /**
+     * Override page ids.
+     *
+     * @var array
+     */
+    protected $overridePageIds = [];
+
+    /**
      * Set the index types.
      *
      * @param array $types
@@ -45,13 +55,6 @@ class IndexRepository extends AbstractRepository
     {
         $this->indexTypes = $types;
     }
-
-    /**
-     * Override page ids.
-     *
-     * @var array
-     */
-    protected $overridePageIds = [];
 
     /**
      * Override page IDs.
@@ -85,7 +88,7 @@ class IndexRepository extends AbstractRepository
             $startTimestamp = $overrideStartDate;
         } else {
             $now = DateTimeUtility::getNow();
-            if ($listStartTime != 'now') {
+            if ('now' !== $listStartTime) {
                 $now->setTime(0, 0, 0);
             }
             $now->modify($startOffsetHours . ' hours');
@@ -192,7 +195,7 @@ class IndexRepository extends AbstractRepository
         }
 
         $query->setLimit($limit);
-        $sort = $sort === QueryInterface::ORDER_ASCENDING ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+        $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings($this->getSorting($sort));
 
         return $this->matchAndExecute($query, $constraints);
@@ -207,9 +210,9 @@ class IndexRepository extends AbstractRepository
      * @param int                   $limit
      * @param string                $sort
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     *
      * @throws Exception
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findByEventTraversing(
         DomainObjectInterface $event,
@@ -241,7 +244,7 @@ class IndexRepository extends AbstractRepository
         }
 
         $query->setLimit($limit);
-        $sort = $sort === QueryInterface::ORDER_ASCENDING ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+        $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings($this->getSorting($sort));
 
         return $this->matchAndExecute($query, $constraints);
@@ -256,7 +259,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findYear($year)
     {
-        return $this->findByTimeSlot(mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1) - 1);
+        return $this->findByTimeSlot(\mktime(0, 0, 0, 1, 1, $year), \mktime(0, 0, 0, 1, 1, $year + 1) - 1);
     }
 
     /**
@@ -269,8 +272,8 @@ class IndexRepository extends AbstractRepository
      */
     public function findMonth($year, $month)
     {
-        $startTime = mktime(0, 0, 0, $month, 1, $year);
-        $endTime = mktime(0, 0, 0, $month + 1, 1, $year) - 1;
+        $startTime = \mktime(0, 0, 0, $month, 1, $year);
+        $endTime = \mktime(0, 0, 0, $month + 1, 1, $year) - 1;
 
         return $this->findByTimeSlot($startTime, $endTime);
     }
@@ -307,7 +310,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findDay($year, $month, $day)
     {
-        $startTime = mktime(0, 0, 0, $month, $day, $year);
+        $startTime = \mktime(0, 0, 0, $month, $day, $year);
 
         return $this->findByTimeSlot($startTime, $startTime + DateTimeUtility::SECONDS_DAY - 1);
     }
@@ -345,9 +348,9 @@ class IndexRepository extends AbstractRepository
      *
      * @param DomainObjectInterface $event
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     *
      * @throws Exception
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findByEvent(DomainObjectInterface $event)
     {
@@ -443,12 +446,13 @@ class IndexRepository extends AbstractRepository
         ];
         $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
 
-        if ($arguments['startTime'] === null && $arguments['endTime'] === null) {
+        if (null === $arguments['startTime'] && null === $arguments['endTime']) {
             return;
-        } elseif ($arguments['startTime'] === null) {
+        }
+        if (null === $arguments['startTime']) {
             // Simulate start time
             $arguments['startTime'] = DateTimeUtility::getNow()->getTimestamp() - DateTimeUtility::SECONDS_DECADE;
-        } elseif ($arguments['endTime'] === null) {
+        } elseif (null === $arguments['endTime']) {
             // Simulate end time
             $arguments['endTime'] = DateTimeUtility::getNow()->getTimestamp() + DateTimeUtility::SECONDS_DECADE;
         }
@@ -499,9 +503,10 @@ class IndexRepository extends AbstractRepository
      */
     protected function getSorting($direction, $field = '')
     {
-        if ($field !== 'end') {
+        if ('end' !== $field) {
             $field = 'start';
         }
+
         return [
             $field . '_date' => $direction,
             $field . '_time' => $direction,

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * CalDav repository.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Domain\Model\CalDav;

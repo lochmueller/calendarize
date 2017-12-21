@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Cleanup the event models.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Domain\Model\Event;
@@ -109,7 +112,7 @@ class CleanupCommandController extends AbstractCommandController
             $repository->update($model);
         };
 
-        if ($modus === self::MODUS_DELETED) {
+        if (self::MODUS_DELETED === $modus) {
             $function = $delete;
         } else {
             $function = $hide;
@@ -154,7 +157,7 @@ class CleanupCommandController extends AbstractCommandController
         $db = HelperUtility::getDatabaseConnection();
         $rows = $db->exec_SELECTquery('foreign_uid', $table, $where, 'foreign_uid');
 
-        $this->enqueueMessage('Just found ' . count($rows) . ' Events ready to process.', 'Events found', FlashMessage::INFO);
+        $this->enqueueMessage('Just found ' . \count($rows) . ' Events ready to process.', 'Events found', FlashMessage::INFO);
 
         return $rows;
     }

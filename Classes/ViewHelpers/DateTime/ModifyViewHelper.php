@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Modify a DateTime.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
@@ -21,7 +24,7 @@ class ModifyViewHelper extends AbstractViewHelper
      */
     public function render($modification, \DateTime $dateTime = null)
     {
-        if ($dateTime === null) {
+        if (null === $dateTime) {
             $dateTime = $this->renderChildren();
         }
         if (!($dateTime instanceof \DateTimeInterface)) {

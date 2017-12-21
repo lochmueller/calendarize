@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Reindex the event models.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Service\IndexerService;

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * LanguageViewHelper.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
@@ -20,10 +23,10 @@ class LanguageViewHelper extends AbstractViewHelper
     {
         /** @var TypoScriptFrontendController $tsfe */
         $tsfe = $GLOBALS['TSFE'];
-        if (!is_object($tsfe)) {
+        if (!\is_object($tsfe)) {
             return 'en';
         }
 
-        return strtolower($tsfe->sys_language_isocode);
+        return \mb_strtolower($tsfe->sys_language_isocode);
     }
 }

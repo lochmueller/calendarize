@@ -3,6 +3,8 @@
 /**
  * Index traversing.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -23,9 +25,8 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class IndexTraversingViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {
@@ -51,7 +52,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
             $this->arguments['index'],
             $this->arguments['future'],
             $this->arguments['past'],
-            (int)$this->arguments['limit'],
+            (int) $this->arguments['limit'],
             $this->arguments['sort'],
             $this->arguments['useIndexTime']
         );

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * CalMigration.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Updates\CalMigrationUpdate;
@@ -24,7 +27,7 @@ class CalMigration
      */
     public function updateSysFileReference()
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         list($calendarizeEventRecord, $event, $table, $recordId, $dbQueries) = $args;
 
         $db = HelperUtility::getDatabaseConnection();

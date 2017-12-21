@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Weeks in month view helper.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 /**
@@ -35,7 +38,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
         $dateClone->modify('first day of this month');
 
         $monthCheck = $dateClone->format('m');
-        while ((int) $monthCheck == (int) $dateClone->format('m')) {
+        while ((int) $monthCheck === (int) $dateClone->format('m')) {
             $week = (int) $dateClone->format('W');
             if (!isset($weeks[$week])) {
                 $weeks[$week] = [

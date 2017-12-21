@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Abstract time table service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;

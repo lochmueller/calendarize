@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Time table builder service.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use Exception;
@@ -49,20 +52,20 @@ class TimeTableService extends AbstractService
                 continue;
             }
 
-            if ($configuration->getHandling() === ConfigurationInterface::HANDLING_INCLUDE) {
+            if (ConfigurationInterface::HANDLING_INCLUDE === $configuration->getHandling()) {
                 $handler->handleConfiguration($timeTable, $configuration);
-            } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_EXCLUDE) {
+            } elseif (ConfigurationInterface::HANDLING_EXCLUDE === $configuration->getHandling()) {
                 $timesToExclude = [];
                 $handler->handleConfiguration($timesToExclude, $configuration);
                 $timeTable = $this->checkAndRemoveTimes($timeTable, $timesToExclude);
-            } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_OVERRIDE) {
+            } elseif (ConfigurationInterface::HANDLING_OVERRIDE === $configuration->getHandling()) {
                 // first remove overridden times
                 $timesToOverride = [];
                 $handler->handleConfiguration($timesToOverride, $configuration);
                 $timeTable = $this->checkAndRemoveTimes($timeTable, $timesToOverride);
                 // then add new times
                 $handler->handleConfiguration($timeTable, $configuration);
-            } elseif ($configuration->getHandling() === ConfigurationInterface::HANDLING_CUTOUT) {
+            } elseif (ConfigurationInterface::HANDLING_CUTOUT === $configuration->getHandling()) {
                 $timesToSelectBy = [];
                 $handler->handleConfiguration($timesToSelectBy, $configuration);
                 $timeTable = $this->selectTimesBy($timeTable, $timesToSelectBy);
@@ -160,9 +163,9 @@ class TimeTableService extends AbstractService
      * @param array  $record
      * @param string $position
      *
-     * @return \DateTime
-     *
      * @throws Exception
+     *
+     * @return \DateTime
      */
     protected function getCompleteDate(array $record, $position)
     {
@@ -171,7 +174,7 @@ class TimeTableService extends AbstractService
         }
         /** @var \DateTime $base */
         $base = clone $record[$position . '_date'];
-        if (is_int($record[$position . '_time']) && (int) $record[$position . '_time'] > 0) {
+        if (\is_int($record[$position . '_time']) && (int) $record[$position . '_time'] > 0) {
             // Fix handling, if the time field contains a complete timestamp
             $seconds = $record[$position . '_time'] % DateTimeUtility::SECONDS_DAY;
             $base->setTime(0, 0, 0);
@@ -190,8 +193,8 @@ class TimeTableService extends AbstractService
      */
     protected function buildConfigurationHandler(Configuration $configuration)
     {
-        $handler = 'HDNET\\Calendarize\\Service\\TimeTable\\' . ucfirst($configuration->getType()) . 'TimeTable';
-        if (!class_exists($handler)) {
+        $handler = 'HDNET\\Calendarize\\Service\\TimeTable\\' . \ucfirst($configuration->getType()) . 'TimeTable';
+        if (!\class_exists($handler)) {
             return false;
         }
 

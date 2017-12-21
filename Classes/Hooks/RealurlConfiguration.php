@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Realurl configuration.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Service\Url\RealUrl;
@@ -22,7 +25,7 @@ class RealurlConfiguration extends AbstractHook
      */
     public function addCalendarizeConfiguration($params, &$pObj)
     {
-        return array_merge_recursive($params['config'], [
+        return \array_merge_recursive($params['config'], [
             'postVarSets' => [
                 '_DEFAULT' => [
                     'event' => [

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Index the given events.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
@@ -111,7 +114,7 @@ class IndexerService extends AbstractService
     {
         /** @var $preparationService IndexPreparationService */
         static $preparationService = null;
-        if ($preparationService === null) {
+        if (null === $preparationService) {
             $preparationService = GeneralUtility::makeInstance(IndexPreparationService::class);
         }
         // @todo Handle Workspace IDs?
@@ -144,8 +147,8 @@ class IndexerService extends AbstractService
             foreach ($currentItems as $currentKey => $currentItem) {
                 if ($this->isEqualArray($neededItem, $currentItem)) {
                     $remove = true;
-                    unset($neededItems[$neededKey]);
-                    unset($currentItems[$currentKey]);
+                    unset($neededItems[$neededKey], $currentItems[$currentKey]);
+
                     break;
                 }
             }
@@ -157,9 +160,9 @@ class IndexerService extends AbstractService
             $databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
         }
 
-        $neededItems = array_values($neededItems);
+        $neededItems = \array_values($neededItems);
         if ($neededItems) {
-            $databaseConnection->exec_INSERTmultipleRows(self::TABLE_NAME, array_keys($neededItems[0]), $neededItems);
+            $databaseConnection->exec_INSERTmultipleRows(self::TABLE_NAME, \array_keys($neededItems[0]), $neededItems);
         }
     }
 
@@ -204,7 +207,7 @@ class IndexerService extends AbstractService
         }
         $where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, self::TABLE_NAME);
         if ($ids) {
-            $where .= ' AND foreign_uid NOT IN (' . implode(',', $ids) . ')';
+            $where .= ' AND foreign_uid NOT IN (' . \implode(',', $ids) . ')';
         }
         $databaseConnection->exec_DELETEquery(self::TABLE_NAME, $where);
     }
@@ -216,7 +219,7 @@ class IndexerService extends AbstractService
      */
     protected function removeInvalidConfigurationIndex()
     {
-        $validKeys = array_keys(Register::getRegister());
+        $validKeys = \array_keys(Register::getRegister());
         $databaseConnection = HelperUtility::getDatabaseConnection();
         if ($validKeys) {
             foreach ($validKeys as $key => $value) {
@@ -225,7 +228,7 @@ class IndexerService extends AbstractService
 
             return (bool) $databaseConnection->exec_DELETEquery(
                 self::TABLE_NAME,
-                'unique_register_key NOT IN (' . implode(',', $validKeys) . ')'
+                'unique_register_key NOT IN (' . \implode(',', $validKeys) . ')'
             );
         }
 

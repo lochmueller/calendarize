@@ -1,7 +1,10 @@
 <?php
+
 /**
  * RealUrl.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\Url;
 
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
@@ -66,7 +69,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
         if (empty($removeIds)) {
             return;
         }
-        $databaseConnection->exec_DELETEquery('tx_realurl_uniqalias', 'uid IN (' . implode(',', $removeIds) . ')');
+        $databaseConnection->exec_DELETEquery('tx_realurl_uniqalias', 'uid IN (' . \implode(',', $removeIds) . ')');
     }
 
     /**
@@ -93,11 +96,9 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
         }
 
         $matches = [];
-        if (preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
+        if (\preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
             return $matches[1];
         }
-
-        return null;
     }
 
     /**
@@ -154,7 +155,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             /** @var \tx_realurl_advanced $realUrl */
             $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');
             $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['pagePath'];
-            if (is_array($configuration)) {
+            if (\is_array($configuration)) {
                 ObjectAccess::setProperty($realUrl, 'conf', $configuration, true);
             }
             $processedTitle = $realUrl->encodeTitle($alias);

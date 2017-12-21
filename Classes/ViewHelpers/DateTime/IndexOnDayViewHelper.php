@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Check if the given Index is on the given day.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -28,7 +31,7 @@ class IndexOnDayViewHelper extends AbstractViewHelper
     {
         $day = DateTimeUtility::normalizeDateTimeSingle($day->format('d.m.Y'));
         $baseDay = clone $day;
-        if ($modification != '') {
+        if ('' !== $modification) {
             $baseDay->modify($modification);
         }
 

@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Link to the booking page.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use HDNET\Calendarize\Domain\Model\Index;
@@ -11,9 +14,8 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class BookingViewHelper extends AbstractLinkViewHelper
 {
-
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {

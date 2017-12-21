@@ -1,7 +1,10 @@
 <?php
+
 /**
  * Abstraction for loop view helper.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\ViewHelpers\Loop;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
@@ -41,9 +44,9 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      * @param \DateTime $date
      * @param string    $iteration
      *
-     * @return string
-     *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+     *
+     * @return string
      */
     public function render(\DateTime $date, $iteration)
     {
@@ -55,12 +58,12 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
         $iterationData = [
             'index' => 0,
             'cycle' => 1,
-            'total' => count($items),
+            'total' => \count($items),
         ];
 
         $output = '';
         foreach ($items as $item) {
-            $iterationData['isFirst'] = $iterationData['cycle'] === 1;
+            $iterationData['isFirst'] = 1 === $iterationData['cycle'];
             $iterationData['isLast'] = $iterationData['cycle'] === $iterationData['total'];
             $iterationData['isEven'] = $iterationData['cycle'] % 2 === 0;
             $iterationData['isOdd'] = !$iterationData['isEven'];
