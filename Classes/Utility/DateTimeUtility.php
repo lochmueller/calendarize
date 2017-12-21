@@ -63,7 +63,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1)
+    public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
     {
         return self::normalizeDateTimeSingle(\strtotime($year . '-W' . $week . '-' . $startDay));
     }
@@ -87,7 +87,7 @@ class DateTimeUtility
      *
      * @return int
      */
-    public static function getDaySecondsOfDateTime(\DateTime $dateTime)
+    public static function getDaySecondsOfDateTime(\DateTime $dateTime): int
     {
         $hours = (int) $dateTime->format('G');
         $minutes = $hours * self::SECONDS_MINUTE + (int) $dateTime->format('i');
@@ -104,7 +104,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function normalizeDateTime($day = null, $month = null, $year = null)
+    public static function normalizeDateTime($day = null, $month = null, $year = null): \DateTime
     {
         $date = self::getNow();
         if (!MathUtility::canBeInterpretedAsInteger($year)) {
@@ -134,7 +134,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function resetTime($dateTime = null)
+    public static function resetTime($dateTime = null): \DateTime
     {
         $dateTime = self::normalizeDateTimeSingle($dateTime);
         $dateTime->setTime(0, 0, 0);
@@ -150,7 +150,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function normalizeDateTimeSingle($dateInformation)
+    public static function normalizeDateTimeSingle($dateInformation): \DateTime
     {
         if ($dateInformation instanceof \DateTimeInterface) {
             return $dateInformation;
@@ -173,7 +173,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function getNow()
+    public static function getNow(): \DateTime
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
@@ -189,7 +189,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function getDayStart($dateInformation)
+    public static function getDayStart($dateInformation): \DateTime
     {
         return self::resetTime($dateInformation);
     }
@@ -201,7 +201,7 @@ class DateTimeUtility
      *
      * @return \DateTime
      */
-    public static function getDayEnd($dateInformation)
+    public static function getDayEnd($dateInformation): \DateTime
     {
         $dateTime = self::getDayStart($dateInformation);
         $dateTime->setTime(23, 59, 59);

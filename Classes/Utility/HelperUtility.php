@@ -64,7 +64,7 @@ class HelperUtility
      *
      * @return Dispatcher
      */
-    public static function getSignalSlotDispatcher()
+    public static function getSignalSlotDispatcher(): Dispatcher
     {
         return self::create(Dispatcher::class);
     }

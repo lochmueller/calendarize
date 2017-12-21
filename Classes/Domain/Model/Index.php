@@ -114,7 +114,7 @@ class Index extends AbstractModel
             if (null === $configuration) {
                 throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
-            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
+            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, (int) $this->getForeignUid());
         }
 
         return $this->originalObject;

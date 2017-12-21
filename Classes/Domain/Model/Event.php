@@ -272,9 +272,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getFeedTitle()
+    public function getFeedTitle(): string
     {
-        return $this->getTitle();
+        return (string) $this->getTitle();
     }
 
     /**
@@ -282,9 +282,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getFeedAbstract()
+    public function getFeedAbstract(): string
     {
-        return $this->getFeedContent();
+        return (string) $this->getFeedContent();
     }
 
     /**
@@ -292,9 +292,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getFeedContent()
+    public function getFeedContent(): string
     {
-        return $this->getDescription();
+        return (string) $this->getDescription();
     }
 
     /**
@@ -302,9 +302,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getFeedLocation()
+    public function getFeedLocation(): string
     {
-        return $this->getLocation();
+        return (string) $this->getLocation();
     }
 
     /**
@@ -312,9 +312,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getRealUrlAliasBase()
+    public function getRealUrlAliasBase(): string
     {
-        return $this->getTitle();
+        return (string) $this->getTitle();
     }
 
     /**
@@ -364,9 +364,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getKeSearchTitle(Index $index)
+    public function getKeSearchTitle(Index $index): string
     {
-        return $this->getTitle() . ' - ' . $index->getStartDate()
+        return (string) $this->getTitle() . ' - ' . $index->getStartDate()
                 ->format('d.m.Y');
     }
 
@@ -377,9 +377,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getKeSearchAbstract(Index $index)
+    public function getKeSearchAbstract(Index $index): string
     {
-        return $this->getDescription();
+        return (string) $this->getDescription();
     }
 
     /**
@@ -389,9 +389,9 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getKeSearchContent(Index $index)
+    public function getKeSearchContent(Index $index): string
     {
-        return $this->getDescription();
+        return (string) $this->getDescription();
     }
 
     /**
@@ -401,7 +401,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string Comma separated list of tags, e.g. '#syscat1#,#syscat2#'
      */
-    public function getKeSearchTags(Index $index)
+    public function getKeSearchTags(Index $index): string
     {
         static $keSearchTags = [];
         if (empty($keSearchTags)) {

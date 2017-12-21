@@ -73,7 +73,7 @@ class CalendarController extends AbstractController
             $configuration = ExtensionConfigurationUtility::get($configurationName);
 
             // get Event by Configuration and Uid
-            $event = EventUtility::getOriginalRecordByConfiguration($configuration, $this->request->getArgument('event'));
+            $event = EventUtility::getOriginalRecordByConfiguration($configuration, (int) $this->request->getArgument('event'));
             $index = $this->indexRepository->findByEventTraversing($event, true, false, 1)->getFirst();
 
             // if there is a valid index in the event

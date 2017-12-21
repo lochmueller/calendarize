@@ -17,26 +17,26 @@ interface FeedInterface
      *
      * @return string
      */
-    public function getFeedTitle();
+    public function getFeedTitle(): string;
 
     /**
      * Get the feed abstract.
      *
      * @return string
      */
-    public function getFeedAbstract();
+    public function getFeedAbstract(): string;
 
     /**
      * Get the feed content.
      *
      * @return string
      */
-    public function getFeedContent();
+    public function getFeedContent(): string;
 
     /**
      * Get the feed location.
      *
      * @return string
      */
-    public function getFeedLocation();
+    public function getFeedLocation(): string;
 }

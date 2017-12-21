@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+
 /**
  * TitleTagViewHelper.
  *
@@ -14,15 +17,23 @@ namespace HDNET\Calendarize\ViewHelpers;
  */
 class TitleTagViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     /**
-     * Render.
+     * @param array                     $arguments
+     * @param \Closure                  $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     *
+     * @return string
      */
-    public function render()
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $content = \trim($this->renderChildren());
+        $content = \trim($renderChildrenClosure());
         if (!empty($content)) {
             $GLOBALS['TSFE']->altPageTitle = $content;
             $GLOBALS['TSFE']->indexedDocTitle = $content;
         }
+
+        return '';
     }
 }

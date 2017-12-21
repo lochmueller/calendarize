@@ -42,7 +42,7 @@ class Register
      *
      * @return array
      */
-    public static function getDefaultAutoloader()
+    public static function getDefaultAutoloader(): array
     {
         return [
             'Hooks',
@@ -62,7 +62,7 @@ class Register
      *
      * @return array
      */
-    public static function getRegister()
+    public static function getRegister(): array
     {
         return \is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']) ? $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] : [];
     }
@@ -74,7 +74,7 @@ class Register
      *
      * @return array
      */
-    public static function getDefaultCalendarizeConfiguration()
+    public static function getDefaultCalendarizeConfiguration(): array
     {
         $configuration = [
             'uniqueRegisterKey' => 'Event',
@@ -93,9 +93,9 @@ class Register
     /**
      * Add the calendarize to the given TCA.
      *
-     * @param $configuration
+     * @param array $configuration
      */
-    protected static function createTcaConfiguration($configuration)
+    protected static function createTcaConfiguration(array $configuration)
     {
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? \trim($configuration['tcaTypeList']) : '';

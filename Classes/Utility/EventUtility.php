@@ -22,9 +22,8 @@ class EventUtility
      *
      * @return object
      */
-    public static function getOriginalRecordByConfiguration($configuration, $uid)
+    public static function getOriginalRecordByConfiguration($configuration, int $uid)
     {
-        $modelName = '';
         if ($configuration instanceof PluginConfiguration) {
             $modelName = $configuration->getModelName();
         } else {

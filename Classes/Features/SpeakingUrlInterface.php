@@ -17,5 +17,5 @@ interface SpeakingUrlInterface
      *
      * @return string
      */
-    public function getRealUrlAliasBase();
+    public function getRealUrlAliasBase(): string;
 }

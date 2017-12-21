@@ -92,7 +92,7 @@ $tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
 
 $search = [
     ',detail_pid',
-    ',storage_pid,recursive', // @todo handle the persistence override in the controller
+    ',storage_pid,recursive',
 ];
 $replace = [
     ',--div--;PID,detail_pid',
