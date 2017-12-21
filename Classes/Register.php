@@ -52,7 +52,6 @@ class Register
             'CommandController',
             'StaticTyposcript',
             'ExtensionId',
-            'ContextSensitiveHelps',
             'TypeConverter',
         ];
     }
