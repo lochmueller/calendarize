@@ -256,7 +256,7 @@
 					<!-- startingpoint -->
 					<persistence.storagePid>
 						<TCEforms>
-							<label>LLL:EXT:lang/locallang_general.xml:LGL.startingpoint</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:startingpoint</label>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -276,7 +276,7 @@
 					<!-- recursive -->
 					<persistence.recursive>
 						<TCEforms>
-							<label>LLL:EXT:lang/locallang_general.xml:LGL.recursive</label>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive</label>
 							<config>
 								<type>select</type>
 								<items type="array">

@@ -453,6 +453,9 @@
 					(ignore enable columns)...
 				</source>
 			</trans-unit>
+			<trans-unit id="recursive">
+				<source>Recursive</source>
+			</trans-unit>
 			<trans-unit id="save.first">
 				<source>Please save the record first...</source>
 			</trans-unit>
@@ -461,6 +464,9 @@
 			</trans-unit>
 			<trans-unit id="sortBy">
 				<source>Sort by</source>
+			</trans-unit>
+			<trans-unit id="startingpoint">
+				<source>Startingpoint</source>
 			</trans-unit>
 			<trans-unit id="tca.information">
 				<source>Calendarize (Information - Save to refresh...)</source>

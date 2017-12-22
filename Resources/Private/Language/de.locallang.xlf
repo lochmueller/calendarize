@@ -449,6 +449,10 @@
 					sind (ignoriert &quot;enable columns&quot;)...
 				</target>
 			</trans-unit>
+			<trans-unit id="recursive" approved="yes">
+				<source>Recursive</source>
+				<target>Rekursiv</target>
+			</trans-unit>
 			<trans-unit id="save.first" approved="yes">
 				<source>Please save the record first...</source>
 				<target>Bite sichere zunächst den Datensatz...</target>
@@ -460,6 +464,10 @@
 			<trans-unit id="sortBy" approved="yes">
 				<source>Sort by</source>
 				<target>Sortierung nach</target>
+			</trans-unit>
+			<trans-unit id="startingpoint" approved="yes">
+				<source>Startingpoint</source>
+				<target>Ausgangspunkt</target>
 			</trans-unit>
 			<trans-unit id="tca.information" approved="yes">
 				<source>Calendarize (Information - Save to refresh...)</source>
