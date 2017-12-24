@@ -422,6 +422,10 @@
                 <source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are (ignore enable columns)...</source>
                 <target>Ilość pozycji w indeksie aktualnego rekordu - %d. Kolejne %d wydarzeń (włączając dziś) to (ignoruj &quot;enable columns&quot;)</target>
             </trans-unit>
+            <trans-unit id="recursive" approved="yes">
+                <source>Recursive</source>
+                <target>Rekursywnie</target>
+            </trans-unit>
             <trans-unit id="save.first" approved="yes">
                 <source>Please save the record first...</source>
                 <target>Proszę najpierw zapisać rekord...</target>
@@ -429,6 +433,10 @@
             <trans-unit id="sorting" approved="yes">
                 <source>Sorting</source>
                 <target>Sortowanie</target>
+            </trans-unit>
+            <trans-unit id="startingpoint" approved="yes">
+                <source>Startingpoint</source>
+                <target>Punkt startowy</target>
             </trans-unit>
             <trans-unit id="tca.information" approved="yes">
                 <source>Calendarize (Information - Save to refresh...)</source>
