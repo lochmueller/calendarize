@@ -22,7 +22,7 @@ class MonthsInYearViewHelper extends AbstractLoopViewHelper
     protected function getItems(\DateTime $date)
     {
         $months = [];
-        $date->setDate($date->format('Y'), $date->format('n'), 1);
+        $date->setDate((int)$date->format('Y'), (int)$date->format('n'), 1);
         for ($i = 0; $i < 12; ++$i) {
             $months[$date->format('n')] = [
                 'week' => $date->format('n'),

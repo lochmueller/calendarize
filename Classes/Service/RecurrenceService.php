@@ -66,7 +66,7 @@ class RecurrenceService extends AbstractService
     {
         // clone and reset and move to next month
         $dateTime = clone $date;
-        $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
+        $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
         $dateTime->modify($modify);
 
         $days = $this->getValidDays($day);
@@ -162,10 +162,10 @@ class RecurrenceService extends AbstractService
     protected function findDayInCurrentMonth($dateTime, $direction, $validDays, $position = 1)
     {
         if (self::DIRECTION_UP === $direction) {
-            $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), 1);
+            $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
             $modify = '+1 day';
         } else {
-            $dateTime->setDate($dateTime->format('Y'), $dateTime->format('m'), $dateTime->format('t'));
+            $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), (int)$dateTime->format('t'));
             $modify = '-1 day';
         }
         $validMonth = $dateTime->format('Y-m');

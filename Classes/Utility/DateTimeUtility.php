@@ -116,7 +116,7 @@ class DateTimeUtility
         if (!MathUtility::canBeInterpretedAsInteger($day)) {
             $day = $date->format('d');
         }
-        $date->setDate($year, $month, $day);
+        $date->setDate((int)$year, (int)$month, (int)$day);
         $date->setTime(0, 0, 0);
         if ($date->format('m') > $month) {
             $date->modify('last day of last month');
