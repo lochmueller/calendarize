@@ -88,7 +88,7 @@ class CmsLayout extends AbstractHook
             );
         }
 
-        if ('' !== \trim($this->flexFormService->get('settings.configuration', 'general'))) {
+        if ('' !== \trim((string)$this->flexFormService->get('settings.configuration', 'general'))) {
             $this->layoutService->addRow(
                 TranslateUtility::get('configuration'),
                 $this->flexFormService->get('settings.configuration', 'general')
