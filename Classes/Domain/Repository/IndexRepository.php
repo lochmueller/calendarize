@@ -270,7 +270,7 @@ class IndexRepository extends AbstractRepository
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findMonth($year, $month)
+    public function findMonth(int $year, int $month)
     {
         $startTime = \mktime(0, 0, 0, $month, 1, $year);
         $endTime = \mktime(0, 0, 0, $month + 1, 1, $year) - 1;
