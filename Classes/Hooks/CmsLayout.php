@@ -15,6 +15,7 @@ use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * Render the CMS layout.
@@ -58,13 +59,9 @@ class CmsLayout extends AbstractHook
         }
 
         $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
-        $extensionRelPath = ExtensionManagementUtility::extRelPath('calendarize');
+        $extensionIconUsage = PathUtility::getAbsoluteWebPath(GeneralUtility::getFileAbsFileName($extensionIcon));
         $this->layoutService = GeneralUtility::makeInstance(ContentElementLayoutService::class);
-        $this->layoutService->setTitle('<img src="' . \str_replace(
-            'EXT:calendarize/',
-            $extensionRelPath,
-            $extensionIcon
-        ) . '" width="32" height="32" /> Calendarize');
+        $this->layoutService->setTitle('<img src="' . $extensionIconUsage . '" width="32" height="32" /> Calendarize');
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
