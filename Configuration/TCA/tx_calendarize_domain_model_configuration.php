@@ -8,7 +8,6 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\TcaService;
 use HDNET\Calendarize\Service\TimeSelectionWizard;
 use HDNET\Calendarize\Utility\TranslateUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 $base = ModelUtility::getTcaInformation(Configuration::class);
 
@@ -48,16 +47,15 @@ $timeType = \str_replace(
 );
 
 $extendTab = ',--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
-$iconPath = ExtensionManagementUtility::extRelPath('calendarize') . 'Resources/Public/Icons/';
 
 $custom = [
     'ctrl' => [
         'type' => 'type',
         'hideTable' => true,
-        'typeicons' => [
-            Configuration::TYPE_TIME => $iconPath . 'Configuration.png',
-            Configuration::TYPE_GROUP => $iconPath . 'ConfigurationGroupType.png',
-            Configuration::TYPE_EXTERNAL => $iconPath . 'ConfigurationExternal.png',
+        'typeicon_classes' => [
+            Configuration::TYPE_TIME => 'apps-calendarize-type-' . Configuration::TYPE_TIME,
+            Configuration::TYPE_GROUP => 'apps-calendarize-type-' . Configuration::TYPE_GROUP,
+            Configuration::TYPE_EXTERNAL => 'apps-calendarize-type-' . Configuration::TYPE_EXTERNAL,
         ],
         'typeicon_column' => 'type',
         'requestUpdate' => 'all_day,frequency,handling',

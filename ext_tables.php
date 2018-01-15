@@ -43,3 +43,20 @@ $iconRegistry->registerIcon(
 //        }
 //    }
 //');
+
+$iconPath = \TYPO3\CMS\Core\Utility\PathUtility::getAbsoluteWebPath(\TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName('EXT:calendarize/Resources/Public/Icons/'));
+$iconRegistry->registerIcon(
+    'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME,
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => $iconPath . 'Configuration.png']
+);
+$iconRegistry->registerIcon(
+    'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_GROUP,
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => $iconPath . 'ConfigurationGroupType.png']
+);
+$iconRegistry->registerIcon(
+    'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_EXTERNAL,
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => $iconPath . 'ConfigurationExternal.png']
+);
