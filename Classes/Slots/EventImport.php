@@ -89,7 +89,7 @@ class EventImport
 
         $startTime = clone $startDate;
         $configuration->setStartDate(DateTimeUtility::resetTime($startDate));
-        $endTime = $endDate;
+        $endTime = clone $endDate;
         $configuration->setEndDate(DateTimeUtility::resetTime($endDate));
 
         $startTime = DateTimeUtility::getDaySecondsOfDateTime($startTime);
