@@ -65,6 +65,7 @@ class DateTimeUtility
      */
     public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
     {
+        $week = \str_pad((string)$week, 2, '0', STR_PAD_LEFT);
         return self::normalizeDateTimeSingle(\strtotime($year . '-W' . $week . '-' . $startDay));
     }
 
