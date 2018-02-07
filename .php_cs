@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/.Build/vendor/autoload.php';
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)

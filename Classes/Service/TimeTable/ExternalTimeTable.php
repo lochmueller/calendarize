@@ -30,8 +30,9 @@ class ExternalTimeTable extends AbstractTimeTable
     /**
      * Modify the given times via the configuration.
      *
-     * @param array $times
+     * @param array         $times
      * @param Configuration $configuration
+     *
      * @throws \TYPO3\CMS\Core\Exception
      */
     public function handleConfiguration(array &$times, Configuration $configuration)

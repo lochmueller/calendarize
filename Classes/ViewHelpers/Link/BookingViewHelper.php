@@ -14,7 +14,6 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class BookingViewHelper extends AbstractLinkViewHelper
 {
-
     /**
      * Init arguments.
      */

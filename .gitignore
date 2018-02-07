@@ -2,3 +2,4 @@
 /.Build/*
 /Resources/External/
 /composer.lock
+/.php_cs.cache
