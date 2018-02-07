@@ -33,7 +33,7 @@ class RecurrenceService extends AbstractService
      *
      * @return \DateTime
      */
-    public function getRecurrenceForNextMonth(\DateTime $date, $recurrence, $day)
+    public function getRecurrenceForNextMonth(\DateTime $date, string $recurrence, string $day)
     {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+1 month');
     }
@@ -47,7 +47,7 @@ class RecurrenceService extends AbstractService
      *
      * @return \DateTime
      */
-    public function getRecurrenceForNextYear(\DateTime $date, $recurrence, $day)
+    public function getRecurrenceForNextYear(\DateTime $date, string $recurrence, string $day)
     {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+1 year');
     }
@@ -62,15 +62,15 @@ class RecurrenceService extends AbstractService
      *
      * @return \DateTime|false
      */
-    protected function getRecurrenceForCurrentMonth(\DateTime $date, $recurrence, $day, $modify)
+    protected function getRecurrenceForCurrentMonth(\DateTime $date, string $recurrence, string $day, string $modify)
     {
         // clone and reset and move to next month
         $dateTime = clone $date;
-        $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
+        $dateTime->setDate((int) $dateTime->format('Y'), (int) $dateTime->format('m'), 1);
         $dateTime->modify($modify);
 
         $days = $this->getValidDays($day);
-        if (!$days) {
+        if (empty($days)) {
             return false;
         }
 
@@ -103,7 +103,7 @@ class RecurrenceService extends AbstractService
      *
      * @return array
      */
-    protected function getValidDays($day)
+    protected function getValidDays(string $day): array
     {
         $days = [];
         switch ($day) {
@@ -159,18 +159,18 @@ class RecurrenceService extends AbstractService
      *
      * @return \DateTime|false
      */
-    protected function findDayInCurrentMonth($dateTime, $direction, $validDays, $position = 1)
+    protected function findDayInCurrentMonth(\DateTime $dateTime, string $direction, array $validDays, int $position = 1)
     {
         if (self::DIRECTION_UP === $direction) {
-            $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
+            $dateTime->setDate((int) $dateTime->format('Y'), (int) $dateTime->format('m'), 1);
             $modify = '+1 day';
         } else {
-            $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), (int)$dateTime->format('t'));
+            $dateTime->setDate((int) $dateTime->format('Y'), (int) $dateTime->format('m'), (int) $dateTime->format('t'));
             $modify = '-1 day';
         }
         $validMonth = $dateTime->format('Y-m');
         while ($dateTime->format('Y-m') === $validMonth) {
-            if (\in_array($dateTime->format('N'), $validDays, true)) {
+            if (\in_array((int) $dateTime->format('N'), $validDays, true)) {
                 --$position;
                 if (0 === $position) {
                     return $dateTime;
