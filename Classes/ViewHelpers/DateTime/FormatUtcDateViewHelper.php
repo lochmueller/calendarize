@@ -25,15 +25,15 @@ class FormatUtcDateViewHelper extends AbstractViewHelper
     public function render(\DateTime $date, string $format = '')
     {
         // save configured timezone
-	    $timezone = date_default_timezone_get();
-	    // set timezone to UTC
-	    date_default_timezone_set("UTC");
+        $timezone = date_default_timezone_get();
+        // set timezone to UTC
+        date_default_timezone_set('UTC');
 
-	    $result = strftime($format, (int) $date->format('U'));
+        $result = strftime($format, (int) $date->format('U'));
 
-	    // restore timezone setting
-	    date_default_timezone_set($timezone);
+        // restore timezone setting
+        date_default_timezone_set($timezone);
 
-	    return $result;
+        return $result;
     }
 }
