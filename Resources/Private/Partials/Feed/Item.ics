@@ -1,8 +1,8 @@
-<f:if condition="{index}">BEGIN:VEVENT
+{namespace c=HDNET\Calendarize\ViewHelpers}<f:if condition="{index}">BEGIN:VEVENT
 UID:calendarize-{index.uid}<f:if condition="{index.tstamp}">
 DTSTAMP:<f:format.date format="%Y%m%d">{index.tstamp}</f:format.date></f:if>
-DTSTART:<f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%SZ')}">{index.startDateComplete}</f:format.date>
-DTEND:<f:format.date format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%SZ')}">{index.endDateComplete}</f:format.date>
+DTSTART:<c:dateTime.formatUtcDate date="{index.startDateComplete}" format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%SZ')}" />
+DTEND:<c:dateTime.formatUtcDate date="{index.endDateComplete}" format="{f:if(condition: index.allDay, then: '%Y%m%d', else: '%Y%m%dT%H%M%SZ')}" />
 SUMMARY:<f:format.htmlspecialchars>{index.originalObject.feedTitle}</f:format.htmlspecialchars>
 DESCRIPTION:<f:format.htmlspecialchars>{index.originalObject.feedAbstract}</f:format.htmlspecialchars>
 LOCATION:<f:format.htmlspecialchars>{index.originalObject.feedLocation}</f:format.htmlspecialchars>
