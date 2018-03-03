@@ -38,7 +38,7 @@ In order to load the needed column mapping for your Model, you have to override 
 .. code-block:: php
 
     // in Configuration/TCA/Overrides/<tx_extension_domain_model_event>.php
-    \HDNET\Calendarize\Register::createTcaConfiguration($configuration));
+    \HDNET\Calendarize\Register::createTcaConfiguration($configuration);
 
 To modify the amount of items shown in the preview you can change the amount in the ext_tables.php after calling the Register::extTables method.
 The default value is 10 items.
