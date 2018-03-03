@@ -94,7 +94,7 @@ class Register
      *
      * @param array $configuration
      */
-    protected static function createTcaConfiguration(array $configuration)
+    public static function createTcaConfiguration(array $configuration)
     {
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? \trim($configuration['tcaTypeList']) : '';

@@ -31,6 +31,15 @@ The following code show the configuration that should be the same in ext_tables 
         'required'          => true, // set to true, than your event need a least one event configuration
     ];
 
+Beginning with Typo3 version 8.5 frontend requests no longer load ext_tables.php in requests.
+The only exception is if a backend user is logged in to the backend at the same time to initialize the admin panel or frontend editing.
+In order to load the needed column mapping for your Model, you have to override the tca configuration for the corresponding table:
+
+.. code-block:: php
+
+    // in Configuration/TCA/Overrides/<tx_extension_domain_model_event>.php
+    \HDNET\Calendarize\Register::createTcaConfiguration($configuration));
+
 To modify the amount of items shown in the preview you can change the amount in the ext_tables.php after calling the Register::extTables method.
 The default value is 10 items.
 
