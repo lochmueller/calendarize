@@ -127,6 +127,7 @@ abstract class AbstractController extends ActionController
         $variables['extended'] = [];
         $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
         $variables['settings'] = $this->settings;
+        $variables['contentObject'] = $this->configurationManager->getContentObject()->data;
 
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
