@@ -39,8 +39,10 @@ class TimeSelectionWizard extends AbstractService
             return '';
         }
 
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadRequireJsModule('TYPO3/CMS/Calendarize/TimeSelection');
+        if (TYPO3_MODE !== 'FE') {
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $pageRenderer->loadRequireJsModule('TYPO3/CMS/Calendarize/TimeSelection');
+        }
 
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $icon = $iconFactory->getIcon(
