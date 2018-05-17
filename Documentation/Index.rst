@@ -26,4 +26,5 @@ Calendarize - Flexible TYPO3 Calendar
    AdministratorManual/Index
    DeveloperManual/Index
    Templates/Index
+   Snippets/Index
    ChangeLog/Index
