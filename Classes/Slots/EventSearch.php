@@ -63,7 +63,7 @@ class EventSearch
         // ?tx_calendarize_calendar[customSearch][categories]=1
         // https://github.com/lochmueller/calendarize/issues/89
 
-        if (!isset($customSearch['fullText'])) {
+        if (!isset($customSearch['fullText']) || empty($customSearch['fullText'])) {
             return;
         }
 
