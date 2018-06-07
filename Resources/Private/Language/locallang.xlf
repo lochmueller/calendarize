@@ -404,6 +404,9 @@
 			<trans-unit id="mode.single">
 				<source>Single</source>
 			</trans-unit>
+			<trans-unit id="mode.past">
+				<source>Past</source>
+			</trans-unit>
 			<trans-unit id="singleItems">
 				<source>Single items</source>
 			</trans-unit>

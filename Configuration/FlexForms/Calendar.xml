@@ -73,7 +73,7 @@
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>
 									<numIndex index="13">
-										<numIndex index="0">Past</numIndex>
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.past</numIndex>
 										<numIndex index="1">Calendar->past</numIndex>
 									</numIndex>
 									<numIndex index="14">

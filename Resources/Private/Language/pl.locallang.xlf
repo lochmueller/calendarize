@@ -386,6 +386,10 @@
                 <source>Year</source>
                 <target>Rok</target>
             </trans-unit>
+            <trans-unit id="mode.year" approved="yes">
+                <source>past</source>
+                <target>Przeszłość</target>
+            </trans-unit>
             <trans-unit id="more" approved="yes">
                 <source>More</source>
                 <target>Więcej</target>
