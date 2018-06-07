@@ -228,6 +228,28 @@ class CalendarController extends AbstractController
     }
 
     /**
+     * Past action.
+     *
+     * @param int        $limit
+     * @param string     $sort
+     *
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     */
+
+    public function pastAction(
+        $limit = 100,
+        $sort = 'ASC'
+    ) {
+        $limit = intval($this->settings['limit']);
+        $sort = $this->settings['sorting'];
+        $this->checkStaticTemplateIsIncluded();
+        $this->slotExtendedAssignMultiple([
+           'indices' => $this->indexRepository->findByPast($limit, $sort)
+        ], __CLASS__, __FUNCTION__);
+    }
+
+
+    /**
      * Year action.
      *
      * @param int $year
@@ -255,7 +277,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'date' => $date,
-            'indices' => $this->indexRepository->findMonth((int) $date->format('Y'), (int) $date->format('n')),
+            'indices' => $this->indexRepository->findMonth((int)$date->format('Y'), (int)$date->format('n')),
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -459,7 +481,7 @@ class CalendarController extends AbstractController
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
             $indices = $this->indexRepository->findDay($year, $month, $day);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
-            $indices = $this->indexRepository->findMonth((int) $year, (int) $month);
+            $indices = $this->indexRepository->findMonth((int)$year, (int)$month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
             $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {

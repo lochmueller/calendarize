@@ -39,7 +39,7 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
     'HDNET.calendarize',
     'Calendar',
     [
-        'Calendar' => 'list,latest,year,month,week,day,detail,search,result,single',
+        'Calendar' => 'list,past,latest,year,month,week,day,detail,search,result,single',
         'Booking' => 'booking,send'
     ],
     [

@@ -73,10 +73,14 @@
 										<numIndex index="1">Calendar->day</numIndex>
 									</numIndex>
 									<numIndex index="13">
+										<numIndex index="0">Past</numIndex>
+										<numIndex index="1">Calendar->past</numIndex>
+									</numIndex>
+									<numIndex index="14">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
 										<numIndex index="1">--div--</numIndex>
 									</numIndex>
-									<numIndex index="14">
+									<numIndex index="15">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
 										<numIndex index="1">Booking->booking;Booking->send</numIndex>
 									</numIndex>
@@ -115,6 +119,7 @@
 									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
 									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->past</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -124,6 +129,7 @@
 							</config>
 						</TCEforms>
 					</settings.limit>
+
 
 					<settings.singleItems>
 						<TCEforms>
@@ -148,6 +154,7 @@
 									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
 									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
 									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->result</numIndex>
+									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->past</numIndex>
 								</OR>
 							</displayCond>
 							<config>
