@@ -114,8 +114,10 @@ class EventSearch
             /** @var PluginConfiguration $pluginConfiguration */
             $pluginConfiguration = $additionalSlotArguments['settings']['pluginConfiguration'];
             $categories = $pluginConfiguration->getCategories();
-            foreach ($categories as $category) {
-                $categoryIds[] = $category->getUid();
+            if ($categories) {
+                foreach ($categories as $category) {
+                    $categoryIds[] = $category->getUid();
+                }
             }
         }
 
