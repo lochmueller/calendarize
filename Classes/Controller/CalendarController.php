@@ -235,7 +235,6 @@ class CalendarController extends AbstractController
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
-
     public function pastAction(
         $limit = 100,
         $sort = 'ASC'
