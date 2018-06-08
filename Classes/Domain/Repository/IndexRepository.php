@@ -151,6 +151,34 @@ class IndexRepository extends AbstractRepository
 
         return $result['result'];
     }
+    /**
+     * Find Past Events
+     * 
+     * @param int       $limit
+     * @param string    $sort
+     * 
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+
+    public function findByPast(
+        $limit,
+        $sort
+    ) {
+        //create Query
+        $query = $this->createQuery();
+        //Get actual datetime
+        $now = DateTimeUtility::getNow()->getTimestamp();
+        
+        $constraints = [];
+        $constraints = $this->getDefaultConstraints($query);
+        $constraints[] = $query->lessThanOrEqual('startDate', $now);
+        $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+        $query->setOrderings($this->getSorting($sort));
+        $query->setLimit($limit);
+
+        return $this->matchAndExecute($query, $constraints);
+
+    }
 
     /**
      * Find by traversing information.

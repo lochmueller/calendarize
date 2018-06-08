@@ -405,6 +405,10 @@
 				<source>Year</source>
 				<target>Jahr</target>
 			</trans-unit>
+			<trans-unit id="mode.past" approved="yes">
+				<source>Past</source>
+				<target>Vergangene</target>
+			</trans-unit>
 			<trans-unit id="monthPid" approved="yes">
 				<source>Month PID</source>
 				<target>Monats PID</target>
