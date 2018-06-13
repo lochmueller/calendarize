@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * PluginConfiguration.
  *
@@ -300,8 +302,11 @@ class PluginConfiguration extends AbstractModel
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
-    public function getCategories()
+    public function getCategories(): ObjectStorage
     {
+        if (!($this->categories instanceof ObjectStorage)) {
+            return new ObjectStorage();
+        }
         return $this->categories;
     }
 
