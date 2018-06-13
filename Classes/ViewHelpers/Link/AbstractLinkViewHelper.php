@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
@@ -28,6 +31,20 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      * @var string
      */
     protected $lastHref = '';
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+    
+    /**
+     * Build up the object
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+    }
 
     /**
      * Arguments initialization.

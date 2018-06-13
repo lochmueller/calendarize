@@ -29,6 +29,10 @@ class MonthViewHelper extends AbstractLinkViewHelper
      */
     public function render()
     {
+        if (!is_object($this->arguments['date'])) {
+            $this->logger->error('Do not call month viewhelper without date');
+            return $this->renderChildren();
+        }
         $date = $this->arguments['date'];
         $additionalParams = [
             'tx_calendarize_calendar' => [
