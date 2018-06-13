@@ -36,7 +36,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      * @var LoggerInterface
      */
     protected $logger;
-    
+
     /**
      * Build up the object
      */
