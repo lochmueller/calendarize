@@ -20,10 +20,11 @@ class BookingCountries
      * @param $index
      * @param $extended
      * @param $settings
+     * @param $contentObject
      *
      * @return array
      */
-    public function bookingSlot($index, $extended, $settings)
+    public function bookingSlot($index, $extended, $settings, $contentObject)
     {
         $extended['countries'] = $this->getCountrySelection();
 
@@ -31,6 +32,7 @@ class BookingCountries
             'index' => $index,
             'extended' => $extended,
             'settings' => $settings,
+            'contentObject' => $contentObject,
         ];
     }
 
@@ -38,10 +40,11 @@ class BookingCountries
      * @param $request
      * @param $extended
      * @param $settings
+     * @param $contentObject
      *
      * @return array
      */
-    public function sendSlot($request, $extended, $settings)
+    public function sendSlot($request, $extended, $settings, $contentObject)
     {
         $extended['countries'] = $this->getCountrySelection();
 
@@ -49,6 +52,7 @@ class BookingCountries
             'request' => $request,
             'extended' => $extended,
             'settings' => $settings,
+            'contentObject' => $contentObject,
         ];
     }
 
