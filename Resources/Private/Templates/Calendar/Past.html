@@ -1,0 +1,17 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+		 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+		 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
+<f:layout name="Default" />
+
+<f:section name="Main">
+
+	<f:flashMessages />
+
+	<f:comment>
+		<f:link.action action="list" format="xml" arguments="{hmac: extended.pluginHmac}">RSS</f:link.action>
+		<f:link.action action="list" format="atom" arguments="{hmac: extended.pluginHmac}">Atom</f:link.action>
+		<f:link.action action="list" format="ics" arguments="{hmac: extended.pluginHmac}">iCal</f:link.action>
+	</f:comment>
+	<f:render partial="List" arguments="{settings: settings, indices: indices}" />
+
+</f:section>
