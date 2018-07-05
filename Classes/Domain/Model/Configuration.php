@@ -297,6 +297,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getGroups()
     {
+        if ($this->groups === null) {
+            return new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        }
         return $this->groups;
     }
 
