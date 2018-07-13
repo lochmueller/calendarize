@@ -29,6 +29,7 @@ The following code show the configuration that should be the same in ext_tables 
         'partialIdentifier' => 'MyEvent', // the identifier of the partials for your event. In most cases this is also unique
         'tableName'         => 'tx_myextension_domain_model_myevent', // the table name of your event table
         'required'          => true, // set to true, than your event need a least one event configuration
+        'subClasses'        => array of classnames, // insert here all classNames, which are used for the extended models
     ];
 
 Beginning with Typo3 version 8.5 frontend requests no longer load ext_tables.php in requests.
