@@ -50,19 +50,21 @@ class ExtensionConfigurationUtility
     {
         self::loadConfiguration();
 
-        $uniqueRegisterKey = null;
+        $eventClass = \get_class($event);
         foreach (self::$configuration as $configuration) {
-            if ($configuration['modelName'] === \get_class($event)) {
-                $uniqueRegisterKey = $configuration['uniqueRegisterKey'];
-                break;
+            if ($configuration['modelName'] === $eventClass) {
+                return $configuration['uniqueRegisterKey'];
+            }
+            if (isset($configuration['subClasses']) && \is_array($configuration['subClasses'])) {
+                foreach ($configuration['subClasses'] as $subClass) {
+                    if ($subClass === $eventClass) {
+                        return $configuration['uniqueRegisterKey'];
+                    }
+                }
             }
         }
 
-        if (null === $uniqueRegisterKey) {
-            throw new Exception('No valid uniqueRegisterKey for: ' . \get_class($event), 1236712);
-        }
-
-        return $uniqueRegisterKey;
+        throw new Exception('No valid uniqueRegisterKey for: ' . $eventClass, 1236712);
     }
 
     /**
