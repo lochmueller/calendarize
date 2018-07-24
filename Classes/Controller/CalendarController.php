@@ -258,7 +258,7 @@ class CalendarController extends AbstractController
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findYear($date->format('Y')),
+            'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
     }
@@ -337,7 +337,7 @@ class CalendarController extends AbstractController
         $next->modify('+1 day');
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findDay($date->format('Y'), $date->format('n'), $date->format('j')),
+            'indices' => $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j')),
             'today' => $date,
             'previous' => $previous,
             'next' => $next,
@@ -478,13 +478,13 @@ class CalendarController extends AbstractController
             $searchMode = true;
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
-            $indices = $this->indexRepository->findDay($year, $month, $day);
+            $indices = $this->indexRepository->findDay((int)$year, (int)$month, (int)$day);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
             $indices = $this->indexRepository->findMonth((int)$year, (int)$month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
             $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
-            $indices = $this->indexRepository->findYear($year);
+            $indices = $this->indexRepository->findYear((int)$year);
         } else {
             $overrideStartDate = (int) $this->settings['overrideStartdate'];
             $overrideEndDate = (int) $this->settings['overrideEnddate'];

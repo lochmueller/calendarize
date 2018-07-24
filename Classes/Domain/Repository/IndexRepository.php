@@ -283,7 +283,7 @@ class IndexRepository extends AbstractRepository
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findYear($year)
+    public function findYear(int $year)
     {
         return $this->findByTimeSlot(\mktime(0, 0, 0, 1, 1, $year), \mktime(0, 0, 0, 1, 1, $year + 1) - 1);
     }
@@ -334,7 +334,7 @@ class IndexRepository extends AbstractRepository
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findDay($year, $month, $day)
+    public function findDay(int $year, int $month, int $day)
     {
         $startTime = \mktime(0, 0, 0, $month, $day, $year);
 
