@@ -137,9 +137,32 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
         if ($this->isOldRealUrlVersion()) {
             $entry['tstamp'] = (new \DateTime())->getTimestamp();
         }
+
+        $aliasBase = $alias;
+        for ($i = 0; ; $i++) {
+            $alias = $i > 0 ? $aliasBase . '-' . $i : $aliasBase;
+            if (!$this->aliasAlreadyExists($alias)) {
+                $entry['value_alias'] = $alias;
+                break;
+            }
+        }
         $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
 
         return $alias;
+    }
+
+    /**
+     * Check if alias already exists
+     *
+     * @param string $alias
+     * @return boolean
+     */
+    protected function aliasAlreadyExists($alias)
+    {
+        $databaseConnection = HelperUtility::getDatabaseConnection();
+        $count = $databaseConnection->exec_SELECTcountRows('*', 'tx_realurl_uniqalias',
+            'value_alias=' . $databaseConnection->fullQuoteStr($alias, 'tx_realurl_uniqalias'));
+        return (bool)$count;
     }
 
     /**

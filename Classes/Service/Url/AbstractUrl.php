@@ -47,9 +47,12 @@ abstract class AbstractUrl extends AbstractService
         }
 
         $base = $originalObject->getRealUrlAliasBase();
-        $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
+        if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDateInSpeakingUrl')) {
+            $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
+            $base .= '-' . $index->getStartDateComplete()
+                ->format($datePart);
+        }
 
-        return $base . '-' . $index->getStartDateComplete()
-            ->format($datePart);
+        return $base;
     }
 }
