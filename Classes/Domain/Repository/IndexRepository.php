@@ -143,8 +143,11 @@ class IndexRepository extends AbstractRepository
         if ($arguments['indexIds']) {
             $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
         }
+        if ($arguments['emptyPreResult']) {
+            $constraints[] = $query->equals('uid', '-1');
+        }
         $result = [
-            'result' => $arguments['emptyPreResult'] ? [] : $this->matchAndExecute($query, $constraints),
+            'result' => $this->matchAndExecute($query, $constraints),
         ];
 
         $result = $this->callSignal(__CLASS__, __FUNCTION__ . 'Post', $result);
