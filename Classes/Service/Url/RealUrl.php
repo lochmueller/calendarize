@@ -155,7 +155,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      * Check if alias already exists
      *
      * @param string $alias
-     * @return boolean
+     * @return bool
      */
     protected function aliasAlreadyExists($alias)
     {
