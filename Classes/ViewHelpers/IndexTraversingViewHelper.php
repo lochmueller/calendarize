@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -46,7 +47,8 @@ class IndexTraversingViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $indexRepository = $this->objectManager->get(IndexRepository::class);
+        $objectManager = new ObjectManager();
+        $indexRepository = $objectManager->get(IndexRepository::class);
 
         return $indexRepository->findByTraversing(
             $this->arguments['index'],
