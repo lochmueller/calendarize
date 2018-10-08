@@ -51,7 +51,6 @@ class Register
             'FlexForms',
             'CommandController',
             'StaticTyposcript',
-            'ExtensionId',
             'TypeConverter',
         ];
     }

@@ -32,8 +32,8 @@ $iconRegistry->registerIcon(
     ['source' => $extensionIcon]
 );
 
-\TYPO3\CMS\Core\Category\CategoryRegistry::getInstance()
-    ->add('calendarize', 'tx_calendarize_domain_model_pluginconfiguration');
+$categoryRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Category\CategoryRegistry::class);
+$categoryRegistry->add('calendarize', 'tx_calendarize_domain_model_pluginconfiguration');
 
 //\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
 //    TCEMAIN.linkHandler {
