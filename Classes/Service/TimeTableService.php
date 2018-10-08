@@ -44,7 +44,7 @@ class TimeTableService extends AbstractService
 
             try {
                 $handler = $this->buildConfigurationHandler($configuration);
-            }catch(\Exception $exception){
+            } catch (\Exception $exception) {
                 HelperUtility::createFlashMessage(
                     $exception->getMessage(),
                     'Index invalid',
