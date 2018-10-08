@@ -85,7 +85,6 @@ class EventRepository extends AbstractRepository
             }
         } catch (\Exception $ex) {
             return;
-
         }
 
         if (empty($result)) {
