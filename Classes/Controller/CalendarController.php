@@ -416,13 +416,13 @@ class CalendarController extends AbstractController
         $indicies = [];
 
         // prepare selection
-        $selection = [];
+        $selections = [];
         $configurations = $this->getCurrentConfigurations();
         foreach (GeneralUtility::trimExplode(',', $this->settings['singleItems']) as $item) {
             list($table, $uid) = BackendUtility::splitTable_Uid($item);
             foreach ($configurations as $configuration) {
                 if ($configuration['tableName'] === $table) {
-                    $selection[] = [
+                    $selections[] = [
                         'configuration' => $configuration,
                         'uid' => $uid,
                     ];
@@ -432,7 +432,7 @@ class CalendarController extends AbstractController
         }
 
         // fetch index
-        foreach ($selection as $selection) {
+        foreach ($selections as $selection) {
             $this->indexRepository->setIndexTypes([$selection['configuration']['uniqueRegisterKey']]);
             $dummyIndex = new Index();
             $dummyIndex->setForeignTable($selection['configuration']['tableName']);

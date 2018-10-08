@@ -48,8 +48,8 @@ class EventSearch
      */
     public function setIdsByCustomSearch(
         array $indexIds,
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        \DateTime $startDate,
+        \DateTime $endDate,
         array $customSearch,
         array $indexTypes,
         bool $emptyPreResult,

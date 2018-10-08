@@ -104,7 +104,7 @@ class PluginConfiguration extends AbstractModel
      */
     public function __construct()
     {
-        $this->categories = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->categories = new ObjectStorage();
     }
 
     /**
@@ -313,7 +313,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
     }

@@ -33,7 +33,7 @@ abstract class AbstractUrl extends AbstractService
      *
      * @return string
      */
-    protected function getIndexBase($indexUid)
+    protected function getIndexBase($indexUid):string
     {
         $indexRepository = HelperUtility::create(IndexRepository::class);
         $index = $indexRepository->findByUid((int) $indexUid);
@@ -53,6 +53,6 @@ abstract class AbstractUrl extends AbstractService
                 ->format($datePart);
         }
 
-        return $base;
+        return (string)$base;
     }
 }

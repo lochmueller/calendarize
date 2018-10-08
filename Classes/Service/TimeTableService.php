@@ -42,10 +42,11 @@ class TimeTableService extends AbstractService
                 continue;
             }
 
-            $handler = $this->buildConfigurationHandler($configuration);
-            if (!$handler) {
+            try {
+                $handler = $this->buildConfigurationHandler($configuration);
+            }catch(\Exception $exception){
                 HelperUtility::createFlashMessage(
-                    'There is no TimeTable handler for the given configuration type: ' . $configuration->getType(),
+                    $exception->getMessage(),
                     'Index invalid',
                     FlashMessage::ERROR
                 );
@@ -189,15 +190,15 @@ class TimeTableService extends AbstractService
      *
      * @param Configuration $configuration
      *
-     * @return bool|AbstractTimeTable
+     * @return AbstractTimeTable
+     * @throws Exception
      */
-    protected function buildConfigurationHandler(Configuration $configuration)
+    protected function buildConfigurationHandler(Configuration $configuration):AbstractTimeTable
     {
         $handler = 'HDNET\\Calendarize\\Service\\TimeTable\\' . \ucfirst($configuration->getType()) . 'TimeTable';
         if (!\class_exists($handler)) {
-            return false;
+            throw new \Exception('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 1236781);
         }
-
         return HelperUtility::create($handler);
     }
 }

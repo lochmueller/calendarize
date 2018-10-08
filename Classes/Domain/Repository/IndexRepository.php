@@ -171,7 +171,6 @@ class IndexRepository extends AbstractRepository
         //Get actual datetime
         $now = DateTimeUtility::getNow()->getTimestamp();
 
-        $constraints = [];
         $constraints = $this->getDefaultConstraints($query);
         $constraints[] = $query->lessThanOrEqual('startDate', $now);
         $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;

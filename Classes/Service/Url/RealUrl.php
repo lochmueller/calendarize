@@ -76,8 +76,10 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      * Handle the alias to index ID convert.
      *
      * @param $value
+     *
+     * @return int
      */
-    protected function alias2id($value)
+    protected function alias2id($value):int
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $row = $databaseConnection->exec_SELECTgetSingleRow(
@@ -97,8 +99,9 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
 
         $matches = [];
         if (\preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
-            return $matches[1];
+            return (int)$matches[1];
         }
+        return 0;
     }
 
     /**
@@ -108,7 +111,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      *
      * @return string
      */
-    protected function id2alias($value)
+    protected function id2alias($value):string
     {
         $databaseConnection = HelperUtility::getDatabaseConnection();
         $row = $databaseConnection->exec_SELECTgetSingleRow(
@@ -120,7 +123,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             ) . ' AND value_id=' . (int) $value
         );
         if (isset($row['value_alias'])) {
-            return $row['value_alias'];
+            return (string)$row['value_alias'];
         }
 
         $alias = $this->getIndexBase((int) $value);
@@ -148,7 +151,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
         }
         $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
 
-        return $alias;
+        return (string)$alias;
     }
 
     /**
@@ -172,7 +175,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      *
      * @return string
      */
-    protected function cleanUrl($alias)
+    protected function cleanUrl(string $alias):string
     {
         if ($this->isOldRealUrlVersion()) {
             /** @var \tx_realurl_advanced $realUrl */
@@ -190,7 +193,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             $processedTitle = $utility->convertToSafeString($alias);
         }
 
-        return $processedTitle;
+        return (string)$processedTitle;
     }
 
     /**
