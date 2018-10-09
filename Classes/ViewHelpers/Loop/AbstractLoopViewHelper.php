@@ -50,7 +50,7 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      */
     public function render(\DateTime $date, $iteration)
     {
-        $variableContainer = $this->renderingContext->getTemplateVariableContainer();
+        $variableContainer = $this->renderingContext->getVariableProvider();
 
         // clone: take care that the getItems method do not manipulate the original
         $items = $this->getItems(clone $date);
