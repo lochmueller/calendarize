@@ -1,12 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 namespace JMBTechnologyLimited\ICalDissect;
 
 /**
+ * @see https://github.com/JMB-Technology-Limited/ICalDissect
  *
- * @link https://github.com/JMB-Technology-Limited/ICalDissect
  * @license https://raw.github.com/JMB-Technology-Limited/ICalDissect/master/LICENSE.txt 3-clause BSD
  * @copyright (c) 2014, JMB Technology Limited, http://jmbtechnology.co.uk/
- * @author James Baster <james@jarofgreen.co.uk>
  */
 class ICalEvent
 {
@@ -15,14 +17,15 @@ class ICalEvent
 
     /**
      * Start, in UTC.
+     *
      * @var \DateTime **/
     protected $start;
 
     /**
      * End, in UTC.
+     *
      * @var \DateTime **/
     protected $end;
-
 
     protected $summary;
 
@@ -48,111 +51,52 @@ class ICalEvent
 
     public function __construct(\DateTimeZone $timeZone = null)
     {
-        $this->timeZoneUTC =  new \DateTimeZone('UTC');
+        $this->timeZoneUTC = new \DateTimeZone('UTC');
         $this->timeZone = $timeZone ? $timeZone : $this->timeZoneUTC;
     }
 
     public function processLine($keyword, $value, $keywordProperties = '')
     {
-        if ($keyword == 'UID') {
+        if ('UID' === $keyword) {
             $this->uid = $value;
-        } elseif ($keyword == 'LOCATION') {
+        } elseif ('LOCATION' === $keyword) {
             $this->location = $value;
-        } elseif ($keyword == 'SUMMARY') {
+        } elseif ('SUMMARY' === $keyword) {
             $this->summary = $value;
-        } elseif ($keyword == 'DESCRIPTION') {
+        } elseif ('DESCRIPTION' === $keyword) {
             $this->description = $value;
-        } elseif ($keyword == 'URL') {
+        } elseif ('URL' === $keyword) {
             $this->url = $value;
-        } elseif ($keyword == 'DTSTART') {
+        } elseif ('DTSTART' === $keyword) {
             $this->start = $this->parseDateTime($value, true, $keywordProperties);
-        } elseif ($keyword == 'DTEND') {
+        } elseif ('DTEND' === $keyword) {
             $this->end = $this->parseDateTime($value, false, $keywordProperties);
-        } elseif ($keyword == 'METHOD' && $value == 'CANCEL') {
+        } elseif ('METHOD' === $keyword && 'CANCEL' === $value) {
             $this->deleted = true;
-        } elseif ($keyword == 'STATUS' && $value == 'CANCELLED') {
+        } elseif ('STATUS' === $keyword && 'CANCELLED' === $value) {
             $this->deleted = true;
-        } elseif ($keyword == 'RRULE') {
+        } elseif ('RRULE' === $keyword) {
             $rrule = [];
-            foreach (explode(';', $value) as $rruleBit) {
-                list($k, $v) = explode('=', $rruleBit, 2);
-                $rrule[strtoupper($k)] = $v;
+            foreach (\explode(';', $value) as $rruleBit) {
+                list($k, $v) = \explode('=', $rruleBit, 2);
+                $rrule[\mb_strtoupper($k)] = $v;
             }
             $this->ical_rrule = $rrule;
-        } elseif ($keyword == 'EXDATE') {
+        } elseif ('EXDATE' === $keyword) {
             $this->exdates[] = new ICalExDate($value, $keywordProperties);
-        } elseif ($keyword == 'GEO') {
-            $bits = explode(';', $value);
-            if (count($bits) == 2) {
+        } elseif ('GEO' === $keyword) {
+            $bits = \explode(';', $value);
+            if (2 === \count($bits)) {
                 $this->geoLat = $bits[0];
                 $this->geoLng = $bits[1];
             }
         }
 
-        if (!isset($this->raw[strtoupper($keyword)])) {
-            $this->raw[strtoupper($keyword)] = [];
+        if (!isset($this->raw[\mb_strtoupper($keyword)])) {
+            $this->raw[\mb_strtoupper($keyword)] = [];
         }
-        $this->raw[strtoupper($keyword)][] = $value;
+        $this->raw[\mb_strtoupper($keyword)][] = $value;
     }
-
-
-    /*
-     * Based on http://code.google.com/p/ics-parser/, MIT License
-     * Changed for Timezones.
-    **/
-    protected function parseDateTime($value, $isStart, $keywordProperties)
-    {
-        // We should be doing something like this - if it's not UTC it's a floating time and we should look at pre-set timezone or parameter timezone.
-        // https://tools.ietf.org/html/rfc5545#section-3.3.5
-        $isUTC = substr($value, -1) == 'Z';
-
-        $value = str_replace('Z', '', $value);
-        $pattern  = '/([0-9]{4})';   // 1: YYYY
-        $pattern .= '([0-9]{2})';    // 2: MM
-        $pattern .= '([0-9]{2})';    // 3: DD
-
-        $hasTimePart = false;
-        if (strpos($value, 'T') > 1) {
-            $value = str_replace('T', '', $value);
-            $pattern .= '([0-9]{0,2})';  // 4: HH
-            $pattern .= '([0-9]{0,2})';  // 5: MM
-            $pattern .= '([0-9]{0,2})/'; // 6: SS
-            $hasTimePart = true;
-        } else {
-            $pattern .= '/';
-        }
-        preg_match($pattern, $value, $date);
-
-        // Unix timestamp can't represent dates before 1970
-        if ($date[1] <= 1970) {
-            return null;
-        }
-        // Unix timestamps after 03:14:07 UTC 2038-01-19 might cause an overflow
-        // if 32 bit integers are used.
-
-        $out = new \DateTime('', $this->timeZoneUTC);
-        if (!$isUTC) {
-
-            // Is Timezone in Keyword Properties?
-            if (substr($keywordProperties, 0, 5) == 'TZID=') {
-                $timeZone = new \DateTimeZone(substr($keywordProperties, 5));
-                $out->setTimezone($timeZone);
-            }
-        }
-        $out->setDate((int)$date[1], (int)$date[2], (int)$date[3]);
-        if ($hasTimePart) {
-            $out->setTime((int)$date[4], (int)$date[5], (int)$date[6]);
-        } elseif ($isStart) {
-            $out->setTime(0, 0, 0);
-        } elseif (!$isStart) {
-            $out->setTime(23, 59, 59);
-        }
-        if (!$isUTC) {
-            $out->setTimezone($this->timeZoneUTC);
-        }
-        return $out;
-    }
-
 
     public function getUid()
     {
@@ -165,7 +109,8 @@ class ICalEvent
     }
 
     /**
-     * In UTC
+     * In UTC.
+     *
      * @return \DateTime
      */
     public function getStart()
@@ -174,7 +119,8 @@ class ICalEvent
     }
 
     /**
-     * In UTC
+     * In UTC.
+     *
      * @return \DateTime
      */
     public function getEnd()
@@ -224,6 +170,8 @@ class ICalEvent
     }
 
     /**
+     * @param mixed $position
+     *
      * @return ICalExDate
      */
     public function getExDate($position)
@@ -231,17 +179,15 @@ class ICalEvent
         return $this->exdates[$position];
     }
 
-
     /**
      * @return int
      */
     public function getExDatesCount()
     {
-        return count($this->exdates);
+        return \count($this->exdates);
     }
 
     /**
-     *
      * Returns raw line data for this event.
      *
      * @parameter $keyword pass keyword you want, or null to get all data as an array
@@ -254,20 +200,22 @@ class ICalEvent
      *
      * Note all keywords are always in upper case.
      *
+     * @param null|mixed $keyword
+     *
      * @return array
      */
     public function getRaw($keyword = null)
     {
         if ($keyword) {
-            return isset($this->raw[strtoupper($keyword)]) ? $this->raw[strtoupper($keyword)] : [];
-        } else {
-            return $this->raw;
+            return isset($this->raw[\mb_strtoupper($keyword)]) ? $this->raw[\mb_strtoupper($keyword)] : [];
         }
+
+        return $this->raw;
     }
 
     public function hasGeo()
     {
-        return (boolean)($this->geoLat && $this->geoLng);
+        return (bool) ($this->geoLat && $this->geoLng);
     }
 
     public function getGeoLat()
@@ -278,5 +226,62 @@ class ICalEvent
     public function getGeoLng()
     {
         return $this->geoLng;
+    }
+
+    /*
+     * Based on http://code.google.com/p/ics-parser/, MIT License
+     * Changed for Timezones.
+    **/
+    protected function parseDateTime($value, $isStart, $keywordProperties)
+    {
+        // We should be doing something like this - if it's not UTC it's a floating time and we should look at pre-set timezone or parameter timezone.
+        // https://tools.ietf.org/html/rfc5545#section-3.3.5
+        $isUTC = 'Z' === \mb_substr($value, -1);
+
+        $value = \str_replace('Z', '', $value);
+        $pattern = '/([0-9]{4})';   // 1: YYYY
+        $pattern .= '([0-9]{2})';    // 2: MM
+        $pattern .= '([0-9]{2})';    // 3: DD
+
+        $hasTimePart = false;
+        if (\mb_strpos($value, 'T') > 1) {
+            $value = \str_replace('T', '', $value);
+            $pattern .= '([0-9]{0,2})';  // 4: HH
+            $pattern .= '([0-9]{0,2})';  // 5: MM
+            $pattern .= '([0-9]{0,2})/'; // 6: SS
+            $hasTimePart = true;
+        } else {
+            $pattern .= '/';
+        }
+        \preg_match($pattern, $value, $date);
+
+        // Unix timestamp can't represent dates before 1970
+        if ($date[1] <= 1970) {
+            return;
+        }
+        // Unix timestamps after 03:14:07 UTC 2038-01-19 might cause an overflow
+        // if 32 bit integers are used.
+
+        $out = new \DateTime('', $this->timeZoneUTC);
+        if (!$isUTC) {
+            // Is Timezone in Keyword Properties?
+            if ('TZID=' === \mb_substr($keywordProperties, 0, 5)) {
+                $timeZone = new \DateTimeZone(\mb_substr($keywordProperties, 5));
+                $out->setTimezone($timeZone);
+            }
+        }
+        $out->setDate((int) $date[1], (int) $date[2], (int) $date[3]);
+        if ($hasTimePart) {
+            $out->setTime((int) $date[4], (int) $date[5], (int) $date[6]);
+        } elseif ($isStart) {
+            $out->setTime(0, 0, 0);
+        } elseif (!$isStart) {
+            $out->setTime(23, 59, 59);
+        }
+        if (!$isUTC) {
+            $out->setTimezone($this->timeZoneUTC);
+        }
+
+        return $out;
     }
 }

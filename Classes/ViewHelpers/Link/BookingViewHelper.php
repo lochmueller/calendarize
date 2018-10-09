@@ -31,8 +31,9 @@ class BookingViewHelper extends AbstractLinkViewHelper
      */
     public function render()
     {
-        if (!is_object($this->arguments['index'])) {
+        if (!\is_object($this->arguments['index'])) {
             $this->logger->error('Do not call booking viewhelper without index');
+
             return $this->renderChildren();
         }
         $additionalParams = [

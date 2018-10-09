@@ -10,7 +10,7 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -30,12 +30,21 @@ class IndexerService extends AbstractService
     public function reindexAll()
     {
         $this->removeInvalidConfigurationIndex();
-        $databaseConnection = HelperUtility::getDatabaseConnection();
+        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
+
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         foreach (Register::getRegister() as $key => $configuration) {
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
-            $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+
+            $q->resetQueryParts();
+            $q->select('uid')
+                ->from($tableName);
+
+            $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
                 $this->updateIndex($key, $configuration['tableName'], $row['uid']);
             }
@@ -66,13 +75,12 @@ class IndexerService extends AbstractService
      */
     public function getIndexCount($table, $uid)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
+        $databaseConnection = HelperUtility::getDatabaseConnection($table);
 
-        return $databaseConnection->exec_SELECTcountRows(
-            '*',
-            self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr($table, self::TABLE_NAME) . ' AND foreign_uid=' . (int) $uid
-        );
+        return $databaseConnection->count('*', self::TABLE_NAME, [
+            'foreign_table' => $table,
+            'foreign_uid' => (int) $uid,
+        ]);
     }
 
     /**
@@ -86,21 +94,24 @@ class IndexerService extends AbstractService
      */
     public function getNextEvents($table, $uid, $limit = 5)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
+        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
         $now = DateTimeUtility::getNow();
         $now->setTime(0, 0, 0);
 
-        return $databaseConnection->exec_SELECTgetRows(
-            '*',
-            self::TABLE_NAME,
-            'start_date >= ' . $now->getTimestamp() . ' AND foreign_table=' . $databaseConnection->fullQuoteStr(
-                $table,
-                self::TABLE_NAME
-            ) . ' AND foreign_uid=' . (int) $uid,
-            '',
-            'start_date ASC, start_time ASC',
-            $limit
-        );
+        $q->select('*')
+            ->from(self::TABLE_NAME)
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->gte('start_date', $now->getTimestamp()),
+                    $q->expr()->eq('foreign_table', $q->createNamedParameter($table)),
+                    $q->expr()->eq('foreign_uid', $q->createNamedParameter((int) $uid, \PDO::PARAM_INT))
+                )
+            )
+            ->addOrderBy('start_date', 'ASC')
+            ->addOrderBy('start_time', 'ASC')
+            ->setMaxResults($limit);
+
+        return $q->execute()->fetchAll();
     }
 
     /**
@@ -133,15 +144,13 @@ class IndexerService extends AbstractService
      */
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $currentItems = $databaseConnection->exec_SELECTgetRows(
-            '*',
-            self::TABLE_NAME,
-            'foreign_table=' . $databaseConnection->fullQuoteStr(
-                $tableName,
-                self::TABLE_NAME
-            ) . ' AND foreign_uid=' . $uid
-        );
+        $databaseConnection = HelperUtility::getDatabaseConnection($tableName);
+
+        $currentItems = $databaseConnection->select(['*'], self::TABLE_NAME, [
+            'foreign_table' => $tableName,
+            'foreign_uid' => $uid,
+        ])->fetchAll();
+
         foreach ($neededItems as $neededKey => $neededItem) {
             $remove = false;
             foreach ($currentItems as $currentKey => $currentItem) {
@@ -157,12 +166,12 @@ class IndexerService extends AbstractService
             }
         }
         foreach ($currentItems as $item) {
-            $databaseConnection->exec_DELETEquery(self::TABLE_NAME, 'uid=' . $item['uid']);
+            $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
         }
 
         $neededItems = \array_values($neededItems);
         if ($neededItems) {
-            $databaseConnection->exec_INSERTmultipleRows(self::TABLE_NAME, \array_keys($neededItems[0]), $neededItems);
+            $databaseConnection->bulkInsert(self::TABLE_NAME, $neededItems, \array_keys($neededItems[0]));
         }
     }
 
@@ -199,17 +208,33 @@ class IndexerService extends AbstractService
      */
     protected function removeInvalidRecordIndex($tableName)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $rows = $databaseConnection->exec_SELECTgetRows('uid', $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+        $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        $q->select('uid')
+            ->from($tableName);
+
+        $rows = $q->execute()->fetchAll();
+
+        $q->resetQueryParts()->resetRestrictions();
+        $q->delete(self::TABLE_NAME)
+            ->where(
+                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName))
+            );
+
         $ids = [];
         foreach ($rows as $row) {
             $ids[] = $row['uid'];
         }
-        $where = 'foreign_table=' . $databaseConnection->fullQuoteStr($tableName, self::TABLE_NAME);
         if ($ids) {
-            $where .= ' AND foreign_uid NOT IN (' . \implode(',', $ids) . ')';
+            $q->andWhere(
+                $q->expr()->notIn('foreign_uid', $ids)
+            );
         }
-        $databaseConnection->exec_DELETEquery(self::TABLE_NAME, $where);
+
+        $q->execute();
     }
 
     /**
@@ -219,19 +244,23 @@ class IndexerService extends AbstractService
      */
     protected function removeInvalidConfigurationIndex()
     {
+        $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
+        $q = $db->createQueryBuilder();
+
         $validKeys = \array_keys(Register::getRegister());
-        $databaseConnection = HelperUtility::getDatabaseConnection();
         if ($validKeys) {
             foreach ($validKeys as $key => $value) {
-                $validKeys[$key] = $databaseConnection->fullQuoteStr($value, self::TABLE_NAME);
+                $validKeys[$key] = $q->createNamedParameter($value);
             }
 
-            return (bool) $databaseConnection->exec_DELETEquery(
-                self::TABLE_NAME,
-                'unique_register_key NOT IN (' . \implode(',', $validKeys) . ')'
-            );
+            $q->delete(self::TABLE_NAME)
+                ->where(
+                    $q->expr()->notIn('unique_register', $validKeys)
+                )->execute();
+
+            return (bool) $q->execute();
         }
 
-        return (bool) $databaseConnection->exec_TRUNCATEquery(self::TABLE_NAME);
+        return (bool) $db->truncate(self::TABLE_NAME);
     }
 }

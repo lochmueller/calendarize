@@ -47,7 +47,7 @@ class CmsLayout extends AbstractHook
      */
     public function getExtensionSummary(array $params)
     {
-        if ($params['row']['list_type'] !== 'calendarize_calendar') {
+        if ('calendarize_calendar' !== $params['row']['list_type']) {
             return '';
         }
 
@@ -76,11 +76,12 @@ class CmsLayout extends AbstractHook
         $pluginConfiguration = (int) $this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {
             $table = 'tx_calendarize_domain_model_pluginconfiguration';
-            $row = HelperUtility::getDatabaseConnection()->exec_SELECTgetSingleRow(
-                '*',
+
+            $row = HelperUtility::getDatabaseConnection($table)->select(
+                ['*'],
                 $table,
-                'uid=' . $pluginConfiguration
-            );
+                ['uid' => $pluginConfiguration]
+            )->fetch();
             $this->layoutService->addRow(
                 TranslateUtility::get('tx_calendarize_domain_model_pluginconfiguration'),
                 BackendUtility::getRecordTitle($table, $row)

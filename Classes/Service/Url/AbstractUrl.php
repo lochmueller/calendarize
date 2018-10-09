@@ -33,7 +33,7 @@ abstract class AbstractUrl extends AbstractService
      *
      * @return string
      */
-    protected function getIndexBase($indexUid):string
+    protected function getIndexBase($indexUid): string
     {
         $indexRepository = HelperUtility::create(IndexRepository::class);
         $index = $indexRepository->findByUid((int) $indexUid);
@@ -47,12 +47,12 @@ abstract class AbstractUrl extends AbstractService
         }
 
         $base = $originalObject->getRealUrlAliasBase();
-        if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDateInSpeakingUrl')) {
+        if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDateInSpeakingUrl')) {
             $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
             $base .= '-' . $index->getStartDateComplete()
                 ->format($datePart);
         }
 
-        return (string)$base;
+        return (string) $base;
     }
 }

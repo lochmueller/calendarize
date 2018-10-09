@@ -30,23 +30,38 @@ class CalMigration
         $args = \func_get_args();
         list($calendarizeEventRecord, $event, $table, $recordId, $dbQueries) = $args;
 
-        $db = HelperUtility::getDatabaseConnection();
+        $q = HelperUtility::getDatabaseConnection('sys_file_reference')->createQueryBuilder();
+        $q->select('*')
+            ->from('sys_file_reference')
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->eq('tablenames', 'tx_cal_event'),
+                    $q->expr()->eq('uid_foreign', $q->createNamedParameter((int) $event['uid'], \PDO::PARAM_INT))
+                )
+            );
 
-        $selectWhere = 'tablenames = \'tx_cal_event\' AND uid_foreign = ' . (int) $event['uid'];
-        $query = $db->SELECTquery('*', 'sys_file_reference', $selectWhere);
-        $selectResults = $db->admin_query($query);
-        $dbQueries[] = $query;
+        $dbQueries[] = $q->getSQL();
+        $selectResults = $q->execute()->fetchAll();
 
         foreach ($selectResults as $selectResult) {
-            $updateWhere = ' import_id = \'' . CalMigrationUpdate::IMPORT_PREFIX . $selectResult['uid'] . '\'';
+            $q->resetQueryParts();
+
+            $importId = CalMigrationUpdate::IMPORT_PREFIX . $selectResult['uid'];
+
             $fieldValues = [
                 'uid_foreign' => (int) $recordId,
                 'tablenames' => $table,
             ];
 
-            $query = $db->UPDATEquery('sys_file_reference', $updateWhere, $fieldValues);
-            $db->admin_query($query);
-            $dbQueries[] = $query;
+            $q->update('sys_file_reference')
+                ->where(
+                    $q->expr()->eq('import_id', $q->createNamedParameter($importId))
+                )
+                ->values($fieldValues);
+
+            $dbQueries[] = $q->getSQL();
+
+            $q->execute();
         }
 
         $variables = [

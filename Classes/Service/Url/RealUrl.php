@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Service\Url;
 
 use DmitryDulepov\Realurl\Configuration\ConfigurationReader;
 use DmitryDulepov\Realurl\Utility;
+use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -58,18 +59,34 @@ class RealUrl extends AbstractUrl
     protected function cleanupOldLinks()
     {
         $removeIds = [];
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $selectInvalidItems = 'SELECT tx_realurl_uniqalias.uid 
-FROM tx_realurl_uniqalias LEFT JOIN tx_calendarize_domain_model_index ON tx_realurl_uniqalias.value_id = tx_calendarize_domain_model_index.uid 
-WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tablename=\'tx_calendarize_domain_model_index\'';
-        $res = $databaseConnection->admin_query($selectInvalidItems);
-        while ($row = $databaseConnection->sql_fetch_assoc($res)) {
+        $table = 'tx_calendarize_domain_model_index';
+        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
+
+        $q->select('uid')
+            ->from('tx_realurl_uniqalias')
+            ->leftJoin('tx_calendarize_domain_model_index', 'tx_realurl_uniqalias.value_id', 'tx_calendarize_domain_model_index.uid')
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->isNull('tx_calendarize_domain_model_index.uid'),
+                    $q->expr()->eq('tx_realurl_uniqalias.tablename', 'tx_calendarize_domain_model_index')
+                )
+            );
+
+        foreach ($q->execute()->fetchAll() as $row) {
             $removeIds[] = (int) $row['uid'];
         }
+
         if (empty($removeIds)) {
             return;
         }
-        $databaseConnection->exec_DELETEquery('tx_realurl_uniqalias', 'uid IN (' . \implode(',', $removeIds) . ')');
+
+        $q->resetQueryParts();
+
+        $q->delete('tx_realurl_uniqalias')
+            ->where(
+                $q->expr()->in('uid', $removeIds)
+            )
+            ->execute();
     }
 
     /**
@@ -79,28 +96,30 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      *
      * @return int
      */
-    protected function alias2id($value):int
+    protected function alias2id($value): int
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $row = $databaseConnection->exec_SELECTgetSingleRow(
-            'value_id',
-            'tx_realurl_uniqalias',
-            'tablename=' . $databaseConnection->fullQuoteStr(
-                IndexerService::TABLE_NAME,
-                IndexerService::TABLE_NAME
-            ) . ' AND value_alias=' . $databaseConnection->fullQuoteStr(
-                $value,
-                IndexerService::TABLE_NAME
+        $q = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME)->createQueryBuilder();
+
+        $row = $q->select('value_id')
+            ->from('tx_realurl_uniqalias')
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->eq('tablename', IndexerService::TABLE_NAME),
+                    $q->expr()->eq('value_alias', $q->createNamedParameter($value))
+                )
             )
-        );
+            ->execute()
+            ->fetch();
+
         if (isset($row['value_id'])) {
             return (int) $row['value_id'];
         }
 
         $matches = [];
         if (\preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
-            return (int)$matches[1];
+            return (int) $matches[1];
         }
+
         return 0;
     }
 
@@ -111,25 +130,28 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      *
      * @return string
      */
-    protected function id2alias($value):string
+    protected function id2alias($value): string
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $row = $databaseConnection->exec_SELECTgetSingleRow(
-            'value_alias',
-            'tx_realurl_uniqalias',
-            'tablename=' . $databaseConnection->fullQuoteStr(
-                IndexerService::TABLE_NAME,
-                IndexerService::TABLE_NAME
-            ) . ' AND value_id=' . (int) $value
-        );
+        $q = HelperUtility::getDatabaseConnection('tx_realurl_uniqalias')->createQueryBuilder();
+
+        $row = $q->select('value_id')
+            ->from('tx_realurl_uniqalias')
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->eq('tablename', IndexerService::TABLE_NAME),
+                    $q->expr()->eq('value_id', $q->createNamedParameter((int) $value, \PDO::PARAM_INT))
+                )
+            )
+            ->execute()
+            ->fetch();
+
         if (isset($row['value_alias'])) {
-            return (string)$row['value_alias'];
+            return (string) $row['value_alias'];
         }
 
         $alias = $this->getIndexBase((int) $value);
         $alias = $this->cleanUrl($alias);
 
-        $databaseConnection = HelperUtility::getDatabaseConnection();
         $entry = [
             'tablename' => IndexerService::TABLE_NAME,
             'field_alias' => 'title',
@@ -142,30 +164,33 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
         }
 
         $aliasBase = $alias;
-        for ($i = 0; ; $i++) {
+        for ($i = 0;; ++$i) {
             $alias = $i > 0 ? $aliasBase . '-' . $i : $aliasBase;
             if (!$this->aliasAlreadyExists($alias)) {
                 $entry['value_alias'] = $alias;
                 break;
             }
         }
-        $databaseConnection->exec_INSERTquery('tx_realurl_uniqalias', $entry);
 
-        return (string)$alias;
+        $q->resetQueryParts();
+        $q->insert('tx_realurl_uniqalias')->values($entry)->execute();
+
+        return (string) $alias;
     }
 
     /**
-     * Check if alias already exists
+     * Check if alias already exists.
      *
      * @param string $alias
+     *
      * @return bool
      */
     protected function aliasAlreadyExists($alias)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $count = $databaseConnection->exec_SELECTcountRows('*', 'tx_realurl_uniqalias',
-            'value_alias=' . $databaseConnection->fullQuoteStr($alias, 'tx_realurl_uniqalias'));
-        return (bool)$count;
+        $db = HelperUtility::getDatabaseConnection('tx_realurl_uniqalias');
+        $count = $db->count('*', 'tx_realurl_uniqalias', ['value_alias' => $db->quoteIdentifier($alias)]);
+
+        return (bool) $count;
     }
 
     /**
@@ -175,7 +200,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
      *
      * @return string
      */
-    protected function cleanUrl(string $alias):string
+    protected function cleanUrl(string $alias): string
     {
         if ($this->isOldRealUrlVersion()) {
             /** @var \tx_realurl_advanced $realUrl */
@@ -193,7 +218,7 @@ WHERE tx_calendarize_domain_model_index.uid IS NULL AND tx_realurl_uniqalias.tab
             $processedTitle = $utility->convertToSafeString($alias);
         }
 
-        return (string)$processedTitle;
+        return (string) $processedTitle;
     }
 
     /**

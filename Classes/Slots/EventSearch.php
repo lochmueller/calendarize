@@ -97,14 +97,24 @@ class EventSearch
         if (!\in_array('Event', $indexTypes, true)) {
             return;
         }
-        $databaseConnection = HelperUtility::getDatabaseConnection();
+
+        $table = 'sys_category_record_mm';
+        $db = HelperUtility::getDatabaseConnection($table);
+        $q = $db->createQueryBuilder();
+
         $categoryIds = [];
         if (isset($additionalSlotArguments['contentRecord']['uid']) && MathUtility::canBeInterpretedAsInteger($additionalSlotArguments['contentRecord']['uid'])) {
-            $rows = $databaseConnection->exec_SELECTgetRows(
-                'uid_local',
-                'sys_category_record_mm',
-                'tablenames="tt_content" AND uid_foreign=' . $additionalSlotArguments['contentRecord']['uid']
-            );
+            $rows = $q->select('uid_local')
+                ->from($table)
+                ->where(
+                    $q->expr()->andX(
+                        $q->expr()->eq('tablenames', 'tt_content'),
+                        $q->expr()->eq('uid_foreign', $q->createNamedParameter($additionalSlotArguments['contentRecord']['uid']))
+                    )
+                )
+                ->execute()
+                ->fetchAll();
+
             foreach ($rows as $row) {
                 $categoryIds[] = (int) $row['uid_local'];
             }
@@ -123,11 +133,18 @@ class EventSearch
             return;
         }
 
-        $rows = $databaseConnection->exec_SELECTgetRows(
-            'uid_foreign',
-            'sys_category_record_mm',
-            'tablenames="' . $this->tableName . '" AND uid_local IN (' . \implode(',', $categoryIds) . ')'
-        );
+        $q->resetQueryParts();
+        $rows = $q->select('uid_foreign')
+            ->from('sys_category_record_mm')
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->eq('tablenames', $this->tableName),
+                    $q->expr()->in('uid', $categoryIds)
+                )
+            )
+            ->execute()
+            ->fetchAll();
+
         foreach ($rows as $row) {
             $indexIds[] = (int) $row['uid_foreign'];
         }

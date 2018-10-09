@@ -66,8 +66,8 @@ class TcaService extends AbstractService
         $GLOBALS['TCA'][$table]['ctrl']['label_userFunc'] = self::class . '->eventTitle';
 
         // base record
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $fullRow = $databaseConnection->exec_SELECTgetSingleRow('*', $table, 'uid=' . $params['row']['uid']);
+        $databaseConnection = HelperUtility::getDatabaseConnection($table);
+        $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']]);
         $configurations = isset($fullRow['calendarize']) ? GeneralUtility::intExplode(
             ',',
             $fullRow['calendarize'],
@@ -80,10 +80,10 @@ class TcaService extends AbstractService
 
         foreach ($configurations as $key => $value) {
             $paramsInternal = [
-                'row' => $databaseConnection->exec_SELECTgetSingleRow(
-                    '*',
+                'row' => $databaseConnection->select(
+                    ['*'],
                     'tx_calendarize_domain_model_configuration',
-                    'uid=' . $value
+                    ['uid' => $value]
                 ),
                 'title' => '',
             ];

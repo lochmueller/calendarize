@@ -12,8 +12,10 @@ use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -149,13 +151,34 @@ class CleanupCommandController extends AbstractCommandController
 
         // search for outdated events
         $table = IndexerService::TABLE_NAME;
-        $where = 'end_date < ' . $now->getTimestamp() . ' AND foreign_table = \'' . $tableName . '\' ';
-        $where .= 'AND foreign_uid NOT IN (';
-        $where .= 'SELECT i2.foreign_uid FROM ' . $table . ' i2 WHERE i2.end_date > ' . $now->getTimestamp() . ' AND i2.foreign_table = \'' . $tableName . '\'';
-        $where .= ') AND hidden = 0 ' . BackendUtility::deleteClause($table);
 
-        $db = HelperUtility::getDatabaseConnection();
-        $rows = $db->exec_SELECTquery('foreign_uid', $table, $where, 'foreign_uid');
+        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
+            ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
+
+        $q->select('foreign_uid')
+            ->from($table)
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->lt('end_date', $q->createNamedParameter($now->getTimestamp())),
+                    $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
+                    $q->expr()->notIn(
+                        'foreign_uid',
+                        $q->select('i2.foreign_uid')
+                            ->from($table, 'i2')
+                            ->where(
+                                $q->expr()->gt('i2.end_date', $q->createNamedParameter($now->getTimestamp()))
+                            )
+                            ->andWhere(
+                                $q->expr()->eq('i2.foreign_table', $q->createNamedParameter($tableName))
+                            )
+                    )
+                )
+            );
+
+        $rows = $q->execute()->fetchAll();
 
         $this->enqueueMessage('Just found ' . \count($rows) . ' Events ready to process.', 'Events found', FlashMessage::INFO);
 

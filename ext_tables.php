@@ -1,10 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
- * General ext_tables file
- *
- * @author   Tim Lochmüller
+ * General ext_tables file.
  */
-if (!defined('TYPO3_MODE')) {
+if (!\defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 

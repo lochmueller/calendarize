@@ -230,8 +230,8 @@ class CalendarController extends AbstractController
     /**
      * Past action.
      *
-     * @param int        $limit
-     * @param string     $sort
+     * @param int    $limit
+     * @param string $sort
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
@@ -239,14 +239,13 @@ class CalendarController extends AbstractController
         $limit = 100,
         $sort = 'ASC'
     ) {
-        $limit = intval($this->settings['limit']);
+        $limit = (int) ($this->settings['limit']);
         $sort = $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
         $this->slotExtendedAssignMultiple([
-           'indices' => $this->indexRepository->findByPast($limit, $sort)
+           'indices' => $this->indexRepository->findByPast($limit, $sort),
         ], __CLASS__, __FUNCTION__);
     }
-
 
     /**
      * Year action.
@@ -258,7 +257,7 @@ class CalendarController extends AbstractController
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
+            'indices' => $this->indexRepository->findYear((int) $date->format('Y')),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
     }
@@ -276,7 +275,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'date' => $date,
-            'indices' => $this->indexRepository->findMonth((int)$date->format('Y'), (int)$date->format('n')),
+            'indices' => $this->indexRepository->findMonth((int) $date->format('Y'), (int) $date->format('n')),
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -337,7 +336,7 @@ class CalendarController extends AbstractController
         $next->modify('+1 day');
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j')),
+            'indices' => $this->indexRepository->findDay((int) $date->format('Y'), (int) $date->format('n'), (int) $date->format('j')),
             'today' => $date,
             'previous' => $previous,
             'next' => $next,
@@ -478,13 +477,13 @@ class CalendarController extends AbstractController
             $searchMode = true;
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
-            $indices = $this->indexRepository->findDay((int)$year, (int)$month, (int)$day);
+            $indices = $this->indexRepository->findDay((int) $year, (int) $month, (int) $day);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
-            $indices = $this->indexRepository->findMonth((int)$year, (int)$month);
+            $indices = $this->indexRepository->findMonth((int) $year, (int) $month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
             $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
-            $indices = $this->indexRepository->findYear((int)$year);
+            $indices = $this->indexRepository->findYear((int) $year);
         } else {
             $overrideStartDate = (int) $this->settings['overrideStartdate'];
             $overrideEndDate = (int) $this->settings['overrideEnddate'];

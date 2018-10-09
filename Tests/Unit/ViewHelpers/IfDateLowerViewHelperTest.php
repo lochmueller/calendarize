@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Check if a date is lower.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
@@ -18,6 +21,6 @@ class IfDateLowerViewHelperTest extends AbstractUnitTest
     public function testValidCheck()
     {
         $viewHelper = new IfDateLowerViewHelper();
-        $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2004'));
+        $this->assertTrue($viewHelper->render(new \DateTime(), '23.04.2004'));
     }
 }
