@@ -9,35 +9,30 @@ namespace JMBTechnologyLimited\ICalDissect;
  * @copyright (c) 2014, JMB Technology Limited, http://jmbtechnology.co.uk/
  * @author James Baster <james@jarofgreen.co.uk>
  */
-
 class ICalExDate
 {
+    protected $properties;
+    protected $values;
 
-	protected $properties;
-	protected $values;
+    public function __construct($values, $properties)
+    {
+        $this->properties = $properties;
+        $this->values = $values;
+    }
 
-	function __construct($values, $properties)
-	{
-		$this->properties = $properties;
-		$this->values = $values;
-	}
+    /**
+     * @return mixed
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
 
-	/**
-	 * @return mixed
-	 */
-	public function getProperties()
-	{
-		return $this->properties;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getValues()
-	{
-		return $this->values;
-	}
-
-
-
+    /**
+     * @return mixed
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
 }
