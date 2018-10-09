@@ -409,7 +409,7 @@ class CalMigrationUpdate extends AbstractUpdate
      * @param $dbQueries
      * @param $customMessages
      *
-     * @return bool|\mysqli_result|object
+     * @return array
      */
     protected function updateEventWithConfiguration($eventImportId, $configuration, &$dbQueries, &$customMessages)
     {
@@ -467,7 +467,7 @@ class CalMigrationUpdate extends AbstractUpdate
      * @param array  $dbQueries
      * @param array  $customMessages
      *
-     * @return bool|\mysqli_result|object
+     * @return array|bool
      */
     protected function addConfigurationIdToEvent($eventImportId, $configurationId, &$dbQueries, &$customMessages)
     {
@@ -487,7 +487,7 @@ class CalMigrationUpdate extends AbstractUpdate
      * @param array $dbQueries
      * @param array $customMessages
      *
-     * @return bool|\mysqli_result|object
+     * @return array
      */
     protected function updateEvent($eventId, $values, &$dbQueries, &$customMessages)
     {

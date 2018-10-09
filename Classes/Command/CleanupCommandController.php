@@ -140,9 +140,10 @@ class CleanupCommandController extends AbstractCommandController
      * @param string $tableName
      * @param int    $waitingPeriod
      *
-     * @return bool|\mysqli_result|object
+     * @return array
+     * @throws \Exception
      */
-    protected function findOutdatedEvents($tableName, $waitingPeriod)
+    protected function findOutdatedEvents($tableName, $waitingPeriod):array
     {
         // calculate the waiting time
         $interval = 'P' . (int) $waitingPeriod . 'D';
@@ -158,25 +159,27 @@ class CleanupCommandController extends AbstractCommandController
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
 
+
+        $foreignUids = $q->select('foreign_uid')
+            ->from($table)
+            ->where($q->expr()
+                ->gt('end_date', $q->createNamedParameter($now->getTimestamp())))
+            ->andWhere($q->expr()
+                ->eq('foreign_table', $q->createNamedParameter($tableName)))
+            ->execute()
+            ->fetchAll();
+
+        $foreignUids = array_map(function ($item) {
+            return (int)$item['foreign_uid'];
+        }, $foreignUids);
+
         $q->select('foreign_uid')
             ->from($table)
-            ->where(
-                $q->expr()->andX(
-                    $q->expr()->lt('end_date', $q->createNamedParameter($now->getTimestamp())),
-                    $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
-                    $q->expr()->notIn(
-                        'foreign_uid',
-                        $q->select('i2.foreign_uid')
-                            ->from($table, 'i2')
-                            ->where(
-                                $q->expr()->gt('i2.end_date', $q->createNamedParameter($now->getTimestamp()))
-                            )
-                            ->andWhere(
-                                $q->expr()->eq('i2.foreign_table', $q->createNamedParameter($tableName))
-                            )
-                    )
-                )
-            );
+            ->where($q->expr()
+                ->andX($q->expr()
+                    ->lt('end_date', $q->createNamedParameter($now->getTimestamp())), $q->expr()
+                    ->eq('foreign_table', $q->createNamedParameter($tableName)), $q->expr()
+                    ->notIn('foreign_uid', $foreignUids)));
 
         $rows = $q->execute()->fetchAll();
 

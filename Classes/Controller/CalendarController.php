@@ -525,7 +525,7 @@ class CalendarController extends AbstractController
      *
      * @return array
      */
-    protected function getAllowedActions()
+    protected function getAllowedActions():array
     {
         $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $allowedActions = [];
@@ -533,7 +533,7 @@ class CalendarController extends AbstractController
             $allowedActions[$controllerName] = $controllerActions['actions'];
         }
 
-        return $allowedActions['Calendar'] ?? [];
+        return is_array($allowedActions['Calendar']) ? $allowedActions['Calendar'] : [];
     }
 
     /**

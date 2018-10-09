@@ -4,7 +4,7 @@ disableDefaultEvent = 0
 # cat=basic/int+; type=int+; label=Frequency limit per item:Set the maximum level of iteration of frequency events to avoid endless indexing
 frequencyLimitPerItem = 300
 
-# cat=basic/int+; type=options[disabled=0,5m=300,10m=600,15m=900,30m=1800,60m=3600]; label=Time shift:Set the value to shift the time even more than the core (core default is 60 seconds). If you increase the time, the selection of content and data is rounded to the given time period (enableFields and also calendarize times). This will speed up the MySQL Query cache, because the SELECT queries are more often the same.
+# cat=basic/int+; type=options[disabled=0,5m=300,10m=600,15m=900,30m=1800,60m=3600]; label=Time shift:Set the value to shift the time even more than the core (core default is 60 seconds). If you increase the time, the selection of content and data is rounded to the given time period (enableFields and also calendarize times). This will speed up the Query cache, because the SELECT queries are more often the same.
 timeShift = 0
 
 # cat=basic/enable; type=boolean; label=Disable date in speaking URL:Disable the date in the speaking URL generation
