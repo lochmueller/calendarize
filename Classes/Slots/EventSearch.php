@@ -108,7 +108,7 @@ class EventSearch
                 ->from($table)
                 ->where(
                     $q->expr()->andX(
-                        $q->expr()->eq('tablenames', 'tt_content'),
+                        $q->expr()->eq('tablenames', $q->createNamedParameter('tt_content')),
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($additionalSlotArguments['contentRecord']['uid']))
                     )
                 )

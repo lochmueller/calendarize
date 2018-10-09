@@ -11,6 +11,8 @@ use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -72,7 +74,9 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      */
     public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false)
     {
-        $uriBuilder = $this->controllerContext->getUriBuilder();
+        $objectManager = new ObjectManager();
+        /** @var UriBuilder $uriBuilder */
+        $uriBuilder = $objectManager->get(UriBuilder::class);
         $this->lastHref = (string) $uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setArguments($additionalParams)

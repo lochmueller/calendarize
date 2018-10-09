@@ -85,7 +85,7 @@ class PluginConfigurationService
         $table = 'tx_calendarize_domain_model_pluginconfiguration';
 
         $db = HelperUtility::getDatabaseConnection($table);
-        $row = $db->select(['*'], $table, ['uid' => (int) $uid]);
+        $row = $db->select(['*'], $table, ['uid' => (int) $uid])->fetch();
 
         if (!isset($row['model_name'])) {
             return;
