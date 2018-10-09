@@ -154,11 +154,12 @@ class IndexRepository extends AbstractRepository
 
         return $result['result'];
     }
+
     /**
-     * Find Past Events
+     * Find Past Events.
      *
-     * @param int       $limit
-     * @param string    $sort
+     * @param int    $limit
+     * @param string $sort
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */

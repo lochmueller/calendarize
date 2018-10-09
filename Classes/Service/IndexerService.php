@@ -10,7 +10,6 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -31,12 +30,21 @@ class IndexerService extends AbstractService
     public function reindexAll()
     {
         $this->removeInvalidConfigurationIndex();
-        $databaseConnection = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
+        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
+
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         foreach (Register::getRegister() as $key => $configuration) {
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
-            $rows = $databaseConnection->select(['uid'], $tableName, '1=1' . BackendUtility::deleteClause($tableName));
+
+            $q->resetQueryParts();
+            $q->select('uid')
+                ->from($tableName);
+
+            $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
                 $this->updateIndex($key, $configuration['tableName'], $row['uid']);
             }
@@ -222,8 +230,8 @@ class IndexerService extends AbstractService
         }
         if ($ids) {
             $q->andWhere(
-                $q->expr()->notIn('foreign_uid', $ids);
-            )
+                $q->expr()->notIn('foreign_uid', $ids)
+            );
         }
 
         $q->execute();

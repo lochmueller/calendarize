@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * IndexUtilityTest.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;

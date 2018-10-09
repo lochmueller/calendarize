@@ -1,12 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 namespace JMBTechnologyLimited\ICalDissect;
 
 /**
+ * @see https://github.com/JMB-Technology-Limited/ICalDissect
  *
- * @link https://github.com/JMB-Technology-Limited/ICalDissect
  * @license https://raw.github.com/JMB-Technology-Limited/ICalDissect/master/LICENSE.txt 3-clause BSD
  * @copyright (c) 2014, JMB Technology Limited, http://jmbtechnology.co.uk/
- * @author James Baster <james@jarofgreen.co.uk>
  */
 class ICalTimeZone
 {
@@ -18,9 +20,9 @@ class ICalTimeZone
 
     public function processLine($keyword, $value)
     {
-        if ($keyword == 'TZID') {
+        if ('TZID' === $keyword) {
             $timezoneIdentifiers = \DateTimeZone::listIdentifiers();
-            if (in_array($value, $timezoneIdentifiers)) {
+            if (\in_array($value, $timezoneIdentifiers, true)) {
                 $this->timeZone = $value;
             }
         }

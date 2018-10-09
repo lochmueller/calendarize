@@ -59,7 +59,7 @@ class EventRepository extends AbstractRepository
     }
 
     /**
-     * Get the right Index ID by the event ID
+     * Get the right Index ID by the event ID.
      *
      * @param int $uid
      *
@@ -70,7 +70,7 @@ class EventRepository extends AbstractRepository
         /** @var Event $event */
         $event = $this->findByUid($uid);
 
-        if (!is_object($event)) {
+        if (!\is_object($event)) {
             return;
         }
 
@@ -93,6 +93,7 @@ class EventRepository extends AbstractRepository
 
         /** @var Index $index */
         $index = $result[0];
+
         return $index;
     }
 }

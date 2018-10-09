@@ -38,7 +38,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     protected $logger;
 
     /**
-     * Build up the object
+     * Build up the object.
      */
     public function __construct()
     {

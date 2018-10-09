@@ -307,6 +307,7 @@ class PluginConfiguration extends AbstractModel
         if (!($this->categories instanceof ObjectStorage)) {
             return new ObjectStorage();
         }
+
         return $this->categories;
     }
 

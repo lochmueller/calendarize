@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
 /**
- * General ext_localconf file
- *
- * @author   Tim Lochmüller
+ * General ext_localconf file.
  */
-if (!defined('TYPO3_MODE')) {
+if (!\defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
 \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
 
-if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
+if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
     \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
     /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
     $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
@@ -40,11 +40,11 @@ if (!(boolean)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefau
     'Calendar',
     [
         'Calendar' => 'list,past,latest,year,month,week,day,detail,search,result,single',
-        'Booking' => 'booking,send'
+        'Booking' => 'booking,send',
     ],
     [
         'Calendar' => 'search,result',
-        'Booking' => 'booking,send'
+        'Booking' => 'booking,send',
     ]
 );
 

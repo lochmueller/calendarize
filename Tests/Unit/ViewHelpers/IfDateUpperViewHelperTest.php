@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Check if a date is upper.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
@@ -18,6 +21,6 @@ class IfDateUpperViewHelperTest extends AbstractUnitTest
     public function testValidCheck()
     {
         $viewHelper = new IfDateUpperViewHelper();
-        $this->assertEquals(true, $viewHelper->render(new \DateTime(), '23.04.2026'));
+        $this->assertTrue($viewHelper->render(new \DateTime(), '23.04.2026'));
     }
 }

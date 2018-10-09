@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * DateTimeUtilityTest.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;

@@ -32,12 +32,20 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      */
     public function checkForUpdate(&$description)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $count = $databaseConnection->exec_SELECTcountRows(
-            '*',
-            'tx_calendarize_domain_model_configuration',
-            'handling="" OR handling IS NULL'
-        );
+        $table = 'tx_calendarize_domain_model_configuration';
+
+        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
+
+        $q->count('*')
+            ->from($table)
+            ->where(
+                $q->expr()->orX(
+                    $q->expr()->eq('handling', ''),
+                    $q->expr()->isNull('handling')
+                )
+            );
+
+        $count = $q->execute();
 
         if ($count > 0) {
             $description = 'We will update ' . $count . ' calendarize configurations';
@@ -58,49 +66,61 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      */
     public function performUpdate(array &$dbQueries, &$customMessages)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection();
-        $query = $databaseConnection->UPDATEquery(
-            'tx_calendarize_domain_model_configuration',
-            'type="timeExclude"',
-            [
-            'type' => ConfigurationInterface::TYPE_TIME,
-            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
-            ]
-        );
-        $databaseConnection->admin_query($query);
-        $dbQueries[] = $query;
+        $table = 'tx_calendarize_domain_model_configuration';
 
-        $query = $databaseConnection->UPDATEquery(
-            'tx_calendarize_domain_model_configuration',
-            'type="include"',
-            [
-            'type' => ConfigurationInterface::TYPE_GROUP,
-            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
-            ]
-        );
-        $databaseConnection->admin_query($query);
-        $dbQueries[] = $query;
+        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
+        $q->update($table)
+            ->where(
+                $q->expr()->eq('type', 'timeExclude')
+            )
+            ->values([
+                'type' => ConfigurationInterface::TYPE_TIME,
+                'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            ]);
 
-        $query = $databaseConnection->UPDATEquery(
-            'tx_calendarize_domain_model_configuration',
-            'type="exclude"',
-            [
-            'type' => ConfigurationInterface::TYPE_GROUP,
-            'handling' => ConfigurationInterface::HANDLING_EXCLUDE,
-            ]
-        );
-        $databaseConnection->admin_query($query);
-        $dbQueries[] = $query;
+        $dbQueries[] = $q->getSQL();
+        $q->execute();
+        $q->resetQueryParts();
 
-        $query = $databaseConnection->UPDATEquery(
-            'tx_calendarize_domain_model_configuration',
-            'handling="" OR handling IS NULL',
-            [
-            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
-            ]
-        );
-        $databaseConnection->admin_query($query);
-        $dbQueries[] = $query;
+        $q->update('tx_calendarize_domain_model_configuration')
+            ->where(
+                $q->expr()->eq('type', 'include')
+            )
+            ->values([
+                'type' => ConfigurationInterface::TYPE_GROUP,
+                'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            ]);
+
+        $dbQueries[] = $q->getSQL();
+        $q->execute();
+        $q->resetQueryParts();
+
+        $q->update('tx_calendarize_domain_model_configuration')
+            ->where(
+                $q->expr()->eq('type', 'exclude')
+            )
+            ->values([
+                'type' => ConfigurationInterface::TYPE_GROUP,
+                'handling' => ConfigurationInterface::HANDLING_EXCLUDE,
+            ]);
+
+        $dbQueries[] = $q->getSQL();
+        $q->execute();
+        $q->resetQueryParts();
+
+        $q->update('tx_calendarize_domain_model_configuration')
+            ->where(
+                $q->expr()->orX(
+                    $q->expr()->eq('handling', ''),
+                    $q->expr()->isNull('handling')
+                )
+            )
+            ->values([
+                'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            ]);
+
+        $dbQueries[] = $q->getSQL();
+        $q->execute();
 
         $customMessages = 'All queries are done! :)';
 

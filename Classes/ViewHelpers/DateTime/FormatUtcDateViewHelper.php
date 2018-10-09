@@ -15,24 +15,24 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 class FormatUtcDateViewHelper extends AbstractViewHelper
 {
     /**
-     * Format dateTime using strftime() with UTC timezone
+     * Format dateTime using strftime() with UTC timezone.
      *
      * @param \DateTime $date
-     * @param string     $format
+     * @param string    $format
      *
      * @return string
      */
     public function render(\DateTime $date, string $format = '')
     {
         // save configured timezone
-        $timezone = date_default_timezone_get();
+        $timezone = \date_default_timezone_get();
         // set timezone to UTC
-        date_default_timezone_set('UTC');
+        \date_default_timezone_set('UTC');
 
-        $result = strftime($format, (int) $date->format('U'));
+        $result = \strftime($format, (int) $date->format('U'));
 
         // restore timezone setting
-        date_default_timezone_set($timezone);
+        \date_default_timezone_set($timezone);
 
         return $result;
     }

@@ -82,8 +82,11 @@ class PluginConfigurationService
      */
     protected function buildPluginConfigurationObject($uid)
     {
-        $db = HelperUtility::getDatabaseConnection();
-        $row = $db->exec_SELECTgetSingleRow('*', 'tx_calendarize_domain_model_pluginconfiguration', 'uid=' . (int) $uid);
+        $table = 'tx_calendarize_domain_model_pluginconfiguration';
+
+        $db = HelperUtility::getDatabaseConnection($table);
+        $row = $db->select(['*'], $table, ['uid' => (int) $uid]);
+
         if (!isset($row['model_name'])) {
             return;
         }

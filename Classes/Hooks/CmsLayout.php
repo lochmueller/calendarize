@@ -47,7 +47,7 @@ class CmsLayout extends AbstractHook
      */
     public function getExtensionSummary(array $params)
     {
-        if ($params['row']['list_type'] !== 'calendarize_calendar') {
+        if ('calendarize_calendar' !== $params['row']['list_type']) {
             return '';
         }
 

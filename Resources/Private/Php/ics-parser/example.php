@@ -1,20 +1,25 @@
 <?php
+
+declare(strict_types=1);
 /**
  * This example demonstrates how the Ics-Parser should be used.
  *
  * PHP Version 5
  *
  * @category Example
- * @author   Martin Thoma <info@martin-thoma.de>
+ *
  * @license  http://www.opensource.org/licenses/mit-license.php  MIT License
+ *
  * @version  SVN: <svn_id>
- * @link     http://code.google.com/p/ics-parser/
+ *
+ * @see     http://code.google.com/p/ics-parser/
+ *
  * @example  $ical = new ical('MyCal.ics');
  *           print_r( $ical->get_event_array() );
  */
 require 'class.iCalReader.php';
 
-$ical   = new ICal('MyCal.ics');
+$ical = new ICal('MyCal.ics');
 $events = $ical->events();
 
 $date = $events[0]['DTSTART'];
