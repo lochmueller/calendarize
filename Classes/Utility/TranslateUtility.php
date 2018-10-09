@@ -19,7 +19,7 @@ class TranslateUtility
      *
      * @param string $key
      *
-     * @return null|string
+     * @return string|null
      */
     public static function get($key)
     {

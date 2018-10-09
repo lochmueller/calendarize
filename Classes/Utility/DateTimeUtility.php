@@ -148,7 +148,7 @@ class DateTimeUtility
      * Get a normalized date time object. The timezone of the returned object is
      * UTC for integer parameters and server timezone for everything else.
      *
-     * @param int|null|string|\DateTime $dateInformation
+     * @param int|string|\DateTime|null $dateInformation
      *
      * @return \DateTime
      */
@@ -187,7 +187,7 @@ class DateTimeUtility
      *
      * @see resetTime()
      *
-     * @param int|null|string|\DateTime $dateInformation
+     * @param int|string|\DateTime|null $dateInformation
      *
      * @return \DateTime
      */
@@ -199,7 +199,7 @@ class DateTimeUtility
     /**
      * Get the End of the given day.
      *
-     * @param int|null|string|\DateTime $dateInformation
+     * @param int|string|\DateTime|null $dateInformation
      *
      * @return \DateTime
      */

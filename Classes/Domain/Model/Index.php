@@ -123,7 +123,7 @@ class Index extends AbstractModel
     /**
      * Get the current configuration.
      *
-     * @return null|array
+     * @return array|null
      */
     public function getConfiguration()
     {

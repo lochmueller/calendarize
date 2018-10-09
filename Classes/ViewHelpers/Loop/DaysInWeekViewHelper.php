@@ -27,7 +27,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
      * Get items.
      *
      * @param \DateTime      $date
-     * @param null|\DateTime $originalDate
+     * @param \DateTime|null $originalDate
      *
      * @return array
      */
