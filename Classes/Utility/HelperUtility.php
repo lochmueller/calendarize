@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -89,11 +91,11 @@ class HelperUtility
     /**
      * Get the database connection.
      *
-     * @return DatabaseConnection
+     * @return Connection
      */
-    public static function getDatabaseConnection()
+    public static function getDatabaseConnection($table)
     {
-        return $GLOBALS['TYPO3_DB'];
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
     }
 
     /**
