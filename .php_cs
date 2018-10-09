@@ -6,7 +6,7 @@ return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->in(__DIR__.'/Classes')
+            ->in(__DIR__ . '/Classes')
     )
     ->setRules(array(
         '@PSR2' => true,

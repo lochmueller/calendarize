@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 $extensionPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('calendarize');
 
 $autoloadClasses = [

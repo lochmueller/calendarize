@@ -1,48 +1,49 @@
 <?php
 
-declare(strict_types=1);
-
 namespace JMBTechnologyLimited\ICalDissect;
 
 /**
- * @see https://github.com/JMB-Technology-Limited/ICalDissect
  *
+ * @link https://github.com/JMB-Technology-Limited/ICalDissect
  * @license https://raw.github.com/JMB-Technology-Limited/ICalDissect/master/LICENSE.txt 3-clause BSD
  * @copyright (c) 2014, JMB Technology Limited, http://jmbtechnology.co.uk/
+ * @author James Baster <james@jarofgreen.co.uk>
  */
-class LineTest extends \PHPUnit_Framework_TestCase
-{
-    public function dataForTestMultiLineDescription()
-    {
-        return [
-                ['IcalParserBasicImportMultiLineDescription.ical', 'Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Lizard'],
-                ['IcalParserBasicImportMultiLineDescription2.ical', 'Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Lizard:Blue'],
-                ['IcalParserBasicImportMultiLineDescription3.ical', 'Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Go Miaow Lizard:Blue abcdefgtijklmnopqrstuvwxyz abcdefgtijklmnopqrstuvwxyz 12345'],
-            ];
-    }
+class LineTest  extends \PHPUnit_Framework_TestCase {
 
-    /**
+
+
+	function dataForTestMultiLineDescription() {
+		return array(
+				array('IcalParserBasicImportMultiLineDescription.ical','Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Lizard'),
+				array('IcalParserBasicImportMultiLineDescription2.ical','Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Lizard:Blue'),
+				array('IcalParserBasicImportMultiLineDescription3.ical','Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Dog Cat Go Miaow Lizard:Blue abcdefgtijklmnopqrstuvwxyz abcdefgtijklmnopqrstuvwxyz 12345'),
+			);
+	}
+
+	/**
      * @dataProvider dataForTestMultiLineDescription
-     *
-     * @param mixed $filename
-     * @param mixed $output
-     */
-    public function testMultiLineDescription($filename, $output)
-    {
-        $parser = new ICalParser();
-        $this->assertTrue($parser->parseFromFile(__DIR__ . '/data/' . $filename));
-        $events = $parser->getEvents();
-        $this->assertEquals(1, \count($events));
-        $event = $events[0];
-        $this->assertEquals($output, $event->getDescription());
+     */		
+	function testMultiLineDescription ($filename, $output) {
+		$parser = new ICalParser();
+		$this->assertTrue($parser->parseFromFile(dirname(__FILE__)."/data/".$filename));
+		$events = $parser->getEvents();
+		$this->assertEquals(1, count($events));
+		$event = $events[0];
+		$this->assertEquals($output, $event->getDescription());
 
-        $rawAll = $event->getRaw();
-        $this->assertTrue(isset($rawAll['DESCRIPTION']));
+		$rawAll = $event->getRaw();
+		$this->assertTrue(isset($rawAll['DESCRIPTION']));
 
-        $rawAllDesc = $rawAll['DESCRIPTION'];
-        $this->assertEquals($output, $rawAllDesc[0]);
+		$rawAllDesc =  $rawAll['DESCRIPTION'];
+		$this->assertEquals($output,$rawAllDesc[0]);
 
-        $rawKey = $event->getRaw('DESCRIPTION');
-        $this->assertEquals($output, $rawKey[0]);
-    }
+		$rawKey = $event->getRaw('DESCRIPTION');
+		$this->assertEquals($output, $rawKey[0]);
+	}
+
+
+
+
 }
+

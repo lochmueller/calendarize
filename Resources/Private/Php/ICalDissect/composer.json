@@ -4,7 +4,7 @@
     "description": "Parses a ICAL file.",
     "keywords": ["ical"],
     "homepage": "https://github.com/JMB-Technology-Limited/ICalDissect",
-    "license": "BSD",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "James Baster",
@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.6.0"
     },
     "autoload": {
         "psr-0": {

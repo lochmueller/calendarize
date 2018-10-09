@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+
 /**
  * This PHP-Class should only read a iCal-File (*.ics), parse it and give an
  * array with its content.
@@ -61,14 +61,14 @@ class ICal
         }
 
         $lines = \file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        if (false === \mb_stristr($lines[0], 'BEGIN:VCALENDAR')) {
+        if (false == \mb_stristr($lines[0], 'BEGIN:VCALENDAR')) {
             return false;
         }
         // TODO: Fix multiline-description problem (see http://tools.ietf.org/html/rfc2445#section-4.8.1.5)
         foreach ($lines as $line) {
             $line = \trim($line);
             $add = $this->keyValueFromString($line);
-            if (false === $add) {
+            if (false == $add) {
                 $this->addCalendarComponentWithKeyAndValue($type, false, $line);
                 continue;
             }
@@ -133,7 +133,7 @@ class ICal
             // Ignore everything in keyword after a ; (things like Language, etc)
             $keyword = \mb_substr($keyword, 0, \mb_strpos($keyword, ';'));
         }
-        if (false === $keyword) {
+        if (false == $keyword) {
             $keyword = $this->last_keyword;
             switch ($component) {
             case 'VEVENT':
@@ -175,7 +175,7 @@ class ICal
     public function keyValueFromString($text)
     {
         \preg_match("/([^:]+)[:]([\w\W]*)/", $text, $matches);
-        if (0 === \count($matches)) {
+        if (0 == \count($matches)) {
             return false;
         }
         $matches = \array_splice($matches, 1, 2);
@@ -230,7 +230,7 @@ class ICal
         $array = $this->cal;
         $events = $array['VEVENT'];
         foreach ($array['VEVENT'] as $anEvent) {
-            if (isset($anEvent['RRULE']) && '' !== $anEvent['RRULE']) {
+            if (isset($anEvent['RRULE']) && '' != $anEvent['RRULE']) {
                 // Recurring event, parse RRULE and add appropriate duplicate events
                 $rrules = [];
                 $rrule_strings = \explode(';', $anEvent['RRULE']);
@@ -243,7 +243,7 @@ class ICal
                 $end_timestamp = $this->iCalDateToUnixTimestamp($anEvent['DTEND']);
                 $event_timestmap_offset = $end_timestamp - $start_timestamp;
                 // Get Interval
-                $interval = (isset($rrules['INTERVAL']) && '' !== $rrules['INTERVAL']) ? $rrules['INTERVAL'] : 1;
+                $interval = (isset($rrules['INTERVAL']) && '' != $rrules['INTERVAL']) ? $rrules['INTERVAL'] : 1;
                 // Get Until
                 $until = $this->iCalDateToUnixTimestamp($rrules['UNTIL']);
                 // Decide how often to add events and do so
@@ -266,9 +266,9 @@ class ICal
                 $offset = "+$interval week";
                 // Build list of days of week to add events
                 $weekdays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
-                $bydays = (isset($rrules['BYDAY']) && '' !== $rrules['BYDAY']) ? \explode(',', $rrules['BYDAY']) : ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+                $bydays = (isset($rrules['BYDAY']) && '' != $rrules['BYDAY']) ? \explode(',', $rrules['BYDAY']) : ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
                 // Get timestamp of first day of start week
-                $week_recurring_timestamp = (0 === \date('w', $start_timestamp)) ? $start_timestamp : \strtotime('last Sunday ' . \date('H:i:s', $start_timestamp), $start_timestamp);
+                $week_recurring_timestamp = (0 == \date('w', $start_timestamp)) ? $start_timestamp : \strtotime('last Sunday ' . \date('H:i:s', $start_timestamp), $start_timestamp);
                 // Step through weeks
                 while ($week_recurring_timestamp <= $until) {
                     // Add events for bydays
@@ -292,7 +292,7 @@ class ICal
                 // Create offset
                 $offset = "+$interval month";
                 $recurring_timestamp = \strtotime($offset, $start_timestamp);
-                if (isset($rrules['BYMONTHDAY']) && '' !== $rrules['BYMONTHDAY']) {
+                if (isset($rrules['BYMONTHDAY']) && '' != $rrules['BYMONTHDAY']) {
                     // Deal with BYMONTHDAY
                     while ($recurring_timestamp <= $until) {
                         // Add event
@@ -302,7 +302,7 @@ class ICal
                         // Move forward
                         $recurring_timestamp = \strtotime($offset, $recurring_timestamp);
                     }
-                } elseif (isset($rrules['BYDAY']) && '' !== $rrules['BYDAY']) {
+                } elseif (isset($rrules['BYDAY']) && '' != $rrules['BYDAY']) {
                     $start_time = \date('His', $start_timestamp);
                     // Deal with BYDAY
                     $day_number = \mb_substr($rrules['BYDAY'], 0, 1);
@@ -330,7 +330,7 @@ class ICal
                 // HACK: Exchange doesn't set a correct UNTIL for yearly events, so just go 2 years out
                 $until = \strtotime('+2 year', $start_timestamp);
                 // Check if BYDAY rule exists
-                if (isset($rrules['BYDAY']) && '' !== $rrules['BYDAY']) {
+                if (isset($rrules['BYDAY']) && '' != $rrules['BYDAY']) {
                     $start_time = \date('His', $start_timestamp);
                     // Deal with BYDAY
                     $day_number = \mb_substr($rrules['BYDAY'], 0, 1);
@@ -416,13 +416,13 @@ class ICal
 
         $extendedEvents = [];
 
-        if (false === $rangeStart) {
+        if (false == $rangeStart) {
             $rangeStart = new DateTime();
         } else {
             $rangeStart = new DateTime($rangeStart);
         }
 
-        if (false === $rangeEnd or $rangeEnd <= 0) {
+        if (false == $rangeEnd or $rangeEnd <= 0) {
             $rangeEnd = new DateTime('2038/01/18');
         } else {
             $rangeEnd = new DateTime($rangeEnd);
