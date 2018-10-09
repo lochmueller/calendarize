@@ -67,7 +67,7 @@ class TcaService extends AbstractService
 
         // base record
         $databaseConnection = HelperUtility::getDatabaseConnection($table);
-        $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']]);
+        $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']])->fetch();
         $configurations = isset($fullRow['calendarize']) ? GeneralUtility::intExplode(
             ',',
             $fullRow['calendarize'],
@@ -80,11 +80,11 @@ class TcaService extends AbstractService
 
         foreach ($configurations as $key => $value) {
             $paramsInternal = [
-                'row' => $databaseConnection->select(
+                'row' => (array)$databaseConnection->select(
                     ['*'],
                     'tx_calendarize_domain_model_configuration',
                     ['uid' => $value]
-                ),
+                )->fetch(),
                 'title' => '',
             ];
             $this->configurationTitle($paramsInternal, null);

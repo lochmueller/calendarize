@@ -255,7 +255,7 @@ class IndexerService extends AbstractService
 
             $q->delete(self::TABLE_NAME)
                 ->where(
-                    $q->expr()->notIn('unique_register', $validKeys)
+                    $q->expr()->notIn('unique_register_key', $validKeys)
                 )->execute();
 
             return (bool) $q->execute();
