@@ -18,7 +18,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'calendarize',
     'Calendar',
-    \HDNET\Calendarize\Utility\TranslateUtility::get('pluginName')
+    \HDNET\Calendarize\Utility\TranslateUtility::getLll('pluginName')
 );
 
 // module icon
