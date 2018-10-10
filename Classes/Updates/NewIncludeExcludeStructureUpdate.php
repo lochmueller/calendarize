@@ -85,7 +85,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
             ->where(
                 $q->expr()->eq('type', $q->quote('include'))
             )
-            ->set('type',ConfigurationInterface::TYPE_GROUP)
+            ->set('type', ConfigurationInterface::TYPE_GROUP)
             ->set('handling', ConfigurationInterface::HANDLING_INCLUDE);
 
         $dbQueries[] = $q->getSQL();
