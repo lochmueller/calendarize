@@ -137,13 +137,12 @@ class EventSearch
         $rows = $q->select('uid_foreign')
             ->from('sys_category_record_mm')
             ->where(
-                $q->expr()->andX(
-                    $q->expr()->eq('tablenames', $this->tableName),
-                    $q->expr()->in('uid', $categoryIds)
-                )
+                $q->expr()->in('uid_local', $categoryIds),
+                $q->expr()->eq('tablenames', $q->quote($this->tableName))
             )
             ->execute()
             ->fetchAll();
+
 
         foreach ($rows as $row) {
             $indexIds[] = (int) $row['uid_foreign'];
