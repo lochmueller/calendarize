@@ -108,7 +108,7 @@ class EventSearch
                 ->from($table)
                 ->where(
                     $q->expr()->andX(
-                        $q->expr()->eq('tablenames', $q->createNamedParameter('tt_content')),
+                        $q->expr()->eq('tablenames', $q->quote('tt_content')),
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($additionalSlotArguments['contentRecord']['uid']))
                     )
                 )
@@ -142,7 +142,6 @@ class EventSearch
             )
             ->execute()
             ->fetchAll();
-
 
         foreach ($rows as $row) {
             $indexIds[] = (int) $row['uid_foreign'];
