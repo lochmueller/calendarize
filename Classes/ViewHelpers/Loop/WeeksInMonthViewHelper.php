@@ -20,6 +20,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
      */
     public function initializeArguments()
     {
+        parent::initializeArguments();
         $this->registerArgument('weekStartsAt', 'int', 'Number between 1 and 7', true, 1);
     }
 

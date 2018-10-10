@@ -14,22 +14,26 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
  */
 class FormatUtcDateViewHelper extends AbstractViewHelper
 {
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('date', \DateTimeInterface::class, 'DateTimeInterface Object to format', true);
+        $this->registerArgument('format', 'string', 'format passed to strftime', false, '');
+    }
+
     /**
      * Format dateTime using strftime() with UTC timezone.
      *
-     * @param \DateTime $date
-     * @param string    $format
-     *
      * @return string
      */
-    public function render(\DateTime $date, string $format = '')
+    public function render()
     {
         // save configured timezone
         $timezone = \date_default_timezone_get();
         // set timezone to UTC
         \date_default_timezone_set('UTC');
 
-        $result = \strftime($format, (int) $date->format('U'));
+        $result = \strftime($this->arguments['format'], (int) $this->arguments['date']->format('U'));
 
         // restore timezone setting
         \date_default_timezone_set($timezone);

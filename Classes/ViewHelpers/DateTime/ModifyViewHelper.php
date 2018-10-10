@@ -14,24 +14,31 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
  */
 class ModifyViewHelper extends AbstractViewHelper
 {
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('modification', 'string', 'DateTime Object Modification String', true, '');
+        $this->registerArgument('dateTime', \DateTimeInterface::class, 'DateTime to modify', false, null);
+    }
+
     /**
      * Modify the given datetime by the string modification.
      *
-     * @param string    $modification
-     * @param \DateTime $dateTime
-     *
      * @return string
      */
-    public function render($modification, \DateTime $dateTime = null)
+    public function render()
     {
-        if (null === $dateTime) {
+        $dateTime = $this->arguments['dateTime'];
+
+        if ($dateTime === null) {
             $dateTime = $this->renderChildren();
         }
-        if (!($dateTime instanceof \DateTimeInterface)) {
+        if (! $dateTime instanceof \DateTimeInterface) {
             $dateTime = new \DateTime();
         }
+
         $clone = clone $dateTime;
 
-        return $clone->modify($modification);
+        return $clone->modify($this->arguments['modification']);
     }
 }

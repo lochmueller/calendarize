@@ -17,21 +17,34 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
  */
 class IndexOnDayViewHelper extends AbstractViewHelper
 {
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('day', \DateTimeInterface::class, 'Day to check against the Indices', true);
+        $this->registerArgument('index', Index::class, 'Index to check against day', false, null);
+        $this->registerArgument('indices', \Iterator::class, 'Indices to check against day', false, []);
+        $this->registerArgument('modification', 'string', 'Apply Modifier to the Date', false, '');
+    }
+
     /**
      * Check if the index or one of the given indices is on the given day.
      *
-     * @param \DateTime $day
-     * @param Index     $index
-     * @param array     $indices
-     * @param string    $modification
-     *
      * @return bool
      */
-    public function render(\DateTime $day, Index $index = null, $indices = [], $modification = '')
+    public function render()
     {
+        /** @var \DateTimeInterface $day */
+        $day = $this->arguments['day'];
+        /** @var ?Index $index */
+        $index = $this->arguments['index'];
+        /** @var array<Index> $indices */
+        $indices = $this->arguments['indices'];
+        /** @var string $modification */
+        $modification = $this->arguments['modification'];
+
         $day = DateTimeUtility::normalizeDateTimeSingle($day->format('d.m.Y'));
         $baseDay = clone $day;
-        if ('' !== $modification) {
+        if ($modification !== '') {
             $baseDay->modify($modification);
         }
 

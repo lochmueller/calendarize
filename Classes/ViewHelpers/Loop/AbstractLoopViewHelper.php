@@ -38,22 +38,26 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('date', \DateTimeInterface::class, 'DateTimeInterface Object', true);
+        $this->registerArgument('iteration', 'string', 'Iterator', true);
+    }
+
     /**
      * Render the element.
-     *
-     * @param \DateTime $date
-     * @param string    $iteration
      *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      *
      * @return string
      */
-    public function render(\DateTime $date, $iteration)
+    public function render()
     {
         $variableContainer = $this->renderingContext->getVariableProvider();
 
         // clone: take care that the getItems method do not manipulate the original
-        $items = $this->getItems(clone $date);
+        $items = $this->getItems(clone $this->arguments['date']);
 
         $iterationData = [
             'index' => 0,
@@ -69,11 +73,11 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
             $iterationData['isOdd'] = !$iterationData['isEven'];
             $iterationData['calendar'] = $item;
 
-            $variableContainer->add($iteration, $iterationData);
+            $variableContainer->add($this->arguments['iteration'], $iterationData);
 
             $output .= $this->renderChildren();
 
-            $variableContainer->remove($iteration);
+            $variableContainer->remove($this->arguments['iteration']);
             ++$iterationData['index'];
             ++$iterationData['cycle'];
         }
