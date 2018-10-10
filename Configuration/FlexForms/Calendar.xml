@@ -271,11 +271,6 @@
 								<size>3</size>
 								<maxitems>50</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</persistence.storagePid>
@@ -341,11 +336,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.detailPid>
@@ -361,11 +351,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.listPid>
@@ -381,11 +366,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.yearPid>
@@ -401,11 +381,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.monthPid>
@@ -421,11 +396,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.weekPid>
@@ -441,11 +411,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.dayPid>
@@ -461,11 +426,6 @@
 								<size>1</size>
 								<maxitems>1</maxitems>
 								<minitems>0</minitems>
-								<wizards>
-									<suggest>
-										<type>suggest</type>
-									</suggest>
-								</wizards>
 							</config>
 						</TCEforms>
 					</settings.bookingPid>

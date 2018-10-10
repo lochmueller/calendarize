@@ -49,12 +49,14 @@ $custom = [
         'start_time' => [
             'config' => [
                 'readOnly' => '1',
+                'renderType' => 'inputDateTime',
                 'eval' => 'time',
             ],
         ],
         'end_time' => [
             'config' => [
                 'readOnly' => '1',
+                'renderType' => 'inputDateTime',
                 'eval' => 'time',
             ],
         ],

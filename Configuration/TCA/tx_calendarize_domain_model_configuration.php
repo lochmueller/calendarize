@@ -58,7 +58,6 @@ $custom = [
             Configuration::TYPE_EXTERNAL => 'apps-calendarize-type-' . Configuration::TYPE_EXTERNAL,
         ],
         'typeicon_column' => 'type',
-        'requestUpdate' => 'all_day,frequency,handling',
         'formattedLabel_userFunc' => TcaService::class . '->configurationTitle',
     ],
     'columns' => [
@@ -84,6 +83,7 @@ $custom = [
             ],
         ],
         'handling' => [
+            'onChange' => 'reload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -142,6 +142,7 @@ $custom = [
         'start_time' => [
             'config' => [
                 'eval' => 'time,required',
+                'renderType' => 'inputDateTime',
                 'size' => 4,
                 'wizards' => [
                     'time_selection' => [
@@ -160,6 +161,7 @@ $custom = [
         'end_time' => [
             'config' => [
                 'eval' => 'time',
+                'renderType' => 'inputDateTime',
                 'size' => 4,
                 'wizards' => [
                     'time_selection' => [
@@ -176,6 +178,7 @@ $custom = [
             ],
         ],
         'all_day' => [
+            'onChange' => 'reload',
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
                 'default' => '0',
@@ -193,6 +196,7 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_GROUP,
         ],
         'frequency' => [
+            'onChange' => 'reload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',

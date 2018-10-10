@@ -16,11 +16,6 @@ $defaultPidConfiguration = [
         'size' => '1',
         'maxitems' => '1',
         'minitems' => '0',
-        'wizards' => [
-            'suggest' => [
-                'type' => 'suggest',
-            ],
-        ],
     ],
 ];
 
@@ -53,11 +48,6 @@ $custom = [
                 'size' => '3',
                 'maxitems' => '50',
                 'minitems' => '0',
-                'wizards' => [
-                    'suggest' => [
-                        'type' => 'suggest',
-                    ],
-                ],
             ],
         ],
         'recursive' => [
