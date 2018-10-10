@@ -108,7 +108,7 @@ class EventSearch
                 ->from($table)
                 ->where(
                     $q->expr()->andX(
-                        $q->expr()->eq('tablenames', $q->createNamedParameter('tt_content')),
+                        $q->expr()->eq('tablenames', $q->quote('tt_content')),
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($additionalSlotArguments['contentRecord']['uid']))
                     )
                 )
@@ -137,10 +137,8 @@ class EventSearch
         $rows = $q->select('uid_foreign')
             ->from('sys_category_record_mm')
             ->where(
-                $q->expr()->andX(
-                    $q->expr()->eq('tablenames', $this->tableName),
-                    $q->expr()->in('uid', $categoryIds)
-                )
+                $q->expr()->in('uid_local', $categoryIds),
+                $q->expr()->eq('tablenames', $q->quote($this->tableName))
             )
             ->execute()
             ->fetchAll();
