@@ -516,6 +516,4 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     {
         $this->organizerLink = $organizerLink;
     }
-
-
 }
