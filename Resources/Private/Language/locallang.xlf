@@ -9,6 +9,8 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_event.organizer_link"><source>Organizer link</source></trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.location_link"><source>Location link</source></trans-unit>
 
 			<trans-unit id="canceled"><source>Canceled</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.state"><source>State</source></trans-unit>

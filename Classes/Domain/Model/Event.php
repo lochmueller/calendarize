@@ -55,12 +55,28 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $location;
 
     /**
+     * Location link.
+     *
+     * @var string
+     * @db
+     */
+    protected $locationLink;
+
+    /**
      * Organizer.
      *
      * @var string
      * @db
      */
     protected $organizer;
+
+    /**
+     * Organizer link.
+     *
+     * @var string
+     * @db
+     */
+    protected $organizerLink;
 
     /**
      * Import ID if the item is based on an ICS structure.
@@ -468,4 +484,38 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     {
         $this->hidden = $hidden;
     }
+
+    /**
+     * @return string
+     */
+    public function getLocationLink()
+    {
+        return $this->locationLink;
+    }
+
+    /**
+     * @param string $locationLink
+     */
+    public function setLocationLink($locationLink)
+    {
+        $this->locationLink = $locationLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganizerLink()
+    {
+        return $this->organizerLink;
+    }
+
+    /**
+     * @param string $organizerLink
+     */
+    public function setOrganizerLink($organizerLink)
+    {
+        $this->organizerLink = $organizerLink;
+    }
+
+
 }

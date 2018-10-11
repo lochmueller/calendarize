@@ -35,6 +35,16 @@ $custom = [
                 'readOnly' => true,
             ],
         ],
+        'location_link' => [
+            'config' => [
+                'renderType' => 'inputLink',
+            ],
+        ],
+        'organizer_link' => [
+            'config' => [
+                'renderType' => 'inputLink',
+            ],
+        ],
         'images' => [
             'config' => [
                 // Use the imageoverlayPalette instead of the basicoverlayPalette
