@@ -59,3 +59,6 @@ $iconRegistry->registerIcon(
     \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
     ['source' => $iconPath . 'ConfigurationExternal.png']
 );
+
+// Exclude "pages" and obsolete fields
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['calendarize_calendar'] = 'recursive,select_key,pages';
