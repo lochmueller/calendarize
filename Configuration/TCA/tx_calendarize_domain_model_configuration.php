@@ -129,6 +129,7 @@ $custom = [
             'config' => [
                 'eval' => 'required,date',
                 'size' => 6,
+                'default' => 0,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -136,6 +137,7 @@ $custom = [
             'config' => [
                 'eval' => 'date',
                 'size' => 6,
+                'default' => 0,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -143,6 +145,7 @@ $custom = [
             'config' => [
                 'eval' => 'time,required',
                 'renderType' => 'inputDateTime',
+                'default' => 0,
                 'size' => 4,
                 'wizards' => [
                     'time_selection' => [
@@ -163,6 +166,7 @@ $custom = [
                 'eval' => 'time',
                 'renderType' => 'inputDateTime',
                 'size' => 4,
+                'default' => 0,
                 'wizards' => [
                     'time_selection' => [
                         'type' => 'userFunc',
@@ -230,6 +234,7 @@ $custom = [
             'config' => [
                 'eval' => 'date',
                 'size' => 8,
+                'default' => 0,
             ],
             'displayCond' => [
                 'AND' => [
@@ -255,7 +260,7 @@ $custom = [
             'config' => [
                 'eval' => 'int,required',
                 'size' => 5,
-                'default' => '1',
+                'default' => 1,
             ],
             'displayCond' => [
                 'AND' => [
