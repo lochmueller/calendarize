@@ -48,12 +48,12 @@ class EventSearch
      */
     public function setIdsByCustomSearch(
         array $indexIds,
-        \DateTime $startDate,
-        \DateTime $endDate,
-        array $customSearch,
-        array $indexTypes,
-        bool $emptyPreResult,
-        array $additionalSlotArguments
+        \DateTime $startDate = null,
+        \DateTime $endDate = null,
+        array $customSearch = [],
+        array $indexTypes = [],
+        bool $emptyPreResult = false,
+        array $additionalSlotArguments = []
     ) {
         if (!\in_array('Event', $indexTypes, true)) {
             return;
