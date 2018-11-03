@@ -121,7 +121,7 @@ class EventSearch
         if (empty($categoryIds)) {
             return;
         }
-        
+
         $q->resetQueryParts();
         $rows = $q->select('uid_foreign')
             ->from('sys_category_record_mm')
