@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Slots;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
+use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -17,18 +18,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class EventSearch
 {
-    /**
-     * Table name.
-     *
-     * Note: This complete class is for the Event Model of the calendarize extension.
-     * If you use a own model with special search criteria you have to register your
-     * own custom Slot. If you only want the category logic for your model, you can
-     * easily register a own slot that is based on this class. Thean you only have
-     * to overwrite the tableName property.
-     *
-     * @var string
-     */
-    protected $tableName = 'tx_calendarize_domain_model_event';
 
     /**
      * Check if we can reduce the amount of results.
@@ -55,7 +44,7 @@ class EventSearch
         bool $emptyPreResult = false,
         array $additionalSlotArguments = []
     ) {
-        if (!\in_array('Event', $indexTypes, true)) {
+        if (!\in_array($this->getUniqueRegisterKey(), $indexTypes, true)) {
             return;
         }
 
@@ -94,7 +83,7 @@ class EventSearch
      */
     public function setIdsByGeneral(array $indexIds, array $indexTypes, array $additionalSlotArguments)
     {
-        if (!\in_array('Event', $indexTypes, true)) {
+        if (!\in_array($this->getUniqueRegisterKey(), $indexTypes, true)) {
             return;
         }
 
@@ -132,13 +121,13 @@ class EventSearch
         if (empty($categoryIds)) {
             return;
         }
-
+        
         $q->resetQueryParts();
         $rows = $q->select('uid_foreign')
             ->from('sys_category_record_mm')
             ->where(
                 $q->expr()->in('uid_local', $categoryIds),
-                $q->expr()->eq('tablenames', $q->quote($this->tableName))
+                $q->expr()->eq('tablenames', $q->quote($this->getTableName()))
             )
             ->execute()
             ->fetchAll();
@@ -152,5 +141,33 @@ class EventSearch
             'indexTypes' => $indexTypes,
             'additionalSlotArguments' => $additionalSlotArguments,
         ];
+    }
+
+    /**
+     * Table name.
+     *
+     * Note: This complete class is for the Event Model of the calendarize extension.
+     * If you use a own model with special search criteria you have to register your
+     * own custom Slot. If you only want the category logic for your model, you can
+     * easily register a own slot that is based on this class. Thean you only have
+     * to overwrite the tableName property.
+     *
+     * @return string
+     */
+    protected function getTableName()
+    {
+        $config = Register::getDefaultCalendarizeConfiguration();
+        return $config['tableName'];
+    }
+
+    /**
+     * Unique register key.
+     *
+     * @return string
+     */
+    protected function getUniqueRegisterKey()
+    {
+        $config = Register::getDefaultCalendarizeConfiguration();
+        return $config['uniqueRegisterKey'];
     }
 }
