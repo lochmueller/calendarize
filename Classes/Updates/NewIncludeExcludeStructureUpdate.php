@@ -45,7 +45,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
                 )
             );
 
-        $count = $q->execute()->rowCount();
+        $count = $q->execute()->fetchColumn(0);
 
         if ($count > 0) {
             $description = 'We will update ' . $count . ' calendarize configurations';
