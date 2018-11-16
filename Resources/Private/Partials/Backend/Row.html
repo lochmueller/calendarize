@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+			xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
+<tr>
+	<td>
+		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+	</td>
+	<td>
+		<f:render partial="DateInformation" arguments="{index: index}"/>
+	</td>
+	<td>
+		{index.configuration.uniqueRegisterKey}/{index.originalObject.uid}
+	</td>
+	<td>
+		<a class="btn btn-default"
+			 href="{c:editRecord(parameters: 'edit[{index.configuration.tableName}][{index.originalObject.uid}]=edit')}">
+			<core:icon identifier="actions-document-open"/>
+		</a>
+	</td>
+</tr>
+</html>

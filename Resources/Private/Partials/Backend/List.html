@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:be.widget.paginate objects="{indices}" as="indexBlock" configuration="{itemsPerPage: 50, insertBelow: 1}">
+	<div class="table-fit">
+		<table class="table table-striped table-hover">
+			<thead>
+			<tr>
+				<th class="col-title">
+					Title
+				</th>
+				<th class="col-title">
+					Date
+				</th>
+				<th class="col-title">
+					Type / ID
+				</th>
+				<th class="col-title">
+					Action
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<f:for each="{indexBlock}" as="index">
+				<f:render partial="Backend/Row" arguments="{index: index}"/>
+			</f:for>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="5">
+					<f:count subject="{indices}"/>
+					items
+				</td>
+			</tr>
+			</tfoot>
+		</table>
+	</div>
+</f:be.widget.paginate>
+</html>
