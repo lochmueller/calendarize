@@ -2,7 +2,6 @@
 /**
  * BackendController
  */
-
 namespace HDNET\Calendarize\Controller;
 
 /**
@@ -10,7 +9,6 @@ namespace HDNET\Calendarize\Controller;
  */
 class BackendController extends AbstractController
 {
-
     protected $indexRepository;
 
     /**
@@ -26,5 +24,4 @@ class BackendController extends AbstractController
             'settings' => $this->settings,
         ]);
     }
-
 }
