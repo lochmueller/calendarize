@@ -59,16 +59,15 @@ class RealUrl extends AbstractUrl
     protected function cleanupOldLinks()
     {
         $removeIds = [];
-        $table = 'tx_calendarize_domain_model_index';
-        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
+        $q = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME)->createQueryBuilder();
 
         $q->select('uid')
-            ->from('tx_realurl_uniqalias')
-            ->leftJoin('tx_calendarize_domain_model_index', 'tx_realurl_uniqalias.value_id', 'tx_calendarize_domain_model_index.uid')
+            ->from('tx_realurl_uniqalias', 'u')
+            ->leftJoin('u', IndexerService::TABLE_NAME, 'i', 'u.value_id = i.uid')
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->isNull('tx_calendarize_domain_model_index.uid'),
-                    $q->expr()->eq('tx_realurl_uniqalias.tablename', 'tx_calendarize_domain_model_index')
+                    $q->expr()->isNull('i.uid'),
+                    $q->expr()->eq('u.tablename', $q->expr()->literal(IndexerService::TABLE_NAME))
                 )
             );
 
