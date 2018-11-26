@@ -61,7 +61,7 @@ class RealUrl extends AbstractUrl
         $removeIds = [];
         $q = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME)->createQueryBuilder();
 
-        $q->select('uid')
+        $q->select('u.uid')
             ->from('tx_realurl_uniqalias', 'u')
             ->leftJoin('u', IndexerService::TABLE_NAME, 'i', 'u.value_id = i.uid')
             ->where(
