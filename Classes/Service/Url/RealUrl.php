@@ -103,7 +103,7 @@ class RealUrl extends AbstractUrl
             ->from('tx_realurl_uniqalias')
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->eq('tablename', IndexerService::TABLE_NAME),
+                    $q->expr()->eq('tablename', $q->expr()->literal(IndexerService::TABLE_NAME)),
                     $q->expr()->eq('value_alias', $q->createNamedParameter($value))
                 )
             )
@@ -137,7 +137,7 @@ class RealUrl extends AbstractUrl
             ->from('tx_realurl_uniqalias')
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->eq('tablename', IndexerService::TABLE_NAME),
+                    $q->expr()->eq('tablename', $q->expr()->literal(IndexerService::TABLE_NAME)),
                     $q->expr()->eq('value_id', $q->createNamedParameter((int) $value, \PDO::PARAM_INT))
                 )
             )
