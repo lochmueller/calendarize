@@ -14,9 +14,13 @@ use HDNET\Calendarize\Utility\EventUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -232,10 +236,33 @@ class CalendarController extends AbstractController
      */
     public function shortcutAction()
     {
-        // @todo fetch the right event
+        list($table, $uid) = explode(':', $GLOBALS['TSFE']->currentRecord);
+        $register = Register::getRegister();
+
+        $event = null;
+        foreach ($register as $key => $value) {
+            if ($value['tableName'] === $table) {
+                $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
+                if (class_exists($repositoryName)) {
+                    $objectManager = new ObjectManager();
+                    $repository = $objectManager->get($repositoryName);
+                    $event = $repository->findByUid($uid);
+                }
+            }
+        }
+
+        if (!($event instanceof DomainObjectInterface)) {
+            return 'Invalid object';
+        }
+
+        $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, 1);
+        if (count($fetchEvent) <= 0) {
+            $fetchEvent = $this->indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
+        }
+
 
         $this->view->assignMultiple([
-            'indices' => $this->indexRepository->findAll(),
+            'indices' => $fetchEvent,
         ]);
     }
 
