@@ -30,10 +30,10 @@ class ModifyViewHelper extends AbstractViewHelper
     {
         $dateTime = $this->arguments['dateTime'];
 
-        if ($dateTime === null) {
+        if (null === $dateTime) {
             $dateTime = $this->renderChildren();
         }
-        if (! $dateTime instanceof \DateTimeInterface) {
+        if (!$dateTime instanceof \DateTimeInterface) {
             $dateTime = new \DateTime();
         }
 

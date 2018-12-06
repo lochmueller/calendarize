@@ -31,6 +31,9 @@ plugin.tx_calendarize {
 		# cat=calendarize//0100; type=string; label=Search end modifier: The modifier for the search end date in the search form
 		searchEndModifier = +1 month
 
+    # cat=calendarize//0110; type=int+; label=Default detail PID: Default detail PID for e.g. the Insert record TS configuration
+    defaultDetailPid = 0
+
 		feed {
 			# cat=calendarize//0080; type=string; label=Title of the Feed: The feed title for atom and xml/rss
 			title = Title of the feed

@@ -57,7 +57,7 @@ abstract class AbstractController extends ActionController
 
         $objectManager = new ObjectManager();
         $pluginConfigurationService = $objectManager->get(PluginConfigurationService::class);
-        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
+        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array) $this->settings);
     }
 
     /**

@@ -140,10 +140,11 @@ class CleanupCommandController extends AbstractCommandController
      * @param string $tableName
      * @param int    $waitingPeriod
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
-    protected function findOutdatedEvents($tableName, $waitingPeriod):array
+    protected function findOutdatedEvents($tableName, $waitingPeriod): array
     {
         // calculate the waiting time
         $interval = 'P' . (int) $waitingPeriod . 'D';
@@ -159,7 +160,6 @@ class CleanupCommandController extends AbstractCommandController
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
 
-
         $foreignUids = $q->select('foreign_uid')
             ->from($table)
             ->where($q->expr()
@@ -169,8 +169,8 @@ class CleanupCommandController extends AbstractCommandController
             ->execute()
             ->fetchAll();
 
-        $foreignUids = array_map(function ($item) {
-            return (int)$item['foreign_uid'];
+        $foreignUids = \array_map(function ($item) {
+            return (int) $item['foreign_uid'];
         }, $foreignUids);
 
         $q->select('foreign_uid')

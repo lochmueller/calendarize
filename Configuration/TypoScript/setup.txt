@@ -10,7 +10,7 @@ plugin.tx_calendarize {
 		listStartTime = {$plugin.tx_calendarize.settings.listStartTime}
 		listStartTimeOffsetHours = {$plugin.tx_calendarize.settings.listStartTimeOffsetHours}
 		searchEndModifier = {$plugin.tx_calendarize.settings.searchEndModifier}
-
+    defaultDetailPid = {$plugin.tx_calendarize.settings.defaultDetailPid}
 
 		feed {
 			title = {$plugin.tx_calendarize.settings.feed.title}
@@ -99,3 +99,34 @@ plugin.tx_calendarize {
 		}
 	}
 [global]
+
+# Rendering of calendarize, displayed by "Insert Record" content element
+tt_content.shortcut.20.tables := addToList(tx_calendarize_domain_model_event)
+tt_content.shortcut.20.conf.tx_calendarize_domain_model_event = USER
+tt_content.shortcut.20.conf.tx_calendarize_domain_model_event {
+  userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+  extensionName = Calendarize
+  pluginName = Calendar
+  vendorName = HDNET
+  switchableControllerActions {
+    Calendar {
+      1 = shortcut
+    }
+  }
+
+  settings =< plugin.tx_calendarize.settings
+  settings {
+    insertRecord = 1
+    hidePagination = 1
+    detailPid = {$plugin.tx_calendarize.settings.defaultDetailPid}
+  }
+}
+# For fluid_styled_content
+tt_content.shortcut.variables.shortcuts.tables := addToList(tx_calendarize_domain_model_event)
+tt_content.shortcut.variables.shortcuts.conf.tx_calendarize_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event
+
+# Add you own tables with (See: EXT:calendarize/Configuration/TCA/Overrides/tt_content.php)
+# tt_content.shortcut.20.tables := addToList(tx_XXXXXX_domain_model_event)
+# tt_content.shortcut.20.conf.tx_XXXXX_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event
+# tt_content.shortcut.variables.shortcuts.tables := addToList(tx_XXXXX_domain_model_event)
+# tt_content.shortcut.variables.shortcuts.conf.tx_XXXXXX_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event

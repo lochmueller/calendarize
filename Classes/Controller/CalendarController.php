@@ -228,6 +228,18 @@ class CalendarController extends AbstractController
     }
 
     /**
+     * Shortcut.
+     */
+    public function shortcutAction()
+    {
+        // @todo fetch the right event
+
+        $this->view->assignMultiple([
+            'indices' => $this->indexRepository->findAll(),
+        ]);
+    }
+
+    /**
      * Past action.
      *
      * @param int    $limit
@@ -525,7 +537,7 @@ class CalendarController extends AbstractController
      *
      * @return array
      */
-    protected function getAllowedActions():array
+    protected function getAllowedActions(): array
     {
         $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $allowedActions = [];
@@ -533,7 +545,7 @@ class CalendarController extends AbstractController
             $allowedActions[$controllerName] = $controllerActions['actions'];
         }
 
-        return is_array($allowedActions['Calendar']) ? $allowedActions['Calendar'] : [];
+        return \is_array($allowedActions['Calendar']) ? $allowedActions['Calendar'] : [];
     }
 
     /**

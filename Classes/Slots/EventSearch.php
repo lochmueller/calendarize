@@ -18,7 +18,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class EventSearch
 {
-
     /**
      * Check if we can reduce the amount of results.
      *
@@ -157,6 +156,7 @@ class EventSearch
     protected function getTableName()
     {
         $config = Register::getDefaultCalendarizeConfiguration();
+
         return $config['tableName'];
     }
 
@@ -168,6 +168,7 @@ class EventSearch
     protected function getUniqueRegisterKey()
     {
         $config = Register::getDefaultCalendarizeConfiguration();
+
         return $config['uniqueRegisterKey'];
     }
 }

@@ -80,7 +80,7 @@ class TcaService extends AbstractService
 
         foreach ($configurations as $key => $value) {
             $paramsInternal = [
-                'row' => (array)$databaseConnection->select(
+                'row' => (array) $databaseConnection->select(
                     ['*'],
                     'tx_calendarize_domain_model_configuration',
                     ['uid' => $value]
