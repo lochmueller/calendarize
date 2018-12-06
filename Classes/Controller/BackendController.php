@@ -4,7 +4,6 @@ declare(strict_types=1);
 /**
  * BackendController.
  */
-
 namespace HDNET\Calendarize\Controller;
 
 /**
