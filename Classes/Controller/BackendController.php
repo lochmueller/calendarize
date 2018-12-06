@@ -11,8 +11,7 @@ namespace HDNET\Calendarize\Controller;
  */
 class BackendController extends AbstractController
 {
-    protected $indexRepository;
-
+    
     public function listAction()
     {
         $this->settings['timeFormat'] = 'H:i';
