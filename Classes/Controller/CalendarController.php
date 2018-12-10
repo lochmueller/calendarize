@@ -434,8 +434,8 @@ class CalendarController extends AbstractController
             $startDate = clone $baseDate;
         }
         if (!($endDate instanceof \DateTimeInterface)) {
-            $baseDate->modify($this->settings['searchEndModifier']);
-            $endDate = $baseDate;
+            $endDate = clone $startDate;
+            $endDate->modify($this->settings['searchEndModifier']);
         }
 
         $this->slotExtendedAssignMultiple([
