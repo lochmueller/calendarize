@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Service\IcsReaderService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use JMBTechnologyLimited\ICalDissect\ICalEvent;
@@ -23,9 +24,13 @@ class ExternalTimeTable extends AbstractTimeTable
      * ICS reader service.
      *
      * @var \HDNET\Calendarize\Service\IcsReaderService
-     * @inject
      */
     protected $icsReaderService;
+
+    public function injectIcsReaderService(IcsReaderService $icsReaderService)
+    {
+        $this->icsReaderService = $icsReaderService;
+    }
 
     /**
      * Modify the given times via the configuration.

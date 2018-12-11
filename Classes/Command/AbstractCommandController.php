@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Command;
 
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
@@ -20,9 +21,13 @@ abstract class AbstractCommandController extends CommandController
      * Flash message service.
      *
      * @var \TYPO3\CMS\Core\Messaging\FlashMessageService
-     * @inject
      */
     protected $flashMessageService;
+
+    public function injectFlashMessageService(FlashMessageService $flashMessageService)
+    {
+        $this->flashMessageService = $flashMessageService;
+    }
 
     /**
      * Adds a message to the FlashMessageQueue or prints it to the CLI.
