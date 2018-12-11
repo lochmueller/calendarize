@@ -58,7 +58,7 @@ class ExternalTimeTable extends AbstractTimeTable
             }
 
             $entry = [
-                'pid' => 0,
+                'pid' => $configuration->getPid(),
                 'start_date' => $event->getStart(),
                 'end_date' => $this->getEventsFixedEndDate($event),
                 'start_time' => $startTime,
