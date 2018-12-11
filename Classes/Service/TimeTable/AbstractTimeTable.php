@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Service\TimeTable;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 use HDNET\Calendarize\Service\AbstractService;
+use HDNET\Calendarize\Service\TimeTableService;
 
 /**
  * Abstract time table service.
@@ -25,9 +26,13 @@ abstract class AbstractTimeTable extends AbstractService
      * Time table service.
      *
      * @var \HDNET\Calendarize\Service\TimeTableService
-     * @inject
      */
     protected $timeTableService;
+
+    public function injectTimeTableService(TimeTableService $timeTableService)
+    {
+        $this->timeTableService = $timeTableService;
+    }
 
     /**
      * Modify the given times via the configuration.

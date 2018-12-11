@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
+use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -29,9 +30,13 @@ abstract class AbstractController extends ActionController
      * The index repository.
      *
      * @var \HDNET\Calendarize\Domain\Repository\IndexRepository
-     * @inject
      */
     protected $indexRepository;
+
+    public function injectIndexRepository(IndexRepository $indexRepository)
+    {
+        $this->indexRepository = $indexRepository;
+    }
 
     /**
      * The feed formats and content types.
