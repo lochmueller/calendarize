@@ -118,6 +118,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $categories;
 
     /**
+     * Hidden.
+     *
      * @var bool
      */
     protected $hidden = false;
@@ -470,6 +472,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Is hidden.
+     *
      * @return bool
      */
     public function isHidden()
@@ -478,6 +482,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Set hidden.
+     *
      * @param bool $hidden
      */
     public function setHidden($hidden)
@@ -486,6 +492,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Get location link.
+     *
      * @return string
      */
     public function getLocationLink()
@@ -494,6 +502,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Set location link.
+     *
      * @param string $locationLink
      */
     public function setLocationLink($locationLink)
@@ -502,6 +512,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Get organizer link.
+     *
      * @return string
      */
     public function getOrganizerLink()
@@ -510,6 +522,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     }
 
     /**
+     * Set organizer link.
+     *
      * @param string $organizerLink
      */
     public function setOrganizerLink($organizerLink)

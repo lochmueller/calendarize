@@ -18,6 +18,8 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 class PluginConfigurationService
 {
     /**
+     * Respect plugin configuration.
+     *
      * @param array $settings
      *
      * @return array

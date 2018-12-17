@@ -38,6 +38,9 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
+    /**
+     * Init arguments.
+     */
     public function initializeArguments()
     {
         parent::initializeArguments();

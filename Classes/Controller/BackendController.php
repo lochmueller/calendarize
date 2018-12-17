@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types=1);
 /**
  * BackendController.
  */
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Controller;
 
 /**
@@ -11,6 +12,10 @@ namespace HDNET\Calendarize\Controller;
  */
 class BackendController extends AbstractController
 {
+
+    /**
+     * Basic backend list.
+     */
     public function listAction()
     {
         $this->settings['timeFormat'] = 'H:i';

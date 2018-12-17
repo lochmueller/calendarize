@@ -58,6 +58,8 @@ class Events implements SitemapProviderInterface
     }
 
     /**
+     * Get indizies.
+     *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     protected function getIndizies()

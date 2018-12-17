@@ -83,7 +83,9 @@ class EventSelectionLinkHandler extends PageLinkHandler
     }
 
     /**
-     * @return string[] Array of body-tag attributes
+     * Get array of body tag attributes.
+     *
+     * @return string[]
      */
     public function getBodyTagAttributes()
     {

@@ -137,6 +137,8 @@ class CleanupCommandController extends AbstractCommandController
     }
 
     /**
+     * Find outdated events.
+     *
      * @param string $tableName
      * @param int    $waitingPeriod
      *

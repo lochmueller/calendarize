@@ -25,6 +25,8 @@ class PluginConfiguration extends AbstractModel
     protected $title;
 
     /**
+     * Model name.
+     *
      * @var string
      * @db
      */
@@ -39,54 +41,72 @@ class PluginConfiguration extends AbstractModel
     protected $configuration;
 
     /**
+     * Storage PID.
+     *
      * @var string
      * @db
      */
     protected $storagePid;
 
     /**
+     * Recursive.
+     *
      * @var int
      * @db
      */
     protected $recursive;
 
     /**
+     * Detail PID.
+     *
      * @var int
      * @db
      */
     protected $detailPid;
 
     /**
+     * List PID.
+     *
      * @var int
      * @db
      */
     protected $listPid;
 
     /**
+     * Year PID.
+     *
      * @var int
      * @db
      */
     protected $yearPid;
 
     /**
+     * Month PID.
+     *
      * @var int
      * @db
      */
     protected $monthPid;
 
     /**
+     * Week PID.
+     *
      * @var int
      * @db
      */
     protected $weekPid;
 
     /**
+     * Day PID.
+     *
      * @var int
      * @db
      */
     protected $dayPid;
 
     /**
+     * Booking PID.
+     *
      * @var int
      * @db
      */
@@ -108,6 +128,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get title.
+     *
      * @return mixed
      */
     public function getTitle()
@@ -116,6 +138,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set title.
+     *
      * @param mixed $title
      */
     public function setTitle($title)
@@ -124,6 +148,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get configuration.
+     *
      * @return string
      */
     public function getConfiguration()
@@ -132,6 +158,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set configuration.
+     *
      * @param string $configuration
      */
     public function setConfiguration($configuration)
@@ -140,6 +168,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get storage PID.
+     *
      * @return string
      */
     public function getStoragePid()
@@ -148,6 +178,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set storage PID.
+     *
      * @param string $storagePid
      */
     public function setStoragePid($storagePid)
@@ -156,6 +188,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get recursive.
+     *
      * @return int
      */
     public function getRecursive()
@@ -164,6 +198,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set recursive.
+     *
      * @param int $recursive
      */
     public function setRecursive($recursive)
@@ -172,6 +208,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get detail PID.
+     *
      * @return int
      */
     public function getDetailPid()
@@ -180,6 +218,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set detail PID.
+     *
      * @param int $detailPid
      */
     public function setDetailPid($detailPid)
@@ -188,6 +228,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get list PID.
+     *
      * @return int
      */
     public function getListPid()
@@ -196,6 +238,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set list PID.
+     *
      * @param int $listPid
      */
     public function setListPid($listPid)
@@ -204,6 +248,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get year PID.
+     *
      * @return int
      */
     public function getYearPid()
@@ -212,6 +258,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set year PID.
+     *
      * @param int $yearPid
      */
     public function setYearPid($yearPid)
@@ -220,6 +268,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get month PID.
+     *
      * @return int
      */
     public function getMonthPid()
@@ -228,6 +278,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set month PID.
+     *
      * @param int $monthPid
      */
     public function setMonthPid($monthPid)
@@ -236,6 +288,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get week PID.
+     *
      * @return int
      */
     public function getWeekPid()
@@ -244,6 +298,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set week PID.
+     *
      * @param int $weekPid
      */
     public function setWeekPid($weekPid)
@@ -252,6 +308,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get day PID.
+     *
      * @return int
      */
     public function getDayPid()
@@ -260,6 +318,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set day PID.
+     *
      * @param int $dayPid
      */
     public function setDayPid($dayPid)
@@ -268,6 +328,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get booking PID.
+     *
      * @return int
      */
     public function getBookingPid()
@@ -276,6 +338,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set booking PID.
+     *
      * @param int $bookingPid
      */
     public function setBookingPid($bookingPid)
@@ -284,6 +348,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get method name.
+     *
      * @return string
      */
     public function getModelName()
@@ -292,6 +358,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set method name.
+     *
      * @param string $modelName
      */
     public function setModelName($modelName)
@@ -300,6 +368,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Get categories.
+     *
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function getCategories(): ObjectStorage
@@ -312,6 +382,8 @@ class PluginConfiguration extends AbstractModel
     }
 
     /**
+     * Set categories.
+     * 
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
      */
     public function setCategories(ObjectStorage $categories)

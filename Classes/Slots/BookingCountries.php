@@ -17,6 +17,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 class BookingCountries
 {
     /**
+     * Booking slot.
+     *
      * @param $index
      * @param $extended
      * @param $settings
@@ -37,6 +39,8 @@ class BookingCountries
     }
 
     /**
+     * Send slot.
+     *
      * @param $request
      * @param $extended
      * @param $settings

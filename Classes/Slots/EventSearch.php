@@ -28,9 +28,9 @@ class EventSearch
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
      * @param array          $customSearch
+     * @param array          $indexTypes
      * @param bool           $emptyPreResult
      * @param array          $additionalSlotArguments
-     * @param array          $indexTypes
      *
      * @return array|void
      */

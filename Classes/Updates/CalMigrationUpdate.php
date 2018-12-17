@@ -112,6 +112,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Perform CAL event update.
+     *
      * @param       $calIds
      * @param array $dbQueries
      * @param       $customMessages
@@ -181,6 +183,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Perform exception event update.
+     *
      * @param       $calIds
      * @param array $dbQueries
      * @param array $customMessages
@@ -230,7 +234,7 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
-     * @TODO
+     * Perform link event to configuration group.
      *
      * @param $calIds
      * @param $dbQueries
@@ -320,7 +324,6 @@ class CalMigrationUpdate extends AbstractUpdate
         $selectWhere = 'tablenames = \'' . $variables['table'] . '\' AND (' . $fieldnames . ')';
         $selectWhere .= ' AND NOT EXISTS (SELECT NULL FROM sys_file_reference sfr2 WHERE sfr2.import_id = CONCAT(\'' . self::IMPORT_PREFIX . '\', sfr1.uid))';
 
-        /* @todo */
         $q->select('*')
             ->from('sys_file_reference', 'sfr1')
             ->where($selectWhere);
@@ -404,6 +407,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Update event with configuration.
+     *
      * @param $eventImportId
      * @param $configuration
      * @param $dbQueries
@@ -441,6 +446,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Add Value to CSV.
+     *
      * @param string $csv
      * @param string $value
      *
@@ -462,6 +469,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Add configuration ID to event.
+     *
      * @param string $eventImportId
      * @param int    $configurationId
      * @param array  $dbQueries
@@ -482,6 +491,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Update event.
+     *
      * @param int   $eventId
      * @param array $values
      * @param array $dbQueries
@@ -518,6 +529,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Find event by import ID.
+     *
      * @param $eventImportId
      * @param $dbQueries
      * @param $customMessages
@@ -549,6 +562,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Find event exclude configuration.
+     *
      * @param string $eventImportId
      * @param array  $dbQueries
      * @param array  $customMessages
@@ -588,6 +603,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Get exception configuration for exception group.
+     *
      * @param       $groupId
      * @param array $dbQueries
      * @param array $customMessages
@@ -671,6 +688,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Map frequency.
+     *
      * @param string $calFrequency
      *
      * @return string
@@ -886,6 +905,8 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * Build configurations.
+     *
      * @param $calEventRow
      * @param $dbQueries
      *
@@ -942,42 +963,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variables);
 
         return $variables['recordId'];
-
-        /*
-         *
-         * @todo
-
-        recurrence	text NULL
-        day	text NULL
-
-
-                 * ["freq"]=>
-                 * string(4) "none"
-                 * ["until"]=>
-                 * string(1) "0"
-                 * ["cnt"]=>
-                 * string(1) "0"
-                 * ["byday"]=>
-                 * string(0) ""
-                 * ["bymonthday"]=>
-                 * string(0) ""
-                 * ["bymonth"]=>
-                 * string(0) ""
-                 * ["intrval"]=>
-                 * string(1) "1"
-                 * ["rdate"]=>
-                 * NULL
-                 * ["rdate_type"]=>
-                 * string(1) "0"
-                 * ["deviation"]=>
-                 * string(1) "0"
-                 * ["monitor_cnt"]=>
-                 * string(1) "0"
-                 * ["exception_cnt"]=>
-                 */
     }
 
     /**
+     * Migrate date.
+     *
      * @param $oldFormat
      *
      * @return int|string
