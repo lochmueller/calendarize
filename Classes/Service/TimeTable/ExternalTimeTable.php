@@ -27,6 +27,11 @@ class ExternalTimeTable extends AbstractTimeTable
      */
     protected $icsReaderService;
 
+    /**
+     * Inject ICS reader service.
+     *
+     * @param IcsReaderService $icsReaderService
+     */
     public function injectIcsReaderService(IcsReaderService $icsReaderService)
     {
         $this->icsReaderService = $icsReaderService;

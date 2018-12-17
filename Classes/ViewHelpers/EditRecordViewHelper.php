@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Edit Record ViewHelper, see FormEngine logic.
+ */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;

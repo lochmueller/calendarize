@@ -27,6 +27,11 @@ class EventImport
      */
     protected $eventRepository;
 
+    /**
+     * Inject event repository.
+     *
+     * @param EventRepository $eventRepository
+     */
     public function injectEventRepository(EventRepository $eventRepository)
     {
         $this->eventRepository = $eventRepository;

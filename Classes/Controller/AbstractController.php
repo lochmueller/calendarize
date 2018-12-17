@@ -33,6 +33,11 @@ abstract class AbstractController extends ActionController
      */
     protected $indexRepository;
 
+    /**
+     * Inject index repository.
+     *
+     * @param \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository
+     */
     public function injectIndexRepository(IndexRepository $indexRepository)
     {
         $this->indexRepository = $indexRepository;

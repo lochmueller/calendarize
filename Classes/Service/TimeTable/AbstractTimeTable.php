@@ -29,6 +29,11 @@ abstract class AbstractTimeTable extends AbstractService
      */
     protected $timeTableService;
 
+    /**
+     * Inject time table service.
+     *
+     * @param \HDNET\Calendarize\Service\TimeTableService $timeTableService
+     */
     public function injectTimeTableService(TimeTableService $timeTableService)
     {
         $this->timeTableService = $timeTableService;

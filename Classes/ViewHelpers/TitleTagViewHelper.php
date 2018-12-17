@@ -20,6 +20,8 @@ class TitleTagViewHelper extends AbstractViewHelper
     use CompileWithRenderStatic;
 
     /**
+     * Render the title function.
+     *
      * @param array                     $arguments
      * @param \Closure                  $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext

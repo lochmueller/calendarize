@@ -24,6 +24,11 @@ abstract class AbstractCommandController extends CommandController
      */
     protected $flashMessageService;
 
+    /**
+     * Inject flash message service.
+     *
+     * @param \TYPO3\CMS\Core\Messaging\FlashMessageService $flashMessageService
+     */
     public function injectFlashMessageService(FlashMessageService $flashMessageService)
     {
         $this->flashMessageService = $flashMessageService;

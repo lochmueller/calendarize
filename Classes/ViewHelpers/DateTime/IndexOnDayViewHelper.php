@@ -17,6 +17,9 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
  */
 class IndexOnDayViewHelper extends AbstractViewHelper
 {
+    /**
+     * Init arguments
+     */
     public function initializeArguments()
     {
         parent::initializeArguments();
