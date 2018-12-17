@@ -383,7 +383,7 @@ class PluginConfiguration extends AbstractModel
 
     /**
      * Set categories.
-     * 
+     *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
      */
     public function setCategories(ObjectStorage $categories)
