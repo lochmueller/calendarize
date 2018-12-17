@@ -18,16 +18,25 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class EditRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
     /**
+     * Init arguments.
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('parameters', 'string', 'A set of GET params to send to FormEngine', true);
+    }
+
+
+    /**
      * Returns a URL to link to FormEngine.
-     *
-     * @param string $parameters Is a set of GET params to send to FormEngine
      *
      * @return string URL to FormEngine module + parameters
      *
      * @see \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl()
      */
-    public function render($parameters)
+    public function render()
     {
+        $parameters = $this->arguments['parameters'];
         $returnUrl = BackendUtility::getModuleUrl('web_CalendarizeCalendarize');
         $parameters = GeneralUtility::explodeUrl2Array($parameters . '&returnUrl=' . \urlencode($returnUrl));
 
