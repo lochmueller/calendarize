@@ -37,11 +37,28 @@ class WeekViewHelper extends AbstractLinkViewHelper
         $date = $this->arguments['date'];
         $additionalParams = [
             'tx_calendarize_calendar' => [
-                'year' => $date->format('Y'),
+                'year' => $this->getCwYear($date),
                 'week' => $date->format('W'),
             ],
         ];
 
         return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams);
+    }
+
+    /**
+     * @param \DateTime $date
+     * @return int
+     */
+    protected function getCwYear(\DateTime $date)
+    {
+        $year = (int)$date->format('Y');
+        if ($date->format('m') === '01' && ($date->format('W') === '52' || $date->format('W') === '53')) {
+            $year--;
+        } else {
+            if ($date->format('m') === '12' && $date->format('W') === '01') {
+                $year++;
+            }
+        }
+        return $year;
     }
 }
