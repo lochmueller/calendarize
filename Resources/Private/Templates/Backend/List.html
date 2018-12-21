@@ -1,12 +1,35 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+			xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers"
+			data-namespace-typo3-fluid="true">
 
 <f:layout name="Backend"/>
 
 <f:section name="Content">
 	<h1>Calendarize</h1>
 
-    <f:flashMessages />
+	<f:flashMessages/>
 
-    <f:render partial="Backend/List" arguments="{_all}"/>
+	<f:if condition="{typeLocations}">
+		<f:then>
+			<p>
+				<f:for each="{typeLocations}" key="table" as="pids">
+					<f:for each="{pids}" key="pid" as="value">
+						<a class="btn btn-primary"
+							 href="{c:editRecord(parameters: 'edit[{table}][{pid}]=new')}">
+							<core:icon identifier="actions-document-new"/>
+							{value} on PID #{pid}
+						</a>
+					</f:for>
+				</f:for>
+			</p>
+
+		</f:then>
+		<f:else>
+			<p>Note: If you create first events in Storage folder, the create buttons will appear in this location</p>
+		</f:else>
+	</f:if>
+
+	<f:render partial="Backend/List" arguments="{_all}"/>
 </f:section>
 </html>

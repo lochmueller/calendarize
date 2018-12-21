@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
+use HDNET\Calendarize\Domain\Model\Index;
+
 /**
  * BackendController.
  */
@@ -23,7 +25,23 @@ class BackendController extends AbstractController
 
         $this->view->assignMultiple([
             'indices' => $this->indexRepository->findAll(),
+            'typeLocations' => $this->getDifferentTypesAndLocations(),
             'settings' => $this->settings,
         ]);
+    }
+
+    /**
+     * Get the differnet locations for new entries
+     *
+     * @return array
+     */
+    protected function getDifferentTypesAndLocations()
+    {
+        $typeLocations = [];
+        foreach ($this->indexRepository->findDifferentTypesAndLocations() as $entry) {
+            /** @var $entry Index */
+            $typeLocations[$entry->getForeignTable()][$entry->getPid()] = $entry->getConfiguration()['uniqueRegisterKey'];
+        }
+        return $typeLocations;
     }
 }

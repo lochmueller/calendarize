@@ -329,6 +329,21 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
+     * Find different types and locations
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findDifferentTypesAndLocations()
+    {
+        $query = $this->createQuery();
+        return $query
+            ->statement('SELECT *'
+                . 'FROM tx_calendarize_domain_model_index '
+                . 'GROUP BY pid,foreign_table')
+            ->execute();
+    }
+
+    /**
      * find day.
      *
      * @param int $year
