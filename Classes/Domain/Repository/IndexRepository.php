@@ -134,7 +134,7 @@ class IndexRepository extends AbstractRepository
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
 
-        if($limit > 0) {
+        if ($limit > 0) {
             $query->setLimit($limit);
         }
 
