@@ -514,7 +514,8 @@ class CalendarController extends AbstractController
         $searchMode = false;
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
-            $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch);
+            $limit = isset($this->settings['limit']) ? (int) $this->settings['limit'] : 0;
+            $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch, $limit);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
             $indices = $this->indexRepository->findDay((int) $year, (int) $month, (int) $day);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {

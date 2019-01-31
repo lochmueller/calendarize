@@ -114,11 +114,12 @@ class IndexRepository extends AbstractRepository
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array     $customSearch
+     * @param array $customSearch
+     * @param int $limit
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
+    public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [], int $limit = 0)
     {
         $arguments = [
             'indexIds' => [],
@@ -132,6 +133,10 @@ class IndexRepository extends AbstractRepository
 
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
+
+        if($limit > 0) {
+            $query->setLimit($limit);
+        }
 
         $this->addTimeFrameConstraints(
             $constraints,
