@@ -76,17 +76,19 @@ class IndexPreparationService
      */
     protected function addLanguageInformation(array &$neededItems, $tableName, array $record)
     {
-        $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] ?? false;
-        $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false;
+        $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] ?? false; // e.g. sys_language_uid
+        $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
 
         if (!$languageField || !$transPointer) {
             return;
         }
-        if ((int) $record[$transPointer] > 0) {
+        if ((int) $record[$transPointer] <= 0) {
             // no Index for language child elements
             return;
         }
         $language = (int) $record[$languageField];
+
+        // @todo handle l10n_parent
 
         foreach (\array_keys($neededItems) as $key) {
             $neededItems[$key]['sys_language_uid'] = $language;

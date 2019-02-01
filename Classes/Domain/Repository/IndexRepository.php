@@ -15,6 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -45,6 +46,37 @@ class IndexRepository extends AbstractRepository
      * @var array
      */
     protected $overridePageIds = [];
+
+    /**
+     * @return QueryInterface
+     */
+    public function createQuery()
+    {
+        $query = parent::createQuery();
+        $query->getQuerySettings()->setLanguageMode($this->getIndexLanguageMode());
+        return $query;
+    }
+
+    /**
+     * Get index language mode
+     *
+     * @return string
+     */
+    protected function getIndexLanguageMode()
+    {
+        static $mode;
+        if ($mode !== null) {
+            return $mode;
+        }
+
+        $objectManager = new ObjectManager();
+        /** @var ConfigurationManagerInterface $config */
+        $config = $objectManager->get(ConfigurationManagerInterface::class);
+        $pluginConfig = $config->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
+        $mode = isset($pluginConfig['indexLanguageMode']) ? (string) $pluginConfig['indexLanguageMode'] : 'strict';
+        return $mode;
+    }
 
     /**
      * Set the index types.

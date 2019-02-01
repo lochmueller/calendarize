@@ -11,6 +11,7 @@ plugin.tx_calendarize {
 		listStartTimeOffsetHours = {$plugin.tx_calendarize.settings.listStartTimeOffsetHours}
 		searchEndModifier = {$plugin.tx_calendarize.settings.searchEndModifier}
     defaultDetailPid = {$plugin.tx_calendarize.settings.defaultDetailPid}
+    indexLanguageMode = {$plugin.tx_calendarize.settings.indexLanguageMode}
 
 		feed {
 			title = {$plugin.tx_calendarize.settings.feed.title}
