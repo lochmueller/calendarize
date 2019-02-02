@@ -39,7 +39,8 @@ class IcsReaderService extends AbstractService
      * @param string $url
      * @return string
      */
-    protected function getCachedUrlFile(string $url):string {
+    protected function getCachedUrlFile(string $url):string
+    {
         $tempFileName = $this->getCheckedCacheFolder() . \md5($url);
         if (!\is_file($tempFileName) || \filemtime($tempFileName) < (\time() - DateTimeUtility::SECONDS_HOUR)) {
             $icsFile = GeneralUtility::getUrl($url);
