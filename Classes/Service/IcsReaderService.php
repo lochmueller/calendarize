@@ -25,18 +25,27 @@ class IcsReaderService extends AbstractService
      */
     public function toArray($paramUrl)
     {
-        $tempFileName = $this->getCheckedCacheFolder() . \md5($paramUrl);
-        if (!\is_file($tempFileName) || \filemtime($tempFileName) < (\time() - DateTimeUtility::SECONDS_HOUR)) {
-            $icsFile = GeneralUtility::getUrl($paramUrl);
-            GeneralUtility::writeFile($tempFileName, $icsFile);
-        }
-
+        $tempFileName = $this->getCachedUrlFile($paramUrl);
         $backend = new ICalParser();
         if ($backend->parseFromFile($tempFileName)) {
             return $backend->getEvents();
         }
-
         return [];
+    }
+
+    /**
+     * Get cached URL file
+     *
+     * @param string $url
+     * @return string
+     */
+    protected function getCachedUrlFile(string $url):string {
+        $tempFileName = $this->getCheckedCacheFolder() . \md5($url);
+        if (!\is_file($tempFileName) || \filemtime($tempFileName) < (\time() - DateTimeUtility::SECONDS_HOUR)) {
+            $icsFile = GeneralUtility::getUrl($url);
+            GeneralUtility::writeFile($tempFileName, $icsFile);
+        }
+        return $tempFileName;
     }
 
     /**
@@ -44,9 +53,9 @@ class IcsReaderService extends AbstractService
      *
      * @return string
      */
-    protected function getCheckedCacheFolder()
+    protected function getCheckedCacheFolder():string
     {
-        $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/calendarize/');
+        $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/var/transient/calendarize/');
         if (!\is_dir($cacheFolder)) {
             GeneralUtility::mkdir_deep($cacheFolder);
         }
