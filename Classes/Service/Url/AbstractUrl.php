@@ -11,6 +11,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use HDNET\Calendarize\Service\AbstractService;
+use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 
 /**
@@ -47,10 +48,14 @@ abstract class AbstractUrl extends AbstractService
         }
 
         $base = $originalObject->getRealUrlAliasBase();
-        if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDateInSpeakingUrl')) {
+        if (!(bool) ConfigurationUtility::get('disableDateInSpeakingUrl')) {
             $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
             $base .= '-' . $index->getStartDateComplete()
                 ->format($datePart);
+        }
+
+        if ((bool) ConfigurationUtility::get('addIndexInSpeakingUrl')) {
+            $base .= '-' . $indexUid;
         }
 
         return (string) $base;

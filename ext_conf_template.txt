@@ -9,3 +9,6 @@ timeShift = 0
 
 # cat=basic/enable; type=boolean; label=Disable date in speaking URL:Disable the date in the speaking URL generation
 disableDateInSpeakingUrl = 0
+
+# cat=basic/enable; type=boolean; label=Add index in speaking URL:Add the Index UID at the end of the generated URI of the even to avoid conflicts
+addIndexInSpeakingUrl = 0
