@@ -435,7 +435,8 @@ class CalendarController extends AbstractController
         }
         if (!($endDate instanceof \DateTimeInterface)) {
             $endDate = clone $startDate;
-            $endDate->modify($this->settings['searchEndModifier']);
+            $modify = is_string($this->settings['searchEndModifier']) ? $this->settings['searchEndModifier'] : '+30 days';
+            $endDate->modify($modify);
         }
 
         $this->slotExtendedAssignMultiple([
