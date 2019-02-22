@@ -14,7 +14,6 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class BackendController extends AbstractController
 {
-
     /**
      * Basic backend list.
      */
@@ -31,7 +30,7 @@ class BackendController extends AbstractController
     }
 
     /**
-     * Get the differnet locations for new entries
+     * Get the differnet locations for new entries.
      *
      * @return array
      */
@@ -39,9 +38,10 @@ class BackendController extends AbstractController
     {
         $typeLocations = [];
         foreach ($this->indexRepository->findDifferentTypesAndLocations() as $entry) {
-            /** @var $entry Index */
+            /* @var $entry Index */
             $typeLocations[$entry->getForeignTable()][$entry->getPid()] = $entry->getConfiguration()['uniqueRegisterKey'];
         }
+
         return $typeLocations;
     }
 }

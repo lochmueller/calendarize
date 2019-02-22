@@ -34,16 +34,6 @@ abstract class AbstractController extends ActionController
     protected $indexRepository;
 
     /**
-     * Inject index repository.
-     *
-     * @param \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository
-     */
-    public function injectIndexRepository(IndexRepository $indexRepository)
-    {
-        $this->indexRepository = $indexRepository;
-    }
-
-    /**
      * The feed formats and content types.
      *
      * @var array
@@ -53,6 +43,16 @@ abstract class AbstractController extends ActionController
         'xml' => 'application/xml',
         'atom' => 'application/rss+xml',
     ];
+
+    /**
+     * Inject index repository.
+     *
+     * @param \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository
+     */
+    public function injectIndexRepository(IndexRepository $indexRepository)
+    {
+        $this->indexRepository = $indexRepository;
+    }
 
     /**
      * Inject the configuration manager.

@@ -54,28 +54,8 @@ class IndexRepository extends AbstractRepository
     {
         $query = parent::createQuery();
         $query->getQuerySettings()->setLanguageMode($this->getIndexLanguageMode());
+
         return $query;
-    }
-
-    /**
-     * Get index language mode
-     *
-     * @return string
-     */
-    protected function getIndexLanguageMode()
-    {
-        static $mode;
-        if ($mode !== null) {
-            return $mode;
-        }
-
-        $objectManager = new ObjectManager();
-        /** @var ConfigurationManagerInterface $config */
-        $config = $objectManager->get(ConfigurationManagerInterface::class);
-        $pluginConfig = $config->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-
-        $mode = isset($pluginConfig['indexLanguageMode']) ? (string) $pluginConfig['indexLanguageMode'] : 'strict';
-        return $mode;
     }
 
     /**
@@ -146,8 +126,8 @@ class IndexRepository extends AbstractRepository
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array $customSearch
-     * @param int $limit
+     * @param array     $customSearch
+     * @param int       $limit
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -366,13 +346,14 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
-     * Find different types and locations
+     * Find different types and locations.
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findDifferentTypesAndLocations()
     {
         $query = $this->createQuery();
+
         return $query
             ->statement('SELECT *'
                 . 'FROM tx_calendarize_domain_model_index '
@@ -445,6 +426,28 @@ class IndexRepository extends AbstractRepository
         $query->matching($query->logicalAnd($constraints));
 
         return $query->execute();
+    }
+
+    /**
+     * Get index language mode.
+     *
+     * @return string
+     */
+    protected function getIndexLanguageMode()
+    {
+        static $mode;
+        if (null !== $mode) {
+            return $mode;
+        }
+
+        $objectManager = new ObjectManager();
+        /** @var ConfigurationManagerInterface $config */
+        $config = $objectManager->get(ConfigurationManagerInterface::class);
+        $pluginConfig = $config->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
+        $mode = isset($pluginConfig['indexLanguageMode']) ? (string) $pluginConfig['indexLanguageMode'] : 'strict';
+
+        return $mode;
     }
 
     /**

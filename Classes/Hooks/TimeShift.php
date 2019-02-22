@@ -43,7 +43,7 @@ class TimeShift extends AbstractHook
      *
      * @return array
      */
-    protected function getConfiguration():array
+    protected function getConfiguration(): array
     {
         $config = \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
         if (\is_array($config)) {

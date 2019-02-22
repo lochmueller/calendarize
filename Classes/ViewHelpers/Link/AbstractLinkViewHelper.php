@@ -35,7 +35,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     protected $lastHref = '';
 
     /**
-     * Logger
+     * Logger.
      *
      * @var LoggerInterface
      */

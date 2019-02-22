@@ -30,22 +30,25 @@ class IcsReaderService extends AbstractService
         if ($backend->parseFromFile($tempFileName)) {
             return $backend->getEvents();
         }
+
         return [];
     }
 
     /**
-     * Get cached URL file
+     * Get cached URL file.
      *
      * @param string $url
+     *
      * @return string
      */
-    protected function getCachedUrlFile(string $url):string
+    protected function getCachedUrlFile(string $url): string
     {
         $tempFileName = $this->getCheckedCacheFolder() . \md5($url);
         if (!\is_file($tempFileName) || \filemtime($tempFileName) < (\time() - DateTimeUtility::SECONDS_HOUR)) {
             $icsFile = GeneralUtility::getUrl($url);
             GeneralUtility::writeFile($tempFileName, $icsFile);
         }
+
         return $tempFileName;
     }
 
@@ -54,7 +57,7 @@ class IcsReaderService extends AbstractService
      *
      * @return string
      */
-    protected function getCheckedCacheFolder():string
+    protected function getCheckedCacheFolder(): string
     {
         $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/var/transient/calendarize/');
         if (!\is_dir($cacheFolder)) {

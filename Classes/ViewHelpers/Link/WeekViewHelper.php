@@ -47,18 +47,20 @@ class WeekViewHelper extends AbstractLinkViewHelper
 
     /**
      * @param \DateTime $date
+     *
      * @return int
      */
     protected function getCwYear(\DateTime $date)
     {
-        $year = (int)$date->format('Y');
-        if ($date->format('m') === '01' && ($date->format('W') === '52' || $date->format('W') === '53')) {
-            $year--;
+        $year = (int) $date->format('Y');
+        if ('01' === $date->format('m') && ('52' === $date->format('W') || '53' === $date->format('W'))) {
+            --$year;
         } else {
-            if ($date->format('m') === '12' && $date->format('W') === '01') {
-                $year++;
+            if ('12' === $date->format('m') && '01' === $date->format('W')) {
+                ++$year;
             }
         }
+
         return $year;
     }
 }

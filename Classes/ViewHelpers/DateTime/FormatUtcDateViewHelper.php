@@ -15,7 +15,7 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 class FormatUtcDateViewHelper extends AbstractViewHelper
 {
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {

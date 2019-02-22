@@ -236,14 +236,14 @@ class CalendarController extends AbstractController
      */
     public function shortcutAction()
     {
-        list($table, $uid) = explode(':', $GLOBALS['TSFE']->currentRecord);
+        list($table, $uid) = \explode(':', $GLOBALS['TSFE']->currentRecord);
         $register = Register::getRegister();
 
         $event = null;
         foreach ($register as $key => $value) {
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
-                if (class_exists($repositoryName)) {
+                if (\class_exists($repositoryName)) {
                     $objectManager = new ObjectManager();
                     $repository = $objectManager->get($repositoryName);
                     $event = $repository->findByUid($uid);
@@ -256,10 +256,9 @@ class CalendarController extends AbstractController
         }
 
         $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, 1);
-        if (count($fetchEvent) <= 0) {
+        if (\count($fetchEvent) <= 0) {
             $fetchEvent = $this->indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
         }
-
 
         $this->view->assignMultiple([
             'indices' => $fetchEvent,
@@ -435,7 +434,7 @@ class CalendarController extends AbstractController
         }
         if (!($endDate instanceof \DateTimeInterface)) {
             $endDate = clone $startDate;
-            $modify = is_string($this->settings['searchEndModifier']) ? $this->settings['searchEndModifier'] : '+30 days';
+            $modify = \is_string($this->settings['searchEndModifier']) ? $this->settings['searchEndModifier'] : '+30 days';
             $endDate->modify($modify);
         }
 

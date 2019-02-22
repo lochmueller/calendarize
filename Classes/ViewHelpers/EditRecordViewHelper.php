@@ -26,7 +26,6 @@ class EditRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
         $this->registerArgument('parameters', 'string', 'A set of GET params to send to FormEngine', true);
     }
 
-
     /**
      * Returns a URL to link to FormEngine.
      *

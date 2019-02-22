@@ -14,9 +14,8 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
  */
 class ModifyViewHelper extends AbstractViewHelper
 {
-
     /**
-     * Init arguments
+     * Init arguments.
      */
     public function initializeArguments()
     {
