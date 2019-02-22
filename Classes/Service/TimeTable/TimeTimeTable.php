@@ -41,7 +41,9 @@ class TimeTimeTable extends AbstractTimeTable
             'all_day' => $configuration->isAllDay(),
             'state' => $configuration->getState(),
         ];
-        $this->validateBaseEntry($baseEntry);
+        if (!$this->validateBaseEntry($baseEntry)) {
+            return;
+        }
         $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
         $this->addFrequencyItems($times, $configuration, $baseEntry);
         $this->addRecurrenceItems($times, $configuration, $baseEntry);
@@ -51,14 +53,20 @@ class TimeTimeTable extends AbstractTimeTable
      * Validate the base entry, if there are logica mistakes.
      *
      * @param array $baseEntry
+     *
+     * @return bool
      */
-    protected function validateBaseEntry(array $baseEntry)
+    protected function validateBaseEntry(array $baseEntry): bool
     {
         $message = null;
-        if (!($baseEntry['start_date'] instanceof \DateTimeInterface) || !($baseEntry['end_date'] instanceof \DateTimeInterface)) {
-            return;
-        }
-        if ($baseEntry['start_date'] > $baseEntry['end_date']) {
+        if (!($baseEntry['start_date'] instanceof \DateTimeInterface)) {
+            $message = GeneralUtility::makeInstance(
+                FlashMessage::class,
+                'There is no usage for a event configuration without start date?!',
+                'No start date?',
+                FlashMessage::ERROR
+            );
+        } elseif ($baseEntry['end_date'] instanceof \DateTimeInterface && $baseEntry['start_date'] > $baseEntry['end_date']) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(
@@ -71,7 +79,7 @@ class TimeTimeTable extends AbstractTimeTable
                 ),
                 FlashMessage::ERROR
             );
-        } elseif (!$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY) {
+        } elseif ($baseEntry['end_date'] instanceof \DateTimeInterface && !$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(
@@ -89,7 +97,11 @@ class TimeTimeTable extends AbstractTimeTable
             $flashMessageService = HelperUtility::create(FlashMessageService::class);
             $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
             $messageQueue->addMessage($message);
+
+            return false;
         }
+
+        return true;
     }
 
     /**
@@ -127,9 +139,9 @@ class TimeTimeTable extends AbstractTimeTable
      * @param array  $loopEntry
      * @param string $modification
      *
-     * @return mixed
+     * @return array
      */
-    protected function createNextLoopEntry($loopEntry, $modification)
+    protected function createNextLoopEntry(array $loopEntry, string $modification): array
     {
         /** @var $startDate \DateTime */
         $startDate = clone $loopEntry['start_date'];
@@ -239,7 +251,7 @@ class TimeTimeTable extends AbstractTimeTable
      *
      * @return int
      */
-    protected function getFrequencyLimitPerItem()
+    protected function getFrequencyLimitPerItem(): int
     {
         $maxLimit = (int) ConfigurationUtility::get('frequencyLimitPerItem');
         if ($maxLimit <= 0) {
