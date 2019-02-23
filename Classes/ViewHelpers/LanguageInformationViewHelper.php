@@ -25,12 +25,24 @@ class LanguageInformationViewHelper extends AbstractViewHelper
     protected static $flags = [];
 
     /**
+     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper.
+     *
+     * @see isOutputEscapingEnabled()
+     *
+     * @var bool
+     *
+     * @api
+     */
+    protected $escapeOutput = false;
+
+    /**
      * Init arguments.
      */
     public function initializeArguments()
     {
         parent::initializeArguments();
         $this->registerArgument('languageUid', 'int', 'Language UID', true);
+        $this->registerArgument('pid', 'int', 'Page UID', false, 0);
     }
 
     /**
@@ -41,12 +53,13 @@ class LanguageInformationViewHelper extends AbstractViewHelper
     public function render()
     {
         $langUid = (int) $this->arguments['languageUid'];
-        if (\array_key_exists($langUid, self::$flags)) {
-            return self::$flags[$langUid];
+        $pid = (int) $this->arguments['pid'];
+        if (\array_key_exists($langUid . '-' . $pid, self::$flags)) {
+            return self::$flags[$langUid . '-' . $pid];
         }
 
         $translationTools = GeneralUtility::makeInstance(TranslationConfigurationProvider::class);
-        $sysLanguages = $translationTools->getSystemLanguages();
+        $sysLanguages = $translationTools->getSystemLanguages($pid);
 
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
 
@@ -58,7 +71,7 @@ class LanguageInformationViewHelper extends AbstractViewHelper
         }
         $out .= $title;
 
-        self::$flags[$this->arguments['languageUid']] = (string) $out;
+        self::$flags[$langUid . '-' . $pid] = (string) $out;
 
         return $out;
     }
