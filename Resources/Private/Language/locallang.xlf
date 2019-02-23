@@ -423,6 +423,9 @@
 			<trans-unit id="mode.year">
 				<source>Year</source>
 			</trans-unit>
+			<trans-unit id="mode.quarter">
+				<source>Quarter</source>
+			</trans-unit>
 			<trans-unit id="monthPid">
 				<source>Month PID</source>
 			</trans-unit>
@@ -610,6 +613,9 @@
 			</trans-unit>
 			<trans-unit id="yearPid">
 				<source>Year PID</source>
+			</trans-unit>
+			<trans-unit id="quarterPid">
+				<source>Quarter PID</source>
 			</trans-unit>
 			<trans-unit id="open_end">
 				<source>Open End</source>

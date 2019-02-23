@@ -1,0 +1,30 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+	 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
+
+	<f:layout name="Default" />
+
+	<f:section name="Main">
+
+
+		<f:if condition="{settings.quarterPid}">
+			<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{date -> c:dateTime.modify(modification: '-1 months')})}">
+				<c:link.quarter pageUid="{settings.monthPid}" date="{date -> c:dateTime.modify(modification: '-1 months')}">
+					&lt;
+				</c:link.quarter>
+			</f:if>
+		</f:if>
+		Q{quarter} <f:format.date format="%Y">{date}</f:format.date>
+		<f:if condition="{settings.quarterPid}">
+			<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:{date -> c:dateTime.modify(modification: '+4 months')})}">
+				<c:link.quarter pageUid="{settings.monthPid}" date="{date -> c:dateTime.modify(modification: '+4 months')}">
+					&gt;
+				</c:link.quarter>
+			</f:if>
+		</f:if>
+
+		<f:for each="{indices}" as="index">
+			<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
+		</f:for>
+	</f:section>
+</div>

@@ -322,6 +322,21 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
+     * find quarter.
+     *
+     * @param int $year
+     * @param int $quarter
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findQuarter(int $year, int $quarter)
+    {
+        $startMonth = 1 + (3 * ($quarter - 1));
+
+        return $this->findByTimeSlot(\mktime(0, 0, 0, $startMonth, 1, $year), \mktime(0, 0, 0, $startMonth + 3, 1, $year) - 1);
+    }
+
+    /**
      * find Month.
      *
      * @param int $year

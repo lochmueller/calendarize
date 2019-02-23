@@ -405,6 +405,10 @@
 				<source>Year</source>
 				<target>Jahr</target>
 			</trans-unit>
+			<trans-unit id="mode.quarter" approved="yes">
+				<source>Quarter</source>
+				<target>Quartal</target>
+			</trans-unit>
 			<trans-unit id="mode.past" approved="yes">
 				<source>Past</source>
 				<target>Vergangene</target>

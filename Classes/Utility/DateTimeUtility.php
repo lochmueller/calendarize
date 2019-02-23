@@ -40,6 +40,11 @@ class DateTimeUtility
     const SECONDS_WEEK = 604800;
 
     /**
+     * One quartar in seconds (90 days).
+     */
+    const SECONDS_QUARTER = 7776000;
+
+    /**
      * One year in seconds (365 days).
      */
     const SECONDS_YEAR = 31536000;
@@ -127,6 +132,36 @@ class DateTimeUtility
         }
 
         return $date;
+    }
+
+    /**
+     * Normalize quartar.
+     *
+     * @param int|null $quarter
+     *
+     * @return int
+     */
+    public static function normalizeQuarter(int $quarter = null): int
+    {
+        if (null === $quarter) {
+            $quarter = self::getQuartar(self::getNow());
+        }
+
+        return MathUtility::forceIntegerInRange((int) $quarter, 1, 4);
+    }
+
+    /**
+     * Normalize quartar.
+     *
+     * @param int|null $quarter
+     *
+     * @return int
+     */
+    public static function getQuartar(\DateTimeInterface $date): int
+    {
+        $month = (int) $date->format('n');
+
+        return (int) \ceil($month / 3);
     }
 
     /**

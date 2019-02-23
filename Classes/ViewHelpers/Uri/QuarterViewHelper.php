@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Uri to the booking.
+ * Uri to the quarter.
  */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
 /**
- * Uri to the booking.
+ * Uri to the quarter.
  */
-class BookingViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\BookingViewHelper
+class QuarterViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\QuarterViewHelper
 {
     /**
-     * Render the uri to the given booking.
+     * Render the uri to the given quarter.
      *
      * @return string
      */

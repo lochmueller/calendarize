@@ -1,16 +1,18 @@
 <?php
 
 /**
- * Link to the year.
+ * Link to the quarter.
  */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use HDNET\Calendarize\Utility\DateTimeUtility;
+
 /**
- * Link to the year.
+ * Link to the quarter.
  */
-class YearViewHelper extends AbstractLinkViewHelper
+class QuarterViewHelper extends AbstractLinkViewHelper
 {
     /**
      * Init arguments.
@@ -23,7 +25,7 @@ class YearViewHelper extends AbstractLinkViewHelper
     }
 
     /**
-     * Render the link to the given year.
+     * Render the link to the given quarter.
      *
      * @return string
      */
@@ -38,6 +40,7 @@ class YearViewHelper extends AbstractLinkViewHelper
         $additionalParams = [
             'tx_calendarize_calendar' => [
                 'year' => $date->format('Y'),
+                'quarter' => DateTimeUtility::getQuartar($date),
             ],
         ];
 

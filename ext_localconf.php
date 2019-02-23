@@ -38,7 +38,7 @@ if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefault
     'HDNET.calendarize',
     'Calendar',
     [
-        'Calendar' => 'list,past,latest,year,month,week,day,detail,search,result,single,shortcut',
+        'Calendar' => 'list,past,latest,year,quater,month,week,day,detail,search,result,single,shortcut',
         'Booking' => 'booking,send',
     ],
     [

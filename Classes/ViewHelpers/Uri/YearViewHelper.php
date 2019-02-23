@@ -13,7 +13,7 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 class YearViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\YearViewHelper
 {
     /**
-     * Render the uri to the given day.
+     * Render the uri to the given year.
      *
      * @return string
      */

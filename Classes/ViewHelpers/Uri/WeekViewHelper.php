@@ -13,7 +13,7 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper
 {
     /**
-     * Render the uri to the given day.
+     * Render the uri to the given week.
      *
      * @return string
      */

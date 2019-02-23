@@ -301,6 +301,24 @@ class CalendarController extends AbstractController
     }
 
     /**
+     * Quarter action.
+     *
+     * @param int $year
+     * @param int $quarter 1-4
+     */
+    public function quarterAction(int $year = null, int $quarter = null)
+    {
+        $quarter = DateTimeUtility::normalizeQuarter($quarter);
+        $date = DateTimeUtility::normalizeDateTime(1, 1 + (($quarter - 1) * 3), $year);
+
+        $this->slotExtendedAssignMultiple([
+            'indices' => $this->indexRepository->findQuarter((int) $date->format('Y'), $quarter),
+            'date' => $date,
+            'quarter' => $quarter,
+        ], __CLASS__, __FUNCTION__);
+    }
+
+    /**
      * Month action.
      *
      * @param int $year

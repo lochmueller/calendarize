@@ -13,7 +13,7 @@ namespace HDNET\Calendarize\ViewHelpers\Uri;
 class MonthViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\MonthViewHelper
 {
     /**
-     * Render the uri to the given day.
+     * Render the uri to the given month.
      *
      * @return string
      */
