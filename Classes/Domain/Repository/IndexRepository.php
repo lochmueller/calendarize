@@ -79,6 +79,19 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
+     * Select indecies for Backend.
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllForBackend()
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+
+        return $query->execute();
+    }
+
+    /**
      * Find List.
      *
      * @param int        $limit

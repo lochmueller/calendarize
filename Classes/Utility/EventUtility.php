@@ -33,6 +33,8 @@ class EventUtility
         $query = HelperUtility::getQuery($modelName);
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
+        $query->getQuerySettings()
+            ->setRespectSysLanguage(false);
         $query->matching($query->equals('uid', $uid));
 
         return $query->execute()

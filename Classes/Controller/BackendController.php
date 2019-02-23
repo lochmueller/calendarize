@@ -23,7 +23,7 @@ class BackendController extends AbstractController
         $this->settings['dateFormat'] = 'd.m.Y';
 
         $this->view->assignMultiple([
-            'indices' => $this->indexRepository->findAll(),
+            'indices' => $this->indexRepository->findAllForBackend(),
             'typeLocations' => $this->getDifferentTypesAndLocations(),
             'settings' => $this->settings,
         ]);

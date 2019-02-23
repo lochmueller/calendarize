@@ -349,4 +349,14 @@ class Index extends AbstractModel
     {
         $this->state = $state;
     }
+
+    /**
+     * Get sys language uid.
+     *
+     * @return int
+     */
+    public function getSysLanguageUid()
+    {
+        return (int) $this->_languageUid;
+    }
 }
