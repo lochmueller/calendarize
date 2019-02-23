@@ -18,7 +18,7 @@
 						<a class="btn btn-primary"
 							 href="{c:editRecord(parameters: 'edit[{table}][{pid}]=new')}">
 							<core:icon identifier="actions-document-new"/>
-							{value} on PID #{pid}
+							{value} on "<c:backend.pageTitle uid="{pid}"/>" (#{pid})
 						</a>
 					</f:for>
 				</f:for>
