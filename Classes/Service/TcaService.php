@@ -68,6 +68,12 @@ class TcaService extends AbstractService
         // base record
         $databaseConnection = HelperUtility::getDatabaseConnection($table);
         $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']])->fetch();
+
+        $transPointer = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
+        if ($transPointer && (int) $fullRow[$transPointer] > 0) {
+            return;
+        }
+
         $configurations = isset($fullRow['calendarize']) ? GeneralUtility::intExplode(
             ',',
             $fullRow['calendarize'],

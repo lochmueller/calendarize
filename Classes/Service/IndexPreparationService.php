@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -33,6 +34,13 @@ class IndexPreparationService
             return [];
         }
         $configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], true);
+
+        $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
+        if ($transPointer && (int) $rawRecord[$transPointer] > 0) {
+            $rawOriginalRecord = BackendUtility::getRecord($tableName, (int) $rawRecord[$transPointer]);
+            $configurations = GeneralUtility::intExplode(',', $rawOriginalRecord['calendarize'], true);
+        }
+
         $neededItems = [];
         if ($configurations) {
             $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
@@ -79,19 +87,36 @@ class IndexPreparationService
         $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] ?? false; // e.g. sys_language_uid
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
 
-        if (!$languageField || !$transPointer) {
-            return;
-        }
-        if ((int) $record[$transPointer] <= 0) {
-            // no Index for language child elements
-            return;
-        }
-        $language = (int) $record[$languageField];
+        if ($transPointer && (int) $record[$transPointer] > 0) {
+            foreach ($neededItems as $key => $value) {
+                $originalRecord = BackendUtility::getRecord($value['foreign_table'], $value['foreign_uid']);
 
-        // @todo handle l10n_parent
+                $searchFor = $value;
+                $searchFor['foreign_uid'] = (int) $originalRecord[$transPointer];
 
-        foreach (\array_keys($neededItems) as $key) {
-            $neededItems[$key]['sys_language_uid'] = $language;
+                $db = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME);
+                $q = $db->createQueryBuilder();
+                $where = [];
+                foreach ($searchFor as $field => $val) {
+                    if (\is_string($val)) {
+                        $where[] = $q->expr()->eq($field, $q->quote($val));
+                    } else {
+                        $where[] = $q->expr()->eq($field, (int) $val);
+                    }
+                }
+
+                $result = $q->select('uid')->from(IndexerService::TABLE_NAME)->andWhere(...$where)->execute()->fetch();
+                if (isset($result['uid'])) {
+                    $neededItems[$key]['l10n_parent'] = (int) $result['uid'];
+                }
+            }
+        }
+
+        if ($languageField && 0 !== (int) $record[$languageField]) {
+            $language = (int) $record[$languageField];
+            foreach (\array_keys($neededItems) as $key) {
+                $neededItems[$key]['sys_language_uid'] = $language;
+            }
         }
     }
 

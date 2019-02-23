@@ -8,11 +8,11 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Utility\ArrayUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Index the given events.
@@ -41,8 +41,19 @@ class IndexerService extends AbstractService
             $this->removeInvalidRecordIndex($tableName);
 
             $q->resetQueryParts();
-            $q->select('uid')
-                ->from($tableName);
+
+            $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
+
+            if ($transPointer) {
+                // Note: In loclized tables, it is important, that the "default language records" are indexed first, so the
+                // overlays can connect with l10n_paretn to the right default record.
+                $q->select('uid')
+                    ->from($tableName)
+                    ->orderBy((string) $transPointer);
+            } else {
+                $q->select('uid')
+                    ->from($tableName);
+            }
 
             $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
@@ -154,7 +165,7 @@ class IndexerService extends AbstractService
         foreach ($neededItems as $neededKey => $neededItem) {
             $remove = false;
             foreach ($currentItems as $currentKey => $currentItem) {
-                if ($this->isEqualArray($neededItem, $currentItem)) {
+                if (ArrayUtility::isEqualArray($neededItem, $currentItem)) {
                     $remove = true;
                     unset($neededItems[$neededKey], $currentItems[$currentKey]);
 
@@ -173,31 +184,6 @@ class IndexerService extends AbstractService
         if ($neededItems) {
             $databaseConnection->bulkInsert(self::TABLE_NAME, $neededItems, \array_keys($neededItems[0]));
         }
-    }
-
-    /**
-     * Check if the properties of the given arrays are equals.
-     *
-     * @param array $neededItem
-     * @param array $currentItem
-     *
-     * @return bool
-     */
-    protected function isEqualArray(array $neededItem, array $currentItem)
-    {
-        foreach ($neededItem as $key => $value) {
-            if (MathUtility::canBeInterpretedAsInteger($value)) {
-                if ((int) $value !== (int) $currentItem[$key]) {
-                    return false;
-                }
-            } else {
-                if ((string) $value !== (string) $currentItem[$key]) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 
     /**
