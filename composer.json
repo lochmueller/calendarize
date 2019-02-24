@@ -37,7 +37,8 @@
 		"ext-json": "*",
 		"ext-pdo": "*",
         "typo3/cms-core": "~8.7.0||~9.5.0",
-        "lochmueller/autoloader": ">4.0.0"
+        "lochmueller/autoloader": ">4.0.0",
+        "sabre/vobject": "^4.2"
     },
     "replace": {
         "typo3-ter/calendarize": "self.version"

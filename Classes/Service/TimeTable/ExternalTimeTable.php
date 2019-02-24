@@ -9,9 +9,7 @@ namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\IcsReaderService;
-use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use JMBTechnologyLimited\ICalDissect\ICalEvent;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -58,49 +56,11 @@ class ExternalTimeTable extends AbstractTimeTable
             return;
         }
 
-        $events = $this->icsReaderService->toArray($url);
-        foreach ($events as $event) {
-            /** @var $event ICalEvent */
-            $startTime = DateTimeUtility::getDaySecondsOfDateTime($event->getStart());
-            $endTime = DateTimeUtility::getDaySecondsOfDateTime($event->getEnd());
-            if (self::DAY_END === $endTime) {
-                $endTime = 0;
-            }
-
-            $entry = [
-                'pid' => $configuration->getPid(),
-                'start_date' => $event->getStart(),
-                'end_date' => $this->getEventsFixedEndDate($event),
-                'start_time' => $startTime,
-                'end_time' => $endTime,
-                'all_day' => 0 === $endTime,
-                'state' => $configuration->getState(),
-            ];
-            $times[$this->calculateEntryKey($entry)] = $entry;
+        $externalTimes = $this->icsReaderService->getTimes($url);
+        foreach ($externalTimes as $time) {
+            $time['pid'] = $configuration->getPid();
+            $time['state'] = $configuration->getState();
+            $times[$this->calculateEntryKey($time)] = $time;
         }
-    }
-
-    /**
-     * Fixes a parser related bug where the DTEND is EXCLUSIVE.
-     * The parser uses it inclusive so every event is one day
-     * longer than it should be.
-     *
-     * @param ICalEvent $event
-     *
-     * @return \DateTime
-     */
-    protected function getEventsFixedEndDate(ICalEvent $event)
-    {
-        if (!$event->getEnd() instanceof \DateTimeInterface) {
-            return $event->getStart();
-        }
-
-        $end = clone $event->getEnd();
-        $end->sub(new \DateInterval('P1D'));
-        if ($end->format('Ymd') === $event->getStart()->format('Ymd')) {
-            return $end;
-        }
-
-        return $event->getEnd();
     }
 }
