@@ -33,13 +33,15 @@ For cooluri you can use this configuration to get the right title incl. a date::
 
 For TYPO3 > 9.0: Please use the EventMapper for URL rewrite options of the index
 
-  CalendarizePlugin:
-    type: Extbase
-    extension: Calendarize
-    plugin: Calendar
-    routes:
-      - { routePath: '/{event_title}', _controller: 'Calendarize::detail', _arguments: {'event_title': 'index'} }
-    defaultController: 'Calendarize::detail'
-    aspects:
-      event_title:
-        type: EventMapper
+.. code-block:: yaml
+
+	CalendarizePlugin:
+	 type: Extbase
+	 extension: Calendarize
+	 plugin: Calendar
+	 routes:
+	   - { routePath: '/{event_title}', _controller: 'Calendarize::detail', _arguments: {'event_title': 'index'} }
+	 defaultController: 'Calendarize::detail'
+	 aspects:
+	   event_title:
+	     type: EventMapper
