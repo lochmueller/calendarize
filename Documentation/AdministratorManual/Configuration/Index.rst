@@ -18,3 +18,31 @@ For a easy editor workflow you can active the time selection wizard by the given
            }
 
 
+
+XML Sitemap for TYPO3 > 9.0
+---------------------------
+
+.. code-block::
+
+  plugin.tx_seo {
+    config {
+      xmlSitemap {
+        sitemaps {
+          ext_calendarize {
+            provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+            config {
+              table = tx_calendarize_domain_model_index
+              pid = xxxxxx
+              url {
+                pageId = xxxxxx
+                fieldToParameterMap {
+                  uid = tx_calendarize_calendar[index]
+                }
+                useCacheHash = 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
