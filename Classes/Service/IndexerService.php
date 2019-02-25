@@ -139,7 +139,6 @@ class IndexerService extends AbstractService
         if (null === $preparationService) {
             $preparationService = GeneralUtility::makeInstance(IndexPreparationService::class);
         }
-        // @todo Handle Workspace IDs?
         $neededItems = $preparationService->prepareIndex($configurationKey, $tableName, $uid);
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);
     }
@@ -150,8 +149,6 @@ class IndexerService extends AbstractService
      * @param array  $neededItems
      * @param string $tableName
      * @param int    $uid
-     *
-     * @todo Handle Workspace IDs?
      */
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {

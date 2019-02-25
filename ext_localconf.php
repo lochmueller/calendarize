@@ -68,4 +68,9 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_service
     \FRUIT\GoogleServices\Service\SitemapProvider::addProvider(\HDNET\Calendarize\Service\SitemapProvider\Events::class);
 }
 
+
+if(class_exists(\TYPO3\CMS\Core\Routing\Aspect\PersistedPatternMapper::class)) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['EventMapper'] = \HDNET\Calendarize\Routing\Aspect\EventMapper::class;
+}
+
 // $GLOBALS['TYPO3_CONF_VARS']['SYS']['linkHandler']['event'] = \HDNET\Calendarize\LinkHandling\EventLinkHandler::class;

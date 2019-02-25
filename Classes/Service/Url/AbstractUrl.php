@@ -13,6 +13,7 @@ use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Routing\Aspect\PersistedAliasMapper;
 
 /**
  * AbstractUrl.
@@ -54,7 +55,7 @@ abstract class AbstractUrl extends AbstractService
                 ->format($datePart);
         }
 
-        if ((bool) ConfigurationUtility::get('addIndexInSpeakingUrl')) {
+        if ((bool) ConfigurationUtility::get('addIndexInSpeakingUrl') || \class_exists(PersistedAliasMapper::class)) {
             $base .= '-' . $indexUid;
         }
 

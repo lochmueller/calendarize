@@ -100,7 +100,7 @@ class RealUrl extends AbstractUrl
         $q = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME)->createQueryBuilder();
 
         $row = $q->select('value_id')
-            ->from('tx_realurl_uniqalias')
+                ->from('tx_realurl_uniqalias')
             ->where(
                 $q->expr()->andX(
                     $q->expr()->eq('tablename', $q->expr()->literal(IndexerService::TABLE_NAME)),

@@ -9,10 +9,12 @@
 			<div class="panel-body">
 				<f:render partial="{index.configuration.partialIdentifier}/Detail" arguments="{index: index}"/>
 				<div class="btn-group">
-					<c:link.list class="btn btn-default">
-						<span class="glyphicon glyphicon-arrow-left"></span>
-						<f:translate key="back"/>
-					</c:link.list>
+					<f:if condition="{settings.listPid}">
+						<c:link.list class="btn btn-default">
+							<span class="glyphicon glyphicon-arrow-left"></span>
+							<f:translate key="back"/>
+						</c:link.list>
+					</f:if>
 					<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal
 					</f:link.action>
 				</div>
