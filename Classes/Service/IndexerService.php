@@ -13,6 +13,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Index the given events.
@@ -29,6 +30,9 @@ class IndexerService extends AbstractService
      */
     public function reindexAll()
     {
+        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        $dispatcher->dispatch(__CLASS__, __FUNCTION__, [$this]);
+
         $this->removeInvalidConfigurationIndex();
         $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
 
@@ -71,6 +75,9 @@ class IndexerService extends AbstractService
      */
     public function reindex($configurationKey, $tableName, $uid)
     {
+        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        $dispatcher->dispatch(__CLASS__, __FUNCTION__, [$configurationKey, $tableName, $uid, $this]);
+
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
