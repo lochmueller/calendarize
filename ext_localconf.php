@@ -69,7 +69,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_service
 }
 
 
-if(class_exists(\TYPO3\CMS\Core\Routing\Aspect\PersistedPatternMapper::class)) {
+if (class_exists(\TYPO3\CMS\Core\Routing\Aspect\PersistedPatternMapper::class)) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['EventMapper'] = \HDNET\Calendarize\Routing\Aspect\EventMapper::class;
 }
 
