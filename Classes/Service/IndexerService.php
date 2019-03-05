@@ -31,7 +31,7 @@ class IndexerService extends AbstractService
     public function reindexAll()
     {
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $dispatcher->dispatch(__CLASS__, __FUNCTION__, [$this]);
+        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$this]);
 
         $this->removeInvalidConfigurationIndex();
         $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
@@ -64,6 +64,8 @@ class IndexerService extends AbstractService
                 $this->updateIndex($key, $configuration['tableName'], $row['uid']);
             }
         }
+
+        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$this]);
     }
 
     /**
@@ -76,11 +78,13 @@ class IndexerService extends AbstractService
     public function reindex($configurationKey, $tableName, $uid)
     {
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $dispatcher->dispatch(__CLASS__, __FUNCTION__, [$configurationKey, $tableName, $uid, $this]);
+        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$configurationKey, $tableName, $uid, $this]);
 
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
+
+        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$configurationKey, $tableName, $uid, $this]);
     }
 
     /**
