@@ -90,19 +90,14 @@ class IndexerService extends AbstractService
     /**
      * Get index count.
      *
-     * @param $table
-     * @param $uid
+     * @param string $tableName
+     * @param int $uid
      *
      * @return mixed
      */
-    public function getIndexCount($table, $uid)
+    public function getIndexCount(string $tableName, int $uid)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection($table);
-
-        return $databaseConnection->count('*', self::TABLE_NAME, [
-            'foreign_table' => $table,
-            'foreign_uid' => (int) $uid,
-        ]);
+        return $this->getCurrentItems($tableName, $uid)->rowCount();
     }
 
     /**
@@ -119,6 +114,10 @@ class IndexerService extends AbstractService
         $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
         $now = DateTimeUtility::getNow();
         $now->setTime(0, 0, 0);
+
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         $q->select('*')
             ->from(self::TABLE_NAME)
@@ -155,6 +154,25 @@ class IndexerService extends AbstractService
     }
 
     /**
+     * Get the current items (ignore enable fields)
+     *
+     * @param string $tableName
+     * @param int $uid
+     * @return \Doctrine\DBAL\Driver\Statement|int
+     */
+    protected function getCurrentItems(string $tableName, int $uid) {
+        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $q->resetQueryParts();
+        $q->select('*')
+            ->from(self::TABLE_NAME)
+            ->where($q->expr()->eq('foreign_table', $q->quote($tableName)), $q->expr()->eq('foreign_uid', $uid));
+        return $q->execute();
+    }
+
+    /**
      * Insert and/or update the needed index records.
      *
      * @param array  $neededItems
@@ -164,11 +182,7 @@ class IndexerService extends AbstractService
     protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection($tableName);
-
-        $currentItems = $databaseConnection->select(['*'], self::TABLE_NAME, [
-            'foreign_table' => $tableName,
-            'foreign_uid' => $uid,
-        ])->fetchAll();
+        $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();
 
         foreach ($neededItems as $neededKey => $neededItem) {
             $remove = false;
