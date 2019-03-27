@@ -15,6 +15,10 @@ $custom = [
         'label_alt' => 'start_date',
         'label_alt_force' => '1',
         'readOnly' => true,
+            'enablecolumns' => [
+            'disabled' => ''
+        ],
+
     ],
     'columns' => [
         'unique_register_key' => [
