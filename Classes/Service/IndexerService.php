@@ -160,7 +160,8 @@ class IndexerService extends AbstractService
      * @param int $uid
      * @return \Doctrine\DBAL\Driver\Statement|int
      */
-    protected function getCurrentItems(string $tableName, int $uid) {
+    protected function getCurrentItems(string $tableName, int $uid)
+    {
         $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
         $q->getRestrictions()
             ->removeAll()
