@@ -108,7 +108,6 @@ class CmsLayout extends AbstractHook
             if ($overrideEndRelative) {
                 $this->layoutService->addRow(TranslateUtility::get('override.endrelative'), $overrideEndRelative);
             }
-
         } else {
             $overrideStartDate = (int) $this->flexFormService->get('settings.overrideStartdate', 'main');
             if ($overrideStartDate) {
