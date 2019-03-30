@@ -166,15 +166,26 @@
 							</config>
 						</TCEforms>
 					</settings.hidePagination>
-
+					<settings.useRelativeDate>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</settings.useRelativeDate>
 					<settings.overrideStartdate>
 						<TCEforms>
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startdate</label>
 							<displayCond>
-								<OR>
-									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-								</OR>
+								<AND>
+									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
+									<OR>
+										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</AND>
 							</displayCond>
 							<config>
 								<type>input</type>
@@ -182,15 +193,17 @@
 							</config>
 						</TCEforms>
 					</settings.overrideStartdate>
-
 					<settings.overrideEnddate>
 						<TCEforms>
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.enddate</label>
 							<displayCond>
-								<OR>
-									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-								</OR>
+								<AND>
+									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
+									<OR>
+										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</AND>
 							</displayCond>
 							<config>
 								<type>input</type>
@@ -198,6 +211,42 @@
 							</config>
 						</TCEforms>
 					</settings.overrideEnddate>
+					<settings.overrideStartRelative>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startrelative</label>
+							<displayCond>
+								<AND>
+									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
+									<OR>
+										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</AND>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<eval>trim</eval>
+							</config>
+						</TCEforms>
+					</settings.overrideStartRelative>
+					<settings.overrideEndRelative>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.endrelative</label>
+							<displayCond>
+								<AND>
+									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
+									<OR>
+										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									</OR>
+								</AND>
+							</displayCond>
+							<config>
+								<type>input</type>
+								<eval>trim</eval>
+							</config>
+						</TCEforms>
+					</settings.overrideEndRelative>
 				</el>
 			</ROOT>
 		</main>

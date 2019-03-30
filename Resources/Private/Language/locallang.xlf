@@ -352,6 +352,15 @@
 			<trans-unit id="override.enddate">
 				<source>Override enddate</source>
 			</trans-unit>
+			<trans-unit id="override.startrelative">
+				<source>Override startdate (relative)</source>
+			</trans-unit>
+			<trans-unit id="override.endrelative">
+				<source>Override enddate (relative)</source>
+			</trans-unit>
+			<trans-unit id="useRelativeDate">
+				<source>Use relative Date ( 'now' or '+1 year')</source>
+			</trans-unit>
 			<trans-unit id="inherit">
 				<source>Inherit</source>
 			</trans-unit>

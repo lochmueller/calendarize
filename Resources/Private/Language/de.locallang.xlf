@@ -325,6 +325,26 @@
 				<source>Hide pagination + Teaser mode</source>
 				<target>Verstecke Pagination + Teaser Modus</target>
 			</trans-unit>
+			<trans-unit id="override.startdate">
+				<source>Override startdate</source>
+				<target>Überschreibe Start-Datum</target>
+			</trans-unit>
+			<trans-unit id="override.enddate">
+				<source>Override enddate</source>
+				<target>Überschreibe End-Datum</target>
+			</trans-unit>
+			<trans-unit id="override.startrelative">
+				<source>Override startdate (relative)</source>
+				<target>Überschreibe Start-Datum (relativ)</target>
+			</trans-unit>
+			<trans-unit id="override.endrelative">
+				<source>Override enddate (relative)</source>
+				<target>Überschreibe End-Datum (relativ)</target>
+			</trans-unit>
+			<trans-unit id="useRelativeDate">
+				<source>Use relative Date ( 'now' or '+1 year')</source>
+				<target>Verwende relative Zeitangabe ( 'now' or '+1 year')</target>
+			</trans-unit>
 			<trans-unit id="inherit" approved="yes">
 				<source>Inherit</source>
 				<target>Vererbt</target>

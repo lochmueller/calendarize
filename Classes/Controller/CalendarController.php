@@ -546,8 +546,32 @@ class CalendarController extends AbstractController
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
             $indices = $this->indexRepository->findYear((int) $year);
         } else {
-            $overrideStartDate = (int) $this->settings['overrideStartdate'];
-            $overrideEndDate = (int) $this->settings['overrideEnddate'];
+            // check if relative dates are enabled
+            if ((bool)$this->settings['useRelativeDate']) {
+                $overrideStartDateRelative = trim($this->settings['overrideStartRelative']);
+                if ($overrideStartDateRelative === '') {
+                    $overrideStartDateRelative = 'now';
+                }
+                try {
+                    $relativeDate = new \DateTime($overrideStartDateRelative);
+                } catch (\Exception $e) {
+                    $relativeDate = new \DateTime();
+                }
+                $overrideStartDate = $relativeDate->getTimestamp();
+                $overrideEndDate = 0;
+                $overrideEndDateRelative = trim($this->settings['overrideEndRelative']);
+                if ($overrideStartDateRelative !== '') {
+                    try {
+                        $relativeDate->modify($overrideEndDateRelative);
+                        $overrideEndDate = $relativeDate->getTimestamp();
+                    } catch (\Exception $e) {
+                        // do nothing $overrideEndDate is 0
+                    }
+                }
+            } else {
+                $overrideStartDate = (int) $this->settings['overrideStartdate'];
+                $overrideEndDate = (int) $this->settings['overrideEnddate'];
+            }
             $indices = $this->indexRepository->findList(
                 (int) $this->settings['limit'],
                 $this->settings['listStartTime'],

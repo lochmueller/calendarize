@@ -98,13 +98,26 @@ class CmsLayout extends AbstractHook
         if ((bool) $this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
-        $overrideStartDate = (int) $this->flexFormService->get('settings.overrideStartdate', 'main');
-        if ($overrideStartDate) {
-            $this->layoutService->addRow('OverrideStartdate', \date('d.m.y H:i', $overrideStartDate));
-        }
-        $overrideEndDate = (int) $this->flexFormService->get('settings.overrideEnddate', 'main');
-        if ($overrideEndDate) {
-            $this->layoutService->addRow('OverrideEndDate', \date('d.m.y H:i', $overrideEndDate));
+        $useRelativeDate = (bool) $this->flexFormService->get('settings.useRelativeDate', 'main');
+        if ($useRelativeDate) {
+            $overrideStartRelative = $this->flexFormService->get('settings.overrideStartRelative', 'main');
+            if ($overrideStartRelative) {
+                $this->layoutService->addRow(TranslateUtility::get('override.startrelative'), $overrideStartRelative);
+            }
+            $overrideEndRelative = $this->flexFormService->get('settings.overrideEndRelative', 'main');
+            if ($overrideEndRelative) {
+                $this->layoutService->addRow(TranslateUtility::get('override.endrelative'), $overrideEndRelative);
+            }
+
+        } else {
+            $overrideStartDate = (int) $this->flexFormService->get('settings.overrideStartdate', 'main');
+            if ($overrideStartDate) {
+                $this->layoutService->addRow(TranslateUtility::get('override.startdate'), \date('d.m.y H:i', $overrideStartDate));
+            }
+            $overrideEndDate = (int) $this->flexFormService->get('settings.overrideEnddate', 'main');
+            if ($overrideEndDate) {
+                $this->layoutService->addRow(TranslateUtility::get('override.enddate'), \date('d.m.y H:i', $overrideEndDate));
+            }
         }
 
         $this->addPageIdsToTable();
