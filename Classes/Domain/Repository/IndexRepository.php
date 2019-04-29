@@ -365,13 +365,18 @@ class IndexRepository extends AbstractRepository
     public function findWeek($year, $week, $weekStart = 1)
     {
         $weekStart = (int) $weekStart;
-        $daysShift = DateTimeUtility::SECONDS_DAY * ($weekStart - 1);
+        $daysShift = $weekStart - 1;
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $timezone = DateTimeUtility::getTimeZone();
         $firstDay->setTimezone($timezone);
-        $timeStampStart = $firstDay->getTimestamp() + $daysShift;
+        if ($daysShift !== 0) {
+            $firstDay->modify('+' . $daysShift . ' days');
+        }
+        $endDate = clone $firstDay;
+        $endDate->modify('+1 week');
+        $endDate->modify('-1 second');
 
-        return $this->findByTimeSlot($timeStampStart, $timeStampStart + DateTimeUtility::SECONDS_WEEK - 1);
+        return $this->findByTimeSlot($firstDay->getTimestamp(), $endDate->getTimestamp());
     }
 
     /**
@@ -398,12 +403,17 @@ class IndexRepository extends AbstractRepository
      * @param int $day
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws Exception
      */
     public function findDay(int $year, int $month, int $day)
     {
         $startTime = \mktime(0, 0, 0, $month, $day, $year);
+        $startDate = new \DateTime('@' . $startTime);
+        $endDate = clone $startDate;
+        $endDate->modify('+1 day');
+        $endDate->modify('-1 second');
 
-        return $this->findByTimeSlot($startTime, $startTime + DateTimeUtility::SECONDS_DAY - 1);
+        return $this->findByTimeSlot($startDate->getTimestamp(), $endDate->getTimestamp());
     }
 
     /**
