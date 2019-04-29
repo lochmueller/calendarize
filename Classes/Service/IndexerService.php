@@ -13,6 +13,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -93,11 +94,15 @@ class IndexerService extends AbstractService
      * @param string $tableName
      * @param int $uid
      *
-     * @return mixed
+     * @return int
      */
-    public function getIndexCount(string $tableName, int $uid)
+    public function getIndexCount(string $tableName, $uid):int
     {
-        return $this->getCurrentItems($tableName, $uid)->rowCount();
+        // Note: "uid" could be e.g. NEW6273482 in DataHandler process
+        if (MathUtility::canBeInterpretedAsInteger($uid)) {
+            return (int) $this->getCurrentItems($tableName, $uid)->rowCount();
+        }
+        return 0;
     }
 
     /**
