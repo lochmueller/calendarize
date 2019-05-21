@@ -548,6 +548,9 @@
 			<trans-unit id="tx_calendarize_domain_model_configuration.start_date">
 				<source>Start date</source>
 			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.with_range_last">
+				<source>Start date (Single dates first)</source>
+			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.start_time">
 				<source>Start time</source>
 			</trans-unit>

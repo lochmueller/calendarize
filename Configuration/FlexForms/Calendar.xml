@@ -288,6 +288,10 @@
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.end_date</numIndex>
 										<numIndex index="1">end</numIndex>
 									</numIndex>
+									<numIndex index="2">
+										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.with_range_last</numIndex>
+										<numIndex index="1">withrangelast</numIndex>
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>

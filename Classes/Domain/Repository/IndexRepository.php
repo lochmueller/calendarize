@@ -626,6 +626,13 @@ class IndexRepository extends AbstractRepository
      */
     protected function getSorting($direction, $field = '')
     {
+        if ($field === 'withrangelast') {
+            return [
+                'end_date' => $direction,
+                'start_date' => $direction,
+                'start_time' => $direction,
+            ];
+        }
         if ('end' !== $field) {
             $field = 'start';
         }
