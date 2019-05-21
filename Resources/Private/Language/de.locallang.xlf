@@ -581,6 +581,10 @@
 				<source>Start date</source>
 				<target>Startdatum</target>
 			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.with_range_last">
+				<source>Start date (Single dates first)</source>
+				<target>Startdatum (Einzeltermin zuerst)</target>
+			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.start_time" approved="yes">
 				<source>Start time</source>
 				<target>Startzeit</target>
