@@ -52,10 +52,10 @@ plugin.tx_calendarize {
 }
 
 [globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}]
-	page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js
+	page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js
 	page.includeJSFooterlibs.moment.external = 1
 	page.includeJSFooterlibs.moment.disableCompression = 1
-	page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.17/moment-timezone.min.js
+	page.includeJSFooterlibs.momentTimezone = https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.25/moment-timezone.min.js
 	page.includeJSFooterlibs.momentTimezone.external = 1
 	page.includeJSFooterlibs.momentTimezone.disableCompression = 1
 	page.includeJSFooterlibs.momentReplacement = typo3conf/ext/calendarize/Resources/Public/JavaScript/MomentReplacement.js
@@ -64,14 +64,14 @@ plugin.tx_calendarize {
 [globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentFullCalendarIo}]
 	page {
 		includeCSS {
-			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css
+			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css
 			fullCalendar {
 				external = 1
 				disableCompression = 1
 				forceOnTop = 1
 			}
 
-			fullCalendarPrint = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css
+			fullCalendarPrint = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.min.css
 			fullCalendarPrint {
 				external = 1
 				media = print
@@ -81,13 +81,13 @@ plugin.tx_calendarize {
 		}
 
 		includeJSFooter {
-			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js
+			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js
 			fullCalendar {
 				external = 1
 				disableCompression = 1
 				excludeFromConcatenation = 1
 			}
-			fullCalendarLanguage = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale-all.js
+			fullCalendarLanguage = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/locale-all.js
 			fullCalendarLanguage {
 				external = 1
 				disableCompression = 1
