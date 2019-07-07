@@ -6,7 +6,7 @@ if (window.jQuery) {
 			if (typeof language !== typeof undefined && language !== false) {
 				moment.locale(language);
 			}
-			let m = moment.utc($element.html());
+			let m = moment.parseZone($element.html());
 			jQuery(this).html(m.format($element.attr('data-format')));
 		});
 	});
