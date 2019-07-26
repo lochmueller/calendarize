@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * RealUrl.
@@ -100,7 +101,7 @@ class RealUrl extends AbstractUrl
         $q = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME)->createQueryBuilder();
 
         $row = $q->select('value_id')
-                ->from('tx_realurl_uniqalias')
+            ->from('tx_realurl_uniqalias')
             ->where(
                 $q->expr()->andX(
                     $q->expr()->eq('tablename', $q->expr()->literal(IndexerService::TABLE_NAME)),
@@ -147,10 +148,9 @@ class RealUrl extends AbstractUrl
         if (isset($row['value_alias'])) {
             return (string) $row['value_alias'];
         }
-
+        
         $alias = $this->getIndexBase((int) $value);
         $alias = $this->cleanUrl($alias);
-
         $entry = [
             'tablename' => IndexerService::TABLE_NAME,
             'field_alias' => 'title',
@@ -185,10 +185,15 @@ class RealUrl extends AbstractUrl
      * @return bool
      */
     protected function aliasAlreadyExists($alias)
-    {
-        $db = HelperUtility::getDatabaseConnection('tx_realurl_uniqalias');
-        $count = $db->count('*', 'tx_realurl_uniqalias', ['value_alias' => $db->quoteIdentifier($alias)]);
-
+    {      
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_realurl_uniqalias');
+        
+        $count = $queryBuilder
+        ->count('uid')
+        ->from('tx_realurl_uniqalias')
+        ->where($queryBuilder->expr()->eq('value_alias', $queryBuilder->createNamedParameter($alias)))
+        ->execute()
+        ->fetchColumn(0);
         return (bool) $count;
     }
 
