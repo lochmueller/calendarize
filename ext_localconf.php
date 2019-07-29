@@ -53,7 +53,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\HDNET\Calend
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:calendarize/Configuration/TsConfig/ContentElementWizard.txt">');
 
 $icons = [
-    'ext-calendarize-wizard-icon' => 'ext_icon.svg',
+    'ext-calendarize-wizard-icon' => 'Resources/Public/Icons/Extension.svg',
 ];
 $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 foreach ($icons as $identifier => $path) {
