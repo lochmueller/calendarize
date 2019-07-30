@@ -12,11 +12,11 @@ use DmitryDulepov\Realurl\Utility;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * RealUrl.
@@ -148,7 +148,7 @@ class RealUrl extends AbstractUrl
         if (isset($row['value_alias'])) {
             return (string) $row['value_alias'];
         }
-        
+
         $alias = $this->getIndexBase((int) $value);
         $alias = $this->cleanUrl($alias);
         $entry = [
@@ -185,9 +185,9 @@ class RealUrl extends AbstractUrl
      * @return bool
      */
     protected function aliasAlreadyExists($alias)
-    {      
+    {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_realurl_uniqalias');
-        
+
         $count = $queryBuilder
         ->count('uid')
         ->from('tx_realurl_uniqalias')
