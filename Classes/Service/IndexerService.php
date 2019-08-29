@@ -92,16 +92,17 @@ class IndexerService extends AbstractService
      * Get index count.
      *
      * @param string $tableName
-     * @param int $uid
+     * @param int    $uid
      *
      * @return int
      */
-    public function getIndexCount(string $tableName, $uid):int
+    public function getIndexCount(string $tableName, $uid): int
     {
         // Note: "uid" could be e.g. NEW6273482 in DataHandler process
         if (MathUtility::canBeInterpretedAsInteger($uid)) {
             return (int) $this->getCurrentItems($tableName, $uid)->rowCount();
         }
+
         return 0;
     }
 
@@ -159,10 +160,11 @@ class IndexerService extends AbstractService
     }
 
     /**
-     * Get the current items (ignore enable fields)
+     * Get the current items (ignore enable fields).
      *
      * @param string $tableName
-     * @param int $uid
+     * @param int    $uid
+     *
      * @return \Doctrine\DBAL\Driver\Statement|int
      */
     protected function getCurrentItems(string $tableName, int $uid)
@@ -175,6 +177,7 @@ class IndexerService extends AbstractService
         $q->select('*')
             ->from(self::TABLE_NAME)
             ->where($q->expr()->eq('foreign_table', $q->quote($tableName)), $q->expr()->eq('foreign_uid', $uid));
+
         return $q->execute();
     }
 

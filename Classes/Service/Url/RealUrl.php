@@ -194,6 +194,7 @@ class RealUrl extends AbstractUrl
         ->where($queryBuilder->expr()->eq('value_alias', $queryBuilder->createNamedParameter($alias)))
         ->execute()
         ->fetchColumn(0);
+
         return (bool) $count;
     }
 

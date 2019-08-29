@@ -181,7 +181,7 @@ class TimeTableService extends AbstractService
             $base->setTime(0, 0, 0);
             $base->modify('+ ' . $seconds . ' seconds');
         }
-        if ($record['all_day'] && $position == 'end') {
+        if ($record['all_day'] && 'end' === $position) {
             $base->setTime(0, 0, 0);
             $base->modify('+1 day');
         }

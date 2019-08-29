@@ -369,7 +369,7 @@ class IndexRepository extends AbstractRepository
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $timezone = DateTimeUtility::getTimeZone();
         $firstDay->setTimezone($timezone);
-        if ($daysShift !== 0) {
+        if (0 !== $daysShift) {
             $firstDay->modify('+' . $daysShift . ' days');
         }
         $endDate = clone $firstDay;
@@ -402,8 +402,9 @@ class IndexRepository extends AbstractRepository
      * @param int $month
      * @param int $day
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws Exception
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findDay(int $year, int $month, int $day)
     {
@@ -626,7 +627,7 @@ class IndexRepository extends AbstractRepository
      */
     protected function getSorting($direction, $field = '')
     {
-        if ($field === 'withrangelast') {
+        if ('withrangelast' === $field) {
             return [
                 'end_date' => $direction,
                 'start_date' => $direction,
