@@ -58,6 +58,14 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $endDate;
 
     /**
+     * End date dynamic.
+     *
+     * @var string
+     * @db
+     */
+    protected $endDateDynamic;
+
+    /**
      * Start time.
      *
      * @var int
@@ -224,6 +232,26 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     public function setEndDate($endDate)
     {
         $this->endDate = $endDate;
+    }
+
+    /**
+     * Get end date dynamic.
+     *
+     * @return string
+     */
+    public function getEndDateDynamic()
+    {
+        return $this->endDateDynamic;
+    }
+
+    /**
+     * Set end date dynamic.
+     *
+     * @param string $endDateDynamic
+     */
+    public function setEndDateDynamic($endDateDynamic)
+    {
+        $this->endDateDynamic = $endDateDynamic;
     }
 
     /**

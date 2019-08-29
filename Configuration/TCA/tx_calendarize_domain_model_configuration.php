@@ -24,7 +24,7 @@ $timeType = \str_replace(
 $timeType = \str_replace(',external_ics_url', '', $timeType);
 $timeType = \str_replace(',groups', '', $timeType);
 $timeType = \str_replace(
-    ',start_date,end_date',
+    ',start_date,end_date,end_date_dynamic',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date;date',
     $timeType
 );
@@ -385,6 +385,39 @@ $custom = [
                 ],
             ],
         ],
+        'end_date_dynamic' => [
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        '',
+                        '',
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_1_DAY),
+                        Configuration::END_DYNAMIC_1_DAY,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_1_WEEK),
+                        Configuration::END_DYNAMIC_1_WEEK,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_WEEK),
+                        Configuration::END_DYNAMIC_END_WEEK,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_MONTH),
+                        Configuration::END_DYNAMIC_END_MONTH,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_YEAR),
+                        Configuration::END_DYNAMIC_END_YEAR,
+                    ],
+                ],
+                'default' => '',
+            ],
+        ],
         'import_id' => [
             'config' => [
                 'readOnly' => true,
@@ -398,7 +431,7 @@ $custom = [
         ],
         'date' => [
             'canNotCollapse' => 1,
-            'showitem' => 'start_date,end_date',
+            'showitem' => 'start_date,end_date,end_date_dynamic',
         ],
         'time' => [
             'canNotCollapse' => 1,

@@ -9,6 +9,12 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_configuration.end_date_dynamic"><source>End date (dynamic)</source></trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.1day"><source>1 day</source></trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.1week"><source>1 week</source></trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.end_week"><source>End of week</source></trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.end_month"><source>End of month</source></trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.end_year"><source>End of year</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_event.organizer_link"><source>Organizer link</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_event.location_link"><source>Location link</source></trans-unit>
 

@@ -81,4 +81,14 @@ interface ConfigurationInterface
     const STATE_DEFAULT = 'default';
 
     const STATE_CANCELED = 'canceled';
+
+    const END_DYNAMIC_1_DAY = '1day';
+
+    const END_DYNAMIC_1_WEEK = '1week';
+
+    const END_DYNAMIC_END_WEEK = 'end_week';
+
+    const END_DYNAMIC_END_MONTH = 'end_month';
+
+    const END_DYNAMIC_END_YEAR = 'end_year';
 }
