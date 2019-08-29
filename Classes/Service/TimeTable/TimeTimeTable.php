@@ -47,6 +47,82 @@ class TimeTimeTable extends AbstractTimeTable
         $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
         $this->addFrequencyItems($times, $configuration, $baseEntry);
         $this->addRecurrenceItems($times, $configuration, $baseEntry);
+        $this->respectDynamicEndDates($times, $configuration);
+    }
+
+    /**
+     * Respect the selection of dynamic enddates.
+     *
+     * @param array         $times
+     * @param Configuration $configuration
+     */
+    protected function respectDynamicEndDates(array &$times, Configuration $configuration)
+    {
+        switch ($configuration->getEndDateDynamic()) {
+            case Configuration::END_DYNAMIC_1_DAY:
+                $callback = function ($entry) {
+                    if ($entry['start_date'] instanceof \DateTime) {
+                        $entry['end_date'] = clone $entry['start_date'];
+                        $entry['end_date']->modify('+1 day');
+                    }
+
+                    return $entry;
+                };
+                break;
+            case Configuration::END_DYNAMIC_1_WEEK:
+                $callback = function ($entry) {
+                    if ($entry['start_date'] instanceof \DateTime) {
+                        $entry['end_date'] = clone $entry['start_date'];
+                        $entry['end_date']->modify('+1 week');
+                    }
+
+                    return $entry;
+                };
+                break;
+            case Configuration::END_DYNAMIC_END_WEEK:
+                $callback = function ($entry) {
+                    if ($entry['start_date'] instanceof \DateTime) {
+                        $entry['end_date'] = clone $entry['start_date'];
+                        $entry['end_date']->modify('monday next week');
+                        $entry['end_date']->modify('-1 day');
+                    }
+
+                    return $entry;
+                };
+                break;
+            case Configuration::END_DYNAMIC_END_MONTH:
+                $callback = function ($entry) {
+                    if ($entry['start_date'] instanceof \DateTime) {
+                        $entry['end_date'] = clone $entry['start_date'];
+                        $entry['end_date']->modify('last day of this month');
+                    }
+
+                    return $entry;
+                };
+                break;
+            case Configuration::END_DYNAMIC_END_YEAR:
+
+                $callback = function ($entry) {
+                    if ($entry['start_date'] instanceof \DateTime) {
+                        $entry['end_date'] = clone $entry['start_date'];
+                        $entry['end_date']->setDate((int) $entry['end_date']->format('Y'), 12, 31);
+                    }
+
+                    return $entry;
+                };
+                break;
+        }
+
+        if (!isset($callback)) {
+            return;
+        }
+
+        $new = [];
+        foreach ($times as $hash => $record) {
+            $target = $callback($record);
+            $new[$this->calculateEntryKey($target)] = $target;
+        }
+        $times = $new;
     }
 
     /**

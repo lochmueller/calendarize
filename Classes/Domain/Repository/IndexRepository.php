@@ -48,6 +48,8 @@ class IndexRepository extends AbstractRepository
     protected $overridePageIds = [];
 
     /**
+     * Create query.
+     *
      * @return QueryInterface
      */
     public function createQuery()
