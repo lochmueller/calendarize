@@ -17,11 +17,11 @@
 		<c:languageInformation languageUid="{index.sysLanguageUid}" pid="{index.pid}" />
 	</td>
 	<td>
-		{index.originalObject.uid}
+		{index.foreignUid}
 	</td>
 	<td>
 		<a class="btn btn-default"
-			 href="{c:editRecord(parameters: 'edit[{index.configuration.tableName}][{index.originalObject.uid}]=edit')}">
+			 href="{c:editRecord(parameters: 'edit[{index.configuration.tableName}][{index.foreignUid}]=edit')}">
 			<core:icon identifier="actions-document-open"/>
 		</a>
 	</td>

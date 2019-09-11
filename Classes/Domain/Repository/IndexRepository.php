@@ -89,8 +89,16 @@ class IndexRepository extends AbstractRepository
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectSysLanguage(false);
+        $query->getQuerySettings()->setLanguageOverlayMode(false);
+        $query->getQuerySettings()->setLanguageMode( "ignore");
 
-        return $query->execute();
+        // Notice Selection without any language handling
+        unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField']);
+        unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['transOrigPointerField']);
+
+        $result =  $query->execute();
+
+        return $result;
     }
 
     /**
