@@ -304,7 +304,10 @@ class IndexRepository extends AbstractRepository
 
         $constraints = [];
 
-        $constraints[] = $query->equals('foreignUid', $event->getUid());
+        $localizedUid = $event->_getProperty('_localizedUid');
+        $selectUid = $localizedUid ? $localizedUid : $event->getUid();
+
+        $constraints[] = $query->equals('foreignUid', $selectUid);
         $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
         if (!$future) {
             $constraints[] = $query->lessThanOrEqual('startDate', $now);
