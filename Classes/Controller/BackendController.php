@@ -38,8 +38,7 @@ class BackendController extends AbstractController
     {
         $typeLocations = [];
         foreach ($this->indexRepository->findDifferentTypesAndLocations() as $entry) {
-            /* @var $entry Index */
-            $typeLocations[$entry->getForeignTable()][$entry->getPid()] = $entry->getConfiguration()['uniqueRegisterKey'];
+            $typeLocations[$entry['foreign_table']][$entry['pid']] = $entry['unique_register_key'];
         }
 
         return $typeLocations;

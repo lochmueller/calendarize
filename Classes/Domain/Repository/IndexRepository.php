@@ -11,6 +11,7 @@ use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -88,7 +89,7 @@ class IndexRepository extends AbstractRepository
     public function findAllForBackend()
     {
         $query = $this->createQuery();
-        // $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setLanguageOverlayMode(false);
         $query->getQuerySettings()->setLanguageMode( "ignore");
@@ -396,17 +397,12 @@ class IndexRepository extends AbstractRepository
     /**
      * Find different types and locations.
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array
      */
-    public function findDifferentTypesAndLocations()
+    public function findDifferentTypesAndLocations(): array
     {
-        $query = $this->createQuery();
-
-        return $query
-            ->statement('SELECT *'
-                . 'FROM tx_calendarize_domain_model_index '
-                . 'GROUP BY pid,foreign_table')
-            ->execute();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_calendarize_domain_model_index');
+        return (array) $queryBuilder->select('unique_register_key','pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
     }
 
     /**
