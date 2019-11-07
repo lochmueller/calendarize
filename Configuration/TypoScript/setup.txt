@@ -13,6 +13,14 @@ plugin.tx_calendarize {
     defaultDetailPid = {$plugin.tx_calendarize.settings.defaultDetailPid}
     indexLanguageMode = {$plugin.tx_calendarize.settings.indexLanguageMode}
 
+    paginateConfiguration {
+      itemsPerPage = 10
+      insertAbove = 0
+      insertBelow = 1
+      maximumNumberOfLinks = 10
+      addQueryStringMethod = GET,POST
+    }
+
 		feed {
 			title = {$plugin.tx_calendarize.settings.feed.title}
 			description = {$plugin.tx_calendarize.settings.feed.description}

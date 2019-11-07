@@ -11,7 +11,7 @@
 				</f:for>
 			</f:then>
 			<f:else>
-				<f:widget.paginate objects="{indices}" as="paginatedIndices" configuration="{itemsPerPage: 10, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 10}">
+				<f:widget.paginate objects="{indices}" as="paginatedIndices" configuration="{settings.paginateConfiguration}">
 					<f:for each="{paginatedIndices}" as="index">
 						<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
 					</f:for>
