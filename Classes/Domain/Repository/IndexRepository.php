@@ -88,6 +88,7 @@ class IndexRepository extends AbstractRepository
     public function findAllForBackend()
     {
         $query = $this->createQuery();
+        // $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setLanguageOverlayMode(false);
         $query->getQuerySettings()->setLanguageMode( "ignore");

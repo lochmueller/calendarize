@@ -445,6 +445,9 @@ $custom = [
             'canNotCollapse' => 1,
             'showitem' => 'counter_interval,recurrence,day',
         ],
+        'access' => [
+            'showitem' => 'starttime, endtime, --linebreak--, hidden',
+        ],
     ],
     'types' => [
         Configuration::TYPE_TIME => [
