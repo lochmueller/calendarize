@@ -27,12 +27,22 @@ class IndexerService extends AbstractService
     const TABLE_NAME = 'tx_calendarize_domain_model_index';
 
     /**
+     * @var Dispatcher
+     */
+    protected $signalSlot;
+
+    public function __construct()
+    {
+        $this->signalSlot = GeneralUtility::makeInstance(Dispatcher::class);
+    }
+
+
+    /**
      * Reindex all elements.
      */
     public function reindexAll()
     {
-        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$this]);
+        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$this]);
 
         $this->removeInvalidConfigurationIndex();
         $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
@@ -66,7 +76,7 @@ class IndexerService extends AbstractService
             }
         }
 
-        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$this]);
+        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$this]);
     }
 
     /**
@@ -192,6 +202,8 @@ class IndexerService extends AbstractService
     {
         $databaseConnection = HelperUtility::getDatabaseConnection($tableName);
         $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();
+        
+        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$neededItems, $tableName, $uid]);
 
         foreach ($neededItems as $neededKey => $neededItem) {
             $remove = false;
