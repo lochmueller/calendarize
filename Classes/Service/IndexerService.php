@@ -202,7 +202,7 @@ class IndexerService extends AbstractService
     {
         $databaseConnection = HelperUtility::getDatabaseConnection($tableName);
         $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();
-        
+
         $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$neededItems, $tableName, $uid]);
 
         foreach ($neededItems as $neededKey => $neededItem) {

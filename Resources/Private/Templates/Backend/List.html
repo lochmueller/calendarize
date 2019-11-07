@@ -10,25 +10,42 @@
 
 	<f:flashMessages/>
 
-	<f:if condition="{typeLocations}">
-		<f:then>
-			<p>
-				<f:for each="{typeLocations}" key="table" as="pids">
-					<f:for each="{pids}" key="pid" as="value">
-						<a class="btn btn-primary"
-							 href="{c:editRecord(parameters: 'edit[{table}][{pid}]=new')}">
-							<core:icon identifier="actions-document-new"/>
-							{value} on "<c:backend.pageTitle uid="{pid}"/>" (#{pid})
-						</a>
-					</f:for>
-				</f:for>
-			</p>
+	<f:comment>
+		<fieldset class="form-group">
+			<f:form action="option" object="{options}" name="options">
 
-		</f:then>
-		<f:else>
-			<p>Note: If you create first events in Storage folder, the create buttons will appear in this location</p>
-		</f:else>
-	</f:if>
+				<div class="form-group">
+					<label for="sorting">Sorting</label>
+					<f:form.select options="{start_date: 'start_date'}" class="form-control" id="sorting" property="sorting" />
+				</div>
+
+				<f:form.submit value="Save options" class="btn btn-primary" />
+			</f:form>
+		</fieldset>
+	</f:comment>
+
+	<fieldset class="form-group">
+		<f:if condition="{typeLocations}">
+			<f:then>
+				<p>
+					<f:for each="{typeLocations}" key="table" as="pids">
+						<f:for each="{pids}" key="pid" as="value">
+							<a class="btn btn-primary"
+								 href="{c:editRecord(parameters: 'edit[{table}][{pid}]=new')}">
+								<core:icon identifier="actions-document-new"/>
+								{value} on "
+								<c:backend.pageTitle uid="{pid}"/>
+								" (#{pid})
+							</a>
+						</f:for>
+					</f:for>
+				</p>
+			</f:then>
+			<f:else>
+				<p>Note: If you create first events in Storage folder, the create buttons will appear in this location</p>
+			</f:else>
+		</f:if>
+	</fieldset>
 
 	<f:render partial="Backend/List" arguments="{_all}"/>
 </f:section>

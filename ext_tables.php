@@ -48,7 +48,7 @@ $categoryRegistry->add('calendarize', 'tx_calendarize_domain_model_pluginconfigu
         'web',
         'calendarize',
         '',
-        ['Backend' => 'list'],
+        ['Backend' => 'list,option'],
         [
             // Additional configuration
             'access' => 'user, group',

@@ -8,6 +8,9 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * BackendController.
@@ -26,7 +29,32 @@ class BackendController extends AbstractController
             'indices' => $this->indexRepository->findAllForBackend(),
             'typeLocations' => $this->getDifferentTypesAndLocations(),
             'settings' => $this->settings,
+            'options' => $this->getOptions()
         ]);
+    }
+
+    /**
+     * Option action
+     *
+     * @param \HDNET\Calendarize\Domain\Model\Request\OptionRequest $options
+     */
+    public function optionAction(OptionRequest $options)
+    {
+
+        // @todo save options
+
+        $this->addFlashMessage('Options saved', '', FlashMessage::OK, true);
+        $this->forward('list');
+    }
+
+    /**
+     * Get option request
+     *
+     * @return OptionRequest
+     */
+    protected function getOptions()
+    {
+        return new OptionRequest();
     }
 
     /**
