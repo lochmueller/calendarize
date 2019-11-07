@@ -92,7 +92,7 @@ class IndexRepository extends AbstractRepository
         $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setLanguageOverlayMode(false);
-        $query->getQuerySettings()->setLanguageMode( "ignore");
+        $query->getQuerySettings()->setLanguageMode('ignore');
 
         // Notice Selection without any language handling
         unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField']);
@@ -402,7 +402,7 @@ class IndexRepository extends AbstractRepository
     public function findDifferentTypesAndLocations(): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_calendarize_domain_model_index');
-        return (array) $queryBuilder->select('unique_register_key','pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
+        return (array) $queryBuilder->select('unique_register_key', 'pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
     }
 
     /**

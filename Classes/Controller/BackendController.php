@@ -7,10 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
-use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * BackendController.
