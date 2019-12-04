@@ -103,6 +103,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\ConfigurationGroup>
      * @db text
      * @lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $groups;
 

@@ -91,6 +91,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      * @db
+     * @lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $images;
 
@@ -99,6 +101,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      * @db
+     * @lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $downloads;
 
