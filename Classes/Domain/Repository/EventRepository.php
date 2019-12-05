@@ -43,6 +43,21 @@ class EventRepository extends AbstractRepository
     }
 
     /**
+     * @param $importId
+     * @return mixed|null
+     */
+    public function findOneByImportId($importId)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->matching($query->equals('importId', $importId));
+        $result = $query->execute()->toArray();
+
+        return isset($result[0]) ? $result[0] : null;
+    }
+
+    /**
      * Return the current tablename.
      *
      * @return string

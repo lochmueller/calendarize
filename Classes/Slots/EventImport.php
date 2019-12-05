@@ -61,7 +61,7 @@ class EventImport
         $configuration = $this->getConfiguration($pid, $event['start'], $event['end']);
         $eventObject->addCalendarize($configuration);
 
-        if (null === $eventObject->getUid()) {
+        if (null !== $eventObject->getUid() && (int)$eventObject->getUid() > 0) {
             $this->eventRepository->update($eventObject);
             $commandController->enqueueMessage('Update Event Meta data: ' . $eventObject->getTitle(), 'Update');
         } else {
@@ -122,6 +122,7 @@ class EventImport
     protected function getEvent($importId)
     {
         $eventObject = $this->eventRepository->findOneByImportId($importId);
+
         if (!($eventObject instanceof Event)) {
             $eventObject = new Event();
         }
