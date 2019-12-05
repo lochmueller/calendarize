@@ -3,7 +3,6 @@
 /**
  * OptionRequest
  */
-
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use HDNET\Calendarize\Domain\Model\AbstractModel;
@@ -67,5 +66,4 @@ class OptionRequest extends AbstractModel
     {
         $this->direction = $direction;
     }
-
 }
