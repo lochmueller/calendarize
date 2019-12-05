@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Command;
 
+use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -63,6 +64,11 @@ class ImportCommandController extends AbstractCommandController
             ];
             $signalSlotDispatcher->dispatch(__CLASS__, 'importCommand', $arguments);
         }
+
+
+        $this->enqueueMessage('Run Reindex proces after import', 'Reindex', FlashMessage::INFO);
+        $indexer = $this->objectManager->get(IndexerService::class);
+        $indexer->reindexAll();
     }
 
     /**
