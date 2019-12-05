@@ -35,7 +35,8 @@ class BackendController extends AbstractController
         ]);
     }
 
-    protected function getPids(array $typeLocations){
+    protected function getPids(array $typeLocations)
+    {
         $pids = [];
         foreach ($typeLocations as $locations) {
             $pids = array_merge($pids, array_keys($locations));
@@ -66,7 +67,7 @@ class BackendController extends AbstractController
         try {
             $info = $GLOBALS['BE_USER']->getSessionData('calendarize_be');
             $object = @unserialize((string)$info);
-            if($object instanceof OptionRequest) {
+            if ($object instanceof OptionRequest) {
                 return $object;
             }
         } catch (\Exception $exception) {
