@@ -33,7 +33,7 @@ class OptionRequest extends AbstractModel
      */
     public function __sleep()
     {
-        return ['sorting', 'direction'];
+        return ['sorting', 'direction', 'pid'];
     }
 
     /**
@@ -67,6 +67,5 @@ class OptionRequest extends AbstractModel
     {
         $this->direction = $direction;
     }
-
 
 }

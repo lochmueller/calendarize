@@ -10,7 +10,7 @@
 
 	<f:flashMessages/>
 
-	<fieldset class="form-group">
+	<fieldset class="form-group border">
 		<f:form action="option" object="{options}" name="options">
 
 			<f:comment>
@@ -21,6 +21,11 @@
 			</f:comment>
 
 			<div class="form-group">
+				<label for="pid">PID</label>
+				<f:form.select prependOptionLabel="All" prependOptionValue="-1" options="{pids}" class="form-control" id="pid" property="pid" />
+			</div>
+
+			<div class="form-group">
 				<label for="direction">Direction</label>
 				<f:form.select options="{asc: 'ASC', desc: 'DESC'}" class="form-control" id="direction" property="direction" />
 			</div>
@@ -28,7 +33,7 @@
 			<f:form.submit value="Save options" class="btn btn-secondary" />
 		</f:form>
 	</fieldset>
-
+	
 	<fieldset class="form-group">
 		<f:if condition="{typeLocations}">
 			<f:then>

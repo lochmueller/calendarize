@@ -100,7 +100,7 @@ class IndexRepository extends AbstractRepository
         unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField']);
         unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['transOrigPointerField']);
 
-        if($options->getDirection() === 'asc') {
+        if ($options->getDirection() === 'asc') {
             $query->setOrderings([
                 'start_date' => QueryInterface::ORDER_ASCENDING,
                 'start_time' => QueryInterface::ORDER_ASCENDING,
@@ -112,6 +112,9 @@ class IndexRepository extends AbstractRepository
             ]);
         }
 
+        if ((int) $options->getPid() > 0) {
+            $query->matching($query->equals('pid', (int) $options->getPid()));
+        }
 
         $result =  $query->execute();
 

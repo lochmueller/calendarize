@@ -24,13 +24,24 @@ class BackendController extends AbstractController
         $this->settings['dateFormat'] = 'd.m.Y';
 
         $options = $this->getOptions();
+        $typeLocations = $this->getDifferentTypesAndLocations();
 
         $this->view->assignMultiple([
             'indices' => $this->indexRepository->findAllForBackend($options),
-            'typeLocations' => $this->getDifferentTypesAndLocations(),
+            'typeLocations' => $typeLocations,
+            'pids' => $this->getPids($typeLocations),
             'settings' => $this->settings,
             'options' => $options
         ]);
+    }
+
+    protected function getPids(array $typeLocations){
+        $pids = [];
+        foreach ($typeLocations as $locations) {
+            $pids = array_merge($pids, array_keys($locations));
+        }
+        $pids = array_unique($pids);
+        return array_combine($pids, $pids);
     }
 
     /**
