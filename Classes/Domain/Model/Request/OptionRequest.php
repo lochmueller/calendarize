@@ -3,6 +3,7 @@
 /**
  * OptionRequest
  */
+
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use HDNET\Calendarize\Domain\Model\AbstractModel;
@@ -21,9 +22,24 @@ class OptionRequest extends AbstractModel
     protected $sorting = 'start_date';
 
     /**
+     * Direction
+     *
+     * @var string
+     */
+    protected $direction = 'asc';
+
+    /**
+     * @return array
+     */
+    public function __sleep()
+    {
+        return ['sorting', 'direction'];
+    }
+
+    /**
      * @return string
      */
-    public function getSorting(): string
+    public function getSorting()
     {
         return $this->sorting;
     }
@@ -31,8 +47,26 @@ class OptionRequest extends AbstractModel
     /**
      * @param string $sorting
      */
-    public function setSorting(string $sorting): void
+    public function setSorting($sorting)
     {
         $this->sorting = $sorting;
     }
+
+    /**
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->direction;
+    }
+
+    /**
+     * @param string $direction
+     */
+    public function setDirection($direction)
+    {
+        $this->direction = $direction;
+    }
+
+
 }

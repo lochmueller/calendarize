@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -84,9 +85,10 @@ class IndexRepository extends AbstractRepository
     /**
      * Select indecies for Backend.
      *
+     * @param OptionRequest $options
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAllForBackend()
+    public function findAllForBackend(OptionRequest $options)
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
@@ -97,6 +99,19 @@ class IndexRepository extends AbstractRepository
         // Notice Selection without any language handling
         unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField']);
         unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['transOrigPointerField']);
+
+        if($options->getDirection() === 'asc') {
+            $query->setOrderings([
+                'start_date' => QueryInterface::ORDER_ASCENDING,
+                'start_time' => QueryInterface::ORDER_ASCENDING,
+            ]);
+        } else {
+            $query->setOrderings([
+                'start_date' => QueryInterface::ORDER_DESCENDING,
+                'start_time' => QueryInterface::ORDER_DESCENDING,
+            ]);
+        }
+
 
         $result =  $query->execute();
 

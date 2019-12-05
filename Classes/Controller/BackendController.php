@@ -23,11 +23,13 @@ class BackendController extends AbstractController
         $this->settings['timeFormat'] = 'H:i';
         $this->settings['dateFormat'] = 'd.m.Y';
 
+        $options = $this->getOptions();
+
         $this->view->assignMultiple([
-            'indices' => $this->indexRepository->findAllForBackend(),
+            'indices' => $this->indexRepository->findAllForBackend($options),
             'typeLocations' => $this->getDifferentTypesAndLocations(),
             'settings' => $this->settings,
-            'options' => $this->getOptions()
+            'options' => $options
         ]);
     }
 
@@ -38,9 +40,7 @@ class BackendController extends AbstractController
      */
     public function optionAction(OptionRequest $options)
     {
-
-        // @todo save options
-
+        $GLOBALS['BE_USER']->setAndSaveSessionData('calendarize_be', serialize($options));
         $this->addFlashMessage('Options saved', '', FlashMessage::OK, true);
         $this->forward('list');
     }
@@ -52,7 +52,15 @@ class BackendController extends AbstractController
      */
     protected function getOptions()
     {
-        return new OptionRequest();
+        try {
+            $info = $GLOBALS['BE_USER']->getSessionData('calendarize_be');
+            $object = @unserialize((string)$info);
+            if($object instanceof OptionRequest) {
+                return $object;
+            }
+        } catch (\Exception $exception) {
+            return new OptionRequest();
+        }
     }
 
     /**

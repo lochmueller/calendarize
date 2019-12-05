@@ -10,19 +10,24 @@
 
 	<f:flashMessages/>
 
-	<f:comment>
-		<fieldset class="form-group">
-			<f:form action="option" object="{options}" name="options">
+	<fieldset class="form-group">
+		<f:form action="option" object="{options}" name="options">
 
-				<div class="form-group">
-					<label for="sorting">Sorting</label>
-					<f:form.select options="{start_date: 'start_date'}" class="form-control" id="sorting" property="sorting" />
-				</div>
+			<f:comment>
+			<div class="form-group">
+				<label for="sorting">Sorting</label>
+				<f:form.select options="{start_date: 'start_date'}" class="form-control" id="sorting" property="sorting" />
+			</div>
+			</f:comment>
 
-				<f:form.submit value="Save options" class="btn btn-primary" />
-			</f:form>
-		</fieldset>
-	</f:comment>
+			<div class="form-group">
+				<label for="direction">Direction</label>
+				<f:form.select options="{asc: 'ASC', desc: 'DESC'}" class="form-control" id="direction" property="direction" />
+			</div>
+
+			<f:form.submit value="Save options" class="btn btn-secondary" />
+		</f:form>
+	</fieldset>
 
 	<fieldset class="form-group">
 		<f:if condition="{typeLocations}">
