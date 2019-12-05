@@ -1,27 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * OptionRequest
+ * OptionRequest.
  */
+
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use HDNET\Calendarize\Domain\Model\AbstractModel;
 
 /**
- * OptionRequest
+ * OptionRequest.
  */
 class OptionRequest extends AbstractModel
 {
-
     /**
-     * Sorting
+     * Sorting.
      *
      * @var string
      */
     protected $sorting = 'start_date';
 
     /**
-     * Direction
+     * Direction.
      *
      * @var string
      */

@@ -36,7 +36,6 @@ class IndexerService extends AbstractService
         $this->signalSlot = GeneralUtility::makeInstance(Dispatcher::class);
     }
 
-
     /**
      * Reindex all elements.
      */

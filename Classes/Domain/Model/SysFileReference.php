@@ -14,7 +14,6 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 /**
  * Class SysFileReference.
  *
- *
  * @db sys_file_reference
  */
 class SysFileReference extends FileReference

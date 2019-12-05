@@ -14,7 +14,6 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 /**
  * Class SysFileReference.
  *
- *
  * @db sys_category
  */
 class SysCategory extends Category

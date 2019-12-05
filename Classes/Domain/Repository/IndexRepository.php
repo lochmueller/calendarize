@@ -86,6 +86,7 @@ class IndexRepository extends AbstractRepository
      * Select indecies for Backend.
      *
      * @param OptionRequest $options
+     *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findAllForBackend(OptionRequest $options)
@@ -97,10 +98,9 @@ class IndexRepository extends AbstractRepository
         $query->getQuerySettings()->setLanguageMode('ignore');
 
         // Notice Selection without any language handling
-        unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField']);
-        unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['transOrigPointerField']);
+        unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField'], $GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['transOrigPointerField']);
 
-        if ($options->getDirection() === 'asc') {
+        if ('asc' === $options->getDirection()) {
             $query->setOrderings([
                 'start_date' => QueryInterface::ORDER_ASCENDING,
                 'start_time' => QueryInterface::ORDER_ASCENDING,
@@ -116,7 +116,7 @@ class IndexRepository extends AbstractRepository
             $query->matching($query->equals('pid', (int) $options->getPid()));
         }
 
-        $result =  $query->execute();
+        $result = $query->execute();
 
         return $result;
     }
@@ -420,6 +420,7 @@ class IndexRepository extends AbstractRepository
     public function findDifferentTypesAndLocations(): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_calendarize_domain_model_index');
+
         return (array) $queryBuilder->select('unique_register_key', 'pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
     }
 

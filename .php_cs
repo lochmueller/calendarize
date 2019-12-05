@@ -31,6 +31,7 @@ return PhpCsFixer\Config::create()
         'array_syntax' => [
             'syntax' => 'short',
         ],
+        'no_superfluous_phpdoc_tags' => false,
         'combine_consecutive_issets' => true,
         'combine_consecutive_unsets' => true,
         'align_multiline_comment' => [

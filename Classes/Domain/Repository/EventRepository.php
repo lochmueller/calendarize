@@ -44,6 +44,7 @@ class EventRepository extends AbstractRepository
 
     /**
      * @param $importId
+     *
      * @return mixed|null
      */
     public function findOneByImportId($importId)
@@ -54,7 +55,7 @@ class EventRepository extends AbstractRepository
         $query->matching($query->equals('importId', $importId));
         $result = $query->execute()->toArray();
 
-        return isset($result[0]) ? $result[0] : null;
+        return $result[0] ?? null;
     }
 
     /**

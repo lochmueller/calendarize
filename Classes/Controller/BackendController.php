@@ -31,34 +31,35 @@ class BackendController extends AbstractController
             'typeLocations' => $typeLocations,
             'pids' => $this->getPids($typeLocations),
             'settings' => $this->settings,
-            'options' => $options
+            'options' => $options,
         ]);
+    }
+
+    /**
+     * Option action.
+     *
+     * @param \HDNET\Calendarize\Domain\Model\Request\OptionRequest $options
+     */
+    public function optionAction(OptionRequest $options)
+    {
+        $GLOBALS['BE_USER']->setAndSaveSessionData('calendarize_be', \serialize($options));
+        $this->addFlashMessage('Options saved', '', FlashMessage::OK, true);
+        $this->forward('list');
     }
 
     protected function getPids(array $typeLocations)
     {
         $pids = [];
         foreach ($typeLocations as $locations) {
-            $pids = array_merge($pids, array_keys($locations));
+            $pids = \array_merge($pids, \array_keys($locations));
         }
-        $pids = array_unique($pids);
-        return array_combine($pids, $pids);
+        $pids = \array_unique($pids);
+
+        return \array_combine($pids, $pids);
     }
 
     /**
-     * Option action
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Request\OptionRequest $options
-     */
-    public function optionAction(OptionRequest $options)
-    {
-        $GLOBALS['BE_USER']->setAndSaveSessionData('calendarize_be', serialize($options));
-        $this->addFlashMessage('Options saved', '', FlashMessage::OK, true);
-        $this->forward('list');
-    }
-
-    /**
-     * Get option request
+     * Get option request.
      *
      * @return OptionRequest
      */
@@ -66,7 +67,7 @@ class BackendController extends AbstractController
     {
         try {
             $info = $GLOBALS['BE_USER']->getSessionData('calendarize_be');
-            $object = @unserialize((string)$info);
+            $object = @\unserialize((string) $info);
             if ($object instanceof OptionRequest) {
                 return $object;
             }
