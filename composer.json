@@ -33,11 +33,11 @@
 		}
 	],
 	"require": {
-		"php": ">=7.0.0",
+		"php": "^7.0||^7.1||^7.2||^7.3",
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"typo3/cms-core": "~8.7.0||~9.5.0",
-		"lochmueller/autoloader": ">6.0.0",
+		"typo3/cms-core": "^8.7||^9.5",
+		"lochmueller/autoloader": "^6.0",
 		"sabre/vobject": "^4.2"
 	},
 	"replace": {
@@ -52,12 +52,12 @@
 		"cabi/microformat": "Output of microformat information for better Google Search Result User Experience"
 	},
 	"require-dev": {
-		"namelesscoder/typo3-repository-client": "2.0.0",
-		"typo3/testing-framework": "~2.0.0",
+		"namelesscoder/typo3-repository-client": "^2.0",
+		"typo3/testing-framework": "^2.0",
 		"squizlabs/php_codesniffer": "^2.6",
-		"friendsofphp/php-cs-fixer": "~2.14.0",
+		"friendsofphp/php-cs-fixer": "^2.14",
 		"phpmd/phpmd": "^2.4",
-		"scrutinizer/ocular": "^1.3.0"
+		"scrutinizer/ocular": "^1.3"
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
