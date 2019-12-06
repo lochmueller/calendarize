@@ -50,9 +50,11 @@ abstract class AbstractUrl extends AbstractService
 
         $base = $originalObject->getRealUrlAliasBase();
         if (!(bool) ConfigurationUtility::get('disableDateInSpeakingUrl')) {
-            $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-h-i';
-            $base .= '-' . $index->getStartDateComplete()
+            $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'];
+            $dateInfo = $index->getStartDateComplete()
                 ->format($datePart);
+            $dateInfo = preg_replace('/[^0-9\-]/', '-', $dateInfo);
+            $base .= '-' . $dateInfo;
         }
 
         if ((bool) ConfigurationUtility::get('addIndexInSpeakingUrl') || \class_exists(PersistedAliasMapper::class)) {
