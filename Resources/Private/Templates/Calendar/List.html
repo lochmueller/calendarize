@@ -10,6 +10,6 @@
 		<f:link.action action="list" format="ics" arguments="{hmac: extended.pluginHmac}">iCal</f:link.action>
 	</f:comment>
 
-	<f:render partial="List" arguments="{settings: settings, indices: indices}" />
+	<f:render partial="List" arguments="{settings: settings, indices: indices, contentObject:contentObject}" />
 
 </f:section>
