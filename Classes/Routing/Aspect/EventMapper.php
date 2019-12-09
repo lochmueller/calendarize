@@ -4,6 +4,7 @@ declare(strict_types=1);
 /**
  * EventMapper.
  */
+
 namespace HDNET\Calendarize\Routing\Aspect;
 
 use HDNET\Calendarize\Service\Url\Typo3Route;

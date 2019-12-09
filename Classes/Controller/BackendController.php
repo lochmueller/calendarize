@@ -71,6 +71,7 @@ class BackendController extends AbstractController
             if ($object instanceof OptionRequest) {
                 return $object;
             }
+
             return new OptionRequest();
         } catch (\Exception $exception) {
             return new OptionRequest();

@@ -53,7 +53,7 @@ abstract class AbstractUrl extends AbstractService
             $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'];
             $dateInfo = $index->getStartDateComplete()
                 ->format($datePart);
-            $dateInfo = preg_replace('/[^0-9\-]/', '-', $dateInfo);
+            $dateInfo = \preg_replace('/[^0-9\-]/', '-', $dateInfo);
             $base .= '-' . $dateInfo;
         }
 

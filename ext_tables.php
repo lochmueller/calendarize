@@ -34,14 +34,20 @@ $iconRegistry->registerIcon(
 $categoryRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Category\CategoryRegistry::class);
 $categoryRegistry->add('calendarize', 'tx_calendarize_domain_model_pluginconfiguration');
 
-//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
-//    TCEMAIN.linkHandler {
-//        event {
-//            handler = HDNET\\Calendarize\\LinkHandling\\EventSelectionLinkHandler
-//            label = Events
-//        }
-//    }
-//');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
+	TCEMAIN {
+		linkHandler {
+			tx_calendarize_domain_model_event {
+				handler = TYPO3\CMS\Recordlist\LinkHandler\RecordLinkHandler
+				label = Events
+				configuration {
+					table = tx_calendarize_domain_model_event
+				}
+				scanAfter = page
+			}
+		}
+	}
+');
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'HDNET.calendarize',

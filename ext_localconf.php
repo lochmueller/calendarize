@@ -50,6 +50,9 @@ if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefault
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\HDNET\Calendarize\Updates\CalMigrationUpdate::class] = \HDNET\Calendarize\Updates\CalMigrationUpdate::class;
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\HDNET\Calendarize\Updates\NewIncludeExcludeStructureUpdate::class] = \HDNET\Calendarize\Updates\NewIncludeExcludeStructureUpdate::class;
 
+$GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
+
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:calendarize/Configuration/TsConfig/ContentElementWizard.txt">');
 
 $icons = [
@@ -68,9 +71,6 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('google_service
     \FRUIT\GoogleServices\Service\SitemapProvider::addProvider(\HDNET\Calendarize\Service\SitemapProvider\Events::class);
 }
 
-
 if (class_exists(\TYPO3\CMS\Core\Routing\Aspect\PersistedPatternMapper::class)) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['EventMapper'] = \HDNET\Calendarize\Routing\Aspect\EventMapper::class;
 }
-
-// $GLOBALS['TYPO3_CONF_VARS']['SYS']['linkHandler']['event'] = \HDNET\Calendarize\LinkHandling\EventLinkHandler::class;

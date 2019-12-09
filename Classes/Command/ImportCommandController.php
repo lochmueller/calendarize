@@ -65,7 +65,6 @@ class ImportCommandController extends AbstractCommandController
             $signalSlotDispatcher->dispatch(__CLASS__, 'importCommand', $arguments);
         }
 
-
         $this->enqueueMessage('Run Reindex proces after import', 'Reindex', FlashMessage::INFO);
         $indexer = $this->objectManager->get(IndexerService::class);
         $indexer->reindexAll();

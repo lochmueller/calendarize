@@ -11,42 +11,23 @@
 Linkhandler
 ===========
 
-With a proper configuration of the EXT:linkhandler you can select in your RTE a event and link to it.
+With a proper configuration of linkhandler function you can select events in Link wizards and RTE. Detials at https://usetypo3.com/linkhandler.html
+This configuration is enabled by default.
 
 .. code-block:: php
-	:caption: linkhandler-setup.ts
+	:caption: Page TS Config
 
-	plugin.tx_linkhandler {
-		tx_calendarize_domain_model_event {
-			parameter={$PID.detailPage}
-			additionalParams=&tx_calendarize_calendar[event]={field:uid}
-			additionalParams.insertData=1
-			useCacheHash=1
-		}
-	}
-
-Optional you can add a special configuration to the additionalParams
-
-.. code-block:: php
-	:caption: linkhandler-setup.ts
-
-	&tx_calendarize_calendar[extensionConfiguration]=Event
-
-where the value is the uniqueRegisterKey you defined in the configuration of your ownevents_.
-
-And to add the Event to your RTE enhance the RTE-Configuration.
-
-.. code-block:: php
-	:caption: page-tsconfig.ts
-
-	RTE.default {
-		tx_linkhandler {
-				tx_calendarize_domain_model_event {
-					label=Events
-					listTables=tx_calendarize_domain_model_event
-					onlyPids=$StorageFolder
-					previewPageId=$PreviewPage
+	TCEMAIN {
+		linkHandler {
+			tx_calendarize_domain_model_event {
+				handler = TYPO3\CMS\Recordlist\LinkHandler\RecordLinkHandler
+				label = Events
+				configuration {
+					table = tx_calendarize_domain_model_event
+					storagePid = xxx
+					hidePageTree = 1
 				}
+				scanAfter = page
+			}
 		}
 	}
-
