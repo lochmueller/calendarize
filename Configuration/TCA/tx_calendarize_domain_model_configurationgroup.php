@@ -19,6 +19,11 @@ $custom = [
         ],
     ],
     'columns' => [
+        'title' => [
+            'config' => [
+                'eval' => 'trim,required',
+            ],
+        ],
         'configurations' => [
             'config' => [
                 'type' => 'inline',

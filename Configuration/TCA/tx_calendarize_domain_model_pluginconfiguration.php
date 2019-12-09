@@ -16,11 +16,17 @@ $defaultPidConfiguration = [
         'size' => '1',
         'maxitems' => '1',
         'minitems' => '0',
+        'default' => '0',
     ],
 ];
 
 $custom = [
     'columns' => [
+        'title' => [
+            'config' => [
+                'eval' => 'trim,required',
+            ],
+        ],
         'model_name' => [
             'config' => [
                 'type' => 'select',
