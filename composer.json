@@ -74,8 +74,7 @@
 	},
 	"scripts": {
 		"code": [
-			"@tool:php-cs-fixer",
-			"@tool:phpdoc"
+			"@tool:php-cs-fixer"
 		],
 		"tool:php-cs-fixer": [
 			"php-cs-fixer fix --config .php_cs"
