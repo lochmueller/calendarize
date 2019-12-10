@@ -90,6 +90,14 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $allDay;
 
     /**
+     * OpenEndTime.
+     *
+     * @var bool
+     * @db
+     */
+    protected $openEndTime;
+
+    /**
      * External ICS url.
      *
      * @var string
@@ -522,4 +530,21 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     {
         $this->state = $state;
     }
+
+    /**
+     * @return bool
+     */
+    public function isOpenEndTime()
+    {
+        return $this->openEndTime;
+    }
+
+    /**
+     * @param bool $openEndTime
+     */
+    public function setOpenEndTime(bool $openEndTime)
+    {
+        $this->openEndTime = $openEndTime;
+    }
+
 }

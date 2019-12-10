@@ -29,7 +29,7 @@ $timeType = \str_replace(
     $timeType
 );
 $timeType = \str_replace(
-    ',start_time,end_time,all_day',
+    ',start_time,end_time,all_day,open_end_time',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time;time',
     $timeType
 );
@@ -177,6 +177,7 @@ $custom = [
             'displayCond' => [
                 'AND' => [
                     'FIELD:all_day:!=:1',
+                    'FIELD:open_end_time:!=:1',
                     'FIELD:type:=:' . Configuration::TYPE_TIME,
                 ],
             ],
@@ -186,6 +187,18 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
                 'default' => '0',
+            ],
+        ],
+        'open_end_time' => [
+            'onChange' => 'reload',
+            'config' => [
+                'default' => '0',
+            ],
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:all_day:!=:1',
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                ],
             ],
         ],
         'groups' => [
@@ -435,7 +448,7 @@ $custom = [
         ],
         'time' => [
             'canNotCollapse' => 1,
-            'showitem' => 'start_time,end_time,--linebreak--,all_day',
+            'showitem' => 'start_time,end_time,open_end_time,--linebreak--,all_day',
         ],
         'termination_condition' => [
             'canNotCollapse' => 1,

@@ -9,6 +9,7 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="tx_calendarize_domain_model_configuration.open_end_time"><source>Open end?</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_date_dynamic"><source>End date (dynamic)</source></trans-unit>
 			<trans-unit id="configuration.end_date_dynamic.1day"><source>1 day</source></trans-unit>
 			<trans-unit id="configuration.end_date_dynamic.1week"><source>1 week</source></trans-unit>
@@ -534,7 +535,7 @@
 				<source>End date (optionally)</source>
 			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_time">
-				<source>End time (00:00 means &quot;open end&quot;)</source>
+				<source>End time</source>
 			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.external_ics_url">
 				<source>External ICS URL</source>
