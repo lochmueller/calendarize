@@ -1,9 +1,9 @@
 <?php
-
-declare(strict_types=1);
 /**
  * EventMapper.
  */
+
+declare(strict_types=1);
 
 namespace HDNET\Calendarize\Routing\Aspect;
 
