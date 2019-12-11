@@ -37,8 +37,9 @@ class TimeTimeTable extends AbstractTimeTable
             'start_date' => $configuration->getStartDate(),
             'end_date' => $configuration->getEndDate() ?: $configuration->getStartDate(),
             'start_time' => $startTime,
-            'end_time' => 0 === $endTime ? self::DAY_END : $endTime,
+            'end_time' => $endTime,
             'all_day' => $configuration->isAllDay(),
+            'open_end_time' => $configuration->isOpenEndTime(),
             'state' => $configuration->getState(),
         ];
         if (!$this->validateBaseEntry($baseEntry)) {
@@ -155,7 +156,7 @@ class TimeTimeTable extends AbstractTimeTable
                 ),
                 FlashMessage::ERROR
             );
-        } elseif ($baseEntry['end_date'] instanceof \DateTimeInterface && !$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY) {
+        } elseif ($baseEntry['end_date'] instanceof \DateTimeInterface && !$baseEntry['all_day'] && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY && $baseEntry['end_time'] > 0) {
             $message = GeneralUtility::makeInstance(
                 FlashMessage::class,
                 LocalizationUtility::translate(

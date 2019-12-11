@@ -86,6 +86,14 @@ class Index extends AbstractModel
     protected $allDay;
 
     /**
+     * OpenEndTime.
+     *
+     * @var bool
+     * @db
+     */
+    protected $openEndTime;
+
+    /**
      * State.
      *
      * @var string
@@ -358,5 +366,21 @@ class Index extends AbstractModel
     public function getSysLanguageUid()
     {
         return (int) $this->_languageUid;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOpenEndTime()
+    {
+        return $this->openEndTime;
+    }
+
+    /**
+     * @param bool $openEndTime
+     */
+    public function setOpenEndTime($openEndTime)
+    {
+        $this->openEndTime = $openEndTime;
     }
 }

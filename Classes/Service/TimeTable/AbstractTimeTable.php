@@ -18,11 +18,6 @@ use HDNET\Calendarize\Service\TimeTableService;
 abstract class AbstractTimeTable extends AbstractService
 {
     /**
-     * Seconds of 23:59:59 that mark the day end.
-     */
-    const DAY_END = 86399;
-
-    /**
      * Time table service.
      *
      * @var \HDNET\Calendarize\Service\TimeTableService

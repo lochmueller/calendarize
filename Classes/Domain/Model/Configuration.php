@@ -536,7 +536,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function isOpenEndTime()
     {
-        return $this->openEndTime;
+        return (bool) $this->openEndTime;
     }
 
     /**
@@ -546,5 +546,4 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     {
         $this->openEndTime = $openEndTime;
     }
-
 }
