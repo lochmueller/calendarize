@@ -43,9 +43,12 @@
 						</f:if>
 					</p>
 
-					<c:link.index index="{index}" class="btn btn-default btn-primary">
-						<f:translate key="more" /> <span class="glyphicon glyphicon-arrow-right"></span>
-					</c:link.index>
+					<f:if condition="{settings.detailPid}">
+						<c:link.index index="{index}" class="btn btn-default btn-primary">
+							<f:translate key="more"/>
+							<span class="glyphicon glyphicon-arrow-right"></span>
+						</c:link.index>
+					</f:if>
 
 					<f:if condition="{settings.bookingPid}">
 						<f:if condition="{event.bookable}">
