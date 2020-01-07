@@ -61,6 +61,7 @@ abstract class AbstractUrl extends AbstractService
             $base .= '-' . $indexUid;
         }
 
-        return (string) $base;
+        $result = \mb_strtolower((string) $base);
+        return \preg_replace('/[^a-z0-9\-]/', '-', $result);
     }
 }
