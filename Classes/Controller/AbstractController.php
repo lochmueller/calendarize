@@ -220,4 +220,16 @@ abstract class AbstractController extends ActionController
         $frontendController->page['title'] = $title;
         $frontendController->indexedDocTitle = $title;
     }
+
+    /**
+     * Add cache tags
+     *
+     * @param array $tags
+     */
+    protected function addCacheTags(array $tags)
+    {
+        if ($GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
+            $GLOBALS['TSFE']->addCacheTags($tags);
+        }
+    }
 }

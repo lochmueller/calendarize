@@ -34,6 +34,8 @@ class CalendarController extends AbstractController
      */
     public function initializeAction()
     {
+        $this->addCacheTags(['calendarize']);
+
         parent::initializeAction();
         if (isset($this->settings['format'])) {
             $this->request->setFormat($this->settings['format']);
@@ -121,6 +123,8 @@ class CalendarController extends AbstractController
             $this->forward('detail');
         }
 
+        $this->addCacheTags(['calendarize_latest']);
+
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
 
         $this->slotExtendedAssignMultiple([
@@ -167,6 +171,8 @@ class CalendarController extends AbstractController
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             $this->forward('detail');
         }
+
+        $this->addCacheTags(['calendarize_result']);
 
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
 
@@ -217,6 +223,8 @@ class CalendarController extends AbstractController
             $this->forward('detail');
         }
 
+        $this->addCacheTags(['calendarize_list']);
+
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, $day, $week);
 
         $this->slotExtendedAssignMultiple([
@@ -239,6 +247,7 @@ class CalendarController extends AbstractController
      */
     public function shortcutAction()
     {
+        $this->addCacheTags(['calendarize_shortcut']);
         list($table, $uid) = \explode(':', $GLOBALS['TSFE']->currentRecord);
         $register = Register::getRegister();
 
@@ -257,6 +266,8 @@ class CalendarController extends AbstractController
         if (!($event instanceof DomainObjectInterface)) {
             return 'Invalid object';
         }
+
+        $this->addCacheTags(['calendarize_event_' . $event->getUid()]);
 
         $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, 1);
         if (\count($fetchEvent) <= 0) {
@@ -280,6 +291,8 @@ class CalendarController extends AbstractController
         $limit = 100,
         $sort = 'ASC'
     ) {
+        $this->addCacheTags(['calendarize_past']);
+
         $limit = (int) ($this->settings['limit']);
         $sort = $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
@@ -295,6 +308,8 @@ class CalendarController extends AbstractController
      */
     public function yearAction($year = null)
     {
+        $this->addCacheTags(['calendarize_year']);
+
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
         $this->slotExtendedAssignMultiple([
@@ -311,6 +326,8 @@ class CalendarController extends AbstractController
      */
     public function quarterAction(int $year = null, int $quarter = null)
     {
+        $this->addCacheTags(['calendarize_quarter']);
+
         $quarter = DateTimeUtility::normalizeQuarter($quarter);
         $date = DateTimeUtility::normalizeDateTime(1, 1 + (($quarter - 1) * 3), $year);
 
@@ -330,6 +347,8 @@ class CalendarController extends AbstractController
      */
     public function monthAction($year = null, $month = null, $day = null)
     {
+        $this->addCacheTags(['calendarize_month']);
+
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
 
         $this->slotExtendedAssignMultiple([
@@ -346,6 +365,8 @@ class CalendarController extends AbstractController
      */
     public function weekAction($year = null, $week = null)
     {
+        $this->addCacheTags(['calendarize_week']);
+
         $now = DateTimeUtility::getNow();
         if (null === $year) {
             $year = $now->format('o'); // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
@@ -385,6 +406,8 @@ class CalendarController extends AbstractController
      */
     public function dayAction($year = null, $month = null, $day = null)
     {
+        $this->addCacheTags(['calendarize_day']);
+
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
         $date->modify('+12 hours');
 
@@ -428,6 +451,8 @@ class CalendarController extends AbstractController
             }
         }
 
+        $this->addCacheTags(['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_event_' . $index->getOriginalObject()->getUid()]);
+
         $this->slotExtendedAssignMultiple([
             'index' => $index,
             'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'),
@@ -449,6 +474,8 @@ class CalendarController extends AbstractController
      */
     public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {
+        $this->addCacheTags(['calendarize_search']);
+
         $baseDate = DateTimeUtility::getNow();
         if (!($startDate instanceof \DateTimeInterface)) {
             $startDate = clone $baseDate;
@@ -472,6 +499,8 @@ class CalendarController extends AbstractController
      */
     public function singleAction()
     {
+        $this->addCacheTags(['calendarize_single']);
+
         $indicies = [];
 
         // prepare selection
