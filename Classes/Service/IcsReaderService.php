@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
-use HDNET\Calendarize\Service\TimeTable\ExternalTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use JMBTechnologyLimited\ICalDissect\ICalEvent;
 use JMBTechnologyLimited\ICalDissect\ICalParser;
