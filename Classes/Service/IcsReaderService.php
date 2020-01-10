@@ -53,7 +53,7 @@ class IcsReaderService extends AbstractService
             /** @var $event ICalEvent */
             $startTime = DateTimeUtility::getDaySecondsOfDateTime($event->getStart());
             $endTime = DateTimeUtility::getDaySecondsOfDateTime($event->getEnd());
-            if (ExternalTimeTable::DAY_END === $endTime) {
+            if (86399 === $endTime) {
                 $endTime = 0;
             }
 
