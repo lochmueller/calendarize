@@ -287,6 +287,7 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
+        $intervalCounter = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
         for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $lastLoop;
 
@@ -295,13 +296,15 @@ class TimeTimeTable extends AbstractTimeTable
                 $dateTime = $recurrenceService->getRecurrenceForNextMonth(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
-                    $configuration->getDay()
+                    $configuration->getDay(),
+                    $intervalCounter
                 );
             } elseif (Configuration::FREQUENCY_YEARLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextYear(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
-                    $configuration->getDay()
+                    $configuration->getDay(),
+                    $intervalCounter
                 );
             }
             if (false === $dateTime) {

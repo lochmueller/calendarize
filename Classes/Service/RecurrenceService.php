@@ -28,28 +28,30 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next month.
      *
      * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
+     * @param string $recurrence
+     * @param string $day
+     * @param int $interval
      *
      * @return \DateTime
      */
-    public function getRecurrenceForNextMonth(\DateTime $date, string $recurrence, string $day)
+    public function getRecurrenceForNextMonth(\DateTime $date, string $recurrence, string $day, int $interval = 1)
     {
-        return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+1 month');
+        return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' month');
     }
 
     /**
      * Get the date if the configuration of the next year.
      *
      * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
+     * @param string $recurrence
+     * @param string $day
+     * @param int $interval
      *
      * @return \DateTime
      */
-    public function getRecurrenceForNextYear(\DateTime $date, string $recurrence, string $day)
+    public function getRecurrenceForNextYear(\DateTime $date, string $recurrence, string $day, int $interval = 1)
     {
-        return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+1 year');
+        return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' year');
     }
 
     /**
