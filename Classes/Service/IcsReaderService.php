@@ -28,9 +28,10 @@ class IcsReaderService extends AbstractService
     public function getTimes(string $url): array
     {
         $fileName = $this->getCachedUrlFile($url);
-        $times = $this->buildWithICalDissect($fileName);
-        // $test = $this->buildWithVObject($fileName);
-        return $times;
+        //if (class_exists(Reader::class)) {
+        //    return $this->buildWithVObject($fileName);
+        //}
+        return $this->buildWithICalDissect($fileName);
     }
 
     /**
@@ -50,6 +51,12 @@ class IcsReaderService extends AbstractService
         $times = [];
         foreach ($events as $event) {
             /** @var $event ICalEvent */
+            if (!($event->getStart() instanceof \DateTime)) {
+                continue;
+            }
+            if (!($event->getEnd() instanceof \DateTime)) {
+                continue;
+            }
             $startTime = DateTimeUtility::getDaySecondsOfDateTime($event->getStart());
             $endTime = DateTimeUtility::getDaySecondsOfDateTime($event->getEnd());
             if (86399 === $endTime) {
@@ -84,20 +91,22 @@ class IcsReaderService extends AbstractService
         );
         $times = [];
         foreach ($vcalendar->VEVENT as $event) {
-            /*DTSTAMP => array(1 item)
-      UID => array(1 item)
-      DTSTART => array(1 item)
-      DTEND => array(1 item)*/
-            //DebuggerUtility::var_dump($event->TESTST);
-            //DebuggerUtility::var_dump($event->DTSTAMP);
-            //DebuggerUtility::var_dump($event->DTSTART);
-            //DebuggerUtility::var_dump($event->DTEND);
+            /** @var \Sabre\VObject\Component\VEvent $event */
+            $start = $event->DTSTAMP;
+            if (!($start instanceof \Sabre\VObject\Property\ICalendar\DateTime)) {
+                continue;
+            }
+
+            $end = $event->DTEND;
+            if (!($end instanceof \Sabre\VObject\Property\ICalendar\DateTime)) {
+                continue;
+            }
 
             $times[] = [
-                'start_date' => $event->DTSTART->getDateTime(),
-                'end_date' => 0, // $this->getEventsFixedEndDate($event),
-                'start_time' => 0,
-                'end_time' => 0,
+                'start_date' => $start->getDateTime(),
+                'end_date' => $end->getDateTime(), // $this->getEventsFixedEndDate($event),
+                'start_time' => 0, // @todo add time
+                'end_time' => 0, // @todo add time
                 'all_day' => true,
             ];
         }
