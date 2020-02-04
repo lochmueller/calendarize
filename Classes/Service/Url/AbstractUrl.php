@@ -62,6 +62,7 @@ abstract class AbstractUrl extends AbstractService
         }
 
         $result = \mb_strtolower((string) $base);
+
         return \preg_replace('/[^a-z0-9\-]/', '-', $result);
     }
 }

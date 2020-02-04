@@ -222,7 +222,7 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * Add cache tags
+     * Add cache tags.
      *
      * @param array $tags
      */

@@ -28,9 +28,9 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next month.
      *
      * @param \DateTime $date
-     * @param string $recurrence
-     * @param string $day
-     * @param int $interval
+     * @param string    $recurrence
+     * @param string    $day
+     * @param int       $interval
      *
      * @return \DateTime
      */
@@ -43,9 +43,9 @@ class RecurrenceService extends AbstractService
      * Get the date if the configuration of the next year.
      *
      * @param \DateTime $date
-     * @param string $recurrence
-     * @param string $day
-     * @param int $interval
+     * @param string    $recurrence
+     * @param string    $day
+     * @param int       $interval
      *
      * @return \DateTime
      */
