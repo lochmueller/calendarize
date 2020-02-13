@@ -56,7 +56,7 @@ class Typo3Route extends AbstractUrl
      */
     protected function id2alias($value): string
     {
-        $alias = (string) $this->getIndexBase((int) $value);
+        $alias = $this->getIndexBase((int) $value);
 
         $slugHelper = GeneralUtility::makeInstance(SlugHelper::class, 'pages', 'uid', []);
         $alias = $slugHelper->sanitize($alias);

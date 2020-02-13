@@ -150,6 +150,7 @@ class RealUrl extends AbstractUrl
         }
 
         $alias = $this->getIndexBase((int) $value);
+        $alias = $this->prepareBase($alias);
         $alias = $this->cleanUrl($alias);
         $entry = [
             'tablename' => IndexerService::TABLE_NAME,
