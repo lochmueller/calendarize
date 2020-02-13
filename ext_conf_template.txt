@@ -12,3 +12,12 @@ disableDateInSpeakingUrl = 0
 
 # cat=basic/enable; type=boolean; label=Add index in speaking URL:Add the Index UID at the end of the generated URI of the even to avoid conflicts
 addIndexInSpeakingUrl = 0
+
+# cat=basic/int+; type=int+; label=Till Days:Maximum of (future) days for which indices should be created (per default based on start date, if till days is relative is true then based on the current day). The frequency limit per item is still active, make sure to set the value high enough. It is also possible to leave this blank and set the value per configuration item.
+tillDays =
+
+# cat=basic/int+; type=boolean; label=Till Days Relative:Defines if till days and till days past are based on the start date or based on the current day. It is also possible to leave this blank and set the value per configuration item.
+tillDaysRelative =
+
+# cat=basic/int+; type=int+; label=Till Days Past:Maximum of (past) days for which indices should be created (does only make sense if till days relative is enabled). The frequency limit per item is still active, make sure to set the value high enough. It is also possible to leave this blank and set the value per configuration item.
+tillDaysPast =

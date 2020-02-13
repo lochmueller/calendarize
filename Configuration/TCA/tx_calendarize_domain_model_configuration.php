@@ -34,6 +34,11 @@ $timeType = \str_replace(
     $timeType
 );
 $timeType = \str_replace(
+    ',till_date,till_days,till_days_past,till_days_relative,counter_amount',
+    ',--palette--;;termination_condition',
+    $timeType
+);
+$timeType = \str_replace(
     ',counter_interval,recurrence,day',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration;frequency_configuration',
     $timeType
@@ -256,6 +261,48 @@ $custom = [
                 ],
             ],
         ],
+        'till_days' => [
+            'config' => [
+                'eval' => 'int,num,null',
+                'size' => 5,
+                'default' => null
+            ],
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                ],
+            ],
+        ],
+        'till_days_relative' => [
+            'onChange' => 'reload',
+            'config' => [
+                'config' => [
+                    'eval' => 'null',
+                    'default' => null
+                ],
+            ],
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                ],
+            ],
+        ],
+        'till_days_past' => [
+            'config' => [
+                'eval' => 'int,num,null',
+                'size' => 5,
+                'default' => null
+            ],
+            'displayCond' => [
+                'AND' => [
+                    'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
+                    'FIELD:type:=:' . Configuration::TYPE_TIME,
+                    'FIELD:till_days_relative:=:1',
+                ],
+            ],
+        ],
         'counter_amount' => [
             'config' => [
                 'eval' => 'int',
@@ -452,7 +499,7 @@ $custom = [
         ],
         'termination_condition' => [
             'canNotCollapse' => 1,
-            'showitem' => 'till_date,counter_amount',
+            'showitem' => 'till_date,till_days,till_days_past,till_days_relative,counter_amount',
         ],
         'frequency_configuration' => [
             'canNotCollapse' => 1,

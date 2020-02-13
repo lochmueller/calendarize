@@ -132,6 +132,30 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $tillDate;
 
     /**
+     * Till days.
+     *
+     * @var int
+     * @db int(11)
+     */
+    protected $tillDays;
+
+    /**
+     * Till days relative.
+     *
+     * @var bool
+     * @db tinyint(4) unsigned
+     */
+    protected $tillDaysRelative;
+
+    /**
+     * Till days past.
+     *
+     * @var int
+     * @db int(11)
+     */
+    protected $tillDaysPast;
+
+    /**
      * Counter amount.
      *
      * @var int
@@ -389,6 +413,66 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     public function setTillDate($tillDate)
     {
         $this->tillDate = $tillDate;
+    }
+
+    /**
+     * Get till days.
+     *
+     * @return int
+     */
+    public function getTillDays()
+    {
+        return $this->tillDays;
+    }
+
+    /**
+     * Set till days.
+     *
+     * @param  int  $tillDays
+     */
+    public function setTillDays(int $tillDays)
+    {
+        $this->tillDays = $tillDays;
+    }
+
+    /**
+     * Is till days relative.
+     *
+     * @return bool
+     */
+    public function isTillDaysRelative()
+    {
+        return $this->tillDaysRelative;
+    }
+
+    /**
+     * Set till days relative.
+     *
+     * @param  bool  $tillDaysRelative
+     */
+    public function setTillDaysRelative(bool $tillDaysRelative)
+    {
+        $this->tillDaysRelative = $tillDaysRelative;
+    }
+
+    /**
+     * Get till days past.
+     *
+     * @return int
+     */
+    public function getTillDaysPast()
+    {
+        return $this->tillDaysPast;
+    }
+
+    /**
+     * Set till days past.
+     *
+     * @param  int  $tillDaysPast
+     */
+    public function setTillDaysPast(int $tillDaysPast)
+    {
+        $this->tillDaysPast = $tillDaysPast;
     }
 
     /**
