@@ -70,7 +70,8 @@ abstract class AbstractUrl extends AbstractService
      * @param string $base
      * @return string|string[]|null
      */
-    protected function prepareBase(string $base): string {
+    protected function prepareBase(string $base): string
+    {
         $result = \mb_strtolower($base);
 
         return \preg_replace('/[^a-z0-9\-]/', '-', $result);
