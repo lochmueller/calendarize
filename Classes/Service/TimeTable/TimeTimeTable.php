@@ -46,9 +46,12 @@ class TimeTimeTable extends AbstractTimeTable
         if (!$this->validateBaseEntry($baseEntry)) {
             return;
         }
-        $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
-        $this->addFrequencyItems($times, $configuration, $baseEntry);
-        $this->addRecurrenceItems($times, $configuration, $baseEntry);
+        $frequency = $this->addFrequencyItems($times, $configuration, $baseEntry);
+        $recurrence = $this->addRecurrenceItems($times, $configuration, $baseEntry);
+        if ($frequency === false && $recurrence === false) {
+            $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
+        }
+
         $this->respectDynamicEndDates($times, $configuration);
     }
 
@@ -185,15 +188,16 @@ class TimeTimeTable extends AbstractTimeTable
     /**
      * Add frequency items.
      *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
+     * @param  array  $times
+     * @param  Configuration  $configuration
+     * @param  array  $baseEntry
+     * @return bool
      */
-    protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry)
+    protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry): bool
     {
         $frequencyIncrement = $this->getFrequencyIncrement($configuration);
         if (!$frequencyIncrement) {
-            return;
+            return false;
         }
         $amountCounter = $configuration->getCounterAmount();
         $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
@@ -218,6 +222,8 @@ class TimeTimeTable extends AbstractTimeTable
 
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
         }
+
+        return true;
     }
 
     /**
@@ -282,14 +288,15 @@ class TimeTimeTable extends AbstractTimeTable
     /**
      * Add recurrence items.
      *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
+     * @param  array  $times
+     * @param  Configuration  $configuration
+     * @param  array  $baseEntry
+     * @return bool
      */
-    protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry)
+    protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry): bool
     {
         if (Configuration::RECURRENCE_NONE === $configuration->getRecurrence() || Configuration::DAY_NONE === $configuration->getDay()) {
-            return;
+            return false;
         }
 
         $recurrenceService = GeneralUtility::makeInstance(RecurrenceService::class);
@@ -341,6 +348,8 @@ class TimeTimeTable extends AbstractTimeTable
 
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
         }
+
+        return true;
     }
 
     /**
