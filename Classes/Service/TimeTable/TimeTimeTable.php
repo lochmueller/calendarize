@@ -46,6 +46,7 @@ class TimeTimeTable extends AbstractTimeTable
         if (!$this->validateBaseEntry($baseEntry)) {
             return;
         }
+        $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
         $this->addFrequencyItems($times, $configuration, $baseEntry);
         $this->addRecurrenceItems($times, $configuration, $baseEntry);
         $this->respectDynamicEndDates($times, $configuration);
