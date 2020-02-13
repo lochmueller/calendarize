@@ -565,6 +565,15 @@
 			<trans-unit id="tx_calendarize_domain_model_configuration.till_date">
 				<source>Till date</source>
 			</trans-unit>
+            <trans-unit id="tx_calendarize_domain_model_configuration.till_days_past">
+                <source>Till Days Past (only active if Till date is empty and Till Days Relative is enabled)</source>
+            </trans-unit>
+            <trans-unit id="tx_calendarize_domain_model_configuration.till_days_relative">
+                <source>Till Days Relative</source>
+            </trans-unit>
+            <trans-unit id="tx_calendarize_domain_model_configuration.till_days">
+                <source>Till Days (only active if Till date is empty)</source>
+            </trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.type">
 				<source>Type</source>
 			</trans-unit>

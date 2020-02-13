@@ -15,6 +15,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -45,7 +46,6 @@ class TimeTimeTable extends AbstractTimeTable
         if (!$this->validateBaseEntry($baseEntry)) {
             return;
         }
-        $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
         $this->addFrequencyItems($times, $configuration, $baseEntry);
         $this->addRecurrenceItems($times, $configuration, $baseEntry);
         $this->respectDynamicEndDates($times, $configuration);
@@ -195,17 +195,26 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
         $amountCounter = $configuration->getCounterAmount();
-        $tillDate = $configuration->getTillDate();
+        $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
         for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
-            $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
+            if ($i === 0) {
+                $loopEntry = $lastLoop;
+            } else {
+                $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
+            }
 
-            if ($tillDate instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDate) {
+            if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
                 break;
             }
 
             $lastLoop = $loopEntry;
+
+            if ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+                continue;
+            }
+
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
         }
     }
@@ -284,7 +293,7 @@ class TimeTimeTable extends AbstractTimeTable
 
         $recurrenceService = GeneralUtility::makeInstance(RecurrenceService::class);
         $amountCounter = $configuration->getCounterAmount();
-        $tillDate = $configuration->getTillDate();
+        $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
         $intervalCounter = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
@@ -315,15 +324,79 @@ class TimeTimeTable extends AbstractTimeTable
             $interval = $loopEntry['start_date']->diff($dateTime);
             $frequencyIncrement = $interval->format('%R%a days');
 
-            $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
+            if ($i > 0) {
+                $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
+            }
 
-            if ($tillDate instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDate) {
+            if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
                 break;
             }
 
             $lastLoop = $loopEntry;
+
+            if ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+                continue;
+            }
+
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
         }
+    }
+
+    /**
+     * @param  Configuration  $configuration
+     * @param  array  $baseEntry
+     * @return array
+     */
+    protected function getTillDateConfiguration(Configuration $configuration, array $baseEntry): array
+    {
+        // get values from item configuration
+        $tillDate = $configuration->getTillDate();
+        $tillDays = $configuration->getTillDays();
+        $tillDaysRelative = $configuration->isTillDaysRelative();
+        $tillDaysPast = $configuration->getTillDaysPast();
+        $tillDatePast = null;
+
+        // if not set get values from extension configuration
+        if ($tillDays === null && $tillDaysPast === null) {
+            $tillDays = ConfigurationUtility::get('tillDays');
+            $tillDays = MathUtility::canBeInterpretedAsInteger($tillDays) ? (int)$tillDays : null;
+            $tillDaysPast = ConfigurationUtility::get('tillDaysPast');
+            $tillDaysPast = MathUtility::canBeInterpretedAsInteger($tillDaysPast) ? (int)$tillDaysPast : null;
+        }
+
+        if ($tillDaysRelative === null) {
+            $tillDaysRelative = (bool)ConfigurationUtility::get('tillDaysRelative');
+        }
+
+        // calculate tillDate and tillDatePast based on configuration
+        if (!$tillDate instanceof \DateTimeInterface && (is_int($tillDays) || is_int($tillDaysPast))) {
+            // get base date for till tillDate and tillDatePast calculation
+            /** @var \DateTime $tillDaysBaseDate */
+            $tillDaysBaseDate = $baseEntry['start_date'];
+            if ($tillDaysRelative) {
+                $tillDaysBaseDate = DateTimeUtility::resetTime();
+            }
+
+            // get actual tillDate
+            if (is_int($tillDays)) {
+                --$tillDays; // - 1 day because we already take the current day into account
+                $tillDate = clone $tillDaysBaseDate;
+                $tillDate->modify('+'.$tillDays.' day');
+            }
+
+            // get actual tillDatePast
+            if ($tillDaysPast === 0) {
+                $tillDatePast = clone $tillDaysBaseDate;
+            } else if (is_int($tillDaysPast) && $tillDaysPast > 0) {
+                $tillDatePast = clone $tillDaysBaseDate;
+                $tillDatePast->modify('-'.$tillDaysPast.' day');
+            }
+        }
+
+        return [
+            'tillDate' => $tillDate,
+            'tillDatePast' => $tillDatePast,
+        ];
     }
 
     /**

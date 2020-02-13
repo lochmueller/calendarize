@@ -605,6 +605,18 @@
 				<source>Till date</source>
 				<target>Bis Datum</target>
 			</trans-unit>
+            <trans-unit id="tx_calendarize_domain_model_configuration.till_days_past">
+                <source>Till Days Past (only active if Till date is empty and Till Days Relative is enabled)</source>
+                <target>Bis Tage Vergangenheit (nur aktiv, wenn Bis Datum leer ist und Bis Tage Relativ aktiv ist</target>
+            </trans-unit>
+            <trans-unit id="tx_calendarize_domain_model_configuration.till_days_relative">
+                <source>Till Days Relative</source>
+                <target>Bis Tage Relativ</target>
+            </trans-unit>
+            <trans-unit id="tx_calendarize_domain_model_configuration.till_days">
+                <source>Till Days (only active if Till date is empty)</source>
+                <target>Bis Tage (nur aktiv, wenn Bis Datum leer ist)</target>
+            </trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.type" approved="yes">
 				<source>Type</source>
 				<target>Typ</target>
