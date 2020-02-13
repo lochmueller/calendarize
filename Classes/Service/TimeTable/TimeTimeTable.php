@@ -381,15 +381,15 @@ class TimeTimeTable extends AbstractTimeTable
             if (is_int($tillDays)) {
                 --$tillDays; // - 1 day because we already take the current day into account
                 $tillDate = clone $tillDaysBaseDate;
-                $tillDate->modify('+'.$tillDays.' day');
+                $tillDate->modify('+' . $tillDays . ' day');
             }
 
             // get actual tillDatePast
             if ($tillDaysPast === 0) {
                 $tillDatePast = clone $tillDaysBaseDate;
-            } else if (is_int($tillDaysPast) && $tillDaysPast > 0) {
+            } elseif (is_int($tillDaysPast) && $tillDaysPast > 0) {
                 $tillDatePast = clone $tillDaysBaseDate;
-                $tillDatePast->modify('-'.$tillDaysPast.' day');
+                $tillDatePast->modify('-' . $tillDaysPast . ' day');
             }
         }
 
