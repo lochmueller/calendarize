@@ -47,9 +47,11 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
         $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
-        $this->addFrequencyItems($times, $configuration, $baseEntry);
-        $this->addRecurrenceItems($times, $configuration, $baseEntry);
+        $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
+        $this->addFrequencyItems($times, $configuration, $baseEntry, $tillDateConfiguration);
+        $this->addRecurrenceItems($times, $configuration, $baseEntry, $tillDateConfiguration);
         $this->respectDynamicEndDates($times, $configuration);
+        $this->removeBaseEntryIfNecessary($times, $configuration, $baseEntry, $tillDateConfiguration);
     }
 
     /**
@@ -188,23 +190,19 @@ class TimeTimeTable extends AbstractTimeTable
      * @param array         $times
      * @param Configuration $configuration
      * @param array         $baseEntry
+     * @param array         $tillDateConfiguration
      */
-    protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry)
+    protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
     {
         $frequencyIncrement = $this->getFrequencyIncrement($configuration);
         if (!$frequencyIncrement) {
             return;
         }
         $amountCounter = $configuration->getCounterAmount();
-        $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
         for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
-            if ($i === 0) {
-                $loopEntry = $lastLoop;
-            } else {
-                $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
-            }
+            $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
             if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
                 break;
@@ -285,8 +283,9 @@ class TimeTimeTable extends AbstractTimeTable
      * @param array         $times
      * @param Configuration $configuration
      * @param array         $baseEntry
+     * @param array         $tillDateConfiguration
      */
-    protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry)
+    protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
     {
         if (Configuration::RECURRENCE_NONE === $configuration->getRecurrence() || Configuration::DAY_NONE === $configuration->getDay()) {
             return;
@@ -294,7 +293,6 @@ class TimeTimeTable extends AbstractTimeTable
 
         $recurrenceService = GeneralUtility::makeInstance(RecurrenceService::class);
         $amountCounter = $configuration->getCounterAmount();
-        $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
         $intervalCounter = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
@@ -325,9 +323,7 @@ class TimeTimeTable extends AbstractTimeTable
             $interval = $loopEntry['start_date']->diff($dateTime);
             $frequencyIncrement = $interval->format('%R%a days');
 
-            if ($i > 0) {
-                $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
-            }
+            $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
 
             if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
                 break;
@@ -340,6 +336,32 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
+        }
+    }
+
+    /**
+     * Remove the base entry if necessary.
+     *
+     * @param array         $times
+     * @param Configuration $configuration
+     * @param array         $baseEntry
+     * @param array         $tillDateConfiguration
+     */
+    protected function removeBaseEntryIfNecessary(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
+    {
+        $baseEntryKey = $this->calculateEntryKey($baseEntry);
+        $tillDate = $configuration->getTillDate();
+
+        if (!isset($times[$baseEntryKey])) {
+            return;
+        }
+
+        // if the till date is set via the till day feature and if the base entry does not match the till date condition remove it from times
+        if (!$tillDate instanceof \DateTimeInterface && $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $baseEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+            unset($times[$baseEntryKey]);
+        } elseif ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $baseEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+            // till date past can only be set via the till date day feature, if the base entry does not match the till date past condition remove it from times
+            unset($times[$baseEntryKey]);
         }
     }
 
@@ -363,35 +385,27 @@ class TimeTimeTable extends AbstractTimeTable
             $tillDays = MathUtility::canBeInterpretedAsInteger($tillDays) ? (int)$tillDays : null;
             $tillDaysPast = ConfigurationUtility::get('tillDaysPast');
             $tillDaysPast = MathUtility::canBeInterpretedAsInteger($tillDaysPast) ? (int)$tillDaysPast : null;
-        }
-
-        if ($tillDaysRelative === null) {
             $tillDaysRelative = (bool)ConfigurationUtility::get('tillDaysRelative');
         }
 
-        // calculate tillDate and tillDatePast based on configuration
-        if (!$tillDate instanceof \DateTimeInterface && (is_int($tillDays) || is_int($tillDaysPast))) {
-            // get base date for till tillDate and tillDatePast calculation
-            /** @var \DateTime $tillDaysBaseDate */
-            $tillDaysBaseDate = $baseEntry['start_date'];
-            if ($tillDaysRelative) {
-                $tillDaysBaseDate = DateTimeUtility::resetTime();
-            }
+        // get base date for till tillDate and tillDatePast calculation
+        /** @var \DateTime $tillDaysBaseDate */
+        $tillDaysBaseDate = $baseEntry['start_date'];
+        if ($tillDaysRelative) {
+            $tillDaysBaseDate = DateTimeUtility::resetTime();
+        }
 
-            // get actual tillDate
-            if (is_int($tillDays)) {
-                --$tillDays; // - 1 day because we already take the current day into account
-                $tillDate = clone $tillDaysBaseDate;
-                $tillDate->modify('+' . $tillDays . ' day');
-            }
+        // get actual tillDate
+        if (!$tillDate instanceof \DateTimeInterface && (is_int($tillDays))) {
+            --$tillDays; // - 1 day because we already take the current day into account
+            $tillDate = clone $tillDaysBaseDate;
+            $tillDate->modify('+' . $tillDays . ' day');
+        }
 
-            // get actual tillDatePast
-            if ($tillDaysPast === 0) {
-                $tillDatePast = clone $tillDaysBaseDate;
-            } elseif (is_int($tillDaysPast) && $tillDaysPast > 0) {
-                $tillDatePast = clone $tillDaysBaseDate;
-                $tillDatePast->modify('-' . $tillDaysPast . ' day');
-            }
+        // get actual tillDatePast
+        if (is_int($tillDaysPast)) {
+            $tillDatePast = clone $tillDaysBaseDate;
+            $tillDatePast->modify('-' . $tillDaysPast . ' day');
         }
 
         return [
