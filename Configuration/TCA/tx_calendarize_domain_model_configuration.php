@@ -263,16 +263,11 @@ $custom = [
         ],
         'till_days' => [
             'config' => [
-                'eval' => 'int,num,null',
+                'eval' => 'num,null',
                 'size' => 5,
                 'default' => null
             ],
-            'displayCond' => [
-                'AND' => [
-                    'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                ],
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_days_relative' => [
             'onChange' => 'reload',
@@ -282,22 +277,16 @@ $custom = [
                     'default' => null
                 ],
             ],
-            'displayCond' => [
-                'AND' => [
-                    'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
-                    'FIELD:type:=:' . Configuration::TYPE_TIME,
-                ],
-            ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME
         ],
         'till_days_past' => [
             'config' => [
-                'eval' => 'int,num,null',
+                'eval' => 'num,null',
                 'size' => 5,
                 'default' => null
             ],
             'displayCond' => [
                 'AND' => [
-                    'FIELD:frequency:!=:' . Configuration::FREQUENCY_NONE,
                     'FIELD:type:=:' . Configuration::TYPE_TIME,
                     'FIELD:till_days_relative:=:1',
                 ],
