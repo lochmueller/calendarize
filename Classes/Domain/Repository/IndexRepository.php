@@ -633,12 +633,12 @@ class IndexRepository extends AbstractRepository
         $timezone = new \DateTimeZone('UTC');
 
         // store values for start_date and start_time in separate variables
-        $startDateTime = new \DateTime('@'.$arguments['startTime'], $timezone);
+        $startDateTime = new \DateTime('@' . $arguments['startTime'], $timezone);
         $restrictionLowTime = DateTimeUtility::getDaySecondsOfDateTime($startDateTime);
         $restrictionLowDay = DateTimeUtility::resetTime($startDateTime)->getTimestamp();
 
         // store values for end_date and end_time in separate variables
-        $endDateTime = new \DateTime('@'.$arguments['endTime'], $timezone);
+        $endDateTime = new \DateTime('@' . $arguments['endTime'], $timezone);
         $restrictionHighTime = DateTimeUtility::getDaySecondsOfDateTime($endDateTime);
         $restrictionHighDay = DateTimeUtility::resetTime($endDateTime)->getTimestamp();
 
