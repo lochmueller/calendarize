@@ -21,3 +21,6 @@ tillDaysRelative =
 
 # cat=basic/int+; type=int+; label=Till Days Past:Maximum of (past) days for which indices should be created (does only make sense if till days relative is enabled). The frequency limit per item is still active, make sure to set the value high enough. It is also possible to leave this blank and set the value per configuration item.
 tillDaysPast =
+
+# cat=basic/enable; type=boolean; label=Respect times in time frame constraints: Per default IndexRepository->addTimeFrameConstraints() only checks start_date and end_date. If you want the actual times to be respected (e.g. if settings.overrideStartRelative is set to 'now') enable this option.
+respectTimesInTimeFrameConstraints = 0
