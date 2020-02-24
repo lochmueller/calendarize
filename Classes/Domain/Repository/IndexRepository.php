@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Domain\Repository;
 use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
+use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -610,6 +611,77 @@ class IndexRepository extends AbstractRepository
             $arguments['endTime'] = DateTimeUtility::getNow()->getTimestamp() + DateTimeUtility::SECONDS_DECADE;
         }
 
+        if ((bool)ConfigurationUtility::get('respectTimesInTimeFrameConstraints')) {
+            $this->addDateTimeFrameConstraints($constraints, $query, $arguments);
+        } else {
+            $this->addDateFrameConstraints($constraints, $query, $arguments);
+        }
+    }
+
+    /**
+     * Adds time frame constraints which respect the actual index times.
+     * Do not call this method directly. Call IndexRepository::addTimeFrameConstraints instead.
+     *
+     * @param array          $constraints
+     * @param QueryInterface $query
+     * @param array          $arguments
+     *
+     * @see IndexRepository::addTimeFrameConstraints
+     */
+    protected function addDateTimeFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
+    {
+        $timezone = new \DateTimeZone('UTC');
+
+        // store values for start_date and start_time in separate variables
+        $startDateTime = new \DateTime('@'.$arguments['startTime'], $timezone);
+        $restrictionLowTime = DateTimeUtility::getDaySecondsOfDateTime($startDateTime);
+        $restrictionLowDay = DateTimeUtility::resetTime($startDateTime)->getTimestamp();
+
+        // store values for end_date and end_time in separate variables
+        $endDateTime = new \DateTime('@'.$arguments['endTime'], $timezone);
+        $restrictionHighTime = DateTimeUtility::getDaySecondsOfDateTime($endDateTime);
+        $restrictionHighDay = DateTimeUtility::resetTime($endDateTime)->getTimestamp();
+
+        $constraints[] = $query->logicalAnd([
+            // (end_date === restrictionLowDay && end_time >= restrictionLowTime) || end_date > restrictionLowDay || (all_day === true && end_date >= restrictionLowDay)
+            $query->logicalOr([
+                $query->logicalAnd([
+                    $query->equals('end_date', $restrictionLowDay),
+                    $query->greaterThanOrEqual('end_time', $restrictionLowTime),
+                ]),
+                $query->greaterThan('end_date', $restrictionLowDay),
+                $query->logicalAnd([
+                    $query->equals('all_day', true),
+                    $query->greaterThanOrEqual('end_date', $restrictionLowDay),
+                ])
+            ]),
+            // (start_date === restrictionHighDay && start_time <= restrictionHighTime) || start_date < restrictionHighDay || (all_day === true && start_date <= restrictionHighDay)
+            $query->logicalOr([
+                $query->logicalAnd([
+                    $query->equals('start_date', $restrictionHighDay),
+                    $query->lessThanOrEqual('start_time', $restrictionHighTime),
+                ]),
+                $query->lessThan('start_date', $restrictionHighDay),
+                $query->logicalAnd([
+                    $query->equals('all_day', true),
+                    $query->lessThanOrEqual('start_date', $restrictionHighDay),
+                ])
+            ]),
+        ]);
+    }
+
+    /**
+     * Adds time frame constraints which respect only the index dates, not the actual index times.
+     * Do not call this method directly. Call IndexRepository::addTimeFrameConstraints instead.
+     *
+     * @param array          $constraints
+     * @param QueryInterface $query
+     * @param array          $arguments
+     *
+     * @see IndexRepository::addTimeFrameConstraints
+     */
+    protected function addDateFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
+    {
         $orConstraint = [];
 
         // before - in
