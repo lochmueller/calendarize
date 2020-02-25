@@ -1,0 +1,11 @@
+routeEnhancers:
+  CalendarizePlugin:
+    type: Extbase
+    extension: Calendarize
+    plugin: Calendar
+    routes:
+      - { routePath: '/{event_title}', _controller: 'Calendarize::detail', _arguments: {'event_title': 'index'} }
+    defaultController: 'Calendarize::detail'
+    aspects:
+      event_title:
+        type: EventMapper
