@@ -4,8 +4,79 @@ routeEnhancers:
     extension: Calendarize
     plugin: Calendar
     routes:
-      - { routePath: '/{event_title}', _controller: 'Calendarize::detail', _arguments: {'event_title': 'index'} }
+      - routePath: '/{calendarize_event_label}/{calendarize_title}'
+        _controller: 'Calendarize::detail'
+        _arguments:
+          calendarize_title: 'index'
+        requirements:
+          calendarize_title: '\d'
+      - routePath: '/{calendarize_month_label}/{calendarize_year}/{calendarize_month}'
+        _controller: 'Calendarize::detail'
+        _arguments:
+          calendarize_year: 'year'
+          calendarize_month: 'month'
+        requirements:
+          calendarize_year: '\d'
+          calendarize_month: '\d'
+#      - routePath: '/{calendarize_week_label}/{calendarize_year}/{calendarize_week}'
+#        _controller: 'Calendarize::detail'
+#        _arguments:
+#          calendarize_year: 'year'
+#          calendarize_week: 'week'
+#        requirements:
+#          calendarize_year: '\d'
+#          calendarize_week: '\d'
+#      - routePath: '/{calendarize_day_label}/{calendarize_year}/{calendarize_month}/{calendarize_day}'
+#        _controller: 'Calendarize::detail'
+#        _arguments:
+#          calendarize_year: 'year'
+#          calendarize_month: 'month'
+#          calendarize_day: 'day'
+#        requirements:
+#          calendarize_year: '\d'
+#          calendarize_month: '\d'
+#          calendarize_day: '\d'
     defaultController: 'Calendarize::detail'
     aspects:
-      event_title:
+      calendarize_title:
         type: EventMapper
+      calendarize_year:
+        type: StaticRangeMapper
+        start: '1900'
+        end: '2200'
+      calendarize_month:
+        type: StaticRangeMapper
+        start: '1'
+        end: '12'
+      calendarize_day:
+        type: StaticRangeMapper
+        start: '1'
+        end: '31'
+      calendarize_week:
+        type: StaticRangeMapper
+        start: '1'
+        end: '53'
+      calendarize_event_label:
+        type: LocaleModifier
+        default: 'event'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'termin'
+      calendarize_month_label:
+        type: LocaleModifier
+        default: 'month'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'monat'
+      calendarize_week_label:
+        type: LocaleModifier
+        default: 'week'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'woche'
+      calendarize_day_label:
+        type: LocaleModifier
+        default: 'day'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'tag'
