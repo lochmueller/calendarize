@@ -66,8 +66,8 @@ class CalMigrationUpdate extends AbstractUpdate
      *
      * @var string
      */
-    protected $title = 'Migrate cal event structures to the new calendarize event structures. 
-    Try to migrate all cal information and place the new calendarize event models in the same folder 
+    protected $title = 'Migrate cal event structures to the new calendarize event structures.
+    Try to migrate all cal information and place the new calendarize event models in the same folder
     as the cal-records. Please note: the migration will be create calendarize default models.';
 
     /**
@@ -219,7 +219,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'crdate' => $selectResult['crdate'],
                 'cruser_id' => $selectResult['cruser_id'],
                 'title' => $selectResult['title'],
-                'configurations' => $this->getExceptionConfigurationForExceptionGroup($selectResult['uid']), // get Configuration
+                'configurations' => $this->getExceptionConfigurationForExceptionGroup($selectResult['uid'], $dbQueries),
                 'hidden' => $selectResult['hidden'],
                 'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
             ];
@@ -607,15 +607,14 @@ class CalMigrationUpdate extends AbstractUpdate
      *
      * @param       $groupId
      * @param array $dbQueries
-     * @param array $customMessages
      *
      * @return string
      */
-    protected function getExceptionConfigurationForExceptionGroup($groupId, &$dbQueries, &$customMessages)
+    protected function getExceptionConfigurationForExceptionGroup($groupId, &$dbQueries)
     {
         $recordIds = [];
         $variables = [
-            'table' => ' tx_cal_exception_event_group_mm',
+            'table' => 'tx_cal_exception_event_group_mm',
             'dbQueries' => $dbQueries,
         ];
 
@@ -631,7 +630,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $mmResults = $q->execute()->fetchAll();
         foreach ($mmResults as $mmResult) {
             $variables = [
-                'table' => ' tx_cal_exception_event',
+                'table' => 'tx_cal_exception_event',
                 'dbQueries' => $dbQueries,
             ];
 
@@ -779,7 +778,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $q->select('*')
             ->from($variables['table'])
             ->where(
-                $q->expr()->neq('import_id', '')
+                $q->expr()->neq('import_id', $q->createNamedParameter(''))
             );
 
         $dbQueries[] = $q->getSQL();
@@ -975,7 +974,7 @@ class CalMigrationUpdate extends AbstractUpdate
     protected function migrateDate($oldFormat)
     {
         try {
-            $date = new \DateTime($oldFormat);
+            $date = new \DateTime((string) $oldFormat);
 
             return $date->getTimestamp();
         } catch (\Exception $e) {
