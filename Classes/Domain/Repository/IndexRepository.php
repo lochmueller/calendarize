@@ -611,7 +611,7 @@ class IndexRepository extends AbstractRepository
             $arguments['endTime'] = DateTimeUtility::getNow()->getTimestamp() + DateTimeUtility::SECONDS_DECADE;
         }
 
-        if ((bool)ConfigurationUtility::get('respectTimesInTimeFrameConstraints')) {
+        if ((bool) ConfigurationUtility::get('respectTimesInTimeFrameConstraints')) {
             $this->addDateTimeFrameConstraints($constraints, $query, $arguments);
         } else {
             $this->addDateFrameConstraints($constraints, $query, $arguments);
@@ -653,7 +653,7 @@ class IndexRepository extends AbstractRepository
                 $query->logicalAnd([
                     $query->equals('all_day', true),
                     $query->greaterThanOrEqual('end_date', $restrictionLowDay),
-                ])
+                ]),
             ]),
             // (start_date === restrictionHighDay && start_time <= restrictionHighTime) || start_date < restrictionHighDay || (all_day === true && start_date <= restrictionHighDay)
             $query->logicalOr([
@@ -665,7 +665,7 @@ class IndexRepository extends AbstractRepository
                 $query->logicalAnd([
                     $query->equals('all_day', true),
                     $query->lessThanOrEqual('start_date', $restrictionHighDay),
-                ])
+                ]),
             ]),
         ]);
     }

@@ -428,7 +428,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set till days.
      *
-     * @param  int  $tillDays
+     * @param int $tillDays
      */
     public function setTillDays(int $tillDays)
     {
@@ -448,7 +448,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set till days relative.
      *
-     * @param  bool  $tillDaysRelative
+     * @param bool $tillDaysRelative
      */
     public function setTillDaysRelative(bool $tillDaysRelative)
     {
@@ -468,7 +468,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set till days past.
      *
-     * @param  int  $tillDaysPast
+     * @param int $tillDaysPast
      */
     public function setTillDaysPast(int $tillDaysPast)
     {

@@ -65,9 +65,10 @@ abstract class AbstractUrl extends AbstractService
     }
 
     /**
-     * Prepare base
+     * Prepare base.
      *
      * @param string $base
+     *
      * @return string|string[]|null
      */
     protected function prepareBase(string $base): string

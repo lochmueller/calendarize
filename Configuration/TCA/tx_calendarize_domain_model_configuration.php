@@ -265,7 +265,7 @@ $custom = [
             'config' => [
                 'eval' => 'num,null',
                 'size' => 5,
-                'default' => null
+                'default' => null,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -274,16 +274,16 @@ $custom = [
             'config' => [
                 'config' => [
                     'eval' => 'null',
-                    'default' => null
+                    'default' => null,
                 ],
             ],
-            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_days_past' => [
             'config' => [
                 'eval' => 'num,null',
                 'size' => 5,
-                'default' => null
+                'default' => null,
             ],
             'displayCond' => [
                 'AND' => [

@@ -366,8 +366,9 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
-     * @param  Configuration  $configuration
-     * @param  array  $baseEntry
+     * @param Configuration $configuration
+     * @param array         $baseEntry
+     *
      * @return array
      */
     protected function getTillDateConfiguration(Configuration $configuration, array $baseEntry): array
@@ -380,12 +381,12 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDatePast = null;
 
         // if not set get values from extension configuration
-        if ($tillDays === null && $tillDaysPast === null) {
+        if (null === $tillDays && null === $tillDaysPast) {
             $tillDays = ConfigurationUtility::get('tillDays');
-            $tillDays = MathUtility::canBeInterpretedAsInteger($tillDays) ? (int)$tillDays : null;
+            $tillDays = MathUtility::canBeInterpretedAsInteger($tillDays) ? (int) $tillDays : null;
             $tillDaysPast = ConfigurationUtility::get('tillDaysPast');
-            $tillDaysPast = MathUtility::canBeInterpretedAsInteger($tillDaysPast) ? (int)$tillDaysPast : null;
-            $tillDaysRelative = (bool)ConfigurationUtility::get('tillDaysRelative');
+            $tillDaysPast = MathUtility::canBeInterpretedAsInteger($tillDaysPast) ? (int) $tillDaysPast : null;
+            $tillDaysRelative = (bool) ConfigurationUtility::get('tillDaysRelative');
         }
 
         // get base date for till tillDate and tillDatePast calculation
@@ -396,14 +397,14 @@ class TimeTimeTable extends AbstractTimeTable
         }
 
         // get actual tillDate
-        if (!$tillDate instanceof \DateTimeInterface && (is_int($tillDays))) {
+        if (!$tillDate instanceof \DateTimeInterface && (\is_int($tillDays))) {
             --$tillDays; // - 1 day because we already take the current day into account
             $tillDate = clone $tillDaysBaseDate;
             $tillDate->modify('+' . $tillDays . ' day');
         }
 
         // get actual tillDatePast
-        if (is_int($tillDaysPast)) {
+        if (\is_int($tillDaysPast)) {
             $tillDatePast = clone $tillDaysBaseDate;
             $tillDatePast->modify('-' . $tillDaysPast . ' day');
         }
