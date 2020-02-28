@@ -35,7 +35,7 @@ class CalMigration
             ->from('sys_file_reference')
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->eq('tablenames', 'tx_cal_event'),
+                    $q->expr()->eq('tablenames', $q->quote('tx_cal_event')),
                     $q->expr()->eq('uid_foreign', $q->createNamedParameter((int) $event['uid'], \PDO::PARAM_INT))
                 )
             );
