@@ -58,6 +58,9 @@ class Typo3Route extends AbstractUrl
     {
         $alias = $this->getIndexBase((int) $value);
 
+        // Because the Slug helper do not remove "/" chars
+        $alias = \str_replace('/', '-', $alias);
+
         $slugHelper = GeneralUtility::makeInstance(SlugHelper::class, 'pages', 'uid', []);
         $alias = $slugHelper->sanitize($alias);
 
