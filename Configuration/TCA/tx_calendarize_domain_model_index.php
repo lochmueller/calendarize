@@ -35,6 +35,7 @@ $custom = [
         'start_date' => [
             'config' => [
                 'readOnly' => '1',
+                'dbType' => 'date',
                 'eval' => 'datetime',
                 'format' => 'date',
             ],
@@ -42,6 +43,7 @@ $custom = [
         'end_date' => [
             'config' => [
                 'readOnly' => '1',
+                'dbType' => 'date',
                 'eval' => 'datetime',
                 'format' => 'date',
             ],

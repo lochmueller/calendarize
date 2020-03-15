@@ -635,36 +635,36 @@ class IndexRepository extends AbstractRepository
         // store values for start_date and start_time in separate variables
         $startDateTime = new \DateTime('@' . $arguments['startTime'], $timezone);
         $restrictionLowTime = DateTimeUtility::getDaySecondsOfDateTime($startDateTime);
-        $restrictionLowDay = DateTimeUtility::resetTime($startDateTime)->getTimestamp();
+        $restrictionLowDay = DateTimeUtility::resetTime($startDateTime)->format('Y-m-d');
 
         // store values for end_date and end_time in separate variables
         $endDateTime = new \DateTime('@' . $arguments['endTime'], $timezone);
         $restrictionHighTime = DateTimeUtility::getDaySecondsOfDateTime($endDateTime);
-        $restrictionHighDay = DateTimeUtility::resetTime($endDateTime)->getTimestamp();
+        $restrictionHighDay = DateTimeUtility::resetTime($endDateTime)->format('Y-m-d');
 
         $constraints[] = $query->logicalAnd([
             // (end_date === restrictionLowDay && end_time >= restrictionLowTime) || end_date > restrictionLowDay || (all_day === true && end_date >= restrictionLowDay)
             $query->logicalOr([
                 $query->logicalAnd([
-                    $query->equals('end_date', $restrictionLowDay),
+                    $query->equals('end_date', $query->createNamedParameter($restrictionLowDay)),
                     $query->greaterThanOrEqual('end_time', $restrictionLowTime),
                 ]),
-                $query->greaterThan('end_date', $restrictionLowDay),
+                $query->greaterThan('end_date', $query->createNamedParameter($restrictionLowDay)),
                 $query->logicalAnd([
                     $query->equals('all_day', true),
-                    $query->greaterThanOrEqual('end_date', $restrictionLowDay),
+                    $query->greaterThanOrEqual('end_date', $query->createNamedParameter($restrictionLowDay)),
                 ]),
             ]),
             // (start_date === restrictionHighDay && start_time <= restrictionHighTime) || start_date < restrictionHighDay || (all_day === true && start_date <= restrictionHighDay)
             $query->logicalOr([
                 $query->logicalAnd([
-                    $query->equals('start_date', $restrictionHighDay),
+                    $query->equals('start_date', $query->createNamedParameter($restrictionHighDay)),
                     $query->lessThanOrEqual('start_time', $restrictionHighTime),
                 ]),
-                $query->lessThan('start_date', $restrictionHighDay),
+                $query->lessThan('start_date', $query->createNamedParameter($restrictionHighDay)),
                 $query->logicalAnd([
                     $query->equals('all_day', true),
-                    $query->lessThanOrEqual('start_date', $restrictionHighDay),
+                    $query->lessThanOrEqual('start_date', $query->createNamedParameter($restrictionHighDay)),
                 ]),
             ]),
         ]);
@@ -686,31 +686,31 @@ class IndexRepository extends AbstractRepository
 
         // before - in
         $beforeIn = [
-            $query->lessThan('start_date', $arguments['startTime']),
-            $query->greaterThanOrEqual('end_date', $arguments['startTime']),
-            $query->lessThan('end_date', $arguments['endTime']),
+            $query->lessThan('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThan('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($beforeIn);
 
         // in - in
         $inIn = [
-            $query->greaterThanOrEqual('start_date', $arguments['startTime']),
-            $query->lessThan('end_date', $arguments['endTime']),
+            $query->greaterThanOrEqual('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->lessThan('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($inIn);
 
         // in - after
         $inAfter = [
-            $query->greaterThanOrEqual('start_date', $arguments['startTime']),
-            $query->lessThan('start_date', $arguments['endTime']),
-            $query->greaterThanOrEqual('end_date', $arguments['endTime']),
+            $query->greaterThanOrEqual('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->lessThan('start_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($inAfter);
 
         // before - after
         $beforeAfter = [
-            $query->lessThan('start_date', $arguments['startTime']),
-            $query->greaterThan('end_date', $arguments['endTime']),
+            $query->lessThan('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->greaterThan('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($beforeAfter);
 

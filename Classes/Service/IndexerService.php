@@ -127,8 +127,6 @@ class IndexerService extends AbstractService
     public function getNextEvents($table, $uid, $limit = 5)
     {
         $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
-        $now = DateTimeUtility::getNow();
-        $now->setTime(0, 0, 0);
 
         $q->getRestrictions()
             ->removeAll()
@@ -138,7 +136,7 @@ class IndexerService extends AbstractService
             ->from(self::TABLE_NAME)
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->gte('start_date', $now->getTimestamp()),
+                    $q->expr()->gte('start_date', $q->createNamedParameter(DateTimeUtility::getNow()->format('Y-m-d'))),
                     $q->expr()->eq('foreign_table', $q->createNamedParameter($table)),
                     $q->expr()->eq('foreign_uid', $q->createNamedParameter((int) $uid, \PDO::PARAM_INT))
                 )

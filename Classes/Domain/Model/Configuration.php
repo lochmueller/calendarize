@@ -45,7 +45,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Start date.
      *
      * @var \DateTime
-     * @db
+     * @db date default NULL
      */
     protected $startDate;
 
@@ -53,7 +53,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * End date.
      *
      * @var \DateTime
-     * @db
+     * @db date default NULL
      */
     protected $endDate;
 

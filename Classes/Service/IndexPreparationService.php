@@ -160,7 +160,7 @@ class IndexPreparationService
     {
         foreach ($record as $key => $value) {
             if ($value instanceof \DateTimeInterface) {
-                $record[$key] = $value->getTimestamp();
+                $record[$key] = $value->format('Y-m-d');
             } elseif (\is_bool($value) || 'start_time' === $key || 'end_time' === $key) {
                 $record[$key] = (int) $value;
             } elseif (null === $value) {

@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Install\Updates\AbstractUpdate;
 
 /**
  * NewIncludeExcludeStructureUpdate.

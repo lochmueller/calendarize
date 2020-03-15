@@ -49,7 +49,7 @@ class Index extends AbstractModel
      * Start date.
      *
      * @var \DateTime
-     * @db
+     * @db date default NULL
      */
     protected $startDate;
 
@@ -57,7 +57,7 @@ class Index extends AbstractModel
      * End date.
      *
      * @var \DateTime
-     * @db
+     * @db date default NULL
      */
     protected $endDate;
 

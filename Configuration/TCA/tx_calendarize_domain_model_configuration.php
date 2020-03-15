@@ -133,16 +133,16 @@ $custom = [
         'start_date' => [
             'config' => [
                 'eval' => 'required,date',
+                'dbType' => 'date',
                 'size' => 6,
-                'default' => 0,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'end_date' => [
             'config' => [
                 'eval' => 'date',
+                'dbType' => 'date',
                 'size' => 6,
-                'default' => 0,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],

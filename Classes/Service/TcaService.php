@@ -146,11 +146,14 @@ class TcaService extends AbstractService
     {
         $title = '';
         if ($row['start_date']) {
-            $dateStart = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int) $row['start_date']);
-            $dateEnd = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int) ($row['end_date'] ?: $row['start_date']));
-            $title .= $dateStart;
-            if ($dateStart !== $dateEnd) {
-                $title .= ' - ' . $dateEnd;
+            try {
+                $dateStart = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (new \DateTime($row['start_date']))->getTimestamp());
+                $dateEnd = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp());
+                $title .= $dateStart;
+                if ($dateStart !== $dateEnd) {
+                    $title .= ' - ' . $dateEnd;
+                }
+            } catch (\Exception $exception) {
             }
         }
         if ($row['all_day']) {
