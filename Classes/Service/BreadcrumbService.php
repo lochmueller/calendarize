@@ -23,7 +23,7 @@ class BreadcrumbService extends AbstractService
     public function generate(string $content, array $configuration)
     {
         $arguments = GeneralUtility::_GET('tx_calendarize_calendar');
-        $indexUid = isset($arguments['index']) ? (int) $arguments['index'] : 0;
+        $indexUid = isset($arguments['index']) ? (int)$arguments['index'] : 0;
         if (0 === $indexUid) {
             return $content;
         }
@@ -36,7 +36,7 @@ class BreadcrumbService extends AbstractService
         $event = $this->getEventByIndex($index);
         $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 
-        if (isset($configuration['doNotLinkIt']) && (bool) $configuration['doNotLinkIt']) {
+        if (isset($configuration['doNotLinkIt']) && (bool)$configuration['doNotLinkIt']) {
             $content = $event['title'];
         } else {
             $linkConfiguration = [
@@ -56,7 +56,7 @@ class BreadcrumbService extends AbstractService
      */
     protected function getEventByIndex($row)
     {
-        return $this->fetchRecordByUid($row['foreign_table'], (int) $row['foreign_uid']);
+        return $this->fetchRecordByUid($row['foreign_table'], (int)$row['foreign_uid']);
     }
 
     /**
@@ -79,7 +79,7 @@ class BreadcrumbService extends AbstractService
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         $where = [
-            $queryBuilder->expr()->eq('uid', (int) $uid),
+            $queryBuilder->expr()->eq('uid', (int)$uid),
         ];
         $rows = $queryBuilder->select('*')
             ->from($table)

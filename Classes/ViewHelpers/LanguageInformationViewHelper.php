@@ -52,8 +52,8 @@ class LanguageInformationViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $langUid = (int) $this->arguments['languageUid'];
-        $pid = (int) $this->arguments['pid'];
+        $langUid = (int)$this->arguments['languageUid'];
+        $pid = (int)$this->arguments['pid'];
         if (\array_key_exists($langUid . '-' . $pid, self::$flags)) {
             return self::$flags[$langUid . '-' . $pid];
         }
@@ -71,7 +71,7 @@ class LanguageInformationViewHelper extends AbstractViewHelper
         }
         $out .= $title;
 
-        self::$flags[$langUid . '-' . $pid] = (string) $out;
+        self::$flags[$langUid . '-' . $pid] = (string)$out;
 
         return $out;
     }

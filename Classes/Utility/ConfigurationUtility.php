@@ -39,7 +39,7 @@ class ConfigurationUtility
     protected static function loadConfiguration()
     {
         if (null === self::$configuration) {
-            self::$configuration = (array) \unserialize((string) $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+            self::$configuration = (array)\unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
         }
     }
 }

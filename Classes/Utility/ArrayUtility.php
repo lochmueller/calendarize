@@ -26,10 +26,10 @@ class ArrayUtility
     {
         foreach ($neededItem as $key => $value) {
             if (MathUtility::canBeInterpretedAsInteger($value)) {
-                if ((int) $value !== (int) $currentItem[$key]) {
+                if ((int)$value !== (int)$currentItem[$key]) {
                     return false;
                 }
-            } elseif ((string) $value !== (string) $currentItem[$key]) {
+            } elseif ((string)$value !== (string)$currentItem[$key]) {
                 return false;
             }
         }

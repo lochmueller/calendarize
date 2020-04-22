@@ -63,7 +63,7 @@ class IndexerService extends AbstractService
                 // overlays can connect with l10n_paretn to the right default record.
                 $q->select('uid')
                     ->from($tableName)
-                    ->orderBy((string) $transPointer);
+                    ->orderBy((string)$transPointer);
             } else {
                 $q->select('uid')
                     ->from($tableName);
@@ -109,7 +109,7 @@ class IndexerService extends AbstractService
     {
         // Note: "uid" could be e.g. NEW6273482 in DataHandler process
         if (MathUtility::canBeInterpretedAsInteger($uid)) {
-            return (int) $this->getCurrentItems($tableName, $uid)->rowCount();
+            return (int)$this->getCurrentItems($tableName, $uid)->rowCount();
         }
 
         return 0;
@@ -138,7 +138,7 @@ class IndexerService extends AbstractService
                 $q->expr()->andX(
                     $q->expr()->gte('start_date', $q->createNamedParameter(DateTimeUtility::getNow()->format('Y-m-d'))),
                     $q->expr()->eq('foreign_table', $q->createNamedParameter($table)),
-                    $q->expr()->eq('foreign_uid', $q->createNamedParameter((int) $uid, \PDO::PARAM_INT))
+                    $q->expr()->eq('foreign_uid', $q->createNamedParameter((int)$uid, \PDO::PARAM_INT))
                 )
             )
             ->addOrderBy('start_date', 'ASC')
@@ -284,9 +284,9 @@ class IndexerService extends AbstractService
                     $q->expr()->notIn('unique_register_key', $validKeys)
                 )->execute();
 
-            return (bool) $q->execute();
+            return (bool)$q->execute();
         }
 
-        return (bool) $db->truncate(self::TABLE_NAME);
+        return (bool)$db->truncate(self::TABLE_NAME);
     }
 }

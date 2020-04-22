@@ -61,7 +61,7 @@ class EventImport
         $configuration = $this->getConfiguration($pid, $event['start'], $event['end']);
         $eventObject->addCalendarize($configuration);
 
-        if (null !== $eventObject->getUid() && (int) $eventObject->getUid() > 0) {
+        if (null !== $eventObject->getUid() && (int)$eventObject->getUid() > 0) {
             $this->eventRepository->update($eventObject);
             $commandController->enqueueMessage('Update Event Meta data: ' . $eventObject->getTitle(), 'Update');
         } else {
@@ -149,7 +149,7 @@ class EventImport
      */
     protected function nl2br($string)
     {
-        $string = \nl2br((string) $string);
+        $string = \nl2br((string)$string);
 
         return \str_replace('\\n', '<br />', $string);
     }

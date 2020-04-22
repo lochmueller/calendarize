@@ -31,9 +31,9 @@ class PageTitleViewHelper extends AbstractViewHelper
      */
     public function render(): string
     {
-        $uid = (int) $this->arguments['uid'];
+        $uid = (int)$this->arguments['uid'];
         $record = BackendUtility::getRecord('pages', $uid);
 
-        return (string) $record['title'];
+        return (string)$record['title'];
     }
 }

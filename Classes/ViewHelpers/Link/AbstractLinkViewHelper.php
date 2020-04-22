@@ -80,7 +80,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         $objectManager = new ObjectManager();
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = $objectManager->get(UriBuilder::class);
-        $this->lastHref = (string) $uriBuilder->reset()
+        $this->lastHref = (string)$uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setArguments($additionalParams)
             ->setCreateAbsoluteUri($absolute)
@@ -107,17 +107,17 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     protected function getPageUid($pageUid, $contextName = null)
     {
         if (MathUtility::canBeInterpretedAsInteger($pageUid) && $pageUid > 0) {
-            return (int) $pageUid;
+            return (int)$pageUid;
         }
 
         // by settings
         if ($contextName && $this->templateVariableContainer->exists('settings')) {
             $settings = $this->templateVariableContainer->get('settings');
             if (isset($settings[$contextName]) && MathUtility::canBeInterpretedAsInteger($settings[$contextName])) {
-                return (int) $settings[$contextName];
+                return (int)$settings[$contextName];
             }
         }
 
-        return (int) $GLOBALS['TSFE']->id;
+        return (int)$GLOBALS['TSFE']->id;
     }
 }

@@ -36,7 +36,7 @@ class CalMigration
             ->where(
                 $q->expr()->andX(
                     $q->expr()->eq('tablenames', $q->quote('tx_cal_event')),
-                    $q->expr()->eq('uid_foreign', $q->createNamedParameter((int) $event['uid'], \PDO::PARAM_INT))
+                    $q->expr()->eq('uid_foreign', $q->createNamedParameter((int)$event['uid'], \PDO::PARAM_INT))
                 )
             );
 
@@ -49,7 +49,7 @@ class CalMigration
             $importId = CalMigrationUpdate::IMPORT_PREFIX . $selectResult['uid'];
 
             $fieldValues = [
-                'uid_foreign' => (int) $recordId,
+                'uid_foreign' => (int)$recordId,
                 'tablenames' => $table,
             ];
 

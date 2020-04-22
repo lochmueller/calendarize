@@ -105,7 +105,7 @@ class EventSearch
                 ->fetchAll();
 
             foreach ($rows as $row) {
-                $categoryIds[] = (int) $row['uid_local'];
+                $categoryIds[] = (int)$row['uid_local'];
             }
         }
 
@@ -134,7 +134,7 @@ class EventSearch
             ->fetchAll();
 
         foreach ($rows as $row) {
-            $indexIds[] = (int) $row['uid_foreign'];
+            $indexIds[] = (int)$row['uid_foreign'];
         }
 
         $indexIds[] = -1;

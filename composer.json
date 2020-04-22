@@ -77,7 +77,7 @@
 			"@tool:php-cs-fixer"
 		],
 		"tool:php-cs-fixer": [
-			"php-cs-fixer fix --config Resource/Private/Build/PhpCsFixer.php"
+			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
 		],
 		"tool:phpdoc": [
 			"docker run --rm -v $(pwd):/data phpdoc/phpdoc -d Classes -t .Build/phpdoc"

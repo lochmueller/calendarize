@@ -122,7 +122,7 @@ class Index extends AbstractModel
             if (empty($configuration)) {
                 throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
-            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, (int) $this->getForeignUid());
+            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$this->getForeignUid());
         }
 
         return $this->originalObject;
@@ -255,7 +255,7 @@ class Index extends AbstractModel
      */
     public function isAllDay()
     {
-        return (bool) $this->allDay;
+        return (bool)$this->allDay;
     }
 
     /**
@@ -365,7 +365,7 @@ class Index extends AbstractModel
      */
     public function getSysLanguageUid()
     {
-        return (int) $this->_languageUid;
+        return (int)$this->_languageUid;
     }
 
     /**

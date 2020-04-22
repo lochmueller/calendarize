@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 $baseDir = \dirname(\dirname(\dirname(__DIR__)));
+
 require $baseDir . '/.Build/vendor/autoload.php';
 
 $finder = PhpCsFixer\Finder::create()
     ->in($baseDir . '/Classes')
     ->in($baseDir . '/Tests/Unit')
     ->in($baseDir . '/Configuration/TCA')
-    ->in($baseDir . '/Configuration/SiteConfiguration')
     ->in($baseDir . '/Resources/Private/Build');
 
 return PhpCsFixer\Config::create()

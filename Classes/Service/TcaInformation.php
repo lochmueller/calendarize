@@ -33,7 +33,7 @@ class TcaInformation extends AbstractService
 
         $previewLimit = 10;
         if (isset($configuration['fieldConf']['config']['items'])) {
-            $previewLimit = (int) $configuration['fieldConf']['config']['items'];
+            $previewLimit = (int)$configuration['fieldConf']['config']['items'];
         }
 
         $indexService = GeneralUtility::makeInstance(IndexerService::class);
@@ -78,16 +78,16 @@ class TcaInformation extends AbstractService
             if (!($event['start_date'] instanceof \DateTimeInterface)) {
                 $event['start_date'] = new \DateTime($event['start_date']);
             }
-            $startDate = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int) $event['start_date']->getTimestamp());
+            $startDate = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['start_date']->getTimestamp());
 
             if (!($event['end_date'] instanceof \DateTimeInterface)) {
                 $event['end_date'] = new \DateTime($event['end_date']);
             }
-            $endDate = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int) $event['end_date']->getTimestamp());
+            $endDate = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['end_date']->getTimestamp());
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'] % DateTimeUtility::SECONDS_DAY, false);
-                if ((bool) $event['open_end_time']) {
+                if ((bool)$event['open_end_time']) {
                     $end = '"' . TranslateUtility::get('openEndTime') . '"';
                 } else {
                     $end = BackendUtility::time($event['end_time'] % DateTimeUtility::SECONDS_DAY, false);

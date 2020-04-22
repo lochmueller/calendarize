@@ -71,7 +71,7 @@ class CleanupCommandController extends AbstractCommandController
 
         // climb thru the events and hide/delete them
         foreach ($events as $event) {
-            $uid = (int) $event['foreign_uid'];
+            $uid = (int)$event['foreign_uid'];
 
             $model = $repository->findByUid($uid);
 
@@ -149,7 +149,7 @@ class CleanupCommandController extends AbstractCommandController
     protected function findOutdatedEvents($tableName, $waitingPeriod): array
     {
         // calculate the waiting time
-        $interval = 'P' . (int) $waitingPeriod . 'D';
+        $interval = 'P' . (int)$waitingPeriod . 'D';
         $now = DateTimeUtility::getNow();
         $now->sub(new \DateInterval($interval));
 
@@ -172,7 +172,7 @@ class CleanupCommandController extends AbstractCommandController
             ->fetchAll();
 
         $foreignUids = \array_map(function ($item) {
-            return (int) $item['foreign_uid'];
+            return (int)$item['foreign_uid'];
         }, $foreignUids);
 
         $q->select('foreign_uid')

@@ -20,6 +20,6 @@ class IfDateUpperViewHelperTest extends AbstractUnitTest
     public function testValidCheck()
     {
         $viewHelper = new IfDateUpperViewHelper();
-        $this->assertTrue($viewHelper->render(new \DateTime(), '23.04.2026'));
+        self::assertTrue($viewHelper->render(new \DateTime(), '23.04.2026'));
     }
 }

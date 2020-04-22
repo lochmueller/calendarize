@@ -296,7 +296,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getFeedTitle(): string
     {
-        return (string) $this->getTitle();
+        return (string)$this->getTitle();
     }
 
     /**
@@ -306,7 +306,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getFeedAbstract(): string
     {
-        return (string) $this->getFeedContent();
+        return (string)$this->getFeedContent();
     }
 
     /**
@@ -316,7 +316,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getFeedContent(): string
     {
-        return (string) $this->getDescription();
+        return (string)$this->getDescription();
     }
 
     /**
@@ -326,7 +326,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getFeedLocation(): string
     {
-        return (string) $this->getLocation();
+        return (string)$this->getLocation();
     }
 
     /**
@@ -336,7 +336,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getRealUrlAliasBase(): string
     {
-        return (string) $this->getTitle();
+        return (string)$this->getTitle();
     }
 
     /**
@@ -388,7 +388,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getKeSearchTitle(Index $index): string
     {
-        return (string) $this->getTitle() . ' - ' . $index->getStartDate()
+        return (string)$this->getTitle() . ' - ' . $index->getStartDate()
                 ->format('d.m.Y');
     }
 
@@ -401,7 +401,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getKeSearchAbstract(Index $index): string
     {
-        return (string) $this->getDescription();
+        return (string)$this->getDescription();
     }
 
     /**
@@ -413,7 +413,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getKeSearchContent(Index $index): string
     {
-        return (string) $this->getDescription();
+        return (string)$this->getDescription();
     }
 
     /**

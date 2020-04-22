@@ -39,8 +39,8 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
         $dateClone->modify('first day of this month');
 
         $monthCheck = $dateClone->format('m');
-        while ((int) $monthCheck === (int) $dateClone->format('m')) {
-            $week = (int) $dateClone->format('W');
+        while ((int)$monthCheck === (int)$dateClone->format('m')) {
+            $week = (int)$dateClone->format('W');
             if (!isset($weeks[$week])) {
                 $weeks[$week] = [
                     'week' => $week,

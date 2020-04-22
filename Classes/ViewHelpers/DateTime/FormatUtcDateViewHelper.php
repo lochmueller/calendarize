@@ -36,7 +36,7 @@ class FormatUtcDateViewHelper extends AbstractViewHelper
         // set timezone to UTC
         \date_default_timezone_set('UTC');
 
-        $result = \strftime($this->arguments['format'], (int) $this->arguments['date']->format('U'));
+        $result = \strftime($this->arguments['format'], (int)$this->arguments['date']->format('U'));
 
         // restore timezone setting
         \date_default_timezone_set($timezone);

@@ -109,7 +109,7 @@ class TimeTimeTable extends AbstractTimeTable
                 $callback = function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
-                        $entry['end_date']->setDate((int) $entry['end_date']->format('Y'), 12, 31);
+                        $entry['end_date']->setDate((int)$entry['end_date']->format('Y'), 12, 31);
                     }
 
                     return $entry;
@@ -383,10 +383,10 @@ class TimeTimeTable extends AbstractTimeTable
         // if not set get values from extension configuration
         if (null === $tillDays && null === $tillDaysPast) {
             $tillDays = ConfigurationUtility::get('tillDays');
-            $tillDays = MathUtility::canBeInterpretedAsInteger($tillDays) ? (int) $tillDays : null;
+            $tillDays = MathUtility::canBeInterpretedAsInteger($tillDays) ? (int)$tillDays : null;
             $tillDaysPast = ConfigurationUtility::get('tillDaysPast');
-            $tillDaysPast = MathUtility::canBeInterpretedAsInteger($tillDaysPast) ? (int) $tillDaysPast : null;
-            $tillDaysRelative = (bool) ConfigurationUtility::get('tillDaysRelative');
+            $tillDaysPast = MathUtility::canBeInterpretedAsInteger($tillDaysPast) ? (int)$tillDaysPast : null;
+            $tillDaysRelative = (bool)ConfigurationUtility::get('tillDaysRelative');
         }
 
         // get base date for till tillDate and tillDatePast calculation
@@ -422,7 +422,7 @@ class TimeTimeTable extends AbstractTimeTable
      */
     protected function getFrequencyLimitPerItem(): int
     {
-        $maxLimit = (int) ConfigurationUtility::get('frequencyLimitPerItem');
+        $maxLimit = (int)ConfigurationUtility::get('frequencyLimitPerItem');
         if ($maxLimit <= 0) {
             $maxLimit = 300;
         }

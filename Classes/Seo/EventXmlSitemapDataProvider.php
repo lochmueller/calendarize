@@ -58,7 +58,7 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
         }
 
         if (!empty($pids)) {
-            $recursiveLevel = isset($this->config['recursive']) ? (int) $this->config['recursive'] : 0;
+            $recursiveLevel = isset($this->config['recursive']) ? (int)$this->config['recursive'] : 0;
             if ($recursiveLevel) {
                 $newList = [];
                 foreach ($pids as $pid) {
@@ -93,7 +93,7 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
         foreach ($rows as $row) {
             $this->items[] = [
                 'data' => $row,
-                'lastMod' => (int) $row[$lastModifiedField],
+                'lastMod' => (int)$row[$lastModifiedField],
             ];
         }
     }
@@ -180,6 +180,6 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
     {
         $context = GeneralUtility::makeInstance(Context::class);
 
-        return (int) $context->getPropertyFromAspect('language', 'id');
+        return (int)$context->getPropertyFromAspect('language', 'id');
     }
 }

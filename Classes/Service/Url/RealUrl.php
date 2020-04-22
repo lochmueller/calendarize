@@ -73,7 +73,7 @@ class RealUrl extends AbstractUrl
             );
 
         foreach ($q->execute()->fetchAll() as $row) {
-            $removeIds[] = (int) $row['uid'];
+            $removeIds[] = (int)$row['uid'];
         }
 
         if (empty($removeIds)) {
@@ -112,12 +112,12 @@ class RealUrl extends AbstractUrl
             ->fetch();
 
         if (isset($row['value_id'])) {
-            return (int) $row['value_id'];
+            return (int)$row['value_id'];
         }
 
         $matches = [];
         if (\preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
-            return (int) $matches[1];
+            return (int)$matches[1];
         }
 
         return 0;
@@ -139,17 +139,17 @@ class RealUrl extends AbstractUrl
             ->where(
                 $q->expr()->andX(
                     $q->expr()->eq('tablename', $q->expr()->literal(IndexerService::TABLE_NAME)),
-                    $q->expr()->eq('value_id', $q->createNamedParameter((int) $value, \PDO::PARAM_INT))
+                    $q->expr()->eq('value_id', $q->createNamedParameter((int)$value, \PDO::PARAM_INT))
                 )
             )
             ->execute()
             ->fetch();
 
         if (isset($row['value_alias'])) {
-            return (string) $row['value_alias'];
+            return (string)$row['value_alias'];
         }
 
-        $alias = $this->getIndexBase((int) $value);
+        $alias = $this->getIndexBase((int)$value);
         $alias = $this->prepareBase($alias);
         $alias = $this->cleanUrl($alias);
         $entry = [
@@ -175,7 +175,7 @@ class RealUrl extends AbstractUrl
         $q->resetQueryParts();
         $q->insert('tx_realurl_uniqalias')->values($entry)->execute();
 
-        return (string) $alias;
+        return (string)$alias;
     }
 
     /**
@@ -196,7 +196,7 @@ class RealUrl extends AbstractUrl
         ->execute()
         ->fetchColumn(0);
 
-        return (bool) $count;
+        return (bool)$count;
     }
 
     /**
@@ -224,7 +224,7 @@ class RealUrl extends AbstractUrl
             $processedTitle = $utility->convertToSafeString($alias);
         }
 
-        return (string) $processedTitle;
+        return (string)$processedTitle;
     }
 
     /**

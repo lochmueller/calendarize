@@ -230,7 +230,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function isAllDay()
     {
-        return (bool) $this->allDay;
+        return (bool)$this->allDay;
     }
 
     /**
@@ -240,7 +240,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function setAllDay($allDay)
     {
-        $this->allDay = (bool) $allDay;
+        $this->allDay = (bool)$allDay;
     }
 
     /**
@@ -620,7 +620,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function isOpenEndTime()
     {
-        return (bool) $this->openEndTime;
+        return (bool)$this->openEndTime;
     }
 
     /**

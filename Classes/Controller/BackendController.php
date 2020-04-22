@@ -67,7 +67,7 @@ class BackendController extends AbstractController
     {
         try {
             $info = $GLOBALS['BE_USER']->getSessionData('calendarize_be');
-            $object = @\unserialize((string) $info);
+            $object = @\unserialize((string)$info);
             if ($object instanceof OptionRequest) {
                 return $object;
             }

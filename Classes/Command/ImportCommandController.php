@@ -128,6 +128,6 @@ class ImportCommandController extends AbstractCommandController
             );
         }
 
-        return (array) (new \ICal($absoluteIcalFile))->events();
+        return (array)(new \ICal($absoluteIcalFile))->events();
     }
 }

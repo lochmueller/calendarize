@@ -38,7 +38,7 @@ abstract class AbstractUrl extends AbstractService
     protected function getIndexBase($indexUid): string
     {
         $indexRepository = HelperUtility::create(IndexRepository::class);
-        $index = $indexRepository->findByUid((int) $indexUid);
+        $index = $indexRepository->findByUid((int)$indexUid);
         if (!($index instanceof Index)) {
             return 'idx-' . $indexUid;
         }
@@ -49,7 +49,7 @@ abstract class AbstractUrl extends AbstractService
         }
 
         $base = $originalObject->getRealUrlAliasBase();
-        if (!(bool) ConfigurationUtility::get('disableDateInSpeakingUrl')) {
+        if (!(bool)ConfigurationUtility::get('disableDateInSpeakingUrl')) {
             $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'];
             $dateInfo = $index->getStartDateComplete()
                 ->format($datePart);
@@ -57,11 +57,11 @@ abstract class AbstractUrl extends AbstractService
             $base .= '-' . $dateInfo;
         }
 
-        if ((bool) ConfigurationUtility::get('addIndexInSpeakingUrl') || \class_exists(PersistedAliasMapper::class)) {
+        if ((bool)ConfigurationUtility::get('addIndexInSpeakingUrl') || \class_exists(PersistedAliasMapper::class)) {
             $base .= '-' . $indexUid;
         }
 
-        return (string) $base;
+        return (string)$base;
     }
 
     /**

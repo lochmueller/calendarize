@@ -82,7 +82,7 @@ class CalendarController extends AbstractController
             $configuration = ExtensionConfigurationUtility::get($configurationName);
 
             // get Event by Configuration and Uid
-            $event = EventUtility::getOriginalRecordByConfiguration($configuration, (int) $this->request->getArgument('event'));
+            $event = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$this->request->getArgument('event'));
             $index = $this->indexRepository->findByEventTraversing($event, true, false, 1)->getFirst();
 
             // if there is a valid index in the event
@@ -293,7 +293,7 @@ class CalendarController extends AbstractController
     ) {
         $this->addCacheTags(['calendarize_past']);
 
-        $limit = (int) ($this->settings['limit']);
+        $limit = (int)($this->settings['limit']);
         $sort = $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
         $this->slotExtendedAssignMultiple([
@@ -313,7 +313,7 @@ class CalendarController extends AbstractController
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findYear((int) $date->format('Y')),
+            'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
     }
@@ -332,7 +332,7 @@ class CalendarController extends AbstractController
         $date = DateTimeUtility::normalizeDateTime(1, 1 + (($quarter - 1) * 3), $year);
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findQuarter((int) $date->format('Y'), $quarter),
+            'indices' => $this->indexRepository->findQuarter((int)$date->format('Y'), $quarter),
             'date' => $date,
             'quarter' => $quarter,
         ], __CLASS__, __FUNCTION__);
@@ -353,7 +353,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'date' => $date,
-            'indices' => $this->indexRepository->findMonth((int) $date->format('Y'), (int) $date->format('n')),
+            'indices' => $this->indexRepository->findMonth((int)$date->format('Y'), (int)$date->format('n')),
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -374,8 +374,8 @@ class CalendarController extends AbstractController
         if (null === $week) {
             $week = $now->format('W');
         }
-        $weekStart = (int) $this->settings['weekStart'];
-        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int) $week, $year, $weekStart);
+        $weekStart = (int)$this->settings['weekStart'];
+        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int)$week, $year, $weekStart);
         $timezone = DateTimeUtility::getTimeZone();
         $firstDay->setTimezone($timezone);
         $firstDay->setTime(0, 0, 0);
@@ -418,7 +418,7 @@ class CalendarController extends AbstractController
         $next->modify('+1 day');
 
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findDay((int) $date->format('Y'), (int) $date->format('n'), (int) $date->format('j')),
+            'indices' => $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j')),
             'today' => $date,
             'previous' => $previous,
             'next' => $next,
@@ -437,7 +437,7 @@ class CalendarController extends AbstractController
         if (null === $index) {
             // handle fallback for "strange language settings"
             if ($this->request->hasArgument('index')) {
-                $indexId = (int) $this->request->getArgument('index');
+                $indexId = (int)$this->request->getArgument('index');
                 if ($indexId > 0) {
                     $index = $this->indexRepository->findByUid($indexId);
                 }
@@ -445,7 +445,7 @@ class CalendarController extends AbstractController
 
             if (null === $index) {
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-                    return (string) TranslateUtility::get('noEventDetailView');
+                    return (string)TranslateUtility::get('noEventDetailView');
                 }
                 $this->slottedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
             }
@@ -564,19 +564,19 @@ class CalendarController extends AbstractController
         $searchMode = false;
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
-            $limit = isset($this->settings['limit']) ? (int) $this->settings['limit'] : 0;
+            $limit = isset($this->settings['limit']) ? (int)$this->settings['limit'] : 0;
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch, $limit);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
-            $indices = $this->indexRepository->findDay((int) $year, (int) $month, (int) $day);
+            $indices = $this->indexRepository->findDay((int)$year, (int)$month, (int)$day);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
-            $indices = $this->indexRepository->findMonth((int) $year, (int) $month);
+            $indices = $this->indexRepository->findMonth((int)$year, (int)$month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
             $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
-            $indices = $this->indexRepository->findYear((int) $year);
+            $indices = $this->indexRepository->findYear((int)$year);
         } else {
             // check if relative dates are enabled
-            if ((bool) $this->settings['useRelativeDate']) {
+            if ((bool)$this->settings['useRelativeDate']) {
                 $overrideStartDateRelative = \trim($this->settings['overrideStartRelative']);
                 if ('' === $overrideStartDateRelative) {
                     $overrideStartDateRelative = 'now';
@@ -598,13 +598,13 @@ class CalendarController extends AbstractController
                     }
                 }
             } else {
-                $overrideStartDate = (int) $this->settings['overrideStartdate'];
-                $overrideEndDate = (int) $this->settings['overrideEnddate'];
+                $overrideStartDate = (int)$this->settings['overrideStartdate'];
+                $overrideEndDate = (int)$this->settings['overrideEnddate'];
             }
             $indices = $this->indexRepository->findList(
-                (int) $this->settings['limit'],
+                (int)$this->settings['limit'],
                 $this->settings['listStartTime'],
-                (int) $this->settings['listStartTimeOffsetHours'],
+                (int)$this->settings['listStartTimeOffsetHours'],
                 $overrideStartDate,
                 $overrideEndDate
             );

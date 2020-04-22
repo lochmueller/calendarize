@@ -32,7 +32,7 @@ class IndexUtilityTest extends AbstractUnitTest
         $startRange = new \DateTime('23.04.1987 04:36:34');
         $endRange = new \DateTime('23.04.1989 04:36:34');
 
-        $this->assertTrue(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
+        self::assertTrue(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
     }
 
     /**
@@ -51,7 +51,7 @@ class IndexUtilityTest extends AbstractUnitTest
         $startRange = new \DateTime('23.04.1987 04:36:34');
         $endRange = new \DateTime('23.04.1989 04:36:34');
 
-        $this->assertFalse(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
+        self::assertFalse(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
     }
 
     /**
@@ -70,6 +70,6 @@ class IndexUtilityTest extends AbstractUnitTest
         $startRange = new \DateTime('23.04.1987 04:36:34');
         $endRange = new \DateTime('23.04.1989 04:36:34');
 
-        $this->assertFalse(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
+        self::assertFalse(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
     }
 }

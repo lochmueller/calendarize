@@ -28,7 +28,7 @@ class TimeShift extends AbstractHook
         }
 
         $configuration = $this->getConfiguration();
-        $timeShift = isset($configuration['timeShift']) ? (int) $configuration['timeShift'] : 0;
+        $timeShift = isset($configuration['timeShift']) ? (int)$configuration['timeShift'] : 0;
         if ($timeShift <= 0) {
             // shift is disabled
             return;

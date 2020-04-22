@@ -39,7 +39,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
         }
 
         $days = [];
-        $move = (int) ($date->format('N') - ((int) $this->arguments['weekStartsAt']));
+        $move = (int)($date->format('N') - ((int)$this->arguments['weekStartsAt']));
         $date->modify('-' . $move . ' days');
         $inWeek = false;
         for ($i = 0; $i < 7; ++$i) {

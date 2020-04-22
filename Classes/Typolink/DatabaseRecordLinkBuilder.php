@@ -23,7 +23,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
     {
         if (isset($linkDetails['identifier']) && \in_array($linkDetails['identifier'], $this->getEventTables(), true)) {
             $eventId = $linkDetails['uid'];
-            $defaultPid = (int) ($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
+            $defaultPid = (int)($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
             if ($defaultPid <= 0) {
                 throw new \Exception('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
             }
@@ -78,7 +78,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
             return 0;
         }
 
-        return (int) $fetchEvent[0]->getUid();
+        return (int)$fetchEvent[0]->getUid();
     }
 
     protected function getEventTables(): array

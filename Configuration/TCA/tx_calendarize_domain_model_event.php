@@ -14,7 +14,7 @@ $base = ModelUtility::getTcaInformation(Event::class);
 
 $custom = [
     'ctrl' => [
-        'hideTable' => (bool) ConfigurationUtility::get('disableDefaultEvent'),
+        'hideTable' => (bool)ConfigurationUtility::get('disableDefaultEvent'),
         'searchFields' => 'uid,title,description',
         'thumbnail' => 'images',
         'label_userFunc' => TcaService::class . '->eventTitle',

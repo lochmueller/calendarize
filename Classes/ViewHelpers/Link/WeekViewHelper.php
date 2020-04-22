@@ -52,7 +52,7 @@ class WeekViewHelper extends AbstractLinkViewHelper
      */
     protected function getCwYear(\DateTime $date)
     {
-        $year = (int) $date->format('Y');
+        $year = (int)$date->format('Y');
         if ('01' === $date->format('m') && ('52' === $date->format('W') || '53' === $date->format('W'))) {
             --$year;
         } else {

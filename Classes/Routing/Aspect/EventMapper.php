@@ -44,7 +44,7 @@ class EventMapper implements PersistedMappableAspectInterface, StaticMappableAsp
     public function resolve(string $value): ?string
     {
         $route = GeneralUtility::makeInstance(Typo3Route::class);
-        $id = (string) $route->convert(['resolve' => $value], null);
+        $id = (string)$route->convert(['resolve' => $value], null);
 
         if ($this->generate($id) !== $value) {
             throw new RouteNotFoundException('Wrong realurl segment', 12378);

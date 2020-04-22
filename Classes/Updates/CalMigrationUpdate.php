@@ -132,7 +132,7 @@ class CalMigrationUpdate extends AbstractUpdate
         foreach ($events as $event) {
             $calendarizeEventRecord = [
                 'pid' => $event['pid'],
-                'import_id' => self::IMPORT_PREFIX . (int) $event['uid'],
+                'import_id' => self::IMPORT_PREFIX . (int)$event['uid'],
                 'tstamp' => $event['tstamp'],
                 'crdate' => $event['crdate'],
                 'hidden' => $event['hidden'],
@@ -258,7 +258,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($selectResults as $group) {
             $importId = \explode(':', $group['import_id']);
-            $groupId = (int) $importId[1];
+            $groupId = (int)$importId[1];
 
             $variables = [
                 'table' => 'tx_cal_exception_event_mm',
@@ -273,7 +273,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 ->where(
                     $q->expr()->andX(
                         $q->expr()->eq('tablenames', 'tx_cal_exception_event_group'),
-                        $q->expr()->eq('uid_foreign', $q->createNamedParameter((int) $groupId, \PDO::PARAM_INT))
+                        $q->expr()->eq('uid_foreign', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT))
                     )
                 );
 
@@ -281,9 +281,9 @@ class CalMigrationUpdate extends AbstractUpdate
             $selectResults = $q->execute()->fetchAll();
 
             foreach ($selectResults as $eventUid) {
-                $eventImportId = self::IMPORT_PREFIX . (int) $eventUid['uid_local'];
+                $eventImportId = self::IMPORT_PREFIX . (int)$eventUid['uid_local'];
                 $configurationRow = [
-                    'pid' => (int) $group['pid'],
+                    'pid' => (int)$group['pid'],
                     'tstamp' => $now->getTimestamp(),
                     'crdate' => $now->getTimestamp(),
                     'type' => 'group',
@@ -427,7 +427,7 @@ class CalMigrationUpdate extends AbstractUpdate
             unset($configurationRow['uid']);
 
             $q->update(self::CONFIGURATION_GROUP_TABLE)
-                ->where('uid', $q->createNamedParameter((int) $configuration['uid'], \PDO::PARAM_INT))
+                ->where('uid', $q->createNamedParameter((int)$configuration['uid'], \PDO::PARAM_INT))
                 ->values($configurationRow);
 
             $dbQueries[] = $q->getSQL();
@@ -506,7 +506,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $variables = [
             'table' => self::EVENT_TABLE,
-            'eventId' => (int) $eventId,
+            'eventId' => (int)$eventId,
             'values' => $values,
             'dbQueries' => $dbQueries,
         ];
@@ -516,7 +516,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $q->update($variables['table'])
             ->where(
-                $q->expr()->eq('uid', $q->createNamedParameter((int) $eventId, \PDO::PARAM_INT))
+                $q->expr()->eq('uid', $q->createNamedParameter((int)$eventId, \PDO::PARAM_INT))
             )
             ->values($variables['values']);
 
@@ -622,7 +622,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $q->select('*')
             ->from($variables['table'])
-            ->where('uid_local', $q->createNamedParameter((int) $groupId, \PDO::PARAM_INT));
+            ->where('uid_local', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT));
 
         $dbQueries[] = $q->getSQL();
 
@@ -637,7 +637,7 @@ class CalMigrationUpdate extends AbstractUpdate
             $q->select('*')
                 ->from($variables['table'])
                 ->where(
-                    $q->expr()->eq('uid', $q->createNamedParameter((int) $mmResult['uid_foreign'], \PDO::PARAM_INT))
+                    $q->expr()->eq('uid', $q->createNamedParameter((int)$mmResult['uid_foreign'], \PDO::PARAM_INT))
                 );
 
             $dbQueries[] = $q->getSQL();
@@ -653,13 +653,13 @@ class CalMigrationUpdate extends AbstractUpdate
                     'handling' => 'include',
                     'start_date' => $this->migrateDate($selectResult['start_date']),
                     'end_date' => $this->migrateDate($selectResult['end_date']),
-                    'start_time' => (int) $selectResult['start_time'],
-                    'end_time' => (int) $selectResult['end_time'],
+                    'start_time' => (int)$selectResult['start_time'],
+                    'end_time' => (int)$selectResult['end_time'],
                     'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
                     'frequency' => $this->mapFrequency($selectResult['freq']),
                     'till_date' => $this->migrateDate($selectResult['until']),
-                    'counter_amount' => (int) $selectResult['cnt'],
-                    'counter_interval' => (int) $selectResult['interval'],
+                    'counter_amount' => (int)$selectResult['cnt'],
+                    'counter_interval' => (int)$selectResult['interval'],
                     'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
                 ];
 
@@ -752,8 +752,8 @@ class CalMigrationUpdate extends AbstractUpdate
                 'l10n_parent' => $category['l18n_parent'],
                 'l10n_diffsource' => $category['l18n_diffsource'],
                 'title' => $category['title'],
-                'parent' => (int) $category['parent_category'],
-                'import_id' => self::IMPORT_PREFIX . (int) $category['uid'],
+                'parent' => (int)$category['parent_category'],
+                'import_id' => self::IMPORT_PREFIX . (int)$category['uid'],
                 'sorting' => $category['sorting'],
             ];
 
@@ -786,13 +786,13 @@ class CalMigrationUpdate extends AbstractUpdate
         foreach ($selectResults as $sysCategory) {
             // update parent, because there are just the old uids
             $updateRecord = [
-                'parent' => $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int) $sysCategory['parent']),
+                'parent' => $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int)$sysCategory['parent']),
             ];
 
             $q->resetQueryParts()->resetRestrictions();
             $q->update('sys_category')
                 ->where(
-                    $q->expr()->eq('uid', $q->createNamedParameter((int) $sysCategory['uid'], \PDO::PARAM_INT))
+                    $q->expr()->eq('uid', $q->createNamedParameter((int)$sysCategory['uid'], \PDO::PARAM_INT))
                 )
                 ->values($updateRecord);
 
@@ -825,7 +825,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $result = $q->execute()->fetchAll();
 
-        return (int) $result['uid'];
+        return (int)$result['uid'];
     }
 
     /**
@@ -859,7 +859,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $q->getSQL();
 
         $result = $q->execute()->fetchAll();
-        $uid = (int) $result['uid'];
+        $uid = (int)$result['uid'];
 
         return $uid;
     }
@@ -897,7 +897,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $q->getSQL();
 
         $result = $q->execute()->fetchAll();
-        $uid = (int) $result['uid'];
+        $uid = (int)$result['uid'];
 
         return $uid;
     }
@@ -925,8 +925,8 @@ class CalMigrationUpdate extends AbstractUpdate
             'all_day' => $calEventRow['allday'],
             'frequency' => $this->mapFrequency($calEventRow['freq']),
             'till_date' => $this->migrateDate($calEventRow['until']),
-            'counter_amount' => (int) $calEventRow['cnt'],
-            'counter_interval' => (int) $calEventRow['interval'],
+            'counter_amount' => (int)$calEventRow['cnt'],
+            'counter_interval' => (int)$calEventRow['interval'],
         ];
 
         $variables = [
@@ -973,7 +973,7 @@ class CalMigrationUpdate extends AbstractUpdate
     protected function migrateDate($oldFormat)
     {
         try {
-            $date = new \DateTime((string) $oldFormat);
+            $date = new \DateTime((string)$oldFormat);
 
             return $date->getTimestamp();
         } catch (\Exception $e) {
@@ -1009,7 +1009,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($events as $event) {
             $checkImportIds[] = '"' . self::IMPORT_PREFIX . $event['uid'] . '"';
-            $nonMigrated[(int) $event['uid']] = (int) $event['uid'];
+            $nonMigrated[(int)$event['uid']] = (int)$event['uid'];
         }
 
         $countOriginal = \count($checkImportIds);
@@ -1033,7 +1033,7 @@ class CalMigrationUpdate extends AbstractUpdate
             );
 
         foreach ($migratedRows as $migratedRow) {
-            $importId = (int) \str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
+            $importId = (int)\str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
             if (isset($nonMigrated[$importId])) {
                 unset($nonMigrated[$importId]);
             }

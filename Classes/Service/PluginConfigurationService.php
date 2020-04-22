@@ -26,7 +26,7 @@ class PluginConfigurationService
      */
     public function respectPluginConfiguration(array $settings)
     {
-        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int) $settings['pluginConfiguration']);
+        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)$settings['pluginConfiguration']);
         if ($settings['pluginConfiguration'] instanceof PluginConfiguration) {
             $checkFields = [
                 'detailPid',
@@ -87,7 +87,7 @@ class PluginConfigurationService
         $table = 'tx_calendarize_domain_model_pluginconfiguration';
 
         $db = HelperUtility::getDatabaseConnection($table);
-        $row = $db->select(['*'], $table, ['uid' => (int) $uid])->fetch();
+        $row = $db->select(['*'], $table, ['uid' => (int)$uid])->fetch();
 
         if (!isset($row['model_name'])) {
             return;

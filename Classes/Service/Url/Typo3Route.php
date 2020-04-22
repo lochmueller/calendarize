@@ -44,7 +44,7 @@ class Typo3Route extends AbstractUrl
     {
         $parts = GeneralUtility::trimExplode('-', $value, true);
 
-        return (int) \array_pop($parts);
+        return (int)\array_pop($parts);
     }
 
     /**
@@ -56,7 +56,7 @@ class Typo3Route extends AbstractUrl
      */
     protected function id2alias($value): string
     {
-        $alias = $this->getIndexBase((int) $value);
+        $alias = $this->getIndexBase((int)$value);
 
         // Because the Slug helper do not remove "/" chars
         $alias = \str_replace('/', '-', $alias);
@@ -64,6 +64,6 @@ class Typo3Route extends AbstractUrl
         $slugHelper = GeneralUtility::makeInstance(SlugHelper::class, 'pages', 'uid', []);
         $alias = $slugHelper->sanitize($alias);
 
-        return (string) $alias;
+        return (string)$alias;
     }
 }

@@ -34,7 +34,7 @@ class TimeSelectionWizard extends AbstractService
         if ('' === $id && '' === $name) {
             return '';
         }
-        $times = $this->getTimes((int) $params['pid']);
+        $times = $this->getTimes((int)$params['pid']);
         if (!$times) {
             return '';
         }

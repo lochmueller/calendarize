@@ -67,7 +67,7 @@ abstract class AbstractController extends ActionController
 
         $objectManager = new ObjectManager();
         $pluginConfigurationService = $objectManager->get(PluginConfigurationService::class);
-        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array) $this->settings);
+        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
     }
 
     /**
@@ -113,7 +113,7 @@ abstract class AbstractController extends ActionController
      */
     protected function sendHeaderAndFilename($contentType, $fileExtension)
     {
-        $testMode = (bool) $this->settings['feed']['debugMode'];
+        $testMode = (bool)$this->settings['feed']['debugMode'];
         if ($testMode) {
             \header('Content-Type: text/plain; charset=utf-8');
         } else {

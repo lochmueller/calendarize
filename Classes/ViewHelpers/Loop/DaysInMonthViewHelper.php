@@ -23,7 +23,7 @@ class DaysInMonthViewHelper extends AbstractLoopViewHelper
     {
         $daysInMonth = $date->format('t');
         $days = [];
-        $move = (int) ($date->format('j') - 1);
+        $move = (int)($date->format('j') - 1);
         $date->modify('-' . $move . ' days');
 
         for ($i = 0; $i < $daysInMonth; ++$i) {

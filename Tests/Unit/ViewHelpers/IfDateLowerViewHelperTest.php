@@ -20,6 +20,6 @@ class IfDateLowerViewHelperTest extends AbstractUnitTest
     public function testValidCheck()
     {
         $viewHelper = new IfDateLowerViewHelper();
-        $this->assertTrue($viewHelper->render(new \DateTime(), '23.04.2004'));
+        self::assertTrue($viewHelper->render(new \DateTime(), '23.04.2004'));
     }
 }

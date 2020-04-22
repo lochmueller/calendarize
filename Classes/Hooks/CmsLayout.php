@@ -73,7 +73,7 @@ class CmsLayout extends AbstractHook
 
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
 
-        $pluginConfiguration = (int) $this->flexFormService->get('settings.pluginConfiguration', 'main');
+        $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {
             $table = 'tx_calendarize_domain_model_pluginconfiguration';
 
@@ -88,17 +88,17 @@ class CmsLayout extends AbstractHook
             );
         }
 
-        if ('' !== \trim((string) $this->flexFormService->get('settings.configuration', 'general'))) {
+        if ('' !== \trim((string)$this->flexFormService->get('settings.configuration', 'general'))) {
             $this->layoutService->addRow(
                 TranslateUtility::get('configuration'),
                 $this->flexFormService->get('settings.configuration', 'general')
             );
         }
 
-        if ((bool) $this->flexFormService->get('settings.hidePagination', 'main')) {
+        if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
-        $useRelativeDate = (bool) $this->flexFormService->get('settings.useRelativeDate', 'main');
+        $useRelativeDate = (bool)$this->flexFormService->get('settings.useRelativeDate', 'main');
         if ($useRelativeDate) {
             $overrideStartRelative = $this->flexFormService->get('settings.overrideStartRelative', 'main');
             if ($overrideStartRelative) {
@@ -109,11 +109,11 @@ class CmsLayout extends AbstractHook
                 $this->layoutService->addRow(TranslateUtility::get('override.endrelative'), $overrideEndRelative);
             }
         } else {
-            $overrideStartDate = (int) $this->flexFormService->get('settings.overrideStartdate', 'main');
+            $overrideStartDate = (int)$this->flexFormService->get('settings.overrideStartdate', 'main');
             if ($overrideStartDate) {
                 $this->layoutService->addRow(TranslateUtility::get('override.startdate'), \date('d.m.y H:i', $overrideStartDate));
             }
-            $overrideEndDate = (int) $this->flexFormService->get('settings.overrideEnddate', 'main');
+            $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
             if ($overrideEndDate) {
                 $this->layoutService->addRow(TranslateUtility::get('override.enddate'), \date('d.m.y H:i', $overrideEndDate));
             }
@@ -139,7 +139,7 @@ class CmsLayout extends AbstractHook
             'bookingPid',
         ];
         foreach ($pageIdsNames as $pageIdName) {
-            $pageId = (int) $this->flexFormService->get('settings.' . $pageIdName, 'pages');
+            $pageId = (int)$this->flexFormService->get('settings.' . $pageIdName, 'pages');
             $pageRow = BackendUtility::getRecord('pages', $pageId);
             if ($pageRow) {
                 $this->layoutService->addRow(

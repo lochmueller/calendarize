@@ -36,8 +36,8 @@ class IndexPreparationService
         $configurations = GeneralUtility::intExplode(',', $rawRecord['calendarize'], true);
 
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
-        if ($transPointer && (int) $rawRecord[$transPointer] > 0) {
-            $rawOriginalRecord = BackendUtility::getRecord($tableName, (int) $rawRecord[$transPointer]);
+        if ($transPointer && (int)$rawRecord[$transPointer] > 0) {
+            $rawOriginalRecord = BackendUtility::getRecord($tableName, (int)$rawRecord[$transPointer]);
             $configurations = GeneralUtility::intExplode(',', $rawOriginalRecord['calendarize'], true);
         }
 
@@ -85,12 +85,12 @@ class IndexPreparationService
         $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] ?? false; // e.g. sys_language_uid
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
 
-        if ($transPointer && (int) $record[$transPointer] > 0) {
+        if ($transPointer && (int)$record[$transPointer] > 0) {
             foreach ($neededItems as $key => $value) {
                 $originalRecord = BackendUtility::getRecord($value['foreign_table'], $value['foreign_uid']);
 
                 $searchFor = $value;
-                $searchFor['foreign_uid'] = (int) $originalRecord[$transPointer];
+                $searchFor['foreign_uid'] = (int)$originalRecord[$transPointer];
 
                 $db = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME);
                 $q = $db->createQueryBuilder();
@@ -99,19 +99,19 @@ class IndexPreparationService
                     if (\is_string($val)) {
                         $where[] = $q->expr()->eq($field, $q->quote($val));
                     } else {
-                        $where[] = $q->expr()->eq($field, (int) $val);
+                        $where[] = $q->expr()->eq($field, (int)$val);
                     }
                 }
 
                 $result = $q->select('uid')->from(IndexerService::TABLE_NAME)->andWhere(...$where)->execute()->fetch();
                 if (isset($result['uid'])) {
-                    $neededItems[$key]['l10n_parent'] = (int) $result['uid'];
+                    $neededItems[$key]['l10n_parent'] = (int)$result['uid'];
                 }
             }
         }
 
-        if ($languageField && 0 !== (int) $record[$languageField]) {
-            $language = (int) $record[$languageField];
+        if ($languageField && 0 !== (int)$record[$languageField]) {
+            $language = (int)$record[$languageField];
             foreach (\array_keys($neededItems) as $key) {
                 $neededItems[$key]['sys_language_uid'] = $language;
             }
@@ -134,16 +134,16 @@ class IndexPreparationService
 
         $addFields = [];
         if (isset($enableFields['disabled'])) {
-            $addFields['hidden'] = (int) $record[$enableFields['disabled']];
+            $addFields['hidden'] = (int)$record[$enableFields['disabled']];
         }
         if (isset($enableFields['starttime'])) {
-            $addFields['starttime'] = (int) $record[$enableFields['starttime']];
+            $addFields['starttime'] = (int)$record[$enableFields['starttime']];
         }
         if (isset($enableFields['endtime'])) {
-            $addFields['endtime'] = (int) $record[$enableFields['endtime']];
+            $addFields['endtime'] = (int)$record[$enableFields['endtime']];
         }
         if (isset($enableFields['fe_group'])) {
-            $addFields['fe_group'] = (string) $record[$enableFields['fe_group']];
+            $addFields['fe_group'] = (string)$record[$enableFields['fe_group']];
         }
 
         foreach ($neededItems as $key => $value) {
@@ -162,7 +162,7 @@ class IndexPreparationService
             if ($value instanceof \DateTimeInterface) {
                 $record[$key] = $value->format('Y-m-d');
             } elseif (\is_bool($value) || 'start_time' === $key || 'end_time' === $key) {
-                $record[$key] = (int) $value;
+                $record[$key] = (int)$value;
             } elseif (null === $value) {
                 $record[$key] = '';
             }

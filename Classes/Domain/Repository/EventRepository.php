@@ -36,7 +36,7 @@ class EventRepository extends AbstractRepository
 
         $ids = [];
         foreach ($rows as $row) {
-            $ids[] = (int) $row['uid'];
+            $ids[] = (int)$row['uid'];
         }
 
         return $ids;

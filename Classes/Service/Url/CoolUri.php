@@ -59,7 +59,7 @@ class CoolUri extends AbstractUrl
      */
     public function coolUri($xml, $value)
     {
-        $alias = $this->getIndexBase((int) $value);
+        $alias = $this->getIndexBase((int)$value);
         $alias = $this->prepareBase($alias);
         $alias = Functions::URLize($alias);
         $alias = Functions::sanitize_title_with_dashes($alias);

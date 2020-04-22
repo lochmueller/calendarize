@@ -113,8 +113,8 @@ class IndexRepository extends AbstractRepository
             ]);
         }
 
-        if ((int) $options->getPid() > 0) {
-            $query->matching($query->equals('pid', (int) $options->getPid()));
+        if ((int)$options->getPid() > 0) {
+            $query->matching($query->equals('pid', (int)$options->getPid()));
         }
 
         $result = $query->execute();
@@ -398,7 +398,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findWeek($year, $week, $weekStart = 1)
     {
-        $weekStart = (int) $weekStart;
+        $weekStart = (int)$weekStart;
         $daysShift = $weekStart - 1;
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
         $timezone = DateTimeUtility::getTimeZone();
@@ -422,7 +422,7 @@ class IndexRepository extends AbstractRepository
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_calendarize_domain_model_index');
 
-        return (array) $queryBuilder->select('unique_register_key', 'pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
+        return (array)$queryBuilder->select('unique_register_key', 'pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
     }
 
     /**
@@ -515,7 +515,7 @@ class IndexRepository extends AbstractRepository
         $config = $objectManager->get(ConfigurationManagerInterface::class);
         $pluginConfig = $config->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 
-        $mode = isset($pluginConfig['indexLanguageMode']) ? (string) $pluginConfig['indexLanguageMode'] : 'strict';
+        $mode = isset($pluginConfig['indexLanguageMode']) ? (string)$pluginConfig['indexLanguageMode'] : 'strict';
 
         return $mode;
     }
@@ -611,7 +611,7 @@ class IndexRepository extends AbstractRepository
             $arguments['endTime'] = DateTimeUtility::getNow()->getTimestamp() + DateTimeUtility::SECONDS_DECADE;
         }
 
-        if ((bool) ConfigurationUtility::get('respectTimesInTimeFrameConstraints')) {
+        if ((bool)ConfigurationUtility::get('respectTimesInTimeFrameConstraints')) {
             $this->addDateTimeFrameConstraints($constraints, $query, $arguments);
         } else {
             $this->addDateFrameConstraints($constraints, $query, $arguments);

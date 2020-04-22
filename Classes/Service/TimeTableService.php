@@ -175,7 +175,7 @@ class TimeTableService extends AbstractService
         }
         /** @var \DateTime $base */
         $base = clone $record[$position . '_date'];
-        if (\is_int($record[$position . '_time']) && (int) $record[$position . '_time'] > 0) {
+        if (\is_int($record[$position . '_time']) && (int)$record[$position . '_time'] > 0) {
             // Fix handling, if the time field contains a complete timestamp
             $seconds = $record[$position . '_time'] % DateTimeUtility::SECONDS_DAY;
             $base->setTime(0, 0, 0);

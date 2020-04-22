@@ -70,7 +70,7 @@ class DateTimeUtility
      */
     public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
     {
-        $week = \str_pad((string) $week, 2, '0', STR_PAD_LEFT);
+        $week = \str_pad((string)$week, 2, '0', STR_PAD_LEFT);
 
         return self::normalizeDateTimeSingle(\strtotime($year . '-W' . $week . '-' . $startDay));
     }
@@ -96,10 +96,10 @@ class DateTimeUtility
      */
     public static function getDaySecondsOfDateTime(\DateTime $dateTime): int
     {
-        $hours = (int) $dateTime->format('G');
-        $minutes = $hours * self::SECONDS_MINUTE + (int) $dateTime->format('i');
+        $hours = (int)$dateTime->format('G');
+        $minutes = $hours * self::SECONDS_MINUTE + (int)$dateTime->format('i');
 
-        return $minutes * self::SECONDS_MINUTE + (int) $dateTime->format('s');
+        return $minutes * self::SECONDS_MINUTE + (int)$dateTime->format('s');
     }
 
     /**
@@ -123,7 +123,7 @@ class DateTimeUtility
         if (!MathUtility::canBeInterpretedAsInteger($day)) {
             $day = $date->format('d');
         }
-        $date->setDate((int) $year, (int) $month, (int) $day);
+        $date->setDate((int)$year, (int)$month, (int)$day);
         $date->setTime(0, 0, 0);
         if ($date->format('m') > $month) {
             $date->modify('last day of last month');
@@ -147,7 +147,7 @@ class DateTimeUtility
             $quarter = self::getQuartar(self::getNow());
         }
 
-        return MathUtility::forceIntegerInRange((int) $quarter, 1, 4);
+        return MathUtility::forceIntegerInRange((int)$quarter, 1, 4);
     }
 
     /**
@@ -159,9 +159,9 @@ class DateTimeUtility
      */
     public static function getQuartar(\DateTimeInterface $date): int
     {
-        $month = (int) $date->format('n');
+        $month = (int)$date->format('n');
 
-        return (int) \ceil($month / 3);
+        return (int)\ceil($month / 3);
     }
 
     /**
@@ -214,7 +214,7 @@ class DateTimeUtility
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
-        return new \DateTime(\date(\DateTime::ATOM, (int) $GLOBALS['SIM_ACCESS_TIME']));
+        return new \DateTime(\date(\DateTime::ATOM, (int)$GLOBALS['SIM_ACCESS_TIME']));
     }
 
     /**
