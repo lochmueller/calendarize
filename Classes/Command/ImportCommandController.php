@@ -105,8 +105,8 @@ class ImportCommandController extends AbstractCommandController
                 'uid' => $icalEvent['UID'],
                 'start' => $startDateTime,
                 'end' => $endDateTime,
-                'title' => $icalEvent['SUMMARY'],
-                'description' => $icalEvent['DESCRIPTION'],
+                'title' => stripslashes($icalEvent['SUMMARY']),
+                'description' => stripslashes($icalEvent['DESCRIPTION']),
             ];
         }
 
