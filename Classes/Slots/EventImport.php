@@ -57,6 +57,7 @@ class EventImport
         $eventObject->setPid($pid);
         $eventObject->setTitle($event['title']);
         $eventObject->setDescription($this->nl2br($event['description']));
+        $eventObject->setLocation($event['location']);
 
         $configuration = $this->getConfiguration($pid, $event['start'], $event['end']);
         $eventObject->addCalendarize($configuration);
