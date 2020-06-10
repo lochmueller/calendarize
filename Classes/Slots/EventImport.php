@@ -137,7 +137,7 @@ class EventImport
      */
     protected function persist()
     {
-        $persist = HelperUtility::create(PersistenceManager::class);
+        $persist = GeneralUtility::makeInstance(PersistenceManager::class);
         $persist->persistAll();
     }
 

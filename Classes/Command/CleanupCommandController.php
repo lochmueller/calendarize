@@ -42,7 +42,7 @@ class CleanupCommandController extends AbstractCommandController
         $waitingPeriod = self::DEFAULT_WAIT_PERIOD
     ) {
         /** @var EventRepository $repository */
-        $repository = HelperUtility::create($repositoryName);
+        $repository = GeneralUtility::makeInstance($repositoryName);
 
         if (!($repository instanceof EventRepository)) {
             return;
@@ -196,7 +196,7 @@ class CleanupCommandController extends AbstractCommandController
      */
     protected function reIndex()
     {
-        $indexer = $this->objectManager->get(IndexerService::class);
+        $indexer = GeneralUtility::makeInstance(IndexerService::class);
         $indexer->reindexAll();
     }
 }

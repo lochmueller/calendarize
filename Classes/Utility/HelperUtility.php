@@ -7,54 +7,43 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
+use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use function get_class;
+use function is_object;
 
 /**
  * Helper Utility.
  */
 class HelperUtility
 {
-    /**
-     * Create a object with the given class name
-     * Please use GeneralUtility::makeInstance if you do not need DI.
-     *
-     * @param string $className
-     *
-     * @return object
-     */
-    public static function create($className)
-    {
-        $arguments = \func_get_args();
-        $objManager = new ObjectManager();
 
-        return \call_user_func_array([
-            $objManager,
-            'get',
-        ], $arguments);
-    }
 
     /**
      * Get the query for the given class name oder object.
      *
      * @param string|object $objectName
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
+     * @return QueryInterface
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getQuery($objectName)
     {
-        $objectName = \is_object($objectName) ? \get_class($objectName) : $objectName;
+        $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
         /** @var PersistenceManagerInterface $manager */
         static $manager = null;
         if (null === $manager) {
-            $manager = self::create(PersistenceManagerInterface::class);
+            $manager = ObjectUtility::getObjectManager()->get(PersistenceManagerInterface::class);
         }
 
         return $manager->createQueryForType($objectName);
@@ -67,7 +56,7 @@ class HelperUtility
      */
     public static function getSignalSlotDispatcher(): Dispatcher
     {
-        return self::create(Dispatcher::class);
+        return GeneralUtility::makeInstance(Dispatcher::class);
     }
 
     /**
@@ -77,7 +66,7 @@ class HelperUtility
      * @param string $title
      * @param int    $mode
      *
-     * @throws \TYPO3\CMS\Core\Exception
+     * @throws Exception
      */
     public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
     {

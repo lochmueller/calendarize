@@ -174,7 +174,7 @@ class TimeTimeTable extends AbstractTimeTable
             );
         }
         if ($message) {
-            $flashMessageService = HelperUtility::create(FlashMessageService::class);
+            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
             $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
             $messageQueue->addMessage($message);
 

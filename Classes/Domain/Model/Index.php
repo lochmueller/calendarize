@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\SmartExclude;
 use HDNET\Calendarize\Exception;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -16,8 +19,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Index information.
  *
- * @db
- * @smartExclude Workspaces
+ * @DatabaseTable
+ * @SmartExclude("Workspaces")
  */
 class Index extends AbstractModel
 {
@@ -25,7 +28,7 @@ class Index extends AbstractModel
      * The unique register key of the used table/model configuration.
      *
      * @var string
-     * @db varchar(150) DEFAULT '' NOT NULL
+     * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
     protected $uniqueRegisterKey;
 
@@ -33,7 +36,7 @@ class Index extends AbstractModel
      * TableName.
      *
      * @var string
-     * @db varchar(150) DEFAULT '' NOT NULL
+     * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
     protected $foreignTable;
 
@@ -41,7 +44,7 @@ class Index extends AbstractModel
      * The Id of the foreign element.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $foreignUid;
 
@@ -49,7 +52,7 @@ class Index extends AbstractModel
      * Start date.
      *
      * @var \DateTime
-     * @db date default NULL
+     * @DatabaseField(sql="date default NULL")
      */
     protected $startDate;
 
@@ -57,7 +60,7 @@ class Index extends AbstractModel
      * End date.
      *
      * @var \DateTime
-     * @db date default NULL
+     * @DatabaseField(sql="date default NULL")
      */
     protected $endDate;
 
@@ -65,7 +68,7 @@ class Index extends AbstractModel
      * Start time.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $startTime;
 
@@ -73,7 +76,7 @@ class Index extends AbstractModel
      * End time.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $endTime;
 
@@ -81,7 +84,7 @@ class Index extends AbstractModel
      * AllDay.
      *
      * @var bool
-     * @db
+     * @DatabaseField("bool")
      */
     protected $allDay;
 
@@ -89,7 +92,7 @@ class Index extends AbstractModel
      * OpenEndTime.
      *
      * @var bool
-     * @db
+     * @DatabaseField("bool")
      */
     protected $openEndTime;
 
@@ -97,7 +100,7 @@ class Index extends AbstractModel
      * State.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $state;
 

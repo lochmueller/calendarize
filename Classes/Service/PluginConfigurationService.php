@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -47,7 +48,7 @@ class PluginConfigurationService
             }
         }
 
-        $dispatcher = HelperUtility::create(Dispatcher::class);
+        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $arguments = [
             'settings' => $settings,
         ];

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
@@ -43,7 +44,7 @@ class CmsLayout extends AbstractHook
      * @param array $params Parameters to the hook
      *
      * @return string Information about pi1 plugin
-     * @hook TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|list_type_Info|calendarize_calendar
+     * @Hook TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|list_type_Info|calendarize_calendar
      */
     public function getExtensionSummary(array $params)
     {

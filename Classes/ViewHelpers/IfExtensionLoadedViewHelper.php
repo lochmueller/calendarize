@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
  * IfExtensionLoadedViewHelper.

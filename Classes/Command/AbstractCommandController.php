@@ -7,15 +7,15 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Command;
 
+use Symfony\Component\Console\Command\Command;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
  * Command controller abstraction.
  */
-abstract class AbstractCommandController extends CommandController
+abstract class AbstractCommandController extends Command
 {
     /**
      * Flash message service.

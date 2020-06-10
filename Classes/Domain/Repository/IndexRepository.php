@@ -117,9 +117,7 @@ class IndexRepository extends AbstractRepository
             $query->matching($query->equals('pid', (int)$options->getPid()));
         }
 
-        $result = $query->execute();
-
-        return $result;
+        return $query->execute();
     }
 
     /**
@@ -510,9 +508,8 @@ class IndexRepository extends AbstractRepository
             return $mode;
         }
 
-        $objectManager = new ObjectManager();
         /** @var ConfigurationManagerInterface $config */
-        $config = $objectManager->get(ConfigurationManagerInterface::class);
+        $config = $this->objectManager->get(ConfigurationManagerInterface::class);
         $pluginConfig = $config->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 
         $mode = isset($pluginConfig['indexLanguageMode']) ? (string)$pluginConfig['indexLanguageMode'] : 'strict';

@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\ViewHelpers;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
+use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
@@ -47,8 +48,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $objectManager = new ObjectManager();
-        $indexRepository = $objectManager->get(IndexRepository::class);
+        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
 
         return $indexRepository->findByTraversing(
             $this->arguments['index'],

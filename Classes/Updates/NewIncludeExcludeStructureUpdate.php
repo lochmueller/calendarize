@@ -9,11 +9,13 @@ namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
+use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * NewIncludeExcludeStructureUpdate.
  */
-class NewIncludeExcludeStructureUpdate extends AbstractUpdate
+class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
 {
     /**
      * The human-readable title of the upgrade wizard.
@@ -63,7 +65,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      *
      * @return bool Whether everything went smoothly or not
      */
-    public function performUpdate(array &$dbQueries, &$customMessages)
+    public function executeUpdate() : bool
     {
         $table = 'tx_calendarize_domain_model_configuration';
 
@@ -120,4 +122,32 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
 
         return true;
     }
+
+    public function getIdentifier(): string
+    {
+        return "calendarizeNewIncludeExcludeStructureUpdate";
+    }
+
+    public function getTitle(): string
+    {
+        return "";
+    }
+
+    public function getDescription(): string
+    {
+        return "";
+    }
+
+    public function updateNecessary(): bool
+    {
+        return false;
+    }
+
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class
+        ];
+    }
+
 }

@@ -14,7 +14,9 @@ use HDNET\Calendarize\Domain\Repository\ConfigurationRepository;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Time table builder service.
@@ -35,7 +37,7 @@ class TimeTableService extends AbstractService
             return $timeTable;
         }
 
-        $configRepository = HelperUtility::create(ConfigurationRepository::class);
+        $configRepository = ObjectUtility::getObjectManager()->get(ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
             $configuration = $configRepository->findByUid($configurationUid);
             if (!($configuration instanceof Configuration)) {
@@ -205,6 +207,6 @@ class TimeTableService extends AbstractService
             throw new \Exception('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 1236781);
         }
 
-        return HelperUtility::create($handler);
+        return GeneralUtility::makeInstance($handler);
     }
 }
