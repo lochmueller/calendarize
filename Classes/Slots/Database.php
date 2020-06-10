@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Slots;
 
+use HDNET\Autoloader\Annotation\SignalClass;
+use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Register;
 
 /**
@@ -17,8 +19,8 @@ class Database
     /**
      * Add the smart object SQL string the the signal below.
      *
-     * @signalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
-     * @signalName tablesDefinitionIsBeingBuilt
+     * @SignalClass \TYPO3\CMS\Install\Service\SqlExpectedSchemaService
+     * @SignalName tablesDefinitionIsBeingBuilt
      *
      * @param array $sqlString
      *
@@ -34,8 +36,8 @@ class Database
     /**
      * Add the smart object SQL string the the signal below.
      *
-     * @signalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
-     * @signalName tablesDefinitionIsBeingBuilt
+     * @SignalClass \TYPO3\CMS\Extensionmanager\Utility\InstallUtility
+     * @SignalName tablesDefinitionIsBeingBuilt
      *
      * @param array  $sqlString
      * @param string $extensionKey

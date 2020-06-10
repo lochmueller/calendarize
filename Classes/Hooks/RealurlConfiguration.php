@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Calendarize\Service\Url\RealUrl;
 
 /**
@@ -21,7 +22,7 @@ class RealurlConfiguration extends AbstractHook
      * @param $pObj
      *
      * @return array
-     * @hook TYPO3_CONF_VARS|SC_OPTIONS|ext/realurl/class.tx_realurl_autoconfgen.php|extensionConfiguration
+     * @Hook TYPO3_CONF_VARS|SC_OPTIONS|ext/realurl/class.tx_realurl_autoconfgen.php|extensionConfiguration
      */
     public function addCalendarizeConfiguration($params, &$pObj)
     {

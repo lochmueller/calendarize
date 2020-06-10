@@ -115,8 +115,10 @@ class Register
             'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
                 'type' => 'user',
-                'userFunc' => TcaInformation::class . '->informationField',
-                'items' => 10,
+                'renderType' => 'calendarizeInfoElement',
+                'parameters' => [
+                    'items' => 10,
+                ],
             ],
         ];
         ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);

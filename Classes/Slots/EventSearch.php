@@ -7,10 +7,13 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Slots;
 
+use HDNET\Autoloader\Annotation\SignalClass;
+use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
+use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -21,8 +24,8 @@ class EventSearch
     /**
      * Check if we can reduce the amount of results.
      *
-     * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
-     * @signalName findBySearchPre
+     * @SignalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
+     * @SignalName findBySearchPre
      *
      * @param array          $indexIds
      * @param \DateTime|null $startDate
@@ -55,7 +58,7 @@ class EventSearch
             return;
         }
 
-        $eventRepository = HelperUtility::create(EventRepository::class);
+        $eventRepository = ObjectUtility::getObjectManager()->get(EventRepository::class);
 
         return [
             'indexIds' => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
@@ -71,8 +74,8 @@ class EventSearch
     /**
      * Set ids by general.
      *
-     * @signalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
-     * @signalName getDefaultConstraints
+     * @SignalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
+     * @SignalName getDefaultConstraints
      *
      * @param array $indexIds
      * @param array $indexTypes

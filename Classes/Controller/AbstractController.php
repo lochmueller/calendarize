@@ -65,8 +65,7 @@ abstract class AbstractController extends ActionController
 
         $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 
-        $objectManager = new ObjectManager();
-        $pluginConfigurationService = $objectManager->get(PluginConfigurationService::class);
+        $pluginConfigurationService = GeneralUtility::makeInstance(PluginConfigurationService::class);
         $this->settings = $pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
     }
 
@@ -170,11 +169,8 @@ abstract class AbstractController extends ActionController
     {
         $string = $this->getStringForPluginHmac();
 
-        /** @var HashService $hashService */
-        $hashService = HelperUtility::create(HashService::class);
-        $hmac = $hashService->generateHmac($string);
-
-        return $hmac;
+        $hashService = GeneralUtility::makeInstance(HashService::class);
+        return $hashService->generateHmac($string);
     }
 
     /**
@@ -189,7 +185,7 @@ abstract class AbstractController extends ActionController
         $string = $this->getStringForPluginHmac();
 
         /** @var HashService $hashService */
-        $hashService = HelperUtility::create(HashService::class);
+        $hashService = GeneralUtility::makeInstance(HashService::class);
 
         return $hashService->validateHmac($string, $hmac);
     }

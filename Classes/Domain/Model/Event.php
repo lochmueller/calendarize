@@ -7,6 +7,10 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\EnableRichText;
+use HDNET\Autoloader\Annotation\SmartExclude;
 use HDNET\Calendarize\Features\FeedInterface;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
@@ -16,8 +20,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Event (Default) for the calendarize function.
  *
- * @db
- * @smartExclude Workspaces
+ * @DatabaseTable
+ * @SmartExclude("Workspaces")
  */
 class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {
@@ -25,7 +29,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Title.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $title;
 
@@ -33,7 +37,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Abstract / Teaser.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $abstract;
 
@@ -41,8 +45,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Description.
      *
      * @var string
-     * @db
-     * @enableRichText
+     * @DatabaseField("string")
+     * @EnableRichText
      */
     protected $description;
 
@@ -50,7 +54,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Location.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $location;
 
@@ -58,7 +62,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Location link.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $locationLink;
 
@@ -66,7 +70,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Organizer.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $organizer;
 
@@ -74,7 +78,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Organizer link.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $organizerLink;
 
@@ -82,7 +86,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Import ID if the item is based on an ICS structure.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $importId;
 
@@ -90,8 +94,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Images.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
-     * @db
-     * @lazy
+     * @DatabaseField("\TYPO3\CMS\Extbase\Domain\Model\FileReference")
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $images;
@@ -100,8 +103,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * Downloads.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
-     * @db
-     * @lazy
+     * @DatabaseField("\TYPO3\CMS\Extbase\Domain\Model\FileReference")
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $downloads;

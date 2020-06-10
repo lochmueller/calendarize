@@ -103,9 +103,9 @@ class CalendarController extends AbstractController
      * @param int                                   $month
      * @param int                                   $week
      *
-     * @ignorevalidation $startDate
-     * @ignorevalidation $endDate
-     * @ignorevalidation $customSearch
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
@@ -152,9 +152,9 @@ class CalendarController extends AbstractController
      * @param int                                   $month
      * @param int                                   $week
      *
-     * @ignorevalidation $startDate
-     * @ignorevalidation $endDate
-     * @ignorevalidation $customSearch
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
@@ -202,9 +202,9 @@ class CalendarController extends AbstractController
      * @param int                                   $day
      * @param int                                   $week
      *
-     * @ignorevalidation $startDate
-     * @ignorevalidation $endDate
-     * @ignorevalidation $customSearch
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
@@ -468,9 +468,9 @@ class CalendarController extends AbstractController
      * @param \DateTime $endDate
      * @param array     $customSearch
      *
-     * @ignorevalidation $startDate
-     * @ignorevalidation $endDate
-     * @ignorevalidation $customSearch
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
      */
     public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
     {

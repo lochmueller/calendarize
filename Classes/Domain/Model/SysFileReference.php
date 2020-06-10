@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Class SysFileReference.
  *
- * @db sys_file_reference
+ * @DatabaseTable(tableName="sys_file_reference")
  */
 class SysFileReference extends FileReference
 {
@@ -23,7 +25,7 @@ class SysFileReference extends FileReference
      *
      * @var string
      *
-     * @db
+     * @DatabaseField("string")
      */
     protected $importId;
 }

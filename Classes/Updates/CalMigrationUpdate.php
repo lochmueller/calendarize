@@ -7,11 +7,15 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
+use HDNET\Autoloader\Annotation\SignalClass;
+use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
+use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * CalMigrationUpdate.
@@ -19,8 +23,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * If using the slots please use the m with func_get_args!
  * Example:
  * /**
- *  * @signalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
- *  * @signalName getCalendarizeEventUid
+ *  * @SignalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
+ *  * @SignalName getCalendarizeEventUid
  *  *
  *
  *  *@return array
@@ -38,7 +42,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *    return $variables;
  * }
  */
-class CalMigrationUpdate extends AbstractUpdate
+class CalMigrationUpdate implements UpgradeWizardInterface
 {
     /**
      * Import prefix.
@@ -97,7 +101,7 @@ class CalMigrationUpdate extends AbstractUpdate
      *
      * @return bool Whether everything went smoothly or not
      */
-    public function performUpdate(array &$dbQueries, &$customMessages)
+    public function executeUpdate() : bool
     {
         $calIds = $this->getNonMigratedCalIds();
         $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
@@ -1049,5 +1053,32 @@ class CalMigrationUpdate extends AbstractUpdate
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'ReadyParsed', $variables);
 
         return $variables['nonMigrated'];
+    }
+
+    public function getIdentifier(): string
+    {
+        return "calendarizeCalMigrationUpdate";
+    }
+
+    public function getTitle(): string
+    {
+        return "";
+    }
+
+    public function getDescription(): string
+    {
+        return "";
+    }
+
+    public function updateNecessary(): bool
+    {
+        return false;
+    }
+
+    public function getPrerequisites(): array
+    {
+        return [
+            DatabaseUpdatedPrerequisite::class
+        ];
     }
 }

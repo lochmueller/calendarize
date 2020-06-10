@@ -7,12 +7,14 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * PluginConfiguration.
  *
- * @db
+ * @DatabaseTable
  */
 class PluginConfiguration extends AbstractModel
 {
@@ -20,7 +22,7 @@ class PluginConfiguration extends AbstractModel
      * Title.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $title;
 
@@ -28,7 +30,7 @@ class PluginConfiguration extends AbstractModel
      * Model name.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $modelName;
 
@@ -36,7 +38,7 @@ class PluginConfiguration extends AbstractModel
      * Configuration / Element Type / Record Type.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $configuration;
 
@@ -44,7 +46,7 @@ class PluginConfiguration extends AbstractModel
      * Storage PID.
      *
      * @var string
-     * @db
+     * @DatabaseField("string")
      */
     protected $storagePid;
 
@@ -52,7 +54,7 @@ class PluginConfiguration extends AbstractModel
      * Recursive.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $recursive;
 
@@ -60,7 +62,7 @@ class PluginConfiguration extends AbstractModel
      * Detail PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $detailPid;
 
@@ -68,7 +70,7 @@ class PluginConfiguration extends AbstractModel
      * List PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $listPid;
 
@@ -76,7 +78,7 @@ class PluginConfiguration extends AbstractModel
      * Year PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $yearPid;
 
@@ -84,7 +86,7 @@ class PluginConfiguration extends AbstractModel
      * Month PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $monthPid;
 
@@ -92,7 +94,7 @@ class PluginConfiguration extends AbstractModel
      * Week PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $weekPid;
 
@@ -100,7 +102,7 @@ class PluginConfiguration extends AbstractModel
      * Day PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $dayPid;
 
@@ -108,7 +110,7 @@ class PluginConfiguration extends AbstractModel
      * Booking PID.
      *
      * @var int
-     * @db
+     * @DatabaseField("int")
      */
     protected $bookingPid;
 

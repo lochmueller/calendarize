@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Slots;
 
+use HDNET\Autoloader\Annotation\SignalClass;
+use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Updates\CalMigrationUpdate;
 use HDNET\Calendarize\Utility\HelperUtility;
 
@@ -20,8 +22,8 @@ class CalMigration
      *
      * @see \HDNET\Calendarize\Updates\CalMigrationUpdate::performCalEventUpdate()
      *
-     * @signalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
-     * @signalName performCalEventUpdatePostInsert
+     * @SignalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
+     * @SignalName performCalEventUpdatePostInsert
      *
      * @return array
      */

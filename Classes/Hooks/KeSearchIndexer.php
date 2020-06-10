@@ -7,18 +7,20 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
+use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * KE Search Indexer.
  *
- * @hook TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration
- * @hook TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer
+ * @Hook TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration
+ * @Hook TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer
  */
 class KeSearchIndexer extends AbstractHook
 {
@@ -52,7 +54,7 @@ class KeSearchIndexer extends AbstractHook
             return;
         }
 
-        $indexRepository = HelperUtility::create(IndexRepository::class);
+        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
         $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $indexObjects = $indexRepository->findList()
             ->toArray();

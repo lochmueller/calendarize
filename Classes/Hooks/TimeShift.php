@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
@@ -17,7 +18,7 @@ class TimeShift extends AbstractHook
     /**
      * Shift the time variables.
      *
-     * @hook TYPO3_CONF_VARS|SC_OPTIONS|tslib/index_ts.php|preprocessRequest
+     * @Hook TYPO3_CONF_VARS|SC_OPTIONS|tslib/index_ts.php|preprocessRequest
      */
     public function shift()
     {

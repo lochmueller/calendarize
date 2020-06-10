@@ -6,6 +6,7 @@ namespace HDNET\Calendarize\Typolink;
 
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
+use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
@@ -50,7 +51,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
 
     protected function getIndexForEventUid($table, $uid): int
     {
-        $indexRepository = (new ObjectManager())->get(IndexRepository::class);
+        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
         $register = Register::getRegister();
 
         $event = null;

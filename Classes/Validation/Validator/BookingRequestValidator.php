@@ -26,7 +26,7 @@ class BookingRequestValidator extends AbstractValidator
     protected function isValid($value)
     {
         /** @var ConjunctionValidator $validator */
-        $validator = HelperUtility::create(ValidatorResolver::class)->getBaseValidatorConjunction(\get_class($value));
+        $validator = GeneralUtility::makeInstance(ValidatorResolver::class)->getBaseValidatorConjunction(\get_class($value));
         /** @var \TYPO3\CMS\Extbase\Error\Result $result */
         $result = $validator->validate($value);
         foreach ($result->getFlattenedErrors() as $property => $errors) {
