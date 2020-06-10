@@ -65,7 +65,7 @@ class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
      *
      * @return bool Whether everything went smoothly or not
      */
-    public function executeUpdate() : bool
+    public function executeUpdate(): bool
     {
         $table = 'tx_calendarize_domain_model_configuration';
 
@@ -125,17 +125,17 @@ class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
 
     public function getIdentifier(): string
     {
-        return "calendarizeNewIncludeExcludeStructureUpdate";
+        return 'calendarizeNewIncludeExcludeStructureUpdate';
     }
 
     public function getTitle(): string
     {
-        return "";
+        return '';
     }
 
     public function getDescription(): string
     {
-        return "";
+        return '';
     }
 
     public function updateNecessary(): bool
@@ -149,5 +149,4 @@ class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
             DatabaseUpdatedPrerequisite::class
         ];
     }
-
 }

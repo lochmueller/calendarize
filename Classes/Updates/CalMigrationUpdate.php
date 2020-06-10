@@ -101,7 +101,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
      *
      * @return bool Whether everything went smoothly or not
      */
-    public function executeUpdate() : bool
+    public function executeUpdate(): bool
     {
         $calIds = $this->getNonMigratedCalIds();
         $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
@@ -1057,17 +1057,17 @@ class CalMigrationUpdate implements UpgradeWizardInterface
 
     public function getIdentifier(): string
     {
-        return "calendarizeCalMigrationUpdate";
+        return 'calendarizeCalMigrationUpdate';
     }
 
     public function getTitle(): string
     {
-        return "";
+        return '';
     }
 
     public function getDescription(): string
     {
-        return "";
+        return '';
     }
 
     public function updateNecessary(): bool

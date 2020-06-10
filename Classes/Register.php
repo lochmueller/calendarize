@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace HDNET\Calendarize;
 
 use HDNET\Calendarize\Domain\Model\Event;
-use HDNET\Calendarize\Service\TcaInformation;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**

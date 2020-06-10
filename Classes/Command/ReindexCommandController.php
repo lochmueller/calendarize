@@ -22,17 +22,12 @@ use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
  */
 class ReindexCommandController extends Command
 {
-
-    /**
-     * @return void
-     */
     public function configure()
     {
         $this->setDescription('Calendarize: Reindex all events');
     }
 
     /**
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int

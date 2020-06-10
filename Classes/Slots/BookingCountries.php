@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Slots;
 
-use In2code\Powermail\Utility\ObjectUtility;
 use SJBR\StaticInfoTables\Domain\Repository\CountryRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -71,7 +70,7 @@ class BookingCountries
         if (!ExtensionManagementUtility::isLoaded('static_info_tables')) {
             return [];
         }
-        $repository = ObjectUtility::getObjectManager()->get(CountryRepository::class);
+        $repository = GeneralUtility::makeInstance(ObjectManager::class)->get(CountryRepository::class);
 
         return $repository->findAll();
     }

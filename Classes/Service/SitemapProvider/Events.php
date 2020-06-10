@@ -12,7 +12,6 @@ use FRUIT\GoogleServices\Domain\Model\Node;
 use FRUIT\GoogleServices\Service\SitemapProviderInterface;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
-use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
@@ -65,7 +64,7 @@ class Events implements SitemapProviderInterface
      */
     protected function getIndizies()
     {
-        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
+        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
         $now = new \DateTime();
 
         return $indexRepository->findByTimeSlot($now->getTimestamp(), $now->getTimestamp() + DateTimeUtility::SECONDS_YEAR);

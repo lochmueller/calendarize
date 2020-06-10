@@ -12,8 +12,6 @@ use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
-use HDNET\Calendarize\Utility\HelperUtility;
-use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -54,7 +52,7 @@ class KeSearchIndexer extends AbstractHook
             return;
         }
 
-        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
+        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
         $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $indexObjects = $indexRepository->findList()
             ->toArray();

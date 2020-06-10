@@ -12,8 +12,6 @@ use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
-use HDNET\Calendarize\Utility\HelperUtility;
-use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Routing\Aspect\PersistedAliasMapper;
 
 /**
@@ -38,7 +36,7 @@ abstract class AbstractUrl extends AbstractService
      */
     protected function getIndexBase($indexUid): string
     {
-        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
+        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
         $index = $indexRepository->findByUid((int)$indexUid);
         if (!($index instanceof Index)) {
             return 'idx-' . $indexUid;

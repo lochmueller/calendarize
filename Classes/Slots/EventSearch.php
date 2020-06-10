@@ -13,7 +13,6 @@ use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
-use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -58,7 +57,7 @@ class EventSearch
             return;
         }
 
-        $eventRepository = ObjectUtility::getObjectManager()->get(EventRepository::class);
+        $eventRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(EventRepository::class);
 
         return [
             'indexIds' => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),

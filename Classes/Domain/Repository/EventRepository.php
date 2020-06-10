@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
-use In2code\Powermail\Utility\ObjectUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -92,7 +91,7 @@ class EventRepository extends AbstractRepository
         }
 
         /** @var IndexRepository $indexRepository */
-        $indexRepository = ObjectUtility::getObjectManager()->get(IndexRepository::class);
+        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
 
         try {
             $result = $indexRepository->findByEventTraversing($event, true, false, 1, QueryInterface::ORDER_ASCENDING);

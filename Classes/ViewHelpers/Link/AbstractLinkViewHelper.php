@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
-use In2code\Powermail\Utility\ObjectUtility;
 use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -79,7 +78,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false)
     {
         /** @var UriBuilder $uriBuilder */
-        $uriBuilder = ObjectUtility::getObjectManager()->get(UriBuilder::class);
+        $uriBuilder = GeneralUtility::makeInstance(ObjectManager::class)->get(UriBuilder::class);
         $this->lastHref = $uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setArguments($additionalParams)

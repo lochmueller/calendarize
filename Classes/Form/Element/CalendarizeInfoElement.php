@@ -1,19 +1,17 @@
 <?php
-declare(strict_types = 1);
-namespace HDNET\Calendarize\Form\Element;
 
+declare(strict_types=1);
+namespace HDNET\Calendarize\Form\Element;
 
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CalendarizeInfoElement extends AbstractFormElement
 {
-
     public function render()
     {
         $result = $this->initializeResultArray();
@@ -33,7 +31,6 @@ class CalendarizeInfoElement extends AbstractFormElement
         $result['html'] = $content;
         return $result;
     }
-
 
     /**
      * Get event list.
@@ -73,5 +70,4 @@ class CalendarizeInfoElement extends AbstractFormElement
 
         return '<ul><li>' . \implode('</li><li>', $items) . '</li></ul>';
     }
-
 }

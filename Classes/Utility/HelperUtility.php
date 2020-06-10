@@ -7,7 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
-use In2code\Powermail\Utility\ObjectUtility;
+use function get_class;
+use function is_object;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Exception;
@@ -19,15 +20,12 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use function get_class;
-use function is_object;
 
 /**
  * Helper Utility.
  */
 class HelperUtility
 {
-
 
     /**
      * Get the query for the given class name oder object.
@@ -43,7 +41,7 @@ class HelperUtility
         /** @var PersistenceManagerInterface $manager */
         static $manager = null;
         if (null === $manager) {
-            $manager = ObjectUtility::getObjectManager()->get(PersistenceManagerInterface::class);
+            $manager = GeneralUtility::makeInstance(ObjectManager::class)->get(PersistenceManagerInterface::class);
         }
 
         return $manager->createQueryForType($objectName);

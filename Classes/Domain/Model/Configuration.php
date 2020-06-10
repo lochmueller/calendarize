@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Autoloader\Annotation\SmartExclude;
@@ -49,7 +48,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Start date.
      *
      * @var \DateTime
-     * @DatabaseField(type="\DateTime",sql="date default NULL")
+     * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $startDate;
 
@@ -57,7 +56,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * End date.
      *
      * @var \DateTime
-     * @DatabaseField(type="\DateTime",sql="date default NULL")
+     * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $endDate;
 
