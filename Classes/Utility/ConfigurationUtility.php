@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Configuration Utility.
  */
@@ -39,7 +42,7 @@ class ConfigurationUtility
     protected static function loadConfiguration()
     {
         if (null === self::$configuration) {
-            self::$configuration = (array)\unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
+            self::$configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('calendarize');
         }
     }
 }

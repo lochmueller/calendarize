@@ -9,6 +9,8 @@ namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Time shift function.
@@ -46,11 +48,6 @@ class TimeShift extends AbstractHook
      */
     protected function getConfiguration(): array
     {
-        $config = \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['calendarize']);
-        if (\is_array($config)) {
-            return $config;
-        }
-
-        return [];
+        return (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('calendarize');
     }
 }
