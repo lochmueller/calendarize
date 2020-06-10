@@ -145,7 +145,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Till days relative.
      *
      * @var bool
-     * @DatabaseField(sql="tinyint(4) unsigned")
+     * @DatabaseField("Boolean")
      */
     protected $tillDaysRelative;
 
