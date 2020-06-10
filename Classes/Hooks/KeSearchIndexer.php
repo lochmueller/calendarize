@@ -13,6 +13,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * KE Search Indexer.

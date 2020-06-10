@@ -51,8 +51,6 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
     /**
      * Render the element.
      *
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
-     *
      * @return string
      */
     public function render()

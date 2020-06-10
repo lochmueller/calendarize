@@ -12,6 +12,7 @@ use FRUIT\GoogleServices\Domain\Model\Node;
 use FRUIT\GoogleServices\Service\SitemapProviderInterface;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Validation\Validator;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator;
 use TYPO3\CMS\Extbase\Validation\ValidatorResolver;

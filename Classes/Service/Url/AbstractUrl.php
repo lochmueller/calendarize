@@ -13,6 +13,8 @@ use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use TYPO3\CMS\Core\Routing\Aspect\PersistedAliasMapper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * AbstractUrl.

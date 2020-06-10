@@ -16,6 +16,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Time table builder service.

@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @internal
  */
-class EditRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class EditRecordViewHelper extends AbstractViewHelper
 {
     /**
      * Init arguments.

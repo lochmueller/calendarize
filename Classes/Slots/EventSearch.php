@@ -13,7 +13,9 @@ use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Event search service.

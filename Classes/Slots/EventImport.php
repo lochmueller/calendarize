@@ -12,6 +12,7 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
