@@ -36,8 +36,8 @@
 		"php": "^7.2||^7.3||^7.4",
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"typo3/cms-core": "^8.7||~9.5.17",
-		"lochmueller/autoloader": "^6.0",
+		"typo3/cms-core": "^10.4",
+		"lochmueller/autoloader": "^7.0",
 		"sabre/vobject": "^4.2"
 	},
 	"replace": {
@@ -53,9 +53,9 @@
 	},
 	"require-dev": {
 		"namelesscoder/typo3-repository-client": "^2.0",
-		"typo3/testing-framework": "^2.0",
+		"typo3/testing-framework": "^6.3",
 		"squizlabs/php_codesniffer": "^2.6",
-		"friendsofphp/php-cs-fixer": "^2.14",
+		"friendsofphp/php-cs-fixer": "^2.16",
 		"phpmd/phpmd": "^2.4",
 		"scrutinizer/ocular": "^1.3"
 	},
