@@ -36,7 +36,10 @@ $custom = [
             'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
                 'type' => 'user',
-                'userFunc' => TcaInformation::class . '->informationGroupField',
+                'renderType' => 'calendarizeInfoElement',
+                'parameters' => [
+                    'items' => 10,
+                ],
             ],
         ],
     ],
