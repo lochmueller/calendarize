@@ -5,7 +5,6 @@ declare(strict_types=1);
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
-use HDNET\Calendarize\Service\TcaInformation;
 
 $base = ModelUtility::getTcaInformation(ConfigurationGroup::class);
 
