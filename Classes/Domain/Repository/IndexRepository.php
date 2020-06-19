@@ -642,25 +642,25 @@ class IndexRepository extends AbstractRepository
             // (end_date === restrictionLowDay && end_time >= restrictionLowTime) || end_date > restrictionLowDay || (all_day === true && end_date >= restrictionLowDay)
             $query->logicalOr([
                 $query->logicalAnd([
-                    $query->equals('end_date', $query->createNamedParameter($restrictionLowDay)),
+                    $query->equals('end_date', $restrictionLowDay),
                     $query->greaterThanOrEqual('end_time', $restrictionLowTime),
                 ]),
-                $query->greaterThan('end_date', $query->createNamedParameter($restrictionLowDay)),
+                $query->greaterThan('end_date', $restrictionLowDay),
                 $query->logicalAnd([
                     $query->equals('all_day', true),
-                    $query->greaterThanOrEqual('end_date', $query->createNamedParameter($restrictionLowDay)),
+                    $query->greaterThanOrEqual('end_date', $restrictionLowDay),
                 ]),
             ]),
             // (start_date === restrictionHighDay && start_time <= restrictionHighTime) || start_date < restrictionHighDay || (all_day === true && start_date <= restrictionHighDay)
             $query->logicalOr([
                 $query->logicalAnd([
-                    $query->equals('start_date', $query->createNamedParameter($restrictionHighDay)),
+                    $query->equals('start_date', $restrictionHighDay),
                     $query->lessThanOrEqual('start_time', $restrictionHighTime),
                 ]),
-                $query->lessThan('start_date', $query->createNamedParameter($restrictionHighDay)),
+                $query->lessThan('start_date', $restrictionHighDay),
                 $query->logicalAnd([
                     $query->equals('all_day', true),
-                    $query->lessThanOrEqual('start_date', $query->createNamedParameter($restrictionHighDay)),
+                    $query->lessThanOrEqual('start_date', $restrictionHighDay),
                 ]),
             ]),
         ]);
