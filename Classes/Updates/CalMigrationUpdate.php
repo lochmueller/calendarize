@@ -1057,7 +1057,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
 
     public function getIdentifier(): string
     {
-        return 'calendarizeCalMigrationUpdate';
+        return self::class;
     }
 
     public function getTitle(): string

@@ -125,7 +125,7 @@ class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
 
     public function getIdentifier(): string
     {
-        return 'calendarizeNewIncludeExcludeStructureUpdate';
+        return self::class;
     }
 
     public function getTitle(): string
