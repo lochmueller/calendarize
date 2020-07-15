@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
 			xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
 			xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers"
 			data-namespace-typo3-fluid="true">
@@ -21,10 +22,10 @@
 		{index.foreignUid}
 	</td>
 	<td>
-		<a class="btn btn-default"
-			 href="{c:editRecord(parameters: 'edit[{index.configuration.tableName}][{index.foreignUid}]=edit')}">
+		<be:link.editRecord class="btn btn-default" uid="{index.foreignUid}" table="{index.configuration.tableName}"
+												returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
 			<core:icon identifier="actions-document-open"/>
-		</a>
+		</be:link.editRecord>
 	</td>
 </tr>
 </html>
