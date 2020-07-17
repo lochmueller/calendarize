@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
 			xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
 			xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers"
 			data-namespace-typo3-fluid="true">
@@ -33,20 +34,20 @@
 			<f:form.submit value="Save options" class="btn btn-secondary" />
 		</f:form>
 	</fieldset>
-	
+
 	<fieldset class="form-group">
 		<f:if condition="{typeLocations}">
 			<f:then>
 				<p>
 					<f:for each="{typeLocations}" key="table" as="pids">
 						<f:for each="{pids}" key="pid" as="value">
-							<a class="btn btn-primary"
-								 href="{c:editRecord(parameters: 'edit[{table}][{pid}]=new')}">
+							<be:link.newRecord class="btn btn-primary" table="{table}" pid="{pid}"
+																 returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
 								<core:icon identifier="actions-document-new"/>
 								{value} on "
 								<c:backend.pageTitle uid="{pid}"/>
 								" (#{pid})
-							</a>
+							</be:link.newRecord>
 						</f:for>
 					</f:for>
 				</p>
