@@ -1,0 +1,6 @@
+services:
+  HDNET\Calendarize\Listener\CalendarizeField:
+    tags:
+      - name: event.listener
+        identifier: 'calendarizeField'
+        event: TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent
