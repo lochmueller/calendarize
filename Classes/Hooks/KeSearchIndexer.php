@@ -18,8 +18,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 /**
  * KE Search Indexer.
  *
- * @Hook TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration
- * @Hook TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer
+ * @Hook("TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration")
+ * @Hook("TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer")
  */
 class KeSearchIndexer extends AbstractHook
 {

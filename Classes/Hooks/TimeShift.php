@@ -20,7 +20,7 @@ class TimeShift extends AbstractHook
     /**
      * Shift the time variables.
      *
-     * @Hook TYPO3_CONF_VARS|SC_OPTIONS|tslib/index_ts.php|preprocessRequest
+     * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|tslib/index_ts.php|preprocessRequest")
      */
     public function shift()
     {
