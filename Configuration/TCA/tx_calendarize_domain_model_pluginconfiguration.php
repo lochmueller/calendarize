@@ -39,9 +39,9 @@ $custom = [
         'configuration' => [
             'config' => [
                 'type' => 'select',
-                'itemsProcFunc' => 'HDNET\Calendarize\Service\PluginConfigurationService->addConfig',
                 'renderType' => 'selectCheckBox',
                 'renderMode' => 'checkbox',
+                'itemsProcFunc' => 'HDNET\Calendarize\Service\PluginConfigurationService->addConfig',
                 'minitems' => '1',
                 'maxitems' => '99',
             ],

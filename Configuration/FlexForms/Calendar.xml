@@ -100,11 +100,11 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginConfiguration</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<foreign_table>tx_calendarize_domain_model_pluginconfiguration</foreign_table>
 								<minitems>0</minitems>
 								<maxitems>1</maxitems>
 								<size>1</size>
-								<renderType>selectSingle</renderType>
 								<items>
 									<numIndex index="0">
 										<numIndex index="0"></numIndex>
@@ -266,8 +266,8 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:configuration</label>
 							<config>
 								<type>select</type>
-								<itemsProcFunc>HDNET\Calendarize\Service\PluginConfigurationService->addConfig</itemsProcFunc>
 								<renderType>selectCheckBox</renderType>
+								<itemsProcFunc>HDNET\Calendarize\Service\PluginConfigurationService->addConfig</itemsProcFunc>
 								<minitems>1</minitems>
 								<maxitems>99</maxitems>
 							</config>
