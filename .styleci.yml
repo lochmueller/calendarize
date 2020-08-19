@@ -1,4 +1,5 @@
 preset: psr2
+risky: true
 
 enabled:
     - no_leading_import_slash
