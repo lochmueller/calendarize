@@ -311,6 +311,10 @@ class CalendarController extends AbstractController
         $this->addCacheTags(['calendarize_year']);
 
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
+        $now = DateTimeUtility::getNow();
+        if ($year === null || $now->format('Y') === $date->format('Y')) {
+            $date = $now;
+        }
 
         $this->slotExtendedAssignMultiple([
             'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
@@ -350,9 +354,16 @@ class CalendarController extends AbstractController
         $this->addCacheTags(['calendarize_month']);
 
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
+        $now = DateTimeUtility::getNow();
+        $useCurrentDate = $now->format('Y-m') === $date->format('Y-m');
+        if ($useCurrentDate) {
+            $date = $now;
+        }
 
         $this->slotExtendedAssignMultiple([
             'date' => $date,
+            'selectDay' => $useCurrentDate,
+            'ignoreSelectedDay' => !$useCurrentDate,
             'indices' => $this->indexRepository->findMonth((int)$date->format('Y'), (int)$date->format('n')),
         ], __CLASS__, __FUNCTION__);
     }

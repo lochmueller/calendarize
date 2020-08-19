@@ -22,14 +22,18 @@ class MonthsInYearViewHelper extends AbstractLoopViewHelper
     protected function getItems(\DateTime $date)
     {
         $months = [];
-        $date->setDate((int)$date->format('Y'), (int)$date->format('n'), 1);
+        $originalDate = clone $date;
+        $date->setDate((int)$date->format('Y'), 1, 1);
         for ($i = 0; $i < 12; ++$i) {
+            $currentMonth = $originalDate->format('Y-m') === $date->format('Y-m');
             $months[$date->format('n')] = [
-                'week' => $date->format('n'),
-                'date' => clone $date,
+                'date' => $currentMonth ? clone $originalDate : clone $date,
                 'break3' => $date->format('n') % 3,
                 'break4' => $date->format('n') % 4,
+                'selectDay' => $currentMonth,
+                'ignoreSelectedDay' => !$currentMonth,
             ];
+
             $date->modify('+1 month');
         }
 
