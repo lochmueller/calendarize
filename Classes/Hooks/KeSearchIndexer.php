@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Hooks;
 use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -18,8 +19,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 /**
  * KE Search Indexer.
  *
- * @Hook("TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration")
- * @Hook("TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer")
+ * @Hook(locations={"TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration", "TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer"})
  */
 class KeSearchIndexer extends AbstractHook
 {
@@ -43,7 +43,7 @@ class KeSearchIndexer extends AbstractHook
      * Calendarize indexer for ke_search.
      *
      * @param array                $indexerConfig Configuration from TYPO3 Backend
-     * @param \tx_kesearch_indexer $indexerObject reference to indexer class
+     * @param \TeaminmediasPluswerk\KeSearch\Indexer\IndexerRunner $indexerObject reference to indexer class
      *
      * @return string|null
      */
@@ -53,15 +53,18 @@ class KeSearchIndexer extends AbstractHook
             return;
         }
 
+        /** @var IndexRepository $indexRepository */
         $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
         $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
-        $indexObjects = $indexRepository->findList()
+        $options = new OptionRequest();
+        $indexObjects = $indexRepository->findAllForBackend($options)
             ->toArray();
 
         foreach ($indexObjects as $index) {
             /** @var $index Index */
             /** @var KeSearchIndexInterface $originalObject */
             $originalObject = $index->getOriginalObject();
+
             if (!($originalObject instanceof KeSearchIndexInterface)) {
                 continue;
             }
@@ -78,7 +81,7 @@ class KeSearchIndexer extends AbstractHook
                 'orig_pid' => $index->getPid(),
             ];
 
-            $indexerObject->storeInIndex(
+            $storeArguemnts = [
                 $indexerConfig['storagepid'],
                 $title,
                 'calendarize',
@@ -93,7 +96,9 @@ class KeSearchIndexer extends AbstractHook
                 $index->_hasProperty('fe_group') ? $index->_getProperty('fe_group') : '',
                 false, // debugOnly
                 $additionalFields
-            );
+            ];
+
+            $indexerObject->storeInIndex(...$storeArguemnts);
         }
 
         return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . \count($indexObjects) . ' elements have been indexed.</b></p>';
