@@ -37,7 +37,7 @@
 		"ext-json": "*",
 		"ext-pdo": "*",
 		"typo3/cms-core": "^10.4.6",
-		"lochmueller/autoloader": "^7.0.2",
+		"lochmueller/autoloader": "^7.1.0",
 		"sabre/vobject": "^4.2"
 	},
 	"replace": {
