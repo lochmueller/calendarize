@@ -99,9 +99,11 @@ class ICal
                     $type = 'VCALENDAR';
                     break;
                 default:
-                    $this->addCalendarComponentWithKeyAndValue($type,
-                                                               $keyword,
-                                                               $value);
+                    $this->addCalendarComponentWithKeyAndValue(
+                        $type,
+                        $keyword,
+                        $value
+                    );
                     break;
                 }
             }
@@ -119,9 +121,11 @@ class ICal
      *
      * @return {None}
      */
-    public function addCalendarComponentWithKeyAndValue($component,
-                                                        $keyword,
-                                                        $value)
+    public function addCalendarComponentWithKeyAndValue(
+        $component,
+        $keyword,
+        $value
+    )
     {
         if (strstr($keyword, ';')) {
             // Ignore everything in keyword after a ; (things like Language, etc)
@@ -205,12 +209,14 @@ class ICal
         }
         // Unix timestamps after 03:14:07 UTC 2038-01-19 might cause an overflow
         // if 32 bit integers are used.
-        $timestamp = mktime((int)$date[4],
-                            (int)$date[5],
-                            (int)$date[6],
-                            (int)$date[2],
-                            (int)$date[3],
-                            (int)$date[1]);
+        $timestamp = mktime(
+            (int)$date[4],
+            (int)$date[5],
+            (int)$date[6],
+            (int)$date[2],
+            (int)$date[3],
+            (int)$date[1]
+        );
         return  $timestamp;
     }
 
