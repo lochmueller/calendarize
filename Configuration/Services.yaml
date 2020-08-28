@@ -1,4 +1,12 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  HDNET\Calendarize\:
+    resource: '../Classes/*'
+
   HDNET\Calendarize\Listener\CalendarizeField:
     tags:
       - name: event.listener

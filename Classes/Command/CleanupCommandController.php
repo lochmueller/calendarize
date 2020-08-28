@@ -88,7 +88,7 @@ class CleanupCommandController extends AbstractCommandController
         }
 
         // persist the modified events
-        HelperUtility::persistAll();
+        // HelperUtility::persistAll(); @todo handle via DI
 
         // after all this deleting ... reindex!
         $this->reIndex();

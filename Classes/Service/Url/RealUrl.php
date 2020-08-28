@@ -13,9 +13,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
