@@ -18,22 +18,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExternalTimeTable extends AbstractTimeTable
 {
-    /**
-     * ICS reader service.
-     *
-     * @var \HDNET\Calendarize\Service\IcsReaderService
-     */
-    protected $icsReaderService;
-
-    /**
-     * Inject ICS reader service.
-     *
-     * @param IcsReaderService $icsReaderService
-     */
-    public function injectIcsReaderService(IcsReaderService $icsReaderService)
-    {
-        $this->icsReaderService = $icsReaderService;
-    }
 
     /**
      * Modify the given times via the configuration.
@@ -56,7 +40,8 @@ class ExternalTimeTable extends AbstractTimeTable
             return;
         }
 
-        $externalTimes = $this->icsReaderService->getTimes($url);
+        $icsReaderService = GeneralUtility::makeInstance(IcsReaderService::class);
+        $externalTimes = $icsReaderService->getTimes($url);
         foreach ($externalTimes as $time) {
             $time['pid'] = $configuration->getPid();
             $time['state'] = $configuration->getState();

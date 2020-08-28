@@ -8,6 +8,7 @@ if (!\defined('TYPO3_MODE')) {
 }
 
 \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
+\HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getGroupCalendarizeConfiguration());
 
 if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
     \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());

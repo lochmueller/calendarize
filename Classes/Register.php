@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize;
 
+use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 use HDNET\Calendarize\Domain\Model\Event;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
@@ -82,9 +83,26 @@ class Register
             'required' => true,
             // 'tcaTypeList'       => '', // optional - only for special type elements
             // 'overrideBookingRequestModel' => \NAME\SPACE\CLASS\Name::class,
+            // 'fieldName' => 'xxxx', // default is "calendarize"
         ];
 
         return $configuration;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getGroupCalendarizeConfiguration(): array
+    {
+        return [
+            'uniqueRegisterKey' => 'ConfigurationGroup',
+            'title' => 'Calendarize Configuration Group',
+            'modelName' => ConfigurationGroup::class,
+            'partialIdentifier' => 'ConfigurationGroup',
+            'tableName' => 'tx_calendarize_domain_model_configurationgroup',
+            'required' => true,
+            'fieldName' => 'configurations',
+        ];
     }
 
     /**
@@ -94,9 +112,10 @@ class Register
      */
     public static function createTcaConfiguration(array $configuration)
     {
+        $fieldName = isset($configuration['fieldName']) ? $configuration['fieldName'] : 'calendarize';
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? \trim($configuration['tcaTypeList']) : '';
-        $GLOBALS['TCA'][$tableName]['columns']['calendarize'] = [
+        $GLOBALS['TCA'][$tableName]['columns'][$fieldName] = [
             'label' => 'Calendarize',
             'l10n_mode' => 'exclude',
             'config' => [
@@ -120,7 +139,7 @@ class Register
                 ],
             ],
         ];
-        ExtensionManagementUtility::addToAllTCAtypes($tableName, 'calendarize,calendarize_info', $typeList);
+        ExtensionManagementUtility::addToAllTCAtypes($tableName, $fieldName . ',calendarize_info', $typeList);
     }
 
     /**

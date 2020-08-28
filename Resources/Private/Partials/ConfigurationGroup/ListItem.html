@@ -1,0 +1,9 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
+
+<f:alias map="{event: index.originalObject}">
+	<h2>
+		<c:link.index index="{index}">
+			<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
+		</c:link.index>
+	</h2>
+</f:alias>

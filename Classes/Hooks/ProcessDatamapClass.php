@@ -60,6 +60,7 @@ class ProcessDatamapClass extends AbstractHook
             return;
         }
         $register = Register::getRegister();
+
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
         foreach ($register as $key => $configuration) {
             foreach ($this->indexItems as $table => $identifiers) {

@@ -8,6 +8,7 @@ if (!\defined('TYPO3_MODE')) {
 }
 
 \HDNET\Autoloader\Loader::extTables('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
+\HDNET\Calendarize\Register::extTables(\HDNET\Calendarize\Register::getGroupCalendarizeConfiguration());
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_calendarize_domain_model_configuration,tx_calendarize_domain_model_index');
 
