@@ -208,34 +208,10 @@ class RealUrl extends AbstractUrl
      */
     protected function cleanUrl(string $alias): string
     {
-        if ($this->isOldRealUrlVersion()) {
-            /** @var \tx_realurl_advanced $realUrl */
-            $realUrl = GeneralUtility::makeInstance('tx_realurl_advanced');
-            $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT']['pagePath'];
-            if (\is_array($configuration)) {
-                ObjectAccess::setProperty($realUrl, 'conf', $configuration, true);
-            }
-            $processedTitle = $realUrl->encodeTitle($alias);
-        } else {
-            $configuration = GeneralUtility::makeInstance(ConfigurationReader::class, ConfigurationReader::MODE_ENCODE);
-            // Init the internal utility by ObjectAccess because the property is
-            // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
-            $utility = GeneralUtility::makeInstance(Utility::class, $configuration);
-            $processedTitle = $utility->convertToSafeString($alias);
-        }
-
-        return (string)$processedTitle;
-    }
-
-    /**
-     * Check if this is a old version of realurl < 2.0.0.
-     *
-     * @return bool
-     */
-    protected function isOldRealUrlVersion()
-    {
-        $extVersion = ExtensionManagementUtility::getExtensionVersion('realurl');
-
-        return VersionNumberUtility::convertVersionNumberToInteger($extVersion) < 2000000;
+        $configuration = GeneralUtility::makeInstance(ConfigurationReader::class, ConfigurationReader::MODE_ENCODE);
+        // Init the internal utility by ObjectAccess because the property is
+        // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
+        $utility = GeneralUtility::makeInstance(Utility::class, $configuration);
+        return (string)$utility->convertToSafeString($alias);
     }
 }
