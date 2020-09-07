@@ -7,7 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
 
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 
 /**
  * LanguageViewHelper.
@@ -21,12 +22,12 @@ class LanguageViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        /** @var TypoScriptFrontendController $tsfe */
-        $tsfe = $GLOBALS['TSFE'];
-        if (!\is_object($tsfe)) {
-            return 'en';
-        }
+        /** @var ServerRequest $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
 
-        return \mb_strtolower($tsfe->sys_language_isocode);
+        /** @var SiteLanguage $language */
+        $language = $request->getAttribute('language');
+
+        return $language->getTwoLetterIsoCode();
     }
 }
