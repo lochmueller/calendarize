@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de"  datatype="plaintext" original="messages" date="2013-10-21T09:49:32Z" product-name="calendarize">
+        <header/>
+        <body>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>List of all events based on the index.</source>
+				<target>Liste aller Events auf Index Basis.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
