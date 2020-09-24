@@ -47,7 +47,7 @@ class IndexRepository extends AbstractRepository
      *
      * @var array
      */
-    protected $overridePageIds = [];
+    protected $overridePageIds;
 
     /**
      * Create query.
@@ -530,7 +530,7 @@ class IndexRepository extends AbstractRepository
      */
     protected function getStoragePageIds()
     {
-        if (!empty($this->overridePageIds)) {
+        if ($this->overridePageIds !== null) {
             return $this->overridePageIds;
         }
 
