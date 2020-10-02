@@ -6,7 +6,7 @@
 
 <tr>
 	<td>
-		<core:iconForRecord table="{index.foreignTable}" row="{uid: index.originalObject.uid}" />
+		<c:iconForRecord table="{index.foreignTable}" uid="{index.originalObject.uid}" />
 		<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
 	</td>
 	<td>

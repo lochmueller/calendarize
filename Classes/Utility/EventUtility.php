@@ -31,6 +31,10 @@ class EventUtility
         }
 
         $query = HelperUtility::getQuery($modelName);
+        if (TYPO3_MODE === 'BE') {
+            $query->getQuerySettings()->setIgnoreEnableFields(true);
+        }
+
         $query->getQuerySettings()
             ->setRespectStoragePage(false);
         $query->getQuerySettings()
