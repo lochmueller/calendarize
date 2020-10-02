@@ -13,7 +13,7 @@ class DateFieldUpdate implements UpgradeWizardInterface
 {
     public function getIdentifier(): string
     {
-        return 'calendarizeDateField';
+        return self::class;
     }
 
     public function getTitle(): string
