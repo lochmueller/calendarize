@@ -427,7 +427,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getKeSearchTags(Index $index): string
     {
-        static $keSearchTags = [];
+        $keSearchTags = [];
         if (empty($keSearchTags)) {
             foreach ($this->getCategories() as $category) {
                 $keSearchTags[] = "#syscat{$category->getUid()}#";
