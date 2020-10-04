@@ -49,7 +49,7 @@
 		"issues": "https://github.com/lochmueller/calendarize/issues"
 	},
 	"suggest": {
-		"cabi/microformat": "Output of microformat information for better Google Search Result User Experience"
+		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience"
 	},
 	"require-dev": {
 		"namelesscoder/typo3-repository-client": "^2.0",
