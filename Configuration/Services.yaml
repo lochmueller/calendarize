@@ -12,3 +12,21 @@ services:
       - name: event.listener
         identifier: 'calendarizeField'
         event: TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent
+
+  HDNET\Calendarize\Command\CleanupCommandController:
+    tags:
+      - name: console.command
+        command: 'calendarize:cleanup'
+        schedulable: true
+
+  HDNET\Calendarize\Command\ImportCommandController:
+    tags:
+      - name: console.command
+        command: 'calendarize:import'
+        schedulable: true
+
+  HDNET\Calendarize\Command\ReindexCommandController:
+    tags:
+      - name: console.command
+        command: 'calendarize:reindex'
+        schedulable: true

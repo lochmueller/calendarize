@@ -8,7 +8,11 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Service\IndexerService;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -17,29 +21,43 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 /**
  * Import.
  */
-class ImportCommandController extends AbstractCommandController
+class ImportCommandController extends Command
 {
-    /**
-     * Import command.
-     *
-     * @param string $icsCalendarUri
-     * @param int    $pid
-     */
-    public function importCommand($icsCalendarUri = null, $pid = null)
+    protected function configure()
     {
-        if (null === $icsCalendarUri || !\filter_var($icsCalendarUri, FILTER_VALIDATE_URL)) {
-            $this->enqueueMessage('You have to enter a valid URL to the iCalendar ICS', 'Error', FlashMessage::ERROR);
+        $this->setDescription('Imports a iCalendar ICS into a page ID')
+            ->addArgument('icsCalendarUri', InputArgument::REQUIRED, 'The URI of the iCalendar ICS')
+            ->addArgument('pid', InputArgument::REQUIRED, 'The page ID to create new elements');
+    }
 
-            return;
+    /**
+     * Executes the command for importing a iCalendar ICS into a page ID.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int 0 if everything went fine, or an exit code
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        $icsCalendarUri = $input->getArgument('icsCalendarUri');
+        $pid = $input->getArgument('pid');
+
+        if (!\filter_var($icsCalendarUri, FILTER_VALIDATE_URL)) {
+            $io->error('You have to enter a valid URL to the iCalendar ICS');
+
+            return 1;
         }
         if (!MathUtility::canBeInterpretedAsInteger($pid)) {
-            $this->enqueueMessage('You have to enter a valid PID for the new created elements', 'Error', FlashMessage::ERROR);
+            $io->error('You have to enter a valid PID for the new created elements');
 
-            return;
+            return 2;
         }
+        $pid = (int)$pid;
 
         // fetch external URI and write to file
-        $this->enqueueMessage('Start to checkout the calendar: ' . $icsCalendarUri, 'Calendar', FlashMessage::INFO);
+        $io->section('Start to checkout the calendar: ' . $icsCalendarUri);
         $relativeIcalFile = 'typo3temp/ical.' . GeneralUtility::shortMD5($icsCalendarUri) . '.ical';
         $absoluteIcalFile = GeneralUtility::getFileAbsFileName($relativeIcalFile);
         $content = GeneralUtility::getUrl($icsCalendarUri);
@@ -47,27 +65,31 @@ class ImportCommandController extends AbstractCommandController
 
         // get Events from file
         $icalEvents = $this->getIcalEvents($absoluteIcalFile);
-        $this->enqueueMessage('Found ' . \count($icalEvents) . ' events in the given calendar', 'Items', FlashMessage::INFO);
-        $events = $this->prepareEvents($icalEvents);
+        $events = $this->prepareEvents($icalEvents, $io);
 
-        $this->enqueueMessage('Found ' . \count($events) . ' events in ' . $icsCalendarUri, 'Items', FlashMessage::INFO);
+        $io->text('Found ' . \count($events) . ' events in ' . $icsCalendarUri);
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
 
-        $this->enqueueMessage('Send the ' . __CLASS__ . '::importCommand signal for each event.', 'Signal', FlashMessage::INFO);
+        $io->section('Send the ' . __CLASS__ . '::importCommand signal for each event.');
+        $io->progressStart(\count($events));
         foreach ($events as $event) {
             $arguments = [
                 'event' => $event,
-                'commandController' => $this,
+                'io' => $io,
                 'pid' => $pid,
                 'handled' => false,
             ];
             $signalSlotDispatcher->dispatch(__CLASS__, 'importCommand', $arguments);
+            $io->progressAdvance();
         }
+        $io->progressFinish();
 
-        $this->enqueueMessage('Run Reindex proces after import', 'Reindex', FlashMessage::INFO);
-        $indexer = $this->objectManager->get(IndexerService::class);
+        $io->section('Run Reindex proces after import');
+        $indexer = GeneralUtility::makeInstance(IndexerService::class);
         $indexer->reindexAll();
+
+        return 0;
     }
 
     /**
@@ -75,9 +97,10 @@ class ImportCommandController extends AbstractCommandController
      *
      * @param array $icalEvents
      *
+     * @param SymfonyStyle $io
      * @return array
      */
-    protected function prepareEvents(array $icalEvents)
+    protected function prepareEvents(array $icalEvents, SymfonyStyle $io)
     {
         $events = [];
         foreach ($icalEvents as $icalEvent) {
@@ -92,11 +115,7 @@ class ImportCommandController extends AbstractCommandController
                     $endDateTime->add(new \DateInterval($icalEvent['DURATION']));
                 }
             } catch (\Exception $ex) {
-                $this->enqueueMessage(
-                    'Could not convert the date in the right format of "' . $icalEvent['SUMMARY'] . '"',
-                    'Warning',
-                    FlashMessage::WARNING
-                );
+                $io->warning('Could not convert the date in the right format of "' . $icalEvent['SUMMARY'] . '"');
                 continue;
             }
 

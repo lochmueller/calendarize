@@ -7,11 +7,11 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Slots;
 
-use HDNET\Calendarize\Command\ImportCommandController;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
@@ -40,18 +40,18 @@ class EventImport
     /**
      * Run the import.
      *
-     * @param array                   $event
-     * @param ImportCommandController $commandController
-     * @param int                     $pid
-     * @param bool                    $handled
+     * @param array         $event
+     * @param SymfonyStyle  $io
+     * @param int           $pid
+     * @param bool          $handled
      *
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      *
      * @return array
      */
-    public function importCommand(array $event, $commandController, $pid, $handled)
+    public function importCommand(array $event, $io, $pid, $handled)
     {
-        $commandController->enqueueMessage('Handle via Default Event Import Slot');
+        $io->text('Handle via Default Event Import Slot');
 
         $eventObject = $this->getEvent($event['uid']);
         $eventObject->setPid($pid);
@@ -64,10 +64,10 @@ class EventImport
 
         if (null !== $eventObject->getUid() && (int)$eventObject->getUid() > 0) {
             $this->eventRepository->update($eventObject);
-            $commandController->enqueueMessage('Update Event Meta data: ' . $eventObject->getTitle(), 'Update');
+            $io->text('Update Event Meta data: ' . $eventObject->getTitle());
         } else {
             $this->eventRepository->add($eventObject);
-            $commandController->enqueueMessage('Add Event: ' . $eventObject->getTitle(), 'Add');
+            $io->text('Add Event: ' . $eventObject->getTitle());
         }
 
         $this->persist();
@@ -75,7 +75,7 @@ class EventImport
 
         return [
             'event' => $event,
-            'commandController' => $commandController,
+            'io' => $io,
             'pid' => $pid,
             'handled' => $handled,
         ];

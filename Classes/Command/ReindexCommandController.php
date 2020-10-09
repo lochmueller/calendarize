@@ -24,7 +24,7 @@ class ReindexCommandController extends Command
 {
     public function configure()
     {
-        $this->setDescription('Calendarize: Reindex all events');
+        $this->setDescription('Reindex all events');
     }
 
     /**
