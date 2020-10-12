@@ -1,3 +1,6 @@
 /.idea/
 /.Build/*
 /.php_cs.cache
+
+# ignore generated documentation
+*GENERATED*

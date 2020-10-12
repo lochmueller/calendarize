@@ -14,7 +14,9 @@ Changing paths of the template
 Please do never change templates directly in the resources folder of the extensions,
 since your changes will get overwritten by extension updates.
 
-Configure your TypoScript setup like shown below::
+Configure your TypoScript setup like shown below:
+
+.. code-block:: typoscript
 
   plugin.tx_calendarize {
     view {
@@ -31,7 +33,9 @@ Configure your TypoScript setup like shown below::
   }
 
 Doing so, you can just **override single files** from the original templates.
-The calendarize templates are always the fallback (position 50). Alternatively you can change the constants::
+The calendarize templates are always the fallback (position 50). Alternatively you can change the constants:
+
+.. code-block:: typoscript
 
   plugin.tx_calendarize.view.templateRootPath
   plugin.tx_calendarize.view.partialRootPath
