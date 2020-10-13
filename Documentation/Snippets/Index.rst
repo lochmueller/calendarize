@@ -1,7 +1,9 @@
 Snippets
 ========
 
-Get the event title of the current page (e.g. for Breadcrumb navigations)::
+Get the event title of the current page (e.g. for Breadcrumb navigations):
+
+.. code-block:: typoscript
 
   lib.eventTitle = CONTENT
   lib.eventTitle {
