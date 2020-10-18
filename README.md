@@ -8,7 +8,15 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lochmueller/calendarize.svg)](http://isitmaintained.com/project/lochmueller/calendarize "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/lochmueller/calendarize.svg)](http://isitmaintained.com/project/lochmueller/calendarize "Percentage of issues still open")
 
-Information
------------
+## Information
+
 * [Podcast example (state of 03/2015)](https://www.youtube.com/watch?v=CUVaRgjpuOI)
 * [typo3.net article](https://www.typo3.net/artikel/typo3-calendarize-moderne-extbasefluid-struktur-und-flexible-datenhaltung/)
+
+## Calendarize infrastructure
+
+* [EXT:calendarize](https://github.com/lochmueller/calendarize) (Base calendar extension base on [EXT:autoloader](https://github.com/lochmueller/autoloader))
+* [EXT:calendarize_pages](https://github.com/lochmueller/calendarize_pages) (Calendarize for pages)
+* [EXT:calendarize_news](https://github.com/lochmueller/calendarize_news) (Calendarize for news)
+* [EXT:md_fullcalendar](https://extensions.typo3.org/extension/md_fullcalendar/) (Full Calendar.io integration)
+* [EXT:md_calendarize_frontend](https://extensions.typo3.org/extension/md_calendarize_frontend/) (Add events via frontend)
