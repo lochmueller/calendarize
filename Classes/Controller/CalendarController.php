@@ -606,7 +606,7 @@ class CalendarController extends AbstractController
                 try {
                     $relativeDate = new \DateTime($overrideStartDateRelative);
                 } catch (\Exception $e) {
-                    $relativeDate = new \DateTime();
+                    $relativeDate = DateTimeUtility::getNow();
                 }
                 $overrideStartDate = $relativeDate->getTimestamp();
                 $overrideEndDate = 0;

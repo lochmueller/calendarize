@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 
 /**
@@ -37,7 +38,7 @@ class ModifyViewHelper extends AbstractViewHelper
             $dateTime = $this->renderChildren();
         }
         if (!$dateTime instanceof \DateTimeInterface) {
-            $dateTime = new \DateTime();
+            $dateTime = DateTimeUtility::getNow();
         }
 
         $clone = clone $dateTime;
