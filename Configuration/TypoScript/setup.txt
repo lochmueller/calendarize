@@ -18,7 +18,7 @@ plugin.tx_calendarize {
       insertAbove = 0
       insertBelow = 1
       maximumNumberOfLinks = 10
-      addQueryStringMethod = GET,POST
+      addQueryStringMethod = GET
     }
 
 		feed {
