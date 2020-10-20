@@ -157,9 +157,6 @@ class RealUrl extends AbstractUrl
             'value_alias' => $alias,
             'value_id' => $value,
         ];
-        if ($this->isOldRealUrlVersion()) {
-            $entry['tstamp'] = (new \DateTime())->getTimestamp();
-        }
 
         $aliasBase = $alias;
         for ($i = 0;; ++$i) {
