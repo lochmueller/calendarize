@@ -88,6 +88,16 @@ class DateTimeUtility
     }
 
     /**
+     * Time zone that is always UTC.
+     *
+     * @return \DateTimeZone
+     */
+    public static function getUtcTimeZone()
+    {
+        return new \DateTimeZone('UTC');
+    }
+
+    /**
      * Get the time seconds of the given date (TYPO3 Backend style).
      *
      * @param \DateTime $dateTime
@@ -114,6 +124,8 @@ class DateTimeUtility
     public static function normalizeDateTime($day = null, $month = null, $year = null): \DateTime
     {
         $date = self::getNow();
+        // Check if this date should handle always in UTC
+        // $date->setTimezone(self::getUtcTimeZone());
         if (!MathUtility::canBeInterpretedAsInteger($year)) {
             $year = $date->format('Y');
         }
