@@ -269,6 +269,9 @@ class CalendarController extends AbstractController
                 if (\class_exists($repositoryName)) {
                     $repository = $this->objectManager->get($repositoryName);
                     $event = $repository->findByUid($uid);
+
+                    $this->addCacheTags(['calendarize_' . lcfirst($value['uniqueRegisterKey']) . '_' . $event->getUid()]);
+                    break;
                 }
             }
         }
@@ -276,8 +279,6 @@ class CalendarController extends AbstractController
         if (!($event instanceof DomainObjectInterface)) {
             return 'Invalid object';
         }
-
-        $this->addCacheTags(['calendarize_event_' . $event->getUid()]);
 
         $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, 1);
         if (\count($fetchEvent) <= 0) {
@@ -472,7 +473,7 @@ class CalendarController extends AbstractController
             }
         }
 
-        $this->addCacheTags(['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_event_' . $index->getOriginalObject()->getUid()]);
+        $this->addCacheTags(['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_' . lcfirst($index->getConfiguration()['uniqueRegisterKey']) . '_' . $index->getOriginalObject()->getUid()]);
 
         $this->slotExtendedAssignMultiple([
             'index' => $index,
