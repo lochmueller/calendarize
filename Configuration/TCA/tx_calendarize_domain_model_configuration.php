@@ -25,7 +25,7 @@ $timeType = \str_replace(',external_ics_url', '', $timeType);
 $timeType = \str_replace(',groups', '', $timeType);
 $timeType = \str_replace(
     ',start_date,end_date,end_date_dynamic',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date;date',
+    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date.duration;date',
     $timeType
 );
 $timeType = \str_replace(

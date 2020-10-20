@@ -306,6 +306,9 @@
 			<trans-unit id="date">
 				<source>Date</source>
 			</trans-unit>
+			<trans-unit id="date.duration">
+				<source>Date and duration</source>
+			</trans-unit>
 			<trans-unit id="dateOptions">
 				<source>Date options</source>
 			</trans-unit>
@@ -533,7 +536,7 @@
 				<source>Day</source>
 			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_date">
-				<source>End date (optionally)</source>
+				<source>End date - duration (optionally)</source>
 			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_time">
 				<source>End time</source>
