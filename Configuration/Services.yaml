@@ -13,6 +13,12 @@ services:
         identifier: 'calendarizeField'
         event: TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent
 
+  HDNET\Calendarize\EventListener\ImportSingleIcalEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'importSingelIcal'
+        event: HDNET\Calendarize\Event\ImportSingleIcalEvent
+
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command
@@ -30,3 +36,5 @@ services:
       - name: console.command
         command: 'calendarize:reindex'
         schedulable: true
+
+
