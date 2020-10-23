@@ -53,7 +53,7 @@ class CoolUri extends AbstractUrl
      * @param string $xml
      * @param int    $value
      *
-     * @throws \HDNET\Calendarize\Exception
+     * @throws \HDNET\Calendarize\InvalidConfigurationException
      *
      * @return string
      */
