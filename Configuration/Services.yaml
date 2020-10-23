@@ -19,6 +19,13 @@ services:
         identifier: 'importSingelIcal'
         event: HDNET\Calendarize\Event\ImportSingleIcalEvent
 
+  HDNET\Calendarize\Compatibility\SlotReplacement:
+    tags:
+      - name: event.listener
+        identifier: 'legacy-slot'
+        method: 'emitImportCommand'
+        event: HDNET\Calendarize\Event\ImportSingleIcalEvent
+
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command
@@ -36,5 +43,3 @@ services:
       - name: console.command
         command: 'calendarize:reindex'
         schedulable: true
-
-
