@@ -115,6 +115,13 @@ class Register
         $fieldName = isset($configuration['fieldName']) ? $configuration['fieldName'] : 'calendarize';
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? \trim($configuration['tcaTypeList']) : '';
+        // Configure position of where to put the calendarize fields
+        // Either after a field or before a field; after takes precedence, if defined
+        // Parameter value is the single TCA field name
+        $position = isset($configuration['addColumnsAfter']) ? 'after:' . \trim($configuration['addColumnsAfter']): '';
+        if ( !$position && isset($configuration['addColumnsBefore']) ) {
+            $position = 'before:'. \trim($configuration['addColumnsBefore']);
+        }
         $GLOBALS['TCA'][$tableName]['columns'][$fieldName] = [
             'label' => 'Calendarize',
             'l10n_mode' => 'exclude',
@@ -139,7 +146,7 @@ class Register
                 ],
             ],
         ];
-        ExtensionManagementUtility::addToAllTCAtypes($tableName, $fieldName . ',calendarize_info', $typeList);
+        ExtensionManagementUtility::addToAllTCAtypes($tableName, $fieldName . ',calendarize_info', $typeList, $position);
     }
 
     /**
