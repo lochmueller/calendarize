@@ -119,7 +119,7 @@ class Register
         // Either after a field or before a field; after takes precedence, if defined
         // Parameter value is the single TCA field name
         $position = isset($configuration['addColumnsAfter']) ? 'after:' . \trim($configuration['addColumnsAfter']): '';
-        if ( !$position && isset($configuration['addColumnsBefore']) ) {
+        if (!$position && isset($configuration['addColumnsBefore'])) {
             $position = 'before:' . \trim($configuration['addColumnsBefore']);
         }
         $GLOBALS['TCA'][$tableName]['columns'][$fieldName] = [
