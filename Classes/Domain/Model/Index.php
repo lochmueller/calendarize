@@ -10,7 +10,7 @@ namespace HDNET\Calendarize\Domain\Model;
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Autoloader\Annotation\SmartExclude;
-use HDNET\Calendarize\Exception;
+use HDNET\Calendarize\Exception\InvalidConfigurationException;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\EventUtility;
@@ -114,16 +114,15 @@ class Index extends AbstractModel
     /**
      * Get the original record for the current index.
      *
-     * @throws Exception
-     *
      * @return AbstractEntity
+     * @throws InvalidConfigurationException
      */
     public function getOriginalObject()
     {
         if (null === $this->originalObject) {
             $configuration = $this->getConfiguration();
             if (empty($configuration)) {
-                throw new Exception('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
+                throw new InvalidConfigurationException('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
             $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$this->getForeignUid());
         }

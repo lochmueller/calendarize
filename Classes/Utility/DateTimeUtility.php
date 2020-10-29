@@ -100,11 +100,11 @@ class DateTimeUtility
     /**
      * Get the time seconds of the given date (TYPO3 Backend style).
      *
-     * @param \DateTime $dateTime
+     * @param \DateTimeInterface $dateTime
      *
      * @return int
      */
-    public static function getDaySecondsOfDateTime(\DateTime $dateTime): int
+    public static function getDaySecondsOfDateTime(\DateTimeInterface $dateTime): int
     {
         $hours = (int)$dateTime->format('G');
         $minutes = $hours * self::SECONDS_MINUTE + (int)$dateTime->format('i');
@@ -179,7 +179,7 @@ class DateTimeUtility
     /**
      * Reset the DateTime.
      *
-     * @param \DateTime $dateTime
+     * @param int|string|\DateTimeInterface|null $dateTime
      *
      * @return \DateTime
      */
@@ -195,14 +195,17 @@ class DateTimeUtility
      * Get a normalized date time object. The timezone of the returned object is
      * UTC for integer parameters and server timezone for everything else.
      *
-     * @param int|string|\DateTime|null $dateInformation
+     * @param int|string|\DateTimeInterface|null $dateInformation
      *
      * @return \DateTime
      */
     public static function normalizeDateTimeSingle($dateInformation): \DateTime
     {
         if ($dateInformation instanceof \DateTimeInterface) {
-            return $dateInformation;
+            return \DateTime::createFromFormat(
+                \DateTimeInterface::ATOM,
+                $dateInformation->format(\DateTimeInterface::ATOM)
+            );
         }
         if (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :
@@ -234,7 +237,7 @@ class DateTimeUtility
      *
      * @see resetTime()
      *
-     * @param int|string|\DateTime|null $dateInformation
+     * @param int|string|\DateTimeInterface|null $dateInformation
      *
      * @return \DateTime
      */
@@ -246,7 +249,7 @@ class DateTimeUtility
     /**
      * Get the End of the given day.
      *
-     * @param int|string|\DateTime|null $dateInformation
+     * @param int|string|\DateTimeInterface|null $dateInformation
      *
      * @return \DateTime
      */

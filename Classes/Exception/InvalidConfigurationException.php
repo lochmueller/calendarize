@@ -5,11 +5,11 @@
  */
 declare(strict_types=1);
 
-namespace HDNET\Calendarize;
+namespace HDNET\Calendarize\Exception;
 
 /**
  * Calendarize logical exception.
  */
-class Exception extends \Exception
+class InvalidConfigurationException extends \RuntimeException
 {
 }

@@ -15,13 +15,6 @@ if (!(bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefault
     /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
     $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
     $signalSlotDispatcher->connect(
-        \HDNET\Calendarize\Command\ImportCommandController::class,
-        'importCommand',
-        \HDNET\Calendarize\Slots\EventImport::class,
-        'importCommand'
-    );
-
-    $signalSlotDispatcher->connect(
         \HDNET\Calendarize\Controller\BookingController::class,
         'bookingAction',
         \HDNET\Calendarize\Slots\BookingCountries::class,
