@@ -41,7 +41,7 @@ final class ImportSingleIcalEventListener
     public function __invoke(ImportSingleIcalEvent $event)
     {
         // TODO: Workaround to disable default event. Look for better solution!
-        if ((bool) \HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
+        if ((bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
             return;
         }
 
