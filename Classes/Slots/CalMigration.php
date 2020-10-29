@@ -22,8 +22,8 @@ class CalMigration
      *
      * @see \HDNET\Calendarize\Updates\CalMigrationUpdate::performCalEventUpdate()
      *
-     * @SignalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
-     * @SignalName performCalEventUpdatePostInsert
+     * @SignalClass(value="HDNET\Calendarize\Updates\CalMigrationUpdate")
+     * @SignalName(value="performCalEventUpdatePostInsert")
      *
      * @return array
      */
