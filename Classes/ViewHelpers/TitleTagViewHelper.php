@@ -30,7 +30,7 @@ class TitleTagViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $content = \trim((string)$renderChildrenClosure());
+        $content = trim((string)$renderChildrenClosure());
         if (!empty($content)) {
             $GLOBALS['TSFE']->altPageTitle = $content;
             $GLOBALS['TSFE']->indexedDocTitle = $content;

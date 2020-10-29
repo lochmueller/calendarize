@@ -42,7 +42,7 @@ class BackendController extends AbstractController
      */
     public function optionAction(OptionRequest $options)
     {
-        $GLOBALS['BE_USER']->setAndSaveSessionData('calendarize_be', \serialize($options));
+        $GLOBALS['BE_USER']->setAndSaveSessionData('calendarize_be', serialize($options));
         $this->addFlashMessage('Options saved', '', FlashMessage::OK, true);
         $this->forward('list');
     }
@@ -51,11 +51,11 @@ class BackendController extends AbstractController
     {
         $pids = [];
         foreach ($typeLocations as $locations) {
-            $pids = \array_merge($pids, \array_keys($locations));
+            $pids = array_merge($pids, array_keys($locations));
         }
-        $pids = \array_unique($pids);
+        $pids = array_unique($pids);
 
-        return \array_combine($pids, $pids);
+        return array_combine($pids, $pids);
     }
 
     /**
@@ -67,7 +67,7 @@ class BackendController extends AbstractController
     {
         try {
             $info = $GLOBALS['BE_USER']->getSessionData('calendarize_be');
-            $object = @\unserialize((string)$info);
+            $object = @unserialize((string)$info);
             if ($object instanceof OptionRequest) {
                 return $object;
             }

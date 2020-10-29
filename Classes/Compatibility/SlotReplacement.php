@@ -80,7 +80,7 @@ class SlotReplacement
         if (!is_scalar($message)) {
             $message = var_export($message, true);
         }
-        if (defined('TYPO3_cliMode') && TYPO3_cliMode) {
+        if (\defined('TYPO3_cliMode') && TYPO3_cliMode) {
             echo '==' . $title . ' == ' . LF;
             echo $message . LF;
         } else {

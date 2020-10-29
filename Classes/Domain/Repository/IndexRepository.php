@@ -202,16 +202,16 @@ class IndexRepository extends AbstractRepository
             $indexIds = [];
             $tabledIndexIds = [];
             foreach ($arguments['indexIds'] as $key => $indexId) {
-                if (is_int($key)) {
+                if (\is_int($key)) {
                     // Plain integers (= deprecated old way, stays in for compatibility)
                     $indexIds[] = $indexId;
-                } elseif (is_string($key) && is_array($indexId)) {
+                } elseif (\is_string($key) && \is_array($indexId)) {
                     // Table based values with array of foreign uids
                     $tabledIndexIds[] = [
                         'table' => $key,
                         'indexIds' => $indexId,
                     ];
-                } elseif (is_string($key) && is_int($indexId)) {
+                } elseif (\is_string($key) && \is_int($indexId)) {
                     // Table based single return value
                     $tabledIndexIds[] = [
                          'table' => $key,
@@ -242,7 +242,7 @@ class IndexRepository extends AbstractRepository
                     }
                 }
             }
-            if (count($foreignIdConstraints) > 1) {
+            if (\count($foreignIdConstraints) > 1) {
                 // Multiple valid tables should be grouped by "OR"
                 // so it's either table_a with uids 1,3,4 OR table_b with uids 1,5,7
                 $foreignIdConstraint = $query->logicalOr($foreignIdConstraints);
@@ -404,7 +404,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findYear(int $year)
     {
-        return $this->findByTimeSlot(\mktime(0, 0, 0, 1, 1, $year), \mktime(0, 0, 0, 1, 1, $year + 1) - 1);
+        return $this->findByTimeSlot(mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1) - 1);
     }
 
     /**
@@ -419,7 +419,7 @@ class IndexRepository extends AbstractRepository
     {
         $startMonth = 1 + (3 * ($quarter - 1));
 
-        return $this->findByTimeSlot(\mktime(0, 0, 0, $startMonth, 1, $year), \mktime(0, 0, 0, $startMonth + 3, 1, $year) - 1);
+        return $this->findByTimeSlot(mktime(0, 0, 0, $startMonth, 1, $year), mktime(0, 0, 0, $startMonth + 3, 1, $year) - 1);
     }
 
     /**
@@ -432,8 +432,8 @@ class IndexRepository extends AbstractRepository
      */
     public function findMonth(int $year, int $month)
     {
-        $startTime = \mktime(0, 0, 0, $month, 1, $year);
-        $endTime = \mktime(0, 0, 0, $month + 1, 1, $year) - 1;
+        $startTime = mktime(0, 0, 0, $month, 1, $year);
+        $endTime = mktime(0, 0, 0, $month + 1, 1, $year) - 1;
 
         return $this->findByTimeSlot($startTime, $endTime);
     }
@@ -489,7 +489,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findDay(int $year, int $month, int $day)
     {
-        $startTime = \mktime(0, 0, 0, $month, $day, $year);
+        $startTime = mktime(0, 0, 0, $month, $day, $year);
         $startDate = new \DateTime('@' . $startTime);
         $endDate = clone $startDate;
         $endDate->modify('+1 day');

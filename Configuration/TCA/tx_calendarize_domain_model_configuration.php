@@ -11,41 +11,41 @@ use HDNET\Calendarize\Utility\TranslateUtility;
 
 $base = ModelUtility::getTcaInformation(Configuration::class);
 
-$timeType = \str_replace(
+$timeType = str_replace(
     '--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xlf:language;language',
     '',
     $base['types']['1']['showitem']
 );
-$timeType = \str_replace(
+$timeType = str_replace(
     ',frequency',
     ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.frequency,frequency',
     $timeType
 );
-$timeType = \str_replace(',external_ics_url', '', $timeType);
-$timeType = \str_replace(',groups', '', $timeType);
-$timeType = \str_replace(
+$timeType = str_replace(',external_ics_url', '', $timeType);
+$timeType = str_replace(',groups', '', $timeType);
+$timeType = str_replace(
     ',start_date,end_date,end_date_dynamic',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date.duration;date',
     $timeType
 );
-$timeType = \str_replace(
+$timeType = str_replace(
     ',start_time,end_time,all_day,open_end_time',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time;time',
     $timeType
 );
-$timeType = \str_replace(
+$timeType = str_replace(
     ',till_date,till_days,till_days_past,till_days_relative,counter_amount',
     ',--palette--;;termination_condition',
     $timeType
 );
-$timeType = \str_replace(
+$timeType = str_replace(
     ',counter_interval,recurrence,day',
     ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration;frequency_configuration',
     $timeType
 );
 
 $baseConfiguration = '--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration;base';
-$timeType = \str_replace(
+$timeType = str_replace(
     'type,handling,state',
     $baseConfiguration,
     $timeType

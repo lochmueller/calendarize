@@ -31,7 +31,7 @@ class TcaService extends AbstractService
         $row = $params['row'];
         $this->migrateFormEngineRow($row);
 
-        $handling = \is_array($row['handling']) ? \array_shift($row['handling']) : $row['handling'];
+        $handling = \is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
         $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
         switch ($row['type']) {
             case Configuration::TYPE_TIME:
@@ -94,9 +94,9 @@ class TcaService extends AbstractService
                 'title' => '',
             ];
             $this->configurationTitle($paramsInternal, null);
-            $configurations[$key] = \strip_tags($paramsInternal['title']);
+            $configurations[$key] = strip_tags($paramsInternal['title']);
         }
-        $params['title'] .= ' / ' . \implode(' / ', $configurations);
+        $params['title'] .= ' / ' . implode(' / ', $configurations);
     }
 
     /**
@@ -129,7 +129,7 @@ class TcaService extends AbstractService
             $groups[$key] = $row['title'] . ' (#' . $id . ')';
         }
         if ($groups) {
-            $title .= '<ul><li>' . \implode('</li><li>', $groups) . '</li></ul>';
+            $title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
         }
 
         return $title;
@@ -147,8 +147,8 @@ class TcaService extends AbstractService
         $title = '';
         if ($row['start_date']) {
             try {
-                $dateStart = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (new \DateTime($row['start_date']))->getTimestamp());
-                $dateEnd = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp());
+                $dateStart = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (new \DateTime($row['start_date']))->getTimestamp());
+                $dateEnd = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp());
                 $title .= $dateStart;
                 if ($dateStart !== $dateEnd) {
                     $title .= ' - ' . $dateEnd;

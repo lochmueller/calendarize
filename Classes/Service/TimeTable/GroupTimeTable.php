@@ -25,7 +25,7 @@ class GroupTimeTable extends AbstractTimeTable
     {
         foreach ($configuration->getGroups() as $group) {
             /** @var ConfigurationGroup $group */
-            $times = \array_merge($times, $this->buildSingleTimeTableByGroup($group));
+            $times = array_merge($times, $this->buildSingleTimeTableByGroup($group));
         }
     }
 }

@@ -258,14 +258,14 @@ class CalendarController extends AbstractController
     public function shortcutAction()
     {
         $this->addCacheTags(['calendarize_shortcut']);
-        list($table, $uid) = \explode(':', $GLOBALS['TSFE']->currentRecord);
+        list($table, $uid) = explode(':', $GLOBALS['TSFE']->currentRecord);
         $register = Register::getRegister();
 
         $event = null;
         foreach ($register as $key => $value) {
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
-                if (\class_exists($repositoryName)) {
+                if (class_exists($repositoryName)) {
                     $repository = $this->objectManager->get($repositoryName);
                     $event = $repository->findByUid($uid);
 
@@ -598,7 +598,7 @@ class CalendarController extends AbstractController
         } else {
             // check if relative dates are enabled
             if ((bool)$this->settings['useRelativeDate']) {
-                $overrideStartDateRelative = \trim($this->settings['overrideStartRelative']);
+                $overrideStartDateRelative = trim($this->settings['overrideStartRelative']);
                 if ('' === $overrideStartDateRelative) {
                     $overrideStartDateRelative = 'now';
                 }
@@ -609,7 +609,7 @@ class CalendarController extends AbstractController
                 }
                 $overrideStartDate = $relativeDate->getTimestamp();
                 $overrideEndDate = 0;
-                $overrideEndDateRelative = \trim($this->settings['overrideEndRelative']);
+                $overrideEndDateRelative = trim($this->settings['overrideEndRelative']);
                 if ('' !== $overrideStartDateRelative) {
                     try {
                         $relativeDate->modify($overrideEndDateRelative);

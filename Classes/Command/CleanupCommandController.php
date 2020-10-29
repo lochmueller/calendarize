@@ -204,7 +204,7 @@ class CleanupCommandController extends Command
             ->execute()
             ->fetchAll();
 
-        $foreignUids = \array_map(function ($item) {
+        $foreignUids = array_map(function ($item) {
             return (int)$item['foreign_uid'];
         }, $foreignUids);
 

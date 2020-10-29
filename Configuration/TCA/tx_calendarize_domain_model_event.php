@@ -100,6 +100,6 @@ $replace = [
     TranslateUtility::getLllOrHelpMessage('dateOptions', 'calendarize'),
 ];
 
-$tca['types']['1']['showitem'] = \str_replace($search, $replace, $tca['types']['1']['showitem']);
+$tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);
 
 return $tca;

@@ -604,7 +604,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getState()
     {
-        return \trim($this->state);
+        return trim($this->state);
     }
 
     /**

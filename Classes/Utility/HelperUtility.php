@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
-use function get_class;
-use function is_object;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Exception;
@@ -36,7 +34,7 @@ class HelperUtility
      */
     public static function getQuery($objectName)
     {
-        $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
+        $objectName = \is_object($objectName) ? \get_class($objectName) : $objectName;
         /** @var PersistenceManagerInterface $manager */
         static $manager = null;
         if (null === $manager) {

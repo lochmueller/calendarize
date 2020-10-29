@@ -27,6 +27,6 @@ class CalendarizeField
             $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (' . $fieldName . ' tinytext);';
         }
 
-        return \implode(LF, $sql);
+        return implode(LF, $sql);
     }
 }

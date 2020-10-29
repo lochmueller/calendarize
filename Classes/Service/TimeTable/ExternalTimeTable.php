@@ -85,8 +85,8 @@ class ExternalTimeTable extends AbstractTimeTable
      */
     protected function getCachedUrlFile(string $url): string
     {
-        $tempFileName = $this->getCheckedCacheFolder() . \md5($url);
-        if (!\is_file($tempFileName) || \filemtime($tempFileName) < (\time() - DateTimeUtility::SECONDS_HOUR)) {
+        $tempFileName = $this->getCheckedCacheFolder() . md5($url);
+        if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - DateTimeUtility::SECONDS_HOUR)) {
             $icsFile = GeneralUtility::getUrl($url);
             GeneralUtility::writeFile($tempFileName, $icsFile);
         }
@@ -102,7 +102,7 @@ class ExternalTimeTable extends AbstractTimeTable
     protected function getCheckedCacheFolder(): string
     {
         $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/var/transient/calendarize/');
-        if (!\is_dir($cacheFolder)) {
+        if (!is_dir($cacheFolder)) {
             GeneralUtility::mkdir_deep($cacheFolder);
         }
 

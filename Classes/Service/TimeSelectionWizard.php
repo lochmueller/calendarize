@@ -28,9 +28,9 @@ class TimeSelectionWizard extends AbstractService
      */
     public function renderWizard(array $params, $pObj)
     {
-        $name = isset($params['itemName']) ? \trim($params['itemName']) : '';
-        $match = \preg_match('/(.*)id="(.*?)"(.*)/', $params['item'], $matches);
-        $id = $match && isset($matches[2]) ? \trim($matches[2]) : '';
+        $name = isset($params['itemName']) ? trim($params['itemName']) : '';
+        $match = preg_match('/(.*)id="(.*?)"(.*)/', $params['item'], $matches);
+        $id = $match && isset($matches[2]) ? trim($matches[2]) : '';
         if ('' === $id && '' === $name) {
             return '';
         }
@@ -92,7 +92,7 @@ class TimeSelectionWizard extends AbstractService
         if (isset($pagesTsConfig['tx_calendarize.']['timeSelectionWizard.']) &&
             \is_array($pagesTsConfig['tx_calendarize.']['timeSelectionWizard.'])
         ) {
-            $times = \array_combine(
+            $times = array_combine(
                 $pagesTsConfig['tx_calendarize.']['timeSelectionWizard.'],
                 $pagesTsConfig['tx_calendarize.']['timeSelectionWizard.']
             );

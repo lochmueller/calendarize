@@ -65,12 +65,12 @@ class CmsLayout extends AbstractHook
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
-        $parts = \array_map(function ($element) {
-            $split = \explode('->', $element);
+        $parts = array_map(function ($element) {
+            $split = explode('->', $element);
 
-            return \ucfirst($split[1]);
+            return ucfirst($split[1]);
         }, $parts);
-        $actionKey = \lcfirst(\implode('', $parts));
+        $actionKey = lcfirst(implode('', $parts));
 
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
 
@@ -89,7 +89,7 @@ class CmsLayout extends AbstractHook
             );
         }
 
-        if ('' !== \trim((string)$this->flexFormService->get('settings.configuration', 'general'))) {
+        if ('' !== trim((string)$this->flexFormService->get('settings.configuration', 'general'))) {
             $this->layoutService->addRow(
                 TranslateUtility::get('configuration'),
                 $this->flexFormService->get('settings.configuration', 'general')
@@ -112,11 +112,11 @@ class CmsLayout extends AbstractHook
         } else {
             $overrideStartDate = (int)$this->flexFormService->get('settings.overrideStartdate', 'main');
             if ($overrideStartDate) {
-                $this->layoutService->addRow(TranslateUtility::get('override.startdate'), \date('d.m.y H:i', $overrideStartDate));
+                $this->layoutService->addRow(TranslateUtility::get('override.startdate'), date('d.m.y H:i', $overrideStartDate));
             }
             $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
             if ($overrideEndDate) {
-                $this->layoutService->addRow(TranslateUtility::get('override.enddate'), \date('d.m.y H:i', $overrideEndDate));
+                $this->layoutService->addRow(TranslateUtility::get('override.enddate'), date('d.m.y H:i', $overrideEndDate));
             }
         }
 

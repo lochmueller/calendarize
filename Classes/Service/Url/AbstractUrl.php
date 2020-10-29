@@ -54,11 +54,11 @@ abstract class AbstractUrl extends AbstractService
             $datePart = $index->isAllDay() ? 'Y-m-d' : 'Y-m-d-' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'];
             $dateInfo = $index->getStartDateComplete()
                 ->format($datePart);
-            $dateInfo = \preg_replace('/[^0-9\-]/', '-', $dateInfo);
+            $dateInfo = preg_replace('/[^0-9\-]/', '-', $dateInfo);
             $base .= '-' . $dateInfo;
         }
 
-        if ((bool)ConfigurationUtility::get('addIndexInSpeakingUrl') || \class_exists(PersistedAliasMapper::class)) {
+        if ((bool)ConfigurationUtility::get('addIndexInSpeakingUrl') || class_exists(PersistedAliasMapper::class)) {
             $base .= '-' . $indexUid;
         }
 
@@ -74,8 +74,8 @@ abstract class AbstractUrl extends AbstractService
      */
     protected function prepareBase(string $base): string
     {
-        $result = \mb_strtolower($base);
+        $result = mb_strtolower($base);
 
-        return \preg_replace('/[^a-z0-9\-]/', '-', $result);
+        return preg_replace('/[^a-z0-9\-]/', '-', $result);
     }
 }

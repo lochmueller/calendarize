@@ -434,7 +434,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
             }
         }
 
-        return \implode(',', $keSearchTags);
+        return implode(',', $keSearchTags);
     }
 
     /**

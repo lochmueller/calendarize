@@ -57,7 +57,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
         foreach ($register as $key => $value) {
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
-                if (\class_exists($repositoryName)) {
+                if (class_exists($repositoryName)) {
                     $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
                     $repository = $objectManager->get($repositoryName);
                     $event = $repository->findByUid($uid);
@@ -85,7 +85,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
     {
         static $tables;
         if (!\is_array($tables)) {
-            $tables = \array_map(function ($config) {
+            $tables = array_map(function ($config) {
                 return $config['tableName'];
             }, GeneralUtility::makeInstance(Register::class)->getRegister());
         }

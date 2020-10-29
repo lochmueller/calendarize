@@ -95,7 +95,7 @@ $replace = [
     '',
 ];
 
-$tca['types']['1']['showitem'] = \str_replace($search, $replace, $tca['types']['1']['showitem']);
+$tca['types']['1']['showitem'] = str_replace($search, $replace, $tca['types']['1']['showitem']);
 
 unset($tca['columns']['recursive']['config']['eval']);
 

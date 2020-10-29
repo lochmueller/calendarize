@@ -30,7 +30,7 @@ class JsQuoteViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $content = null === $this->arguments['content'] || '' === \trim((string)$this->arguments['content']) ? $this->renderChildren() : $this->arguments['content'];
+        $content = null === $this->arguments['content'] || '' === trim((string)$this->arguments['content']) ? $this->renderChildren() : $this->arguments['content'];
 
         return GeneralUtility::quoteJSvalue($content);
     }

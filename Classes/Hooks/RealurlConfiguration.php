@@ -26,7 +26,7 @@ class RealurlConfiguration extends AbstractHook
      */
     public function addCalendarizeConfiguration($params, &$pObj)
     {
-        return \array_merge_recursive($params['config'], [
+        return array_merge_recursive($params['config'], [
             'postVarSets' => [
                 '_DEFAULT' => [
                     'event' => [

@@ -69,6 +69,6 @@ abstract class AbstractTimeTable extends AbstractService
     protected function calculateEntryKey(array $entry)
     {
         // crc32 may be faster but have more collision-potential
-        return \hash('md5', \json_encode($entry));
+        return hash('md5', json_encode($entry));
     }
 }

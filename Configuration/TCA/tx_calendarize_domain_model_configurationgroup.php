@@ -14,7 +14,7 @@ $custom = [
     ],
     'types' => [
         '1' => [
-            'showitem' => \str_replace('configurations,', 'configurations,calendarize_info,', $base['types']['1']['showitem']),
+            'showitem' => str_replace('configurations,', 'configurations,calendarize_info,', $base['types']['1']['showitem']),
         ],
     ],
     'columns' => [

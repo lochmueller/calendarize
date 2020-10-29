@@ -27,7 +27,7 @@ class CalendarizeInfoElement extends AbstractFormElement
         $indexService = GeneralUtility::makeInstance(IndexerService::class);
         $count = $indexService->getIndexCount($this->data['tableName'], $this->data['vanillaUid']);
         $next = $indexService->getNextEvents($this->data['tableName'], $this->data['vanillaUid'], $previewLimit);
-        $content = \sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);
+        $content = sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);
 
         $result['html'] = $content;
 
@@ -48,12 +48,12 @@ class CalendarizeInfoElement extends AbstractFormElement
             if (!($event['start_date'] instanceof \DateTimeInterface)) {
                 $event['start_date'] = new \DateTime($event['start_date']);
             }
-            $startDate = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['start_date']->getTimestamp());
+            $startDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['start_date']->getTimestamp());
 
             if (!($event['end_date'] instanceof \DateTimeInterface)) {
                 $event['end_date'] = new \DateTime($event['end_date']);
             }
-            $endDate = \strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['end_date']->getTimestamp());
+            $endDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['end_date']->getTimestamp());
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'] % DateTimeUtility::SECONDS_DAY, false);
@@ -70,6 +70,6 @@ class CalendarizeInfoElement extends AbstractFormElement
             $items[] = TranslateUtility::get('noEvents');
         }
 
-        return '<ul><li>' . \implode('</li><li>', $items) . '</li></ul>';
+        return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
     }
 }

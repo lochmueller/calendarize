@@ -135,13 +135,13 @@ class RecurrenceService extends AbstractService
                 $days[] = 6;
                 break;
             case ConfigurationInterface::DAY_SPECIAL_WEEKDAY:
-                $days = \range(1, 7);
+                $days = range(1, 7);
                 break;
             case ConfigurationInterface::DAY_SPECIAL_BUSINESS:
-                $days = \range(1, 6);
+                $days = range(1, 6);
                 break;
             case ConfigurationInterface::DAY_SPECIAL_WORKDAY:
-                $days = \range(1, 5);
+                $days = range(1, 5);
                 break;
             default:
                 // no day

@@ -103,7 +103,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
         foreach (self::$configurations as $configurationKey) {
             foreach ($register as $key => $configuration) {
                 if ($key === $configurationKey) {
-                    if (isset($configuration['overrideBookingRequestModel']) && \class_exists($configuration['overrideBookingRequestModel'])) {
+                    if (isset($configuration['overrideBookingRequestModel']) && class_exists($configuration['overrideBookingRequestModel'])) {
                         $class = $configuration['overrideBookingRequestModel'];
 
                         return new $class();

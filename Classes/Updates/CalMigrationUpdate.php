@@ -260,7 +260,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
         $dbQueries[] = $q->getSQL();
 
         foreach ($selectResults as $group) {
-            $importId = \explode(':', $group['import_id']);
+            $importId = explode(':', $group['import_id']);
             $groupId = (int)$importId[1];
 
             $variables = [
@@ -322,7 +322,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
         ];
 
         // select all not migrated entries
-        $fieldnames = 'fieldname = \'' . \implode('\' OR fieldname = \'', $variables['fieldnames']) . '\'';
+        $fieldnames = 'fieldname = \'' . implode('\' OR fieldname = \'', $variables['fieldnames']) . '\'';
         $selectWhere = 'tablenames = \'' . $variables['table'] . '\' AND (' . $fieldnames . ')';
         $selectWhere .= ' AND NOT EXISTS (SELECT NULL FROM sys_file_reference sfr2 WHERE sfr2.import_id = CONCAT(\'' . self::IMPORT_PREFIX . '\', sfr1.uid))';
 
@@ -460,12 +460,12 @@ class CalMigrationUpdate implements UpgradeWizardInterface
         $csvArray = GeneralUtility::trimExplode(',', $csv);
 
         // check for doubles
-        $values = \array_flip($csvArray);
+        $values = array_flip($csvArray);
         if (isset($values[$value])) {
             return $csv;
         }
         $csvArray[] = $value;
-        $csv = \implode(',', $csvArray);
+        $csv = implode(',', $csvArray);
 
         return $csv;
     }
@@ -685,7 +685,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
             }
         }
 
-        return \implode(',', $recordIds);
+        return implode(',', $recordIds);
     }
 
     /**
@@ -1036,7 +1036,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
             );
 
         foreach ($migratedRows as $migratedRow) {
-            $importId = (int)\str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
+            $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
             if (isset($nonMigrated[$importId])) {
                 unset($nonMigrated[$importId]);
             }

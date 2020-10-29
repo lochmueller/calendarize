@@ -64,10 +64,10 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
                 foreach ($pids as $pid) {
                     $list = $this->cObj->getTreeList($pid, $recursiveLevel);
                     if ($list) {
-                        $newList = \array_merge($newList, \explode(',', $list));
+                        $newList = array_merge($newList, explode(',', $list));
                     }
                 }
-                $pids = \array_merge($pids, $newList);
+                $pids = array_merge($pids, $newList);
             }
 
             $constraints[] = $queryBuilder->expr()->in('pid', $pids);
@@ -115,7 +115,7 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
         $additionalParams = $this->getUrlFieldParameterMap($additionalParams, $data['data']);
         $additionalParams = $this->getUrlAdditionalParams($additionalParams);
 
-        $additionalParamsString = \http_build_query(
+        $additionalParamsString = http_build_query(
             $additionalParams,
             '',
             '&',

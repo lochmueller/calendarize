@@ -116,7 +116,7 @@ class IndexPreparationService
 
         if ($languageField && 0 !== (int)$record[$languageField]) {
             $language = (int)$record[$languageField];
-            foreach (\array_keys($neededItems) as $key) {
+            foreach (array_keys($neededItems) as $key) {
                 $neededItems[$key]['sys_language_uid'] = $language;
             }
         }
@@ -151,7 +151,7 @@ class IndexPreparationService
         }
 
         foreach ($neededItems as $key => $value) {
-            $neededItems[$key] = \array_merge($value, $addFields);
+            $neededItems[$key] = array_merge($value, $addFields);
         }
     }
 

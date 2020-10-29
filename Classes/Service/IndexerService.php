@@ -220,9 +220,9 @@ class IndexerService extends AbstractService
             $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
         }
 
-        $neededItems = \array_values($neededItems);
+        $neededItems = array_values($neededItems);
         if ($neededItems) {
-            $databaseConnection->bulkInsert(self::TABLE_NAME, $neededItems, \array_keys($neededItems[0]));
+            $databaseConnection->bulkInsert(self::TABLE_NAME, $neededItems, array_keys($neededItems[0]));
         }
     }
 
@@ -273,7 +273,7 @@ class IndexerService extends AbstractService
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         $q = $db->createQueryBuilder();
 
-        $validKeys = \array_keys(Register::getRegister());
+        $validKeys = array_keys(Register::getRegister());
         if ($validKeys) {
             foreach ($validKeys as $key => $value) {
                 $validKeys[$key] = $q->createNamedParameter($value);

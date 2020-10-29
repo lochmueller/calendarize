@@ -69,7 +69,7 @@ class EventRepository extends AbstractRepository
         $query = $this->createQuery();
         if ($query instanceof Query) {
             $source = $query->getSource();
-            if (\method_exists($source, 'getSelectorName')) {
+            if (method_exists($source, 'getSelectorName')) {
                 return $source->getSelectorName();
             }
         }

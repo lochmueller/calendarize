@@ -70,9 +70,9 @@ class DateTimeUtility
      */
     public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
     {
-        $week = \str_pad((string)$week, 2, '0', STR_PAD_LEFT);
+        $week = str_pad((string)$week, 2, '0', STR_PAD_LEFT);
 
-        return self::normalizeDateTimeSingle(\strtotime($year . '-W' . $week . '-' . $startDay));
+        return self::normalizeDateTimeSingle(strtotime($year . '-W' . $week . '-' . $startDay));
     }
 
     /**
@@ -84,7 +84,7 @@ class DateTimeUtility
      */
     public static function getTimeZone()
     {
-        return new \DateTimeZone(\date_default_timezone_get());
+        return new \DateTimeZone(date_default_timezone_get());
     }
 
     /**
@@ -173,7 +173,7 @@ class DateTimeUtility
     {
         $month = (int)$date->format('n');
 
-        return (int)\ceil($month / 3);
+        return (int)ceil($month / 3);
     }
 
     /**
@@ -229,7 +229,7 @@ class DateTimeUtility
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
-        return new \DateTime(\date(\DateTime::ATOM, (int)$GLOBALS['SIM_ACCESS_TIME']));
+        return new \DateTime(date(\DateTime::ATOM, (int)$GLOBALS['SIM_ACCESS_TIME']));
     }
 
     /**

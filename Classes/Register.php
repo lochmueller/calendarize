@@ -114,10 +114,10 @@ class Register
     {
         $fieldName = isset($configuration['fieldName']) ? $configuration['fieldName'] : 'calendarize';
         $tableName = $configuration['tableName'];
-        $typeList = isset($configuration['tcaTypeList']) ? \trim($configuration['tcaTypeList']) : '';
+        $typeList = isset($configuration['tcaTypeList']) ? trim($configuration['tcaTypeList']) : '';
         // Configure position of where to put the calendarize fields
         // Supports everything offered by TYPO3, e.g.: before:abc, after:abc, replace:abc
-        $position = isset($configuration['tcaPosition']) ? \trim($configuration['tcaPosition']) : '';
+        $position = isset($configuration['tcaPosition']) ? trim($configuration['tcaPosition']) : '';
         $GLOBALS['TCA'][$tableName]['columns'][$fieldName] = [
             'label' => 'Calendarize',
             'l10n_mode' => 'exclude',

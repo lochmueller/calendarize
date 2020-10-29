@@ -69,9 +69,9 @@ class KeSearchIndexer extends AbstractHook
                 continue;
             }
 
-            $title = \strip_tags($originalObject->getKeSearchTitle($index));
-            $abstract = \strip_tags($originalObject->getKeSearchAbstract($index));
-            $content = \strip_tags($originalObject->getKeSearchContent($index));
+            $title = strip_tags($originalObject->getKeSearchTitle($index));
+            $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
+            $content = strip_tags($originalObject->getKeSearchContent($index));
             $fullContent = $title . "\n" . $abstract . "\n" . $content;
 
             // @todo Add year and month information

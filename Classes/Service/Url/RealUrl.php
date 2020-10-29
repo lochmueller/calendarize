@@ -114,7 +114,7 @@ class RealUrl extends AbstractUrl
         }
 
         $matches = [];
-        if (\preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
+        if (preg_match('/^idx-([0-9]+)$/', $value, $matches)) {
             return (int)$matches[1];
         }
 

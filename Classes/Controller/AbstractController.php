@@ -112,10 +112,10 @@ abstract class AbstractController extends ActionController
     {
         $testMode = (bool)$this->settings['feed']['debugMode'];
         if ($testMode) {
-            \header('Content-Type: text/plain; charset=utf-8');
+            header('Content-Type: text/plain; charset=utf-8');
         } else {
-            \header('Content-Type: ' . $contentType . '; charset=utf-8');
-            \header('Content-Disposition: inline; filename=calendar.' . $fileExtension);
+            header('Content-Type: ' . $contentType . '; charset=utf-8');
+            header('Content-Disposition: inline; filename=calendar.' . $fileExtension);
         }
         echo $this->response->getContent();
         HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_200);
@@ -149,7 +149,7 @@ abstract class AbstractController extends ActionController
      */
     protected function getStringForPluginHmac(): string
     {
-        $actionMethodName = \ucfirst($this->request->getControllerActionName());
+        $actionMethodName = ucfirst($this->request->getControllerActionName());
         $pluginName = $this->request->getPluginName();
         $controllerName = $this->request->getControllerName();
 

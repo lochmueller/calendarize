@@ -64,7 +64,7 @@ class LanguageInformationViewHelper extends AbstractViewHelper
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
 
         $out = '';
-        $title = \htmlspecialchars($sysLanguages[$langUid]['title']);
+        $title = htmlspecialchars($sysLanguages[$langUid]['title']);
         if ($sysLanguages[$langUid]['flagIcon']) {
             $out .= '<span title="' . $title . '">' . $iconFactory->getIcon($sysLanguages[$langUid]['flagIcon'], Icon::SIZE_SMALL)->render() . '</span>';
             $out .= '&nbsp;';

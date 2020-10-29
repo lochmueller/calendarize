@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$baseDir = \dirname(\dirname(\dirname(__DIR__)));
+$baseDir = dirname(dirname(dirname(__DIR__)));
 
 require $baseDir . '/.Build/vendor/autoload.php';
 
@@ -17,6 +17,7 @@ return PhpCsFixer\Config::create()
     ->setRules([
         '@DoctrineAnnotation' => true,
         '@Symfony' => true,
+        '@Symfony:risky' => true,
         'no_superfluous_phpdoc_tags' => false,
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,
