@@ -222,16 +222,16 @@ class IndexRepository extends AbstractRepository
             $foreignIdConstraints = [];
             // Old way, just accept foreignUids as provided, not checking the table.
             // This has a caveat solved with the $tabledIndexIds
-            if ( $indexIds ) {
+            if ($indexIds) {
                 $foreignIdConstraints[] = $query->in('foreignUid', $indexIds);
             }
-            if ( $tabledIndexIds ) {
+            if ($tabledIndexIds) {
                 // Handle each table individually on the filters
                 // allowing for uids to be table specific.
                 // If 1,3,5 on table_a are ok and 4,5,7 on table_b are ok,
                 // don't show uid 1 from table_b
-                foreach ( $tabledIndexIds as $tabledIndexId ) {
-                    if ( $tabledIndexId['indexIds'] ) {
+                foreach ($tabledIndexIds as $tabledIndexId) {
+                    if ($tabledIndexId['indexIds']) {
                         // This table has used filters and returned some allowed uids.
                         // Providing non-existing values e.g.: -1 will remove everything
                         // unless other elements have found elements with the filters
@@ -242,7 +242,7 @@ class IndexRepository extends AbstractRepository
                     }
                 }
             }
-            if ( count($foreignIdConstraints) > 1 ) {
+            if (count($foreignIdConstraints) > 1) {
                 // Multiple valid tables should be grouped by "OR"
                 // so it's either table_a with uids 1,3,4 OR table_b with uids 1,5,7
                 $foreignIdConstraint = $query->logicalOr($foreignIdConstraints);
@@ -251,7 +251,7 @@ class IndexRepository extends AbstractRepository
                 $foreignIdConstraint = array_shift($foreignIdConstraints);
             }
             // If any foreignUid constraint survived, use it on the query
-            if ( $foreignIdConstraint ) {
+            if ($foreignIdConstraint) {
                 $constraints[] = $foreignIdConstraint;
             }
         }
@@ -631,7 +631,7 @@ class IndexRepository extends AbstractRepository
         $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
 
         if ($arguments['indexIds']) {
-            $constraints[] = $query->in('foreign_uid', $arguments['indexIds']);
+            $constraints[] = $query->in('foreignUid', $arguments['indexIds']);
         }
 
         return $constraints;
@@ -703,25 +703,25 @@ class IndexRepository extends AbstractRepository
             // (end_date === restrictionLowDay && end_time >= restrictionLowTime) || end_date > restrictionLowDay || (all_day === true && end_date >= restrictionLowDay)
             $query->logicalOr([
                 $query->logicalAnd([
-                    $query->equals('end_date', $restrictionLowDay),
-                    $query->greaterThanOrEqual('end_time', $restrictionLowTime),
+                    $query->equals('endDate', $restrictionLowDay),
+                    $query->greaterThanOrEqual('endTime', $restrictionLowTime),
                 ]),
-                $query->greaterThan('end_date', $restrictionLowDay),
+                $query->greaterThan('endDate', $restrictionLowDay),
                 $query->logicalAnd([
-                    $query->equals('all_day', true),
-                    $query->greaterThanOrEqual('end_date', $restrictionLowDay),
+                    $query->equals('allDay', true),
+                    $query->greaterThanOrEqual('endDate', $restrictionLowDay),
                 ]),
             ]),
             // (start_date === restrictionHighDay && start_time <= restrictionHighTime) || start_date < restrictionHighDay || (all_day === true && start_date <= restrictionHighDay)
             $query->logicalOr([
                 $query->logicalAnd([
-                    $query->equals('start_date', $restrictionHighDay),
-                    $query->lessThanOrEqual('start_time', $restrictionHighTime),
+                    $query->equals('startDate', $restrictionHighDay),
+                    $query->lessThanOrEqual('startTime', $restrictionHighTime),
                 ]),
-                $query->lessThan('start_date', $restrictionHighDay),
+                $query->lessThan('startDate', $restrictionHighDay),
                 $query->logicalAnd([
-                    $query->equals('all_day', true),
-                    $query->lessThanOrEqual('start_date', $restrictionHighDay),
+                    $query->equals('allDay', true),
+                    $query->lessThanOrEqual('startDate', $restrictionHighDay),
                 ]),
             ]),
         ]);
@@ -743,31 +743,31 @@ class IndexRepository extends AbstractRepository
 
         // before - in
         $beforeIn = [
-            $query->lessThan('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->greaterThanOrEqual('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
-            $query->lessThan('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThan('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThan('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($beforeIn);
 
         // in - in
         $inIn = [
-            $query->greaterThanOrEqual('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->lessThan('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->lessThan('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($inIn);
 
         // in - after
         $inAfter = [
-            $query->greaterThanOrEqual('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->lessThan('start_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
-            $query->greaterThanOrEqual('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->lessThan('startDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($inAfter);
 
         // before - after
         $beforeAfter = [
-            $query->lessThan('start_date', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->greaterThan('end_date', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThan('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
+            $query->greaterThan('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($beforeAfter);
 
@@ -787,9 +787,9 @@ class IndexRepository extends AbstractRepository
     {
         if ('withrangelast' === $field) {
             return [
-                'end_date' => $direction,
-                'start_date' => $direction,
-                'start_time' => $direction,
+                'endDate' => $direction,
+                'startDate' => $direction,
+                'startTime' => $direction,
             ];
         }
         if ('end' !== $field) {
@@ -797,8 +797,8 @@ class IndexRepository extends AbstractRepository
         }
 
         return [
-            $field . '_date' => $direction,
-            $field . '_time' => $direction,
+            $field . 'Date' => $direction,
+            $field . 'Time' => $direction,
         ];
     }
 }

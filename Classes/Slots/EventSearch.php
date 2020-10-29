@@ -61,7 +61,7 @@ class EventSearch
         /** @var EventRepository $eventRepository */
         $eventRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(EventRepository::class);
         $searchTermHits = $eventRepository->getIdsBySearchTerm($customSearch['fullText']);
-        if ( $searchTermHits && count($searchTermHits) ) {
+        if ($searchTermHits && count($searchTermHits)) {
             $indexIds['tx_calendarize_domain_model_event'] = $searchTermHits;
         }
         return [
