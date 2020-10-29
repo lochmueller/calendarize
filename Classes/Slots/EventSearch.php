@@ -25,8 +25,8 @@ class EventSearch
     /**
      * Check if we can reduce the amount of results.
      *
-     * @SignalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
-     * @SignalName findBySearchPre
+     * @SignalClass(value="HDNET\Calendarize\Domain\Repository\IndexRepository")
+     * @SignalName(value="findBySearchPre")
      *
      * @param array          $indexIds
      * @param \DateTime|null $startDate
@@ -55,14 +55,17 @@ class EventSearch
         // ?tx_calendarize_calendar[customSearch][categories]=1
         // https://github.com/lochmueller/calendarize/issues/89
 
-        if (!isset($customSearch['fullText'])) {
+        if (!isset($customSearch['fullText']) || !$customSearch['fullText']) {
             return;
         }
-
+        /** @var EventRepository $eventRepository */
         $eventRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(EventRepository::class);
-
+        $searchTermHits = $eventRepository->getIdsBySearchTerm($customSearch['fullText']);
+        if ($searchTermHits && count($searchTermHits)) {
+            $indexIds['tx_calendarize_domain_model_event'] = $searchTermHits;
+        }
         return [
-            'indexIds' => $eventRepository->getIdsBySearchTerm($customSearch['fullText']),
+            'indexIds' => $indexIds,
             'startDate' => $startDate,
             'endDate' => $endDate,
             'customSearch' => $customSearch,
