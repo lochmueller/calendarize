@@ -62,8 +62,9 @@ class CleanupCommandController extends Command
      * Cleanup the event models.
      * Remove outdated events to keep a small footprint. This gain maybe a little more performance.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output)

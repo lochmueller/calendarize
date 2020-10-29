@@ -27,9 +27,8 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class ImportCommandController extends Command
 {
-
     /**
-     * @var ICalServiceInterface $iCalService
+     * @var ICalServiceInterface
      */
     protected $iCalService;
 
@@ -45,10 +44,11 @@ class ImportCommandController extends Command
 
     /**
      * ImportCommandController constructor.
-     * @param string|null $name
-     * @param ICalServiceInterface $iCalService
+     *
+     * @param string|null              $name
+     * @param ICalServiceInterface     $iCalService
      * @param EventDispatcherInterface $eventDispatcher
-     * @param IndexerService $indexerService
+     * @param IndexerService           $indexerService
      */
     public function __construct(
         string $name = null,
@@ -89,9 +89,11 @@ class ImportCommandController extends Command
     /**
      * Executes the command for importing a iCalendar ICS into a page ID.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int 0 if everything went fine, or an exit code
+     *
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -101,12 +103,14 @@ class ImportCommandController extends Command
         $icsCalendarUri = (string)$input->getArgument('icsCalendarUri');
         if (!GeneralUtility::isValidUrl($icsCalendarUri)) {
             $io->error('You have to enter a valid URL to the iCalendar ICS');
+
             return 1;
         }
 
         $pid = $input->getArgument('pid');
         if (!MathUtility::canBeInterpretedAsInteger($pid)) {
             $io->error('You have to enter a valid PID for the new created elements');
+
             return 1;
         }
         $pid = (int)$pid;
@@ -114,7 +118,7 @@ class ImportCommandController extends Command
         // Process skip
         $since = $input->getOption('since');
         $ignoreBeforeDate = null;
-        if ($since !== null) {
+        if (null !== $since) {
             $ignoreBeforeDate = new \DateTime($since);
             $io->text('Skipping all events before ' . $ignoreBeforeDate->format(\DateTimeInterface::ATOM));
         }
@@ -123,15 +127,17 @@ class ImportCommandController extends Command
         $io->section('Start to checkout the calendar');
 
         $content = GeneralUtility::getUrl($icsCalendarUri);
-        if ($content === false) {
+        if (false === $content) {
             $io->error('Unable to get the content of ' . $icsCalendarUri . '.');
+
             return 1;
         }
 
         $icalFile = Environment::getVarPath() . '/transient/.' . 'ical-' . GeneralUtility::shortMD5($icsCalendarUri) . '.ics';
         $tempResult = GeneralUtility::writeFileToTypo3tempDir($icalFile, $content);
-        if ($tempResult !== null) {
+        if (null !== $tempResult) {
             $io->error('Unable to write to "' . $icalFile . '". Reason: ' . $tempResult);
+
             return 1;
         }
 
@@ -151,12 +157,12 @@ class ImportCommandController extends Command
             // Skip events before given date
             if (($event->getEndDate() ?? $event->getStartDate()) < $ignoreBeforeDate) {
                 $io->progressAdvance();
-                $skipCount++;
+                ++$skipCount;
                 continue;
             }
 
             $this->eventDispatcher->dispatch(new ImportSingleIcalEvent($event, $pid));
-            $dispatchCount++;
+            ++$dispatchCount;
             $io->progressAdvance();
         }
         $io->progressFinish();

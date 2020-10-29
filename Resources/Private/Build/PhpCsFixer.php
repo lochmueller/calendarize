@@ -16,7 +16,8 @@ return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
-        '@PSR2' => true,
+        '@Symfony' => true,
+        'no_superfluous_phpdoc_tags' => false,
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,
         'braces' => ['allow_single_line_closure' => true],

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace HDNET\Calendarize\Service\Ical;
 
 use HDNET\Calendarize\Exception\UnableToGetEventsException;
@@ -11,9 +12,8 @@ use JMBTechnologyLimited\ICalDissect\ICalParser;
 
 class DissectICalService extends AbstractService implements ICalServiceInterface
 {
-
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEvents(string $filename): array
     {

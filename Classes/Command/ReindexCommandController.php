@@ -28,9 +28,11 @@ class ReindexCommandController extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
+     *
      * @throws InvalidConfigurationTypeException
      * @throws InvalidExtensionNameException
      * @throws Exception

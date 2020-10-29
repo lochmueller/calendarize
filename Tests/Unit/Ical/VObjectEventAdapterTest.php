@@ -16,6 +16,7 @@ class VObjectEventAdapterTest extends ICalEventTest
 
         /* @var \Sabre\VObject\Component\VEvent $vevent */
         $vevent = $vcalendar->VEVENT;
+
         return new VObjectEventAdapter($vevent);
     }
 }

@@ -8,7 +8,6 @@ use HDNET\Calendarize\Ical\ICalEvent;
 
 final class ImportSingleIcalEvent
 {
-
     /**
      * @var ICalEvent
      */
@@ -21,8 +20,9 @@ final class ImportSingleIcalEvent
 
     /**
      * ImportSingleEvent constructor.
+     *
      * @param ICalEvent $event
-     * @param int $pid
+     * @param int       $pid
      */
     public function __construct(ICalEvent $event, int $pid)
     {

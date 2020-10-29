@@ -115,6 +115,7 @@ class Index extends AbstractModel
      * Get the original record for the current index.
      *
      * @return AbstractEntity
+     *
      * @throws InvalidConfigurationException
      */
     public function getOriginalObject()

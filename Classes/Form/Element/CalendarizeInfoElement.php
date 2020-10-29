@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace HDNET\Calendarize\Form\Element;
 
 use HDNET\Calendarize\Service\IndexerService;
@@ -29,6 +30,7 @@ class CalendarizeInfoElement extends AbstractFormElement
         $content = \sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);
 
         $result['html'] = $content;
+
         return $result;
     }
 

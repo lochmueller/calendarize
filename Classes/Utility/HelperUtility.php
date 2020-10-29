@@ -25,13 +25,13 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 class HelperUtility
 {
-
     /**
      * Get the query for the given class name oder object.
      *
      * @param string|object $objectName
      *
      * @return QueryInterface
+     *
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     public static function getQuery($objectName)

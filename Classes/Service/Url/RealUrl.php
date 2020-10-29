@@ -207,6 +207,7 @@ class RealUrl extends AbstractUrl
         // Init the internal utility by ObjectAccess because the property is
         // set by a protected method only. :( Perhaps this could be part of the construct (in realurl)
         $utility = GeneralUtility::makeInstance(Utility::class, $configuration);
+
         return (string)$utility->convertToSafeString($alias);
     }
 }

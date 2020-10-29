@@ -10,7 +10,6 @@ use Sabre\VObject\Component\VEvent;
 
 class VObjectEventAdapter implements ICalEvent
 {
-
     /**
      * @var VEvent
      */
@@ -18,6 +17,7 @@ class VObjectEventAdapter implements ICalEvent
 
     /**
      * VObjectEvent constructor.
+     *
      * @param VEvent $event
      */
     public function __construct(VEvent $event)
@@ -34,7 +34,7 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRawData(): array
     {
@@ -42,7 +42,7 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUid(): string
     {
@@ -50,18 +50,19 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTitle(): ?string
     {
         if (!isset($this->event->SUMMARY)) {
             return null;
         }
+
         return $this->event->SUMMARY->getValue();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDescription(): ?string
     {
@@ -73,7 +74,7 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getLocation(): ?string
     {
@@ -85,7 +86,7 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOrganizer(): ?string
     {
@@ -97,7 +98,7 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getStartDate(): ?\DateTime
     {
@@ -107,11 +108,12 @@ class VObjectEventAdapter implements ICalEvent
 
         /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
         $start = $this->event->DTSTART;
+
         return DateTimeUtility::getDayStart($start->getDateTime());
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEndDate(): ?\DateTime
     {
@@ -130,6 +132,7 @@ class VObjectEventAdapter implements ICalEvent
 
     /**
      * Gets the end datetime, determines it with the duration or returns null.
+     *
      * @return \DateTimeImmutable|null
      */
     protected function getEndDateTime(): ?\DateTimeImmutable
@@ -147,11 +150,12 @@ class VObjectEventAdapter implements ICalEvent
 
             return (clone $dtStart)->getDateTime()->add($duration);
         }
+
         return null;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getStartTime(): int
     {
@@ -161,11 +165,12 @@ class VObjectEventAdapter implements ICalEvent
 
         /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
         $start = $this->event->DTSTART;
+
         return DateTimeUtility::getDaySecondsOfDateTime($start->getDateTime());
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEndTime(): int
     {
@@ -178,7 +183,7 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isAllDay(): bool
     {
@@ -187,11 +192,12 @@ class VObjectEventAdapter implements ICalEvent
         }
         /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
         $start = $this->event->DTSTART;
+
         return !$start->hasTime();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isOpenEndTime(): bool
     {
@@ -199,16 +205,17 @@ class VObjectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getState(): string
     {
         if (isset($this->event->STATUS)) {
             $status = $this->event->STATUS->getValue();
-            if ($status === 'CANCELLED') {
+            if ('CANCELLED' === $status) {
                 return ConfigurationInterface::STATE_CANCELED;
             }
         }
+
         return ConfigurationInterface::STATE_DEFAULT;
     }
 }

@@ -168,6 +168,7 @@ abstract class AbstractController extends ActionController
         $string = $this->getStringForPluginHmac();
 
         $hashService = GeneralUtility::makeInstance(HashService::class);
+
         return $hashService->generateHmac($string);
     }
 

@@ -17,6 +17,7 @@ interface ICalEvent
 
     /**
      * Returns event data as key value array.
+     *
      * @return array
      */
     public function getRawData(): array;

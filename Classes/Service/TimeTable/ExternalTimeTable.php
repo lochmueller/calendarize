@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExternalTimeTable extends AbstractTimeTable
 {
-
     /**
      * Ical service.
      *

@@ -209,13 +209,13 @@ class IndexRepository extends AbstractRepository
                     // Table based values with array of foreign uids
                     $tabledIndexIds[] = [
                         'table' => $key,
-                        'indexIds' => $indexId
+                        'indexIds' => $indexId,
                     ];
                 } elseif (is_string($key) && is_int($indexId)) {
                     // Table based single return value
                     $tabledIndexIds[] = [
                          'table' => $key,
-                         'indexIds' => [$indexId]
+                         'indexIds' => [$indexId],
                     ];
                 }
             }
@@ -237,7 +237,7 @@ class IndexRepository extends AbstractRepository
                         // unless other elements have found elements with the filters
                         $foreignIdConstraints[] = $query->logicalAnd([
                             $query->equals('foreignTable', $tabledIndexId['table']),
-                            $query->in('foreignUid', $tabledIndexId['indexIds'])
+                            $query->in('foreignUid', $tabledIndexId['indexIds']),
                         ]);
                     }
                 }
@@ -584,7 +584,7 @@ class IndexRepository extends AbstractRepository
      */
     protected function getStoragePageIds()
     {
-        if ($this->overridePageIds !== null) {
+        if (null !== $this->overridePageIds) {
             return $this->overridePageIds;
         }
 

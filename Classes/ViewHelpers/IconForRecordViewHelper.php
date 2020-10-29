@@ -21,9 +21,8 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 class IconForRecordViewHelper extends \TYPO3\CMS\Core\ViewHelpers\IconForRecordViewHelper
 {
-
     /**
-     * Initializes the arguments
+     * Initializes the arguments.
      */
     public function initializeArguments()
     {
@@ -33,9 +32,10 @@ class IconForRecordViewHelper extends \TYPO3\CMS\Core\ViewHelpers\IconForRecordV
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
+     * @param array                     $arguments
+     * @param \Closure                  $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
+     *
      * @return string
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
@@ -44,6 +44,7 @@ class IconForRecordViewHelper extends \TYPO3\CMS\Core\ViewHelpers\IconForRecordV
         if (!is_array($arguments['row'])) {
             $arguments['row'] = [];
         }
+
         return parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
     }
 }

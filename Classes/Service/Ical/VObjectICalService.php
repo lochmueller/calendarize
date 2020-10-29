@@ -14,14 +14,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class VObjectICalService extends AbstractService implements ICalServiceInterface
 {
-
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEvents(string $filename): array
     {
         $content = GeneralUtility::getUrl($filename);
-        if ($content === false) {
+        if (false === $content) {
             throw new UnableToGetEventsException('Unable to get "' . $filename . '".', 1603307743);
         }
 

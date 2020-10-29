@@ -4,6 +4,7 @@ declare(strict_types=1);
 /**
  * Check if a date is lower.
  */
+
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;

@@ -28,6 +28,7 @@ final class ImportSingleIcalEventListener
 
     /**
      * ImportSingleIcalEventListener constructor.
+     *
      * @param EventRepository $eventRepository
      */
     public function __construct(
@@ -62,7 +63,9 @@ final class ImportSingleIcalEventListener
 
     /**
      * Initializes or gets a event by import id.
+     *
      * @param string $importId
+     *
      * @return Event
      */
     protected function initializeEventRecord(string $importId)
@@ -73,14 +76,16 @@ final class ImportSingleIcalEventListener
             $eventObj = new Event();
             $eventObj->setImportId($importId);
         }
+
         return $eventObj;
     }
 
     /**
      * Hydrates the event record with the event data.
-     * @param Event $eventObj
+     *
+     * @param Event     $eventObj
      * @param ICalEvent $calEvent
-     * @param int $pid
+     * @param int       $pid
      */
     protected function hydrateEventRecord(Event $eventObj, ICalEvent $calEvent, int $pid)
     {
@@ -105,7 +110,7 @@ final class ImportSingleIcalEventListener
         // To prevent multiple (also duplicate) Configurations, a new store is created.
         // TODO: Find better way to update, ... the existing configuration,
         //       to prevent recreation.
-        if ($eventObj->getCalendarize()->count() !== 0) {
+        if (0 !== $eventObj->getCalendarize()->count()) {
             $eventObj->setCalendarize(new ObjectStorage());
         }
         $eventObj->addCalendarize($configuration);

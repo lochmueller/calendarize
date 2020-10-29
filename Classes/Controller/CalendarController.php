@@ -29,7 +29,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 class CalendarController extends AbstractController
 {
-
     /**
      * @var ObjectManagerInterface
      */
@@ -107,12 +106,12 @@ class CalendarController extends AbstractController
      * Latest action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
@@ -156,12 +155,12 @@ class CalendarController extends AbstractController
      * Result action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch
-     * @param int $year
-     * @param int $month
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $week
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
@@ -205,13 +204,13 @@ class CalendarController extends AbstractController
      * List action.
      *
      * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array $customSearch *
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $week
+     * @param \DateTime                             $startDate
+     * @param \DateTime                             $endDate
+     * @param array                                 $customSearch *
+     * @param int                                   $year
+     * @param int                                   $month
+     * @param int                                   $day
+     * @param int                                   $week
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
@@ -293,7 +292,7 @@ class CalendarController extends AbstractController
     /**
      * Past action.
      *
-     * @param int $limit
+     * @param int    $limit
      * @param string $sort
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
@@ -323,7 +322,7 @@ class CalendarController extends AbstractController
 
         $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
         $now = DateTimeUtility::getNow();
-        if ($year === null || $now->format('Y') === $date->format('Y')) {
+        if (null === $year || $now->format('Y') === $date->format('Y')) {
             $date = $now;
         }
 
@@ -488,7 +487,7 @@ class CalendarController extends AbstractController
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param array $customSearch
+     * @param array     $customSearch
      *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
@@ -566,11 +565,11 @@ class CalendarController extends AbstractController
      *
      * @param \DateTime|null $startDate
      * @param \DateTime|null $endDate
-     * @param array $customSearch
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @param int $week
+     * @param array          $customSearch
+     * @param int            $year
+     * @param int            $month
+     * @param int            $day
+     * @param int            $week
      *
      * @return array
      */
@@ -694,8 +693,8 @@ class CalendarController extends AbstractController
      * A redirect that have a slot included.
      *
      * @param string $signalClassName name of the signal class: __CLASS__
-     * @param string $signalName name of the signal: __FUNCTION__
-     * @param array $variables optional: if not set use the defaults
+     * @param string $signalName      name of the signal: __FUNCTION__
+     * @param array  $variables       optional: if not set use the defaults
      */
     protected function slottedRedirect($signalClassName, $signalName, $variables = null)
     {

@@ -42,7 +42,7 @@ class KeSearchIndexer extends AbstractHook
     /**
      * Calendarize indexer for ke_search.
      *
-     * @param array                $indexerConfig Configuration from TYPO3 Backend
+     * @param array                                                $indexerConfig Configuration from TYPO3 Backend
      * @param \TeaminmediasPluswerk\KeSearch\Indexer\IndexerRunner $indexerObject reference to indexer class
      *
      * @return string|null
@@ -95,7 +95,7 @@ class KeSearchIndexer extends AbstractHook
                 $index->_hasProperty('endtime') ? $index->_getProperty('endtime') : 0,
                 $index->_hasProperty('fe_group') ? $index->_getProperty('fe_group') : '',
                 false, // debugOnly
-                $additionalFields
+                $additionalFields,
             ];
 
             $indexerObject->storeInIndex(...$storeArguemnts);

@@ -25,7 +25,6 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  * /**
  *  * @SignalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
  *  * @SignalName getCalendarizeEventUid
- *  *
  *
  *  *@return array
  *  *
@@ -1078,7 +1077,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 }

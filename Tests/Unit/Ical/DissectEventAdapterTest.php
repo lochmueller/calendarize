@@ -28,7 +28,7 @@ class DissectEventAdapterTest extends ICalEventTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getEvent(string $content): ICalEvent
     {
@@ -38,6 +38,7 @@ class DissectEventAdapterTest extends ICalEventTest
         if (!$parser->parseFromFile($this->tmpFile)) {
             self::fail('Unable to open or parse temporary ical file.');
         }
+
         return new DissectEventAdapter($parser->getEvents()[0]);
     }
 

@@ -98,6 +98,7 @@ class DateFieldUpdate implements UpgradeWizardInterface
         }
         /** @var \Doctrine\DBAL\Schema\Column $checkField */
         $checkField = $columns[$fieldName];
+
         return !($checkField->getType() instanceof \Doctrine\DBAL\Types\DateType);
     }
 

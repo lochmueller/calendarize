@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace HDNET\Calendarize\Tests\Unit\Ical;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
@@ -10,7 +11,6 @@ use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 /** @coversDefaultClass ICalEvent */
 abstract class ICalEventTest extends AbstractUnitTest
 {
-
     /**
      * @return ICalEvent
      */
@@ -42,6 +42,7 @@ END:VCALENDAR
         self::assertTrue($event->isAllDay());
         self::assertEquals(ConfigurationInterface::STATE_DEFAULT, $event->getState());
     }
+
     public function testAllGetters()
     {
         $input = 'BEGIN:VCALENDAR
@@ -279,6 +280,7 @@ END:VCALENDAR
         self::assertEquals(ICalEvent::ALLDAY_START_TIME, $event->getStartTime());
         self::assertEquals(ICalEvent::ALLDAY_END_TIME, $event->getEndTime());
     }
+
     public function testDuration()
     {
         $input = 'BEGIN:VCALENDAR

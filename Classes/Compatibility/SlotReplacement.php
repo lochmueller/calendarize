@@ -62,9 +62,9 @@ class SlotReplacement
     /**
      * Adds a message to the FlashMessageQueue or prints it to the CLI.
      *
-     * @param mixed $message
+     * @param mixed  $message
      * @param string $title
-     * @param int $severity
+     * @param int    $severity
      */
     public function enqueueMessage($message, $title = '', $severity = FlashMessage::INFO)
     {
@@ -91,9 +91,9 @@ class SlotReplacement
     /**
      * Adds a message to the FlashMessageQueue.
      *
-     * @param mixed $message
+     * @param mixed  $message
      * @param string $title
-     * @param int $severity
+     * @param int    $severity
      */
     private function enqueueMessageGui($message, $title = '', $severity = FlashMessage::INFO)
     {

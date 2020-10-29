@@ -8,11 +8,10 @@ use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
- * Class DissectEvent
+ * Class DissectEvent.
  */
 class DissectEventAdapter implements ICalEvent
 {
-
     /**
      * @var \JMBTechnologyLimited\ICalDissect\ICalEvent
      */
@@ -20,6 +19,7 @@ class DissectEventAdapter implements ICalEvent
 
     /**
      * DissectEvent constructor.
+     *
      * @param \JMBTechnologyLimited\ICalDissect\ICalEvent $event
      */
     public function __construct(\JMBTechnologyLimited\ICalDissect\ICalEvent $event)
@@ -44,7 +44,7 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUid(): string
     {
@@ -52,7 +52,7 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTitle(): ?string
     {
@@ -60,7 +60,7 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDescription(): ?string
     {
@@ -68,7 +68,7 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getLocation(): ?string
     {
@@ -76,7 +76,7 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOrganizer(): ?string
     {
@@ -84,29 +84,31 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getStartDate(): ?\DateTime
     {
         if (empty($this->event->getStart())) {
             return null;
         }
+
         return DateTimeUtility::getDayStart($this->event->getStart());
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getStartTime(): int
     {
         if ($this->isAllDay() || empty($this->event->getStart())) {
             return self::ALLDAY_START_TIME;
         }
+
         return DateTimeUtility::getDaySecondsOfDateTime($this->event->getStart());
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEndDate(): ?\DateTime
     {
@@ -123,18 +125,19 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEndTime(): int
     {
         if ($this->isAllDay() || empty($this->event->getEnd())) {
             return self::ALLDAY_END_TIME;
         }
+
         return DateTimeUtility::getDaySecondsOfDateTime($this->event->getEnd());
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isAllDay(): bool
     {
@@ -149,16 +152,17 @@ class DissectEventAdapter implements ICalEvent
         $start = true;
         $end = true;
         if (!empty($this->event->getStart())) {
-            $start = DateTimeUtility::getDaySecondsOfDateTime($this->event->getStart()) === 0;
+            $start = 0 === DateTimeUtility::getDaySecondsOfDateTime($this->event->getStart());
         }
         if (!empty($this->event->getEnd())) {
-            $end = DateTimeUtility::getDaySecondsOfDateTime($this->event->getEnd()) === 86399;
+            $end = 86399 === DateTimeUtility::getDaySecondsOfDateTime($this->event->getEnd());
         }
+
         return $start && $end;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isOpenEndTime(): bool
     {
@@ -166,13 +170,14 @@ class DissectEventAdapter implements ICalEvent
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getState(): string
     {
         if ($this->event->isDeleted()) {
             return ConfigurationInterface::STATE_CANCELED;
         }
+
         return ConfigurationInterface::STATE_DEFAULT;
     }
 }

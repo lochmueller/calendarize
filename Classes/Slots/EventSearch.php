@@ -64,6 +64,7 @@ class EventSearch
         if ($searchTermHits && count($searchTermHits)) {
             $indexIds['tx_calendarize_domain_model_event'] = $searchTermHits;
         }
+
         return [
             'indexIds' => $indexIds,
             'startDate' => $startDate,
