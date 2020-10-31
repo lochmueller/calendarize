@@ -119,7 +119,7 @@ abstract class AbstractController extends ActionController
         }
         switch ($this->request->getFormat()) {
             case 'ics':
-                # Use CRLF, see https://tools.ietf.org/html/rfc5545#section-3.1
+                // Use CRLF, see https://tools.ietf.org/html/rfc5545#section-3.1
                 echo str_replace("\n", "\r\n", $this->response->getContent());
                 break;
             default:
