@@ -7,9 +7,9 @@ namespace HDNET\Calendarize\ViewHelpers\Format;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * EscapeNewLinesViewHelper.
+ * EscapeIcalTextViewHelper.
  */
-class EscapeNewLinesViewHelper extends AbstractViewHelper
+class EscapeIcalTextViewHelper extends AbstractViewHelper
 {
     /**
      * @var bool
@@ -30,11 +30,11 @@ class EscapeNewLinesViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Escapes special characters with their escaped counterparts as needed using PHPs htmlspecialchars() function.
+     * Escapes special characters for ICalendar TEXT defined in RFC 5545 - 3.3.11.
      *
      * @return string the altered string
      *
-     * @see http://www.php.net/manual/function.htmlspecialchars.php
+     * @see https://tools.ietf.org/html/rfc5545#section-3.3.11
      *
      * @api
      */
@@ -44,7 +44,7 @@ class EscapeNewLinesViewHelper extends AbstractViewHelper
         if (null === $value) {
             $value = $this->renderChildren();
         }
-
-        return str_replace(["\n", "\r"], ['\\n', '\\r'], $value);
+        // Note: The string syntax use double and single quotes!
+        return str_replace(["\\", "\n", "\r", ",", ";"], ['\\\\', '\n', '\r', '\,', '\;'], $value);
     }
 }

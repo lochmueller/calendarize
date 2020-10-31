@@ -117,7 +117,15 @@ abstract class AbstractController extends ActionController
             header('Content-Type: ' . $contentType . '; charset=utf-8');
             header('Content-Disposition: inline; filename=calendar.' . $fileExtension);
         }
-        echo $this->response->getContent();
+        switch ($this->request->getFormat()) {
+            case 'ics':
+                # Use CRLF, see https://tools.ietf.org/html/rfc5545#section-3.1
+                echo str_replace("\n", "\r\n", $this->response->getContent());
+                break;
+            default:
+                echo $this->response->getContent();
+                break;
+        }
         HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_200);
     }
 
