@@ -7,25 +7,15 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
 
-use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
+use TYPO3\CMS\Fluid\ViewHelpers\Format\DateViewHelper;
 
 /**
- * Check if the given Index is on the given day.
+ * Formats the date to UTC.
  */
-class FormatUtcDateViewHelper extends AbstractViewHelper
+class FormatUtcDateViewHelper extends DateViewHelper
 {
     /**
-     * Init arguments.
-     */
-    public function initializeArguments()
-    {
-        parent::initializeArguments();
-        $this->registerArgument('date', \DateTimeInterface::class, 'DateTimeInterface Object to format', true);
-        $this->registerArgument('format', 'string', 'format passed to strftime', false, '');
-    }
-
-    /**
-     * Format dateTime using strftime() with UTC timezone.
+     * Format dateTime to the UTC timezone.
      *
      * @return string
      */
@@ -36,7 +26,7 @@ class FormatUtcDateViewHelper extends AbstractViewHelper
         // set timezone to UTC
         date_default_timezone_set('UTC');
 
-        $result = strftime($this->arguments['format'], (int)$this->arguments['date']->format('U'));
+        $result = parent::render();
 
         // restore timezone setting
         date_default_timezone_set($timezone);
