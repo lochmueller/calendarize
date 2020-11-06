@@ -37,7 +37,7 @@ class ProcessCmdmapClass extends AbstractHook
         foreach ($register as $key => $configuration) {
             if ($configuration['tableName'] === $table) {
                 $indexer = GeneralUtility::makeInstance(IndexerService::class);
-                $indexer->reindex($key, $table, $uid);
+                $indexer->reindex($key, $table, (int)$uid);
             }
         }
     }

@@ -71,7 +71,7 @@ class IndexerService extends AbstractService
 
             $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
-                $this->updateIndex($key, $configuration['tableName'], $row['uid']);
+                $this->updateIndex($key, $configuration['tableName'], (int)$row['uid']);
             }
         }
 
@@ -85,7 +85,7 @@ class IndexerService extends AbstractService
      * @param string $tableName
      * @param int    $uid
      */
-    public function reindex($configurationKey, $tableName, $uid)
+    public function reindex(string $configurationKey, string $tableName, int $uid)
     {
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$configurationKey, $tableName, $uid, $this]);
@@ -109,7 +109,7 @@ class IndexerService extends AbstractService
     {
         // Note: "uid" could be e.g. NEW6273482 in DataHandler process
         if (MathUtility::canBeInterpretedAsInteger($uid)) {
-            return (int)$this->getCurrentItems($tableName, $uid)->rowCount();
+            return (int)$this->getCurrentItems($tableName, (int)$uid)->rowCount();
         }
 
         return 0;
@@ -155,7 +155,7 @@ class IndexerService extends AbstractService
      * @param string $tableName
      * @param int    $uid
      */
-    protected function updateIndex($configurationKey, $tableName, $uid)
+    protected function updateIndex(string $configurationKey, string $tableName, int $uid)
     {
         /** @var $preparationService IndexPreparationService */
         static $preparationService = null;
@@ -195,7 +195,7 @@ class IndexerService extends AbstractService
      * @param string $tableName
      * @param int    $uid
      */
-    protected function insertAndUpdateNeededItems(array $neededItems, $tableName, $uid)
+    protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection($tableName);
         $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();

@@ -66,7 +66,7 @@ class ProcessDatamapClass extends AbstractHook
             foreach ($this->indexItems as $table => $identifiers) {
                 if ($table === $configuration['tableName']) {
                     foreach ($identifiers as $uid) {
-                        $indexer->reindex($key, $table, $uid);
+                        $indexer->reindex($key, $table, (int)$uid);
                     }
                 }
             }
