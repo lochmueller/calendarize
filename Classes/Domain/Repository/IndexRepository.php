@@ -282,10 +282,10 @@ class IndexRepository extends AbstractRepository
         //create Query
         $query = $this->createQuery();
         //Get actual datetime
-        $now = DateTimeUtility::getNow()->getTimestamp();
+        $now = DateTimeUtility::getNow();
 
         $constraints = $this->getDefaultConstraints($query);
-        $constraints[] = $query->lessThanOrEqual('startDate', $now);
+        $constraints[] = $query->lessThanOrEqual('startDate', $now->format('Y-m-d'));
         $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings($this->getSorting($sort));
         $query->setLimit($limit);
