@@ -318,10 +318,9 @@ class IndexRepository extends AbstractRepository
         }
         $query = $this->createQuery();
 
-        $now = DateTimeUtility::getNow()
-            ->getTimestamp();
+        $now = DateTimeUtility::getNow();
         if ($useIndexTime) {
-            $now = $index->getStartDate()->getTimestamp();
+            $now = $index->getStartDate();
         }
 
         $constraints = [];
@@ -329,10 +328,10 @@ class IndexRepository extends AbstractRepository
         $constraints[] = $query->equals('foreignTable', $index->getForeignTable());
         $constraints[] = $query->equals('foreignUid', $index->getForeignUid());
         if (!$future) {
-            $constraints[] = $query->lessThanOrEqual('startDate', $now);
+            $constraints[] = $query->lessThanOrEqual('startDate', $now->format('Y-m-d'));
         }
         if (!$past) {
-            $constraints[] = $query->greaterThanOrEqual('startDate', $now);
+            $constraints[] = $query->greaterThanOrEqual('startDate', $now->format('Y-m-d'));
         }
 
         $query->setLimit($limit);
