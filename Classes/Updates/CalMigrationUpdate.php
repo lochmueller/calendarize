@@ -103,6 +103,7 @@ class CalMigrationUpdate implements UpgradeWizardInterface
     public function executeUpdate(): bool
     {
         $calIds = $this->getNonMigratedCalIds();
+        $dbQueries = [];
         $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
         $this->performSysFileReferenceUpdate($calIds, $dbQueries, $customMessages);
         $this->performExceptionEventUpdate($calIds, $dbQueries, $customMessages);
