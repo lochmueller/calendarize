@@ -64,6 +64,11 @@ class CalendarizeInfoElement extends AbstractFormElement
                 }
                 $entry .= ' (' . $start . ' - ' . $end . ')';
             }
+
+            if ($event['state'] !== 'default') {
+                $entry .= ' / ' . TranslateUtility::get($event['state']);
+            }
+
             $items[] = $entry;
         }
         if (!$items) {
