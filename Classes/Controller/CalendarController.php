@@ -668,7 +668,7 @@ class CalendarController extends AbstractController
             $allowedActions[$controllerName] = $controllerActions['actions'];
         }
 
-        return \is_array($allowedActions['Calendar']) ? $allowedActions['Calendar'] : [];
+        return \is_array($allowedActions[__CLASS__]) ? $allowedActions[__CLASS__] : [];
     }
 
     /**
