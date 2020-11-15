@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use function gmmktime;
 
 /**
  * Index repository.
@@ -403,7 +404,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findYear(int $year)
     {
-        return $this->findByTimeSlot(mktime(0, 0, 0, 1, 1, $year), mktime(0, 0, 0, 1, 1, $year + 1) - 1);
+        return $this->findByTimeSlot(gmmktime(0, 0, 0, 1, 1, $year), gmmktime(0, 0, 0, 1, 1, $year + 1) - 1);
     }
 
     /**
@@ -418,7 +419,7 @@ class IndexRepository extends AbstractRepository
     {
         $startMonth = 1 + (3 * ($quarter - 1));
 
-        return $this->findByTimeSlot(mktime(0, 0, 0, $startMonth, 1, $year), mktime(0, 0, 0, $startMonth + 3, 1, $year) - 1);
+        return $this->findByTimeSlot(gmmktime(0, 0, 0, $startMonth, 1, $year), gmmktime(0, 0, 0, $startMonth + 3, 1, $year) - 1);
     }
 
     /**
@@ -431,8 +432,8 @@ class IndexRepository extends AbstractRepository
      */
     public function findMonth(int $year, int $month)
     {
-        $startTime = mktime(0, 0, 0, $month, 1, $year);
-        $endTime = mktime(0, 0, 0, $month + 1, 1, $year) - 1;
+        $startTime = gmmktime(0, 0, 0, $month, 1, $year);
+        $endTime = gmmktime(0, 0, 0, $month + 1, 1, $year) - 1;
 
         return $this->findByTimeSlot($startTime, $endTime);
     }
@@ -488,7 +489,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findDay(int $year, int $month, int $day)
     {
-        $startTime = mktime(0, 0, 0, $month, $day, $year);
+        $startTime = gmmktime(0, 0, 0, $month, $day, $year);
         $startDate = new \DateTime('@' . $startTime);
         $endDate = clone $startDate;
         $endDate->modify('+1 day');
@@ -751,7 +752,7 @@ class IndexRepository extends AbstractRepository
         // in - in
         $inIn = [
             $query->greaterThanOrEqual('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->lessThan('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThanOrEqual('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
         ];
         $orConstraint[] = $query->logicalAnd($inIn);
 
