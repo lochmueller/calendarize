@@ -51,22 +51,23 @@ interface ICalEvent
     public function getLocation(): ?string;
 
     /**
-     * Get orginzer.
+     * Get organinzer.
      *
      * @return string|null
      */
     public function getOrganizer(): ?string;
 
     /**
-     * Get start date.
+     * Get the start date.
+     * The date is converted to the local timezone and set to the beginning of the day.
      *
      * @return \DateTime|null
      */
     public function getStartDate(): ?\DateTime;
 
     /**
-     * Get end date.
-     * This is an inclusive end date.
+     * Get the inclusive end date.
+     * The date is converted to the local timezone and set to the beginning of the day.
      *
      * @return \DateTime|null
      */
@@ -74,6 +75,7 @@ interface ICalEvent
 
     /**
      * Get start time.
+     * The time is calculated in the local timezone.
      *
      * @return int
      */
@@ -81,6 +83,7 @@ interface ICalEvent
 
     /**
      * Get end time.
+     * The time is calculated in the local timezone.
      *
      * @return int
      */
