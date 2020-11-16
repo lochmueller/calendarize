@@ -397,9 +397,6 @@ class CalendarController extends AbstractController
         }
         $weekStart = (int)$this->settings['weekStart'];
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int)$week, $year, $weekStart);
-        $timezone = DateTimeUtility::getTimeZone();
-        $firstDay->setTimezone($timezone);
-        $firstDay->setTime(0, 0, 0);
 
         $weekConfiguration = [
             '+0 day' => 2,

@@ -88,11 +88,16 @@ class DissectEventAdapter implements ICalEvent
      */
     public function getStartDate(): ?\DateTime
     {
-        if (empty($this->event->getStart())) {
+        $startDate = $this->event->getStart();
+        if (empty($startDate)) {
             return null;
         }
+        if ($this->isAllDay()) {
+            // Allows the date to be reparsed with the right timezone.
+            $startDate = $startDate->format('Y-m-d');
+        }
 
-        return DateTimeUtility::getDayStart($this->event->getStart());
+        return DateTimeUtility::getDayStart($startDate);
     }
 
     /**
@@ -104,7 +109,7 @@ class DissectEventAdapter implements ICalEvent
             return self::ALLDAY_START_TIME;
         }
 
-        return DateTimeUtility::getDaySecondsOfDateTime($this->event->getStart());
+        return DateTimeUtility::getNormalizedDaySecondsOfDateTime($this->event->getStart());
     }
 
     /**
@@ -119,6 +124,8 @@ class DissectEventAdapter implements ICalEvent
         if ($this->isAllDay()) {
             // Converts the exclusive enddate to inclusive
             $endDate = (clone $endDate)->sub(new \DateInterval('P1D'));
+            // Allows the date to be reparsed with the right timezone.
+            $endDate = $endDate->format('Y-m-d');
         }
 
         return DateTimeUtility::getDayStart($endDate);
@@ -133,7 +140,7 @@ class DissectEventAdapter implements ICalEvent
             return self::ALLDAY_END_TIME;
         }
 
-        return DateTimeUtility::getDaySecondsOfDateTime($this->event->getEnd());
+        return DateTimeUtility::getNormalizedDaySecondsOfDateTime($this->event->getEnd());
     }
 
     /**

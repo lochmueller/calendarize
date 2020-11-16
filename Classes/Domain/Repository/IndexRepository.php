@@ -452,8 +452,6 @@ class IndexRepository extends AbstractRepository
         $weekStart = (int)$weekStart;
         $daysShift = $weekStart - 1;
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
-        $timezone = DateTimeUtility::getTimeZone();
-        $firstDay->setTimezone($timezone);
         if (0 !== $daysShift) {
             $firstDay->modify('+' . $daysShift . ' days');
         }

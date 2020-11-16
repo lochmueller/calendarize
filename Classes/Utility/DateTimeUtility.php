@@ -70,9 +70,11 @@ class DateTimeUtility
      */
     public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
     {
-        $week = str_pad((string)$week, 2, '0', STR_PAD_LEFT);
+        $date = self::getNow();
+        $date->setTime(0, 0, 0);
+        $date->setISODate($year, $week, $startDay);
 
-        return self::normalizeDateTimeSingle(strtotime($year . '-W' . $week . '-' . $startDay));
+        return $date;
     }
 
     /**
@@ -110,6 +112,20 @@ class DateTimeUtility
         $minutes = $hours * self::SECONDS_MINUTE + (int)$dateTime->format('i');
 
         return $minutes * self::SECONDS_MINUTE + (int)$dateTime->format('s');
+    }
+
+    /**
+     * Get the time seconds of the given date (TYPO3 Backend style) in the server timezone.
+     *
+     * @param \DateTimeInterface $dateTime
+     *
+     * @return int
+     */
+    public static function getNormalizedDaySecondsOfDateTime(\DateTimeInterface $dateTime): int
+    {
+        $date = self::normalizeDateTimeSingle($dateTime);
+
+        return self::getDaySecondsOfDateTime($date);
     }
 
     /**
@@ -165,7 +181,7 @@ class DateTimeUtility
     /**
      * Normalize quartar.
      *
-     * @param int|null $quarter
+     * @param \DateTimeInterface $date
      *
      * @return int
      */
@@ -192,31 +208,40 @@ class DateTimeUtility
     }
 
     /**
-     * Get a normalized date time object. The timezone of the returned object is
-     * UTC for integer parameters and server timezone for everything else.
+     * Get a normalized date time object in a specific timezone.
      *
      * @param int|string|\DateTimeInterface|null $dateInformation
+     * @param \DateTimeZone|null                 $timezone        Timezone to normalize to. Defaults to the self::getTimeZone().
      *
      * @return \DateTime
+     *
+     * @throws \Exception
      */
-    public static function normalizeDateTimeSingle($dateInformation): \DateTime
+    public static function normalizeDateTimeSingle($dateInformation = null, \DateTimeZone $timezone = null): \DateTime
     {
+        $timezone = $timezone ?? self::getTimeZone();
+        $date = self::getNow();
+
         if ($dateInformation instanceof \DateTimeInterface) {
-            return \DateTime::createFromFormat(
+            // Convert DateTimeInterface to a DateTime object
+            $date = \DateTime::createFromFormat(
                 \DateTimeInterface::ATOM,
-                $dateInformation->format(\DateTimeInterface::ATOM)
+                $dateInformation->format(\DateTimeInterface::ATOM),
+                $timezone
             );
-        }
-        if (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
+        } elseif (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :
             // The $timezone parameter and the current timezone are ignored [ie. set to UTC] when the $time parameter [...] is a UNIX timestamp (e.g. @946684800) [...]
-            return new \DateTime("@$dateInformation");
-        }
-        if (\is_string($dateInformation)) {
-            return new \DateTime($dateInformation);
+            $date = new \DateTime("@$dateInformation");
+        } elseif (\is_string($dateInformation)) {
+            // Add timezone explicitly here, so that it does not depend on the "current timezone".
+            $date = new \DateTime($dateInformation, $timezone);
         }
 
-        return self::getNow();
+        // Change timezone
+        $date->setTimezone($timezone);
+
+        return $date;
     }
 
     /**
@@ -229,7 +254,7 @@ class DateTimeUtility
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
-        return new \DateTime(date(\DateTime::ATOM, (int)$GLOBALS['SIM_ACCESS_TIME']));
+        return new \DateTime(date(\DateTime::ATOM, (int)$GLOBALS['SIM_ACCESS_TIME']), self::getTimeZone());
     }
 
     /**

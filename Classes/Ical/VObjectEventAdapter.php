@@ -105,11 +105,14 @@ class VObjectEventAdapter implements ICalEvent
         if (!isset($this->event->DTSTART)) {
             return null;
         }
+        $start = $this->event->DTSTART->getDateTime();
 
-        /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
-        $start = $this->event->DTSTART;
+        if ($this->isAllDay()) {
+            // Allows the date to be reparsed with the right timezone.
+            $start = $start->format('Y-m-d');
+        }
 
-        return DateTimeUtility::getDayStart($start->getDateTime());
+        return DateTimeUtility::getDayStart($start);
     }
 
     /**
@@ -125,6 +128,8 @@ class VObjectEventAdapter implements ICalEvent
         if ($this->isAllDay()) {
             // Converts the exclusive enddate to inclusive
             $end = (clone $end)->sub(new \DateInterval('P1D'));
+            // Allows the date to be reparsed with the right timezone.
+            $end = $end->format('Y-m-d');
         }
 
         return DateTimeUtility::getDayStart($end);
@@ -166,7 +171,7 @@ class VObjectEventAdapter implements ICalEvent
         /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
         $start = $this->event->DTSTART;
 
-        return DateTimeUtility::getDaySecondsOfDateTime($start->getDateTime());
+        return DateTimeUtility::getNormalizedDaySecondsOfDateTime($start->getDateTime());
     }
 
     /**
@@ -179,7 +184,7 @@ class VObjectEventAdapter implements ICalEvent
             return self::ALLDAY_END_TIME;
         }
 
-        return DateTimeUtility::getDaySecondsOfDateTime($end);
+        return DateTimeUtility::getNormalizedDaySecondsOfDateTime($end);
     }
 
     /**

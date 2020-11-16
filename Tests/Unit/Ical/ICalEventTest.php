@@ -7,10 +7,29 @@ namespace HDNET\Calendarize\Tests\Unit\Ical;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Ical\ICalEvent;
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /** @coversDefaultClass ICalEvent */
 abstract class ICalEventTest extends AbstractUnitTest
 {
+    /**
+     * @var string Backup of current timezone, it is manipulated in tests
+     */
+    protected $timezone;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->timezone = @date_default_timezone_get();
+        date_default_timezone_set('UTC');
+    }
+
+    protected function tearDown(): void
+    {
+        date_default_timezone_set($this->timezone);
+        parent::tearDown();
+    }
+
     /**
      * @return ICalEvent
      */
@@ -279,6 +298,58 @@ END:VCALENDAR
         self::assertTrue($event->isAllDay());
         self::assertEquals(ICalEvent::ALLDAY_START_TIME, $event->getStartTime());
         self::assertEquals(ICalEvent::ALLDAY_END_TIME, $event->getEndTime());
+    }
+
+    public function testDateAndTimeTimzone()
+    {
+        $timezone = new \DateTimeZone('America/Los_Angeles');
+        date_default_timezone_set($timezone->getName());
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:0ee38aeb-ef2d-4a06-b01d-8a21d2552e4b@example.com
+DTSTAMP:20150907T083000Z
+DTSTART:20120101T073000Z
+DTEND:20120101T083000Z
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+
+        $expectedStart = new \DateTime('20120101T073000Z');
+        $expectedStart->setTimezone($timezone);
+        $expectedEnd = new \DateTime('20120101T083000Z');
+        $expectedEnd->setTimezone($timezone);
+
+        self::assertEquals($expectedStart->format('Ymd'), $event->getStartDate()->format('Ymd'));
+        self::assertEquals($expectedEnd->format('Ymd'), $event->getEndDate()->format('Ymd'));
+        self::assertEquals(DateTimeUtility::getDaySecondsOfDateTime($expectedStart), $event->getStartTime());
+        self::assertEquals(DateTimeUtility::getDaySecondsOfDateTime($expectedEnd), $event->getEndTime());
+        self::assertFalse($event->isAllDay());
+    }
+
+    public function testAllDayTimezone()
+    {
+        date_default_timezone_set('America/Los_Angeles');
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:3c670bf2-e81b-4b36-9e39-e84418d4112a@example.com
+DTSTAMP:20201023T215502Z
+DTSTART;VALUE=DATE:20050515
+DTEND;VALUE=DATE:20050516
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+
+        self::assertEquals('20050515', $event->getStartDate()->format('Ymd'));
+        self::assertEquals('20050515', $event->getEndDate()->format('Ymd'));
+        self::assertEquals(ICalEvent::ALLDAY_START_TIME, $event->getStartTime());
+        self::assertEquals(ICalEvent::ALLDAY_END_TIME, $event->getEndTime());
+        self::assertTrue($event->isAllDay());
     }
 
     public function testDuration()
