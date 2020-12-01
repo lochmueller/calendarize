@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 
 /**
  * BookingController.
@@ -35,7 +36,7 @@ class BookingController extends AbstractController
      * @param Index                                                          $index
      * @param \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest $request
      *
-     * @validate $request \HDNET\Calendarize\Validation\Validator\BookingRequestValidator
+     * @Extbase\Validate("\HDNET\Calendarize\Validation\Validator\BookingRequestValidator", param="request")
      */
     public function sendAction(Index $index, AbstractBookingRequest $request)
     {

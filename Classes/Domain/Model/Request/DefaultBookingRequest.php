@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model\Request;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
+
 /**
  * DefaultBookingRequest.
  */
@@ -16,7 +18,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * First name.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $firstName;
 
@@ -24,7 +26,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * Last name.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $lastName;
 
@@ -32,8 +34,8 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * E-Mail.
      *
      * @var string
-     * @validate NotEmpty
-     * @validate EmailAddress
+     * @Extbase\Validate("NotEmpty")
+     * @Extbase\Validate("EmailAddress")
      */
     protected $email;
 
@@ -48,7 +50,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * Street.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $street;
 
@@ -56,7 +58,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * House number.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $houseNumber;
 
@@ -64,7 +66,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * ZIP.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $zip;
 
@@ -72,7 +74,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * City.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $city;
 
@@ -80,7 +82,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * Country.
      *
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $country;
 
