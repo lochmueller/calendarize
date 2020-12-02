@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Logical configuration group.
  *
  * @DatabaseTable
- * @SmartExclude("Language")
+ * @SmartExclude(excludes={"Language"})
  */
 class ConfigurationGroup extends AbstractModel
 {

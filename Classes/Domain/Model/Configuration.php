@@ -16,7 +16,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
  * Configuration for time options.
  *
  * @DatabaseTable
- * @SmartExclude("Language")
+ * @SmartExclude(excludes={"Language"})
  */
 class Configuration extends AbstractModel implements ConfigurationInterface
 {
