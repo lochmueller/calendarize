@@ -41,7 +41,7 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  *    return $variables;
  * }
  */
-class CalMigrationUpdate implements UpgradeWizardInterface
+class CalMigrationUpdate extends AbstractUpdate
 {
     /**
      * Import prefix.
@@ -1053,21 +1053,6 @@ class CalMigrationUpdate implements UpgradeWizardInterface
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'ReadyParsed', $variables);
 
         return $variables['nonMigrated'];
-    }
-
-    public function getIdentifier(): string
-    {
-        return self::class;
-    }
-
-    public function getTitle(): string
-    {
-        return '';
-    }
-
-    public function getDescription(): string
-    {
-        return '';
     }
 
     public function updateNecessary(): bool

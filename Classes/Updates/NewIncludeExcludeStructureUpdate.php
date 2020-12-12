@@ -15,7 +15,7 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 /**
  * NewIncludeExcludeStructureUpdate.
  */
-class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
+class NewIncludeExcludeStructureUpdate extends AbstractUpdate
 {
     /**
      * The human-readable title of the upgrade wizard.
@@ -121,21 +121,6 @@ class NewIncludeExcludeStructureUpdate implements UpgradeWizardInterface
         $customMessages = 'All queries are done! :)';
 
         return true;
-    }
-
-    public function getIdentifier(): string
-    {
-        return self::class;
-    }
-
-    public function getTitle(): string
-    {
-        return '';
-    }
-
-    public function getDescription(): string
-    {
-        return '';
     }
 
     public function updateNecessary(): bool

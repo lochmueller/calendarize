@@ -7,24 +7,11 @@ namespace HDNET\Calendarize\Updates;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
-class DateFieldUpdate implements UpgradeWizardInterface
+class DateFieldUpdate extends AbstractUpdate
 {
-    public function getIdentifier(): string
-    {
-        return self::class;
-    }
 
-    public function getTitle(): string
-    {
-        return 'Calendarize Date Field';
-    }
-
-    public function getDescription(): string
-    {
-        return '';
-    }
+    protected $title = 'Calendarize Date Field';
 
     protected $migrationMap = [
         'tx_calendarize_domain_model_configuration' => [
