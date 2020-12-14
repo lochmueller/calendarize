@@ -113,6 +113,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * You do not need this field, if you don't use the default Event.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\Configuration>
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $calendarize;
 
