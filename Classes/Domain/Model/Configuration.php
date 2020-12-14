@@ -128,8 +128,8 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Till date.
      *
-     * @var \DateTime
-     * @DatabaseField("\DateTime")
+     * @var \DateTime|null
+     * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $tillDate;
 
@@ -400,7 +400,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Get till date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getTillDate()
     {
@@ -410,7 +410,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set till date.
      *
-     * @param \DateTime $tillDate
+     * @param \DateTime|null $tillDate
      */
     public function setTillDate($tillDate)
     {

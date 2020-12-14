@@ -10,8 +10,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DateFieldUpdate extends AbstractUpdate
 {
-
     protected $title = 'Calendarize Date Field';
+
+    protected $description = 'This wizard migrates the existing start and end dates in the ' .
+        'database from a timestamp to a real date. This enables dates before 1970 and after 2038.';
 
     protected $migrationMap = [
         'tx_calendarize_domain_model_configuration' => [
