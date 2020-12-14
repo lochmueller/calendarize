@@ -223,4 +223,20 @@ class VObjectEventAdapter implements ICalEvent
 
         return ConfigurationInterface::STATE_DEFAULT;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRRule(): array
+    {
+        if (!isset($this->event->RRULE)) {
+            return [];
+        }
+        $rrule = $this->event->RRULE->getValue();
+        if (\is_string($rrule)) {
+            $rrule = \Sabre\VObject\Property\ICalendar\Recur::stringToArray($rrule);
+        }
+
+        return $rrule;
+    }
 }

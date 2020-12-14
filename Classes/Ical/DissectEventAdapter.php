@@ -187,4 +187,12 @@ class DissectEventAdapter implements ICalEvent
 
         return ConfigurationInterface::STATE_DEFAULT;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRRule(): array
+    {
+        return $this->event->getRRule() ?? [];
+    }
 }

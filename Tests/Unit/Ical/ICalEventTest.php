@@ -373,4 +373,30 @@ END:VCALENDAR
         self::assertEquals(69240, $event->getEndTime());
         self::assertFalse($event->isAllDay());
     }
+
+    public function testRRule()
+    {
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:64843636-21d6-44e3-8f8f-6174845e2342@example.com
+DTSTAMP:20050404T112124Z
+DTSTART:20050404T195534Z
+RRULE:FREQ=DAILY;INTERVAL=1;COUNT=45
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+        $rrule = $event->getRRule();
+
+        self::assertArrayHasKey('FREQ', $rrule);
+        self::assertEqualsIgnoringCase('DAILY', $rrule['FREQ']);
+
+        self::assertArrayHasKey('INTERVAL', $rrule);
+        self::assertEqualsIgnoringCase('1', $rrule['INTERVAL']);
+
+        self::assertArrayHasKey('COUNT', $rrule);
+        self::assertEqualsIgnoringCase('45', $rrule['COUNT']);
+    }
 }
