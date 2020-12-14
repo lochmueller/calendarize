@@ -9,11 +9,12 @@ namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\ViewHelpers\IfDateUpperViewHelper;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Check if a date is upper.
  */
-class IfDateUpperViewHelperTest extends AbstractUnitTest
+class IfDateUpperViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @test
@@ -21,6 +22,14 @@ class IfDateUpperViewHelperTest extends AbstractUnitTest
     public function testValidCheck()
     {
         $viewHelper = new IfDateUpperViewHelper();
-        self::assertTrue($viewHelper->render(new \DateTime(), '23.04.2026'));
+        $this->injectDependenciesIntoViewHelper($viewHelper);
+        $this->setArgumentsUnderTest(
+            $viewHelper,
+            [
+                'base' => '23.04.2004',
+                'check' => new \DateTime('2020-12-14'),
+            ]
+        );
+        self::assertTrue($viewHelper->initializeArgumentsAndRender());
     }
 }

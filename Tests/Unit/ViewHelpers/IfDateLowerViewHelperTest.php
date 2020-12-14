@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
-use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\ViewHelpers\IfDateLowerViewHelper;
+use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Check if a date is lower.
  */
-class IfDateLowerViewHelperTest extends AbstractUnitTest
+class IfDateLowerViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @test
@@ -21,6 +21,14 @@ class IfDateLowerViewHelperTest extends AbstractUnitTest
     public function testValidCheck()
     {
         $viewHelper = new IfDateLowerViewHelper();
-        self::assertTrue($viewHelper->render(new \DateTime(), '23.04.2004'));
+        $this->injectDependenciesIntoViewHelper($viewHelper);
+        $this->setArgumentsUnderTest(
+            $viewHelper,
+            [
+                'base' => '23.04.2026',
+                'check' => new \DateTime('2020-12-14')
+            ]
+        );
+        self::assertTrue($viewHelper->initializeArgumentsAndRender());
     }
 }
