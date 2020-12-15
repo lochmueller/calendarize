@@ -20,6 +20,7 @@ class MonthViewHelper extends AbstractLinkViewHelper
         parent::initializeArguments();
         $this->registerArgument('date', \DateTime::class, '', true);
         $this->registerArgument('pageUid', 'int', '', false, 0);
+        $this->registerArgument('section', 'string', '', false);
     }
 
     /**
@@ -41,7 +42,8 @@ class MonthViewHelper extends AbstractLinkViewHelper
                 'month' => $date->format('n'),
             ],
         ];
+        $section = isset($this->arguments['section']) ? (string)$this->arguments['section'] : '';
 
-        return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams);
+        return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams, false, $section);
     }
 }

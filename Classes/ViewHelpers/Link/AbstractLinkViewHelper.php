@@ -75,12 +75,13 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      *
      * @return string Rendered page URI
      */
-    public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false)
+    public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false, $section = '')
     {
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(ObjectManager::class)->get(UriBuilder::class);
         $this->lastHref = $uriBuilder->reset()
             ->setTargetPageUid($pageUid)
+            ->setSection($section)
             ->setArguments($additionalParams)
             ->setCreateAbsoluteUri($absolute)
             ->build();
