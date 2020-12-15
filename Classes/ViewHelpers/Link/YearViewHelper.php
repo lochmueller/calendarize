@@ -20,6 +20,7 @@ class YearViewHelper extends AbstractLinkViewHelper
         parent::initializeArguments();
         $this->registerArgument('date', \DateTime::class, '', true);
         $this->registerArgument('pageUid', 'int', '', false, 0);
+        $this->registerArgument('section', 'string', '', false);
     }
 
     /**
@@ -40,7 +41,8 @@ class YearViewHelper extends AbstractLinkViewHelper
                 'year' => $date->format('Y'),
             ],
         ];
+        $section = isset($this->arguments['section']) ? (string)$this->arguments['section'] : '';
 
-        return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams);
+        return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams, false, $section);
     }
 }
