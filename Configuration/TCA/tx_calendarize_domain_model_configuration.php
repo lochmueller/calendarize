@@ -251,8 +251,7 @@ $custom = [
         'till_date' => [
             'config' => [
                 'eval' => 'date',
-                'size' => 8,
-                'default' => 0,
+                'dbType' => 'date',
             ],
             'displayCond' => [
                 'AND' => [
