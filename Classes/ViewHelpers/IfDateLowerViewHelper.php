@@ -15,18 +15,27 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 class IfDateLowerViewHelper extends AbstractViewHelper
 {
     /**
+     * Initialize arguments.
+     */
+    public function initializeArguments(): void
+    {
+        parent::initializeArguments();
+        $this->registerArgument('base', 'mixed', '', true);
+        $this->registerArgument('check', 'mixed', '', true);
+    }
+
+    /**
      * Render the view helper.
      *
      * Note: You have to wrap this view helper in an f:if ViewHelper.
      * This VH just return a boolean evaluation value
      *
-     * @param string|\DateTime $base
-     * @param \DateTime        $check
-     *
      * @return string
      */
-    public function render($base, $check)
+    public function render()
     {
+        $base = $this->arguments['base'];
+        $check = $this->arguments['check'];
         $base = DateTimeUtility::normalizeDateTimeSingle($base);
         $check = DateTimeUtility::normalizeDateTimeSingle($check);
 
