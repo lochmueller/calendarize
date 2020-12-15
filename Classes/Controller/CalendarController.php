@@ -381,8 +381,8 @@ class CalendarController extends AbstractController
     /**
      * Week action.
      *
-     * @param int $year
-     * @param int $week
+     * @param int|null $year
+     * @param int|null $week
      */
     public function weekAction($year = null, $week = null)
     {
@@ -390,13 +390,13 @@ class CalendarController extends AbstractController
 
         $now = DateTimeUtility::getNow();
         if (null === $year) {
-            $year = $now->format('o'); // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
+            $year = (int)$now->format('o'); // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
         }
         if (null === $week) {
-            $week = $now->format('W');
+            $week = (int)$now->format('W');
         }
         $weekStart = (int)$this->settings['weekStart'];
-        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear((int)$week, $year, $weekStart);
+        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart);
 
         $weekConfiguration = [
             '+0 day' => 2,
@@ -410,7 +410,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'firstDay' => $firstDay,
-            'indices' => $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']),
+            'indices' => $this->indexRepository->findWeek($year, $week, $weekStart),
             'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
     }
@@ -589,7 +589,7 @@ class CalendarController extends AbstractController
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
             $indices = $this->indexRepository->findMonth((int)$year, (int)$month);
         } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
-            $indices = $this->indexRepository->findWeek($year, $week, $this->settings['weekStart']);
+            $indices = $this->indexRepository->findWeek((int)$year, (int)$week, (int)$this->settings['weekStart']);
         } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
             $indices = $this->indexRepository->findYear((int)$year);
         } else {
