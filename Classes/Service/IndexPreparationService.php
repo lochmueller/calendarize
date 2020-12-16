@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -58,12 +59,12 @@ class IndexPreparationService
                 $record['start_date'] = \DateTime::createFromFormat(
                     'Y-m-d H:i:s',
                     $record['start_date']->format('Y-m-d') . ' 00:00:00',
-                    new \DateTimeZone('UTC')
+                    DateTimeUtility::getUtcTimeZone()
                 );
                 $record['end_date'] = \DateTime::createFromFormat(
                     'Y-m-d H:i:s',
                     $record['end_date']->format('Y-m-d') . ' 00:00:00',
-                    new \DateTimeZone('UTC')
+                    DateTimeUtility::getUtcTimeZone()
                 );
 
                 $this->prepareRecordForDatabase($record);

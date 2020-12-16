@@ -685,7 +685,7 @@ class IndexRepository extends AbstractRepository
      */
     protected function addDateTimeFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
     {
-        $timezone = new \DateTimeZone('UTC');
+        $timezone = DateTimeUtility::getUtcTimeZone();
 
         // store values for start_date and start_time in separate variables
         $startDateTime = new \DateTime('@' . $arguments['startTime'], $timezone);
@@ -738,7 +738,7 @@ class IndexRepository extends AbstractRepository
     protected function addDateFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
     {
         $orConstraint = [];
-        
+
         // DateTimeUtility::getTimeZone() ?!
         $startDate = (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d');
         $endDate = (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d');
