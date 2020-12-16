@@ -738,34 +738,38 @@ class IndexRepository extends AbstractRepository
     protected function addDateFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
     {
         $orConstraint = [];
+        
+        // DateTimeUtility::getTimeZone() ?!
+        $startDate = (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d');
+        $endDate = (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d');
 
         // before - in
         $beforeIn = [
-            $query->lessThan('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->greaterThanOrEqual('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
-            $query->lessThan('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThan('startDate', $startDate),
+            $query->greaterThanOrEqual('endDate', $endDate),
+            $query->lessThan('endDate', $endDate),
         ];
         $orConstraint[] = $query->logicalAnd($beforeIn);
 
         // in - in
         $inIn = [
-            $query->greaterThanOrEqual('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->lessThanOrEqual('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('startDate', $startDate),
+            $query->lessThanOrEqual('endDate', $endDate),
         ];
         $orConstraint[] = $query->logicalAnd($inIn);
 
         // in - after
         $inAfter = [
-            $query->greaterThanOrEqual('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->lessThan('startDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
-            $query->greaterThanOrEqual('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->greaterThanOrEqual('startDate', $startDate),
+            $query->lessThan('startDate', $endDate),
+            $query->greaterThanOrEqual('endDate', $endDate),
         ];
         $orConstraint[] = $query->logicalAnd($inAfter);
 
         // before - after
         $beforeAfter = [
-            $query->lessThan('startDate', (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d')),
-            $query->greaterThan('endDate', (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d')),
+            $query->lessThan('startDate', $startDate),
+            $query->greaterThan('endDate', $endDate),
         ];
         $orConstraint[] = $query->logicalAnd($beforeAfter);
 
