@@ -746,7 +746,7 @@ class IndexRepository extends AbstractRepository
         // before - in
         $beforeIn = [
             $query->lessThan('startDate', $startDate),
-            $query->greaterThanOrEqual('endDate', $endDate),
+            $query->greaterThanOrEqual('endDate', $startDate),
             $query->lessThan('endDate', $endDate),
         ];
         $orConstraint[] = $query->logicalAnd($beforeIn);
