@@ -11,6 +11,7 @@ use HDNET\Autoloader\Annotation\SignalClass;
 use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Updates\CalMigrationUpdate;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * CalMigration.
@@ -33,6 +34,9 @@ class CalMigration
         list($calendarizeEventRecord, $event, $table, $recordId, $dbQueries) = $args;
 
         $q = HelperUtility::getDatabaseConnection('sys_file_reference')->createQueryBuilder();
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $q->select('*')
             ->from('sys_file_reference')
             ->where(
@@ -50,16 +54,12 @@ class CalMigration
 
             $importId = CalMigrationUpdate::IMPORT_PREFIX . $selectResult['uid'];
 
-            $fieldValues = [
-                'uid_foreign' => (int)$recordId,
-                'tablenames' => $table,
-            ];
-
             $q->update('sys_file_reference')
                 ->where(
                     $q->expr()->eq('import_id', $q->createNamedParameter($importId))
                 )
-                ->values($fieldValues);
+                ->set('uid_foreign', (int) $recordId)
+                ->set('tablenames', $table);
 
             $dbQueries[] = $q->getSQL();
 

@@ -128,6 +128,21 @@ class CalMigrationUpdate extends AbstractUpdate
         $table = 'tx_cal_event';
         $db = HelperUtility::getDatabaseConnection($table);
         $q = $db->createQueryBuilder();
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        $locationTable = 'tx_cal_location';
+        $locations = HelperUtility::getDatabaseConnection($locationTable)
+            ->createQueryBuilder()
+            ->select('*')
+            ->from($locationTable)
+            ->execute()
+            ->fetchAll();
+        $locationByUid = [];
+        foreach ($locations as $location) {
+            $locationByUid[$location['uid']] = $location['name'];
+        }
 
         $events = $q->select('*')->from($table)->where(
             $q->expr()->in('uid', $calIds)
@@ -144,7 +159,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'endtime' => $event['endtime'],
                 'title' => $event['title'],
                 'organizer' => $event['organizer'],
-                'location' => $event['location'],
+                'location' => $event['location_id'] > 0 ? $locationByUid[$event['location_id']] : $event['location'],
                 'abstract' => $event['teaser'],
                 'description' => $event['description'],
                 'images' => $event['image'],
@@ -200,6 +215,7 @@ class CalMigrationUpdate extends AbstractUpdate
         // ConfigurationGroup für jede ExceptionGroup
         $db = HelperUtility::getDatabaseConnection($table);
         $q = $db->createQueryBuilder();
+
         $variables = [
             'table' => $table,
             'dbQueries' => $dbQueries,
@@ -388,24 +404,26 @@ class CalMigrationUpdate extends AbstractUpdate
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         foreach ($selectResults as $mm) {
-            $eventUid = $this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries, $customMessages);
-            $categoryUid = $this->getCalendarizeCategoryUid(
+            $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries, $customMessages);
+            $categoryUid = (int)$this->getCalendarizeCategoryUid(
                 self::IMPORT_PREFIX . $mm['uid_foreign'],
                 $dbQueries,
                 $customMessages
             );
 
-            $insertValues = [
-                'uid_local' => $categoryUid,
-                'uid_foreign' => $eventUid,
-                'tablenames' => $variables['tablenames'],
-                'fieldname' => $variables['fieldname'],
-            ];
+            if($eventUid !== 0 && $categoryUid !== 0) {
+                $insertValues = [
+                    'uid_local' => $categoryUid,
+                    'uid_foreign' => $eventUid,
+                    'tablenames' => $variables['tablenames'],
+                    'fieldname' => $variables['fieldname'],
+                ];
 
-            $q->insert('sys_category_record_mm')->values($insertValues);
-            $dbQueries[] = $q->getSQL();
+                $q->insert('sys_category_record_mm')->values($insertValues);
+                $dbQueries[] = $q->getSQL();
 
-            $q->execute();
+                $q->execute();
+            }
         }
     }
 
@@ -431,8 +449,10 @@ class CalMigrationUpdate extends AbstractUpdate
             unset($configurationRow['uid']);
 
             $q->update(self::CONFIGURATION_GROUP_TABLE)
-                ->where('uid', $q->createNamedParameter((int)$configuration['uid'], \PDO::PARAM_INT))
-                ->values($configurationRow);
+                ->where('uid', $q->createNamedParameter((int)$configuration['uid'], \PDO::PARAM_INT));
+            foreach ($configurationRow as $key => $value) {
+                $q->set($key, $value);
+            }
 
             $dbQueries[] = $q->getSQL();
             $results = $q->execute();
@@ -521,8 +541,10 @@ class CalMigrationUpdate extends AbstractUpdate
         $q->update($variables['table'])
             ->where(
                 $q->expr()->eq('uid', $q->createNamedParameter((int)$eventId, \PDO::PARAM_INT))
-            )
-            ->values($variables['values']);
+            );
+        foreach ($variables['values'] as $key => $value) {
+            $q->set($key, $value);
+        }
 
         unset($values['uid']);
 
@@ -789,16 +811,14 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($selectResults as $sysCategory) {
             // update parent, because there are just the old uids
-            $updateRecord = [
-                'parent' => $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int)$sysCategory['parent']),
-            ];
-
             $q->resetQueryParts()->resetRestrictions();
             $q->update('sys_category')
                 ->where(
                     $q->expr()->eq('uid', $q->createNamedParameter((int)$sysCategory['uid'], \PDO::PARAM_INT))
-                )
-                ->values($updateRecord);
+                )->set(
+                    'parent',
+                    $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int) $sysCategory['parent'])
+                );
 
             $dbQueries[] = $q->getSQL();
 
@@ -829,7 +849,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $result = $q->execute()->fetchAll();
 
-        return (int)$result['uid'];
+        return (int)$result[0]['uid'];
     }
 
     /**
@@ -863,9 +883,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $q->getSQL();
 
         $result = $q->execute()->fetchAll();
-        $uid = (int)$result['uid'];
-
-        return $uid;
+        return (int)$result[0]['uid'];
     }
 
     /**
@@ -901,9 +919,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $q->getSQL();
 
         $result = $q->execute()->fetchAll();
-        $uid = (int)$result['uid'];
-
-        return $uid;
+        return (int)$result[0]['uid'];
     }
 
     /**
@@ -1034,7 +1050,9 @@ class CalMigrationUpdate extends AbstractUpdate
             ->from($variables['table'])
             ->where(
                 $q->expr()->in('import_id', $checkImportIds)
-            );
+            )
+            ->execute()
+            ->fetchAll();
 
         foreach ($migratedRows as $migratedRow) {
             $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
