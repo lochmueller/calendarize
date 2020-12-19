@@ -30,7 +30,7 @@ class CleanupCommandController extends Command
     const MODUS_HIDDEN = 'hide';
     const MODUS_DELETED = 'delete';
     const DEFAULT_WAIT_PERIOD = 14;
-    const DEFAULT_CLEANUP_REPOSITORY = 'HDNET\\Calendarize\\Domain\\Repository\\EventRepository';
+    const DEFAULT_CLEANUP_REPOSITORY = \HDNET\Calendarize\Domain\Repository\EventRepository::class;
 
     protected function configure()
     {
