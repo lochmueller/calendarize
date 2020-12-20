@@ -58,7 +58,6 @@ class IndexRepository extends AbstractRepository
     public function createQuery()
     {
         $query = parent::createQuery();
-        $query->getQuerySettings()->setLanguageMode($this->getIndexLanguageMode());
 
         return $query;
     }
@@ -96,7 +95,6 @@ class IndexRepository extends AbstractRepository
         $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setLanguageOverlayMode(false);
-        $query->getQuerySettings()->setLanguageMode('ignore');
 
         // Notice Selection without any language handling
         unset($GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['languageField'], $GLOBALS['TCA']['tx_calendarize_domain_model_index']['ctrl']['transOrigPointerField']);
@@ -552,27 +550,6 @@ class IndexRepository extends AbstractRepository
         $query->matching($query->logicalAnd($constraints));
 
         return $query->execute();
-    }
-
-    /**
-     * Get index language mode.
-     *
-     * @return string
-     */
-    protected function getIndexLanguageMode()
-    {
-        static $mode;
-        if (null !== $mode) {
-            return $mode;
-        }
-
-        /** @var ConfigurationManagerInterface $config */
-        $config = $this->objectManager->get(ConfigurationManagerInterface::class);
-        $pluginConfig = $config->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-
-        $mode = isset($pluginConfig['indexLanguageMode']) ? (string)$pluginConfig['indexLanguageMode'] : 'strict';
-
-        return $mode;
     }
 
     /**

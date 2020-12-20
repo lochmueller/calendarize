@@ -34,9 +34,6 @@ plugin.tx_calendarize {
     # cat=calendarize//0110; type=int+; label=Default detail PID: Default detail PID for e.g. the Insert record TS configuration
     defaultDetailPid = 0
 
-    # cat=calendarize//00121; type=options[strict=strict, content_fallback=content_fallback]; label=Index language mode: The language mode of the index repository
-    indexLanguageMode = strict
-
 		feed {
 			# cat=calendarize//0080; type=string; label=Title of the Feed: The feed title for atom and xml/rss
 			title = Title of the feed
