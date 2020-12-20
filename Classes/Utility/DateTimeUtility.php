@@ -285,4 +285,45 @@ class DateTimeUtility
 
         return $dateTime;
     }
+
+    /**
+     * Converts DateTime objects for native dates, so that they are stored "as is".
+     * This is required for Typo3 versions before 11, since they are formatted in UTC, but shouldn't.
+     *
+     * @param \DateTime|null $date
+     *
+     * @return \DateTime|null
+     */
+    public static function fixDateTimeForDb(?\DateTime $date): ?\DateTime
+    {
+        if ($date instanceof \DateTimeInterface) {
+            $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+            if ($typo3Version->getMajorVersion() < 11) {
+                $date = new \DateTime($date->format('Y-m-d\TH:i:s'), self::getUtcTimeZone());
+            }
+        }
+
+        return $date;
+    }
+
+    /**
+     * Converts the native date object from UTC to the local timezone.
+     * This is required for Typo3 versions before 11, since the dates in the db are assumed as UTC, but aren't.
+     *
+     * @param \DateTime|null $date
+     *
+     * @return \DateTime|null
+     */
+    public static function fixDateTimeForExtbase(?\DateTime $date): ?\DateTime
+    {
+        if ($date instanceof \DateTimeInterface) {
+            $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+            if ($typo3Version->getMajorVersion() < 11) {
+                $date = (clone $date)->setTimezone(self::getUtcTimeZone());
+                $date = new \DateTime($date->format('Y-m-d\TH:i:s'), self::getTimeZone());
+            }
+        }
+
+        return $date;
+    }
 }
