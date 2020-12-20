@@ -10,7 +10,6 @@ namespace HDNET\Calendarize\Command;
 use HDNET\Calendarize\Event\ImportSingleIcalEvent;
 use HDNET\Calendarize\Service\Ical\ICalServiceInterface;
 use HDNET\Calendarize\Service\IndexerService;
-use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -81,8 +80,8 @@ class ImportCommandController extends Command
                 's',
                 InputOption::VALUE_OPTIONAL,
                 "Imports all events since the given date.\n"
-                . 'Valid PHP date format e.g. "2014-04-14", "-10 days" (Note: use --since="-x days" syntax)',
-                DateTimeUtility::getNow()->format('Y-m-d')
+                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . "\n"
+                . '(Note: use --since="-x days" syntax on the console)'
             );
     }
 
