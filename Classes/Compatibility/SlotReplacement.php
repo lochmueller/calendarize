@@ -11,6 +11,9 @@ use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
+/**
+ * @extensionScannerIgnoreFile
+ */
 class SlotReplacement
 {
     /**
@@ -43,7 +46,7 @@ class SlotReplacement
                 'event' => [
                     'uid' => $icalEvent->getUid(),
                     'start' => $icalEvent->getStartDate()->add(\DateInterval::createFromDateString($icalEvent->getStartTime() . ' seconds')),
-                    'end' => $icalEvent->getEndDate()->add(\DateInterval::createFromDateString($icalEvent->getEndTime() . ' seconds')),
+                    'end' => ($icalEvent->getEndDate() ?? $icalEvent->getStartDate())->add(\DateInterval::createFromDateString($icalEvent->getEndTime() . ' seconds')),
                     'title' => $icalEvent->getTitle(),
                     'description' => $icalEvent->getDescription(),
                     'location' => $icalEvent->getLocation(),
