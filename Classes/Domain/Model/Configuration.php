@@ -47,7 +47,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Start date.
      *
-     * @var \DateTime
+     * @var \DateTime|null
      * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $startDate;
@@ -55,7 +55,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * End date.
      *
-     * @var \DateTime
+     * @var \DateTime|null
      * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $endDate;
@@ -248,25 +248,21 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Get end date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getEndDate()
+    public function getEndDate(): ?\DateTime
     {
-        if ($this->endDate instanceof \DateTime) {
-            $this->endDate->setTimezone(DateTimeUtility::getTimeZone());
-        }
-
-        return $this->endDate;
+        return DateTimeUtility::fixDateTimeForExtbase($this->endDate);
     }
 
     /**
      * Set end date.
      *
-     * @param \DateTime $endDate
+     * @param \DateTime|null $endDate
      */
-    public function setEndDate($endDate)
+    public function setEndDate(?\DateTime $endDate): void
     {
-        $this->endDate = $endDate;
+        $this->endDate = DateTimeUtility::fixDateTimeForDb($endDate);
     }
 
     /**
@@ -312,25 +308,21 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Get start date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getStartDate()
+    public function getStartDate(): ?\DateTime
     {
-        if ($this->startDate instanceof \DateTime) {
-            $this->startDate->setTimezone(DateTimeUtility::getTimeZone());
-        }
-
-        return $this->startDate;
+        return DateTimeUtility::fixDateTimeForExtbase($this->startDate);
     }
 
     /**
      * Set start date.
      *
-     * @param \DateTime $startDate
+     * @param \DateTime|null $startDate
      */
-    public function setStartDate($startDate)
+    public function setStartDate(?\DateTime $startDate): void
     {
-        $this->startDate = $startDate;
+        $this->startDate = DateTimeUtility::fixDateTimeForDb($startDate);
     }
 
     /**
@@ -402,9 +394,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return \DateTime|null
      */
-    public function getTillDate()
+    public function getTillDate(): ?\DateTime
     {
-        return $this->tillDate;
+        return DateTimeUtility::fixDateTimeForExtbase($this->tillDate);
     }
 
     /**
@@ -412,9 +404,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param \DateTime|null $tillDate
      */
-    public function setTillDate($tillDate)
+    public function setTillDate(?\DateTime $tillDate): void
     {
-        $this->tillDate = $tillDate;
+        $this->tillDate = DateTimeUtility::fixDateTimeForDb($tillDate);
     }
 
     /**
