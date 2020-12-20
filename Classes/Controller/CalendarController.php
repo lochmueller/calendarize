@@ -384,7 +384,7 @@ class CalendarController extends AbstractController
      * @param int|null $year
      * @param int|null $week
      */
-    public function weekAction($year = null, $week = null)
+    public function weekAction(?int $year = null, ?int $week = null)
     {
         $this->addCacheTags(['calendarize_week']);
 
