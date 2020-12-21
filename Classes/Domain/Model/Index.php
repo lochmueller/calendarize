@@ -51,7 +51,7 @@ class Index extends AbstractModel
     /**
      * Start date.
      *
-     * @var \DateTime
+     * @var \DateTime|null
      * @DatabaseField(sql="date default NULL")
      */
     protected $startDate;
@@ -59,7 +59,7 @@ class Index extends AbstractModel
     /**
      * End date.
      *
-     * @var \DateTime
+     * @var \DateTime|null
      * @DatabaseField(sql="date default NULL")
      */
     protected $endDate;
@@ -150,15 +150,13 @@ class Index extends AbstractModel
     /**
      * Get the complete start date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getStartDateComplete()
+    public function getStartDateComplete(): ?\DateTime
     {
         $date = $this->getStartDate();
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
-            $time = DateTimeUtility::normalizeDateTimeSingle($this->getStartTime());
-
-            return \DateTime::createFromFormat('Y-m-d H:i', $date->format('Y-m-d') . ' ' . $time->format('H:i'));
+            return DateTimeUtility::setSecondsOfDateTime($date, $this->getStartTime());
         }
 
         return $date;
@@ -167,15 +165,13 @@ class Index extends AbstractModel
     /**
      * Get the complete end date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getEndDateComplete()
+    public function getEndDateComplete(): ?\DateTime
     {
         $date = $this->getEndDate();
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
-            $time = DateTimeUtility::normalizeDateTimeSingle($this->getEndTime());
-
-            return \DateTime::createFromFormat('Y-m-d H:i', $date->format('Y-m-d') . ' ' . $time->format('H:i'));
+            return DateTimeUtility::setSecondsOfDateTime($date, $this->getEndTime());
         }
 
         return $date;
@@ -264,21 +260,21 @@ class Index extends AbstractModel
     /**
      * Set end date.
      *
-     * @param \DateTime $endDate
+     * @param \DateTime|null $endDate
      */
-    public function setEndDate($endDate)
+    public function setEndDate(?\DateTime $endDate): void
     {
-        $this->endDate = $endDate;
+        $this->endDate = DateTimeUtility::fixDateTimeForDb($endDate);
     }
 
     /**
      * Get end date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getEndDate()
+    public function getEndDate(): ?\DateTime
     {
-        return $this->endDate;
+        return DateTimeUtility::fixDateTimeForExtbase($this->endDate);
     }
 
     /**
@@ -304,21 +300,21 @@ class Index extends AbstractModel
     /**
      * Set start date.
      *
-     * @param \DateTime $startDate
+     * @param \DateTime|null $startDate
      */
-    public function setStartDate($startDate)
+    public function setStartDate(?\DateTime $startDate): void
     {
-        $this->startDate = $startDate;
+        $this->startDate = DateTimeUtility::fixDateTimeForDb($startDate);
     }
 
     /**
      * Get start date.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getStartDate()
+    public function getStartDate(): ?\DateTime
     {
-        return $this->startDate;
+        return DateTimeUtility::fixDateTimeForExtbase($this->startDate);
     }
 
     /**
