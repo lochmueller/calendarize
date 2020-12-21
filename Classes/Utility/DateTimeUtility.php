@@ -129,6 +129,23 @@ class DateTimeUtility
     }
 
     /**
+     * Sets the time seconds on the given date.
+     *
+     * @param \DateTime $date
+     * @param int       $seconds
+     *
+     * @return \DateTime
+     */
+    public static function setSecondsOfDateTime(\DateTime $date, int $seconds): \DateTime
+    {
+        $date = clone $date;
+        $date->setTime(0, 0, 0);
+        $date->modify("+$seconds seconds");
+
+        return $date;
+    }
+
+    /**
      * Get a normalize date time object.
      *
      * @param int|null $day
