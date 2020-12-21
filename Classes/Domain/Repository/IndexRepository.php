@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
+use function gmmktime;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
@@ -19,7 +20,6 @@ use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use function gmmktime;
 
 /**
  * Index repository.
@@ -447,12 +447,9 @@ class IndexRepository extends AbstractRepository
      */
     public function findWeek($year, $week, $weekStart = 1)
     {
-        $weekStart = (int)$weekStart;
-        $daysShift = $weekStart - 1;
-        $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year);
-        if (0 !== $daysShift) {
-            $firstDay->modify('+' . $daysShift . ' days');
-        }
+        $firstDayLocal = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart);
+        // Convert local date to utc date
+        $firstDay = new \Datetime($firstDayLocal->format('Y-m-d'), DateTimeUtility::getUtcTimeZone());
         $endDate = clone $firstDay;
         $endDate->modify('+1 week');
         $endDate->modify('-1 second');
