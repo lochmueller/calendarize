@@ -20,6 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -31,6 +32,19 @@ class CleanupCommandController extends Command
     const MODUS_DELETED = 'delete';
     const DEFAULT_WAIT_PERIOD = 14;
     const DEFAULT_CLEANUP_REPOSITORY = \HDNET\Calendarize\Domain\Repository\EventRepository::class;
+
+    /**
+     * @var PersistenceManager
+     */
+    protected $persistenceManager;
+
+    /**
+     * @param PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(PersistenceManager $persistenceManager): void
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
 
     protected function configure()
     {
@@ -117,8 +131,7 @@ class CleanupCommandController extends Command
             $this->processEvent($repository, $model, $modus);
         }
 
-        // persist the modified events
-        // HelperUtility::persistAll(); @todo handle via DI
+        $this->persistenceManager->persistAll();
 
         $io->section('Reindex all events');
         // after all this deleting ... reindex!
@@ -198,7 +211,7 @@ class CleanupCommandController extends Command
         $foreignUids = $q->select('foreign_uid')
             ->from($table)
             ->where($q->expr()
-                ->gt('end_date', $q->createNamedParameter($now->getTimestamp())))
+                ->gt('end_date', $q->createNamedParameter($now->format('Y-m-d'))))
             ->andWhere($q->expr()
                 ->eq('foreign_table', $q->createNamedParameter($tableName)))
             ->execute()
@@ -212,7 +225,7 @@ class CleanupCommandController extends Command
             ->from($table)
             ->where($q->expr()
                 ->andX($q->expr()
-                    ->lt('end_date', $q->createNamedParameter($now->getTimestamp())), $q->expr()
+                    ->lt('end_date', $q->createNamedParameter($now->format('Y-m-d'))), $q->expr()
                     ->eq('foreign_table', $q->createNamedParameter($tableName)), $q->expr()
                     ->notIn('foreign_uid', $foreignUids)));
 

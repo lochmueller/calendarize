@@ -121,6 +121,7 @@ class Register
         $GLOBALS['TCA'][$tableName]['columns'][$fieldName] = [
             'label' => 'Calendarize',
             'l10n_mode' => 'exclude',
+            'l10n_display' => 'defaultAsReadonly',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',

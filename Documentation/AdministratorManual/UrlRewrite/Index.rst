@@ -37,4 +37,4 @@ If you are using TYPO3 >= 9.0 just load the RouteEnhancers of the extension.
 .. code-block:: yaml
 
   imports:
-    - { resource: "typo3conf/ext/calendarize/Configuration/Yaml/RouteEnhancers.yaml" }
+    - { resource: "EXT:calendarize/Configuration/Yaml/RouteEnhancers.yaml" }
