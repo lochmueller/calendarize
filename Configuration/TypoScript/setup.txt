@@ -58,7 +58,7 @@ plugin.tx_calendarize {
 	}
 }
 
-[globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}]
+["{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}" == "1"]
 	page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js
 	page.includeJSFooterlibs.moment.external = 1
 	page.includeJSFooterlibs.moment.disableCompression = 1
@@ -68,7 +68,7 @@ plugin.tx_calendarize {
 	page.includeJSFooterlibs.momentReplacement = EXT:calendarize/Resources/Public/JavaScript/MomentReplacement.js
 [global]
 
-[globalVar = LIT:0<{$plugin.tx_calendarize.settings.useMomentFullCalendarIo}]
+["{$plugin.tx_calendarize.settings.useMomentFullCalendarIo}" == "1"]
 	page {
 		includeCSS {
 			fullCalendar = https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css
