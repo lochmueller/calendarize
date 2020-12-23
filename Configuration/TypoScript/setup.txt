@@ -138,3 +138,11 @@ tt_content.shortcut.variables.shortcuts.conf.tx_calendarize_domain_model_event =
 # tt_content.shortcut.20.conf.tx_XXXXX_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event
 # tt_content.shortcut.variables.shortcuts.tables := addToList(tx_XXXXX_domain_model_event)
 # tt_content.shortcut.variables.shortcuts.conf.tx_XXXXXX_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event
+
+# enable page title provider
+config.pageTitleProviders {
+	calendarize {
+		provider = HDNET\Calendarize\Seo\CalendarizeTitleProvider
+		before = altPageTitle,record,seo
+	}
+}
