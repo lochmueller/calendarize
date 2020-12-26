@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Compatibility;
 
 use HDNET\Calendarize\Command\ImportCommandController;
+use HDNET\Calendarize\Domain\Repository\IndexRepository;
+use HDNET\Calendarize\Event\AddTimeFrameConstraintsEvent;
 use HDNET\Calendarize\Event\ImportSingleIcalEvent;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -56,6 +58,52 @@ class SlotReplacement
                 'handled' => false,
             ]
         );
+    }
+
+    public function emitAddDateTimeFrameConstraints(AddTimeFrameConstraintsEvent $event): void
+    {
+        $start = $event->getStart();
+        $end = $event->getEnd();
+
+        // The start and end dates are expected as UTC timestamps
+        if (null !== $start) {
+            $start = strtotime($start->format('Y-m-d H:i:s') . ' UTC');
+        }
+        if (null !== $end) {
+            $end = strtotime($end->format('Y-m-d H:i:s') . ' UTC');
+        }
+
+        $constraints = &$event->getConstraints();
+        $arguments = [
+            'constraints' => &$constraints,
+            'query' => $event->getQuery(),
+            'startTime' => $start,
+            'endTime' => $end,
+            'additionalSlotArguments' => $event->getAdditionalArguments(),
+        ];
+        $arguments = $this->signalSlotDispatcher->dispatch(
+            IndexRepository::class,
+            'addTimeFrameConstraints',
+            $arguments
+        );
+
+        // If the dates changed, we write them back
+        // Note: A new DateTime with '@' is in the UTC timezone.
+        //       This is fine here, since no timezone conversion should later happen.
+        if ($arguments['startTime'] !== $start) {
+            if (null === $arguments['startTime']) {
+                $event->setStart(null);
+            } else {
+                $event->setStart(new \DateTime("@{$arguments['startTime']}"));
+            }
+        }
+        if ($arguments['endTime'] !== $end) {
+            if (null === $arguments['endTime']) {
+                $event->setEnd(null);
+            } else {
+                $event->setEnd(new \DateTime("@{$arguments['endTime']}"));
+            }
+        }
     }
 
     //--------------------------------------------------------------------
