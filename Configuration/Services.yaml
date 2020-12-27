@@ -26,6 +26,11 @@ services:
         method: 'emitImportCommand'
         event: HDNET\Calendarize\Event\ImportSingleIcalEvent
 
+      - name: event.listener
+        identifier: 'legacy-slot'
+        method: 'emitAddDateTimeFrameConstraints'
+        event: HDNET\Calendarize\Event\AddTimeFrameConstraintsEvent
+
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command

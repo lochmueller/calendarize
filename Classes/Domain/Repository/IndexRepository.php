@@ -8,12 +8,13 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Domain\Repository;
 
 use Exception;
-use function gmmktime;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
+use HDNET\Calendarize\Event\AddTimeFrameConstraintsEvent;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
@@ -49,6 +50,16 @@ class IndexRepository extends AbstractRepository
      * @var array
      */
     protected $overridePageIds;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     /**
      * Create query.
@@ -136,22 +147,24 @@ class IndexRepository extends AbstractRepository
         $overrideStartDate = 0,
         $overrideEndDate = 0
     ) {
+        $startTime = DateTimeUtility::getNow();
+        $endTime = null;
+
         if ($overrideStartDate > 0) {
-            $startTimestamp = $overrideStartDate;
+            // Note: setTimestamp does not change the timezone
+            $startTime->setTimestamp($overrideStartDate);
         } else {
-            $now = DateTimeUtility::getNow();
             if ('now' !== $listStartTime) {
-                $now->setTime(0, 0, 0);
+                $startTime->setTime(0, 0, 0);
             }
-            $now->modify($startOffsetHours . ' hours');
-            $startTimestamp = $now->getTimestamp();
-        }
-        $endTimestamp = null;
-        if ($overrideEndDate > 0) {
-            $endTimestamp = $overrideEndDate;
+            $startTime->modify($startOffsetHours . ' hours');
         }
 
-        $result = $this->findByTimeSlot($startTimestamp, $endTimestamp);
+        if ($overrideEndDate > 0) {
+            $endTime = DateTimeUtility::getNow()->setTimestamp($overrideEndDate);
+        }
+
+        $result = $this->findByTimeSlot($startTime, $endTime);
         if ($limit > 0) {
             $query = $result->getQuery();
             $query->setLimit($limit);
@@ -164,15 +177,19 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by custom search.
      *
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array     $customSearch
-     * @param int       $limit
+     * @param \DateTimeInterface|null $startDate
+     * @param \DateTimeInterface|null $endDate
+     * @param array                   $customSearch
+     * @param int                     $limit
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findBySearch(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [], int $limit = 0)
-    {
+    public function findBySearch(
+        \DateTimeInterface $startDate = null,
+        \DateTimeInterface $endDate = null,
+        array $customSearch = [],
+        int $limit = 0
+    ) {
         $arguments = [
             'indexIds' => [],
             'startDate' => $startDate,
@@ -193,8 +210,8 @@ class IndexRepository extends AbstractRepository
         $this->addTimeFrameConstraints(
             $constraints,
             $query,
-            $arguments['startDate'] instanceof \DateTime ? DateTimeUtility::getDayStart($arguments['startDate'])->getTimestamp() : null,
-            $arguments['endDate'] instanceof \DateTime ? DateTimeUtility::getDayEnd($arguments['endDate'])->getTimestamp() : null
+            $arguments['startDate'],
+            $arguments['endDate']
         );
 
         if ($arguments['indexIds']) {
@@ -369,8 +386,7 @@ class IndexRepository extends AbstractRepository
 
         $this->setIndexTypes([$uniqueRegisterKey]);
 
-        $now = DateTimeUtility::getNow()
-            ->getTimestamp();
+        $now = DateTimeUtility::getNow()->format('Y-m-d');
 
         $constraints = [];
 
@@ -402,7 +418,10 @@ class IndexRepository extends AbstractRepository
      */
     public function findYear(int $year)
     {
-        return $this->findByTimeSlot(gmmktime(0, 0, 0, 1, 1, $year), gmmktime(0, 0, 0, 1, 1, $year + 1) - 1);
+        $startTime = (new \DateTimeImmutable('midnight'))->setDate($year, 1, 1);
+        $endTime = $startTime->modify('+1 year -1 second');
+
+        return $this->findByTimeSlot($startTime, $endTime);
     }
 
     /**
@@ -416,8 +435,10 @@ class IndexRepository extends AbstractRepository
     public function findQuarter(int $year, int $quarter)
     {
         $startMonth = 1 + (3 * ($quarter - 1));
+        $startTime = (new \DateTimeImmutable('midnight'))->setDate($year, $startMonth, 1);
+        $endTime = $startTime->modify('+3 months -1 second');
 
-        return $this->findByTimeSlot(gmmktime(0, 0, 0, $startMonth, 1, $year), gmmktime(0, 0, 0, $startMonth + 3, 1, $year) - 1);
+        return $this->findByTimeSlot($startTime, $endTime);
     }
 
     /**
@@ -430,8 +451,8 @@ class IndexRepository extends AbstractRepository
      */
     public function findMonth(int $year, int $month)
     {
-        $startTime = gmmktime(0, 0, 0, $month, 1, $year);
-        $endTime = gmmktime(0, 0, 0, $month + 1, 1, $year) - 1;
+        $startTime = (new \DateTimeImmutable('midnight'))->setDate($year, $month, 1);
+        $endTime = $startTime->modify('+1 month -1 second');
 
         return $this->findByTimeSlot($startTime, $endTime);
     }
@@ -445,28 +466,12 @@ class IndexRepository extends AbstractRepository
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findWeek($year, $week, $weekStart = 1)
+    public function findWeek(int $year, int $week, int $weekStart = 1)
     {
-        $firstDayLocal = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart);
-        // Convert local date to utc date
-        $firstDay = new \Datetime($firstDayLocal->format('Y-m-d'), DateTimeUtility::getUtcTimeZone());
-        $endDate = clone $firstDay;
-        $endDate->modify('+1 week');
-        $endDate->modify('-1 second');
+        $startTime = \DateTimeImmutable::createFromMutable(DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart));
+        $endTime = $startTime->modify('+1 week -1 second');
 
-        return $this->findByTimeSlot($firstDay->getTimestamp(), $endDate->getTimestamp());
-    }
-
-    /**
-     * Find different types and locations.
-     *
-     * @return array
-     */
-    public function findDifferentTypesAndLocations(): array
-    {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_calendarize_domain_model_index');
-
-        return (array)$queryBuilder->select('unique_register_key', 'pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
+        return $this->findByTimeSlot($startTime, $endTime);
     }
 
     /**
@@ -482,13 +487,22 @@ class IndexRepository extends AbstractRepository
      */
     public function findDay(int $year, int $month, int $day)
     {
-        $startTime = gmmktime(0, 0, 0, $month, $day, $year);
-        $startDate = new \DateTime('@' . $startTime);
-        $endDate = clone $startDate;
-        $endDate->modify('+1 day');
-        $endDate->modify('-1 second');
+        $startTime = (new \DateTimeImmutable('midnight'))->setDate($year, $month, $day);
+        $endTime = $startTime->modify('+1 day -1 second');
 
-        return $this->findByTimeSlot($startDate->getTimestamp(), $endDate->getTimestamp());
+        return $this->findByTimeSlot($startTime, $endTime);
+    }
+
+    /**
+     * Find different types and locations.
+     *
+     * @return array
+     */
+    public function findDifferentTypesAndLocations(): array
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_calendarize_domain_model_index');
+
+        return (array)$queryBuilder->select('unique_register_key', 'pid', 'foreign_table')->from('tx_calendarize_domain_model_index')->groupBy('pid', 'foreign_table', 'unique_register_key')->execute()->fetchAll();
     }
 
     /**
@@ -505,12 +519,12 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by time slot.
      *
-     * @param int      $startTime
-     * @param int|null $endTime   null means open end
+     * @param \DateTimeInterface|null $startTime
+     * @param \DateTimeInterface|null $endTime
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByTimeSlot($startTime, $endTime = null)
+    public function findByTimeSlot(?\DateTimeInterface $startTime, ?\DateTimeInterface $endTime = null)
     {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -612,143 +626,113 @@ class IndexRepository extends AbstractRepository
     /**
      * Add time frame related queries.
      *
-     * @param array          $constraints
-     * @param QueryInterface $query
-     * @param int            $startTime
-     * @param int|null       $endTime
+     * @param array                   $constraints
+     * @param QueryInterface          $query
+     * @param \DateTimeInterface|null $startTime
+     * @param \DateTimeInterface|null $endTime
      *
      * @see IndexUtility::isIndexInRange
      */
-    protected function addTimeFrameConstraints(&$constraints, QueryInterface $query, $startTime = null, $endTime = null)
-    {
-        $arguments = [
-            'constraints' => &$constraints,
-            'query' => $query,
-            'startTime' => $startTime,
-            'endTime' => $endTime,
-        ];
-        $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
+    protected function addTimeFrameConstraints(
+        array &$constraints,
+        QueryInterface $query,
+        ?\DateTimeInterface $startTime = null,
+        ?\DateTimeInterface $endTime = null
+    ): void {
+        /** @var AddTimeFrameConstraintsEvent $event */
+        $event = $this->eventDispatcher->dispatch(new AddTimeFrameConstraintsEvent(
+            $constraints,
+            $query,
+            $this->additionalSlotArguments,
+            $startTime,
+            $endTime
+        ));
 
-        if (null === $arguments['startTime'] && null === $arguments['endTime']) {
+        $this->addDateTimeFrameConstraint(
+            $constraints,
+            $query,
+            $event->getStart(),
+            $event->getEnd(),
+            (bool)ConfigurationUtility::get('respectTimesInTimeFrameConstraints')
+        );
+    }
+
+    /**
+     * Adds time frame constraints. The dates are formatted the timezone of the DateTime objects.
+     * This includes all events, that have an "active" part in the range.
+     * Do not call this method directly. Call IndexRepository::addTimeFrameConstraints instead.
+     *
+     * @param array                   $constraints
+     * @param QueryInterface          $query
+     * @param \DateTimeInterface|null $start
+     * @param \DateTimeInterface|null $end         Inclusive end date
+     * @param bool                    $respectTime if true, it will also respect the time of the indices
+     *
+     * @see IndexRepository::addTimeFrameConstraints
+     */
+    protected function addDateTimeFrameConstraint(
+        array &$constraints,
+        QueryInterface $query,
+        ?\DateTimeInterface $start,
+        ?\DateTimeInterface $end,
+        bool $respectTime = false
+    ): void {
+        if (null === $start && null === $end) {
             return;
         }
-        if (null === $arguments['startTime']) {
-            // Simulate start time
-            $arguments['startTime'] = DateTimeUtility::getNow()->getTimestamp() - DateTimeUtility::SECONDS_DECADE;
-        } elseif (null === $arguments['endTime']) {
-            // Simulate end time
-            $arguments['endTime'] = DateTimeUtility::getNow()->getTimestamp() + DateTimeUtility::SECONDS_DECADE;
+        $dateConstraints = [];
+
+        // No start means open end
+        if (null !== $start) {
+            $startDate = $start->format('Y-m-d');
+
+            if (false === $respectTime) {
+                // The endDate of an index must be after the range start, otherwise the event was in the past
+                $dateConstraints[] = $query->greaterThanOrEqual('endDate', $startDate);
+            } else {
+                $startTime = DateTimeUtility::getDaySecondsOfDateTime($start);
+
+                // We split up greaterThan and equal to check more conditions on the same day
+                // e.g. if it is either allDay, openEnd or the end time is after the start time
+                // (endDate > $startDate) || (endDate == $startDate && (allDay || openEndTime || endTime >= $startTime))
+                $dateConstraints[] = $query->logicalOr([
+                    $query->greaterThan('endDate', $startDate),
+                    $query->logicalAnd([
+                        $query->equals('endDate', $startDate),
+                        $query->logicalOr([
+                            $query->equals('allDay', true),
+                            $query->equals('openEndTime', true),
+                            $query->greaterThanOrEqual('endTime', $startTime),
+                        ]),
+                    ]),
+                ]);
+            }
         }
 
-        if ((bool)ConfigurationUtility::get('respectTimesInTimeFrameConstraints')) {
-            $this->addDateTimeFrameConstraints($constraints, $query, $arguments);
-        } else {
-            $this->addDateFrameConstraints($constraints, $query, $arguments);
+        // No end means open start
+        if (null !== $end) {
+            $endDate = $end->format('Y-m-d');
+
+            if (false === $respectTime) {
+                // The startDate of an index must be before the range end, otherwise the event is in the future
+                $dateConstraints[] = $query->lessThanOrEqual('startDate', $endDate);
+            } else {
+                $endTime = DateTimeUtility::getDaySecondsOfDateTime($end);
+
+                $dateConstraints[] = $query->logicalOr([
+                    $query->lessThan('startDate', $endDate),
+                    $query->logicalAnd([
+                        $query->equals('startDate', $endDate),
+                        $query->logicalOr([
+                            $query->equals('allDay', true),
+                            $query->lessThanOrEqual('startTime', $endTime),
+                        ]),
+                    ]),
+                ]);
+            }
         }
-    }
 
-    /**
-     * Adds time frame constraints which respect the actual index times.
-     * Do not call this method directly. Call IndexRepository::addTimeFrameConstraints instead.
-     *
-     * @param array          $constraints
-     * @param QueryInterface $query
-     * @param array          $arguments
-     *
-     * @see IndexRepository::addTimeFrameConstraints
-     */
-    protected function addDateTimeFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
-    {
-        $timezone = DateTimeUtility::getUtcTimeZone();
-
-        // store values for start_date and start_time in separate variables
-        $startDateTime = new \DateTime('@' . $arguments['startTime'], $timezone);
-        $restrictionLowTime = DateTimeUtility::getDaySecondsOfDateTime($startDateTime);
-        $restrictionLowDay = DateTimeUtility::resetTime($startDateTime)->format('Y-m-d');
-
-        // store values for end_date and end_time in separate variables
-        $endDateTime = new \DateTime('@' . $arguments['endTime'], $timezone);
-        $restrictionHighTime = DateTimeUtility::getDaySecondsOfDateTime($endDateTime);
-        $restrictionHighDay = DateTimeUtility::resetTime($endDateTime)->format('Y-m-d');
-
-        $constraints[] = $query->logicalAnd([
-            // (end_date === restrictionLowDay && end_time >= restrictionLowTime) || end_date > restrictionLowDay || (all_day === true && end_date >= restrictionLowDay)
-            $query->logicalOr([
-                $query->logicalAnd([
-                    $query->equals('endDate', $restrictionLowDay),
-                    $query->greaterThanOrEqual('endTime', $restrictionLowTime),
-                ]),
-                $query->greaterThan('endDate', $restrictionLowDay),
-                $query->logicalAnd([
-                    $query->equals('allDay', true),
-                    $query->greaterThanOrEqual('endDate', $restrictionLowDay),
-                ]),
-            ]),
-            // (start_date === restrictionHighDay && start_time <= restrictionHighTime) || start_date < restrictionHighDay || (all_day === true && start_date <= restrictionHighDay)
-            $query->logicalOr([
-                $query->logicalAnd([
-                    $query->equals('startDate', $restrictionHighDay),
-                    $query->lessThanOrEqual('startTime', $restrictionHighTime),
-                ]),
-                $query->lessThan('startDate', $restrictionHighDay),
-                $query->logicalAnd([
-                    $query->equals('allDay', true),
-                    $query->lessThanOrEqual('startDate', $restrictionHighDay),
-                ]),
-            ]),
-        ]);
-    }
-
-    /**
-     * Adds time frame constraints which respect only the index dates, not the actual index times.
-     * Do not call this method directly. Call IndexRepository::addTimeFrameConstraints instead.
-     *
-     * @param array          $constraints
-     * @param QueryInterface $query
-     * @param array          $arguments
-     *
-     * @see IndexRepository::addTimeFrameConstraints
-     */
-    protected function addDateFrameConstraints(&$constraints, QueryInterface $query, array $arguments)
-    {
-        $orConstraint = [];
-
-        // DateTimeUtility::getTimeZone() ?!
-        $startDate = (new \DateTime('@' . $arguments['startTime']))->format('Y-m-d');
-        $endDate = (new \DateTime('@' . $arguments['endTime']))->format('Y-m-d');
-
-        // before - in
-        $beforeIn = [
-            $query->lessThan('startDate', $startDate),
-            $query->greaterThanOrEqual('endDate', $startDate),
-            $query->lessThan('endDate', $endDate),
-        ];
-        $orConstraint[] = $query->logicalAnd($beforeIn);
-
-        // in - in
-        $inIn = [
-            $query->greaterThanOrEqual('startDate', $startDate),
-            $query->lessThanOrEqual('endDate', $endDate),
-        ];
-        $orConstraint[] = $query->logicalAnd($inIn);
-
-        // in - after
-        $inAfter = [
-            $query->greaterThanOrEqual('startDate', $startDate),
-            $query->lessThan('startDate', $endDate),
-            $query->greaterThanOrEqual('endDate', $endDate),
-        ];
-        $orConstraint[] = $query->logicalAnd($inAfter);
-
-        // before - after
-        $beforeAfter = [
-            $query->lessThan('startDate', $startDate),
-            $query->greaterThan('endDate', $endDate),
-        ];
-        $orConstraint[] = $query->logicalAnd($beforeAfter);
-
-        // finish
-        $constraints[] = $query->logicalOr($orConstraint);
+        $constraints['dateTimeFrame'] = $query->logicalAnd($dateConstraints);
     }
 
     /**
