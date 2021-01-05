@@ -13,10 +13,8 @@ use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
-use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * CalMigrationUpdate.
@@ -104,6 +102,9 @@ class CalMigrationUpdate extends AbstractUpdate
     public function executeUpdate(): bool
     {
         $calIds = $this->getNonMigratedCalIds();
+        if (empty($calIds)) {
+            return true;
+        }
         $dbQueries = [];
         $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
         $this->performSysFileReferenceUpdate($calIds, $dbQueries, $customMessages);
@@ -163,8 +164,8 @@ class CalMigrationUpdate extends AbstractUpdate
                 'location' => $event['location_id'] > 0 ? $locationByUid[$event['location_id']] : $event['location'],
                 'abstract' => $event['teaser'],
                 'description' => $event['description'],
-                'images' => $event['image'],
-                'downloads' => $event['attachment'],
+                'images' => (int)$event['image'],
+                'downloads' => (int)$event['attachment'],
                 'calendarize' => $this->buildConfigurations($event, $dbQueries),
             ];
 
@@ -293,7 +294,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 ->from($variables['table'])
                 ->where(
                     $q->expr()->andX(
-                        $q->expr()->eq('tablenames', 'tx_cal_exception_event_group'),
+                        $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_exception_event_group')),
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT))
                     )
                 );
@@ -412,7 +413,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 $customMessages
             );
 
-            if($eventUid !== 0 && $categoryUid !== 0) {
+            if (0 !== $eventUid && 0 !== $categoryUid) {
                 $insertValues = [
                     'uid_local' => $categoryUid,
                     'uid_foreign' => $eventUid,
@@ -678,13 +679,13 @@ class CalMigrationUpdate extends AbstractUpdate
                     'crdate' => $selectResult['crdate'],
                     'type' => 'time',
                     'handling' => 'include',
-                    'start_date' => $this->migrateDate($selectResult['start_date']),
-                    'end_date' => $this->migrateDate($selectResult['end_date']),
+                    'start_date' => (string)$selectResult['start_date'] ?: null,
+                    'end_date' => (string)$selectResult['end_date'] ?: null,
                     'start_time' => (int)$selectResult['start_time'],
                     'end_time' => (int)$selectResult['end_time'],
                     'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
                     'frequency' => $this->mapFrequency($selectResult['freq']),
-                    'till_date' => $this->migrateDate($selectResult['until']),
+                    'till_date' => (string)$selectResult['until'] ?: null,
                     'counter_amount' => (int)$selectResult['cnt'],
                     'counter_interval' => (int)$selectResult['interval'],
                     'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
@@ -818,7 +819,7 @@ class CalMigrationUpdate extends AbstractUpdate
                     $q->expr()->eq('uid', $q->createNamedParameter((int)$sysCategory['uid'], \PDO::PARAM_INT))
                 )->set(
                     'parent',
-                    $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int) $sysCategory['parent'])
+                    $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int)$sysCategory['parent'])
                 );
 
             $dbQueries[] = $q->getSQL();
@@ -884,6 +885,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $q->getSQL();
 
         $result = $q->execute()->fetchAll();
+
         return (int)$result[0]['uid'];
     }
 
@@ -920,6 +922,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dbQueries[] = $q->getSQL();
 
         $result = $q->execute()->fetchAll();
+
         return (int)$result[0]['uid'];
     }
 
@@ -939,13 +942,13 @@ class CalMigrationUpdate extends AbstractUpdate
             'crdate' => $calEventRow['crdate'],
             'type' => 'time',
             'handling' => 'include',
-            'start_date' => $this->migrateDate($calEventRow['start_date']),
-            'end_date' => $this->migrateDate($calEventRow['end_date']),
-            'start_time' => $calEventRow['start_time'],
-            'end_time' => $calEventRow['end_time'],
+            'start_date' => (string)$calEventRow['start_date'] ?: null,
+            'end_date' => (string)$calEventRow['end_date'] ?: null,
+            'start_time' => (int)$calEventRow['start_time'],
+            'end_time' => (int)$calEventRow['end_time'],
             'all_day' => $calEventRow['allday'],
             'frequency' => $this->mapFrequency($calEventRow['freq']),
-            'till_date' => $this->migrateDate($calEventRow['until']),
+            'till_date' => (string)$calEventRow['until'] ?: null,
             'counter_amount' => (int)$calEventRow['cnt'],
             'counter_interval' => (int)$calEventRow['interval'],
         ];
@@ -985,35 +988,12 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
-     * Migrate date.
-     *
-     * @param $oldFormat
-     *
-     * @return int|string
-     */
-    protected function migrateDate($oldFormat)
-    {
-        try {
-            $date = new \DateTime((string)$oldFormat);
-
-            return $date->getTimestamp();
-        } catch (\Exception $e) {
-        }
-
-        return '';
-    }
-
-    /**
      * Get the non migrated cal IDs.
      *
      * @return array
      */
     protected function getNonMigratedCalIds()
     {
-        if (!ExtensionManagementUtility::isLoaded('cal')) {
-            return [];
-        }
-
         $checkImportIds = [];
         $nonMigrated = [];
 
@@ -1084,7 +1064,7 @@ class CalMigrationUpdate extends AbstractUpdate
             return $table->getName();
         }, $dbSchema->getTables());
 
-        return in_array('tx_cal_event', $tableNames);
+        return \in_array('tx_cal_event', $tableNames);
     }
 
     public function getPrerequisites(): array
