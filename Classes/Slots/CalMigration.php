@@ -11,6 +11,7 @@ use HDNET\Autoloader\Annotation\SignalClass;
 use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Updates\CalMigrationUpdate;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -58,7 +59,7 @@ class CalMigration
                 ->where(
                     $q->expr()->eq('import_id', $q->createNamedParameter($importId))
                 )
-                ->set('uid_foreign', (int) $recordId)
+                ->set('uid_foreign', (int)$recordId)
                 ->set('tablenames', $table);
 
             $dbQueries[] = $q->getSQL();
