@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
+use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -14,6 +15,7 @@ use HDNET\Calendarize\Utility\EventUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -470,6 +472,14 @@ class CalendarController extends AbstractController
         }
 
         $this->addCacheTags(['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_' . lcfirst($index->getConfiguration()['uniqueRegisterKey']) . '_' . $index->getOriginalObject()->getUid()]);
+
+        // Meta tags
+        if ($index->getOriginalObject() instanceof Event) {
+            // @todo move to event
+            /** @var Event $event */
+            $event = $index->getOriginalObject();
+            GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
+        }
 
         $this->slotExtendedAssignMultiple([
             'index' => $index,
