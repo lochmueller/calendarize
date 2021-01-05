@@ -112,6 +112,14 @@ class Index extends AbstractModel
     protected $originalObject;
 
     /**
+     * Slug.
+     *
+     * @var string
+     * @DatabaseField("string")
+     */
+    protected $slug = '';
+
+    /**
      * Get the original record for the current index.
      *
      * @return AbstractEntity
@@ -382,4 +390,22 @@ class Index extends AbstractModel
     {
         $this->openEndTime = $openEndTime;
     }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+
 }
