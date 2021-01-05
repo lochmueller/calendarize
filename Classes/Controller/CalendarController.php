@@ -322,7 +322,8 @@ class CalendarController extends AbstractController
     {
         $this->addCacheTags(['calendarize_year']);
 
-        $date = DateTimeUtility::normalizeDateTime(1, 1, $year);
+        // use the thrid day, to avoid time shift problems in the timezone
+        $date = DateTimeUtility::normalizeDateTime(3, 1, $year);
         $now = DateTimeUtility::getNow();
         if (null === $year || $now->format('Y') === $date->format('Y')) {
             $date = $now;

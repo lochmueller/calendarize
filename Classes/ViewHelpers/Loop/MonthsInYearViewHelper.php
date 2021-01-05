@@ -23,7 +23,8 @@ class MonthsInYearViewHelper extends AbstractLoopViewHelper
     {
         $months = [];
         $originalDate = clone $date;
-        $date->setDate((int)$date->format('Y'), 1, 1);
+        // use the thrid day, to avoid time shift problems in the timezone
+        $date->setDate((int)$date->format('Y'), 1, 3);
         for ($i = 0; $i < 12; ++$i) {
             $currentMonth = $originalDate->format('Y-m') === $date->format('Y-m');
             $months[$date->format('n')] = [
