@@ -11,6 +11,7 @@ use HDNET\Autoloader\Annotation\SignalClass;
 use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -1075,7 +1076,15 @@ class CalMigrationUpdate extends AbstractUpdate
 
     public function updateNecessary(): bool
     {
-        return false;
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connection = $connectionPool->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
+        $dbSchema = $connection->getSchemaManager()->createSchema();
+
+        $tableNames = array_map(function ($table) {
+            return $table->getName();
+        }, $dbSchema->getTables());
+
+        return in_array('tx_cal_event', $tableNames);
     }
 
     public function getPrerequisites(): array
