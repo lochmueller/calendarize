@@ -24,7 +24,7 @@ class CalendarizeField
         $sql = [];
         foreach (Register::getRegister() as $configuration) {
             $fieldName = isset($configuration['fieldName']) ? $configuration['fieldName'] : 'calendarize';
-            $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (' . $fieldName . ' tinytext);';
+            $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (' . $fieldName . ' tinytext, calendarize_info tinytext);';
         }
 
         return implode(LF, $sql);
