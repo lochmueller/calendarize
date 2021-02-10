@@ -22,7 +22,7 @@ The following code show the configuration that should be the same in ext_tables 
 
 .. code-block:: php
 
-	$configuration = [
+    $configuration = [
         'uniqueRegisterKey' => 'MyEvent', // A unique Key for the register (e.g. you Extension Key + "Event")
         'title'             => 'My Event', // The title for your events (this is shown in the FlexForm configuration of the Plugins)
         'modelName'         => \HDNET\MyExtension\Domain\Model\MyEvent::class, // the name of your model
@@ -45,5 +45,6 @@ To modify the amount of items shown in the preview you can change the amount in 
 The default value is 10 items.
 
 .. code-block:: php
+
 	// in ext_tables.php
 	$GLOBALS['TCA']['tx_myextension_domain_model_myevent']['columns']['calendarize_info']['config']['items'] = 25;

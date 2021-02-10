@@ -14,7 +14,7 @@ Linkhandler
 With a proper configuration of linkhandler function you can select events in Link wizards and RTE. Detials at https://usetypo3.com/linkhandler.html
 This configuration is enabled by default.
 
-.. code-block:: php
+.. code-block:: typoscript
 	:caption: Page TS Config
 
 	TCEMAIN {
