@@ -25,6 +25,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
+use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
 /**
  * Calendar.
@@ -329,6 +331,10 @@ class CalendarController extends AbstractController
             $date = $now;
         }
 
+        if ($this->isDateOutOfTypoScriptConfiguration($date)) {
+            return $this->return404Page();
+        }
+
         $this->slotExtendedAssignMultiple([
             'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
             'date' => $date,
@@ -347,6 +353,10 @@ class CalendarController extends AbstractController
 
         $quarter = DateTimeUtility::normalizeQuarter($quarter);
         $date = DateTimeUtility::normalizeDateTime(1, 1 + (($quarter - 1) * 3), $year);
+
+        if ($this->isDateOutOfTypoScriptConfiguration($date)) {
+            return $this->return404Page();
+        }
 
         $this->slotExtendedAssignMultiple([
             'indices' => $this->indexRepository->findQuarter((int)$date->format('Y'), $quarter),
@@ -371,6 +381,10 @@ class CalendarController extends AbstractController
         $useCurrentDate = $now->format('Y-m') === $date->format('Y-m');
         if ($useCurrentDate) {
             $date = $now;
+        }
+
+        if ($this->isDateOutOfTypoScriptConfiguration($date)) {
+            return $this->return404Page();
         }
 
         $this->slotExtendedAssignMultiple([
@@ -400,6 +414,10 @@ class CalendarController extends AbstractController
         }
         $weekStart = (int)$this->settings['weekStart'];
         $firstDay = DateTimeUtility::convertWeekYear2DayMonthYear($week, $year, $weekStart);
+
+        if ($this->isDateOutOfTypoScriptConfiguration($firstDay)) {
+            return $this->return404Page();
+        }
 
         $weekConfiguration = [
             '+0 day' => 2,
@@ -431,6 +449,10 @@ class CalendarController extends AbstractController
 
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
         $date->modify('+12 hours');
+
+        if ($this->isDateOutOfTypoScriptConfiguration($date)) {
+            return $this->return404Page();
+        }
 
         $previous = clone $date;
         $previous->modify('-1 day');

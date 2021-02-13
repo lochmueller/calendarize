@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -17,7 +18,9 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
 /**
  * Abstract controller.
@@ -64,7 +67,7 @@ abstract class AbstractController extends ActionController
         $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 
         $pluginConfigurationService = GeneralUtility::makeInstance(PluginConfigurationService::class);
-        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
+        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array) $this->settings);
     }
 
     /**
@@ -110,7 +113,7 @@ abstract class AbstractController extends ActionController
      */
     protected function sendHeaderAndFilename($contentType, $fileExtension)
     {
-        $testMode = (bool)$this->settings['feed']['debugMode'];
+        $testMode = (bool) $this->settings['feed']['debugMode'];
         if ($testMode) {
             header('Content-Type: text/plain; charset=utf-8');
         } else {
@@ -132,7 +135,7 @@ abstract class AbstractController extends ActionController
     /**
      * Extend the view by the slot class and name and assign the variable to the view.
      *
-     * @param array  $variables
+     * @param array $variables
      * @param string $signalClassName
      * @param string $signalName
      */
@@ -167,9 +170,9 @@ abstract class AbstractController extends ActionController
     /**
      * Calculate the plugin Hmac.
      *
+     * @return string $hmac
      * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
      *
-     * @return string $hmac
      */
     protected function calculatePluginHmac()
     {
@@ -234,5 +237,21 @@ abstract class AbstractController extends ActionController
         if ($GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
             $GLOBALS['TSFE']->addCacheTags($tags);
         }
+    }
+
+    protected function isDateOutOfTypoScriptConfiguration(\DateTime $dateTime): bool
+    {
+        $prev = new \DateTime($this->settings['dateLimitBrowserPrev']);
+        $next = new \DateTime($this->settings['dateLimitBrowserNext']);
+        return ($prev > $dateTime || $next < $dateTime);
+    }
+
+    protected function return404Page(): ResponseInterface
+    {
+        return GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+            $GLOBALS['TYPO3_REQUEST'],
+            'The requested page does not exist',
+            ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+        );
     }
 }

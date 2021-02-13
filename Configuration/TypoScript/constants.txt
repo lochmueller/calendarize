@@ -2,10 +2,10 @@ plugin.tx_calendarize {
 
 	settings {
 		# cat=calendarize//0010; type=string; label=Previous Limit: Limit for the previous button in the day,week,month,year view - Format: YYYY-MM-DD
-		dateLimitBrowserPrev = 2017-01-01
+		dateLimitBrowserPrev = 2019-01-01
 
 		# cat=calendarize//0020; type=string; label=Next Limit: Limit for the next button in the day,week,month,year view - Format: YYYY-MM-DD
-		dateLimitBrowserNext = 2024-01-01
+		dateLimitBrowserNext = 2028-01-01
 
 		# cat=calendarize//0030; type=int+; label=Start of the week: Start of the week (1 Mo - 7 Su) - ISO-8601 / http://php.net/manual/de/function.date.php 'N' / http://php.net/manual/de/function.date.php#119974
 		weekStart = 1
