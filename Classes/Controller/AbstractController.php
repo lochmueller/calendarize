@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
+use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -241,8 +242,9 @@ abstract class AbstractController extends ActionController
 
     protected function isDateOutOfTypoScriptConfiguration(\DateTime $dateTime): bool
     {
-        $prev = new \DateTime($this->settings['dateLimitBrowserPrev']);
-        $next = new \DateTime($this->settings['dateLimitBrowserNext']);
+
+        $prev = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserPrev']);
+        $next = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserNext']);
         return ($prev > $dateTime || $next < $dateTime);
     }
 
