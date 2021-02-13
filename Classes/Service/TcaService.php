@@ -23,7 +23,7 @@ class TcaService extends AbstractService
     /**
      * Render the configuration title.
      *
-     * @param array  $params
+     * @param array $params
      * @param object $object
      */
     public function configurationTitle(array &$params, $object)
@@ -49,7 +49,7 @@ class TcaService extends AbstractService
     /**
      * Add configurations to event titles.
      *
-     * @param array  $params
+     * @param array $params
      * @param object $object
      */
     public function eventTitle(array &$params, $object)
@@ -70,7 +70,7 @@ class TcaService extends AbstractService
         $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']])->fetch();
 
         $transPointer = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
-        if ($transPointer && (int)$fullRow[$transPointer] > 0) {
+        if ($transPointer && (int) $fullRow[$transPointer] > 0) {
             return;
         }
 
@@ -86,7 +86,7 @@ class TcaService extends AbstractService
 
         foreach ($configurations as $key => $value) {
             $paramsInternal = [
-                'row' => (array)$databaseConnection->select(
+                'row' => (array) $databaseConnection->select(
                     ['*'],
                     'tx_calendarize_domain_model_configuration',
                     ['uid' => $value]
@@ -160,7 +160,11 @@ class TcaService extends AbstractService
             $title .= ' ' . TranslateUtility::get('tx_calendarize_domain_model_index.all_day');
         } elseif ($row['start_time']) {
             $title .= ' <br />' . BackendUtility::time($row['start_time'] % DateTimeUtility::SECONDS_DAY, false);
-            $title .= ' - ' . BackendUtility::time($row['end_time'] % DateTimeUtility::SECONDS_DAY, false);
+            if ($row['open_end_time']) {
+                $title .= ' - ' . TranslateUtility::get('open_end');
+            } else {
+                $title .= ' - ' . BackendUtility::time($row['end_time'] % DateTimeUtility::SECONDS_DAY, false);
+            }
         }
         if ($row['frequency'] && Configuration::FREQUENCY_NONE !== $row['frequency']) {
             $title .= ' <br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
