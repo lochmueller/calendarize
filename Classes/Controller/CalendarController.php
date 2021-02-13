@@ -72,7 +72,7 @@ class CalendarController extends AbstractController
                 ->setTypeConverterOption(
                     DateTimeConverter::class,
                     DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-                    $this->settings['dateFormat']
+                    'Y-m-d'
                 );
         }
         if (isset($this->arguments['endDate'])) {
@@ -80,7 +80,7 @@ class CalendarController extends AbstractController
                 ->setTypeConverterOption(
                     DateTimeConverter::class,
                     DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-                    $this->settings['dateFormat']
+                    'Y-m-d'
                 );
         }
         if ($this->request->hasArgument('event') && 'detailAction' === $this->actionMethodName) {
