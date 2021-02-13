@@ -79,8 +79,8 @@ class EventSearch
     /**
      * Set ids by general.
      *
-     * @SignalClass \HDNET\Calendarize\Domain\Repository\IndexRepository
-     * @SignalName getDefaultConstraints
+     * @SignalClass("HDNET\Calendarize\Domain\Repository\IndexRepository")
+     * @SignalName("getDefaultConstraints")
      *
      * @param array $indexIds
      * @param array $indexTypes

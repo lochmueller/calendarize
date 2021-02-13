@@ -22,8 +22,8 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
  * If using the slots please use the m with func_get_args!
  * Example:
  * /**
- *  * @SignalClass \HDNET\Calendarize\Updates\CalMigrationUpdate
- *  * @SignalName getCalendarizeEventUid
+ *  * @SignalClass("HDNET\Calendarize\Updates\CalMigrationUpdate")
+ *  * @SignalName("getCalendarizeEventUid")
  *
  *  *@return array
  *  *
