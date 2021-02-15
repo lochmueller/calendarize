@@ -90,7 +90,7 @@ class EventSearch
      */
     public function setIdsByGeneral(array $indexIds, array $indexTypes, array $additionalSlotArguments)
     {
-        if (!\in_array($this->getUniqueRegisterKey(), $indexTypes, true)) {
+        if (!empty($indexTypes) && !\in_array($this->getUniqueRegisterKey(), $indexTypes, true)) {
             return;
         }
 

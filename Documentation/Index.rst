@@ -21,10 +21,12 @@ Calendarize - Flexible TYPO3 Calendar
       en
 
 .. toctree::
+   :titlesonly:
 
    Introduction/Index
    AdministratorManual/Index
    DeveloperManual/Index
    Templates/Index
    Snippets/Index
+   KnownProblems/Index
    ChangeLog/Index

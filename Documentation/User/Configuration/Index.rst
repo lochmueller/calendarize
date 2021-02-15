@@ -6,7 +6,7 @@
 .. include:: ../../Includes.txt
 
 
-.. _event:
+.. _configuration:
 
 Configuration
 =============

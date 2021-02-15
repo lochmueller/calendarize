@@ -19,9 +19,10 @@
 * [EXT:calendarize_news](https://github.com/lochmueller/calendarize_news) (Calendarize for news)
 * [EXT:md_fullcalendar](https://extensions.typo3.org/extension/md_fullcalendar/) (Full Calendar.io integration)
 * [EXT:md_calendarize_frontend](https://extensions.typo3.org/extension/md_calendarize_frontend/) (Add events via frontend)
+* [EXT:calendarize_address](https://extensions.typo3.org/extension/calendarize_address/) (Extends events with tt_address records)
 
 ## Sponsors & supporter
 
 Thank you for support and sponsoring the extension:
 
-- [All contributos](https://github.com/lochmueller/calendarize/graphs/contributors)!
+- [All contributors](https://github.com/lochmueller/calendarize/graphs/contributors)!

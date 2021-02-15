@@ -2,6 +2,7 @@ For administrators
 ==================
 
 .. toctree::
+	:titlesonly:
 
 	Installation/Index
 	Configuration/Index
