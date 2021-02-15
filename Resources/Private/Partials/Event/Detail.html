@@ -23,11 +23,29 @@
 	<dl class="dl-horizontal meta">
 		<f:if condition="{event.location}">
 			<dt><f:translate key="tx_calendarize_domain_model_event.location" />:</dt>
-			<dd>{event.location}</dd>
+			<dd>
+				<f:if condition="{event.locationLink}">
+					<f:then>
+						<f:link.typolink parameter="{event.locationLink}">{event.location}</f:link.typolink>
+					</f:then>
+					<f:else>
+						{event.location}
+					</f:else>
+				</f:if>
+			</dd>
 		</f:if>
 		<f:if condition="{event.organizer}">
 			<dt><f:translate key="tx_calendarize_domain_model_event.organizer" />:</dt>
-			<dd>{event.organizer}</dd>
+			<dd>
+				<f:if condition="{event.organizerLink}">
+					<f:then>
+						<f:link.typolink parameter="{event.organizerLink}">{event.organizer}</f:link.typolink>
+					</f:then>
+					<f:else>
+						{event.organizer}
+					</f:else>
+				</f:if>
+			</dd>
 		</f:if>
 	</dl>
 
