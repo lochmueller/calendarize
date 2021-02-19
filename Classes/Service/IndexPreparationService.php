@@ -60,6 +60,7 @@ class IndexPreparationService
         }
 
         $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
+        $this->addCtrlFieldInformation($neededItems, $tableName, $rawRecord);
         $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
 
         return $neededItems;
@@ -136,6 +137,33 @@ class IndexPreparationService
         }
         if (isset($enableFields['fe_group'])) {
             $addFields['fe_group'] = (string)$record[$enableFields['fe_group']];
+        }
+
+        foreach ($neededItems as $key => $value) {
+            $neededItems[$key] = array_merge($value, $addFields);
+        }
+    }
+
+    /**
+     * Add the ctrl field information.
+     *
+     * @param array  $neededItems
+     * @param string $tableName
+     * @param array  $record
+     */
+    protected function addCtrlFieldInformation(array &$neededItems, $tableName, array $record)
+    {
+        $ctrl = $GLOBALS['TCA'][$tableName]['ctrl'] ?? [];
+        if (!$ctrl) {
+            return;
+        }
+
+        $addFields = [];
+        if (isset($ctrl['tstamp'])) {
+            $addFields['tstamp'] = (int) $record[$ctrl['tstamp']];
+        }
+        if (isset($ctrl['crdate'])) {
+            $addFields['crdate'] = (int) $record[$ctrl['crdate']];
         }
 
         foreach ($neededItems as $key => $value) {
