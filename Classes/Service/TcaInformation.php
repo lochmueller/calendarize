@@ -94,6 +94,7 @@ class TcaInformation extends AbstractService
                 }
                 $entry .= ' (' . $start . ' - ' . $end . ')';
             }
+            $entry .= ($event['state'] != 'default') ? ' ' . ucfirst($event['state']) : '';
             $items[] = $entry;
         }
         if (!$items) {
