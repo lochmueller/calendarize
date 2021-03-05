@@ -876,6 +876,11 @@ class CalMigrationUpdate extends AbstractUpdate
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
+        // also get restricted (e.g. hidden) records, otherwise retrieving event uid for
+        // restricted records will always return 0
+        $q->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $q->select('uid')
             ->from($variables['table'])
             ->where(
