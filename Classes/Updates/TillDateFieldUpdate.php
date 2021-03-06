@@ -16,4 +16,9 @@ class TillDateFieldUpdate extends DateFieldUpdate
             'till_date',
         ],
     ];
+
+    public function getIdentifier(): string
+    {
+        return 'calendarize_tillDateField';
+    }
 }

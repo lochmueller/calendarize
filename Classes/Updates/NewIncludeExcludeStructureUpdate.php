@@ -24,6 +24,12 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
      */
     protected $title = 'Migrate the calendarize configurations to the new include/exclude/override/cutout structure';
 
+    public function getIdentifier(): string
+    {
+        return 'calendarize_newIncludeExcludeStructure';
+    }
+
+
     /**
      * Checks whether updates are required.
      *
