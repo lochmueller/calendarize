@@ -26,6 +26,11 @@ class DateFieldUpdate extends AbstractUpdate
         ],
     ];
 
+    public function getIdentifier(): string
+    {
+        return 'dateFieldUpdate';
+    }
+
     public function executeUpdate(): bool
     {
         foreach ($this->migrationMap as $table => $fields) {

@@ -71,6 +71,11 @@ class CalMigrationUpdate extends AbstractUpdate
     Try to migrate all cal information and place the new calendarize event models in the same folder
     as the cal-records. Please note: the migration will be create calendarize default models.';
 
+    public function getIdentifier(): string
+    {
+        return 'calMigration';
+    }
+
     /**
      * Checks whether updates are required.
      *
