@@ -73,7 +73,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
     public function getIdentifier(): string
     {
-        return 'calMigration';
+        return 'calendarize_calMigration';
     }
 
     /**

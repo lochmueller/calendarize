@@ -26,7 +26,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
 
     public function getIdentifier(): string
     {
-        return 'newIncludeExcludeStructure';
+        return 'calendarize_newIncludeExcludeStructure';
     }
 
 

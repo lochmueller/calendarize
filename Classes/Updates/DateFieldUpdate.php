@@ -28,7 +28,7 @@ class DateFieldUpdate extends AbstractUpdate
 
     public function getIdentifier(): string
     {
-        return 'dateFieldUpdate';
+        return 'calendarize_dateField';
     }
 
     public function executeUpdate(): bool
