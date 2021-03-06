@@ -106,14 +106,49 @@ class CalMigrationUpdate extends AbstractUpdate
             return true;
         }
         $dbQueries = [];
-        $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
+
+        /**
+         * @var bool
+         */
+        $calUsesSysCategories = $this->isCalWithSysCategories();
+
+        if (!$calUsesSysCategories) {
+            $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
+        }
         $this->performSysFileReferenceUpdate($calIds, $dbQueries, $customMessages);
         $this->performExceptionEventUpdate($calIds, $dbQueries, $customMessages);
         $this->performCalEventUpdate($calIds, $dbQueries, $customMessages);
-        $this->performLinkEventToCategory($calIds, $dbQueries, $customMessages);
+        if ($calUsesSysCategories) {
+            $this->performLinkEventToSysCategory($calIds, $dbQueries, $customMessages);
+        } else {
+            $this->performLinkEventToCategory($calIds, $dbQueries, $customMessages);
+        }
         $this->performLinkEventToConfigurationGroup($calIds, $dbQueries, $customMessages);
 
         return true;
+    }
+
+    /**
+     * Check if cal is already using sys_category instead
+     * of tx_cal_category. This affects the conversion of
+     * categories and category / event relations.
+     *
+     * @return bool
+     */
+    protected function isCalWithSysCategories(): bool
+    {
+        $table = 'sys_category_record_mm';
+
+        $db = HelperUtility::getDatabaseConnection($table);
+        $q = $db->createQueryBuilder();
+        $count = (int)$q->count('*')
+            ->from($table)
+            ->where(
+                $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
+                $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
+            )
+            ->execute();
+        return $count > 0;
     }
 
     /**
@@ -427,6 +462,83 @@ class CalMigrationUpdate extends AbstractUpdate
                 $q->execute();
             }
         }
+    }
+
+    /**
+     * Link the Events to the migrated categories.
+     *
+     * This uses the existing 'sys_category_record_mm' table which links tx_cal_event to sys_category.
+     * The fields must be updated to use tx_calendarize_domain_model_event instead.
+     * Additionally, the uid_foreign must be updated to point to the new event uid.
+     *
+     * Before: tablenames='tx_cal_event', fieldname='category_id'
+     * After: tablenames='tx_calendarize_domain_model_event', fieldname='categories'
+     *
+     * @param       $calIds
+     * @param array $dbQueries
+     * @param array $customMessages
+     */
+    public function performLinkEventToSysCategory($calIds, &$dbQueries, &$customMessages)
+    {
+        $table = 'sys_category_record_mm';
+
+        $db = HelperUtility::getDatabaseConnection($table);
+        $q = $db->createQueryBuilder();
+
+        $q->select('uid_foreign')->from($table)
+            ->where(
+                $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
+                $q->expr()->eq('fieldname', $q->createNamedParameter('category_id')),
+                $q->expr()->neq('uid_local', $q->createNamedParameter(0, \PDO::PARAM_INT)),
+                $q->expr()->neq('uid_foreign', $q->createNamedParameter(0, \PDO::PARAM_INT))
+            )->groupBy('uid_foreign');
+
+        $selectResults = $q->execute()->fetchAll();
+
+        $variables = [
+            'tablenames' => self::EVENT_TABLE,
+            'fieldname' => 'categories'
+        ];
+
+        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
+
+        foreach ($selectResults as $mm) {
+            $eventUidOld = (int) $mm['uid_foreign'];
+            // event id is in uid_foreign
+            $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $eventUidOld, $dbQueries, $customMessages);
+
+            if ($eventUid !== 0) {
+                $q->update('sys_category_record_mm')
+                    ->set('tablenames', $variables['tablenames'])
+                    ->set('fieldname', $variables['fieldname'])
+                    ->set('uid_foreign', $eventUid)
+                    ->where(
+                        $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUidOld, \PDO::PARAM_INT)),
+                        $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
+                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id')),
+                    )->execute();
+            } else {
+                $q->delete($table)
+                    ->where(
+                        $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUid, \PDO::PARAM_INT)),
+                        $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
+                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id')),
+                    )
+                    ->execute();
+            }
+        }
+
+        // delete remaining entries with insufficient values (e.g. uid_foreign=0)
+        $q->delete($table)
+            ->where(
+                $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
+                $q->expr()->orX(
+                    $q->expr()->eq('fieldname', $q->createNamedParameter('')),
+                    $q->expr()->eq('uid_local', $q->createNamedParameter(0, \PDO::PARAM_INT)),
+                    $q->expr()->eq('uid_foreign', $q->createNamedParameter(0, \PDO::PARAM_INT))
+                )
+            )->execute();
     }
 
     /**
