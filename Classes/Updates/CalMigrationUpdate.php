@@ -11,6 +11,7 @@ use HDNET\Autoloader\Annotation\SignalClass;
 use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -186,16 +187,31 @@ class CalMigrationUpdate extends AbstractUpdate
             $locationByUid[$location['uid']] = $location['name'];
         }
 
-        $events = $q->select('*')->from($table)->where(
-            $q->expr()->in('uid', $calIds)
-        )->execute()->fetchAll();
+        $events = $q->select('*')
+            ->from($table)
+            ->where(
+                $q->expr()->in('uid', $q->createNamedParameter($calIds, Connection::PARAM_INT_ARRAY))
+            )
+            ->orderBy('l18n_parent')
+            ->execute()->fetchAll();
 
         foreach ($events as $event) {
+            // Get the parent id of the event record
+            // Note: The parent record should exist at this time, since we orderBy('l18n_parent')
+            $parentEventUid = 0;
+            if ($event['l18n_parent']) {
+                $parentEventUid = (int)$this->getCalendarizeEventUid(
+                    self::IMPORT_PREFIX . $event['l18n_parent'],
+                    $dbQueries,
+                    $customMessages
+                );
+            }
+
             $calendarizeEventRecord = [
                 'pid' => $event['pid'],
                 'import_id' => self::IMPORT_PREFIX . (int)$event['uid'],
                 'sys_language_uid' => $event['sys_language_uid'] ?? 0,
-                'l10n_parent' => $event['l18n_parent'] ?? 0,
+                'l10n_parent' => $parentEventUid,
                 'tstamp' => $event['tstamp'],
                 'crdate' => $event['crdate'],
                 'hidden' => $event['hidden'],
