@@ -222,6 +222,8 @@ class CalMigrationUpdate extends AbstractUpdate
             $dispatcher = HelperUtility::getSignalSlotDispatcher();
             $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
+            $db = HelperUtility::getDatabaseConnection($variables['table']);
+            $q = $db->createQueryBuilder();
             $q->insert($variables['table'])->values($variables['calendarizeEventRecord']);
             $dbQueries[] = $q->getSQL();
 
@@ -288,6 +290,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
             ];
 
+            $q = $db->createQueryBuilder();
             $q->insert(self::CONFIGURATION_GROUP_TABLE)->values($group);
             $dbQueries[] = $q->getSQL();
 
@@ -331,7 +334,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'calIds' => $calIds,
             ];
 
-            $q->resetQueryParts()->resetRestrictions();
+            $q = HelperUtility::getDatabaseConnection('uid_local')->createQueryBuilder();
 
             $q->select('uid_local')
                 ->from($variables['table'])
@@ -404,13 +407,14 @@ class CalMigrationUpdate extends AbstractUpdate
         ];
 
         // create new entry with import_id
+        $db = HelperUtility::getDatabaseConnection('sys_file_reference');
         foreach ($variables['selectResults'] as $selectResult) {
             $selectResult['tablenames'] = $variables['table'];
             $selectResult['import_id'] = self::IMPORT_PREFIX . $selectResult['uid'];
             $selectResult['fieldname'] = ('image' === $selectResult['fieldname']) ? 'images' : 'downloads';
             unset($selectResult['uid_foreign'], $selectResult['uid']);
 
-            $q->resetQueryParts()->resetRestrictions();
+            $q = $db->createQueryBuilder();
             $q->insert('sys_file_reference')->values($selectResult);
 
             $dbQueries[] = $q->getSQL();
@@ -464,7 +468,8 @@ class CalMigrationUpdate extends AbstractUpdate
                     'fieldname' => $variables['fieldname'],
                 ];
 
-                $q->insert('sys_category_record_mm')->values($insertValues);
+                $q = $db->createQueryBuilder();
+                $q->insert($table)->values($insertValues);
                 $dbQueries[] = $q->getSQL();
 
                 $q->execute();
@@ -516,8 +521,9 @@ class CalMigrationUpdate extends AbstractUpdate
             // event id is in uid_foreign
             $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $eventUidOld, $dbQueries, $customMessages);
 
+            $q = $db->createQueryBuilder();
             if ($eventUid !== 0) {
-                $q->update('sys_category_record_mm')
+                $q->update($table)
                     ->set('tablenames', $variables['tablenames'])
                     ->set('fieldname', $variables['fieldname'])
                     ->set('uid_foreign', $eventUid)
@@ -538,6 +544,7 @@ class CalMigrationUpdate extends AbstractUpdate
         }
 
         // delete remaining entries with insufficient values (e.g. uid_foreign=0)
+        $q = $db->createQueryBuilder();
         $q->delete($table)
             ->where(
                 $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
@@ -562,7 +569,6 @@ class CalMigrationUpdate extends AbstractUpdate
     protected function updateEventWithConfiguration($eventImportId, $configuration, &$dbQueries, &$customMessages)
     {
         $db = HelperUtility::getDatabaseConnection(self::CONFIGURATION_TABLE);
-        $q = $db->createQueryBuilder();
 
         $configurationRow = $this->findEventExcludeConfiguration($eventImportId, $dbQueries, $customMessages);
         if ($configurationRow) {
@@ -570,6 +576,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
             unset($configurationRow['uid']);
 
+            $q = HelperUtility::getDatabaseConnection(self::CONFIGURATION_GROUP_TABLE)->createQueryBuilder();
             $q->update(self::CONFIGURATION_GROUP_TABLE)
                 ->where('uid', $q->createNamedParameter((int)$configuration['uid'], \PDO::PARAM_INT));
             foreach ($configurationRow as $key => $value) {
@@ -579,6 +586,7 @@ class CalMigrationUpdate extends AbstractUpdate
             $dbQueries[] = $q->getSQL();
             $results = $q->execute();
         } else {
+            $q = $db->createQueryBuilder();
             $q->insert(self::CONFIGURATION_TABLE)->values($configuration);
             $dbQueries[] = $q->getSQL();
 
@@ -781,7 +789,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'dbQueries' => $dbQueries,
             ];
 
-            $q->resetQueryParts()->resetRestrictions();
+            $q = $db->createQueryBuilder();
             $q->select('*')
                 ->from($variables['table'])
                 ->where(
@@ -819,7 +827,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 $dispatcher = HelperUtility::getSignalSlotDispatcher();
                 $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
-                $q->resetQueryParts()->resetRestrictions();
+                $q = $db->createQueryBuilder();
                 $q->insert($variables['table'])->values($variables['configurationRow']);
 
                 $dbQueries[] = $q->getSQL();
@@ -905,8 +913,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'sorting' => $category['sorting'],
             ];
 
-            $q->resetQueryParts()->resetRestrictions();
-
+            $q = $db->createQueryBuilder();
             $q->insert('sys_category')->values($sysCategoryRecord);
             $dbQueries[] = $q->getSQL();
 
@@ -920,7 +927,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'calIds' => $calIds,
         ];
 
-        $q->resetQueryParts()->resetRestrictions();
+        $q = $db->createQueryBuilder();
 
         $q->select('*')
             ->from($variables['table'])
@@ -933,7 +940,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         foreach ($selectResults as $sysCategory) {
             // update parent, because there are just the old uids
-            $q->resetQueryParts()->resetRestrictions();
+            $q = $db->createQueryBuilder();
             $q->update('sys_category')
                 ->where(
                     $q->expr()->eq('uid', $q->createNamedParameter((int)$sysCategory['uid'], \PDO::PARAM_INT))
@@ -1150,7 +1157,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreSelect', $variables);
 
-        $q->resetQueryParts();
+        $q = HelperUtility::getDatabaseConnection($variables['table'])->createQueryBuilder();
 
         $migratedRows = $q->select('uid', 'import_id')
             ->from($variables['table'])
