@@ -194,6 +194,9 @@ class CalMigrationUpdate extends AbstractUpdate
             $calendarizeEventRecord = [
                 'pid' => $event['pid'],
                 'import_id' => self::IMPORT_PREFIX . (int)$event['uid'],
+                'sys_language_uid' => $event['sys_language_uid'] ?? 0,
+                'l10n_parent' => $event['l18n_parent'] ?? 0,
+                'l10n_diffsource' => $event['l18n_diffsource'] ?? '',
                 'tstamp' => $event['tstamp'],
                 'crdate' => $event['crdate'],
                 'hidden' => $event['hidden'],
