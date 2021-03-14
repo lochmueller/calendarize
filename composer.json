@@ -65,6 +65,7 @@
 	},
 	"extra": {
 		"typo3/cms": {
+			"extension-key": "calendarize",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web",
 			"Package": {
