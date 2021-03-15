@@ -36,7 +36,7 @@ class IndexPreparationService
         }
 
         $register = Register::getRegister();
-        $fieldName = isset($register[$configurationKey]['fieldName']) ? $register[$configurationKey]['fieldName'] : 'calendarize';
+        $fieldName = $register[$configurationKey]['fieldName'] ?? 'calendarize';
         $configurations = GeneralUtility::intExplode(',', $rawRecord[$fieldName], true);
 
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
@@ -74,14 +74,14 @@ class IndexPreparationService
      * @param string $tableName
      * @param array  $record
      */
-    protected function addLanguageInformation(array &$neededItems, $tableName, array $record)
+    protected function addLanguageInformation(array &$neededItems, string $tableName, array $record): void
     {
         $languageField = $GLOBALS['TCA'][$tableName]['ctrl']['languageField'] ?? false; // e.g. sys_language_uid
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
 
         if ($transPointer && (int)$record[$transPointer] > 0) {
             foreach ($neededItems as $key => $value) {
-                $originalRecord = BackendUtility::getRecord($value['foreign_table'], $value['foreign_uid']);
+                $originalRecord = BackendUtility::getRecord($value['foreign_table'], $value['foreign_uid'], $transPointer);
 
                 $searchFor = $value;
                 $searchFor['foreign_uid'] = (int)$originalRecord[$transPointer];
@@ -161,10 +161,10 @@ class IndexPreparationService
 
         $addFields = [];
         if (isset($ctrl['tstamp'])) {
-            $addFields['tstamp'] = (int) $record[$ctrl['tstamp']];
+            $addFields['tstamp'] = (int)$record[$ctrl['tstamp']];
         }
         if (isset($ctrl['crdate'])) {
-            $addFields['crdate'] = (int) $record[$ctrl['crdate']];
+            $addFields['crdate'] = (int)$record[$ctrl['crdate']];
         }
 
         foreach ($neededItems as $key => $value) {
