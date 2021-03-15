@@ -59,9 +59,10 @@ class IndexPreparationService
             }
         }
 
+        // Language information must be added before ctrl/enable information
+        $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
         $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
         $this->addCtrlFieldInformation($neededItems, $tableName, $rawRecord);
-        $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
 
         return $neededItems;
     }
