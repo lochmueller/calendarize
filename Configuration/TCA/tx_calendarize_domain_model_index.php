@@ -8,6 +8,15 @@ use HDNET\Calendarize\Domain\Model\Index;
 
 $base = ModelUtility::getTcaInformation(Index::class);
 
+// Removed unused fields, because the records are not accessible by the user
+unset(
+    // Stores changes after translation was made
+    $base['ctrl']['transOrigDiffSourceField'],
+    $base['columns']['l10n_diffsource'],
+    // Prevents editing of records for non admins
+    $base['ctrl']['editlock'],
+);
+
 $custom = [
     'ctrl' => [
         'hideTable' => true,
