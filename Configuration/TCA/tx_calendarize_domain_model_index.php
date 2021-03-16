@@ -15,6 +15,7 @@ unset(
     $base['columns']['l10n_diffsource'],
     // Prevents editing of records for non admins
     $base['ctrl']['editlock'],
+    $base['columns']['editlock'],
 );
 
 $custom = [
