@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -94,7 +95,7 @@ class TcaInformation extends AbstractService
                 }
                 $entry .= ' (' . $start . ' - ' . $end . ')';
             }
-            $entry .= ($event['state'] != 'default') ? ' ' . ucfirst($event['state']) : '';
+            $entry .= (ConfigurationInterface::STATE_DEFAULT !== $event['state']) ? ' ' . ucfirst($event['state']) : '';
             $items[] = $entry;
         }
         if (!$items) {

@@ -44,23 +44,21 @@ class IndexerService extends AbstractService
         $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$this]);
 
         $this->removeInvalidConfigurationIndex();
-        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
-
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         foreach (Register::getRegister() as $key => $configuration) {
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
 
-            $q->resetQueryParts();
+            $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
+            $q->getRestrictions()
+                ->removeAll()
+                ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
             $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
 
             if ($transPointer) {
-                // Note: In loclized tables, it is important, that the "default language records" are indexed first, so the
-                // overlays can connect with l10n_paretn to the right default record.
+                // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
+                // overlays can connect with l10n_parent to the right default record.
                 $q->select('uid')
                     ->from($tableName)
                     ->orderBy((string)$transPointer);
