@@ -11,7 +11,7 @@
 Linkhandler
 ===========
 
-With a proper configuration of linkhandler function you can select events in Link wizards and RTE. Detials at https://usetypo3.com/linkhandler.html
+With a proper configuration of linkhandler function you can select events in Link wizards and RTE. Details at https://usetypo3.com/linkhandler.html
 This configuration is enabled by default.
 
 .. code-block:: typoscript
