@@ -21,6 +21,7 @@ $custom = [
     ],
     'columns' => [
         'title' => [
+            'l10n_mode' => 'prefixLangTitle',
             'config' => [
                 'eval' => 'required',
             ],
