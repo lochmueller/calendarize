@@ -3,12 +3,12 @@
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
 
-.. include:: ../../Includes.txt
+.. include:: ../../../Includes.txt
 
 
-.. _configuration:
+.. _configurationgroup:
 
-Configuration
-=============
+Configuration Group
+===================
 
 tbd.

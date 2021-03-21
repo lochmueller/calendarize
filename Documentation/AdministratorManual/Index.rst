@@ -9,3 +9,4 @@ For administrators
 	Scheduler/Index
 	UrlRewrite/Index
 	Linkhandler/Index
+	Migration/Index
