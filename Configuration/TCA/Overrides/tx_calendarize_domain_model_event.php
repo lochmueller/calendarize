@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
-use TYPO3\CMS\Core\Category\CategoryRegistry;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 if (!(bool)ConfigurationUtility::get('disableDefaultEvent')) {
     Register::extTables(Register::getDefaultCalendarizeConfiguration());
 
-    $categoryRegistry = GeneralUtility::makeInstance(CategoryRegistry::class);
-    $categoryRegistry->add('calendarize', 'tx_calendarize_domain_model_event');
+    ExtensionManagementUtility::makeCategorizable(
+        'calendarize',
+        'tx_calendarize_domain_model_event',
+        'categories',
+        [
+            // Allow backend users to edit this record
+            'exclude' => false,
+        ]
+    );
 }

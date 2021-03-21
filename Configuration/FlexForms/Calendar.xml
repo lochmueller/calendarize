@@ -170,6 +170,13 @@
 					<settings.useRelativeDate>
 						<TCEforms>
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
+							<displayCond>
+								<OR>
+									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
+									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+								</OR>
+							</displayCond>
 							<onChange>reload</onChange>
 							<config>
 								<type>check</type>
@@ -185,12 +192,14 @@
 									<OR>
 										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
 							<config>
 								<type>input</type>
 								<eval>datetime</eval>
+								<renderType>inputDateTime</renderType>
 							</config>
 						</TCEforms>
 					</settings.overrideStartdate>
@@ -203,12 +212,14 @@
 									<OR>
 										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
 							<config>
 								<type>input</type>
 								<eval>datetime</eval>
+								<renderType>inputDateTime</renderType>
 							</config>
 						</TCEforms>
 					</settings.overrideEnddate>
@@ -221,6 +232,7 @@
 									<OR>
 										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
@@ -239,6 +251,7 @@
 									<OR>
 										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
 										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
+										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>

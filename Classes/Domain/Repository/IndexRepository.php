@@ -304,7 +304,9 @@ class IndexRepository extends AbstractRepository
         $constraints[] = $query->lessThanOrEqual('startDate', $now->format('Y-m-d'));
         $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings($this->getSorting($sort));
-        $query->setLimit($limit);
+        if ($limit > 0) {
+            $query->setLimit($limit);
+        }
 
         return $this->matchAndExecute($query, $constraints);
     }
