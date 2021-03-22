@@ -8,6 +8,8 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
@@ -26,10 +28,17 @@ class BackendController extends AbstractController
         $options = $this->getOptions();
         $typeLocations = $this->getDifferentTypesAndLocations();
 
+        $pids = $this->getPids($typeLocations);
+        if ($pids) {
+            $indices = $this->indexRepository->findAllForBackend($options, $pids);
+        } else {
+            $indices = [];
+        }
+
         $this->view->assignMultiple([
-            'indices' => $this->indexRepository->findAllForBackend($options),
+            'indices' => $indices,
             'typeLocations' => $typeLocations,
-            'pids' => $this->getPids($typeLocations),
+            'pids' => $pids,
             'settings' => $this->settings,
             'options' => $options,
         ]);
@@ -85,11 +94,68 @@ class BackendController extends AbstractController
      */
     protected function getDifferentTypesAndLocations()
     {
+        /**
+         * @var array<int>
+         */
+        $mountPoints = $this->getAllowedDbMounts();
+
         $typeLocations = [];
         foreach ($this->indexRepository->findDifferentTypesAndLocations() as $entry) {
-            $typeLocations[$entry['foreign_table']][$entry['pid']] = $entry['unique_register_key'];
+            $pageId = $entry['pid'];
+            if ($this->isPageAllowed($pageId, $mountPoints)) {
+                $typeLocations[$entry['foreign_table']][$pageId] = $entry['unique_register_key'];
+            }
         }
 
         return $typeLocations;
     }
+
+    /**
+     * Check if access to page is allowed for current user.
+     *
+     * @param int $pageId
+     * @param array $mountPoints
+     * @return bool
+     */
+    protected function isPageAllowed(int $pageId, array $mountPoints):bool
+    {
+        if ($this->getBackendUser()->isAdmin()) {
+            return true;
+        }
+
+        // check if any mountpoint is in rootline
+        $rootline = BackendUtility::BEgetRootLine($pageId, '');
+        foreach ($rootline as $entry) {
+            if (in_array((int)$entry['uid'], $mountPoints)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get allowed mountpoints. Returns temporary mountpoint when temporary mountpoint is used.
+     *
+     * copied from core TreeController
+     *
+     * @return int[]
+     */
+    protected function getAllowedDbMounts(): array
+    {
+        $dbMounts = (int)($this->getBackendUser()->uc['pageTree_temporaryMountPoint'] ?? 0);
+        if (!$dbMounts) {
+            $dbMounts = array_map('intval', $this->getBackendUser()->returnWebmounts());
+            return array_unique($dbMounts);
+        }
+        return [$dbMounts];
+    }
+
+    /**
+     * @return BackendUserAuthentication
+     */
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
+    }
+
 }

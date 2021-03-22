@@ -97,10 +97,11 @@ class IndexRepository extends AbstractRepository
      * Select indecies for Backend.
      *
      * @param OptionRequest $options
+     * @param limit values to these pages
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAllForBackend(OptionRequest $options)
+    public function findAllForBackend(OptionRequest $options, array $allowedPages = [])
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
@@ -124,6 +125,8 @@ class IndexRepository extends AbstractRepository
 
         if ((int)$options->getPid() > 0) {
             $query->matching($query->equals('pid', (int)$options->getPid()));
+        } else if ($allowedPages) {
+            $query->matching($query->in('pid', $allowedPages));
         }
 
         return $query->execute();
