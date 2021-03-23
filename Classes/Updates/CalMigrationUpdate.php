@@ -545,14 +545,14 @@ class CalMigrationUpdate extends AbstractUpdate
                     ->where(
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUidOld, \PDO::PARAM_INT)),
                         $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
-                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id')),
+                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
                     )->execute();
             } else {
                 $q->delete($table)
                     ->where(
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUid, \PDO::PARAM_INT)),
                         $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
-                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id')),
+                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
                     )
                     ->execute();
             }
