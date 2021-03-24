@@ -38,7 +38,7 @@ class BackendController extends AbstractController
         $this->view->assignMultiple([
             'indices' => $indices,
             'typeLocations' => $typeLocations,
-            'pids' => $pids,
+            'pids' => $this->getPageTitles($pids),
             'settings' => $this->settings,
             'options' => $options,
         ]);
@@ -65,6 +65,19 @@ class BackendController extends AbstractController
         $pids = array_unique($pids);
 
         return array_combine($pids, $pids);
+    }
+
+    protected function getPageTitles(array $pids): array
+    {
+        foreach ($pids as $pageId) {
+            $row = BackendUtility::getRecord('pages', $pageId, 'title');
+            if ($row['title'] ?? '') {
+                $results[$pageId] = '"' . $row['title'] . '" (#' . $pageId . ')';
+            } else {
+                $results[$pageId] = '#' . $pageId;
+            }
+        }
+        return $results;
     }
 
     /**

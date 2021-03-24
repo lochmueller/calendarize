@@ -25,14 +25,16 @@ class PageTitleViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Render.
+     * Render the title of a page
      *
      * @return string
+     *
+     * @deprecated
      */
     public function render(): string
     {
         $uid = (int)$this->arguments['uid'];
-        $record = BackendUtility::getRecord('pages', $uid);
+        $record = BackendUtility::getRecord('pages', $uid, 'title');
 
         return (string)$record['title'];
     }

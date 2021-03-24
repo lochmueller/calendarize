@@ -7,6 +7,7 @@
 <f:layout name="Backend"/>
 
 <f:section name="Content">
+
 	<h1>Calendarize</h1>
 
 	<f:flashMessages/>
@@ -39,14 +40,12 @@
 		<f:if condition="{typeLocations}">
 			<f:then>
 				<p>
-					<f:for each="{typeLocations}" key="table" as="pids">
-						<f:for each="{pids}" key="pid" as="value">
+					<f:for each="{typeLocations}" key="table" as="typePids">
+						<f:for each="{typePids}" key="pid" as="value">
 							<be:link.newRecord class="btn btn-primary" table="{table}" pid="{pid}"
 																 returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
 								<core:icon identifier="actions-document-new"/>
-								{value} on "
-								<c:backend.pageTitle uid="{pid}"/>
-								" (#{pid})
+								{value} on {pids.{pid}}
 							</be:link.newRecord>
 						</f:for>
 					</f:for>
