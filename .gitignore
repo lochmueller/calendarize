@@ -1,6 +1,8 @@
 /.idea/
 /.Build/*
 /.php_cs.cache
+/var
+/Tests/Unit/Build/.phpunit.result.cache
 
 # ignore generated documentation
 *GENERATED*

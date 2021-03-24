@@ -33,7 +33,7 @@
 		}
 	],
 	"require": {
-		"php": "^7.2||^7.3||^7.4",
+		"php": "^7.3||^7.4",
 		"ext-json": "*",
 		"ext-pdo": "*",
 		"typo3/cms-core": "^10.4.12",
@@ -52,7 +52,6 @@
 		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience"
 	},
 	"require-dev": {
-		"namelesscoder/typo3-repository-client": "^2.0",
 		"typo3/testing-framework": "^6.3",
 		"squizlabs/php_codesniffer": "^2.6",
 		"friendsofphp/php-cs-fixer": "^2.16",
@@ -75,10 +74,14 @@
 	},
 	"scripts": {
 		"code": [
-			"@tool:php-cs-fixer"
+			"@tool:php-cs-fixer",
+			"@tool:phpunit"
 		],
 		"tool:php-cs-fixer": [
 			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
+		],
+		"tool:phpunit": [
+			"phpunit --configuration=Tests/Unit/Build/UnitTests.xml"
 		],
 		"tool:phpdoc": [
 			"docker run --rm -v $(pwd):/data phpdoc/phpdoc -d Classes -t .Build/phpdoc"
