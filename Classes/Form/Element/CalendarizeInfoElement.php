@@ -37,7 +37,7 @@ class CalendarizeInfoElement extends AbstractFormElement
     /**
      * Get event list.
      *
-     * @param $events
+     * @param array $events
      *
      * @return string
      */

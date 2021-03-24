@@ -26,10 +26,10 @@ class ProcessCmdmapClass extends AbstractHook
      * @param string      $command
      * @param string      $table
      * @param int         $uid
-     * @param             $value
+     * @param mixed       $value
      * @param DataHandler $handler
-     * @param             $pasteUpdate
-     * @param             $pasteDatamap
+     * @param mixed       $pasteUpdate
+     * @param mixed       $pasteDatamap
      */
     public function processCmdmap_postProcess($command, $table, $uid, $value, $handler, $pasteUpdate, $pasteDatamap)
     {

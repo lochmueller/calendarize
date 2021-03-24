@@ -26,3 +26,7 @@
 Thank you for support and sponsoring the extension:
 
 - [All contributors](https://github.com/lochmueller/calendarize/graphs/contributors)!
+
+## Contribution
+
+Check CONTRIBUTING.md file!
