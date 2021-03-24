@@ -68,7 +68,7 @@ abstract class AbstractController extends ActionController
         $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
 
         $pluginConfigurationService = GeneralUtility::makeInstance(PluginConfigurationService::class);
-        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array) $this->settings);
+        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
     }
 
     /**
@@ -114,7 +114,7 @@ abstract class AbstractController extends ActionController
      */
     protected function sendHeaderAndFilename($contentType, $fileExtension)
     {
-        $testMode = (bool) $this->settings['feed']['debugMode'];
+        $testMode = (bool)$this->settings['feed']['debugMode'];
         if ($testMode) {
             header('Content-Type: text/plain; charset=utf-8');
         } else {
@@ -136,7 +136,7 @@ abstract class AbstractController extends ActionController
     /**
      * Extend the view by the slot class and name and assign the variable to the view.
      *
-     * @param array $variables
+     * @param array  $variables
      * @param string $signalClassName
      * @param string $signalName
      */
@@ -172,8 +172,8 @@ abstract class AbstractController extends ActionController
      * Calculate the plugin Hmac.
      *
      * @return string $hmac
-     * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
      *
+     * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
      */
     protected function calculatePluginHmac()
     {
@@ -242,10 +242,10 @@ abstract class AbstractController extends ActionController
 
     protected function isDateOutOfTypoScriptConfiguration(\DateTime $dateTime): bool
     {
-
         $prev = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserPrev']);
         $next = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserNext']);
-        return ($prev > $dateTime || $next < $dateTime);
+
+        return $prev > $dateTime || $next < $dateTime;
     }
 
     protected function return404Page(): ResponseInterface

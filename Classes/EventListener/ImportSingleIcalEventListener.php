@@ -21,17 +21,17 @@ final class ImportSingleIcalEventListener
      *
      * @var EventRepository
      */
-    protected $eventRepository;
+    private $eventRepository;
 
     /**
      * @var PersistenceManager
      */
-    protected $persistenceManager;
+    private $persistenceManager;
 
     /**
      * @var EventConfigurationService
      */
-    protected $eventConfigurationService;
+    private $eventConfigurationService;
 
     /**
      * ImportSingleIcalEventListener constructor.
@@ -79,7 +79,7 @@ final class ImportSingleIcalEventListener
      *
      * @return Event
      */
-    protected function initializeEventRecord(string $importId): Event
+    private function initializeEventRecord(string $importId): Event
     {
         $eventObj = $this->eventRepository->findOneByImportId($importId);
 
@@ -98,7 +98,7 @@ final class ImportSingleIcalEventListener
      * @param ICalEvent $calEvent
      * @param int       $pid
      */
-    protected function hydrateEventRecord(Event $eventObj, ICalEvent $calEvent, int $pid): void
+    private function hydrateEventRecord(Event $eventObj, ICalEvent $calEvent, int $pid): void
     {
         $eventObj->setPid($pid);
         $eventObj->setTitle($calEvent->getTitle());

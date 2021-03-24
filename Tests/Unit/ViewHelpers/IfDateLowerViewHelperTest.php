@@ -15,9 +15,6 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
  */
 class IfDateLowerViewHelperTest extends ViewHelperBaseTestcase
 {
-    /**
-     * @test
-     */
     public function testValidCheck()
     {
         $viewHelper = new IfDateLowerViewHelper();
@@ -26,7 +23,7 @@ class IfDateLowerViewHelperTest extends ViewHelperBaseTestcase
             $viewHelper,
             [
                 'base' => '23.04.2026',
-                'check' => new \DateTime('2020-12-14')
+                'check' => new \DateTime('2020-12-14'),
             ]
         );
         self::assertTrue($viewHelper->initializeArgumentsAndRender());

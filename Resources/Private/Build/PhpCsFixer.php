@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$baseDir = dirname(dirname(dirname(__DIR__)));
+$baseDir = dirname(__DIR__, 3);
 
 require $baseDir . '/.Build/vendor/autoload.php';
 

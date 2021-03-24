@@ -6,7 +6,6 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 abstract class AbstractUpdate implements UpgradeWizardInterface
 {
-
     /**
      * @var string
      */
@@ -29,7 +28,6 @@ abstract class AbstractUpdate implements UpgradeWizardInterface
 
     public function getIdentifier(): string
     {
-        return get_class($this);
+        return static::class;
     }
-
 }

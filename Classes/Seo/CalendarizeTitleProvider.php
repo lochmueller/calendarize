@@ -1,18 +1,17 @@
 <?php
 
 /**
- * CalendarizeTitleProvider
+ * CalendarizeTitleProvider.
  */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Seo;
 
 use TYPO3\CMS\Core\PageTitle\AbstractPageTitleProvider;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Generate page title
- * 
+ * Generate page title.
+ *
  * @see https://docs.typo3.org/m/typo3/reference-coreapi/master/en-us/ApiOverview/PageTitleApi/Index.html
  */
 class CalendarizeTitleProvider extends AbstractPageTitleProvider

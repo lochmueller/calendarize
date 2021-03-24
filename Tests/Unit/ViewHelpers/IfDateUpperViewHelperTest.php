@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Tests\Unit\ViewHelpers;
 
-use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
 use HDNET\Calendarize\ViewHelpers\IfDateUpperViewHelper;
 use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
@@ -16,9 +15,6 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
  */
 class IfDateUpperViewHelperTest extends ViewHelperBaseTestcase
 {
-    /**
-     * @test
-     */
     public function testValidCheck()
     {
         $viewHelper = new IfDateUpperViewHelper();

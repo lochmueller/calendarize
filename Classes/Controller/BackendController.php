@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 
 /**
@@ -79,6 +79,7 @@ class BackendController extends AbstractController
             // fallback to uid
             $results[$pageId] = '#' . $pageId;
         }
+
         return $results;
     }
 
@@ -128,11 +129,12 @@ class BackendController extends AbstractController
     /**
      * Check if access to page is allowed for current user.
      *
-     * @param int $pageId
+     * @param int   $pageId
      * @param array $mountPoints
+     *
      * @return bool
      */
-    protected function isPageAllowed(int $pageId, array $mountPoints):bool
+    protected function isPageAllowed(int $pageId, array $mountPoints): bool
     {
         if ($this->getBackendUser()->isAdmin()) {
             return true;
@@ -141,10 +143,11 @@ class BackendController extends AbstractController
         // check if any mountpoint is in rootline
         $rootline = BackendUtility::BEgetRootLine($pageId, '');
         foreach ($rootline as $entry) {
-            if (in_array((int)$entry['uid'], $mountPoints)) {
+            if (\in_array((int)$entry['uid'], $mountPoints)) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -160,8 +163,10 @@ class BackendController extends AbstractController
         $dbMounts = (int)($this->getBackendUser()->uc['pageTree_temporaryMountPoint'] ?? 0);
         if (!$dbMounts) {
             $dbMounts = array_map('intval', $this->getBackendUser()->returnWebmounts());
+
             return array_unique($dbMounts);
         }
+
         return [$dbMounts];
     }
 
@@ -172,5 +177,4 @@ class BackendController extends AbstractController
     {
         return $GLOBALS['BE_USER'];
     }
-
 }

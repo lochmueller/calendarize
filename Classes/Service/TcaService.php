@@ -23,7 +23,7 @@ class TcaService extends AbstractService
     /**
      * Render the configuration title.
      *
-     * @param array $params
+     * @param array  $params
      * @param object $object
      */
     public function configurationTitle(array &$params, $object)
@@ -49,7 +49,7 @@ class TcaService extends AbstractService
     /**
      * Add configurations to event titles.
      *
-     * @param array $params
+     * @param array  $params
      * @param object $object
      */
     public function eventTitle(array &$params, $object)
@@ -70,7 +70,7 @@ class TcaService extends AbstractService
         $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']])->fetch();
 
         $transPointer = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
-        if ($transPointer && (int) $fullRow[$transPointer] > 0) {
+        if ($transPointer && (int)$fullRow[$transPointer] > 0) {
             return;
         }
 
@@ -86,7 +86,7 @@ class TcaService extends AbstractService
 
         foreach ($configurations as $key => $value) {
             $paramsInternal = [
-                'row' => (array) $databaseConnection->select(
+                'row' => (array)$databaseConnection->select(
                     ['*'],
                     'tx_calendarize_domain_model_configuration',
                     ['uid' => $value]

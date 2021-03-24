@@ -7,9 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use HDNET\Calendarize\Seo\CalendarizeTitleProvider;
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
@@ -33,7 +32,6 @@ class TitleTagViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-		
         $content = trim((string)$renderChildrenClosure());
         if (!empty($content)) {
             $GLOBALS['TSFE']->altPageTitle = $content;
@@ -43,7 +41,7 @@ class TitleTagViewHelper extends AbstractViewHelper
         if (!empty($content)) {
             GeneralUtility::makeInstance(CalendarizeTitleProvider::class)->setTitle($content);
         }
-		
+
         return '';
     }
 }

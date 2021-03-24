@@ -250,7 +250,7 @@ class DateTimeUtility
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :
             // The $timezone parameter and the current timezone are ignored [ie. set to UTC] when the $time parameter [...] is a UNIX timestamp (e.g. @946684800) [...]
             $date = new \DateTime("@$dateInformation");
-        } elseif (\is_string($dateInformation) && in_array($dateInformation[0], ['-', '+'])) {
+        } elseif (\is_string($dateInformation) && \in_array($dateInformation[0], ['-', '+'])) {
             $date = self::getNow();
             $date->modify($dateInformation);
         } elseif (\is_string($dateInformation)) {

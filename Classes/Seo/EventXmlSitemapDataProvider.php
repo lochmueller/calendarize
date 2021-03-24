@@ -119,7 +119,7 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
             $additionalParams,
             '',
             '&',
-            PHP_QUERY_RFC3986
+            \PHP_QUERY_RFC3986
         );
 
         $typoLinkConfig = [

@@ -406,6 +406,4 @@ class Index extends AbstractModel
     {
         $this->slug = $slug;
     }
-
-
 }

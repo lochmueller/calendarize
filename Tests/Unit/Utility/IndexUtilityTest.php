@@ -17,9 +17,6 @@ use HDNET\Calendarize\Utility\IndexUtility;
  */
 class IndexUtilityTest extends AbstractUnitTest
 {
-    /**
-     * @test
-     */
     public function testIndexInRange()
     {
         $index = new Index();
@@ -36,9 +33,6 @@ class IndexUtilityTest extends AbstractUnitTest
         self::assertTrue(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
     }
 
-    /**
-     * @test
-     */
     public function testIndexBeforeRange()
     {
         $index = new Index();
@@ -55,9 +49,6 @@ class IndexUtilityTest extends AbstractUnitTest
         self::assertFalse(IndexUtility::isIndexInRange($index, $startRange, $endRange), 'The index is not in the range');
     }
 
-    /**
-     * @test
-     */
     public function testIndexAfterRange()
     {
         $index = new Index();

@@ -16,9 +16,6 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
  */
 class DateTimeUtilityTest extends AbstractUnitTest
 {
-    /**
-     * @test
-     */
     public function testDaySecondsOfDateTime()
     {
         $dateTime = new \DateTime('23.04.1987 04:36:34');

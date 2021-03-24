@@ -25,7 +25,7 @@ class PageTitleViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Render the title of a page
+     * Render the title of a page.
      *
      * @return string
      *

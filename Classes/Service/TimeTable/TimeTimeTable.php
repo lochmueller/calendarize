@@ -104,7 +104,6 @@ class TimeTimeTable extends AbstractTimeTable
                 };
                 break;
             case Configuration::END_DYNAMIC_END_YEAR:
-
                 $callback = function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];

@@ -10,7 +10,6 @@ namespace HDNET\Calendarize\Updates;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
-use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * NewIncludeExcludeStructureUpdate.
@@ -28,7 +27,6 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
     {
         return 'calendarize_newIncludeExcludeStructure';
     }
-
 
     /**
      * Checks whether updates are required.

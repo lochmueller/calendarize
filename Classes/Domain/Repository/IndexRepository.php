@@ -125,7 +125,7 @@ class IndexRepository extends AbstractRepository
 
         if ((int)$options->getPid() > 0) {
             $query->matching($query->equals('pid', (int)$options->getPid()));
-        } else if ($allowedPages) {
+        } elseif ($allowedPages) {
             $query->matching($query->in('pid', $allowedPages));
         }
 
@@ -396,7 +396,7 @@ class IndexRepository extends AbstractRepository
         $constraints = [];
 
         $localizedUid = $event->_getProperty('_localizedUid');
-        $selectUid = $localizedUid ? $localizedUid : $event->getUid();
+        $selectUid = $localizedUid ?: $event->getUid();
 
         $constraints[] = $query->equals('foreignUid', $selectUid);
         $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);

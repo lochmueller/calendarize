@@ -154,6 +154,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
             )
             ->execute();
+
         return $count > 0;
     }
 
@@ -525,19 +526,19 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $variables = [
             'tablenames' => self::EVENT_TABLE,
-            'fieldname' => 'categories'
+            'fieldname' => 'categories',
         ];
 
         $dispatcher = HelperUtility::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         foreach ($selectResults as $mm) {
-            $eventUidOld = (int) $mm['uid_foreign'];
+            $eventUidOld = (int)$mm['uid_foreign'];
             // event id is in uid_foreign
             $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $eventUidOld, $dbQueries, $customMessages);
 
             $q = $db->createQueryBuilder();
-            if ($eventUid !== 0) {
+            if (0 !== $eventUid) {
                 $q->update($table)
                     ->set('tablenames', $variables['tablenames'])
                     ->set('fieldname', $variables['fieldname'])
