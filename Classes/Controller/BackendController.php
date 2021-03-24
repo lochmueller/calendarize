@@ -70,12 +70,14 @@ class BackendController extends AbstractController
     protected function getPageTitles(array $pids): array
     {
         foreach ($pids as $pageId) {
-            $row = BackendUtility::getRecord('pages', $pageId, 'title');
-            if ($row['title'] ?? '') {
-                $results[$pageId] = '"' . $row['title'] . '" (#' . $pageId . ')';
-            } else {
-                $results[$pageId] = '#' . $pageId;
+            $row = BackendUtility::getRecord('pages', $pageId);
+            if ($row) {
+                $title = BackendUtility::getRecordTitle('pages', $row);
+                $results[$pageId] = '"' . $title . '" (#' . $pageId . ')';
+                continue;
             }
+            // fallback to uid
+            $results[$pageId] = '#' . $pageId;
         }
         return $results;
     }
