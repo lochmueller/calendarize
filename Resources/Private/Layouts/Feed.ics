@@ -1,4 +1,4 @@
-{namespace c=HDNET\Calendarize\ViewHelpers}
+{namespace c=HDNET\Calendarize\ViewHelpers}<c:format.removeBlankLines>
 <c:format.lineFolding>
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -6,3 +6,4 @@ PRODID:-//TYPO3/NONSGML Calendarize//EN
 <f:render section="items" />
 END:VCALENDAR
 </c:format.lineFolding>
+</c:format.removeBlankLines>
