@@ -6,6 +6,7 @@ DTEND;VALUE=DATE:<f:format.date format="Ymd" base="{index.endDateComplete}" date
 </f:then><f:else>DTSTART:<c:dateTime.formatUtcDate date="{index.startDateComplete}" format="Ymd\THis\Z" />
 DTEND:<c:dateTime.formatUtcDate date="{index.endDateComplete}" format="Ymd\THis\Z" />
 </f:else></f:if>SUMMARY:{index.originalObject.feedTitle -> c:format.escapeIcalText()}
-DESCRIPTION:{index.originalObject.feedAbstract -> f:format.stripTags() -> c:format.escapeIcalText()}
+DESCRIPTION:{index.originalObject.feedAbstract -> f:format.stripTags() -> f:format.htmlentitiesDecode() -> c:format.escapeIcalText()}
+X-ALT-DESC;FMTTYPE=text/html:{index.originalObject.feedAbstract -> c:format.escapeIcalText()}
 LOCATION:{index.originalObject.feedLocation -> c:format.escapeIcalText()}
 END:VEVENT</f:if>
