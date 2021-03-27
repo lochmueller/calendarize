@@ -45,6 +45,6 @@ class EscapeIcalTextViewHelper extends AbstractViewHelper
             $value = $this->renderChildren();
         }
         // Note: The string syntax use double and single quotes!
-        return str_replace(['\\', "\r\n", "\n", ',', ';'], ['\\\\', '\n', '\n', '\,', '\;'], $value);
+        return str_replace(['\\', "\r", "\n", ',', ';'], ['\\\\', '', '\n', '\,', '\;'], $value);
     }
 }
