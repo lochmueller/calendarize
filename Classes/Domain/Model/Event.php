@@ -329,6 +329,10 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getFeedLocation(): string
     {
+        if ($this->getLocationLink()) {
+            return "{$this->getLocation()} ({$this->getLocationLink()})";
+        }
+
         return (string)$this->getLocation();
     }
 
