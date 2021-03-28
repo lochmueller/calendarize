@@ -43,7 +43,7 @@ Realization
          :class: with-shadow
          :scale: 65
 
-   #. Add an additionally configuration and set :guilabel:`Type` to :code:`Group` and the :guilabel:`Handling` to :code:`Exclude`.
+   #. Add an additional configuration and set :guilabel:`Type` to :code:`Group` and the :guilabel:`Handling` to :code:`Exclude`.
 
    #. Fill in the field :guilabel:`Groups` by selecting the previously created group.
 
