@@ -82,6 +82,12 @@ $custom = [
                 'readOnly' => '1',
             ],
         ],
+        'slug' => [
+            'config' => [
+                'eval' => 'unique',
+                'prependSlash' => false,
+            ],
+        ],
     ],
 ];
 

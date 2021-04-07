@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\ArrayUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -36,12 +37,19 @@ class IndexerService extends AbstractService
      */
     protected $preparationService;
 
+    /**
+     * @var SlugService
+     */
+    protected $slugService;
+
     public function __construct(
         Dispatcher $dispatcher,
-        IndexPreparationService $preparationService
+        IndexPreparationService $preparationService,
+        SlugService $slugService
     ) {
         $this->signalSlot = $dispatcher;
         $this->preparationService = $preparationService;
+        $this->slugService = $slugService;
     }
 
     /**
@@ -213,9 +221,21 @@ class IndexerService extends AbstractService
             $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
         }
 
-        $neededItems = array_values($neededItems);
-        if ($neededItems) {
-            $databaseConnection->bulkInsert(self::TABLE_NAME, $neededItems, array_keys($neededItems[0]));
+        $this->generateSlugAndInsert($neededItems);
+    }
+
+    /**
+     * Generates a slug and inserts the records in the db.
+     *
+     * @param array $neededItems
+     */
+    protected function generateSlugAndInsert(array $neededItems): void
+    {
+        $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
+        foreach ($neededItems as $key => $item) {
+            $item['slug'] = $this->slugService->makeSlugUnique($item);
+            // We need to insert after each index, so subsequent indices do not get the same slug
+            $db->insert(self::TABLE_NAME, $item);
         }
     }
 

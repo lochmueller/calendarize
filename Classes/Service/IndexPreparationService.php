@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,6 +20,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class IndexPreparationService extends AbstractService
 {
+    /**
+     * @var SlugService
+     */
+    protected $slugService;
+
+    public function __construct(SlugService $slugService)
+    {
+        $this->slugService = $slugService;
+    }
+
     /**
      * Build the index for one element.
      *
@@ -63,6 +74,7 @@ class IndexPreparationService extends AbstractService
         $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
         $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
         $this->addCtrlFieldInformation($neededItems, $tableName, $rawRecord);
+        $this->addSlugInformation($neededItems, $configurationKey, $rawRecord);
 
         return $neededItems;
     }
@@ -169,6 +181,21 @@ class IndexPreparationService extends AbstractService
 
         foreach ($neededItems as $key => $value) {
             $neededItems[$key] = array_merge($value, $addFields);
+        }
+    }
+
+    /**
+     * Add slug to each index.
+     *
+     * @param array  $neededItems
+     * @param string $uniqueRegisterKey
+     * @param array  $record
+     */
+    protected function addSlugInformation(array &$neededItems, string $uniqueRegisterKey, array $record): void
+    {
+        $slugs = $this->slugService->generateSlugForItems($uniqueRegisterKey, $record, $neededItems);
+        foreach ($neededItems as $key => $value) {
+            $neededItems[$key] = array_merge($value, $slugs[$key] ?? []);
         }
     }
 
