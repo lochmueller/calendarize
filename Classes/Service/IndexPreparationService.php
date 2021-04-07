@@ -17,7 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Helper class for the IndexService
  * Prepare the index.
  */
-class IndexPreparationService
+class IndexPreparationService extends AbstractService
 {
     /**
      * Build the index for one element.
