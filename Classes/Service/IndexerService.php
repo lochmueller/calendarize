@@ -210,7 +210,15 @@ class IndexerService extends AbstractService
 
         foreach ($neededItems as $neededKey => $neededItem) {
             foreach ($currentItems as $currentKey => $currentItem) {
-                if (ArrayUtility::isEqualArray($neededItem, $currentItem)) {
+                if (ArrayUtility::isEqualArray($neededItem, $currentItem, ['tstamp', 'crdate', 'slug'])) {
+                    // Check if the current slug starts with the new slug
+                    // Prevents regeneration for slugs with counting suffixes (added before insertion)
+                    // False positives are possible (e.g. single event where a part gets removed)
+                    if (0 !== mb_stripos($currentItem['slug'] ?? '', $neededItem['slug'], 0, 'utf-8')) {
+                        // Slug changed
+                        continue;
+                    }
+
                     unset($neededItems[$neededKey], $currentItems[$currentKey]);
 
                     break;
