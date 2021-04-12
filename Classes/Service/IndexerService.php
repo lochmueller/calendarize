@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\ArrayUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -31,9 +32,24 @@ class IndexerService extends AbstractService
      */
     protected $signalSlot;
 
-    public function __construct()
-    {
-        $this->signalSlot = GeneralUtility::makeInstance(Dispatcher::class);
+    /**
+     * @var IndexPreparationService
+     */
+    protected $preparationService;
+
+    /**
+     * @var SlugService
+     */
+    protected $slugService;
+
+    public function __construct(
+        Dispatcher $dispatcher,
+        IndexPreparationService $preparationService,
+        SlugService $slugService
+    ) {
+        $this->signalSlot = $dispatcher;
+        $this->preparationService = $preparationService;
+        $this->slugService = $slugService;
     }
 
     /**
@@ -54,22 +70,18 @@ class IndexerService extends AbstractService
                 ->removeAll()
                 ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
-            $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
+            $q->select('uid')
+                ->from($tableName);
 
+            $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
             if ($transPointer) {
                 // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
                 // overlays can connect with l10n_parent to the right default record.
-                $q->select('uid')
-                    ->from($tableName)
-                    ->orderBy((string)$transPointer);
-            } else {
-                $q->select('uid')
-                    ->from($tableName);
+                $q->orderBy((string)$transPointer);
             }
-
             $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
-                $this->updateIndex($key, $configuration['tableName'], (int)$row['uid']);
+                $this->updateIndex($key, $tableName, (int)$row['uid']);
             }
         }
 
@@ -85,14 +97,13 @@ class IndexerService extends AbstractService
      */
     public function reindex(string $configurationKey, string $tableName, int $uid)
     {
-        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$configurationKey, $tableName, $uid, $this]);
+        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$configurationKey, $tableName, $uid, $this]);
 
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
 
-        $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$configurationKey, $tableName, $uid, $this]);
+        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$configurationKey, $tableName, $uid, $this]);
     }
 
     /**
@@ -155,12 +166,7 @@ class IndexerService extends AbstractService
      */
     protected function updateIndex(string $configurationKey, string $tableName, int $uid)
     {
-        /** @var $preparationService IndexPreparationService */
-        static $preparationService = null;
-        if (null === $preparationService) {
-            $preparationService = GeneralUtility::makeInstance(IndexPreparationService::class);
-        }
-        $neededItems = $preparationService->prepareIndex($configurationKey, $tableName, $uid);
+        $neededItems = $this->preparationService->prepareIndex($configurationKey, $tableName, $uid);
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);
     }
 
@@ -178,10 +184,12 @@ class IndexerService extends AbstractService
         $q->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $q->resetQueryParts();
         $q->select('*')
             ->from(self::TABLE_NAME)
-            ->where($q->expr()->eq('foreign_table', $q->quote($tableName)), $q->expr()->eq('foreign_uid', $uid));
+            ->where(
+                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
+                $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
+            );
 
         return $q->execute();
     }
@@ -195,32 +203,47 @@ class IndexerService extends AbstractService
      */
     protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid)
     {
-        $databaseConnection = HelperUtility::getDatabaseConnection($tableName);
+        $databaseConnection = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();
 
         $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$neededItems, $tableName, $uid]);
 
         foreach ($neededItems as $neededKey => $neededItem) {
-            $remove = false;
             foreach ($currentItems as $currentKey => $currentItem) {
-                if (ArrayUtility::isEqualArray($neededItem, $currentItem)) {
-                    $remove = true;
+                if (ArrayUtility::isEqualArray($neededItem, $currentItem, ['tstamp', 'crdate', 'slug'])) {
+                    // Check if the current slug starts with the new slug
+                    // Prevents regeneration for slugs with counting suffixes (added before insertion)
+                    // False positives are possible (e.g. single event where a part gets removed)
+                    if (0 !== mb_stripos($currentItem['slug'] ?? '', $neededItem['slug'], 0, 'utf-8')) {
+                        // Slug changed
+                        continue;
+                    }
+
                     unset($neededItems[$neededKey], $currentItems[$currentKey]);
 
                     break;
                 }
-            }
-            if ($remove) {
-                continue;
             }
         }
         foreach ($currentItems as $item) {
             $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
         }
 
-        $neededItems = array_values($neededItems);
-        if ($neededItems) {
-            $databaseConnection->bulkInsert(self::TABLE_NAME, $neededItems, array_keys($neededItems[0]));
+        $this->generateSlugAndInsert($neededItems);
+    }
+
+    /**
+     * Generates a slug and inserts the records in the db.
+     *
+     * @param array $neededItems
+     */
+    protected function generateSlugAndInsert(array $neededItems): void
+    {
+        $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
+        foreach ($neededItems as $key => $item) {
+            $item['slug'] = $this->slugService->makeSlugUnique($item);
+            // We need to insert after each index, so subsequent indices do not get the same slug
+            $db->insert(self::TABLE_NAME, $item);
         }
     }
 
@@ -242,7 +265,7 @@ class IndexerService extends AbstractService
 
         $rows = $q->execute()->fetchAll();
 
-        $q->resetQueryParts()->resetRestrictions();
+        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
         $q->delete(self::TABLE_NAME)
             ->where(
                 $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName))

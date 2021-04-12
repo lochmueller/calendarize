@@ -19,12 +19,16 @@ class ArrayUtility
      *
      * @param array $neededItem
      * @param array $currentItem
+     * @param array $ignoredKeys
      *
      * @return bool
      */
-    public static function isEqualArray(array $neededItem, array $currentItem)
+    public static function isEqualArray(array $neededItem, array $currentItem, array $ignoredKeys = []): bool
     {
         foreach ($neededItem as $key => $value) {
+            if (\in_array($key, $ignoredKeys, true)) {
+                continue;
+            }
             if (MathUtility::canBeInterpretedAsInteger($value)) {
                 if ((int)$value !== (int)$currentItem[$key]) {
                     return false;

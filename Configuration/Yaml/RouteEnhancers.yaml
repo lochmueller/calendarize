@@ -45,11 +45,11 @@ routeEnhancers:
     type: Plugin
     namespace: 'tx_calendarize_calendar'
     routePath: '/{calendarize_event_label}/{index}'
-    requirements:
-      index: '.*'
     aspects:
       index:
-        type: EventMapper
+        type: PersistedAliasMapper
+        tableName: tx_calendarize_domain_model_index
+        routeFieldName: slug
       calendarize_event_label:
         type: LocaleModifier
         default: 'event'
