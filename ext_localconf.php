@@ -45,6 +45,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_newIncludeExcludeStructure'] = \HDNET\Calendarize\Updates\NewIncludeExcludeStructureUpdate::class;
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_dateField'] = \HDNET\Calendarize\Updates\DateFieldUpdate::class;
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_tillDateField'] = \HDNET\Calendarize\Updates\TillDateFieldUpdate::class;
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_populateEventSlugs'] = \HDNET\Calendarize\Updates\PopulateEventSlugs::class;
 
 $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
 
