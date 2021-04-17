@@ -19,10 +19,20 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * EventMapper.
+ *
+ * @deprecated
  */
 class EventMapper implements PersistedMappableAspectInterface, StaticMappableAspectInterface, SiteLanguageAwareInterface
 {
     use SiteLanguageAwareTrait;
+
+    public function __construct()
+    {
+        @trigger_error(
+            'EventMapper will be removed. Use the slug field with PersistedAliasMapper instead.',
+            \E_USER_DEPRECATED
+        );
+    }
 
     /**
      * @param string $value

@@ -18,6 +18,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * AbstractUrl.
+ *
+ * @deprecated
  */
 abstract class AbstractUrl extends AbstractService
 {
