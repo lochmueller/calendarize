@@ -10,30 +10,42 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 
 /**
  * BackendController.
  */
 class BackendController extends AbstractController
 {
+    const OPTIONS_KEY = 'calendarize_be';
+
     /**
      * Basic backend list.
      */
-    public function listAction()
+    public function listAction(OptionRequest $options = null, int $currentPage = 1)
     {
         $this->settings['timeFormat'] = 'H:i';
         $this->settings['dateFormat'] = 'd.m.Y';
 
-        $options = $this->getOptions();
+        if (null === $options) {
+            $options = $this->getOptions();
+        } else {
+            $this->setOptions($options);
+        }
+
         $typeLocations = $this->getDifferentTypesAndLocations();
 
         $pids = $this->getPids($typeLocations);
         if ($pids) {
             $indices = $this->indexRepository->findAllForBackend($options, $pids);
+            $paginator = new QueryResultPaginator($indices, $currentPage, 50);
         } else {
             $indices = [];
+            $paginator = new ArrayPaginator($indices, $currentPage, 50);
         }
+        $pagination = new SimplePagination($paginator);
 
         $this->view->assignMultiple([
             'indices' => $indices,
@@ -41,19 +53,10 @@ class BackendController extends AbstractController
             'pids' => $this->getPageTitles($pids),
             'settings' => $this->settings,
             'options' => $options,
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+            'totalAmount' => $indices->count(),
         ]);
-    }
-
-    /**
-     * Option action.
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Request\OptionRequest $options
-     */
-    public function optionAction(OptionRequest $options)
-    {
-        $GLOBALS['BE_USER']->setAndSaveSessionData('calendarize_be', serialize($options));
-        $this->addFlashMessage('Options saved', '', FlashMessage::OK, true);
-        $this->forward('list');
     }
 
     protected function getPids(array $typeLocations)
@@ -88,19 +91,30 @@ class BackendController extends AbstractController
      *
      * @return OptionRequest
      */
-    protected function getOptions()
+    protected function getOptions(): OptionRequest
     {
         try {
-            $info = $GLOBALS['BE_USER']->getSessionData('calendarize_be');
-            $object = @unserialize((string)$info);
-            if ($object instanceof OptionRequest) {
-                return $object;
+            $info = $GLOBALS['BE_USER']->getSessionData(self::OPTIONS_KEY) ?? '';
+            if ('' !== $info) {
+                $object = @unserialize($info, ['allowed_classes' => [OptionRequest::class]]);
+                if ($object instanceof OptionRequest) {
+                    return $object;
+                }
             }
-
-            return new OptionRequest();
         } catch (\Exception $exception) {
-            return new OptionRequest();
         }
+
+        return new OptionRequest();
+    }
+
+    /**
+     * Persists options data.
+     *
+     * @param OptionRequest $options
+     */
+    protected function setOptions(OptionRequest $options)
+    {
+        $GLOBALS['BE_USER']->setAndSaveSessionData(self::OPTIONS_KEY, serialize($options));
     }
 
     /**
