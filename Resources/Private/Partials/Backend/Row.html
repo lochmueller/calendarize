@@ -21,11 +21,13 @@
 	<td>
 		{index.foreignUid}
 	</td>
-	<td>
-		<be:link.editRecord class="btn btn-default" uid="{index.foreignUid}" table="{index.configuration.tableName}"
-												returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
-			<core:icon identifier="actions-document-open"/>
-		</be:link.editRecord>
+	<td class="col-control">
+		<div class="btn-group" role="group">
+			<be:link.editRecord class="btn btn-default" uid="{index.foreignUid}" table="{index.configuration.tableName}"
+													returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
+				<core:icon identifier="actions-open"/>
+			</be:link.editRecord>
+		</div>
 	</td>
 </tr>
 </html>
