@@ -51,7 +51,7 @@ $timeType = str_replace(
     $timeType
 );
 
-$extendTab = ',--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.extended';
+$extendTab = ',--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended';
 
 $custom = [
     'ctrl' => [
