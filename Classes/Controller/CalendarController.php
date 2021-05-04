@@ -534,6 +534,7 @@ class CalendarController extends AbstractController
             $modify = \is_string($this->settings['searchEndModifier']) ? $this->settings['searchEndModifier'] : '+30 days';
             $endDate->modify($modify);
         }
+        $this->checkWrongDateOrder($startDate, $endDate);
 
         $this->slotExtendedAssignMultiple([
             'startDate' => $startDate,
@@ -611,6 +612,7 @@ class CalendarController extends AbstractController
         $week = null
     ) {
         $searchMode = false;
+        $this->checkWrongDateOrder($startDate, $endDate);
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
             $limit = isset($this->settings['limit']) ? (int)$this->settings['limit'] : 0;
@@ -681,6 +683,14 @@ class CalendarController extends AbstractController
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         return $variables['extended'];
+    }
+
+    protected function checkWrongDateOrder(\DateTime &$startDate = null, \DateTime &$endDate = null)
+    {
+        if ($startDate && $endDate && $endDate < $startDate) {
+            // End date is before start date. So use start and end equals!
+            $endDate = clone $startDate;
+        }
     }
 
     /**
