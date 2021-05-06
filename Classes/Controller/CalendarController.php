@@ -580,6 +580,12 @@ class CalendarController extends AbstractController
             $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
             if (\is_object($index)) {
                 $indicies[] = $index;
+            } else {
+                $result = $this->indexRepository->findByTraversing($dummyIndex, false, true);
+                $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
+                if (\is_object($index)) {
+                    $indicies[] = $index;
+                }
             }
         }
 
