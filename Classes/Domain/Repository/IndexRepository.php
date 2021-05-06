@@ -315,6 +315,23 @@ class IndexRepository extends AbstractRepository
     }
 
     /**
+     * Find by Index UIDs.
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByUids(
+        array $uids
+    ) {
+        $query = $this->createQuery();
+        $query->setOrderings($this->getSorting(QueryInterface::ORDER_ASCENDING));
+        $constraints = [
+            $query->in('uid', $uids)
+        ];
+
+        return $this->matchAndExecute($query, $constraints);
+    }
+
+    /**
      * Find by traversing information.
      *
      * @param Index      $index
