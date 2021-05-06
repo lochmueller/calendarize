@@ -34,6 +34,14 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $title;
 
     /**
+     * Slug.
+     *
+     * @var string
+     * @DatabaseField("string")
+     */
+    protected $slug = '';
+
+    /**
      * Abstract / Teaser.
      *
      * @var string
@@ -130,14 +138,6 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * @var bool
      */
     protected $hidden = false;
-
-    /**
-     * Slug.
-     *
-     * @var string
-     * @DatabaseField("string")
-     */
-    protected $slug = '';
 
     /**
      * Build up the object.

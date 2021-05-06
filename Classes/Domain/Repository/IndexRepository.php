@@ -325,7 +325,7 @@ class IndexRepository extends AbstractRepository
         $query = $this->createQuery();
         $query->setOrderings($this->getSorting(QueryInterface::ORDER_ASCENDING));
         $constraints = [
-            $query->in('uid', $uids)
+            $query->in('uid', $uids),
         ];
 
         return $this->matchAndExecute($query, $constraints);
