@@ -85,6 +85,18 @@ $custom = [
                 ],
             ],
         ],
+        'slug' => [
+            'config' => [
+                'prependSlash' => false,
+                'generatorOptions' => [
+                    'fields' => ['title'],
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                ],
+                'eval' => 'unique',
+            ],
+        ],
     ],
 ];
 

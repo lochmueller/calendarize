@@ -16,7 +16,6 @@ This is the reason why there are services to generate speaking URLs of index IDs
 
   \HDNET\Calendarize\Features\SpeakingUrlInterface
 
-Please use the EventMapper for URL rewrite options of the index.
 You can just load the RouteEnhancers of the extension.
 
 .. code-block:: yaml

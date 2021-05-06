@@ -612,6 +612,9 @@
 			<trans-unit id="tx_calendarize_domain_model_event.title">
 				<source>Title</source>
 			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.slug">
+				<source>URL segment</source>
+			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_index">
 				<source>Index</source>
 			</trans-unit>

@@ -132,6 +132,14 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     protected $hidden = false;
 
     /**
+     * Slug.
+     *
+     * @var string
+     * @DatabaseField("string")
+     */
+    protected $slug = '';
+
+    /**
      * Build up the object.
      */
     public function __construct()
@@ -343,7 +351,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getRealUrlAliasBase(): string
     {
-        return (string)$this->getTitle();
+        return $this->getSlug() ?: $this->getTitle();
     }
 
     /**
@@ -540,5 +548,21 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     public function setOrganizerLink($organizerLink)
     {
         $this->organizerLink = $organizerLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 }
