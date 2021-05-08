@@ -18,7 +18,7 @@ Basic sitemap
               table = tx_calendarize_domain_model_index
               pid = <page id('s) containing records>
               url {
-                pageId = <your detail page id>
+                pageId = {$plugin.tx_calendarize.settings.defaultDetailPid}
                 fieldToParameterMap {
                   uid = tx_calendarize_calendar[index]
                 }
