@@ -1,58 +1,91 @@
 routeEnhancers:
-  CalendarizePluginYear:
-    # Do not use Extbase, because we use skipDefaultArguments = 1
-    type: Plugin
-    namespace: 'tx_calendarize_calendar'
-    routePath: '/{calendarize_year_label}/{year}'
+  Calendarize:
+    type: Extbase
+    extension: Calendarize
+    plugin: Calendar
+    # limitToPages: []
+    routes:
+      - routePath: '/{calendarize_event_label}/{index}'
+        _controller: 'Calendar::detail'
+      - routePath: '/{calendarize_year_label}/{year}'
+        _controller: 'Calendar::year'
+      - routePath: '/{calendarize_quarter_label}/{quarter}'
+        _controller: 'Calendar::quarter'
+      - routePath: '/{calendarize_month_label}/{year}/{month}'
+        _controller: 'Calendar::month'
+      - routePath: '/{calendarize_week_label}/{year}/{week}'
+        _controller: 'Calendar::week'
+      - routePath: '/{calendarize_day_label}/{year}/{month}/{day}'
+        _controller: 'Calendar::day'
+
     requirements:
-      year: '.*'
-    aspects:
-      year:
-        type: StaticRangeMapper
-        start: '1900'
-        end: '2200'
-      calendarize_year_label:
-        type: LocaleModifier
-        default: 'year'
-        localeMap:
-          - locale: 'de_.*'
-            value: 'jahr'
-  CalendarizePluginMonth:
-    # Do not use Extbase, because we use skipDefaultArguments = 1
-    type: Plugin
-    namespace: 'tx_calendarize_calendar'
-    routePath: '/{calendarize_month_label}/{year}/{month}'
-    requirements:
-      year: '.*'
-      month: '.*'
-    aspects:
-      year:
-        type: StaticRangeMapper
-        start: '1900'
-        end: '2200'
-      month:
-        type: StaticRangeMapper
-        start: '1'
-        end: '12'
-      calendarize_month_label:
-        type: LocaleModifier
-        default: 'month'
-        localeMap:
-          - locale: 'de_.*'
-            value: 'monat'
-  CalendarizePluginIndex:
-    # Do not use Extbase, because we use skipDefaultArguments = 1
-    type: Plugin
-    namespace: 'tx_calendarize_calendar'
-    routePath: '/{calendarize_event_label}/{index}'
+      # Specify kind of parameters, if the aspects are not used.
+      # year: '\d{4}'
+      # quarter: '\d'
+      # month: '\d{1,2}'
+      # week: '\d{1,2}'
+      # day: '\d{1,2}'
+
     aspects:
       index:
         type: PersistedAliasMapper
         tableName: tx_calendarize_domain_model_index
         routeFieldName: slug
+      year:
+        type: StaticRangeMapper
+        start: '2015'
+        end: '2040'
+      quater:
+        type: StaticRangeMapper
+        start: '1'
+        end: '4'
+      month:
+        type: StaticRangeMapper
+        start: '1'
+        end: '12'
+      week:
+        type: StaticRangeMapper
+        start: '1'
+        end: '53'
+      day:
+        type: StaticRangeMapper
+        start: '1'
+        end: '31'
+
+      # Localization
       calendarize_event_label:
         type: LocaleModifier
         default: 'event'
         localeMap:
           - locale: 'de_.*'
             value: 'termin'
+      calendarize_year_label:
+        type: LocaleModifier
+        default: 'year'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'jahr'
+      calendarize_quarter_label:
+        type: LocaleModifier
+        default: 'quarter'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'quatal'
+      calendarize_month_label:
+        type: LocaleModifier
+        default: 'month'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'monat'
+      calendarize_week_label:
+        type: LocaleModifier
+        default: 'week'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'woche'
+      calendarize_day_label:
+        type: LocaleModifier
+        default: 'day'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'tag'
