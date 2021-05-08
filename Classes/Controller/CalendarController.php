@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
+use GeorgRinger\NumberedPagination\NumberedPagination;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Register;
@@ -16,13 +17,16 @@ use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -141,6 +145,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'indices' => $search['indices'],
+            'pagination' => $this->getPagination($search['indices']),
             'searchMode' => $search['searchMode'],
             'searchParameter' => [
                 'startDate' => $startDate,
@@ -190,6 +195,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'indices' => $search['indices'],
+            'pagination' => $this->getPagination($search['indices']),
             'searchMode' => $search['searchMode'],
             'searchParameter' => [
                 'startDate' => $startDate,
@@ -241,6 +247,7 @@ class CalendarController extends AbstractController
 
         $this->slotExtendedAssignMultiple([
             'indices' => $search['indices'],
+            'pagination' => $this->getPagination($search['indices']),
             'searchMode' => $search['searchMode'],
             'searchParameter' => [
                 'startDate' => $startDate,
@@ -287,6 +294,7 @@ class CalendarController extends AbstractController
         }
 
         $this->view->assignMultiple([
+            'pagination' => $this->getPagination($fetchEvent),
             'indices' => $fetchEvent,
         ]);
     }
@@ -308,8 +316,11 @@ class CalendarController extends AbstractController
         $limit = (int)($this->settings['limit']);
         $sort = $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
+        $indices = $this->indexRepository->findByPast($limit, $sort);
+
         $this->slotExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findByPast($limit, $sort),
+            'indices' => $indices,
+            'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -697,6 +708,34 @@ class CalendarController extends AbstractController
             // End date is before start date. So use start and end equals!
             $endDate = clone $startDate;
         }
+    }
+
+    /**
+     * Creates the pagination logic for the results.
+     *
+     * @param QueryResultInterface $queryResult
+     *
+     * @return array
+     */
+    protected function getPagination(QueryResultInterface $queryResult): array
+    {
+        $paginateConfiguration = $this->settings['paginateConfiguration'] ?? [];
+        $itemsPerPage = (int)($paginateConfiguration['itemsPerPage'] ?? 10);
+        $maximumNumberOfLinks = (int)($paginateConfiguration['maximumNumberOfLinks'] ?? 10);
+
+        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+
+        $paginator = new QueryResultPaginator($queryResult, $currentPage, $itemsPerPage);
+        if (class_exists(NumberedPagination::class)) {
+            $pagination = new NumberedPagination($paginator, $maximumNumberOfLinks);
+        } else {
+            $pagination = new SimplePagination($paginator);
+        }
+
+        return [
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+        ];
     }
 
     /**

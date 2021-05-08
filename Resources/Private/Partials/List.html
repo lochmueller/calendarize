@@ -11,18 +11,14 @@
 				</f:for>
 			</f:then>
 			<f:else>
-				<f:if condition="{settings.paginateConfiguration}">
-					<f:then>
-						<f:widget.paginate objects="{indices}" as="paginatedIndices"
-															 configuration="{settings.paginateConfiguration}">
-							<f:for each="{paginatedIndices}" as="index">
-								<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}"/>
-							</f:for>
-						</f:widget.paginate>
-					</f:then>
-					<f:else>
-						You have to include the static typoscript to get the paginateConfiguration for list views
-					</f:else>
+				<f:if condition="{settings.paginateConfiguration.insertAbove -> f:or(alternative:0)}">
+					<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+				</f:if>
+				<f:for each="{pagination.paginator.paginatedItems}" as="index">
+					<f:render partial="{index.configuration.partialIdentifier}/ListItem" arguments="{index: index}" />
+				</f:for>
+				<f:if condition="{settings.paginateConfiguration.insertBelow -> f:or(alternative:1)}">
+					<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
 				</f:if>
 			</f:else>
 		</f:if>
