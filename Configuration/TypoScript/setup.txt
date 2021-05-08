@@ -46,6 +46,7 @@ plugin.tx_calendarize {
 			100 = {$plugin.tx_calendarize.view.layoutRootPath}
 		}
 
+        // Deprecated: remove after Typo3 > 10
 		widget {
 			TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
 				templateRootPath = EXT:calendarize/Resources/Private/Templates/
