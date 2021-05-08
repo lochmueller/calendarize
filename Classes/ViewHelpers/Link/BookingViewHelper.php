@@ -12,8 +12,11 @@ use HDNET\Calendarize\Domain\Model\Index;
 /**
  * Link to the booking page.
  */
-class BookingViewHelper extends AbstractLinkViewHelper
+class BookingViewHelper extends AbstractActionViewHelper
 {
+    protected $controllerName = 'Booking';
+    protected $actionName = 'booking';
+
     /**
      * Init arguments.
      */
@@ -21,7 +24,6 @@ class BookingViewHelper extends AbstractLinkViewHelper
     {
         parent::initializeArguments();
         $this->registerArgument('index', Index::class, '', true);
-        $this->registerArgument('pageUid', 'int', '', false, 0);
     }
 
     /**
@@ -31,17 +33,10 @@ class BookingViewHelper extends AbstractLinkViewHelper
      */
     public function render()
     {
-        if (!\is_object($this->arguments['index'])) {
-            $this->logger->error('Do not call booking viewhelper without index');
-
-            return $this->renderChildren();
-        }
-        $additionalParams = [
-            'tx_calendarize_calendar' => [
-                'index' => $this->arguments['index']->getUid(),
-            ],
+        $pluginArgs = [
+            'index' => $this->arguments['index']->getUid(),
         ];
 
-        return parent::renderLink($this->getPageUid($this->arguments['pageUid'], 'bookingPid'), $additionalParams);
+        $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'bookingPid'));
     }
 }

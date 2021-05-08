@@ -10,17 +10,17 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 /**
  * Link to the day.
  */
-class DayViewHelper extends AbstractLinkViewHelper
+class DayViewHelper extends AbstractActionViewHelper
 {
+    protected $actionName = 'day';
+
     /**
      * Init arguments.
      */
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('date', \DateTime::class, '', true);
-        $this->registerArgument('pageUid', 'int', '', false, 0);
-        $this->registerArgument('section', 'string', '', false);
+        $this->registerArgument('date', \DateTimeInterface::class, '', true);
     }
 
     /**
@@ -30,21 +30,14 @@ class DayViewHelper extends AbstractLinkViewHelper
      */
     public function render()
     {
-        if (!\is_object($this->arguments['date'])) {
-            $this->logger->error('Do not call day viewhelper without date');
-
-            return $this->renderChildren();
-        }
         $date = $this->arguments['date'];
-        $additionalParams = [
-            'tx_calendarize_calendar' => [
-                'year' => $date->format('Y'),
-                'month' => $date->format('n'),
-                'day' => $date->format('j'),
-            ],
-        ];
-        $section = isset($this->arguments['section']) ? (string)$this->arguments['section'] : '';
 
-        return parent::renderLink($this->getPageUid($this->arguments['pageUid']), $additionalParams, false, $section);
+        $pluginArgs = [
+            'year' => $date->format('Y'),
+            'month' => $date->format('n'),
+            'day' => $date->format('j'),
+        ];
+
+        return $this->renderExtbaseLink($pluginArgs);
     }
 }

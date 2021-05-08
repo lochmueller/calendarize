@@ -7,12 +7,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
-use Psr\Log\LoggerInterface;
-use TYPO3\CMS\Core\Log\LogManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -33,22 +29,6 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      * @var string
      */
     protected $lastHref = '';
-
-    /**
-     * Logger.
-     *
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * Build up the object.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-    }
 
     /**
      * Arguments initialization.
@@ -78,7 +58,8 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false, $section = '')
     {
         /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(ObjectManager::class)->get(UriBuilder::class);
+        $uriBuilder = $this->renderingContext->getControllerContext()->getUriBuilder();
+        // $uriBuilder = $this->renderingContext->getUriBuilder(); // Typo3 11 and later
         $this->lastHref = $uriBuilder->reset()
             ->setTargetPageUid($pageUid)
             ->setSection($section)
@@ -108,6 +89,9 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     {
         if (MathUtility::canBeInterpretedAsInteger($pageUid) && $pageUid > 0) {
             return (int)$pageUid;
+        }
+        if (null === $contextName && $this->actionName) {
+            $contextName = $this->actionName . 'Pid';
         }
 
         // by settings

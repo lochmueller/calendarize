@@ -12,8 +12,10 @@ use HDNET\Calendarize\Domain\Model\Index;
 /**
  * Link to the index.
  */
-class IndexViewHelper extends AbstractLinkViewHelper
+class IndexViewHelper extends AbstractActionViewHelper
 {
+    protected $actionName = 'detail';
+
     /**
      * Init arguments.
      */
@@ -21,8 +23,6 @@ class IndexViewHelper extends AbstractLinkViewHelper
     {
         parent::initializeArguments();
         $this->registerArgument('index', Index::class, '', true);
-        $this->registerArgument('pageUid', 'int', '', false, 0);
-        $this->registerArgument('absolute', 'bool', '', false, false);
     }
 
     /**
@@ -32,17 +32,10 @@ class IndexViewHelper extends AbstractLinkViewHelper
      */
     public function render()
     {
-        if (!\is_object($this->arguments['index'])) {
-            $this->logger->error('Do not call index viewhelper without index');
-
-            return $this->renderChildren();
-        }
-        $additionalParams = [
-            'tx_calendarize_calendar' => [
-                'index' => $this->arguments['index']->getUid(),
-            ],
+        $pluginArgs = [
+            'index' => $this->arguments['index']->getUid(),
         ];
 
-        return parent::renderLink($this->getPageUid($this->arguments['pageUid'], 'detailPid'), $additionalParams, (bool)$this->arguments['absolute']);
+        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'detailPid'));
     }
 }
