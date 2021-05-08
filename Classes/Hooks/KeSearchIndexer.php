@@ -14,6 +14,7 @@ use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
@@ -81,6 +82,14 @@ class KeSearchIndexer extends AbstractHook
                 'orig_pid' => $index->getPid(),
             ];
 
+            $params = HttpUtility::buildQueryString([
+                'tx_calendarize_calendar' => [
+                    'index' => $index->getUid(),
+                    'controller' => 'Calendar',
+                    'action' => 'detail',
+                ],
+            ], '&');
+
             $storeArguemnts = [
                 $indexerConfig['storagepid'],
                 $title,
@@ -88,7 +97,7 @@ class KeSearchIndexer extends AbstractHook
                 $indexerConfig['targetpid'],
                 $fullContent,
                 $originalObject->getKeSearchTags($index),
-                "&tx_calendarize_calendar[index]={$index->getUid()}",
+                $params,
                 $abstract,
                 $index->_getProperty('_languageUid'), // $index always has a "_languageUid" - if the $originalObject does not use translations, it is 0
                 $index->_hasProperty('starttime') ? $index->_getProperty('starttime') : 0,
