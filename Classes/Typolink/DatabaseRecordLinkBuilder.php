@@ -8,6 +8,7 @@ use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -30,7 +31,13 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
 
             $typoScriptConfiguration = [
                 'parameter' => $defaultPid,
-                'additionalParams' => '&tx_calendarize_calendar[index]=' . $this->getIndexForEventUid($linkDetails['identifier'], $eventId),
+                'additionalParams' => HttpUtility::buildQueryString([
+                    'tx_calendarize_calendar' => [
+                        'index' => $this->getIndexForEventUid($linkDetails['identifier'], $eventId),
+                        'controller' => 'Calendar',
+                        'action' => 'detail',
+                    ],
+                ], '&'),
             ];
 
             $localContentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);

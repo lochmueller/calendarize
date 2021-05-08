@@ -1,5 +1,10 @@
 XML Sitemap for TYPO3
----------------------
+=====================
+
+The sitemap includes links to all indices.
+
+Basic sitemap
+-------------
 
 .. code-block:: typoscript
 
@@ -11,11 +16,15 @@ XML Sitemap for TYPO3
             provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
             config {
               table = tx_calendarize_domain_model_index
-              pid = xxxxxx
+              pid = <page id('s) containing records>
               url {
-                pageId = xxxxxx
+                pageId = <your detail page id>
                 fieldToParameterMap {
                   uid = tx_calendarize_calendar[index]
+                }
+                additionalGetParameters {
+                  tx_calendarize_calendar.controller = Calendar
+                  tx_calendarize_calendar.action = detail
                 }
                 useCacheHash = 1
               }

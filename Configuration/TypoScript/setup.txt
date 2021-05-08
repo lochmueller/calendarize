@@ -52,10 +52,6 @@ plugin.tx_calendarize {
 			}
 		}
 	}
-
-	features {
-		skipDefaultArguments = 1
-	}
 }
 
 ["{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}" == "1"]

@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Service;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -41,7 +42,13 @@ class BreadcrumbService extends AbstractService
         } else {
             $linkConfiguration = [
                 'parameter' => $GLOBALS['TSFE']->id,
-                'additionalParams' => '&tx_calendarize_calendar[index]=' . $indexUid,
+                'additionalParams' => HttpUtility::buildQueryString([
+                    'tx_calendarize_calendar' => [
+                        'index' => $indexUid,
+                        'controller' => 'Calendar',
+                        'action' => 'detail',
+                    ],
+                ], '&'),
             ];
             $content = $contentObjectRenderer->typoLink($event['title'], $linkConfiguration);
         }

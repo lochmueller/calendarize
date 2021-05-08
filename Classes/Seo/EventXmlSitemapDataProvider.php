@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Seo\XmlSitemap\AbstractXmlSitemapDataProvider;
 use TYPO3\CMS\Seo\XmlSitemap\Exception\MissingConfigurationException;
@@ -110,17 +111,14 @@ class EventXmlSitemapDataProvider extends AbstractXmlSitemapDataProvider
         $additionalParams = [
             'tx_calendarize_calendar' => [
                 'index' => $data['data']['uid'],
+                'controller' => 'Calendar',
+                'action' => 'detail',
             ],
         ];
         $additionalParams = $this->getUrlFieldParameterMap($additionalParams, $data['data']);
         $additionalParams = $this->getUrlAdditionalParams($additionalParams);
 
-        $additionalParamsString = http_build_query(
-            $additionalParams,
-            '',
-            '&',
-            \PHP_QUERY_RFC3986
-        );
+        $additionalParamsString = HttpUtility::buildQueryString($additionalParams, '&');
 
         $typoLinkConfig = [
             'parameter' => $pageId,

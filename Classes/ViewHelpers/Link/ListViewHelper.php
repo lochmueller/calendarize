@@ -10,15 +10,16 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 /**
  * Link to the list.
  */
-class ListViewHelper extends AbstractLinkViewHelper
+class ListViewHelper extends AbstractActionViewHelper
 {
+    protected $actionName = 'list';
+
     /**
      * Init arguments.
      */
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('pageUid', 'int', '', false, 0);
     }
 
     /**
@@ -28,6 +29,6 @@ class ListViewHelper extends AbstractLinkViewHelper
      */
     public function render()
     {
-        return parent::renderLink($this->getPageUid($this->arguments['pageUid'], 'listPid'));
+        return $this->renderExtbaseLink([], $this->getPageUid($this->arguments['pageUid'], 'listPid'));
     }
 }
