@@ -3,5 +3,6 @@ For developers
 
 .. toctree::
 
-	OwnEvents/Index
-	Features/Index
+   OwnEvents/Index
+   Features/Index
+   Features/SpeakingUrl
