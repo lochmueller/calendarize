@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Repository;
 
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -48,22 +47,5 @@ class AbstractRepository extends Repository
     public function setAdditionalSlotArguments(array $additionalSlotArguments)
     {
         $this->additionalSlotArguments = $additionalSlotArguments;
-    }
-
-    /**
-     * Call Signal incl. the additionalSlotArguments.
-     *
-     * @param string $signalClassName
-     * @param string $signalName
-     * @param array  $arguments
-     *
-     * @return mixed
-     */
-    protected function callSignal($signalClassName, $signalName, array $arguments)
-    {
-        $arguments['additionalSlotArguments'] = $this->additionalSlotArguments;
-        $signalSlotDispatcher = HelperUtility::getSignalSlotDispatcher();
-
-        return $signalSlotDispatcher->dispatch($signalClassName, $signalName, $arguments);
     }
 }

@@ -9,9 +9,11 @@ namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
+use HDNET\Calendarize\Event\CleanupEvent;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +23,6 @@ use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Cleanup the event models.
@@ -39,11 +40,24 @@ class CleanupCommandController extends Command
     protected $persistenceManager;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @param PersistenceManager $persistenceManager
      */
     public function injectPersistenceManager(PersistenceManager $persistenceManager): void
     {
         $this->persistenceManager = $persistenceManager;
+    }
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     protected function configure()
@@ -163,19 +177,10 @@ class CleanupCommandController extends Command
             $function = $hide;
         }
 
-        // dispatch variables
-        // use function to write your own reaction
-        $variables = [
-            'modus' => $modus,
-            'repository' => $repository,
-            'model' => $model,
-            'function' => $function,
-        ];
+        $event = new CleanupEvent($modus, $repository, $model, $function);
+        $this->eventDispatcher->dispatch($event);
 
-        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
-
-        $myFunction = $variables['function'];
+        $myFunction = $event->getFunction();
         $myFunction($repository, $model);
     }
 

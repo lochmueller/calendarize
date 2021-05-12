@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\QueryRestrictionInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 /**
@@ -233,7 +234,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'dbQueries' => $dbQueries,
             ];
 
-            $dispatcher = HelperUtility::getSignalSlotDispatcher();
+            $dispatcher = self::getSignalSlotDispatcher();
             $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
             $db = HelperUtility::getDatabaseConnection($variables['table']);
@@ -251,7 +252,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 'dbQueries' => $dbQueries,
             ];
 
-            $dispatcher = HelperUtility::getSignalSlotDispatcher();
+            $dispatcher = self::getSignalSlotDispatcher();
             $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
         }
 
@@ -455,7 +456,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         foreach ($selectResults as $mm) {
@@ -518,7 +519,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'fieldname' => 'categories',
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         foreach ($selectResults as $mm) {
@@ -668,7 +669,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         $q->update($variables['table'])
@@ -705,7 +706,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'eventImportId' => $eventImportId,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         $q->select('*')->from($variables['table'])
@@ -824,7 +825,7 @@ class CalMigrationUpdate extends AbstractUpdate
                     'configurationRow' => $configurationRow,
                 ];
 
-                $dispatcher = HelperUtility::getSignalSlotDispatcher();
+                $dispatcher = self::getSignalSlotDispatcher();
                 $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
                 $db = HelperUtility::getDatabaseConnection($variables['table']);
@@ -996,7 +997,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         $q = $this->getQueryBuilder($variables['table']);
@@ -1038,7 +1039,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         $q = $this->getQueryBuilder($variables['table']);
@@ -1093,7 +1094,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $db = HelperUtility::getDatabaseConnection($variables['table']);
         $q = $db->createQueryBuilder();
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreInsert', $variables);
 
         $q->insert($variables['table'])
@@ -1111,7 +1112,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'dbQueries' => $dbQueries,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variables);
 
         return $variables['recordId'];
@@ -1149,7 +1150,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'table' => self::EVENT_TABLE,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PreSelect', $variables);
 
         $q = $this->getQueryBuilder($variables['table']);
@@ -1175,7 +1176,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'nonMigrated' => $nonMigrated,
         ];
 
-        $dispatcher = HelperUtility::getSignalSlotDispatcher();
+        $dispatcher = self::getSignalSlotDispatcher();
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'ReadyParsed', $variables);
 
         return $variables['nonMigrated'];
@@ -1234,5 +1235,15 @@ class CalMigrationUpdate extends AbstractUpdate
         }
 
         return $queryBuilder;
+    }
+
+    /**
+     * Get the signal slot dispatcher.
+     *
+     * @return Dispatcher
+     */
+    public static function getSignalSlotDispatcher(): Dispatcher
+    {
+        return GeneralUtility::makeInstance(Dispatcher::class);
     }
 }

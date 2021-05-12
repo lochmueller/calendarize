@@ -48,6 +48,7 @@ class PluginConfigurationService
             }
         }
 
+        // @todo PSR-14
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $arguments = [
             'settings' => $settings,

@@ -11,6 +11,9 @@ use Exception;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Event\AddTimeFrameConstraintsEvent;
+use HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent;
+use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
+use HDNET\Calendarize\Event\IndexRepositoryTimeSlotEvent;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
@@ -193,15 +196,7 @@ class IndexRepository extends AbstractRepository
         array $customSearch = [],
         int $limit = 0
     ) {
-        $arguments = [
-            'indexIds' => [],
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-            'customSearch' => $customSearch,
-            'indexTypes' => $this->indexTypes,
-            'emptyPreResult' => false,
-        ];
-        $arguments = $this->callSignal(__CLASS__, __FUNCTION__ . 'Pre', $arguments);
+        $event = new IndexRepositoryFindBySearchEvent([], $startDate, $endDate, $customSearch, $this->indexTypes, false);
 
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -213,14 +208,14 @@ class IndexRepository extends AbstractRepository
         $this->addTimeFrameConstraints(
             $constraints,
             $query,
-            $arguments['startDate'],
-            $arguments['endDate']
+            $event->getStartDate(),
+            $event->getEndDate()
         );
 
-        if ($arguments['indexIds']) {
+        if ($event->getIndexIds()) {
             $indexIds = [];
             $tabledIndexIds = [];
-            foreach ($arguments['indexIds'] as $key => $indexId) {
+            foreach ($event->getIndexIds() as $key => $indexId) {
                 if (\is_int($key)) {
                     // Plain integers (= deprecated old way, stays in for compatibility)
                     $indexIds[] = $indexId;
@@ -274,16 +269,11 @@ class IndexRepository extends AbstractRepository
                 $constraints[] = $foreignIdConstraint;
             }
         }
-        if ($arguments['emptyPreResult']) {
+        if ($event->isEmptyPreResult()) {
             $constraints[] = $query->equals('uid', '-1');
         }
-        $result = [
-            'result' => $this->matchAndExecute($query, $constraints),
-        ];
 
-        $result = $this->callSignal(__CLASS__, __FUNCTION__ . 'Post', $result);
-
-        return $result['result'];
+        return $this->matchAndExecute($query, $constraints);
     }
 
     /**
@@ -552,14 +542,10 @@ class IndexRepository extends AbstractRepository
         $constraints = $this->getDefaultConstraints($query);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
 
-        $arguments = [
-            'constraints' => $constraints,
-            'query' => $query,
-        ];
-        $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
-        $constraints = $arguments['constraints'] ?: $constraints;
+        $event = new IndexRepositoryTimeSlotEvent($constraints, $query);
+        $this->eventDispatcher->dispatch($event);
 
-        return $this->matchAndExecute($query, $constraints);
+        return $this->matchAndExecute($query, $event->getConstraints());
     }
 
     /**
@@ -632,14 +618,11 @@ class IndexRepository extends AbstractRepository
             $constraints[] = $query->in('pid', $storagePages);
         }
 
-        $arguments = [
-            'indexIds' => [],
-            'indexTypes' => $this->indexTypes,
-        ];
-        $arguments = $this->callSignal(__CLASS__, __FUNCTION__, $arguments);
+        $event = new IndexRepositoryDefaultConstraintEvent([], $this->indexTypes);
+        $this->eventDispatcher->dispatch($event);
 
-        if ($arguments['indexIds']) {
-            $constraints[] = $query->in('foreignUid', $arguments['indexIds']);
+        if ($event->getIndexIds()) {
+            $constraints[] = $query->in('foreignUid', $event->getIndexIds());
         }
 
         return $constraints;

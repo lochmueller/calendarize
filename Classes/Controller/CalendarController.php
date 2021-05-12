@@ -696,6 +696,7 @@ class CalendarController extends AbstractController
         ];
         $variables['settings'] = $this->settings;
 
+        // @todo PSR-14
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
@@ -796,6 +797,7 @@ class CalendarController extends AbstractController
             $variables['settings'] = $this->settings;
         }
 
+        // @todo PSR-14
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
 

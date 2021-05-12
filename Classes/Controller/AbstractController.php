@@ -148,6 +148,7 @@ abstract class AbstractController extends ActionController
         $variables['settings'] = $this->settings;
         $variables['contentObject'] = $this->configurationManager->getContentObject()->data;
 
+        // @todo PSR-14
         $dispatcher = $this->objectManager->get(Dispatcher::class);
         $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
 

@@ -16,7 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Helper Utility.
@@ -42,16 +41,6 @@ class HelperUtility
         }
 
         return $manager->createQueryForType($objectName);
-    }
-
-    /**
-     * Get the signal slot dispatcher.
-     *
-     * @return Dispatcher
-     */
-    public static function getSignalSlotDispatcher(): Dispatcher
-    {
-        return GeneralUtility::makeInstance(Dispatcher::class);
     }
 
     /**

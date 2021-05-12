@@ -7,15 +7,18 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Event\IndexAllEvent;
+use HDNET\Calendarize\Event\IndexPreUpdateEvent;
+use HDNET\Calendarize\Event\IndexSingleEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\ArrayUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Index the given events.
@@ -28,9 +31,9 @@ class IndexerService extends AbstractService
     const TABLE_NAME = 'tx_calendarize_domain_model_index';
 
     /**
-     * @var Dispatcher
+     * @var EventDispatcherInterface
      */
-    protected $signalSlot;
+    protected $eventDispatcher;
 
     /**
      * @var IndexPreparationService
@@ -43,11 +46,11 @@ class IndexerService extends AbstractService
     protected $slugService;
 
     public function __construct(
-        Dispatcher $dispatcher,
+        EventDispatcherInterface $eventDispatcher,
         IndexPreparationService $preparationService,
         SlugService $slugService
     ) {
-        $this->signalSlot = $dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
         $this->preparationService = $preparationService;
         $this->slugService = $slugService;
     }
@@ -57,7 +60,7 @@ class IndexerService extends AbstractService
      */
     public function reindexAll()
     {
-        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$this]);
+        $this->eventDispatcher->dispatch(new IndexAllEvent($this, IndexAllEvent::POSITION_PRE));
 
         $this->removeInvalidConfigurationIndex();
 
@@ -84,8 +87,7 @@ class IndexerService extends AbstractService
                 $this->updateIndex($key, $tableName, (int)$row['uid']);
             }
         }
-
-        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$this]);
+        $this->eventDispatcher->dispatch(new IndexAllEvent($this, IndexAllEvent::POSITION_POST));
     }
 
     /**
@@ -97,13 +99,13 @@ class IndexerService extends AbstractService
      */
     public function reindex(string $configurationKey, string $tableName, int $uid)
     {
-        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$configurationKey, $tableName, $uid, $this]);
+        $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE));
 
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
 
-        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Post', [$configurationKey, $tableName, $uid, $this]);
+        $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST));
     }
 
     /**
@@ -206,9 +208,10 @@ class IndexerService extends AbstractService
         $databaseConnection = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();
 
-        $this->signalSlot->dispatch(__CLASS__, __FUNCTION__ . 'Pre', [$neededItems, $tableName, $uid]);
+        $event = new IndexPreUpdateEvent($neededItems, $tableName, $uid);
+        $this->eventDispatcher->dispatch($event);
 
-        foreach ($neededItems as $neededKey => $neededItem) {
+        foreach ($event->getNeededItems() as $neededKey => $neededItem) {
             foreach ($currentItems as $currentKey => $currentItem) {
                 if (ArrayUtility::isEqualArray($neededItem, $currentItem, ['tstamp', 'crdate', 'slug'])) {
                     // Check if the current slug starts with the new slug
