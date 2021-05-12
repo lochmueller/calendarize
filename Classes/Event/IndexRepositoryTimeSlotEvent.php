@@ -4,10 +4,17 @@ namespace HDNET\Calendarize\Event;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
-class IndexRepositoryTimeSlotEvent
+final class IndexRepositoryTimeSlotEvent
 {
-    protected array $constraints;
-    protected QueryInterface $query;
+    /**
+     * @var array
+     */
+    private $constraints;
+
+    /**
+     * @var QueryInterface
+     */
+    private $query;
 
     public function __construct(array $constraints, QueryInterface $query)
     {

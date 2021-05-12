@@ -2,10 +2,17 @@
 
 namespace HDNET\Calendarize\Event;
 
-class IndexRepositoryDefaultConstraintEvent
+final class IndexRepositoryDefaultConstraintEvent
 {
-    protected array $indexIds;
-    protected array $indexTypes;
+    /**
+     * @var array
+     */
+    private $indexIds;
+
+    /**
+     * @var array
+     */
+    private $indexTypes;
 
     public function __construct(array $indexIds, array $indexTypes)
     {

@@ -2,14 +2,26 @@
 
 namespace HDNET\Calendarize\Event;
 
-class IndexRepositoryFindBySearchEvent
+final class IndexRepositoryFindBySearchEvent
 {
-    protected array $indexIds;
-    protected $startDate;
-    protected $endDate;
-    protected $customSearch;
-    protected array $indexTypes;
-    protected bool $emptyPreResult;
+    /**
+     * @var array
+     */
+    private $indexIds;
+
+    private $startDate;
+    private $endDate;
+    private $customSearch;
+
+    /**
+     * @var array
+     */
+    private $indexTypes;
+
+    /**
+     * @var bool
+     */
+    private $emptyPreResult;
 
     public function __construct(array $indexIds, $startDate, $endDate, $customSearch, array $indexTypes, bool $emptyPreResult)
     {

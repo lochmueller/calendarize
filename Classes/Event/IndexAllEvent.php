@@ -10,8 +10,8 @@ final class IndexAllEvent
 
     const POSITION_POST = 'post';
 
-    private IndexerService $indexerService;
-    private string $position;
+    private $indexerService;
+    private $position;
 
     public function __construct(IndexerService $indexerService, string $position)
     {

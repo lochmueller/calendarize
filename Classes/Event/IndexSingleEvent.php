@@ -10,15 +10,30 @@ final class IndexSingleEvent
 
     const POSITION_POST = 'post';
 
-    private string $configurationKey;
+    /**
+     * @var string
+     */
+    private $configurationKey;
 
-    private string $tableName;
+    /**
+     * @var string
+     */
+    private $tableName;
 
-    private int $uid;
+    /**
+     * @var int
+     */
+    private $uid;
 
-    private IndexerService $indexerService;
+    /**
+     * @var IndexerService
+     */
+    private $indexerService;
 
-    private string $position;
+    /**
+     * @var string
+     */
+    private $position;
 
     public function __construct(string $configurationKey, string $tableName, int $uid, IndexerService $indexerService, string $position)
     {

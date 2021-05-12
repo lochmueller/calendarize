@@ -274,7 +274,7 @@ class DateTimeUtility
     {
         // NOTE that new \DateTime('@timestamp') does NOT work - @see comment in normalizeDateTimeSingle()
         // So we create a date string with timezone information first, and a \DateTime in the current server timezone then.
-        return new \DateTime(date(\DateTime::ATOM, (int)$GLOBALS['SIM_ACCESS_TIME']), self::getTimeZone());
+        return new \DateTime(date('Y-m-d\TH:i:sP', (int)$GLOBALS['SIM_ACCESS_TIME']), self::getTimeZone());
     }
 
     /**

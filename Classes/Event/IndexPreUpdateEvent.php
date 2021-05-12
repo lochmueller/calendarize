@@ -4,9 +4,20 @@ namespace HDNET\Calendarize\Event;
 
 final class IndexPreUpdateEvent
 {
-    private array $neededItems;
-    private string $tableName;
-    private int $uid;
+    /**
+     * @var array
+     */
+    private $neededItems;
+
+    /**
+     * @var string
+     */
+    private $tableName;
+
+    /**
+     * @var int
+     */
+    private $uid;
 
     public function __construct(array $neededItems, string $tableName, int $uid)
     {
