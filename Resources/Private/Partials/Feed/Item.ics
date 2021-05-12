@@ -1,7 +1,7 @@
 {namespace c=HDNET\Calendarize\ViewHelpers}
 <f:if condition="{index}">
 BEGIN:VEVENT
-UID:calendarize-{index.uid}
+UID:calendarize-{index.slug}
 DTSTAMP:{f:if(condition: index.tstamp, then: index.tstamp, else: 'now') -> c:dateTime.formatUtcDate(format: 'Ymd\THis\Z')}
 <f:if condition="{index.allDay}">
     <f:then>
