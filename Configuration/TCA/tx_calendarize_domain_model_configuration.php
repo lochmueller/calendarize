@@ -6,7 +6,6 @@ use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\TcaService;
-use HDNET\Calendarize\Service\TimeSelectionWizard;
 use HDNET\Calendarize\Utility\TranslateUtility;
 
 $base = ModelUtility::getTcaInformation(Configuration::class);
@@ -152,12 +151,6 @@ $custom = [
                 'renderType' => 'inputDateTime',
                 'default' => 0,
                 'size' => 4,
-                'wizards' => [
-                    'time_selection' => [
-                        'type' => 'userFunc',
-                        'userFunc' => TimeSelectionWizard::class . '->renderWizard',
-                    ],
-                ],
             ],
             'displayCond' => [
                 'AND' => [
@@ -172,12 +165,6 @@ $custom = [
                 'renderType' => 'inputDateTime',
                 'size' => 4,
                 'default' => 0,
-                'wizards' => [
-                    'time_selection' => [
-                        'type' => 'userFunc',
-                        'userFunc' => TimeSelectionWizard::class . '->renderWizard',
-                    ],
-                ],
             ],
             'displayCond' => [
                 'AND' => [

@@ -19,6 +19,5 @@ If you leave the detailPid empty and select the monthPid, no events are in the o
 .. toctree::
         :titlesonly:
 
-        TimeSelectionWizard
         Sitemap
         Breadcrumb
