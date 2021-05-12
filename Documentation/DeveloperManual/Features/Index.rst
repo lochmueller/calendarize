@@ -7,4 +7,4 @@ The following features are currelty in the calendarize extension:
 - `BookingInterface` - The event is bookable by the internal booking process
 - `FeedInterface` - The event is rendered in the different Feeds like Atom & RSS
 - `KeSearchIndexInterface` - The event is indexed via the calendarize default indexer in your ke_search index
-- `SpeakingUrlInterface` - The event generates an alias for the given event, that is the base for the EventMapper alias
+- `SpeakingUrlInterface` - The event is used to generate a base slug for the indices
