@@ -48,12 +48,12 @@ class CalendarizeInfoElement extends AbstractFormElement
             if (!($event['start_date'] instanceof \DateTimeInterface)) {
                 $event['start_date'] = new \DateTime($event['start_date']);
             }
-            $startDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['start_date']->getTimestamp());
+            $startDate = BackendUtility::date((int)$event['start_date']->getTimestamp());
 
             if (!($event['end_date'] instanceof \DateTimeInterface)) {
                 $event['end_date'] = new \DateTime($event['end_date']);
             }
-            $endDate = strftime(DateTimeUtility::FORMAT_DATE_BACKEND, (int)$event['end_date']->getTimestamp());
+            $endDate = BackendUtility::date((int)$event['end_date']->getTimestamp());
             $entry = $startDate . ' - ' . $endDate;
             if (!$event['all_day']) {
                 $start = BackendUtility::time($event['start_time'] % DateTimeUtility::SECONDS_DAY, false);

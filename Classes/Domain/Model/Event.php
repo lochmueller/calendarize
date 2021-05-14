@@ -16,6 +16,7 @@ use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /**
  * Event (Default) for the calendarize function.
@@ -403,8 +404,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getKeSearchTitle(Index $index): string
     {
-        return (string)$this->getTitle() . ' - ' . $index->getStartDate()
-                ->format('d.m.Y');
+        return (string)$this->getTitle() . ' - ' . BackendUtility::date($index->getStartDate());
     }
 
     /**
