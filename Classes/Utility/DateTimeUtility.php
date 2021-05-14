@@ -55,11 +55,6 @@ class DateTimeUtility
     const SECONDS_DECADE = 315360000;
 
     /**
-     * Format date (Backend).
-     */
-    const FORMAT_DATE_BACKEND = '%a %d.%m.%Y';
-
-    /**
      * Convert a Week/Year combination to a DateTime of the first day of week.
      *
      * @param int $week
