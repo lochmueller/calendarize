@@ -1,0 +1,12 @@
+TCEMAIN {
+  linkHandler {
+    tx_calendarize_domain_model_event {
+      handler = TYPO3\CMS\Recordlist\LinkHandler\RecordLinkHandler
+      label = Events
+      configuration {
+        table = tx_calendarize_domain_model_event
+      }
+      scanAfter = page
+    }
+  }
+}

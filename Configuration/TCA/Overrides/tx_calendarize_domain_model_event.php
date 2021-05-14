@@ -1,15 +1,14 @@
 <?php
 
 declare(strict_types=1);
+defined('TYPO3') or exit();
 
-use HDNET\Calendarize\Register;
-use HDNET\Calendarize\Utility\ConfigurationUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+if (!(bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
+    \HDNET\Calendarize\Register::extTables(
+        \HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration()
+    );
 
-if (!(bool)ConfigurationUtility::get('disableDefaultEvent')) {
-    Register::extTables(Register::getDefaultCalendarizeConfiguration());
-
-    ExtensionManagementUtility::makeCategorizable(
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
         'calendarize',
         'tx_calendarize_domain_model_event',
         'categories',

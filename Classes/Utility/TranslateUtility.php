@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -23,7 +24,7 @@ class TranslateUtility
      */
     public static function get($key)
     {
-        if (TYPO3_MODE === 'FE' && !\is_object($GLOBALS['TSFE'])) {
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() && !\is_object($GLOBALS['TSFE'])) {
             // check wrong eID context. Do not call "LocalizationUtility::translate" in eID context, if there is no
             // valid TypoScriptFrontendController. Skip this call by returning just the $key!
             return $key;
