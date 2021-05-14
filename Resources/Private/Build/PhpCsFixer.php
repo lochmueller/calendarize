@@ -30,6 +30,7 @@ return PhpCsFixer\Config::create()
         'function_typehint_space' => true,
         'hash_to_slash_comment' => true,
         'lowercase_cast' => true,
+        'logical_operators' => false,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'modernize_types_casting' => true,
         'native_function_casing' => true,

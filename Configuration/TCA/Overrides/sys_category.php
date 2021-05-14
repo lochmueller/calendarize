@@ -1,12 +1,10 @@
 <?php
 
 declare(strict_types=1);
+defined('TYPO3') or exit();
 
-use HDNET\Autoloader\Utility\ArrayUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
-
-$GLOBALS['TCA']['sys_category'] = ModelUtility::getTcaOverrideInformation('calendarize', 'sys_category');
+$GLOBALS['TCA']['sys_category'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('calendarize', 'sys_category');
 
 $custom = [];
 
-$GLOBALS['TCA']['sys_category'] = ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['sys_category'], $custom);
+$GLOBALS['TCA']['sys_category'] = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['sys_category'], $custom);

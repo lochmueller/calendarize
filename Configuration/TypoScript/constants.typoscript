@@ -1,0 +1,62 @@
+plugin.tx_calendarize {
+
+  settings {
+    # cat=calendarize//0010; type=string; label=Previous Limit: Limit for the previous button in the day,week,month,year view - Format: YYYY-MM-DD or something like "-2 years"
+    dateLimitBrowserPrev = -2 years
+
+    # cat=calendarize//0020; type=string; label=Next Limit: Limit for the next button in the day,week,month,year view - Format: YYYY-MM-DD or something like "+2 years"
+    dateLimitBrowserNext = +3 years
+
+    # cat=calendarize//0030; type=int+; label=Start of the week: Start of the week (1 Mo - 7 Su) - ISO-8601 / http://php.net/manual/de/function.date.php 'N' / http://php.net/manual/de/function.date.php#119974
+    weekStart = 1
+
+    # cat=calendarize//0040; type=string; label=Date format: date format - http://php.net/manual/de/function.date.php
+    dateFormat = d.m.Y
+
+    # cat=calendarize//0050; type=string; label=Time format: time format - http://php.net/manual/de/function.date.php
+    timeFormat = H:i
+
+    # cat=calendarize//0060; type=boolean; label=Moment.js: Experimental: Use Moment.js for date and time output
+    useMomentJsDateAndTimeOutput = 0
+
+    # cat=calendarize//0070; type=boolean; label=FullCalendar IO: Experimental: Use FullCalendar IO for the month view. You have to enable the Moment.js function
+    useMomentFullCalendarIo = 0
+
+    # cat=calendarize//0080; type=options[00:00:00=0, Now=now]; label=List start time: The start time for the list (also used for latest view)
+    listStartTime = 0
+
+    # cat=calendarize//0090; type=int[-24-24]; label=list start time offset: The offset for the list start time in hours (also used for latest view)
+    listStartTimeOffsetHours = 0
+
+    # cat=calendarize//0100; type=string; label=Search end modifier: The modifier for the search end date in the search form
+    searchEndModifier = +1 month
+
+    # cat=calendarize//0110; type=int+; label=Default detail PID: Default detail PID for e.g. the Insert record TS configuration
+    defaultDetailPid = 0
+
+    feed {
+      # cat=calendarize//0080; type=string; label=Title of the Feed: The feed title for atom and xml/rss
+      title = Title of the feed
+
+      # cat=calendarize//0090; type=string; label=Description of the Feed: The feed description for atom and xml/rss
+      description = General description of the feed
+
+      # cat=calendarize//0100; type=string; label=Language of the Feed: The feed language for xml/rss
+      language = en
+
+      # cat=calendarize//0110; type=boolean; label=Debug mode: If you enable the debug mode, the feed is send with text/plain header so you can easily check the output in the browser
+      debugMode = 0
+    }
+  }
+
+  view {
+    # cat=calendarize/file; type=string; label=Path to template root (FE)
+    templateRootPath = EXT:calendarize/Resources/Private/Templates/
+
+    # cat=calendarize/file; type=string; label=Path to template partials (FE)
+    partialRootPath = EXT:calendarize/Resources/Private/Partials/
+
+    # cat=calendarize/file; type=string; label=Path to template layouts (FE)
+    layoutRootPath = EXT:calendarize/Resources/Private/Layouts/
+  }
+}
