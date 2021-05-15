@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
+use HDNET\Calendarize\Event\GenericActionRedirectEvent;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -160,6 +161,41 @@ abstract class AbstractController extends ActionController
         $this->eventDispatcher->dispatch($event);
 
         $this->view->assignMultiple($event->getVariables());
+    }
+
+    /**
+     * A redirect that have a event included.
+     */
+    protected function eventExtendedRedirect(string $className, string $eventName, array $variables = [])
+    {
+        // set default variables for the redirect
+        if (empty($variables)) {
+            $variables['extended'] = [
+                'actionName' => 'list',
+                'controllerName' => null,
+                'extensionName' => null,
+                'arguments' => [],
+                'pageUid' => $this->settings['listPid'],
+                'delay' => 0,
+                'statusCode' => 301,
+            ];
+            $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
+            $variables['settings'] = $this->settings;
+        }
+
+        $event = new GenericActionRedirectEvent($variables, $className, $eventName);
+        $this->eventDispatcher->dispatch($event);
+        $variables = $event->getVariables();
+
+        $this->redirect(
+            $variables['extended']['actionName'],
+            $variables['extended']['controllerName'],
+            $variables['extended']['extensionName'],
+            $variables['extended']['arguments'],
+            $variables['extended']['pageUid'],
+            $variables['extended']['delay'],
+            $variables['extended']['statusCode']
+        );
     }
 
     /**

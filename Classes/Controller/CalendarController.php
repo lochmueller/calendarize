@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Controller;
 use GeorgRinger\NumberedPagination\NumberedPagination;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Event\DetermineSearchEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\EventUtility;
@@ -28,7 +29,6 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Calendar.
@@ -499,7 +499,7 @@ class CalendarController extends AbstractController
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
                     return (string)TranslateUtility::get('noEventDetailView');
                 }
-                $this->slottedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
+                $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
             }
         }
 
@@ -678,29 +678,23 @@ class CalendarController extends AbstractController
             );
         }
 
-        // use this variable in your extension to add more custom variables
-        $variables = [
-            'extended' => [
-                'indices' => $indices,
-                'searchMode' => $searchMode,
-                'parameters' => [
-                    'startDate' => $startDate,
-                    'endDate' => $endDate,
-                    'customSearch' => $customSearch,
-                    'year' => $year,
-                    'month' => $month,
-                    'day' => $day,
-                    'week' => $week,
-                ],
+        $event = new DetermineSearchEvent([
+            'indices' => $indices,
+            'searchMode' => $searchMode,
+            'parameters' => [
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'customSearch' => $customSearch,
+                'year' => $year,
+                'month' => $month,
+                'day' => $day,
+                'week' => $week,
             ],
-        ];
-        $variables['settings'] = $this->settings;
+        ], $this->settings);
 
-        // @todo PSR-14
-        $dispatcher = $this->objectManager->get(Dispatcher::class);
-        $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
+        $this->eventDispatcher->dispatch($event);
 
-        return $variables['extended'];
+        return $event->getVariables();
     }
 
     protected function checkWrongDateOrder(\DateTime &$startDate = null, \DateTime &$endDate = null)
@@ -771,44 +765,5 @@ class CalendarController extends AbstractController
         }
 
         return $return;
-    }
-
-    /**
-     * A redirect that have a slot included.
-     *
-     * @param string $signalClassName name of the signal class: __CLASS__
-     * @param string $signalName      name of the signal: __FUNCTION__
-     * @param array  $variables       optional: if not set use the defaults
-     */
-    protected function slottedRedirect($signalClassName, $signalName, $variables = null)
-    {
-        // set default variables for the redirect
-        if (null === $variables) {
-            $variables['extended'] = [
-                'actionName' => 'list',
-                'controllerName' => null,
-                'extensionName' => null,
-                'arguments' => [],
-                'pageUid' => $this->settings['listPid'],
-                'delay' => 0,
-                'statusCode' => 301,
-            ];
-            $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
-            $variables['settings'] = $this->settings;
-        }
-
-        // @todo PSR-14
-        $dispatcher = $this->objectManager->get(Dispatcher::class);
-        $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
-
-        $this->redirect(
-            $variables['extended']['actionName'],
-            $variables['extended']['controllerName'],
-            $variables['extended']['extensionName'],
-            $variables['extended']['arguments'],
-            $variables['extended']['pageUid'],
-            $variables['extended']['delay'],
-            $variables['extended']['statusCode']
-        );
     }
 }
