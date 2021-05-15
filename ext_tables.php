@@ -30,4 +30,9 @@ defined('TYPO3') or exit();
             'navigationComponentId' => '',
         ]
     );
+
+    // Exclude "pages" and obsolete fields
+    // Stored here instead of Overrides/tt_content, otherwise it is overwritten by autoloader
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['calendarize_calendar'] = 'recursive,select_key,pages';
+
 })();
