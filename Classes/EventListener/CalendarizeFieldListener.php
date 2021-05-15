@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace HDNET\Calendarize\Listener;
+namespace HDNET\Calendarize\EventListener;
 
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent;
 
-class CalendarizeField
+class CalendarizeFieldListener
 {
     public function __invoke(AlterTableDefinitionStatementsEvent $event): void
     {

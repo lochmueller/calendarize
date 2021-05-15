@@ -618,7 +618,7 @@ class IndexRepository extends AbstractRepository
             $constraints[] = $query->in('pid', $storagePages);
         }
 
-        $event = new IndexRepositoryDefaultConstraintEvent([], $this->indexTypes);
+        $event = new IndexRepositoryDefaultConstraintEvent([], $this->indexTypes, $this->additionalSlotArguments);
         $this->eventDispatcher->dispatch($event);
 
         if ($event->getIndexIds()) {

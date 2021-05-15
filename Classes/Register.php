@@ -16,6 +16,8 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class Register
 {
+    const UNIQUE_REGISTER_KEY = 'Event';
+
     /**
      * Register in the extTables.
      *
@@ -75,7 +77,7 @@ class Register
     public static function getDefaultCalendarizeConfiguration(): array
     {
         $configuration = [
-            'uniqueRegisterKey' => 'Event',
+            'uniqueRegisterKey' => self::UNIQUE_REGISTER_KEY,
             'title' => 'Calendarize Event',
             'modelName' => Event::class,
             'partialIdentifier' => 'Event',

@@ -14,10 +14,16 @@ final class IndexRepositoryDefaultConstraintEvent
      */
     private $indexTypes;
 
-    public function __construct(array $indexIds, array $indexTypes)
+    /**
+     * @var array
+     */
+    private $additionalSlotArguments;
+
+    public function __construct(array $indexIds, array $indexTypes, array $additionalSlotArguments)
     {
         $this->indexIds = $indexIds;
         $this->indexTypes = $indexTypes;
+        $this->additionalSlotArguments = $additionalSlotArguments;
     }
 
     public function getIndexIds(): array
@@ -33,5 +39,10 @@ final class IndexRepositoryDefaultConstraintEvent
     public function getIndexTypes(): array
     {
         return $this->indexTypes;
+    }
+
+    public function getAdditionalSlotArguments(): array
+    {
+        return $this->additionalSlotArguments;
     }
 }

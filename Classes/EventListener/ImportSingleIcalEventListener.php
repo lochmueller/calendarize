@@ -14,7 +14,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 /**
  * Class ImportSingleIcalEventListener.
  */
-final class ImportSingleIcalEventListener
+class ImportSingleIcalEventListener
 {
     /**
      * Event repository.

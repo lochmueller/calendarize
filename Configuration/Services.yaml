@@ -7,7 +7,7 @@ services:
   HDNET\Calendarize\:
     resource: '../Classes/*'
 
-  HDNET\Calendarize\Listener\CalendarizeField:
+  HDNET\Calendarize\EventListener\CalendarizeFieldListener:
     tags:
       - name: event.listener
         identifier: 'calendarizeField'
@@ -24,6 +24,20 @@ services:
       - name: event.listener
         identifier: 'bookingCountries'
         event: HDNET\Calendarize\Event\GenericActionAssignmentEvent
+
+  HDNET\Calendarize\EventListener\DefaultEventSearchListener:
+    tags:
+      - name: event.listener
+        identifier: 'defaultEventSearch'
+        event: HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent
+
+  HDNET\Calendarize\EventListener\DefaultEventConstraintsListener:
+    tags:
+      - name: event.listener
+        identifier: 'defaultEventConstraints'
+        event: HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent
+
+
 
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
