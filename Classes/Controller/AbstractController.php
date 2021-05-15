@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
+use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -18,7 +19,6 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
@@ -36,6 +36,11 @@ abstract class AbstractController extends ActionController
     protected $indexRepository;
 
     /**
+     * @var PluginConfigurationService
+     */
+    protected $pluginConfigurationService;
+
+    /**
      * The feed formats and content types.
      *
      * @var array
@@ -45,6 +50,16 @@ abstract class AbstractController extends ActionController
         'xml' => 'application/xml',
         'atom' => 'application/rss+xml',
     ];
+
+    /**
+     * Inject plugin configuration service.
+     *
+     * @param PluginConfigurationService $pluginConfigurationService
+     */
+    public function injectPluginConfigurationService(PluginConfigurationService $pluginConfigurationService)
+    {
+        $this->pluginConfigurationService = $pluginConfigurationService;
+    }
 
     /**
      * Inject index repository.
@@ -64,11 +79,8 @@ abstract class AbstractController extends ActionController
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
         $this->configurationManager = $configurationManager;
-
         $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-
-        $pluginConfigurationService = GeneralUtility::makeInstance(PluginConfigurationService::class);
-        $this->settings = $pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
+        $this->settings = $this->pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
     }
 
     /**
@@ -134,13 +146,9 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * Extend the view by the slot class and name and assign the variable to the view.
-     *
-     * @param array  $variables
-     * @param string $signalClassName
-     * @param string $signalName
+     * Extend the variables by the event and name and assign the variable to the view.
      */
-    protected function slotExtendedAssignMultiple(array $variables, $signalClassName, $signalName)
+    protected function eventExtendedAssignMultiple(array $variables, string $className, string $eventName)
     {
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [];
@@ -148,11 +156,10 @@ abstract class AbstractController extends ActionController
         $variables['settings'] = $this->settings;
         $variables['contentObject'] = $this->configurationManager->getContentObject()->data;
 
-        // @todo PSR-14
-        $dispatcher = $this->objectManager->get(Dispatcher::class);
-        $variables = $dispatcher->dispatch($signalClassName, $signalName, $variables);
+        $event = new GenericActionAssignmentEvent($variables, $className, $eventName);
+        $this->eventDispatcher->dispatch($event);
 
-        $this->view->assignMultiple($variables);
+        $this->view->assignMultiple($event->getVariables());
     }
 
     /**

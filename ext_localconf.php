@@ -11,21 +11,6 @@ defined('TYPO3') or exit();
 
     if (!(bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
         \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
-
-        // @todo PSR-14
-        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-        $signalSlotDispatcher->connect(
-            \HDNET\Calendarize\Controller\BookingController::class,
-            'bookingAction',
-            \HDNET\Calendarize\Slots\BookingCountries::class,
-            'bookingSlot'
-        );
-        $signalSlotDispatcher->connect(
-            \HDNET\Calendarize\Controller\BookingController::class,
-            'sendAction',
-            \HDNET\Calendarize\Slots\BookingCountries::class,
-            'sendSlot'
-        );
     }
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(

@@ -143,7 +143,7 @@ class CalendarController extends AbstractController
 
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $search['indices'],
             'pagination' => $this->getPagination($search['indices']),
             'searchMode' => $search['searchMode'],
@@ -193,7 +193,7 @@ class CalendarController extends AbstractController
 
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $search['indices'],
             'pagination' => $this->getPagination($search['indices']),
             'searchMode' => $search['searchMode'],
@@ -245,7 +245,7 @@ class CalendarController extends AbstractController
 
         $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, $day, $week);
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $search['indices'],
             'pagination' => $this->getPagination($search['indices']),
             'searchMode' => $search['searchMode'],
@@ -318,7 +318,7 @@ class CalendarController extends AbstractController
         $this->checkStaticTemplateIsIncluded();
         $indices = $this->indexRepository->findByPast($limit, $sort);
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $indices,
             'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
@@ -344,7 +344,7 @@ class CalendarController extends AbstractController
             return $this->return404Page();
         }
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
@@ -367,7 +367,7 @@ class CalendarController extends AbstractController
             return $this->return404Page();
         }
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $this->indexRepository->findQuarter((int)$date->format('Y'), $quarter),
             'date' => $date,
             'quarter' => $quarter,
@@ -396,7 +396,7 @@ class CalendarController extends AbstractController
             return $this->return404Page();
         }
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'date' => $date,
             'selectDay' => $useCurrentDate,
             'ignoreSelectedDay' => !$useCurrentDate,
@@ -438,7 +438,7 @@ class CalendarController extends AbstractController
             '+6 days' => 1,
         ];
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'firstDay' => $firstDay,
             'indices' => $this->indexRepository->findWeek($year, $week, $weekStart),
             'weekConfiguration' => $weekConfiguration,
@@ -469,7 +469,7 @@ class CalendarController extends AbstractController
         $next = clone $date;
         $next->modify('+1 day');
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indices' => $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j')),
             'today' => $date,
             'previous' => $previous,
@@ -513,7 +513,7 @@ class CalendarController extends AbstractController
             GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
         }
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'index' => $index,
             'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'),
         ], __CLASS__, __FUNCTION__);
@@ -547,7 +547,7 @@ class CalendarController extends AbstractController
         }
         $this->checkWrongDateOrder($startDate, $endDate);
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'startDate' => $startDate,
             'endDate' => $endDate,
             'customSearch' => $customSearch,
@@ -600,7 +600,7 @@ class CalendarController extends AbstractController
             }
         }
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'indicies' => $indicies,
             'configurations' => $configurations,
         ], __CLASS__, __FUNCTION__);

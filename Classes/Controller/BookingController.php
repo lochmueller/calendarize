@@ -25,7 +25,7 @@ class BookingController extends AbstractController
     {
         $this->view->assign('index', $index);
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'index' => $index,
         ], __CLASS__, __FUNCTION__);
     }
@@ -44,7 +44,7 @@ class BookingController extends AbstractController
 
         // Use the Slot to handle the request
 
-        $this->slotExtendedAssignMultiple([
+        $this->eventExtendedAssignMultiple([
             'request' => $request,
         ], __CLASS__, __FUNCTION__);
     }

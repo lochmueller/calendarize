@@ -8,16 +8,29 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
+use HDNET\Calendarize\Event\PluginConfigurationSettingsEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * PluginConfigurationService.
  */
 class PluginConfigurationService
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * Respect plugin configuration.
      *
@@ -48,14 +61,10 @@ class PluginConfigurationService
             }
         }
 
-        // @todo PSR-14
-        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        $arguments = [
-            'settings' => $settings,
-        ];
-        $arguments = $dispatcher->dispatch(__CLASS__, __METHOD__, $arguments);
+        $event = new PluginConfigurationSettingsEvent($settings);
+        $this->eventDispatcher->dispatch($event);
 
-        return $arguments['settings'];
+        return $event->getSettings();
     }
 
     /**

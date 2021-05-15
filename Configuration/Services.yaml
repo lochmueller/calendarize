@@ -19,6 +19,12 @@ services:
         identifier: 'importSingelIcal'
         event: HDNET\Calendarize\Event\ImportSingleIcalEvent
 
+  HDNET\Calendarize\EventListener\BookingCountriesListener:
+    tags:
+      - name: event.listener
+        identifier: 'bookingCountries'
+        event: HDNET\Calendarize\Event\GenericActionAssignmentEvent
+
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command
