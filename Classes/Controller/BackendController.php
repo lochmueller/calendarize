@@ -26,8 +26,8 @@ class BackendController extends AbstractController
      */
     public function listAction(OptionRequest $options = null, int $currentPage = 1)
     {
-        $this->settings['timeFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?? 'd-m-y';
-        $this->settings['dateFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'] ?? 'H:i';
+        $this->settings['timeFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'] ?? 'H:i';
+        $this->settings['dateFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?? 'd-m-y';
 
         if (null === $options) {
             $options = $this->getOptions();
