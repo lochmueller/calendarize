@@ -28,6 +28,7 @@ defined('TYPO3') or exit();
             'iconIdentifier' => 'module-my_redirects',
             'labels' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf',
             'navigationComponentId' => '',
+            'inheritNavigationComponentFromMainModule' => false,
         ]
     );
 
