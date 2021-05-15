@@ -197,6 +197,7 @@ class IndexRepository extends AbstractRepository
         int $limit = 0
     ) {
         $event = new IndexRepositoryFindBySearchEvent([], $startDate, $endDate, $customSearch, $this->indexTypes, false);
+        $this->eventDispatcher->dispatch($event);
 
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
