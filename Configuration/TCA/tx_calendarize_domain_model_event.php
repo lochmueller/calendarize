@@ -89,6 +89,7 @@ $custom = [
             'config' => [
                 'prependSlash' => false,
                 'generatorOptions' => [
+                    'prefixParentPageSlug' => false,
                     'fields' => ['title'],
                     'replacements' => [
                         '/' => '-',
