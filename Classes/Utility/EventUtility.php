@@ -8,6 +8,8 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Utility;
 
 use HDNET\Calendarize\Domain\Model\PluginConfiguration;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\ApplicationType;
 
 /**
@@ -32,7 +34,10 @@ class EventUtility
         }
 
         $query = HelperUtility::getQuery($modelName);
-        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+        if (Environment::isCli()
+            || ($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
+        ) {
             $query->getQuerySettings()->setIgnoreEnableFields(true);
         }
 
