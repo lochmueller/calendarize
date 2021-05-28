@@ -399,4 +399,28 @@ END:VCALENDAR
         self::assertArrayHasKey('COUNT', $rrule);
         self::assertEqualsIgnoringCase('45', $rrule['COUNT']);
     }
+
+    public function testRawData()
+    {
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:9b2505f4-7a45-44f6-b4ba-e9181e176d35@example.com
+DTSTAMP:20210528T170133Z
+DTSTART:20210623T160000Z
+URL:http://abc.com/pub/calendars/jsmith/mytime.ics
+X-ALT-DESC;FMTTYPE=text/html:<html><body><p>A <b>BOLD</b> and <i>italic</i> story!</p></body></html>
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+        $raw = $event->getRawData();
+
+        self::assertArrayHasKey('URL', $raw);
+        self::assertEqualsIgnoringCase('http://abc.com/pub/calendars/jsmith/mytime.ics', $raw['URL'][0]);
+
+        self::assertArrayHasKey('X-ALT-DESC', $raw);
+        self::assertStringContainsStringIgnoringCase('<html><body><p>A <b>BOLD</b> and <i>italic</i> story!</p></body></html>', $raw['X-ALT-DESC'][0]);
+    }
 }

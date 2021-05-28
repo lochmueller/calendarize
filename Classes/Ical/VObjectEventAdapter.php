@@ -7,6 +7,7 @@ namespace HDNET\Calendarize\Ical;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use Sabre\VObject\Component\VEvent;
+use Sabre\VObject\Property;
 
 class VObjectEventAdapter implements ICalEvent
 {
@@ -38,7 +39,14 @@ class VObjectEventAdapter implements ICalEvent
      */
     public function getRawData(): array
     {
-        return $this->event->children();
+        $raw = [];
+        foreach ($this->event->children() as $child) {
+            if ($child instanceof Property) {
+                $raw[$child->name][] = $child->getValue();
+            }
+        }
+
+        return $raw;
     }
 
     /**
