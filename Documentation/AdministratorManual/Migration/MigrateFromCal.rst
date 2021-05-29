@@ -35,6 +35,13 @@ It is also possible to execute the wizard from the command line.
    The identifier was formerly called :code:`HDNET\\Calendarize\\Updates\\CalMigrationUpdate`.
 
 
+Migration of plugins
+~~~~~~~~~~~~~~~~~~~~
+
+The plugins of cal can partially be migrated to plugins of calendarize.
+For this take a look at `sypets/cal2calendarize <https://github.com/sypets/cal2calendarize>`__.
+
+
 Migrated tables
 ~~~~~~~~~~~~~~~
 
@@ -80,7 +87,7 @@ Be aware that some things are **not** migrated:
 
 - Templates
 - TypoScript configurations
-- Plugins
+- (Plugins)
 - Some fields and tables (e.g. calendar, locations, attendees, deviations, ...)
 - Additionally fields by other extensions
 - ...

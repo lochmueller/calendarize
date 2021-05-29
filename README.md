@@ -20,6 +20,7 @@
 * [EXT:md_fullcalendar](https://extensions.typo3.org/extension/md_fullcalendar/) (Full Calendar.io integration)
 * [EXT:md_calendarize_frontend](https://extensions.typo3.org/extension/md_calendarize_frontend/) (Add events via frontend)
 * [EXT:calendarize_address](https://extensions.typo3.org/extension/calendarize_address/) (Extends events with tt_address records)
+* [EXT:cal2calendarize](https://github.com/sypets/cal2calendarize) (Migrate cal plugins to calendarize plugins)
 
 ## Sponsors & supporter
 
