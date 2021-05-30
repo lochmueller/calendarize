@@ -198,6 +198,13 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $importId;
 
     /**
+     * Hidden.
+     *
+     * @var bool
+     */
+    protected $hidden = false;
+
+    /**
      * Configuration constructor.
      */
     public function __construct()
@@ -639,5 +646,21 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     public function setImportId(?string $importId): void
     {
         $this->importId = $importId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param bool $hidden
+     */
+    public function setHidden(bool $hidden): void
+    {
+        $this->hidden = $hidden;
     }
 }

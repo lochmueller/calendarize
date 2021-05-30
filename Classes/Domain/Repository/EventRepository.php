@@ -11,7 +11,6 @@ use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -57,22 +56,6 @@ class EventRepository extends AbstractRepository
         $result = $query->execute()->toArray();
 
         return $result[0] ?? null;
-    }
-
-    /**
-     * Return the current tablename.
-     *
-     * @return string
-     */
-    public function getTableName()
-    {
-        $query = $this->createQuery();
-        if ($query instanceof Query) {
-            $source = $query->getSource();
-            if (method_exists($source, 'getSelectorName')) {
-                return $source->getSelectorName();
-            }
-        }
     }
 
     /**
