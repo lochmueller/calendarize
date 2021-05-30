@@ -15,8 +15,8 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
@@ -63,21 +63,24 @@ class CleanupCommandController extends Command
     protected function configure()
     {
         $this->setDescription('Remove outdated events to keep a small footprint')
-            ->addArgument(
+            ->addOption(
                 'repositoryName',
-                InputArgument::OPTIONAL,
+                'r',
+                InputOption::VALUE_REQUIRED,
                 'The repository of the event to clean up',
                 self::DEFAULT_CLEANUP_REPOSITORY
             )
-            ->addArgument(
+            ->addOption(
                 'modus',
-                InputArgument::OPTIONAL,
+                'm',
+                InputOption::VALUE_REQUIRED,
                 'What to do with cleaned Events? Set them \'hide\' or \'delete\'',
                 self::MODUS_HIDDEN
             )
-            ->addArgument(
+            ->addOption(
                 'waitingPeriod',
-                InputArgument::OPTIONAL,
+                'w',
+                InputOption::VALUE_REQUIRED,
                 'How many days to wait after ending the Event before \'hide/delete\' it',
                 self::DEFAULT_WAIT_PERIOD
             );
