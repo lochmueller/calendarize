@@ -45,6 +45,13 @@ class ConfigurationGroup extends AbstractModel
     protected $importId;
 
     /**
+     * Hidden.
+     *
+     * @var bool
+     */
+    protected $hidden = false;
+
+    /**
      * Get title.
      *
      * @return string
@@ -72,5 +79,21 @@ class ConfigurationGroup extends AbstractModel
     public function getConfigurationIds()
     {
         return GeneralUtility::intExplode(',', $this->configurations);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param bool $hidden
+     */
+    public function setHidden(bool $hidden): void
+    {
+        $this->hidden = $hidden;
     }
 }

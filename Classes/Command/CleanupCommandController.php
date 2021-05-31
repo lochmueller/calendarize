@@ -15,14 +15,18 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Cleanup the event models.
@@ -45,6 +49,16 @@ class CleanupCommandController extends Command
     protected $eventDispatcher;
 
     /**
+     * @var DataMapper
+     */
+    protected $dataMapper;
+
+    /**
+     * @var IndexerService
+     */
+    protected $indexerService;
+
+    /**
      * @param PersistenceManager $persistenceManager
      */
     public function injectPersistenceManager(PersistenceManager $persistenceManager): void
@@ -60,26 +74,50 @@ class CleanupCommandController extends Command
         $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * @param DataMapper $dataMapper
+     */
+    public function injectDataMapper(DataMapper $dataMapper): void
+    {
+        $this->dataMapper = $dataMapper;
+    }
+
+    /**
+     * @param IndexerService $indexerService
+     */
+    public function injectIndexerService(IndexerService $indexerService): void
+    {
+        $this->indexerService = $indexerService;
+    }
+
     protected function configure()
     {
         $this->setDescription('Remove outdated events to keep a small footprint')
-            ->addArgument(
+            ->addOption(
                 'repositoryName',
-                InputArgument::OPTIONAL,
+                'r',
+                InputOption::VALUE_REQUIRED,
                 'The repository of the event to clean up',
                 self::DEFAULT_CLEANUP_REPOSITORY
             )
-            ->addArgument(
+            ->addOption(
                 'modus',
-                InputArgument::OPTIONAL,
+                'm',
+                InputOption::VALUE_REQUIRED,
                 'What to do with cleaned Events? Set them \'hide\' or \'delete\'',
                 self::MODUS_HIDDEN
             )
-            ->addArgument(
+            ->addOption(
                 'waitingPeriod',
-                InputArgument::OPTIONAL,
+                'w',
+                InputOption::VALUE_REQUIRED,
                 'How many days to wait after ending the Event before \'hide/delete\' it',
                 self::DEFAULT_WAIT_PERIOD
+            )->addOption(
+                'dry-run',
+                null,
+                InputOption::VALUE_NONE,
+                'If this option is set, it only outputs the amount of records which would have been updated'
             );
     }
 
@@ -92,61 +130,61 @@ class CleanupCommandController extends Command
      *
      * @return int 0 if everything went fine, or an exit code
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
         $repositoryName = $input->getOption('repositoryName');
         $modus = $input->getOption('modus');
-        $waitingPeriod = $input->getOption('waitingPeriod');
+        $waitingPeriod = (int)$input->getOption('waitingPeriod');
 
-        /** @var EventRepository $repository */
+        /** @var Repository $repository */
         $repository = GeneralUtility::makeInstance($repositoryName);
-
-        if (!($repository instanceof EventRepository)) {
-            return 1;
-        }
 
         $io->section('Reindex all events');
         // Index all events to start on a clean slate
-        $this->reIndex();
+        $this->indexerService->reindexAll();
 
-        // get tablename from repository, works only with the extended EventRepository
-        $tableName = $repository->getTableName();
-
-        if (!$tableName) {
-            $io->error('No tablename found on your given Repository! [' . $repositoryName . ']');
-
-            return 2;
-        }
+        // repository name -> model name -> table name
+        $objectType = ClassNamingUtility::translateRepositoryNameToModelName($repositoryName);
+        $tableName = $this->dataMapper->getDataMap($objectType)->getTableName();
 
         $io->text('Tablename ' . $tableName);
+
+        if (self::MODUS_HIDDEN === $modus
+            && !isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']['disabled'])
+        ) {
+            $io->error('Cannot hide events due to missing hidden/disabled field.');
+
+            return 3;
+        }
 
         $io->section('Find outdated events');
         // events uid, to be precise
         $events = $this->findOutdatedEvents($tableName, $waitingPeriod);
 
-        $io->text('Just found ' . \count($events) . ' Events ready to process.');
+        $io->text('Found ' . \count($events) . ' Events ready to process.');
 
-        // climb thru the events and hide/delete them
+        if (0 === \count($events) || true === $input->getOption('dry-run')) {
+            return 0;
+        }
+
+        // climb through the events and hide/delete them
         foreach ($events as $event) {
             $uid = (int)$event['foreign_uid'];
 
+            /** @var AbstractEntity $model */
             $model = $repository->findByUid($uid);
-
-            if (!($model instanceof Event)) {
-                $io->error('Object with uid [' . $uid . '] is not an instance of the event base model.');
-                continue;
-            }
 
             $this->processEvent($repository, $model, $modus);
         }
+        $io->text('Events processed.');
 
         $this->persistenceManager->persistAll();
 
         $io->section('Reindex all events');
         // after all this deleting ... reindex!
-        $this->reIndex();
+        $this->indexerService->reindexAll();
 
         return 0;
     }
@@ -158,7 +196,7 @@ class CleanupCommandController extends Command
      * @param Event           $model
      * @param string          $modus
      */
-    protected function processEvent(EventRepository $repository, Event $model, $modus)
+    protected function processEvent(Repository $repository, AbstractEntity $model, string $modus)
     {
         // define the function for the delete-modus.
         $delete = function ($repository, $model) {
@@ -190,14 +228,12 @@ class CleanupCommandController extends Command
      * @param string $tableName
      * @param int    $waitingPeriod
      *
-     * @throws \Exception
-     *
      * @return array
      */
-    protected function findOutdatedEvents($tableName, $waitingPeriod): array
+    protected function findOutdatedEvents(string $tableName, int $waitingPeriod): array
     {
         // calculate the waiting time
-        $interval = 'P' . (int)$waitingPeriod . 'D';
+        $interval = 'P' . $waitingPeriod . 'D';
         $now = DateTimeUtility::getNow();
         $now->sub(new \DateInterval($interval));
 
@@ -210,39 +246,17 @@ class CleanupCommandController extends Command
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
 
-        $foreignUids = $q->select('foreign_uid')
-            ->from($table)
-            ->where($q->expr()
-                ->gt('end_date', $q->createNamedParameter($now->format('Y-m-d'))))
-            ->andWhere($q->expr()
-                ->eq('foreign_table', $q->createNamedParameter($tableName)))
-            ->execute()
-            ->fetchAll();
-
-        $foreignUids = array_map(function ($item) {
-            return (int)$item['foreign_uid'];
-        }, $foreignUids);
-
         $q->select('foreign_uid')
+            ->addSelectLiteral(
+                $q->expr()->max('end_date', 'max_end_date')
+            )
             ->from($table)
-            ->where($q->expr()
-                ->andX($q->expr()
-                    ->lt('end_date', $q->createNamedParameter($now->format('Y-m-d'))), $q->expr()
-                    ->eq('foreign_table', $q->createNamedParameter($tableName)), $q->expr()
-                    ->notIn('foreign_uid', $foreignUids)));
+            ->where($q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)))
+            ->groupBy('foreign_uid')
+            ->having(
+                $q->expr()->lt('max_end_date', $q->createNamedParameter($now->format('Y-m-d')))
+            );
 
-        $rows = $q->execute()->fetchAll();
-
-        return $rows;
-    }
-
-    /**
-     * Reindex the Events.
-     * This may take some time.
-     */
-    protected function reIndex()
-    {
-        $indexer = GeneralUtility::makeInstance(IndexerService::class);
-        $indexer->reindexAll();
+        return $q->execute()->fetchAll();
     }
 }
