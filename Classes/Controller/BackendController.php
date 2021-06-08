@@ -131,7 +131,7 @@ class BackendController extends AbstractController
 
         $typeLocations = [];
         foreach ($this->indexRepository->findDifferentTypesAndLocations() as $entry) {
-            $pageId = $entry['pid'];
+            $pageId = (int)$entry['pid'];
             if ($this->isPageAllowed($pageId, $mountPoints)) {
                 $typeLocations[$entry['foreign_table']][$pageId] = $entry['unique_register_key'];
             }
