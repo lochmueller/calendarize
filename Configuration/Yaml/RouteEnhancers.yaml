@@ -18,7 +18,7 @@ routeEnhancers:
       - routePath: '/{calendarize_day_label}/{year}/{month}/{day}'
         _controller: 'Calendar::day'
 
-    requirements:
+#    requirements:
       # Specify kind of parameters, if the aspects are not used.
       # year: '\d{4}'
       # quarter: '\d'
