@@ -3,6 +3,7 @@ TypoScript
 
 You can render every EXT:calendarize view also directly with TypoScript. Example below render a single event into the TS PAGE object. Please replace the marker, with the right values:
 
+::
 
 	page.9999 =< tt_content.list.20.calendarize_calendar
 	page.9999 {
