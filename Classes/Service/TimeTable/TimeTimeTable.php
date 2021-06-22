@@ -199,7 +199,8 @@ class TimeTimeTable extends AbstractTimeTable
         $amountCounter = $configuration->getCounterAmount();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
-        for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
+        $loopEntriesAdded = 0;
+        for ($i = 0; $loopEntriesAdded < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
             if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
@@ -213,6 +214,7 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
+            ++$loopEntriesAdded;
         }
     }
 
@@ -293,8 +295,9 @@ class TimeTimeTable extends AbstractTimeTable
         $amountCounter = $configuration->getCounterAmount();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
+        $loopEntriesAdded = 0;
         $intervalCounter = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
-        for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
+        for ($i = 0; $loopEntriesAdded < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $lastLoop;
 
             $dateTime = false;
@@ -334,6 +337,7 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
+            ++$loopEntriesAdded;
         }
     }
 
