@@ -52,7 +52,14 @@
 	<f:if condition="{event.images}">
 		<div class="images">
 			<f:for each="{event.images}" as="image" iteration="i">
-				<f:image src="{image.uid}" treatIdAsReference="1" alt="" maxWidth="300" class="img-rounded"/>
+				<f:if condition="{image.originalResource.type}==4">
+                    <f:then>
+                        <f:media file="{image}" />
+                    </f:then>
+                    <f:else>
+                        <f:image image="{image}" alt="" maxWidth="300" class="img-rounded"/>
+                    </f:else>
+                </f:if>
 			</f:for>
 		</div>
 	</f:if>
