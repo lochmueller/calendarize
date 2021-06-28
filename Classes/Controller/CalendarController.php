@@ -288,9 +288,11 @@ class CalendarController extends AbstractController
             return 'Invalid object';
         }
 
-        $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, 1);
+        $limitEvents = (int)$this->settings['shortcutLimitEvents'];
+
+        $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, $limitEvents);
         if (\count($fetchEvent) <= 0) {
-            $fetchEvent = $this->indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
+            $fetchEvent = $this->indexRepository->findByEventTraversing($event, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING);
         }
 
         $this->view->assignMultiple([
