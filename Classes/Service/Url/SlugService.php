@@ -74,7 +74,7 @@ class SlugService extends \HDNET\Calendarize\Service\AbstractService
         // Get domain model
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
         /** @var DomainObjectInterface $model */
-        $model = EventUtility::getOriginalRecordByConfiguration($configuration, $record['uid']);
+        $model = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$record['uid']);
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
 

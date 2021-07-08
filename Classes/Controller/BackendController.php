@@ -72,6 +72,7 @@ class BackendController extends AbstractController
 
     protected function getPageTitles(array $pids): array
     {
+        $results = [];
         foreach ($pids as $pageId) {
             $row = BackendUtility::getRecord('pages', $pageId);
             if ($row) {
