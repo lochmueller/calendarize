@@ -37,8 +37,6 @@ services:
         identifier: 'defaultEventConstraints'
         event: HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent
 
-
-
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command
@@ -56,3 +54,33 @@ services:
       - name: console.command
         command: 'calendarize:reindex'
         schedulable: true
+
+  dashboard.widgets.calendarizeNextEvents:
+    class: 'TYPO3\CMS\Dashboard\Widgets\ListWidget'
+    arguments:
+      $view: '@dashboard.views.widget'
+      $dataProvider: '@HDNET\Calendarize\Widgets\DataProvider\NextEventsDataProvider'
+    tags:
+      - name: dashboard.widget
+        identifier: 'calendarizeNextEvents'
+        groupNames: 'calendarizegroup'
+        title: 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:calendarizeNextEvents.title'
+        description: 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:calendarizeNextEvents.description'
+        iconIdentifier: 'extension-calendarize-extension'
+        height: 'medium'
+        width: 'medium'
+
+#  dashboard.widgets.calendarizeIndexAmount:
+#    class: 'TYPO3\CMS\Dashboard\Widgets\NumberWithIconWidget'
+#    arguments:
+#      $view: '@dashboard.views.widget'
+#      $dataProvider: '@HDNET\Calendarize\Widgets\DataProvider\IndexAmountDataProvider'
+#    tags:
+#      - name: dashboard.widget
+#        identifier: 'calendarizeIndexAmount'
+#        groupNames: 'calendarizegroup'
+#        title: 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:calendarizeIndexAmount.title'
+#        description: 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:calendarizeIndexAmount.description'
+#        iconIdentifier: 'extension-calendarize-extension'
+#        height: 'small'
+#        width: 'small'
