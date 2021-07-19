@@ -51,6 +51,7 @@ class Register
             'Slots',
             'SmartObjects',
             'FlexForms',
+            'Icon',
             'CommandController',
             'StaticTyposcript',
             'TypeConverter',
