@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Widgets\DataProvider;
@@ -22,7 +23,6 @@ class IndexAmountDataProvider implements NumberWithIconDataProviderInterface
 
     public function getNumber(): int
     {
-        return 100;
         return $this->indexRepository->findAll()->count();
     }
 }

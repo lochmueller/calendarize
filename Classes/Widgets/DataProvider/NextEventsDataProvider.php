@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Widgets\DataProvider;
@@ -28,7 +29,8 @@ class NextEventsDataProvider implements ListDataProviderInterface
     {
         $options = new OptionRequest();
         // @todo create new backend functions
-        $indices = array_slice($this->indexRepository->findAllForBackend($options)->toArray(), 0, 15);
+        $indices = \array_slice($this->indexRepository->findAllForBackend($options)->toArray(), 0, 15);
+
         return array_map(function (Index $index) {
             try {
                 /** @var StandaloneView $standaloneView */
@@ -37,6 +39,7 @@ class NextEventsDataProvider implements ListDataProviderInterface
                 $standaloneView->setPartialRootPaths(['EXT:calendarize/Resources/Private/Partials/', 'EXT:calendarize_premium/Resources/Private/Partials/']);
 
                 $titlePartial = $index->getConfiguration()['partialIdentifier'] . '/Title';
+
                 return $standaloneView->renderPartial($titlePartial, null, ['index' => $index]);
             } catch (\Exception $exception) {
                 return $exception->getMessage();

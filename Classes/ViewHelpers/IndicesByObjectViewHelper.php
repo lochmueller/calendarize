@@ -13,7 +13,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
- * Indices by object
+ * Indices by object.
  *
  * == Examples ==
  *
@@ -59,7 +59,7 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
             }
         }
 
-        if ($config === null) {
+        if (null === $config) {
             return [];
         }
 
@@ -71,7 +71,7 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
             $fakeIndex,
             $this->arguments['future'],
             $this->arguments['past'],
-            (int) $this->arguments['limit'],
+            (int)$this->arguments['limit'],
             $this->arguments['sort'],
             false
         );
