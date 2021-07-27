@@ -37,7 +37,6 @@
 		"ext-json": "*",
 		"ext-pdo": "*",
 		"typo3/cms-core": "^10.4.12",
-		"typo3/cms-dashboard": "^10.4.12",
 		"lochmueller/autoloader": "^7.1.0",
 		"sabre/vobject": "^4.2"
 	},
@@ -51,7 +50,8 @@
 	},
 	"suggest": {
 		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience",
-		"georgringer/numbered-pagination": "Pagination with reduced amount of pages"
+		"georgringer/numbered-pagination": "Pagination with reduced amount of pages",
+		"typo3/cms-dashboard": "Dashboard widgets"
 	},
 	"require-dev": {
 		"typo3/testing-framework": "^6.3",
