@@ -12,6 +12,8 @@
             <trans-unit id="module.dashboard.group.calendarize.title"><source>Calendarize</source></trans-unit>
             <trans-unit id="calendarizeNextEvents.title"><source>Next events</source></trans-unit>
             <trans-unit id="calendarizeNextEvents.description"><source>List of the next events</source></trans-unit>
+            <trans-unit id="calendarizeIndexAmount.title"><source>Index size</source></trans-unit>
+            <trans-unit id="calendarizeIndexAmount.description"><source>Size of the index</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.open_end_time"><source>Open end?</source></trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_date_dynamic"><source>End date (dynamic)</source></trans-unit>
 			<trans-unit id="configuration.end_date_dynamic.1day"><source>1 day</source></trans-unit>
