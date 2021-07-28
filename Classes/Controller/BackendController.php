@@ -55,7 +55,7 @@ class BackendController extends AbstractController
             'options' => $options,
             'paginator' => $paginator,
             'pagination' => $pagination,
-            'totalAmount' => $indices->count(),
+            'totalAmount' => \count($indices),
         ]);
     }
 
