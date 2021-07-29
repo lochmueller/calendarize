@@ -287,21 +287,31 @@ class TimeTimeTable extends AbstractTimeTable
         $tillDate = $configuration->getTillDate();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
+        $intervalCounter = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
         for ($i = 0; $i < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $lastLoop;
 
             $dateTime = false;
+            $ignoreEntry = false;
             if (Configuration::FREQUENCY_MONTHLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextMonth(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
-                    $configuration->getDay()
+                    $configuration->getDay(),
+                    $intervalCounter
                 );
+                if (false === $dateTime) {
+                    $dateTime = clone $loopEntry['start_date'];
+                    $dateTime->modify('first day of this month');
+                    $dateTime->modify('+1 month');
+                    $ignoreEntry = true;
+                }
             } elseif (Configuration::FREQUENCY_YEARLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextYear(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
-                    $configuration->getDay()
+                    $configuration->getDay(),
+                    $intervalCounter
                 );
             }
             if (false === $dateTime) {
@@ -319,7 +329,10 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $lastLoop = $loopEntry;
-            $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
+
+            if($ignoreEntry === false) {
+                $times[$this->calculateEntryKey($loopEntry)] = $loopEntry;
+            }
         }
     }
 
