@@ -20,8 +20,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * Index information.
  *
  * @DatabaseTable
- * @SmartExclude(excludes={"Workspaces"})
- * @todo Workspaces
  */
 class Index extends AbstractModel
 {
