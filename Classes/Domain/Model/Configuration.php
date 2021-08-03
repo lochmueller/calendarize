@@ -189,13 +189,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     protected $day = self::DAY_NONE;
 
-    /**
-     * Import ID if the item is based on an ICS structure.
-     *
-     * @var string|null
-     * @DatabaseField("string")
-     */
-    protected $importId;
+    use ImportTrait;
 
     /**
      * Hidden.
@@ -630,22 +624,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     public function setOpenEndTime(bool $openEndTime)
     {
         $this->openEndTime = $openEndTime;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImportId(): ?string
-    {
-        return $this->importId;
-    }
-
-    /**
-     * @param string|null $importId
-     */
-    public function setImportId(?string $importId): void
-    {
-        $this->importId = $importId;
     }
 
     /**

@@ -20,11 +20,5 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
  */
 class SysCategory extends Category
 {
-    /**
-     * Import ID if the item is based on EXT:cal import or ICS strukture.
-     *
-     * @var string
-     * @DatabaseField(sql="varchar(100) DEFAULT '' NOT NULL")
-     */
-    protected $importId;
+    use ImportTrait;
 }

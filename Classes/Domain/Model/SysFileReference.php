@@ -20,12 +20,5 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  */
 class SysFileReference extends FileReference
 {
-    /**
-     * Import ID if the item is based on EXT:cal import or ICS strukture.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $importId;
+    use ImportTrait;
 }

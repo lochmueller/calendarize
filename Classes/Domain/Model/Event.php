@@ -90,13 +90,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     protected $organizerLink;
 
-    /**
-     * Import ID if the item is based on an ICS structure.
-     *
-     * @var string
-     * @DatabaseField("string")
-     */
-    protected $importId;
+    use ImportTrait;
 
     /**
      * Images.
@@ -248,26 +242,6 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
     public function setImages($images)
     {
         $this->images = $images;
-    }
-
-    /**
-     * Get Import ID.
-     *
-     * @return string
-     */
-    public function getImportId()
-    {
-        return $this->importId;
-    }
-
-    /**
-     * Set import ID.
-     *
-     * @param string $importId
-     */
-    public function setImportId($importId)
-    {
-        $this->importId = $importId;
     }
 
     /**

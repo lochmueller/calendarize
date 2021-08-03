@@ -36,13 +36,7 @@ class ConfigurationGroup extends AbstractModel
      */
     protected $configurations;
 
-    /**
-     * Import ID if the item is based on an ICS structure.
-     *
-     * @var string
-     * @DatabaseField("string")
-     */
-    protected $importId;
+    use ImportTrait;
 
     /**
      * Hidden.
