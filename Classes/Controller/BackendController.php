@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
+use HDNET\Calendarize\Register;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
@@ -50,6 +51,7 @@ class BackendController extends AbstractController
         $this->view->assignMultiple([
             'indices' => $indices,
             'typeLocations' => $typeLocations,
+            'types' => $this->getTypes(),
             'pids' => $this->getPageTitles($pids),
             'settings' => $this->settings,
             'options' => $options,
@@ -119,7 +121,7 @@ class BackendController extends AbstractController
     }
 
     /**
-     * Get the differnet locations for new entries.
+     * Get the different locations for new entries.
      *
      * @return array
      */
@@ -139,6 +141,22 @@ class BackendController extends AbstractController
         }
 
         return $typeLocations;
+    }
+
+    /**
+     * Get the different types
+     *
+     * @return array
+     */
+    protected function getTypes()
+    {
+        $types = [];
+
+        foreach (Register::getRegister() as $config) {
+            $types[$config['uniqueRegisterKey']] = $config['title'];
+        }
+
+        return $types;
     }
 
     /**

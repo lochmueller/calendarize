@@ -126,10 +126,20 @@ class IndexRepository extends AbstractRepository
             ]);
         }
 
-        if ((int)$options->getPid() > 0) {
-            $query->matching($query->equals('pid', (int)$options->getPid()));
+        $constraints = [];
+
+        if ((int) $options->getPid() > 0) {
+            $constraints[] = $query->equals('pid', (int) $options->getPid());
         } elseif ($allowedPages) {
-            $query->matching($query->in('pid', $allowedPages));
+            $constraints[] = $query->in('pid', $allowedPages);
+        }
+
+        if ($options->getType() !== '') {
+            $constraints[] = $query->equals('uniqueRegisterKey', $options->getType());
+        }
+
+        if ($constraints) {
+            $query->matching($query->logicalAnd($constraints));
         }
 
         return $query->execute();

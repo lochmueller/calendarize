@@ -27,6 +27,11 @@
 			</div>
 
 			<div class="form-group">
+				<label for="pid">Type</label>
+				<f:form.select prependOptionLabel="All" prependOptionValue="" options="{types}" class="form-control" id="type" property="type" />
+			</div>
+
+			<div class="form-group">
 				<label for="direction">Direction</label>
 				<f:form.select options="{asc: 'ASC', desc: 'DESC'}" class="form-control" id="direction" property="direction" />
 			</div>

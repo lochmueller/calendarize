@@ -30,11 +30,18 @@ class OptionRequest extends AbstractModel
     protected $direction = 'asc';
 
     /**
+     * Type.
+     *
+     * @var string
+     */
+    protected $type = '';
+
+    /**
      * @return array
      */
     public function __sleep()
     {
-        return ['sorting', 'direction', 'pid'];
+        return ['sorting', 'direction', 'pid', 'type'];
     }
 
     /**
@@ -68,4 +75,22 @@ class OptionRequest extends AbstractModel
     {
         $this->direction = $direction;
     }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+
 }
