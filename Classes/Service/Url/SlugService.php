@@ -7,6 +7,7 @@ namespace HDNET\Calendarize\Service\Url;
 use HDNET\Calendarize\Event\BaseSlugGenerationEvent;
 use HDNET\Calendarize\Event\SlugSuffixGenerationEvent;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
+use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\EventUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
@@ -16,7 +17,7 @@ use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
-class SlugService extends \HDNET\Calendarize\Service\AbstractService
+class SlugService extends AbstractService
 {
     protected const TABLE_NAME = 'tx_calendarize_domain_model_index';
     protected const SLUG_NAME = 'slug';
@@ -73,8 +74,15 @@ class SlugService extends \HDNET\Calendarize\Service\AbstractService
 
         // Get domain model
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
+
+        $uid = (int) $record['uid'];
+        if (isset($record['t3ver_oid']) && $record['t3ver_oid']) {
+            // Add Workspace handling
+            $uid = (int) $record['t3ver_oid'];
+        }
+
         /** @var DomainObjectInterface $model */
-        $model = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$record['uid']);
+        $model = EventUtility::getOriginalRecordByConfiguration($configuration, $uid);
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
 

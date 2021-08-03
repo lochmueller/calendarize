@@ -23,6 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  * @DatabaseTable
  * @SmartExclude(excludes={"Workspaces"})
+ * @todo Workspaces
  */
 class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {

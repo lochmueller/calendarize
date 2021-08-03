@@ -509,7 +509,6 @@ class CalendarController extends AbstractController
 
         // Meta tags
         if ($index->getOriginalObject() instanceof Event) {
-            // @todo move to event
             /** @var Event $event */
             $event = $index->getOriginalObject();
             GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());

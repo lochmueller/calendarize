@@ -76,11 +76,16 @@ class IndexerService extends AbstractService
             $q->select('uid')
                 ->from($tableName);
 
+            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] ? (bool) $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] : false;
+            if ($worksSpaceSupport) {
+                $q->addOrderBy('t3ver_wsid', 'ASC');
+            }
+
             $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
             if ($transPointer) {
                 // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
                 // overlays can connect with l10n_parent to the right default record.
-                $q->orderBy((string)$transPointer);
+                $q->addOrderBy((string) $transPointer, 'ASC');
             }
             $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
@@ -169,7 +174,38 @@ class IndexerService extends AbstractService
     protected function updateIndex(string $configurationKey, string $tableName, int $uid)
     {
         $neededItems = $this->preparationService->prepareIndex($configurationKey, $tableName, $uid);
-        $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid);
+
+        $rawRecord = BackendUtility::getRecord($tableName, $uid);
+        $workspace = isset($rawRecord['t3ver_wsid']) ? (int) $rawRecord['t3ver_wsid'] : 0;
+        $origId = isset($rawRecord['t3ver_oid']) ? (int) $rawRecord['t3ver_oid'] : 0;
+
+        if ($workspace && $origId) {
+
+            // Remove all entries in current workspace that are related to the current item
+            HelperUtility::getDatabaseConnection(self::TABLE_NAME)->delete(self::TABLE_NAME, [
+                't3ver_wsid' => $workspace,
+                't3ver_state' => '1',
+                'foreign_table' => $tableName,
+                'foreign_uid' => $origId,
+            ]);
+
+            // Create deleted items for very entry in the live workspace
+            $liveItems = $this->getCurrentItems($tableName, $origId, 0)->fetchAll();
+            foreach ($liveItems as $liveItem) {
+                $liveItem['t3ver_state'] = '1';
+                $liveItem['t3ver_oid'] = $liveItem['uid'];
+                $liveItem['t3ver_wsid'] = $workspace;
+                $liveItem['foreign_uid'] = $origId;
+                unset($liveItem['uid']);
+                HelperUtility::getDatabaseConnection(self::TABLE_NAME)->insert(self::TABLE_NAME, $liveItem);
+            }
+        }
+
+        // @todo workspaces
+        // @todo handle backend preview of times in the list view
+        // @todo handle selection in backend module
+
+        $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
     }
 
     /**
@@ -180,7 +216,7 @@ class IndexerService extends AbstractService
      *
      * @return \Doctrine\DBAL\Driver\Statement|int
      */
-    protected function getCurrentItems(string $tableName, int $uid)
+    protected function getCurrentItems(string $tableName, int $uid, int $workspace = 0)
     {
         $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
         $q->getRestrictions()
@@ -189,6 +225,7 @@ class IndexerService extends AbstractService
         $q->select('*')
             ->from(self::TABLE_NAME)
             ->where(
+                // $q->expr()->eq('t3ver_wsid', $q->createNamedParameter($workspace)), // @todo workspaces
                 $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
                 $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
             );
@@ -203,10 +240,10 @@ class IndexerService extends AbstractService
      * @param string $tableName
      * @param int    $uid
      */
-    protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid)
+    protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid, int $workspace = 0)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
-        $currentItems = $this->getCurrentItems($tableName, $uid)->fetchAll();
+        $currentItems = $this->getCurrentItems($tableName, $uid, $workspace)->fetchAll();
 
         $event = new IndexPreUpdateEvent($neededItems, $tableName, $uid);
         $this->eventDispatcher->dispatch($event);
@@ -232,7 +269,11 @@ class IndexerService extends AbstractService
             $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
         }
 
-        $this->generateSlugAndInsert($neededItems);
+        if ($workspace) {
+            // @todo Remove all live placeholders that are connected to Entries of current workspace
+        }
+
+        $this->generateSlugAndInsert($neededItems, $workspace);
     }
 
     /**
@@ -240,10 +281,22 @@ class IndexerService extends AbstractService
      *
      * @param array $neededItems
      */
-    protected function generateSlugAndInsert(array $neededItems): void
+    protected function generateSlugAndInsert(array $neededItems, int $workspace = 0): void
     {
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         foreach ($neededItems as $key => $item) {
+            if($workspace) {
+                // @todo remove placeholders
+                $livePlaceholder = $item;
+                $livePlaceholder['t3ver_wsid'] = 0;
+                $livePlaceholder['t3ver_state'] = 1;
+                $livePlaceholder['slug'] = $this->slugService->makeSlugUnique($livePlaceholder);
+
+                $db->insert(self::TABLE_NAME, $livePlaceholder);
+
+                $item['t3ver_oid'] = $db->lastInsertId(self::TABLE_NAME);
+            }
+
             $item['slug'] = $this->slugService->makeSlugUnique($item);
             // We need to insert after each index, so subsequent indices do not get the same slug
             $db->insert(self::TABLE_NAME, $item);

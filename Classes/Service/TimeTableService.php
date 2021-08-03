@@ -39,7 +39,10 @@ class TimeTableService extends AbstractService
 
         $configRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
+            // Disable Workspace for selection to get also offline versions of configuration
+            $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = false;
             $configuration = $configRepository->findByUid($configurationUid);
+            $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = true;
             if (!($configuration instanceof Configuration)) {
                 continue;
             }

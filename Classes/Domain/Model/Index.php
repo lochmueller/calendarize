@@ -21,6 +21,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  * @DatabaseTable
  * @SmartExclude(excludes={"Workspaces"})
+ * @todo Workspaces
  */
 class Index extends AbstractModel
 {

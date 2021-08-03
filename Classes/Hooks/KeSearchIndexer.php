@@ -75,7 +75,6 @@ class KeSearchIndexer extends AbstractHook
             $content = strip_tags($originalObject->getKeSearchContent($index));
             $fullContent = $title . "\n" . $abstract . "\n" . $content;
 
-            // @todo Add year and month information
             $additionalFields = [
                 'sortdate' => $index->getStartDateComplete()->getTimestamp(),
                 'orig_uid' => $index->getUid(),

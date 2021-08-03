@@ -9,12 +9,14 @@ namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\SmartExclude;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * PluginConfiguration.
  *
  * @DatabaseTable
+ * @SmartExclude(excludes={"Workspaces"})
  */
 class PluginConfiguration extends AbstractModel
 {
