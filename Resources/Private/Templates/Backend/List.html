@@ -46,11 +46,13 @@
 				<p>
 					<f:for each="{typeLocations}" key="table" as="typePids">
 						<f:for each="{typePids}" key="pid" as="value">
-							<be:link.newRecord class="btn btn-primary" table="{table}" pid="{pid}" style="margin-bottom:4px"
-																 returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
-								<core:icon identifier="actions-document-new"/>
-								{value} on {pids.{pid}}
-							</be:link.newRecord>
+							<f:if condition="{options.type} === '' || {options.type} === {value}">
+								<be:link.newRecord class="btn btn-primary" table="{table}" pid="{pid}" style="margin-bottom:4px"
+																	 returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
+									<core:icon identifier="actions-document-new"/>
+									{value} on {pids.{pid}}
+								</be:link.newRecord>
+							</f:if>
 						</f:for>
 					</f:for>
 				</p>
