@@ -17,6 +17,10 @@ routeEnhancers:
         _controller: 'Calendar::week'
       - routePath: '/{calendarize_day_label}/{year}/{month}/{day}'
         _controller: 'Calendar::day'
+      - routePath: '/{calendarize_result_page_label}/{currentPage}'
+        _controller: 'Calendar::result'
+      - routePath: '/{calendarize_page_label}/{currentPage}'
+        _controller: 'Calendar::list'
 
 #    requirements:
       # Specify kind of parameters, if the aspects are not used.
@@ -51,6 +55,10 @@ routeEnhancers:
         type: StaticRangeMapper
         start: '1'
         end: '31'
+      currentPage:
+        type: StaticRangeMapper
+        start: '1'
+        end: '1000'
 
       # Localization
       calendarize_event_label:
@@ -89,3 +97,15 @@ routeEnhancers:
         localeMap:
           - locale: 'de_.*'
             value: 'tag'
+      calendarize_page_label:
+        type: LocaleModifier
+        default: 'page'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'seite'
+      calendarize_result_page_label:
+        type: LocaleModifier
+        default: 'result-page'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'ergebnis-seite'
