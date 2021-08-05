@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Annotation\SmartExclude;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
@@ -19,6 +18,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
  */
 class Configuration extends AbstractModel implements ConfigurationInterface
 {
+    use ImportTrait;
     /**
      * Type.
      *
@@ -187,8 +187,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @DatabaseField("string")
      */
     protected $day = self::DAY_NONE;
-
-    use ImportTrait;
 
     /**
      * Hidden.

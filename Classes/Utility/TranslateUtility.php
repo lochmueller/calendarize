@@ -29,8 +29,6 @@ class TranslateUtility
             return $key;
         }
 
-
-
         return LocalizationUtility::translate(self::getLll($key), 'calendarize');
     }
 

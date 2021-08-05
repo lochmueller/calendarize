@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ConfigurationGroup extends AbstractModel
 {
+    use ImportTrait;
     /**
      * Title.
      *
@@ -35,8 +36,6 @@ class ConfigurationGroup extends AbstractModel
      * @DatabaseField("string")
      */
     protected $configurations;
-
-    use ImportTrait;
 
     /**
      * Hidden.
