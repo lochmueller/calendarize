@@ -29,7 +29,7 @@ class IndexerService extends AbstractService
     /**
      * Index table name.
      */
-    const TABLE_NAME = 'tx_calendarize_domain_model_index';
+    public const TABLE_NAME = 'tx_calendarize_domain_model_index';
 
     /**
      * @var EventDispatcherInterface
@@ -77,7 +77,7 @@ class IndexerService extends AbstractService
             $q->select('uid')
                 ->from($tableName);
 
-            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] ? (bool) $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] : false;
+            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] ? (bool)$GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] : false;
             if ($worksSpaceSupport) {
                 $q->addOrderBy('t3ver_wsid', 'ASC');
             }
@@ -86,7 +86,7 @@ class IndexerService extends AbstractService
             if ($transPointer) {
                 // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
                 // overlays can connect with l10n_parent to the right default record.
-                $q->addOrderBy((string) $transPointer, 'ASC');
+                $q->addOrderBy((string)$transPointer, 'ASC');
             }
             $rows = $q->execute()->fetchAll();
             foreach ($rows as $row) {
@@ -177,11 +177,10 @@ class IndexerService extends AbstractService
         $neededItems = $this->preparationService->prepareIndex($configurationKey, $tableName, $uid);
 
         $rawRecord = BackendUtility::getRecord($tableName, $uid);
-        $workspace = isset($rawRecord['t3ver_wsid']) ? (int) $rawRecord['t3ver_wsid'] : 0;
-        $origId = isset($rawRecord['t3ver_oid']) ? (int) $rawRecord['t3ver_oid'] : 0;
+        $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
+        $origId = isset($rawRecord['t3ver_oid']) ? (int)$rawRecord['t3ver_oid'] : 0;
 
         if ($workspace && $origId) {
-
             // Remove all entries in current workspace that are related to the current item
             HelperUtility::getDatabaseConnection(self::TABLE_NAME)->delete(self::TABLE_NAME, [
                 't3ver_wsid' => $workspace,
@@ -286,7 +285,7 @@ class IndexerService extends AbstractService
     {
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         foreach ($neededItems as $key => $item) {
-            if($workspace) {
+            if ($workspace) {
                 // @todo remove placeholders
                 $livePlaceholder = $item;
                 $livePlaceholder['t3ver_wsid'] = 0;

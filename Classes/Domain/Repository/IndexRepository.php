@@ -128,13 +128,13 @@ class IndexRepository extends AbstractRepository
 
         $constraints = [];
 
-        if ((int) $options->getPid() > 0) {
-            $constraints[] = $query->equals('pid', (int) $options->getPid());
+        if ((int)$options->getPid() > 0) {
+            $constraints[] = $query->equals('pid', (int)$options->getPid());
         } elseif ($allowedPages) {
             $constraints[] = $query->in('pid', $allowedPages);
         }
 
-        if ($options->getType() !== '') {
+        if ('' !== $options->getType()) {
             $constraints[] = $query->equals('uniqueRegisterKey', $options->getType());
         }
 

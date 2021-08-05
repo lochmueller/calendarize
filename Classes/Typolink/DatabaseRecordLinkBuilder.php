@@ -52,7 +52,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
             throw new UnableToLinkException('', 1491130170, null, $link);
         }
 
-        parent::build($linkDetails, $linkText, $target, $conf);
+        return parent::build($linkDetails, $linkText, $target, $conf);
     }
 
     protected function getIndexForEventUid($table, $uid): int

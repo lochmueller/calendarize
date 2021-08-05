@@ -17,42 +17,42 @@ class DateTimeUtility
     /**
      * One second.
      */
-    const SECONDS_SECOND = 1;
+    public const SECONDS_SECOND = 1;
 
     /**
      * One minute in seconds.
      */
-    const SECONDS_MINUTE = 60;
+    public const SECONDS_MINUTE = 60;
 
     /**
      * One hour in seconds.
      */
-    const SECONDS_HOUR = 3600;
+    public const SECONDS_HOUR = 3600;
 
     /**
      * One day in seconds.
      */
-    const SECONDS_DAY = 86400;
+    public const SECONDS_DAY = 86400;
 
     /**
      * One week in seconds.
      */
-    const SECONDS_WEEK = 604800;
+    public const SECONDS_WEEK = 604800;
 
     /**
      * One quartar in seconds (90 days).
      */
-    const SECONDS_QUARTER = 7776000;
+    public const SECONDS_QUARTER = 7776000;
 
     /**
      * One year in seconds (365 days).
      */
-    const SECONDS_YEAR = 31536000;
+    public const SECONDS_YEAR = 31536000;
 
     /**
      * One decade in seconds (base on a 365 days year).
      */
-    const SECONDS_DECADE = 315360000;
+    public const SECONDS_DECADE = 315360000;
 
     /**
      * Convert a Week/Year combination to a DateTime of the first day of week.

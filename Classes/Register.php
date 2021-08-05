@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class Register
 {
-    const UNIQUE_REGISTER_KEY = 'Event';
+    public const UNIQUE_REGISTER_KEY = 'Event';
 
     /**
      * Register in the extTables.

@@ -39,3 +39,6 @@ jobs:
 
       - name: Unit Tests with phpunit
         run: composer run tool:phpunit --
+
+      - name: Run PHP CS Fixer checks
+        run: composer run tool:php-cs-fixer-check

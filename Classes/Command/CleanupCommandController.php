@@ -33,10 +33,10 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class CleanupCommandController extends Command
 {
-    const MODUS_HIDDEN = 'hide';
-    const MODUS_DELETED = 'delete';
-    const DEFAULT_WAIT_PERIOD = 14;
-    const DEFAULT_CLEANUP_REPOSITORY = \HDNET\Calendarize\Domain\Repository\EventRepository::class;
+    public const MODUS_HIDDEN = 'hide';
+    public const MODUS_DELETED = 'delete';
+    public const DEFAULT_WAIT_PERIOD = 14;
+    public const DEFAULT_CLEANUP_REPOSITORY = \HDNET\Calendarize\Domain\Repository\EventRepository::class;
 
     /**
      * @var PersistenceManager

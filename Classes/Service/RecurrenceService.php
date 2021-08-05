@@ -17,12 +17,12 @@ class RecurrenceService extends AbstractService
     /**
      * direction up.
      */
-    const DIRECTION_UP = 'up';
+    public const DIRECTION_UP = 'up';
 
     /**
      * direction down.
      */
-    const DIRECTION_DOWN = 'down';
+    public const DIRECTION_DOWN = 'down';
 
     /**
      * Get the date if the configuration of the next month.

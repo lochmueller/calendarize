@@ -6,9 +6,9 @@ use HDNET\Calendarize\Service\IndexerService;
 
 final class IndexSingleEvent
 {
-    const POSITION_PRE = 'pre';
+    public const POSITION_PRE = 'pre';
 
-    const POSITION_POST = 'post';
+    public const POSITION_POST = 'post';
 
     /**
      * @var string

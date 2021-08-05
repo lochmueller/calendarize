@@ -82,14 +82,15 @@ class IndexPreparationService extends AbstractService
 
     protected function addWorkspaceInformation(array &$neededItems, string $configurationKey, array $record): void
     {
-        $workspace = isset($record['t3ver_wsid']) ? (int) $record['t3ver_wsid'] : 0;
-        $origId = isset($record['t3ver_oid']) ? (int) $record['t3ver_oid'] : 0;
+        $workspace = isset($record['t3ver_wsid']) ? (int)$record['t3ver_wsid'] : 0;
+        $origId = isset($record['t3ver_oid']) ? (int)$record['t3ver_oid'] : 0;
         $neededItems = array_map(function ($item) use ($workspace, $origId) {
             $item['t3ver_wsid'] = $workspace;
             // Set relation to the original record
             if ($workspace) {
                 $item['foreign_uid'] = $origId;
             }
+
             return $item;
         }, $neededItems);
     }

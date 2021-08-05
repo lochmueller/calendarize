@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Domain\Model;
 
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Annotation\SmartExclude;
 use HDNET\Calendarize\Exception\InvalidConfigurationException;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;

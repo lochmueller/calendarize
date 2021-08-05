@@ -75,10 +75,10 @@ class SlugService extends AbstractService
         // Get domain model
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
 
-        $uid = (int) $record['uid'];
+        $uid = (int)$record['uid'];
         if (isset($record['t3ver_oid']) && $record['t3ver_oid']) {
             // Add Workspace handling
-            $uid = (int) $record['t3ver_oid'];
+            $uid = (int)$record['t3ver_oid'];
         }
 
         /** @var DomainObjectInterface $model */

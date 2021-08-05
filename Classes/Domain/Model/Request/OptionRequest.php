@@ -91,6 +91,4 @@ class OptionRequest extends AbstractModel
     {
         $this->type = $type;
     }
-
-
 }

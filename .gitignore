@@ -3,6 +3,7 @@
 /.php_cs.cache
 /var
 /Tests/Unit/Build/.phpunit.result.cache
+/.php-cs-fixer.cache
 
 # ignore generated documentation
 *GENERATED*

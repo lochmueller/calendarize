@@ -51,22 +51,22 @@ class CalMigrationUpdate extends AbstractUpdate
     /**
      * Import prefix.
      */
-    const IMPORT_PREFIX = 'calMigration:';
+    public const IMPORT_PREFIX = 'calMigration:';
 
     /**
      * Event table.
      */
-    const EVENT_TABLE = 'tx_calendarize_domain_model_event';
+    public const EVENT_TABLE = 'tx_calendarize_domain_model_event';
 
     /**
      * Configuration table.
      */
-    const CONFIGURATION_TABLE = 'tx_calendarize_domain_model_configuration';
+    public const CONFIGURATION_TABLE = 'tx_calendarize_domain_model_configuration';
 
     /**
      * ConfigurationGroup table.
      */
-    const CONFIGURATION_GROUP_TABLE = 'tx_calendarize_domain_model_configurationgroup';
+    public const CONFIGURATION_GROUP_TABLE = 'tx_calendarize_domain_model_configurationgroup';
 
     /**
      * The human-readable title of the upgrade wizard.

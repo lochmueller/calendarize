@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 

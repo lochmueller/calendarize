@@ -6,7 +6,6 @@ use HDNET\Autoloader\Annotation\DatabaseField;
 
 trait ImportTrait
 {
-
     /**
      * Import ID if the item is based on an ICS structure.
      *
@@ -24,5 +23,4 @@ trait ImportTrait
     {
         $this->importId = $importId;
     }
-
 }

@@ -20,7 +20,7 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
  */
 class BackendController extends AbstractController
 {
-    const OPTIONS_KEY = 'calendarize_be';
+    public const OPTIONS_KEY = 'calendarize_be';
 
     /**
      * Basic backend list.
@@ -144,7 +144,7 @@ class BackendController extends AbstractController
     }
 
     /**
-     * Get the different types
+     * Get the different types.
      *
      * @return array
      */

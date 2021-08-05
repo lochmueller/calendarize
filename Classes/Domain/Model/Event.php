@@ -10,7 +10,6 @@ namespace HDNET\Calendarize\Domain\Model;
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Autoloader\Annotation\EnableRichText;
-use HDNET\Autoloader\Annotation\SmartExclude;
 use HDNET\Calendarize\Features\FeedInterface;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
@@ -25,6 +24,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {
+    use ImportTrait;
     /**
      * Title.
      *
@@ -89,8 +89,6 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * @DatabaseField("string")
      */
     protected $organizerLink;
-
-    use ImportTrait;
 
     /**
      * Images.
