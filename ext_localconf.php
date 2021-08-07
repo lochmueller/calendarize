@@ -3,6 +3,7 @@
 /**
  * General ext_localconf file.
  */
+
 defined('TYPO3') or exit();
 
 (function () {
@@ -78,4 +79,8 @@ defined('TYPO3') or exit();
         'priority' => 40,
         'class' => \HDNET\Calendarize\Form\Element\CalendarizeInfoElement::class,
     ];
+
+    if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('workspaces')) {
+        \HDNET\Autoloader\Utility\ExtendedUtility::addXclass(\TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer::class, \HDNET\Calendarize\Xclass\WorkspaceRemoteServer::class);
+    }
 })();
