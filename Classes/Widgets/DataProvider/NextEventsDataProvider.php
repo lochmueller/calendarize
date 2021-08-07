@@ -28,8 +28,9 @@ class NextEventsDataProvider implements ListDataProviderInterface
     public function getItems(): array
     {
         $options = new OptionRequest();
-        // @todo create new backend functions
-        $indices = \array_slice($this->indexRepository->findAllForBackend($options)->toArray(), 0, 15);
+        $query = $this->indexRepository->findAllForBackend($options)->getQuery();
+        $query->setLimit(15);
+        $indices = $query->execute()->toArray();
 
         return array_map(function (Index $index) {
             try {
