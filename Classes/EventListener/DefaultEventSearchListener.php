@@ -18,7 +18,7 @@ class DefaultEventSearchListener
 
         $customSearch = $event->getCustomSearch();
 
-        // @todo Filter here for $customSearch['categories'] and take also care of the fullText
+        // Filter here for $customSearch['categories'] and take also care of the fullText
         // ?tx_calendarize_calendar[customSearch][categories]=1
         // https://github.com/lochmueller/calendarize/issues/89
 

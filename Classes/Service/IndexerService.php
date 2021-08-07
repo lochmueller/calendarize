@@ -18,6 +18,8 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Log\LogRecord;
+use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -106,6 +108,10 @@ class IndexerService extends AbstractService
     public function reindex(string $configurationKey, string $tableName, int $uid)
     {
         $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE));
+
+        // tmp:
+        // (new DatabaseWriter())->writeLog(new LogRecord('calendarize', 'debug', 'Reindex '.$tableName.':'.$uid));
+        // @todo Workspaces: If Live Version reindex also WS versions
 
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
@@ -201,9 +207,9 @@ class IndexerService extends AbstractService
             }
         }
 
-        // @todo workspaces
-        // @todo handle backend preview of times in the list view
-        // @todo handle selection in backend module
+        // @todo Workspaces: handle backend preview of times in the list view
+        // @todo Workspaces: handle selection in backend module
+        // @todo Workspaces: Add documentation about workspaces
 
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
     }
@@ -225,7 +231,7 @@ class IndexerService extends AbstractService
         $q->select('*')
             ->from(self::TABLE_NAME)
             ->where(
-                // $q->expr()->eq('t3ver_wsid', $q->createNamedParameter($workspace)), // @todo workspaces
+                $q->expr()->eq('t3ver_wsid', $q->createNamedParameter($workspace)),
                 $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
                 $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
             );
@@ -270,7 +276,7 @@ class IndexerService extends AbstractService
         }
 
         if ($workspace) {
-            // @todo Remove all live placeholders that are connected to Entries of current workspace
+            // @todo Workspaces: Remove all live placeholders that are connected to Entries of current workspace
         }
 
         $this->generateSlugAndInsert($neededItems, $workspace);
@@ -286,7 +292,7 @@ class IndexerService extends AbstractService
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         foreach ($neededItems as $key => $item) {
             if ($workspace) {
-                // @todo remove placeholders
+                // @todo Workspaces: remove placeholders
                 $livePlaceholder = $item;
                 $livePlaceholder['t3ver_wsid'] = 0;
                 $livePlaceholder['t3ver_state'] = 1;

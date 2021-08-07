@@ -52,7 +52,6 @@ abstract class AbstractTimeTable extends AbstractService
      */
     protected function buildSingleTimeTableByGroup(ConfigurationGroup $group)
     {
-        // @todo move to DI
         $this->timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
 
         return $this->timeTableService->getTimeTablesByConfigurationIds($group->getConfigurationIds());

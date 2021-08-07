@@ -10,3 +10,4 @@ For administrators
 	UrlRewrite/Index
 	Linkhandler/Index
 	Migration/Index
+	Workspaces/Index
