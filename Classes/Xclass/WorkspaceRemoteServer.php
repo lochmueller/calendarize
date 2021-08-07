@@ -25,7 +25,7 @@ class WorkspaceRemoteServer extends RemoteServer
         }
 
         $data = $this->gridDataService->generateGridListFromVersions($versions, $parameter, $this->getCurrentWorkspace());
+
         return $data;
     }
-
 }

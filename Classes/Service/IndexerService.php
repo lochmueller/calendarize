@@ -208,7 +208,6 @@ class IndexerService extends AbstractService
         }
 
         // @todo Workspaces: handle backend preview of times in the list view
-        // @todo Workspaces: handle selection in backend module
         // @todo Workspaces: Add documentation about workspaces
 
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
