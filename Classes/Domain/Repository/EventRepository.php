@@ -65,13 +65,13 @@ class EventRepository extends AbstractRepository
      *
      * @return Index|null
      */
-    protected function findNextIndex(int $uid)
+    public function findNextIndex(int $uid): ?object
     {
         /** @var Event $event */
         $event = $this->findByUid($uid);
 
         if (!\is_object($event)) {
-            return;
+            return null;
         }
 
         /** @var IndexRepository $indexRepository */
@@ -83,11 +83,11 @@ class EventRepository extends AbstractRepository
                 $result = $indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
             }
         } catch (\Exception $ex) {
-            return;
+            return null;
         }
 
         if (empty($result)) {
-            return;
+            return null;
         }
 
         /** @var Index $index */
