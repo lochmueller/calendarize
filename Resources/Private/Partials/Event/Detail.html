@@ -20,6 +20,15 @@
 		<f:format.html>{event.description}</f:format.html>
 	</div>
 
+	<f:comment>
+		Category example (also possible in list view):
+		<div class="categories">
+			<f:for each="{event.categories}" as="category" iteration="itemIteration">
+				<span class="category c{category.uid}"><i class="fa fa-tags"></i>&nbsp;{category.title}</span>
+			</f:for>
+		</div>
+	</f:comment>
+
 	<dl class="dl-horizontal meta">
 		<f:if condition="{event.location}">
 			<dt><f:translate key="tx_calendarize_domain_model_event.location" />:</dt>

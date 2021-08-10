@@ -2,6 +2,7 @@
 
 namespace HDNET\Calendarize\EventListener;
 
+use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
 use HDNET\Calendarize\Register;
@@ -16,22 +17,29 @@ class DefaultEventSearchListener
             return;
         }
 
-        $customSearch = $event->getCustomSearch();
+        $search = $this->getSearchDto($event);
 
-        // Filter here for $customSearch['categories'] and take also care of the fullText
-        // ?tx_calendarize_calendar[customSearch][categories]=1
-        // https://github.com/lochmueller/calendarize/issues/89
-
-        if (!isset($customSearch['fullText']) || !$customSearch['fullText']) {
+        if (!$search->isSearch()) {
             return;
         }
         /** @var EventRepository $eventRepository */
         $eventRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(EventRepository::class);
-        $searchTermHits = $eventRepository->getIdsBySearchTerm($customSearch['fullText']);
+        $searchTermHits = $eventRepository->findBySearch($search);
         if ($searchTermHits && \count($searchTermHits)) {
             $indexIds = $event->getIndexIds();
             $indexIds['tx_calendarize_domain_model_event'] = $searchTermHits;
             $event->setIndexIds($indexIds);
         }
+    }
+
+    protected function getSearchDto(IndexRepositoryFindBySearchEvent $event): Search
+    {
+        $customSearch = $event->getCustomSearch();
+
+        $search = new Search();
+        $search->setFullText(trim((string)$customSearch['fullText'] ?? ''));
+        $search->setCategory((int)$customSearch['category'] ?? 0);
+
+        return $search;
     }
 }

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Repository;
 
+use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -21,17 +22,24 @@ class EventRepository extends AbstractRepository
     /**
      * Get the IDs of the given search term.
      *
-     * @param string $searchTerm
+     * @param Search $search
      *
      * @return array
      */
-    public function getIdsBySearchTerm($searchTerm)
+    public function findBySearch(Search $search)
     {
         $query = $this->createQuery();
-        $constraint = [];
-        $constraint[] = $query->like('title', '%' . $searchTerm . '%');
-        $constraint[] = $query->like('description', '%' . $searchTerm . '%');
-        $query->matching($query->logicalOr($constraint));
+        $constraints = [];
+        if ($search->getFullText()) {
+            $constraints['fullText'] = $query->logicalOr([
+                $query->like('title', '%' . $search->getFullText() . '%'),
+                $query->like('description', '%' . $search->getFullText() . '%'),
+            ]);
+        }
+        if ($search->getCategory()) {
+            $constraints['categories'] = $query->contains('categories', $search->getCategory());
+        }
+        $query->matching($query->logicalAnd($constraints));
         $rows = $query->execute(true);
 
         $ids = [];
