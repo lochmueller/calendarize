@@ -18,8 +18,6 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Log\LogRecord;
-use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -109,15 +107,32 @@ class IndexerService extends AbstractService
     {
         $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE));
 
-        // tmp:
-        // (new DatabaseWriter())->writeLog(new LogRecord('calendarize', 'debug', 'Reindex '.$tableName.':'.$uid));
-        // @todo Workspaces: If Live Version reindex also WS versions
-
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
 
         $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST));
+
+        $this->reindexVersions($configurationKey, $tableName, $uid);
+    }
+
+    protected function reindexVersions(string $configurationKey, string $tableName, int $uid)
+    {
+        $record = BackendUtility::getRecord($tableName, $uid);
+        if (0 === (int)($record['t3ver_oid'] ?? 0)) {
+            $versions = BackendUtility::selectVersionsOfRecord($tableName, $uid, 'uid', null);
+            $ids = array_map(function ($row) {
+                return (int)$row['uid'];
+            }, $versions);
+
+            $ids = array_filter($ids, function ($id) use ($uid) {
+                return $id !== $uid;
+            });
+
+            foreach ($ids as $id) {
+                $this->reindex($configurationKey, $tableName, $id);
+            }
+        }
     }
 
     /**
@@ -208,7 +223,6 @@ class IndexerService extends AbstractService
         }
 
         // @todo Workspaces: handle backend preview of times in the list view
-        // @todo Workspaces: Add documentation about workspaces
 
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
     }
