@@ -305,7 +305,6 @@ class IndexerService extends AbstractService
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         foreach ($neededItems as $key => $item) {
             if ($workspace) {
-                // @todo Workspaces: remove placeholders
                 $livePlaceholder = $item;
                 $livePlaceholder['t3ver_wsid'] = 0;
                 $livePlaceholder['t3ver_state'] = 1;

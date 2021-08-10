@@ -19,3 +19,8 @@ So it is not required to publish every single Index of an Event. The Index will 
 
 Next point are the Index records: If you change a Event in a Workspace, ALL live Index records are marked as deleted in the current Workspace and the Indexer create Live-Placeholder and Workspace Index records.
 So there will be no relation between a Live Index and a Workspace Index, because all Indices are created new. That do not mean, that the publishing create new Index records in Live!
+
+Selection
+---------
+
+The "reindexAll" (via Scheduler) but also the single index process take care, that the Live version is always the first in the index process and after the Live Index the Workspace records are created.
