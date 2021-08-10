@@ -69,11 +69,6 @@ defined('TYPO3') or exit();
         );
     }
 
-    if (class_exists(\TYPO3\CMS\Core\Routing\Aspect\PersistedPatternMapper::class)) {
-        /* @deprecated */
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['EventMapper'] = \HDNET\Calendarize\Routing\Aspect\EventMapper::class;
-    }
-
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1591803668] = [
         'nodeName' => 'calendarizeInfoElement',
         'priority' => 40,
