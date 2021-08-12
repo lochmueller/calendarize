@@ -16,16 +16,22 @@ use HDNET\Calendarize\Utility\ArrayUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Backend;
 
 /**
  * Index the given events.
  */
-class IndexerService extends AbstractService
+class IndexerService extends AbstractService implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * Index table name.
      */
@@ -61,6 +67,8 @@ class IndexerService extends AbstractService
      */
     public function reindexAll()
     {
+        $this->logger->debug('Start reindex ALL process');
+
         $this->eventDispatcher->dispatch(new IndexAllEvent($this, IndexAllEvent::POSITION_PRE));
 
         $this->removeInvalidConfigurationIndex();
@@ -105,6 +113,8 @@ class IndexerService extends AbstractService
      */
     public function reindex(string $configurationKey, string $tableName, int $uid)
     {
+        $this->logger->debug('Start reindex SINGLE ' . $tableName . ':' . $uid);
+
         $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE));
 
         $this->removeInvalidConfigurationIndex();
@@ -147,7 +157,12 @@ class IndexerService extends AbstractService
     {
         // Note: "uid" could be e.g. NEW6273482 in DataHandler process
         if (MathUtility::canBeInterpretedAsInteger($uid)) {
-            return (int)$this->getCurrentItems($tableName, (int)$uid)->rowCount();
+            $workspace = 0;
+            if ($GLOBALS['BE_USER']  instanceof BackendUserAuthentication) {
+                $workspace = (int)$GLOBALS['BE_USER']->workspace;
+            }
+
+            return (int)$this->getCurrentItems($tableName, (int)$uid, $workspace)->rowCount();
         }
 
         return 0;
@@ -200,6 +215,8 @@ class IndexerService extends AbstractService
         $rawRecord = BackendUtility::getRecord($tableName, $uid);
         $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
         $origId = isset($rawRecord['t3ver_oid']) ? (int)$rawRecord['t3ver_oid'] : 0;
+
+        $this->logger->debug('Update index of ' . $tableName . ':' . $uid . ' in  workspace ' . $workspace);
 
         if ($workspace && $origId) {
             // Remove all entries in current workspace that are related to the current item
@@ -365,6 +382,8 @@ class IndexerService extends AbstractService
      */
     protected function removeInvalidConfigurationIndex()
     {
+        $this->logger->debug('Log invalid index items of old configurations');
+
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         $q = $db->createQueryBuilder();
 

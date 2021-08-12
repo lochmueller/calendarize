@@ -24,3 +24,10 @@ Selection
 ---------
 
 The "reindexAll" (via Scheduler) but also the single index process take care, that the Live version is always the first in the index process and after the Live Index the Workspace records are created.
+
+
+Scheduler
+---------
+
+I suggest to enable the "reindex all" command in the scheduler to cleanup the index in the right way.
+
