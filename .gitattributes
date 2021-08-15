@@ -8,3 +8,4 @@
 /.travis.yml export-ignore
 /.php_cs export-ignore
 /.php_cs.cache export-ignore
+/depfile.yaml

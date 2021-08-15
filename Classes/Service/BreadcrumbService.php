@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -56,44 +56,13 @@ class BreadcrumbService extends AbstractService
         return $contentObjectRenderer->stdWrap($content, $configuration);
     }
 
-    /**
-     * @param $row
-     *
-     * @return mixed|null
-     */
-    protected function getEventByIndex($row)
+    protected function getEventByIndex(array $row)
     {
-        return $this->fetchRecordByUid($row['foreign_table'], (int)$row['foreign_uid']);
+        return BackendUtility::getRecord($row['foreign_table'], (int)$row['foreign_uid']);
     }
 
-    /**
-     * @param $uid
-     *
-     * @return mixed|null
-     */
-    protected function getIndex($uid)
+    protected function getIndex(int $uid)
     {
-        return $this->fetchRecordByUid('tx_calendarize_domain_model_index', $uid);
-    }
-
-    /**
-     * @param $uid
-     * @param mixed $table
-     *
-     * @return mixed|null
-     */
-    protected function fetchRecordByUid($table, $uid)
-    {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-        $where = [
-            $queryBuilder->expr()->eq('uid', (int)$uid),
-        ];
-        $rows = $queryBuilder->select('*')
-            ->from($table)
-            ->where(...$where)
-            ->execute()
-            ->fetchAll();
-
-        return $rows[0] ?? null;
+        return BackendUtility::getRecord('tx_calendarize_domain_model_index', $uid);
     }
 }

@@ -9,18 +9,15 @@ namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
+use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Event\CleanupEvent;
 use HDNET\Calendarize\Service\IndexerService;
-use HDNET\Calendarize\Utility\DateTimeUtility;
-use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -47,6 +44,11 @@ class CleanupCommandController extends Command
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
+
+    /**
+     * @var RawIndexRepository
+     */
+    protected $rawIndexRepository;
 
     /**
      * @var DataMapper
@@ -80,6 +82,14 @@ class CleanupCommandController extends Command
     public function injectDataMapper(DataMapper $dataMapper): void
     {
         $this->dataMapper = $dataMapper;
+    }
+
+    /**
+     * @param RawIndexRepository $rawIndexRepository
+     */
+    public function injectRawIndexRepository(RawIndexRepository $rawIndexRepository): void
+    {
+        $this->rawIndexRepository = $rawIndexRepository;
     }
 
     /**
@@ -161,7 +171,7 @@ class CleanupCommandController extends Command
 
         $io->section('Find outdated events');
         // events uid, to be precise
-        $events = $this->findOutdatedEvents($tableName, $waitingPeriod);
+        $events = $this->rawIndexRepository->findOutdatedEvents($tableName, $waitingPeriod);
 
         $io->text('Found ' . \count($events) . ' Events ready to process.');
 
@@ -220,43 +230,5 @@ class CleanupCommandController extends Command
 
         $myFunction = $event->getFunction();
         $myFunction($repository, $model);
-    }
-
-    /**
-     * Find outdated events.
-     *
-     * @param string $tableName
-     * @param int    $waitingPeriod
-     *
-     * @return array
-     */
-    protected function findOutdatedEvents(string $tableName, int $waitingPeriod): array
-    {
-        // calculate the waiting time
-        $interval = 'P' . $waitingPeriod . 'D';
-        $now = DateTimeUtility::getNow();
-        $now->sub(new \DateInterval($interval));
-
-        // search for outdated events
-        $table = IndexerService::TABLE_NAME;
-
-        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
-            ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
-
-        $q->select('foreign_uid')
-            ->addSelectLiteral(
-                $q->expr()->max('end_date', 'max_end_date')
-            )
-            ->from($table)
-            ->where($q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)))
-            ->groupBy('foreign_uid')
-            ->having(
-                $q->expr()->lt('max_end_date', $q->createNamedParameter($now->format('Y-m-d')))
-            );
-
-        return $q->execute()->fetchAll();
     }
 }

@@ -42,3 +42,6 @@ jobs:
 
       - name: Run PHP CS Fixer checks
         run: composer run tool:php-cs-fixer-check
+
+      - name: Run DepTrac
+        run: composer run tool:deptrac

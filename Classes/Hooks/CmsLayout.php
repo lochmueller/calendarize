@@ -11,7 +11,6 @@ use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
-use HDNET\Calendarize\Utility\HelperUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -77,12 +76,7 @@ class CmsLayout extends AbstractHook
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {
             $table = 'tx_calendarize_domain_model_pluginconfiguration';
-
-            $row = HelperUtility::getDatabaseConnection($table)->select(
-                ['*'],
-                $table,
-                ['uid' => $pluginConfiguration]
-            )->fetch();
+            $row = BackendUtility::getRecord($table, $pluginConfiguration);
             $this->layoutService->addRow(
                 TranslateUtility::get('tx_calendarize_domain_model_pluginconfiguration'),
                 BackendUtility::getRecordTitle($table, $row)

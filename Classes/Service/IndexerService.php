@@ -7,13 +7,13 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Event\IndexAllEvent;
 use HDNET\Calendarize\Event\IndexPreUpdateEvent;
 use HDNET\Calendarize\Event\IndexSingleEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\ArrayUtility;
-use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -48,6 +48,11 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     protected $preparationService;
 
     /**
+     * @var RawIndexRepository
+     */
+    protected $rawIndexRepository;
+
+    /**
      * @var SlugService
      */
     protected $slugService;
@@ -55,11 +60,13 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         IndexPreparationService $preparationService,
-        SlugService $slugService
+        SlugService $slugService,
+        RawIndexRepository $rawIndexRepository
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->preparationService = $preparationService;
         $this->slugService = $slugService;
+        $this->rawIndexRepository = $rawIndexRepository;
     }
 
     /**
@@ -130,7 +137,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     {
         $record = BackendUtility::getRecord($tableName, $uid);
         if (0 === (int)($record['t3ver_oid'] ?? 0)) {
-            $versions = BackendUtility::selectVersionsOfRecord($tableName, $uid, 'uid', null);
+            $versions = (array)BackendUtility::selectVersionsOfRecord($tableName, $uid, 'uid', null);
             $ids = array_map(function ($row) {
                 return (int)$row['uid'];
             }, $versions);
@@ -162,7 +169,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 $workspace = (int)$GLOBALS['BE_USER']->workspace;
             }
 
-            return (int)$this->getCurrentItems($tableName, (int)$uid, $workspace)->rowCount();
+            return $this->rawIndexRepository->countAllEvents($tableName, (int)$uid, $workspace);
         }
 
         return 0;
@@ -179,26 +186,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      */
     public function getNextEvents($table, $uid, $limit = 5)
     {
-        $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
-
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-
-        $q->select('*')
-            ->from(self::TABLE_NAME)
-            ->where(
-                $q->expr()->andX(
-                    $q->expr()->gte('start_date', $q->createNamedParameter(DateTimeUtility::getNow()->format('Y-m-d'))),
-                    $q->expr()->eq('foreign_table', $q->createNamedParameter($table)),
-                    $q->expr()->eq('foreign_uid', $q->createNamedParameter((int)$uid, \PDO::PARAM_INT))
-                )
-            )
-            ->addOrderBy('start_date', 'ASC')
-            ->addOrderBy('start_time', 'ASC')
-            ->setMaxResults($limit);
-
-        return $q->execute()->fetchAll();
+        return $this->rawIndexRepository->findNextEvents((string)$table, (int)$uid, (int)$limit);
     }
 
     /**
@@ -228,7 +216,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             ]);
 
             // Create deleted items for very entry in the live workspace
-            $liveItems = $this->getCurrentItems($tableName, $origId, 0)->fetchAll();
+            $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $origId, 0);
             foreach ($liveItems as $liveItem) {
                 $liveItem['t3ver_state'] = '1';
                 $liveItem['t3ver_oid'] = $liveItem['uid'];
@@ -245,31 +233,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     }
 
     /**
-     * Get the current items (ignore enable fields).
-     *
-     * @param string $tableName
-     * @param int    $uid
-     *
-     * @return \Doctrine\DBAL\Driver\Statement|int
-     */
-    protected function getCurrentItems(string $tableName, int $uid, int $workspace = 0)
-    {
-        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $q->select('*')
-            ->from(self::TABLE_NAME)
-            ->where(
-                $q->expr()->eq('t3ver_wsid', $q->createNamedParameter($workspace)),
-                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
-                $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
-            );
-
-        return $q->execute();
-    }
-
-    /**
      * Insert and/or update the needed index records.
      *
      * @param array  $neededItems
@@ -279,7 +242,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid, int $workspace = 0)
     {
         $databaseConnection = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
-        $currentItems = $this->getCurrentItems($tableName, $uid, $workspace)->fetchAll();
+        $currentItems = $this->rawIndexRepository->findAllEvents($tableName, $uid, $workspace);
 
         $event = new IndexPreUpdateEvent($neededItems, $tableName, $uid);
         $this->eventDispatcher->dispatch($event);

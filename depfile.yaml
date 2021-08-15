@@ -1,0 +1,69 @@
+paths:
+  - ./Classes
+layers:
+  -
+    name: Controller
+    collectors:
+      -
+        type: className
+        regex: .*Controller.*
+  -
+    name: Repository
+    collectors:
+      -
+        type: className
+        regex: .*Repository.*
+  -
+    name: Service
+    collectors:
+      -
+        type: className
+        regex: HDNET.*Service.*
+  -
+    name: Model
+    collectors:
+      -
+        type: className
+        regex: .*Model.*
+  -
+    name: Utility
+    collectors:
+      -
+        type: className
+        regex: .*Utility.*
+  -
+    name: ViewHelper
+    collectors:
+      -
+        type: className
+        regex: .*ViewHelper.*
+#  -
+#    name: CoreDatabase
+#    collectors:
+#      -
+#        type: className
+#        regex: .*Core\\Database.*
+ruleset:
+  Controller:
+    - Service
+    - Repository
+    - Model
+    - Utility
+  Service:
+    - Repository
+    - Model
+    - Utility
+  Repository:
+    - Model
+    - Utility
+#    - CoreDatabase
+  Model:
+    - Utility
+  Utility:
+    - Model
+#    - CoreDatabase
+  ViewHelper:
+    - Utility
+    - Repository
+    - Model
+#  CoreDatabase: ~
