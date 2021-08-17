@@ -19,11 +19,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Backend;
 
 /**
  * Index the given events.
@@ -108,6 +105,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 $this->updateIndex($key, $tableName, (int)$row['uid']);
             }
         }
+
         $this->eventDispatcher->dispatch(new IndexAllEvent($this, IndexAllEvent::POSITION_POST));
     }
 
@@ -127,10 +125,9 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
+        $this->reindexVersions($configurationKey, $tableName, $uid);
 
         $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST));
-
-        $this->reindexVersions($configurationKey, $tableName, $uid);
     }
 
     protected function reindexVersions(string $configurationKey, string $tableName, int $uid)
@@ -150,43 +147,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 $this->reindex($configurationKey, $tableName, $id);
             }
         }
-    }
-
-    /**
-     * Get index count.
-     *
-     * @param string $tableName
-     * @param int    $uid
-     *
-     * @return int
-     */
-    public function getIndexCount(string $tableName, $uid): int
-    {
-        // Note: "uid" could be e.g. NEW6273482 in DataHandler process
-        if (MathUtility::canBeInterpretedAsInteger($uid)) {
-            $workspace = 0;
-            if ($GLOBALS['BE_USER']  instanceof BackendUserAuthentication) {
-                $workspace = (int)$GLOBALS['BE_USER']->workspace;
-            }
-
-            return $this->rawIndexRepository->countAllEvents($tableName, (int)$uid, $workspace);
-        }
-
-        return 0;
-    }
-
-    /**
-     * Get the next events.
-     *
-     * @param string $table
-     * @param int    $uid
-     * @param int    $limit
-     *
-     * @return array|null
-     */
-    public function getNextEvents($table, $uid, $limit = 5)
-    {
-        return $this->rawIndexRepository->findNextEvents((string)$table, (int)$uid, (int)$limit);
     }
 
     /**
@@ -227,8 +187,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             }
         }
 
-        // @todo Workspaces: handle backend preview of times in the list view
-
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
     }
 
@@ -266,6 +224,8 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         }
         foreach ($currentItems as $item) {
             $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
+            // Delete workspace versions
+            $databaseConnection->delete(self::TABLE_NAME, ['t3ver_oid' => $item['uid']]);
         }
 
         if ($workspace) {

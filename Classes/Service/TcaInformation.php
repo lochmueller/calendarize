@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
+use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -15,6 +16,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * TCA information.
+ *
+ * @todo backend preview for workspaces times and count
  */
 class TcaInformation extends AbstractService
 {
@@ -37,12 +40,18 @@ class TcaInformation extends AbstractService
             $previewLimit = (int)$configuration['fieldConf']['config']['items'];
         }
 
-        $indexService = GeneralUtility::makeInstance(IndexerService::class);
-        $count = $indexService->getIndexCount($configuration['table'], $configuration['row']['uid']);
-        $next = $indexService->getNextEvents($configuration['table'], $configuration['row']['uid'], $previewLimit);
-        $content = sprintf(TranslateUtility::get('previewLabel'), $count, $previewLimit) . $this->getEventList($next);
+        return $this->wrapContent($this->renderPreviewField((string)$configuration['table'], (int)$configuration['row']['uid'], $previewLimit));
+    }
 
-        return $this->wrapContent($content);
+    public function renderPreviewField(string $tableName, int $uid, int $limit): string
+    {
+        /** @var RawIndexRepository $rawIndexRepository */
+        $rawIndexRepository = GeneralUtility::makeInstance(RawIndexRepository::class);
+        $count = $rawIndexRepository->countAllEvents($tableName, $uid);
+        $next = $rawIndexRepository->findNextEvents($tableName, $uid, $limit);
+        $content = sprintf(TranslateUtility::get('previewLabel'), $count, $limit) . $this->getEventList($next);
+
+        return $content;
     }
 
     /**
@@ -95,7 +104,10 @@ class TcaInformation extends AbstractService
                 }
                 $entry .= ' (' . $start . ' - ' . $end . ')';
             }
-            $entry .= (ConfigurationInterface::STATE_DEFAULT !== $event['state']) ? ' ' . ucfirst($event['state']) : '';
+            if (ConfigurationInterface::STATE_DEFAULT !== $event['state']) {
+                $entry .= ' / ' . TranslateUtility::get($event['state']);
+                // $entry .= (ConfigurationInterface::STATE_DEFAULT !== $event['state']) ? ' ' . ucfirst($event['state']) : '';
+            }
             $items[] = $entry;
         }
         if (!$items) {

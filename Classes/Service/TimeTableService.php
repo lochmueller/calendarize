@@ -14,6 +14,8 @@ use HDNET\Calendarize\Domain\Repository\ConfigurationRepository;
 use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -37,8 +39,22 @@ class TimeTableService extends AbstractService
             return $timeTable;
         }
 
+        try {
+            $workspace = (int)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('workspace', 'id');
+        } catch (\Exception $exception) {
+            $workspace = 0;
+        }
+
         $configRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
+            if ($workspace) {
+                $row = BackendUtility::getRecord('tx_calendarize_domain_model_configuration', $configurationUid);
+                BackendUtility::workspaceOL('tx_calendarize_domain_model_configuration', $row, $workspace);
+                if (isset($row['_ORIG_uid'])) {
+                    //    $configurationUid = (int)$row['_ORIG_uid'];
+                }
+            }
+
             // Disable Workspace for selection to get also offline versions of configuration
             $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = false;
             $configuration = $configRepository->findByUid($configurationUid);
