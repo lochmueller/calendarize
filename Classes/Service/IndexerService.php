@@ -205,7 +205,10 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $event = new IndexPreUpdateEvent($neededItems, $tableName, $uid);
         $this->eventDispatcher->dispatch($event);
 
-        foreach ($event->getNeededItems() as $neededKey => $neededItem) {
+        // use return of event for further processing
+        $neededItems = $event->getNeededItems();
+
+        foreach ($neededItems as $neededKey => $neededItem) {
             foreach ($currentItems as $currentKey => $currentItem) {
                 if (ArrayUtility::isEqualArray($neededItem, $currentItem, ['tstamp', 'crdate', 'slug'])) {
                     // Check if the current slug starts with the new slug
