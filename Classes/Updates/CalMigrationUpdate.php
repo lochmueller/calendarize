@@ -151,15 +151,15 @@ class CalMigrationUpdate extends AbstractUpdate
         $table = 'sys_category_record_mm';
 
         $q = $this->getQueryBuilder($table);
-        $count = (int)$q->count('*')
+        $count = $q->count('*')
             ->from($table)
             ->where(
                 $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
                 $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
             )
-            ->execute();
+            ->execute()->fetchAssociative();
 
-        return $count > 0;
+        return (int)$count['COUNT(*)'] > 0;
     }
 
     /**
