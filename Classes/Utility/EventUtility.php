@@ -34,10 +34,7 @@ class EventUtility
         }
 
         $query = HelperUtility::getQuery($modelName);
-        if (Environment::isCli()
-            || ($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
-            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
-        ) {
+        if (self::isIgnoreEnableFields()) {
             $query->getQuerySettings()->setIgnoreEnableFields(true);
         }
 
@@ -49,5 +46,26 @@ class EventUtility
 
         return $query->execute()
             ->getFirst();
+    }
+
+    protected static function isIgnoreEnableFields(): bool
+    {
+        // Regular CLI requests
+        if (Environment::isCli()) {
+            return true;
+        }
+
+        // Modern (TYPO3_REQUEST) Backend request
+        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+            return true;
+        }
+
+        // Old backend request (e.g. install tool wizards)
+        if (defined('TYPO3_MODE') && TYPO3_MODE === 'BE') {
+            return true;
+        }
+
+        return false;
     }
 }
