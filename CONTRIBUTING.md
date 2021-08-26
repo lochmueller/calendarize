@@ -11,3 +11,9 @@ Features: Please create a issue first and describe the feature!
 The extension use PHP CS Fixer & PHP Unit in tooling. Please run "composer code" or equivalent to execute PHP CS Fixer and the tests in front of the commit!
 
 More tooling will be added shortly.
+
+## Functional tests
+
+Docker is required. Please run:
+
+`./Build/Scripts/runTests.sh -s functional`

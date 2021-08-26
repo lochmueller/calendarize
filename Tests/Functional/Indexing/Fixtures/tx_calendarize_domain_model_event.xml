@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_calendarize_domain_model_event>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Live Event</title>
+        <calendarize>1</calendarize>
+    </tx_calendarize_domain_model_event>
+    <tx_calendarize_domain_model_event>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>Workspace Override</title>
+        <t3ver_oid>1</t3ver_oid>
+        <t3ver_stage>1</t3ver_stage>
+        <t3ver_wsid>91</t3ver_wsid>
+        <deleted>0</deleted>
+        <calendarize>1</calendarize> <!-- point always to live versions?! -->
+    </tx_calendarize_domain_model_event>
+</dataset>

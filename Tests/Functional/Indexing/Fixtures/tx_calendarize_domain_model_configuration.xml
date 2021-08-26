@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_calendarize_domain_model_configuration>
+        <uid>1</uid>
+        <pid>1</pid>
+        <type>time</type>
+        <handling>include</handling>
+        <start_date>2026-04-01</start_date>
+        <all_day>1</all_day>
+    </tx_calendarize_domain_model_configuration>
+    <tx_calendarize_domain_model_configuration>
+        <uid>2</uid>
+        <pid>1</pid>
+        <type>time</type>
+        <handling>include</handling>
+        <start_date>2026-04-13</start_date>
+        <all_day>1</all_day>
+        <t3ver_oid>1</t3ver_oid>
+        <t3ver_wsid>91</t3ver_wsid>
+        <all_day>1</all_day>
+    </tx_calendarize_domain_model_configuration>
+</dataset>
