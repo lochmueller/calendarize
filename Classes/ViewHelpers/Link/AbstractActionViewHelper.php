@@ -52,6 +52,14 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
                 $this->pluginName
             );
 
+        if ('' != $this->arguments['title']) {
+            $this->tag->addAttribute('title', $this->arguments['title']);
+        }
+
+        if ('' != $this->arguments['class']) {
+            $this->tag->addAttribute('class', $this->arguments['class']);
+        }
+
         if ('' !== $this->lastHref) {
             $this->tag->addAttribute('href', $this->lastHref);
             $this->tag->setContent($this->renderChildren());
@@ -60,7 +68,6 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
         } else {
             $result = $this->renderChildren();
         }
-
         return $result;
     }
 }
