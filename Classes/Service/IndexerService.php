@@ -170,7 +170,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             // Remove all entries in current workspace that are related to the current item
             HelperUtility::getDatabaseConnection(self::TABLE_NAME)->delete(self::TABLE_NAME, [
                 't3ver_wsid' => $workspace,
-                't3ver_state' => '1',
                 'foreign_table' => $tableName,
                 'foreign_uid' => $origId,
             ]);
@@ -178,7 +177,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             // Create deleted items for very entry in the live workspace
             $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $origId, 0);
             foreach ($liveItems as $liveItem) {
-                $liveItem['t3ver_state'] = '1';
+                $liveItem['t3ver_state'] = '2';
                 $liveItem['t3ver_oid'] = $liveItem['uid'];
                 $liveItem['t3ver_wsid'] = $workspace;
                 $liveItem['foreign_uid'] = $origId;
@@ -226,13 +225,10 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             }
         }
         foreach ($currentItems as $item) {
+            // @todo check "_ORIG_uid"
             $databaseConnection->delete(self::TABLE_NAME, ['uid' => $item['uid']]);
             // Delete workspace versions
             $databaseConnection->delete(self::TABLE_NAME, ['t3ver_oid' => $item['uid']]);
-        }
-
-        if ($workspace) {
-            // @todo Workspaces: Remove all live placeholders that are connected to Entries of current workspace
         }
 
         $this->generateSlugAndInsert($neededItems, $workspace);
@@ -248,14 +244,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $db = HelperUtility::getDatabaseConnection(self::TABLE_NAME);
         foreach ($neededItems as $key => $item) {
             if ($workspace) {
-                $livePlaceholder = $item;
-                $livePlaceholder['t3ver_wsid'] = 0;
-                $livePlaceholder['t3ver_state'] = 1;
-                $livePlaceholder['slug'] = $this->slugService->makeSlugUnique($livePlaceholder);
-
-                $db->insert(self::TABLE_NAME, $livePlaceholder);
-
-                $item['t3ver_oid'] = $db->lastInsertId(self::TABLE_NAME);
+                $item['t3ver_oid'] = 0;
             }
 
             $item['slug'] = $this->slugService->makeSlugUnique($item);

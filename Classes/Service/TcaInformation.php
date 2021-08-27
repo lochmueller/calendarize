@@ -11,6 +11,7 @@ use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
+use HDNET\Calendarize\Utility\WorkspaceUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -47,8 +48,8 @@ class TcaInformation extends AbstractService
     {
         /** @var RawIndexRepository $rawIndexRepository */
         $rawIndexRepository = GeneralUtility::makeInstance(RawIndexRepository::class);
-        $count = $rawIndexRepository->countAllEvents($tableName, $uid);
-        $next = $rawIndexRepository->findNextEvents($tableName, $uid, $limit);
+        $count = $rawIndexRepository->countAllEvents($tableName, $uid, WorkspaceUtility::getCurrentWorkspaceId());
+        $next = $rawIndexRepository->findNextEvents($tableName, $uid, $limit, WorkspaceUtility::getCurrentWorkspaceId());
         $content = sprintf(TranslateUtility::get('previewLabel'), $count, $limit) . $this->getEventList($next);
 
         return $content;

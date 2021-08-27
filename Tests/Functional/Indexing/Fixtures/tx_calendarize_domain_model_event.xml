@@ -11,9 +11,17 @@
         <pid>1</pid>
         <title>Workspace Override</title>
         <t3ver_oid>1</t3ver_oid>
-        <t3ver_stage>1</t3ver_stage>
         <t3ver_wsid>91</t3ver_wsid>
         <deleted>0</deleted>
-        <calendarize>1</calendarize> <!-- point always to live versions?! -->
+        <calendarize>2</calendarize>
+    </tx_calendarize_domain_model_event>
+    <tx_calendarize_domain_model_event>
+        <uid>4</uid>
+        <pid>1</pid>
+        <title>Workspace only</title>
+        <t3ver_oid>3</t3ver_oid>
+        <t3ver_state>-1</t3ver_state>
+        <t3ver_wsid>91</t3ver_wsid>
+        <calendarize>3</calendarize>
     </tx_calendarize_domain_model_event>
 </dataset>

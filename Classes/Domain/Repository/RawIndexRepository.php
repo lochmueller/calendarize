@@ -4,7 +4,6 @@ namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use HDNET\Calendarize\Utility\WorkspaceUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
@@ -48,14 +47,30 @@ class RawIndexRepository
     /**
      * Find the next events (ignore enable fields).
      */
-    public function findNextEvents(string $foreignTable, int $uid, int $limit = 5): array
+    public function findNextEvents(string $foreignTable, int $uid, int $limit = 5, int $workspace = 0): array
+    {
+        return $this->findEventsAfterStartDate($foreignTable, $uid, DateTimeUtility::getNow(), $limit, $workspace);
+    }
+
+    /**
+     * Get the current items (ignore enable fields).
+     */
+    public function findAllEvents(string $tableName, int $uid, int $workspace = 0): array
+    {
+        return $this->findEventsAfterStartDate($tableName, $uid, new \DateTime('1970-01-01'), 999999, $workspace);
+    }
+
+    /**
+     * Find the next events (ignore enable fields).
+     */
+    public function findEventsAfterStartDate(string $foreignTable, int $uid, \DateTime $dateTime, int $limit = 5, int $workspace = 0): array
     {
         $q = HelperUtility::getDatabaseConnection($this->tableName)->createQueryBuilder();
 
         $q->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
-            ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, WorkspaceUtility::getCurrentWorkspaceId()));
+            ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, $workspace));
 
         $liveId = BackendUtility::getLiveVersionIdOfRecord($foreignTable, $uid);
         if (null !== $liveId) {
@@ -66,7 +81,7 @@ class RawIndexRepository
             ->from($this->tableName)
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->gte('start_date', $q->createNamedParameter(DateTimeUtility::getNow()->format('Y-m-d'))),
+                    $q->expr()->gte('start_date', $q->createNamedParameter($dateTime->format('Y-m-d'))),
                     $q->expr()->eq('foreign_table', $q->createNamedParameter($foreignTable)),
                     $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
                 )
@@ -78,37 +93,11 @@ class RawIndexRepository
         $result = (array)$q->execute()->fetchAll();
 
         foreach ($result as $key => $row) {
-            BackendUtility::workspaceOL($this->tableName, $row, WorkspaceUtility::getCurrentWorkspaceId());
+            BackendUtility::workspaceOL($this->tableName, $row, $workspace);
             $result[$key] = $row;
         }
 
         return $result;
-    }
-
-    /**
-     * Get the current items (ignore enable fields).
-     */
-    public function findAllEvents(string $tableName, int $uid, int $workspace = 0): array
-    {
-        $q = HelperUtility::getDatabaseConnection($this->tableName)->createQueryBuilder();
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
-            ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, $workspace));
-
-        $liveId = BackendUtility::getLiveVersionIdOfRecord($tableName, $uid);
-        if (null !== $liveId) {
-            $uid = $liveId;
-        }
-
-        $q->select('*')
-            ->from($this->tableName)
-            ->where(
-                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
-                $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
-            );
-
-        return (array)$q->execute()->fetchAll();
     }
 
     /**
@@ -118,24 +107,7 @@ class RawIndexRepository
      */
     public function countAllEvents(string $tableName, int $uid, int $workspace = 0): int
     {
-        $q = HelperUtility::getDatabaseConnection($this->tableName)->createQueryBuilder();
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
-            ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, WorkspaceUtility::getCurrentWorkspaceId()));
-
-        $liveId = BackendUtility::getLiveVersionIdOfRecord($tableName, $uid);
-        if (null !== $liveId) {
-            $uid = $liveId;
-        }
-
-        $q->select('*')
-            ->from($this->tableName)
-            ->where(
-                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)),
-                $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
-            );
-
-        return (int)$q->execute()->rowCount();
+        // Select all to check workspaces in the right way
+        return \count($this->findAllEvents($tableName, $uid, $workspace));
     }
 }
