@@ -17,8 +17,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * TCA information.
- *
- * @todo backend preview for workspaces times and count
  */
 class TcaInformation extends AbstractService
 {

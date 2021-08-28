@@ -3,14 +3,14 @@
 namespace HDNET\Calendarize\Domain\Repository;
 
 use HDNET\Calendarize\Utility\DateTimeUtility;
-use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Versioning\VersionState;
 
-class RawIndexRepository
+class RawIndexRepository extends AbstractRawRepository
 {
     protected $tableName = 'tx_calendarize_domain_model_index';
 
@@ -24,7 +24,7 @@ class RawIndexRepository
         $now = DateTimeUtility::getNow();
         $now->sub(new \DateInterval($interval));
 
-        $q = HelperUtility::getDatabaseConnection($this->tableName)->createQueryBuilder();
+        $q = $this->getQueryBuilder();
         $q->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
@@ -65,7 +65,7 @@ class RawIndexRepository
      */
     public function findEventsAfterStartDate(string $foreignTable, int $uid, \DateTime $dateTime, int $limit = 5, int $workspace = 0): array
     {
-        $q = HelperUtility::getDatabaseConnection($this->tableName)->createQueryBuilder();
+        $q = $this->getQueryBuilder();
 
         $q->getRestrictions()
             ->removeAll()
@@ -97,6 +97,11 @@ class RawIndexRepository
             $result[$key] = $row;
         }
 
+        // @todo check
+        $result = array_values(array_filter($result, function ($item) {
+            return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== $item['t3ver_state'];
+        }));
+
         return $result;
     }
 
@@ -109,5 +114,21 @@ class RawIndexRepository
     {
         // Select all to check workspaces in the right way
         return \count($this->findAllEvents($tableName, $uid, $workspace));
+    }
+
+    public function deleteNotInUniqueRegisterKey(array $validKeys)
+    {
+        $q = $this->getQueryBuilder();
+
+        foreach ($validKeys as $key => $value) {
+            $validKeys[$key] = $q->createNamedParameter($value);
+        }
+
+        $q->delete($this->tableName)
+            ->where(
+                $q->expr()->notIn('unique_register_key', $validKeys)
+            )->execute();
+
+        return (bool)$q->execute();
     }
 }
