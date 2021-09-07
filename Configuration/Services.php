@@ -46,7 +46,7 @@ return function (ContainerConfigurator $configurator) {
             ->arg('$view', new Reference('dashboard.views.widget'))
             ->arg('$dataProvider', new Reference(IndexAmountDataProvider::class))
             ->arg('$options', [
-                'title' => TranslateUtility::getLll('calendarizeIndexAmount.title'),
+                'title' => TranslateUtility::getLll('calendarizeIndexAmount.description'),
                 'icon' => 'calendarize-extension',
             ])->tag('dashboard.widget', [
                 'identifier' => 'calendarizeIndexAmount',
