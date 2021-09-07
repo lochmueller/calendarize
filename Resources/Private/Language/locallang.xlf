@@ -139,16 +139,14 @@
 				<source>Wrong date</source>
 			</trans-unit>
 			<trans-unit id="wrong.date.message">
-				<source>The date of one of the date configurations is wrong. It is not "useful" to select a end date in front of a
-					start date!
+				<source>The date of one of the date configurations is wrong. The end date cannot be earlier than the start date.
 				</source>
 			</trans-unit>
 			<trans-unit id="wrong.time">
 				<source>Wrong time</source>
 			</trans-unit>
 			<trans-unit id="wrong.time.message">
-				<source>The time of one of the date configurations is wrong. It is not "useful" to select a end time in front of a
-					start time!
+				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the start time!
 				</source>
 			</trans-unit>
 			<trans-unit id="booking.thankYouMessage">
@@ -210,7 +208,7 @@
 				<source>None</source>
 			</trans-unit>
 			<trans-unit id="configuration.day.business">
-				<source>Business day (Mo-Sa)</source>
+				<source>Business day (Mon-Sat)</source>
 			</trans-unit>
 			<trans-unit id="configuration.day.friday">
 				<source>Friday</source>
@@ -237,13 +235,13 @@
 				<source>Wednesday</source>
 			</trans-unit>
 			<trans-unit id="configuration.day.weekday">
-				<source>Weekday (Mo-So)</source>
+				<source>Weekday (Mon-Sun)</source>
 			</trans-unit>
 			<trans-unit id="configuration.day.weekend">
-				<source>Weekend (Sa-So)</source>
+				<source>Weekend (Sat-Sun)</source>
 			</trans-unit>
 			<trans-unit id="configuration.day.workday">
-				<source>Workday (Mo-Fr)</source>
+				<source>Workday (Mon-Fri)</source>
 			</trans-unit>
 			<trans-unit id="configuration.frequency.">
 				<source>None</source>
