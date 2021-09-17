@@ -150,6 +150,17 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
         $origId = isset($rawRecord['t3ver_oid']) ? (int)$rawRecord['t3ver_oid'] : 0;
 
+        if (VersionState::DELETE_PLACEHOLDER === $rawRecord['t3ver_state']) {
+            // Remove all entries in current workspace that are related to the current item
+            $this->rawIndexRepository->deleteByIdentifier([
+                't3ver_wsid' => $workspace,
+                'foreign_table' => $tableName,
+                'foreign_uid' => $checkUid,
+            ]);
+
+            return;
+        }
+
         if ($workspace && null !== $liveId && $liveId !== $uid) {
             // Update live in front of versions
             $this->reindex($configurationKey, $tableName, $liveId);
