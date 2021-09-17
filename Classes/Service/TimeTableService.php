@@ -15,7 +15,6 @@ use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -29,7 +28,7 @@ class TimeTableService extends AbstractService
      * Build the timetable for the given configuration matrix (sorted).
      *
      * @param array $ids
-     * @param int $workspace
+     * @param int   $workspace
      *
      * @return array
      */
