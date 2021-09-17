@@ -29,20 +29,15 @@ class TimeTableService extends AbstractService
      * Build the timetable for the given configuration matrix (sorted).
      *
      * @param array $ids
+     * @param int $workspace
      *
      * @return array
      */
-    public function getTimeTablesByConfigurationIds(array $ids)
+    public function getTimeTablesByConfigurationIds(array $ids, $workspace)
     {
         $timeTable = [];
         if (!$ids) {
             return $timeTable;
-        }
-
-        try {
-            $workspace = (int)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('workspace', 'id');
-        } catch (\Exception $exception) {
-            $workspace = 0;
         }
 
         $configRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationRepository::class);
@@ -51,7 +46,7 @@ class TimeTableService extends AbstractService
                 $row = BackendUtility::getRecord('tx_calendarize_domain_model_configuration', $configurationUid);
                 BackendUtility::workspaceOL('tx_calendarize_domain_model_configuration', $row, $workspace);
                 if (isset($row['_ORIG_uid'])) {
-                    //    $configurationUid = (int)$row['_ORIG_uid'];
+                    $configurationUid = (int)$row['_ORIG_uid'];
                 }
             }
 
