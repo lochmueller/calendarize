@@ -15,7 +15,6 @@ use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -29,20 +28,15 @@ class TimeTableService extends AbstractService
      * Build the timetable for the given configuration matrix (sorted).
      *
      * @param array $ids
+     * @param int   $workspace
      *
      * @return array
      */
-    public function getTimeTablesByConfigurationIds(array $ids)
+    public function getTimeTablesByConfigurationIds(array $ids, $workspace)
     {
         $timeTable = [];
         if (!$ids) {
             return $timeTable;
-        }
-
-        try {
-            $workspace = (int)GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('workspace', 'id');
-        } catch (\Exception $exception) {
-            $workspace = 0;
         }
 
         $configRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationRepository::class);
@@ -51,7 +45,7 @@ class TimeTableService extends AbstractService
                 $row = BackendUtility::getRecord('tx_calendarize_domain_model_configuration', $configurationUid);
                 BackendUtility::workspaceOL('tx_calendarize_domain_model_configuration', $row, $workspace);
                 if (isset($row['_ORIG_uid'])) {
-                    //    $configurationUid = (int)$row['_ORIG_uid'];
+                    $configurationUid = (int)$row['_ORIG_uid'];
                 }
             }
 
