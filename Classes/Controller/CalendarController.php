@@ -318,7 +318,8 @@ class CalendarController extends AbstractController
         $limit = (int)($this->settings['limit']);
         $sort = $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
-        $indices = $this->indexRepository->findByPast($limit, $sort);
+        $listStartTime = $this->settings['listStartTime'];
+        $indices = $this->indexRepository->findByPast($limit, $sort, $listStartTime);
 
         $this->eventExtendedAssignMultiple([
             'indices' => $indices,

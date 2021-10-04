@@ -297,15 +297,19 @@ class IndexRepository extends AbstractRepository
      */
     public function findByPast(
         $limit,
-        $sort
+        $sort,
+        $listStartTime = 0
     ) {
-        //create Query
-        $query = $this->createQuery();
-        //Get actual datetime
         $now = DateTimeUtility::getNow();
+        if ('now' !== $listStartTime) {
+            $now->setTime(0, 0, 0);
+        }
+
+        $query = $this->createQuery();
 
         $constraints = $this->getDefaultConstraints($query);
-        $constraints[] = $query->lessThanOrEqual('startDate', $now->format('Y-m-d'));
+        $this->addTimeFrameConstraints($constraints, $query, null, $now);
+        
         $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings($this->getSorting($sort));
         if ($limit > 0) {
