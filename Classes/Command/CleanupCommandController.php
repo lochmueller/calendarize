@@ -151,7 +151,7 @@ class CleanupCommandController extends Command
         /** @var Repository $repository */
         $repository = GeneralUtility::makeInstance($repositoryName);
 
-        $io->section('Reindex all events');
+        $io->section('Cleanup outdated events');
         // Index all events to start on a clean slate
         $this->indexerService->reindexAll();
 
