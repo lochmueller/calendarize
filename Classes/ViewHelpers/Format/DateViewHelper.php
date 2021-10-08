@@ -7,7 +7,6 @@ namespace HDNET\Calendarize\ViewHelpers\Format;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
@@ -17,7 +16,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 class DateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Format\DateViewHelper
 {
     /**
-     * Initialize arguments
+     * Initialize arguments.
      */
     public function initializeArguments()
     {
@@ -26,41 +25,42 @@ class DateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Format\DateViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
+     * @param array                     $arguments
+     * @param \Closure                  $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      *
      * @return string
+     *
      * @throws Exception
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         $format = $arguments['format'];
         $base = $arguments['base'] ?? GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('date', 'timestamp');
-        if (is_string($base)) {
+        if (\is_string($base)) {
             $base = trim($base);
         }
 
-        if ($format === '') {
+        if ('' === $format) {
             $format = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?: 'Y-m-d';
         }
 
         $date = $renderChildrenClosure();
-        if ($date === null) {
+        if (null === $date) {
             return '';
         }
 
-        if (is_string($date)) {
+        if (\is_string($date)) {
             $date = trim($date);
         }
 
-        if ($date === '') {
+        if ('' === $date) {
             $date = 'now';
         }
 
         if (!$date instanceof \DateTimeInterface) {
             try {
-                $base = $base instanceof \DateTimeInterface ? (int) $base->format('U') : (int) strtotime((MathUtility::canBeInterpretedAsInteger($base) ? '@' : '') . $base);
+                $base = $base instanceof \DateTimeInterface ? (int)$base->format('U') : (int)strtotime((MathUtility::canBeInterpretedAsInteger($base) ? '@' : '') . $base);
                 $dateTimestamp = strtotime((MathUtility::canBeInterpretedAsInteger($date) ? '@' : '') . $date, $base);
                 $date = new \DateTime('@' . $dateTimestamp);
                 $date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
@@ -74,9 +74,10 @@ class DateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Format\DateViewHelper
             $date = new \DateTime($date->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
         }
 
-        if (strpos($format, '%') !== false) {
-            return strftime($format, (int) $date->format('U'));
+        if (false !== strpos($format, '%')) {
+            return strftime($format, (int)$date->format('U'));
         }
+
         return $date->format($format);
     }
 }
