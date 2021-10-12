@@ -31,9 +31,10 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
 
             $indexUid = $this->getIndexForEventUid($linkDetails['identifier'], $eventId);
 
-            if(!$indexUid){
+            if (!$indexUid) {
                 $conf['parameter'] = 0;
                 $linkDetails = [];
+
                 return parent::build($linkDetails, $linkText, $target, $conf);
             }
 
