@@ -29,11 +29,20 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
                 throw new \Exception('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
             }
 
+            $indexUid = $this->getIndexForEventUid($linkDetails['identifier'], $eventId);
+
+            if (!$indexUid) {
+                $conf['parameter'] = 0;
+                $linkDetails = [];
+
+                return parent::build($linkDetails, $linkText, $target, $conf);
+            }
+
             $typoScriptConfiguration = [
                 'parameter' => $defaultPid,
                 'additionalParams' => HttpUtility::buildQueryString([
                     'tx_calendarize_calendar' => [
-                        'index' => $this->getIndexForEventUid($linkDetails['identifier'], $eventId),
+                        'index' => $indexUid,
                         'controller' => 'Calendar',
                         'action' => 'detail',
                     ],
