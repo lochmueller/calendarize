@@ -32,7 +32,7 @@ class TimeTableService extends AbstractService
      *
      * @return array
      */
-    public function getTimeTablesByConfigurationIds(array $ids, $workspace)
+    public function getTimeTablesByConfigurationIds(array $ids, int $workspace)
     {
         $timeTable = [];
         if (!$ids) {

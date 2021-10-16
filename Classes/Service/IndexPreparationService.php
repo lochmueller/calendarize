@@ -59,7 +59,7 @@ class IndexPreparationService extends AbstractService
         $neededItems = [];
         if ($configurations) {
             $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
-            $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations, $rawRecord['t3ver_wsid']);
+            $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations, (int)$rawRecord['t3ver_wsid']);
             foreach ($neededItems as $key => $record) {
                 $record['foreign_table'] = $tableName;
                 $record['foreign_uid'] = $uid;

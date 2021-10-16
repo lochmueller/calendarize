@@ -54,7 +54,7 @@ abstract class AbstractTimeTable extends AbstractService
     {
         $this->timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
 
-        return $this->timeTableService->getTimeTablesByConfigurationIds($group->getConfigurationIds());
+        return $this->timeTableService->getTimeTablesByConfigurationIds($group->getConfigurationIds(), 0);
     }
 
     /**
