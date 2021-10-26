@@ -5,9 +5,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ubuntu-latest]
-        php-versions: ["7.4", "8.0"]
-    runs-on: ${{ matrix.operating-system }}
+        php: ["7.4", "8.0"]
+        typo3: ["10.4", "11.5"]
+        exclude:
+          - php: "8.0"
+            typo3: "10.4"
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,8 +37,8 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+      - name: Install the right version
+        run: composer require "typo3/cms-core:^${{ matrix.typo3 }}" "typo3/cms-workspaces:^${{ matrix.typo3 }}" -W
 
       - name: Unit Tests with phpunit
         run: composer run tool:phpunit --
