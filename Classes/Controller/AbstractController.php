@@ -16,7 +16,6 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
@@ -91,59 +90,6 @@ abstract class AbstractController extends ActionController
     {
         parent::initializeAction();
         AbstractBookingRequest::setConfigurations(GeneralUtility::trimExplode(',', $this->settings['configuration']));
-    }
-
-    /**
-     * Calls the specified action method and passes the arguments.
-     *
-     * If the action returns a string, it is appended to the content in the
-     * response object. If the action doesn't return anything and a valid
-     * view exists, the view is rendered automatically.
-     *
-     * @api
-     */
-    protected function callActionMethod()
-    {
-        parent::callActionMethod();
-        if (isset($this->feedFormats[$this->request->getFormat()])) {
-            $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
-            if ($this->request->hasArgument('hmac')) {
-                $hmac = $this->request->getArgument('hmac');
-                if ($this->validatePluginHmac($hmac)) {
-                    $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
-                }
-
-                return;
-            }
-            $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
-        }
-    }
-
-    /**
-     * Send the content type header and the right file extension in front of the content.
-     *
-     * @param $contentType
-     * @param $fileExtension
-     */
-    protected function sendHeaderAndFilename($contentType, $fileExtension)
-    {
-        $testMode = (bool)$this->settings['feed']['debugMode'];
-        if ($testMode) {
-            header('Content-Type: text/plain; charset=utf-8');
-        } else {
-            header('Content-Type: ' . $contentType . '; charset=utf-8');
-            header('Content-Disposition: inline; filename=calendar.' . $fileExtension);
-        }
-        switch ($this->request->getFormat()) {
-            case 'ics':
-                // Use CRLF, see https://tools.ietf.org/html/rfc5545#section-3.1
-                echo str_replace("\n", "\r\n", $this->response->getContent());
-                break;
-            default:
-                echo $this->response->getContent();
-                break;
-        }
-        HttpUtility::setResponseCodeAndExit(HttpUtility::HTTP_STATUS_200);
     }
 
     /**

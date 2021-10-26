@@ -33,7 +33,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 /**
  * Calendar.
  */
-class CalendarController extends AbstractController
+class CalendarController extends AbstractCompatibilityController
 {
     /**
      * @var ObjectManagerInterface
