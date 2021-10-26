@@ -33,11 +33,11 @@
 		}
 	],
 	"require": {
-		"php": "^7.3||^7.4",
+		"php": "^7.4||^8.0",
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"typo3/cms-core": "^10.4.12",
-		"lochmueller/autoloader": "^7.1.0",
+		"typo3/cms-core": "^10.4||^11.5",
+		"lochmueller/autoloader": "^7.1",
 		"sabre/vobject": "^4.2"
 	},
 	"replace": {
@@ -55,7 +55,7 @@
 	},
 	"require-dev": {
         "typo3/testing-framework": "^6.5",
-        "typo3/cms-workspaces": "^10.4.12",
+        "typo3/cms-workspaces": "^10.4||^11.5",
 		"squizlabs/php_codesniffer": "^2.6",
 		"friendsofphp/php-cs-fixer": "^3.0",
 		"phpmd/phpmd": "^2.4",
