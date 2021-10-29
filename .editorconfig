@@ -24,6 +24,10 @@ indent_size = 2
 [**.ics]
 insert_final_newline = false
 
+# JSON-Files
+[*.json]
+indent_style = tab
+
 [{*.rst,*.rst.txt}]
 indent_style = space
 indent_size = 3
@@ -35,9 +39,17 @@ indent_style = space
 indent_size = 4
 max_line_length = 80
 
+# TS/JS-Files
+[*.{ts,js}]
+indent_size = 2
+
 # TypoScript
 [*.{typoscript,tsconfig}]
 indent_size = 2
+
+# XLF-Files
+[*.xlf]
+indent_style = tab
 
 # YAML-Files
 [*.{yaml,yml}]
