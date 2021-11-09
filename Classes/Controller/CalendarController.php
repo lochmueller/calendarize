@@ -659,7 +659,7 @@ class CalendarController extends AbstractCompatibilityController
                 $overrideStartDate = $relativeDate->getTimestamp();
                 $overrideEndDate = 0;
                 $overrideEndDateRelative = trim($this->settings['overrideEndRelative']);
-                if ('' !== $overrideStartDateRelative) {
+                if ('' !== $overrideEndDateRelative) {
                     try {
                         $relativeDate->modify($overrideEndDateRelative);
                         $overrideEndDate = $relativeDate->getTimestamp();
