@@ -78,7 +78,7 @@ routeEnhancers:
         default: 'quarter'
         localeMap:
           - locale: 'de_.*'
-            value: 'quatal'
+            value: 'quartal'
       calendarize_month_label:
         type: LocaleModifier
         default: 'month'
