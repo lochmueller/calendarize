@@ -22,6 +22,7 @@ routeEnhancers:
       - routePath: '/{calendarize_page_label}/{currentPage}'
         _controller: 'Calendar::list'
 
+    defaultController: 'Calendar::list'
 #    requirements:
       # Specify kind of parameters, if the aspects are not used.
       # year: '\d{4}'
