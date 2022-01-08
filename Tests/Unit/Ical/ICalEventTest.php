@@ -329,6 +329,29 @@ END:VCALENDAR
         self::assertFalse($event->isAllDay());
     }
 
+    public function testUnknownTimezone()
+    {
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:de3e9a87-69ec-43f8-9332-5abe7e04f3ca@example.com
+DTSTAMP:20220107T220312Z
+DTSTART;TZID="Unknown timezone":20220214T123000
+DTEND;TZID="Unknown timezone":20220214T133000
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+        self::assertEquals('20220214', $event->getStartDate()->format('Ymd'));
+        self::assertEquals('20220214', $event->getEndDate()->format('Ymd'));
+        // With an unknown timezone we expect the time to be UTC or the server time zone
+        // (depends on the library used, in this case these are the same!)
+        self::assertEquals((12 * 60 + 30) * 60, $event->getStartTime());
+        self::assertEquals((13 * 60 + 30) * 60, $event->getEndTime());
+        self::assertFalse($event->isAllDay());
+    }
+
     public function testAllDayTimezone()
     {
         date_default_timezone_set('America/Los_Angeles');
