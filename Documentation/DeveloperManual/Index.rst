@@ -6,4 +6,5 @@ For developers
    OwnEvents/Index
    Features/Index
    Features/SpeakingUrl
+   Bookings
    TypoScript
