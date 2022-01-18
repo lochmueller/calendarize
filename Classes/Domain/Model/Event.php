@@ -323,7 +323,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      */
     public function getRealUrlAliasBase(): string
     {
-        return $this->getSlug() ?: $this->getTitle();
+        return $this->getSlug() ?: $this->getTitle() ?? '';
     }
 
     /**
