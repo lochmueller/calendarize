@@ -18,8 +18,10 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 /**
  * BackendController.
  */
-class BackendController extends AbstractCompatibilityController
+class BackendController extends AbstractController
 {
+    protected $defaultViewObjectName = \TYPO3\CMS\Backend\View\BackendTemplateView::class;
+
     public const OPTIONS_KEY = 'calendarize_be';
 
     /**
