@@ -1,6 +1,6 @@
 <div xmlns="http://www.w3.org/1999/xhtml" lang="en"
 		 xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
-		 xmlns:c="http://typo3.org/ns/HDNET/Calendarize/ViewHelpers">
+>
 
 	<f:layout name="Default"/>
 
@@ -10,10 +10,10 @@
 				<f:render partial="{index.configuration.partialIdentifier}/Detail" arguments="{index: index}"/>
 				<div class="btn-group">
 					<f:if condition="{settings.listPid}">
-						<c:link.list class="btn btn-default">
+						<f:link.page pageUid="{settings.listPid}" class="btn btn-default">
 							<span class="glyphicon glyphicon-arrow-left"></span>
 							<f:translate key="back"/>
-						</c:link.list>
+						</f:link.page>
 					</f:if>
 					<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal
 					</f:link.action>
