@@ -7,9 +7,7 @@ namespace HDNET\Calendarize\ViewHelpers;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -26,6 +24,19 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class IndicesByObjectViewHelper extends AbstractViewHelper
 {
+    /**
+     * @var IndexRepository
+     */
+    protected $indexRepository;
+
+    /**
+     * @param IndexRepository $indexRepository
+     */
+    public function injectIndexRepository(IndexRepository $indexRepository)
+    {
+        $this->indexRepository = $indexRepository;
+    }
+
     /**
      * Init arguments.
      */
@@ -46,8 +57,6 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
-
         /** @var AbstractEntity $object */
         $object = $this->arguments['object'];
 
@@ -67,7 +76,7 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
         $fakeIndex->setForeignTable($config['tableName']);
         $fakeIndex->setForeignUid($object->getUid());
 
-        return $indexRepository->findByTraversing(
+        return $this->indexRepository->findByTraversing(
             $fakeIndex,
             $this->arguments['future'],
             $this->arguments['past'],

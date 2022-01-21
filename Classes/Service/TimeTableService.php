@@ -17,13 +17,25 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Time table builder service.
  */
 class TimeTableService extends AbstractService
 {
+    /**
+     * @var ConfigurationRepository
+     */
+    protected $configurationRepository;
+
+    /**
+     * @param ConfigurationRepository $configurationRepository
+     */
+    public function __construct(ConfigurationRepository $configurationRepository)
+    {
+        $this->configurationRepository = $configurationRepository;
+    }
+
     /**
      * Build the timetable for the given configuration matrix (sorted).
      *
@@ -39,7 +51,6 @@ class TimeTableService extends AbstractService
             return $timeTable;
         }
 
-        $configRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(ConfigurationRepository::class);
         foreach ($ids as $configurationUid) {
             if ($workspace) {
                 $row = BackendUtility::getRecord('tx_calendarize_domain_model_configuration', $configurationUid);
@@ -51,7 +62,7 @@ class TimeTableService extends AbstractService
 
             // Disable Workspace for selection to get also offline versions of configuration
             $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = false;
-            $configuration = $configRepository->findByUid($configurationUid);
+            $configuration = $this->configurationRepository->findByUid($configurationUid);
             $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = true;
             if (!($configuration instanceof Configuration)) {
                 continue;

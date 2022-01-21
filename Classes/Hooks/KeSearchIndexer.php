@@ -15,7 +15,6 @@ use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * KE Search Indexer.
@@ -24,6 +23,19 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class KeSearchIndexer extends AbstractHook
 {
+    /**
+     * @var IndexRepository
+     */
+    protected $indexRepository;
+
+    /**
+     * @param IndexRepository $indexRepository
+     */
+    public function __construct(IndexRepository $indexRepository)
+    {
+        $this->indexRepository = $indexRepository;
+    }
+
     /**
      * Register the indexer configuration.
      *
@@ -54,11 +66,9 @@ class KeSearchIndexer extends AbstractHook
             return;
         }
 
-        /** @var IndexRepository $indexRepository */
-        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
-        $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
+        $this->indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $options = new OptionRequest();
-        $indexObjects = $indexRepository->findAllForBackend($options)
+        $indexObjects = $this->indexRepository->findAllForBackend($options)
             ->toArray();
 
         foreach ($indexObjects as $index) {

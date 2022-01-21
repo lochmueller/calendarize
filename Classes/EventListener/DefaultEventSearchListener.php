@@ -6,11 +6,22 @@ use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
 use HDNET\Calendarize\Register;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class DefaultEventSearchListener
 {
+    /**
+     * @var EventRepository
+     */
+    protected $eventRepository;
+
+    /**
+     * @param EventRepository $eventRepository
+     */
+    public function __construct(EventRepository $eventRepository)
+    {
+        $this->eventRepository = $eventRepository;
+    }
+
     public function __invoke(IndexRepositoryFindBySearchEvent $event)
     {
         if (!\in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)) {
@@ -22,14 +33,14 @@ class DefaultEventSearchListener
         if (!$search->isSearch()) {
             return;
         }
-        /** @var EventRepository $eventRepository */
-        $eventRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(EventRepository::class);
-        $searchTermHits = $eventRepository->findBySearch($search);
-        if ($searchTermHits && \count($searchTermHits)) {
-            $indexIds = $event->getIndexIds();
-            $indexIds['tx_calendarize_domain_model_event'] = $searchTermHits;
-            $event->setIndexIds($indexIds);
-        }
+
+        $searchTermIds = $this->eventRepository->findBySearch($search);
+        // Blocks result (displaying no event) on no search match (empty id array)
+        $searchTermIds[] = -1;
+
+        $indexIds = $event->getIndexIds();
+        $indexIds['tx_calendarize_domain_model_event'] = $searchTermIds;
+        $event->setIndexIds($indexIds);
     }
 
     protected function getSearchDto(IndexRepositoryFindBySearchEvent $event): Search

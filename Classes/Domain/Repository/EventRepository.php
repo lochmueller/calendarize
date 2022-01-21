@@ -10,8 +10,6 @@ namespace HDNET\Calendarize\Domain\Repository;
 use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -19,6 +17,19 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class EventRepository extends AbstractRepository
 {
+    /**
+     * @var IndexRepository
+     */
+    protected $indexRepository;
+
+    /**
+     * @param IndexRepository $indexRepository
+     */
+    public function injectIndexRepository(IndexRepository $indexRepository)
+    {
+        $this->indexRepository = $indexRepository;
+    }
+
     /**
      * Get the IDs of the given search term.
      *
@@ -82,13 +93,10 @@ class EventRepository extends AbstractRepository
             return null;
         }
 
-        /** @var IndexRepository $indexRepository */
-        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
-
         try {
-            $result = $indexRepository->findByEventTraversing($event, true, false, 1, QueryInterface::ORDER_ASCENDING);
+            $result = $this->indexRepository->findByEventTraversing($event, true, false, 1, QueryInterface::ORDER_ASCENDING);
             if (empty($result)) {
-                $result = $indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
+                $result = $this->indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
             }
         } catch (\Exception $ex) {
             return null;
