@@ -37,11 +37,21 @@ class OptionRequest extends AbstractModel
     protected $type = '';
 
     /**
+     * @var \DateTime|null
+     */
+    protected $startDate;
+
+    /**
+     * @var \DateTime|null
+     */
+    protected $endDate;
+
+    /**
      * @return array
      */
     public function __sleep()
     {
-        return ['sorting', 'direction', 'pid', 'type'];
+        return ['sorting', 'direction', 'pid', 'type', 'startDate', 'endDate'];
     }
 
     /**
@@ -90,5 +100,37 @@ class OptionRequest extends AbstractModel
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getStartDate(): ?\DateTime
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param \DateTime|null $startDate
+     */
+    public function setStartDate(?\DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getEndDate(): ?\DateTime
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param \DateTime|null $endDate
+     */
+    public function setEndDate(?\DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
     }
 }

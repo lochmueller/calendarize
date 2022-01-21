@@ -138,6 +138,13 @@ class IndexRepository extends AbstractRepository
             $constraints[] = $query->equals('uniqueRegisterKey', $options->getType());
         }
 
+        $this->addDateTimeFrameConstraint(
+            $constraints,
+            $query,
+            $options->getStartDate(),
+            $options->getEndDate()
+        );
+
         if ($constraints) {
             $query->matching($query->logicalAnd($constraints));
         }

@@ -14,22 +14,43 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 
 /**
  * BackendController.
  */
-class BackendController extends AbstractCompatibilityController
+class BackendController extends AbstractController
 {
+    protected $defaultViewObjectName = \TYPO3\CMS\Backend\View\BackendTemplateView::class;
+
     public const OPTIONS_KEY = 'calendarize_be';
+
+    public function initializeListAction()
+    {
+        $this->settings['timeFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'] ?? 'H:i';
+        $this->settings['dateFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?? 'd-m-y';
+
+        $optionsConfiguration = $this->arguments->getArgument('options')->getPropertyMappingConfiguration();
+
+        $optionsConfiguration->forProperty('startDate')
+            ->setTypeConverterOption(
+                DateTimeConverter::class,
+                DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                'Y-m-d'
+            );
+        $optionsConfiguration->forProperty('endDate')
+            ->setTypeConverterOption(
+                DateTimeConverter::class,
+                DateTimeConverter::CONFIGURATION_DATE_FORMAT,
+                'Y-m-d'
+            );
+    }
 
     /**
      * Basic backend list.
      */
     public function listAction(OptionRequest $options = null, int $currentPage = 1)
     {
-        $this->settings['timeFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'] ?? 'H:i';
-        $this->settings['dateFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?? 'd-m-y';
-
         if (null === $options) {
             $options = $this->getOptions();
         } else {
@@ -99,7 +120,7 @@ class BackendController extends AbstractCompatibilityController
         try {
             $info = $GLOBALS['BE_USER']->getSessionData(self::OPTIONS_KEY) ?? '';
             if ('' !== $info) {
-                $object = @unserialize($info, ['allowed_classes' => [OptionRequest::class]]);
+                $object = @unserialize($info, ['allowed_classes' => [OptionRequest::class, \DateTime::class]]);
                 if ($object instanceof OptionRequest) {
                     return $object;
                 }
