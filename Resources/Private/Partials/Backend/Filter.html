@@ -52,6 +52,36 @@
 			/>
 		</div>
 
+		<div class="form-group col">
+			<label for="startDate" class="form-label">
+				<f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:from"/>
+			</label>
+			<div class="input-group">
+				<f:form.textfield
+					property="startDate"
+					type="date"
+					value="{f:format.date(format:'Y-m-d', date: '{options.startDate}')}"
+					class="form-control"
+					id="startDate"
+				/>
+			</div>
+		</div>
+
+		<div class="form-group col">
+			<label for="endDate" class="form-label">
+				<f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:to"/>
+			</label>
+			<div class="input-group">
+				<f:form.textfield
+					property="endDate"
+					type="date"
+					value="{f:format.date(format:'Y-m-d', date: '{options.endDate}')}"
+					class="form-control"
+					id="endDate"
+				/>
+			</div>
+		</div>
+
 		<div class="col form-group">
 			<f:form.submit value="Save options" class="btn btn-light"/>
 		</div>
