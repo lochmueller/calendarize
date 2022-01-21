@@ -1,0 +1,60 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+	data-namespace-typo3-fluid="true">
+
+<f:form action="list" object="{options}" name="options">
+	<div class="form-inline form-inline-spaced row row-cols-auto align-items-end">
+
+		<f:comment>
+			<div class="form-group col">
+				<label class="form-label" for="sorting">Sorting</label>
+				<f:form.select
+					options="{start_date: 'start_date'}"
+					class="form-control form-select"
+					id="sorting"
+					property="sorting"
+				/>
+			</div>
+		</f:comment>
+
+		<div class="form-group col">
+			<label class="form-label" for="pid">PID</label>
+			<f:form.select
+				prependOptionLabel="All"
+				prependOptionValue="-1"
+				options="{pids}"
+				class="form-control form-select"
+				id="pid"
+				property="pid"
+			/>
+		</div>
+
+		<div class="form-group col">
+			<label class="form-label" for="type">Type</label>
+			<f:form.select
+				prependOptionLabel="All"
+				prependOptionValue=""
+				options="{types}"
+				class="form-control form-select"
+				id="type"
+				property="type"
+			/>
+		</div>
+
+		<div class="form-group col">
+			<label class="form-label" for="direction">Direction</label>
+			<f:form.select
+				options="{asc: 'ASC', desc: 'DESC'}"
+				class="form-control form-select"
+				id="direction"
+				property="direction"
+			/>
+		</div>
+
+		<div class="col form-group">
+			<f:form.submit value="Save options" class="btn btn-light"/>
+		</div>
+	</div>
+</f:form>
+</html>

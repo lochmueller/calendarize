@@ -10,35 +10,7 @@
 	<h1>Calendarize</h1>
 
 	<f:flashMessages/>
-
-	<fieldset class="form-group border">
-		<f:form action="list" object="{options}" name="options">
-
-			<f:comment>
-			<div class="form-group">
-				<label for="sorting">Sorting</label>
-				<f:form.select options="{start_date: 'start_date'}" class="form-control" id="sorting" property="sorting" />
-			</div>
-			</f:comment>
-
-			<div class="form-group">
-				<label for="pid">PID</label>
-				<f:form.select prependOptionLabel="All" prependOptionValue="-1" options="{pids}" class="form-control" id="pid" property="pid" />
-			</div>
-
-			<div class="form-group">
-				<label for="pid">Type</label>
-				<f:form.select prependOptionLabel="All" prependOptionValue="" options="{types}" class="form-control" id="type" property="type" />
-			</div>
-
-			<div class="form-group">
-				<label for="direction">Direction</label>
-				<f:form.select options="{asc: 'ASC', desc: 'DESC'}" class="form-control" id="direction" property="direction" />
-			</div>
-
-			<f:form.submit value="Save options" class="btn btn-secondary" />
-		</f:form>
-	</fieldset>
+	<f:render partial="Backend/Filter" arguments="{_all}"/>
 
 	<fieldset class="form-group">
 		<f:if condition="{typeLocations}">
