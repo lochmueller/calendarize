@@ -23,18 +23,6 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
  */
 class KeSearchIndexer extends AbstractHook
 {
-    /**
-     * @var IndexRepository
-     */
-    protected $indexRepository;
-
-    /**
-     * @param IndexRepository $indexRepository
-     */
-    public function __construct(IndexRepository $indexRepository)
-    {
-        $this->indexRepository = $indexRepository;
-    }
 
     /**
      * Register the indexer configuration.
@@ -66,9 +54,11 @@ class KeSearchIndexer extends AbstractHook
             return;
         }
 
-        $this->indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
+        /** @var IndexRepository $indexRepository */
+        $indexRepository = GeneralUtility::makeInstance(IndexRepository::class);
+        $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $options = new OptionRequest();
-        $indexObjects = $this->indexRepository->findAllForBackend($options)
+        $indexObjects = $indexRepository->findAllForBackend($options)
             ->toArray();
 
         foreach ($indexObjects as $index) {
