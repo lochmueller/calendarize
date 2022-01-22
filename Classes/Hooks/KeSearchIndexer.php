@@ -23,7 +23,7 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
  */
 class KeSearchIndexer extends AbstractHook
 {
-    const KEY = 'calendarize';
+    public const KEY = 'calendarize';
 
     /**
      * Register the indexer configuration.
@@ -57,10 +57,12 @@ class KeSearchIndexer extends AbstractHook
 
         /** @var IndexRepository $indexRepository */
         $indexRepository = GeneralUtility::makeInstance(IndexRepository::class);
-        $indexRepository->setOverridePageIds(GeneralUtility::intExplode(',', $indexerConfig['sysfolder']));
         $options = new OptionRequest();
-        $indexObjects = $indexRepository->findAllForBackend($options)
-            ->toArray();
+        $indexObjects = $indexRepository->findAllForBackend(
+            $options,
+            GeneralUtility::intExplode(',', $indexerConfig['sysfolder']),
+            false
+        )->toArray();
 
         foreach ($indexObjects as $index) {
             /** @var $index Index */

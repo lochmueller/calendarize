@@ -100,14 +100,15 @@ class IndexRepository extends AbstractRepository
      * Select indecies for Backend.
      *
      * @param OptionRequest $options
-     * @param limit values to these pages
+     * @param array         $allowedPages
+     * @param bool          $ignoreEnableFields
      *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAllForBackend(OptionRequest $options, array $allowedPages = [])
+    public function findAllForBackend(OptionRequest $options, array $allowedPages = [], bool $ignoreEnableFields = true)
     {
         $query = $this->createQuery();
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setIgnoreEnableFields($ignoreEnableFields);
         $query->getQuerySettings()->setRespectSysLanguage(false);
         $query->getQuerySettings()->setLanguageOverlayMode(false);
 
