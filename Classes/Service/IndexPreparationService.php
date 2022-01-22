@@ -88,7 +88,7 @@ class IndexPreparationService extends AbstractService
             $item['t3ver_wsid'] = $workspace;
             // Set relation to the original record
             if ($workspace) {
-                $item['foreign_uid'] = $origId ?? (int)$record['uid'];
+                $item['foreign_uid'] = $origId ?: (int)$record['uid'];
             }
 
             return $item;
