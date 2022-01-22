@@ -8,11 +8,11 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Annotation\Hook;
-use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
+use Tpwd\KeSearch\Indexer\IndexerRunner;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 
@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
  */
 class KeSearchIndexer extends AbstractHook
 {
+    const KEY = 'calendarize';
 
     /**
      * Register the indexer configuration.
@@ -34,8 +35,8 @@ class KeSearchIndexer extends AbstractHook
     {
         $newArray = [
             'Calendarize Indexer',
-            'calendarize',
-            IconUtility::getByExtensionKey('calendarize'),
+            self::KEY,
+            'EXT:calendarize/Resources/Public/Icons/Extension.svg',
         ];
         $params['items'][] = $newArray;
     }
@@ -43,15 +44,15 @@ class KeSearchIndexer extends AbstractHook
     /**
      * Calendarize indexer for ke_search.
      *
-     * @param array                                                $indexerConfig Configuration from TYPO3 Backend
-     * @param \TeaminmediasPluswerk\KeSearch\Indexer\IndexerRunner $indexerObject reference to indexer class
+     * @param array         $indexerConfig Configuration from TYPO3 Backend
+     * @param IndexerRunner $indexerObject reference to indexer class
      *
      * @return string|null
      */
-    public function customIndexer(&$indexerConfig, &$indexerObject)
+    public function customIndexer(array &$indexerConfig, IndexerRunner &$indexerObject): string
     {
-        if ('calendarize' !== $indexerConfig['type']) {
-            return;
+        if (self::KEY !== $indexerConfig['type']) {
+            return '';
         }
 
         /** @var IndexRepository $indexRepository */
@@ -89,26 +90,26 @@ class KeSearchIndexer extends AbstractHook
                 ],
             ], '&');
 
-            $storeArguemnts = [
-                $indexerConfig['storagepid'],
-                $title,
-                'calendarize',
-                $indexerConfig['targetpid'],
-                $fullContent,
-                $originalObject->getKeSearchTags($index),
-                $params,
-                $abstract,
+            $storeArguments = [
+                $indexerConfig['storagepid'],               // storage PID
+                $title,                                     // record title
+                self::KEY,                                  // content type
+                $indexerConfig['targetpid'],                // target PID: where is the single view?
+                $fullContent,                               // indexed content, includes the title (linebreak after title)
+                $originalObject->getKeSearchTags($index),   // tags for faceted search
+                $params,                                    // typolink params for singleview
+                $abstract,                                  // abstract; shown in result list if not empty
                 $index->_getProperty('_languageUid'), // $index always has a "_languageUid" - if the $originalObject does not use translations, it is 0
                 $index->_hasProperty('starttime') ? $index->_getProperty('starttime') : 0,
                 $index->_hasProperty('endtime') ? $index->_getProperty('endtime') : 0,
                 $index->_hasProperty('fe_group') ? $index->_getProperty('fe_group') : '',
-                false, // debugOnly
-                $additionalFields,
+                false,                                      // debug only?
+                $additionalFields,                          // additionalFields
             ];
 
-            $indexerObject->storeInIndex(...$storeArguemnts);
+            $indexerObject->storeInIndex(...$storeArguments);
         }
 
-        return '<p><b>Custom Indexer "' . $indexerConfig['title'] . '": ' . \count($indexObjects) . ' elements have been indexed.</b></p>';
+        return 'Custom Indexer "' . $indexerConfig['title'] . '": ' . \count($indexObjects) . ' elements have been indexed.';
     }
 }
