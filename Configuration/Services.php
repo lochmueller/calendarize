@@ -26,7 +26,9 @@ return function (ContainerConfigurator $configurator) {
         $services->alias(ICalServiceInterface::class, DissectICalService::class);
     }
 
-    if (ExtensionManagementUtility::isLoaded('dashboard')) {
+    /** @note was ExtensionManagementUtility::isLoaded('dashboard') before, but class check is more stable in Service.php */
+    $isDashboardExtensionIsLoaded = class_exists(ListWidget::class);
+    if ($isDashboardExtensionIsLoaded) {
         $services->set('dashboard.widgets.calendarizeNextEvents')
             ->class(ListWidget::class)
             ->arg('$view', new Reference('dashboard.views.widget'))
