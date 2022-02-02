@@ -58,11 +58,11 @@ class BreadcrumbService extends AbstractService
 
     protected function getEventByIndex(array $row)
     {
-        return BackendUtility::getRecord($row['foreign_table'], (int)$row['foreign_uid']);
+        return BackendUtility::getRecordWSOL($row['foreign_table'], (int)$row['foreign_uid']);
     }
 
     protected function getIndex(int $uid)
     {
-        return BackendUtility::getRecord('tx_calendarize_domain_model_index', $uid);
+        return BackendUtility::getRecordWSOL('tx_calendarize_domain_model_index', $uid);
     }
 }
