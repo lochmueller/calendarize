@@ -5,8 +5,7 @@ To add the calendarize link to the breadcrumb use this user function
 
 .. code-block:: typoscript
 
-  [globalVar = GP:tx_calendarize_calendar|index > 0]
-  # [request.getQueryParams()['tx_calendarize_calendar']['index'] > 0] # TYPO3 >= 9
+  [request.getQueryParams()['tx_calendarize_calendar']['index'] > 0]
   lib.myBreadcrumbMenu.999 = USER
   lib.myBreadcrumbMenu.999.userFunc = HDNET\Calendarize\Service\BreadcrumbService->generate
   lib.myBreadcrumbMenu.999.doNotLinkIt = 1 # (enable or disable the link => 0)
