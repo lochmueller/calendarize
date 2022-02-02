@@ -40,7 +40,7 @@ class IconForRecordViewHelper extends \TYPO3\CMS\Core\ViewHelpers\IconForRecordV
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $arguments['row'] = BackendUtility::getRecord($arguments['table'], $arguments['uid']);
+        $arguments['row'] = BackendUtility::getRecordWSOL($arguments['table'], $arguments['uid']);
         if (!\is_array($arguments['row'])) {
             $arguments['row'] = [];
         }
