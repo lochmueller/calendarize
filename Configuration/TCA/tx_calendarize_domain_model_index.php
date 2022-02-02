@@ -46,16 +46,14 @@ $custom = [
             'config' => [
                 'readOnly' => '1',
                 'dbType' => 'date',
-                'eval' => 'datetime',
-                'format' => 'date',
+                'eval' => 'date',
             ],
         ],
         'end_date' => [
             'config' => [
                 'readOnly' => '1',
                 'dbType' => 'date',
-                'eval' => 'datetime',
-                'format' => 'date',
+                'eval' => 'date',
             ],
         ],
         'start_time' => [
