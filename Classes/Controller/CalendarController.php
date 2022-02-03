@@ -505,8 +505,18 @@ class CalendarController extends AbstractCompatibilityController
                 $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
             }
         }
+        $uniqueRegisterKey = $index->getConfiguration()['uniqueRegisterKey'];
+        $originalObject = $index->getOriginalObject();
+        if (!$originalObject) {
+            $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
+        }
 
-        $this->addCacheTags(['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_' . lcfirst($index->getConfiguration()['uniqueRegisterKey']) . '_' . $index->getOriginalObject()->getUid()]);
+        $this->addCacheTags(
+            ['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_'
+            . lcfirst($uniqueRegisterKey)
+            . '_'
+            . $originalObject->getUid(), ]
+        );
 
         // Meta tags
         if ($index->getOriginalObject() instanceof Event) {
