@@ -11,3 +11,4 @@ For administrators
 	Linkhandler/Index
 	Migration/Index
 	Workspaces/Index
+	DataProcessing/Index
