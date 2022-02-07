@@ -29,6 +29,7 @@ use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Extbase\Service\ImageService;
 
 /**
  * Calendar.
@@ -522,18 +523,17 @@ class CalendarController extends AbstractCompatibilityController
         if ($index->getOriginalObject() instanceof Event) {
             /** @var Event $event */
             $event = $index->getOriginalObject();
-            GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
-
-            GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:description')->addProperty('og:description', $event->getAbstract());
+            $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+            $metaTagManagerRegistry->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
+            $metaTagManagerRegistry->getManagerForProperty('og:description')->addProperty('og:description', $event->getAbstract());
 
             $images = $event->getImages();
             if ($images[0]) {
-                $parsedUrl = $this->request->getBaseUri() . $images[0]->getOriginalResource()->getPublicUrl();
-                $this->imageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Service\\ImageService');
+                $imageService = GeneralUtility::makeInstance(ImageService::class);
                 $processingInstructions = ['minWidth' => 600, 'minHeight' => 315, 'maxWidth' => 1200, 'maxHeight' => 630];
-                $processedImage = $this->imageService->applyProcessingInstructions($images[0]->getOriginalResource(), $processingInstructions);
-                $imageUrl = $this->request->getBaseUri() . $this->imageService->getImageUri($processedImage);
-                GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:image')->addProperty('og:image', $imageUrl);
+                $processedImage = $imageService->applyProcessingInstructions($images[0]->getOriginalResource(), $processingInstructions);
+                $imageUrl = $this->request->getBaseUri() . $imageService->getImageUri($processedImage);
+                $metaTagManagerRegistry->getManagerForProperty('og:image')->addProperty('og:image', $imageUrl);
             }
         }
 
