@@ -523,6 +523,18 @@ class CalendarController extends AbstractCompatibilityController
             /** @var Event $event */
             $event = $index->getOriginalObject();
             GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
+
+            GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:description')->addProperty('og:description', $event->getAbstract());
+
+            $images = $event->getImages();
+            if ($images[0]) {
+                $parsedUrl = $this->request->getBaseUri() . $images[0]->getOriginalResource()->getPublicUrl();
+                $this->imageService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Service\\ImageService');
+                $processingInstructions = ['minWidth' => 600, 'minHeight' => 315, 'maxWidth' => 1200, 'maxHeight' => 630];
+                $processedImage = $this->imageService->applyProcessingInstructions($images[0]->getOriginalResource(), $processingInstructions);
+                $imageUrl = $this->request->getBaseUri() . $this->imageService->getImageUri($processedImage);
+                GeneralUtility::makeInstance(MetaTagManagerRegistry::class)->getManagerForProperty('og:image')->addProperty('og:image', $imageUrl);
+            }
         }
 
         $this->eventExtendedAssignMultiple([
