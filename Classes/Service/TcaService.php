@@ -147,21 +147,13 @@ class TcaService extends AbstractService
         $title = '';
         if ($row['start_date']) {
             try {
-                if (str_contains($row['start_date'], 'T')) {
-                    $dateStart = BackendUtility::date((new \DateTime($row['start_date']))->getTimestamp() + -1 * ((new \DateTime($row['start_date']))->getOffset()));
-                } else {
-                    $dateStart = BackendUtility::date((new \DateTime($row['start_date']))->getTimestamp());
-                }
+                $startDateTime = new \DateTime($row['start_date']);
+                $dateStart = BackendUtility::date((new \DateTime(gmdate('Y-m-d', $startDateTime->getTimestamp())))->getTimestamp());
 
-                if (str_contains($row['end_date'] ?: $row['start_date'], 'T')) {
-                    $dateEnd = BackendUtility::date((new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp() + -1 * ((new \DateTime($row['start_date']))->getOffset()));
-                } else {
-                    $dateEnd = BackendUtility::date((new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp());
-                }
+                $endDateTime = new \DateTime($row['end_date'] ?: $row['start_date']);
+                $dateEnd = BackendUtility::date((new \DateTime(gmdate('Y-m-d', ($endDateTime)->getTimestamp())))->getTimestamp());
 
                 $title .= $dateStart;
-
-                // $title .=  ' [' . ($row['start_date']) . ' | ' . date('c', ((new \DateTime($row['start_date']))->getTimestamp() + -1 *  ((new \DateTime($row['start_date']))->getOffset()))) . '] ';
 
                 if ($dateStart !== $dateEnd) {
                     $title .= ' - ' . $dateEnd;
