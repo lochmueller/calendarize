@@ -148,10 +148,20 @@ class TcaService extends AbstractService
         if ($row['start_date']) {
             try {
                 $startDateTime = new \DateTime($row['start_date']);
-                $dateStart = BackendUtility::date((new \DateTime(gmdate('Y-m-d', $startDateTime->getTimestamp())))->getTimestamp());
+
+                if (str_contains($row['start_date'], 'T')) {
+                    $dateStart = BackendUtility::date((new \DateTime(gmdate('Y-m-d', $startDateTime->getTimestamp())))->getTimestamp());
+                } else {
+                    $dateStart = BackendUtility::date($startDateTime->getTimestamp());
+                }
 
                 $endDateTime = new \DateTime($row['end_date'] ?: $row['start_date']);
-                $dateEnd = BackendUtility::date((new \DateTime(gmdate('Y-m-d', ($endDateTime)->getTimestamp())))->getTimestamp());
+
+                if (str_contains($row['end_date'] ?: $row['start_date'], 'T')) {
+                    $dateEnd = BackendUtility::date((new \DateTime(gmdate('Y-m-d', ($endDateTime)->getTimestamp())))->getTimestamp());
+                } else {
+                    $dateEnd = BackendUtility::date($endDateTime->getTimestamp());
+                }
 
                 $title .= $dateStart;
 
