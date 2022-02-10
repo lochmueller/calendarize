@@ -9,12 +9,16 @@ namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Calendarize\Domain\Model\Index;
-use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
-use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
+use HDNET\Calendarize\Service\IndexerService;
 use Tpwd\KeSearch\Indexer\IndexerRunner;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * KE Search Indexer.
@@ -24,6 +28,7 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 class KeSearchIndexer extends AbstractHook
 {
     public const KEY = 'calendarize';
+    public const TABLE = IndexerService::TABLE_NAME;
 
     /**
      * Register the indexer configuration.
@@ -54,64 +59,90 @@ class KeSearchIndexer extends AbstractHook
         if (self::KEY !== $indexerConfig['type']) {
             return '';
         }
+        $languageField = $GLOBALS['TCA'][self::TABLE]['ctrl']['languageField']; // e.g. sys_language_uid
 
-        /** @var IndexRepository $indexRepository */
-        $indexRepository = GeneralUtility::makeInstance(IndexRepository::class);
-        $options = new OptionRequest();
-        $indexObjects = $indexRepository->findAllForBackend(
-            $options,
-            GeneralUtility::intExplode(',', $indexerConfig['sysfolder']),
-            false
-        )->toArray();
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        // We use a QueryBuilder instead of the IndexRepository, to avoid problems with workspaces, ...
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
 
-        foreach ($indexObjects as $index) {
-            /** @var $index Index */
-            /** @var KeSearchIndexInterface $originalObject */
-            $originalObject = $index->getOriginalObject();
+        // Don't fetch hidden, deleted or workspace elements, but the elements
+        // with frontend user group access restrictions or time (start / stop)
+        // restrictions in order to copy those restrictions to the index.
+        $queryBuilder->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
+            ->add(GeneralUtility::makeInstance(HiddenRestriction::class))
+            ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, 0));
 
-            if (!($originalObject instanceof KeSearchIndexInterface)) {
-                continue;
+        $pids = GeneralUtility::intExplode(',', $indexerConfig['sysfolder']);
+        $result = $queryBuilder
+            ->select('*')
+            ->from(self::TABLE)
+            ->where($queryBuilder->expr()->in('pid', $pids))
+            ->executeQuery();
+
+        $indexedCounter = 0;
+
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetchAssociative()) {
+                try {
+                    /** @var Index $index */
+                    // Get domainObject to check and call the feature/interface
+                    $index = $dataMapper->map(Index::class, [$row])[0];
+                    $originalObject = $index->getOriginalObject();
+
+                    if (!($originalObject instanceof KeSearchIndexInterface)) {
+                        continue;
+                    }
+
+                    $title = strip_tags($originalObject->getKeSearchTitle($index));
+                    $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
+                    $content = strip_tags($originalObject->getKeSearchContent($index));
+                    $fullContent = $title . "\n" . $abstract . "\n" . $content;
+
+                    $additionalFields = [
+                        'sortdate' => $index->getStartDateComplete()->getTimestamp(),
+                        'orig_uid' => $row['uid'],
+                        'orig_pid' => $row['pid'],
+                    ];
+
+                    $params = HttpUtility::buildQueryString([
+                        'tx_calendarize_calendar' => [
+                            'index' => $row['uid'],
+                            'controller' => 'Calendar',
+                            'action' => 'detail',
+                        ],
+                    ], '&');
+
+                    $storeArguments = [
+                        $indexerConfig['storagepid'],               // storage PID
+                        $title,                                     // record title
+                        self::KEY,                                  // content type
+                        $indexerConfig['targetpid'],                // target PID: where is the single view?
+                        $fullContent,                               // indexed content, includes the title (linebreak after title)
+                        $originalObject->getKeSearchTags($index),   // tags for faceted search
+                        $params,                                    // typolink params for singleview
+                        $abstract,                                  // abstract; shown in result list if not empty
+                        $row[$languageField],                       // language uid
+                        $row['starttime'],                          // starttime
+                        $row['endtime'],                            // endtime
+                        $row['fe_group'],                           // fe_group
+                        false,                                      // debug only?
+                        $additionalFields,                          // additionalFields
+                    ];
+
+                    $indexerObject->storeInIndex(...$storeArguments);
+                    ++$indexedCounter;
+                } catch (\Exception $exception) {
+                    $indexerObject->logger->error("Unable to index ${$row['uid']}: " . $exception->getMessage());
+                }
             }
-
-            $title = strip_tags($originalObject->getKeSearchTitle($index));
-            $abstract = strip_tags($originalObject->getKeSearchAbstract($index));
-            $content = strip_tags($originalObject->getKeSearchContent($index));
-            $fullContent = $title . "\n" . $abstract . "\n" . $content;
-
-            $additionalFields = [
-                'sortdate' => $index->getStartDateComplete()->getTimestamp(),
-                'orig_uid' => $index->getUid(),
-                'orig_pid' => $index->getPid(),
-            ];
-
-            $params = HttpUtility::buildQueryString([
-                'tx_calendarize_calendar' => [
-                    'index' => $index->getUid(),
-                    'controller' => 'Calendar',
-                    'action' => 'detail',
-                ],
-            ], '&');
-
-            $storeArguments = [
-                $indexerConfig['storagepid'],               // storage PID
-                $title,                                     // record title
-                self::KEY,                                  // content type
-                $indexerConfig['targetpid'],                // target PID: where is the single view?
-                $fullContent,                               // indexed content, includes the title (linebreak after title)
-                $originalObject->getKeSearchTags($index),   // tags for faceted search
-                $params,                                    // typolink params for singleview
-                $abstract,                                  // abstract; shown in result list if not empty
-                $index->_getProperty('_languageUid'), // $index always has a "_languageUid" - if the $originalObject does not use translations, it is 0
-                $index->_hasProperty('starttime') ? $index->_getProperty('starttime') : 0,
-                $index->_hasProperty('endtime') ? $index->_getProperty('endtime') : 0,
-                $index->_hasProperty('fe_group') ? $index->_getProperty('fe_group') : '',
-                false,                                      // debug only?
-                $additionalFields,                          // additionalFields
-            ];
-
-            $indexerObject->storeInIndex(...$storeArguments);
+        } else {
+            $indexerObject->logger->info('No calendarize records found for indexing!');
         }
+        $msg = 'Custom Indexer "' . $indexerConfig['title'] . '": ' . $indexedCounter . ' elements have been indexed.';
+        $indexerObject->logger->info($msg);
 
-        return 'Custom Indexer "' . $indexerConfig['title'] . '": ' . \count($indexObjects) . ' elements have been indexed.';
+        return $msg;
     }
 }
