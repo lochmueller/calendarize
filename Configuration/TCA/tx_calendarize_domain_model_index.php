@@ -23,61 +23,61 @@ $custom = [
         'hideTable' => true,
         'rootLevel' => -1,
         'label_alt' => 'start_date',
-        'label_alt_force' => '1',
+        'label_alt_force' => true,
         'readOnly' => true,
     ],
     'columns' => [
         'unique_register_key' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
             ],
         ],
         'foreign_uid' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
             ],
         ],
         'foreign_table' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
             ],
         ],
         'start_date' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
                 'dbType' => 'date',
                 'eval' => 'date',
             ],
         ],
         'end_date' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
                 'dbType' => 'date',
                 'eval' => 'date',
             ],
         ],
         'start_time' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
                 'renderType' => 'inputDateTime',
                 'eval' => 'time',
             ],
         ],
         'end_time' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
                 'renderType' => 'inputDateTime',
                 'eval' => 'time',
             ],
         ],
         'all_day' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
             ],
         ],
         'state' => [
             'config' => [
-                'readOnly' => '1',
+                'readOnly' => true,
             ],
         ],
         'slug' => [

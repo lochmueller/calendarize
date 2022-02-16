@@ -306,6 +306,9 @@
 			<trans-unit id="configuration.type.timeExclude">
 				<source>Time (exclude)</source>
 			</trans-unit>
+			<trans-unit id="configuration.state.canceled">
+				<source>Canceled</source>
+			</trans-unit>
 			<trans-unit id="date">
 				<source>Date</source>
 			</trans-unit>

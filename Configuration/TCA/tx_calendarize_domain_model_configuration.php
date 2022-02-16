@@ -24,26 +24,26 @@ $timeType = str_replace(',external_ics_url', '', $timeType);
 $timeType = str_replace(',groups', '', $timeType);
 $timeType = str_replace(
     ',start_date,end_date,end_date_dynamic',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date.duration;date',
+    ',--palette--;;date',
     $timeType
 );
 $timeType = str_replace(
     ',start_time,end_time,all_day,open_end_time',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time;time',
+    ',--palette--;;time',
     $timeType
 );
 $timeType = str_replace(
-    ',till_date,till_days,till_days_past,till_days_relative,counter_amount',
+    ',till_date,till_days,till_days_relative,till_days_past,counter_amount',
     ',--palette--;;termination_condition',
     $timeType
 );
 $timeType = str_replace(
     ',counter_interval,recurrence,day',
-    ',--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration;frequency_configuration',
+    ',--palette--;;frequency_configuration',
     $timeType
 );
 
-$baseConfiguration = '--palette--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration;base';
+$baseConfiguration = '--palette--;;base';
 $timeType = str_replace(
     'type,handling,state',
     $baseConfiguration,
@@ -122,7 +122,7 @@ $custom = [
                         Configuration::STATE_DEFAULT,
                     ],
                     [
-                        'Canceled',
+                        'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:configuration.state.canceled',
                         Configuration::STATE_CANCELED,
                     ],
                 ],
@@ -178,13 +178,13 @@ $custom = [
             'onChange' => 'reload',
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
-                'default' => '0',
+                'default' => false,
             ],
         ],
         'open_end_time' => [
             'onChange' => 'reload',
             'config' => [
-                'default' => '0',
+                'default' => false,
             ],
             'displayCond' => [
                 'AND' => [
@@ -198,9 +198,9 @@ $custom = [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_calendarize_domain_model_configurationgroup',
-                'minitems' => '1',
+                'minitems' => 1,
                 'size' => 5,
-                'maxitems' => '99',
+                'maxitems' => 99,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_GROUP,
         ],
@@ -461,23 +461,23 @@ $custom = [
     ],
     'palettes' => [
         'base' => [
-            'canNotCollapse' => 1,
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration',
             'showitem' => 'type,handling,state',
         ],
         'date' => [
-            'canNotCollapse' => 1,
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date.duration',
             'showitem' => 'start_date,end_date,end_date_dynamic',
         ],
         'time' => [
-            'canNotCollapse' => 1,
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time',
             'showitem' => 'start_time,end_time,open_end_time,--linebreak--,all_day',
         ],
         'termination_condition' => [
-            'canNotCollapse' => 1,
-            'showitem' => 'till_date,till_days,till_days_past,till_days_relative,counter_amount',
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:termination_condition',
+            'showitem' => 'till_date,till_days,till_days_relative,till_days_past,--linebreak--,counter_amount',
         ],
         'frequency_configuration' => [
-            'canNotCollapse' => 1,
+            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration',
             'showitem' => 'counter_interval,recurrence,day',
         ],
         'access' => [
