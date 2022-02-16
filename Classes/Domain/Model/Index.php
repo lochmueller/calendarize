@@ -179,6 +179,9 @@ class Index extends AbstractModel
         if (!$this->isAllDay() && $date instanceof \DateTimeInterface) {
             return DateTimeUtility::setSecondsOfDateTime($date, $this->getEndTime());
         }
+        if ($this->isAllDay() && $date instanceof \DateTimeInterface) {
+            return DateTimeUtility::getDayEnd($date);
+        }
 
         return $date;
     }
