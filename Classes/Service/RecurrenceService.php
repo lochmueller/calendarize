@@ -8,12 +8,16 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Recurrence service.
  */
-class RecurrenceService extends AbstractService
+class RecurrenceService extends AbstractService implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
     /**
      * direction up.
      */
@@ -94,6 +98,8 @@ class RecurrenceService extends AbstractService
             case ConfigurationInterface::RECURRENCE_FIFTH:
                 return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_UP, $days, 5);
             default:
+                $this->logger->notice('Invalid recurrence "{recurrence}" in frequency configuration.', ['recurrence' => $recurrence]);
+
                 return false;
         }
     }
@@ -105,50 +111,54 @@ class RecurrenceService extends AbstractService
      *
      * @return array
      */
-    protected function getValidDays(string $day): array
+    protected function getValidDays(string $dayString): array
     {
         $days = [];
-        switch ($day) {
-            case ConfigurationInterface::DAY_MONDAY:
-                $days[] = 1;
-                break;
-            case ConfigurationInterface::DAY_TUESDAY:
-                $days[] = 2;
-                break;
-            case ConfigurationInterface::DAY_WEDNESDAY:
-                $days[] = 3;
-                break;
-            case ConfigurationInterface::DAY_THURSDAY:
-                $days[] = 4;
-                break;
-            case ConfigurationInterface::DAY_FRIDAY:
-                $days[] = 5;
-                break;
-            case ConfigurationInterface::DAY_SATURDAY:
-                $days[] = 6;
-                break;
-            case ConfigurationInterface::DAY_SUNDAY:
-                $days[] = 7;
-                break;
-            case ConfigurationInterface::DAY_SPECIAL_WEEKEND:
-                $days[] = 7;
-                $days[] = 6;
-                break;
-            case ConfigurationInterface::DAY_SPECIAL_WEEKDAY:
-                $days = range(1, 7);
-                break;
-            case ConfigurationInterface::DAY_SPECIAL_BUSINESS:
-                $days = range(1, 6);
-                break;
-            case ConfigurationInterface::DAY_SPECIAL_WORKDAY:
-                $days = range(1, 5);
-                break;
-            default:
-                // no day
-                break;
+        $dayList = GeneralUtility::trimExplode(',', $dayString, true);
+        foreach ($dayList as $day) {
+            switch ($day) {
+                case ConfigurationInterface::DAY_MONDAY:
+                    $days[] = 1;
+                    break;
+                case ConfigurationInterface::DAY_TUESDAY:
+                    $days[] = 2;
+                    break;
+                case ConfigurationInterface::DAY_WEDNESDAY:
+                    $days[] = 3;
+                    break;
+                case ConfigurationInterface::DAY_THURSDAY:
+                    $days[] = 4;
+                    break;
+                case ConfigurationInterface::DAY_FRIDAY:
+                    $days[] = 5;
+                    break;
+                case ConfigurationInterface::DAY_SATURDAY:
+                    $days[] = 6;
+                    break;
+                case ConfigurationInterface::DAY_SUNDAY:
+                    $days[] = 7;
+                    break;
+                case ConfigurationInterface::DAY_SPECIAL_WEEKEND:
+                    $days[] = 7;
+                    $days[] = 6;
+                    break;
+                case ConfigurationInterface::DAY_SPECIAL_WEEKDAY:
+                    $days = array_merge($days, range(1, 7));
+                    break;
+                case ConfigurationInterface::DAY_SPECIAL_BUSINESS:
+                    $days = array_merge($days, range(1, 6));
+                    break;
+                case ConfigurationInterface::DAY_SPECIAL_WORKDAY:
+                    $days = array_merge($days, range(1, 5));
+                    break;
+                default:
+                    // no day
+                    $this->logger->notice('Invalid day selection "{day}" in frequency configuration.', ['day' => $day]);
+                    break;
+            }
         }
 
-        return $days;
+        return array_unique($days);
     }
 
     /**

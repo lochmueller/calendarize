@@ -313,24 +313,8 @@ $custom = [
         'day' => [
             'config' => [
                 'type' => 'select',
-                'renderType' => 'selectSingle',
+                'renderType' => 'selectSingleBox',
                 'items' => [
-                    [
-                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
-                        Configuration::DAY_SPECIAL_WEEKDAY,
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS),
-                        Configuration::DAY_SPECIAL_BUSINESS,
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY),
-                        Configuration::DAY_SPECIAL_WORKDAY,
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND),
-                        Configuration::DAY_SPECIAL_WEEKEND,
-                    ],
                     [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_MONDAY),
                         Configuration::DAY_MONDAY,
@@ -359,8 +343,24 @@ $custom = [
                         TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SUNDAY),
                         Configuration::DAY_SUNDAY,
                     ],
+                    [
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
+                        Configuration::DAY_SPECIAL_WEEKDAY,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS),
+                        Configuration::DAY_SPECIAL_BUSINESS,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY),
+                        Configuration::DAY_SPECIAL_WORKDAY,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND),
+                        Configuration::DAY_SPECIAL_WEEKEND,
+                    ],
                 ],
-                'default' => Configuration::DAY_SPECIAL_WEEKDAY,
+                'default' => Configuration::DAY_NONE,
             ],
             'displayCond' => [
                 'OR' => [
