@@ -8,6 +8,9 @@ DTSTAMP:{f:if(condition: index.tstamp, then: index.tstamp, else: 'now') -> c:dat
 DTSTART;VALUE=DATE:<f:format.date format="Ymd" date="{index.startDateComplete}" />
 DTEND;VALUE=DATE:<f:format.date format="Ymd" base="{index.endDateComplete}" date="+1 day" />
     </f:then>
+    <f:else if="{index.openEndTime}">
+DTSTART:<c:dateTime.formatUtcDate date="{index.startDateComplete}" format="Ymd\THis\Z" />
+    </f:else>
     <f:else>
 DTSTART:<c:dateTime.formatUtcDate date="{index.startDateComplete}" format="Ymd\THis\Z" />
 DTEND:<c:dateTime.formatUtcDate date="{index.endDateComplete}" format="Ymd\THis\Z" />
