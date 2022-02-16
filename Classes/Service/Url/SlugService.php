@@ -23,11 +23,6 @@ class SlugService extends AbstractService
     protected const SLUG_NAME = 'slug';
 
     /**
-     * @var SlugHelper
-     */
-    protected $slugHelper;
-
-    /**
      * @var RecordStateFactory
      */
     protected $stateFactory;
@@ -45,12 +40,6 @@ class SlugService extends AbstractService
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
-        $this->slugHelper = GeneralUtility::makeInstance(
-            SlugHelper::class,
-            self::TABLE_NAME,
-            self::SLUG_NAME,
-            $GLOBALS['TCA'][self::TABLE_NAME]['columns'][self::SLUG_NAME]['config']
-        );
         $this->stateFactory = RecordStateFactory::forName(self::TABLE_NAME);
 
         $this->useDate = !(bool)ConfigurationUtility::get('disableDateInSpeakingUrl');
@@ -74,15 +63,8 @@ class SlugService extends AbstractService
 
         // Get domain model
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
-
-        $uid = (int)$record['uid'];
-        if (isset($record['t3ver_oid']) && $record['t3ver_oid']) {
-            // Add Workspace handling
-            $uid = (int)$record['t3ver_oid'];
-        }
-
         /** @var DomainObjectInterface $model */
-        $model = EventUtility::getOriginalRecordByConfiguration($configuration, $uid);
+        $model = EventUtility::getOriginalRecordByConfigurationInWorkspace($configuration, (int)$record['uid'], $record['t3ver_wsid'] ?? 0);
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
 
@@ -112,7 +94,7 @@ class SlugService extends AbstractService
                 ?? "$uniqueRegisterKey-{$record['uid']}";
         }
 
-        $baseSlug = $this->slugHelper->sanitize($baseSlug);
+        $baseSlug = $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)->sanitize($baseSlug);
 
         return $this->eventDispatcher->dispatch(new BaseSlugGenerationEvent(
             $uniqueRegisterKey,
@@ -142,7 +124,7 @@ class SlugService extends AbstractService
                 $indexSlug .= '-' . str_replace('-', '', $item['start_date']);
             }
 
-            $indexSlug = $this->slugHelper->sanitize($indexSlug);
+            $indexSlug = $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)->sanitize($indexSlug);
             $addFields[$key]['slug'] = $this->eventDispatcher->dispatch(new SlugSuffixGenerationEvent(
                 $uniqueRegisterKey,
                 $item,
@@ -169,6 +151,18 @@ class SlugService extends AbstractService
             $recordData['uid'] ?? ''
         );
         /* @noinspection PhpUnhandledExceptionInspection */
-        return $this->slugHelper->buildSlugForUniqueInTable($recordData['slug'], $state);
+        return $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)
+            ->buildSlugForUniqueInTable($recordData['slug'], $state);
+    }
+
+    protected function getSlugHelper(int $workspaceId = 0): SlugHelper
+    {
+        return GeneralUtility::makeInstance(
+            SlugHelper::class,
+            self::TABLE_NAME,
+            self::SLUG_NAME,
+            $GLOBALS['TCA'][self::TABLE_NAME]['columns'][self::SLUG_NAME]['config'],
+            $workspaceId
+        );
     }
 }
