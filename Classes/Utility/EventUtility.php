@@ -7,10 +7,14 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
-use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * Event utility.
@@ -20,18 +24,14 @@ class EventUtility
     /**
      * Get the original record by configuration.
      *
-     * @param PluginConfiguration|array $configuration
-     * @param int                       $uid
+     * @param array $configuration
+     * @param int   $uid
      *
-     * @return object
+     * @return DomainObjectInterface|null
      */
-    public static function getOriginalRecordByConfiguration($configuration, int $uid)
+    public static function getOriginalRecordByConfiguration(array $configuration, int $uid): ?DomainObjectInterface
     {
-        if ($configuration instanceof PluginConfiguration) {
-            $modelName = $configuration->getModelName();
-        } else {
-            $modelName = $configuration['modelName'];
-        }
+        $modelName = $configuration['modelName'];
 
         $query = HelperUtility::getQuery($modelName);
         if (self::isIgnoreEnableFields()) {
@@ -46,6 +46,50 @@ class EventUtility
 
         return $query->execute()
             ->getFirst();
+    }
+
+    /**
+     * Get the original record by configuration.
+     * For backend only!
+     *
+     * @param array $configuration
+     * @param int   $uid           live uid or (correct) versioned uid of record
+     * @param int   $workspaceId   the workspace ID to get the record of (-99 to get it from the current BE user)
+     *
+     * @return DomainObjectInterface|null
+     */
+    public static function getOriginalRecordByConfigurationInWorkspace(array $configuration, int $uid, int $workspaceId): ?DomainObjectInterface
+    {
+        $table = $configuration['tableName'];
+        $modelName = $configuration['modelName'];
+
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable($table);
+        $queryBuilder->getRestrictions()->removeAll();
+
+        $queryBuilder->select('*')
+            ->from($table)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
+            );
+
+        $row = $queryBuilder->executeQuery()->fetchAssociative();
+
+        if (false === $row) {
+            return null;
+        }
+
+        // If it is already the correct version, skip overlay
+        if ($row['t3ver_wsid'] !== $workspaceId) {
+            BackendUtility::workspaceOL($table, $row, $workspaceId);
+            // Swap the UIDs back, since the overlay changes the id to the live UID.
+            // We require the versioned UID for the dataMapper.
+            $row['uid'] = !empty($row['_ORIG_uid']) ? $row['_ORIG_uid'] : $row['uid'];
+        }
+
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+
+        return $dataMapper->map($modelName, [$row])[0];
     }
 
     protected static function isIgnoreEnableFields(): bool
