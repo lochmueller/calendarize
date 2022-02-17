@@ -841,6 +841,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
                     'counter_amount' => (int)$selectResult['cnt'],
                     'counter_interval' => (int)$selectResult['interval'],
                     'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
+                    'recurrence' => $this->mapRecurrence($selectResult['byday']),
+                    'day' => $this->mapRecurrenceDay($selectResult['byday']),
                 ];
 
                 $variables = [
@@ -884,6 +886,60 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
         ];
 
         return $freq[$calFrequency] ?? '';
+    }
+
+    /**
+     * Map day of recurrence.
+     *
+     * @param string $calByday
+     *
+     * @return string
+     */
+    protected function mapRecurrenceDay($calByday)
+    {
+        $days = [
+            'mo' => ConfigurationInterface::DAY_MONDAY,
+            'tu' => ConfigurationInterface::DAY_TUESDAY,
+            'we' => ConfigurationInterface::DAY_WEDNESDAY,
+            'th' => ConfigurationInterface::DAY_THURSDAY,
+            'fr' => ConfigurationInterface::DAY_FRIDAY,
+            'sa' => ConfigurationInterface::DAY_SATURDAY,
+            'su' => ConfigurationInterface::DAY_SUNDAY,
+        ];
+        $recurrenceDay = substr($calByday, -2);
+
+        if (empty($calByday) || !array_key_exists($recurrenceDay, $days)) {
+            return '';
+        }
+
+        return $days[$recurrenceDay];
+    }
+
+    /**
+     * Map day of recurrence.
+     *
+     * @param string $calByday
+     *
+     * @return string
+     */
+    protected function mapRecurrence($calByday)
+    {
+        $recurrences = [
+            '1' => ConfigurationInterface::RECURRENCE_FIRST,
+            '2' => ConfigurationInterface::RECURRENCE_SECOND,
+            '3' => ConfigurationInterface::RECURRENCE_THIRD,
+            '4' => ConfigurationInterface::RECURRENCE_FOURTH,
+            '5' => ConfigurationInterface::RECURRENCE_FIFTH,
+            '-1' => ConfigurationInterface::RECURRENCE_LAST,
+            '-2' => ConfigurationInterface::RECURRENCE_NEXT_TO_LAST,
+            '-3' => ConfigurationInterface::RECURRENCE_THIRD_LAST,
+        ];
+        $recurrence = substr($calByday, 0, -2); // cut last 2 chars
+        if (empty($calByday) || !array_key_exists($recurrence,$recurrences)) {
+            return '';
+        }
+
+        return $recurrences[$recurrence];
     }
 
     /**
@@ -1105,6 +1161,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
             'till_date' => (string)$calEventRow['until'] ?: null,
             'counter_amount' => (int)$calEventRow['cnt'],
             'counter_interval' => (int)($calEventRow['interval'] ?? 1),
+            'recurrence' => $this->mapRecurrence($calEventRow['byday']),
+            'day' => $this->mapRecurrenceDay($calEventRow['byday']),
         ];
 
         $variables = [
