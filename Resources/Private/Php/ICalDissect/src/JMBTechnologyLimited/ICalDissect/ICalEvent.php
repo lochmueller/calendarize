@@ -136,7 +136,7 @@ class ICalEvent
             // Is Timezone in Keyword Properties?
             if (substr($keywordProperties, 0, 5) == 'TZID=') {
                 try {
-                    $timeZone = new \DateTimeZone(substr($keywordProperties, 5));
+                    $timeZone = new \DateTimeZone(strtok(substr($keywordProperties, 5), ';'));
                     $out->setTimezone($timeZone);
                 } catch (\Exception $e) {}
             }
