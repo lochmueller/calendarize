@@ -8,8 +8,9 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Exception\UnableToGetFileForUrlException;
 use HDNET\Calendarize\Service\Ical\ICalServiceInterface;
-use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Service\Ical\ICalUrlService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,6 +28,11 @@ class ExternalTimeTable extends AbstractTimeTable
     protected $iCalService;
 
     /**
+     * @var ICalUrlService
+     */
+    protected ICalUrlService $iCalUrlService;
+
+    /**
      * Inject ical service.
      *
      * @param ICalServiceInterface $iCalService
@@ -36,29 +42,45 @@ class ExternalTimeTable extends AbstractTimeTable
         $this->iCalService = $iCalService;
     }
 
+    public function injectICalUrlService(ICalUrlService $icalUrlService)
+    {
+        $this->iCalUrlService = $icalUrlService;
+    }
+
     /**
      * Modify the given times via the configuration.
      *
      * @param array         $times
      * @param Configuration $configuration
-     *
-     * @throws \TYPO3\CMS\Core\Exception
      */
     public function handleConfiguration(array &$times, Configuration $configuration)
     {
-        $url = $configuration->getExternalIcsUrl();
-        if (!GeneralUtility::isValidUrl($url)) {
+        $externalIcsUrl = $configuration->getExternalIcsUrl();
+        try {
+            $fileName = $this->iCalUrlService->getOrCreateLocalFileForUrl($externalIcsUrl);
+        } catch (UnableToGetFileForUrlException $e) {
             HelperUtility::createFlashMessage(
-                'Configuration with invalid ICS URL: ' . $url,
-                'Index ICS URL',
+                'Configuration with invalid ICS URL: ' . $externalIcsUrl . '. ' . $e->getMessage(),
+                'External ICS URL',
                 FlashMessage::ERROR
             );
 
             return;
         }
 
-        $fileName = $this->getCachedUrlFile($url);
-        $externalTimes = $this->iCalService->getEvents($fileName);
+        try {
+            $externalTimes = $this->iCalService->getEvents($fileName);
+        } catch (\Exception $e) {
+            HelperUtility::createFlashMessage(
+                'Unable to process events: ' . $e->getMessage(),
+                'Unable to process ICS',
+                FlashMessage::ERROR
+            );
+
+            return;
+        } finally {
+            GeneralUtility::unlink_tempfile($fileName);
+        }
 
         foreach ($externalTimes as $event) {
             $time = [
@@ -74,38 +96,5 @@ class ExternalTimeTable extends AbstractTimeTable
             $time['state'] = $configuration->getState();
             $times[$this->calculateEntryKey($time)] = $time;
         }
-    }
-
-    /**
-     * Get cached URL file.
-     *
-     * @param string $url
-     *
-     * @return string
-     */
-    protected function getCachedUrlFile(string $url): string
-    {
-        $tempFileName = $this->getCheckedCacheFolder() . md5($url);
-        if (!is_file($tempFileName) || filemtime($tempFileName) < (time() - DateTimeUtility::SECONDS_HOUR)) {
-            $icsFile = GeneralUtility::getUrl($url);
-            GeneralUtility::writeFile($tempFileName, $icsFile);
-        }
-
-        return $tempFileName;
-    }
-
-    /**
-     * Return the cache folder and check if the folder exists.
-     *
-     * @return string
-     */
-    protected function getCheckedCacheFolder(): string
-    {
-        $cacheFolder = GeneralUtility::getFileAbsFileName('typo3temp/var/transient/calendarize/');
-        if (!is_dir($cacheFolder)) {
-            GeneralUtility::mkdir_deep($cacheFolder);
-        }
-
-        return $cacheFolder;
     }
 }

@@ -8,7 +8,9 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Event\ImportSingleIcalEvent;
+use HDNET\Calendarize\Exception\UnableToGetFileForUrlException;
 use HDNET\Calendarize\Service\Ical\ICalServiceInterface;
+use HDNET\Calendarize\Service\Ical\ICalUrlService;
 use HDNET\Calendarize\Service\IndexerService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +19,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -42,6 +43,11 @@ class ImportCommandController extends Command
     protected $indexerService;
 
     /**
+     * @var ICalUrlService
+     */
+    protected $iCalUrlService;
+
+    /**
      * ImportCommandController constructor.
      *
      * @param string|null              $name
@@ -53,11 +59,13 @@ class ImportCommandController extends Command
         string $name = null,
         ICalServiceInterface $iCalService,
         EventDispatcherInterface $eventDispatcher,
-        IndexerService $indexerService
+        IndexerService $indexerService,
+        ICalUrlService $iCalUrlService
     ) {
         $this->iCalService = $iCalService;
         $this->eventDispatcher = $eventDispatcher;
         $this->indexerService = $indexerService;
+        $this->iCalUrlService = $iCalUrlService;
 
         parent::__construct($name);
     }
@@ -68,7 +76,7 @@ class ImportCommandController extends Command
             ->addArgument(
                 'icsCalendarUri',
                 InputArgument::REQUIRED,
-                'The URI of the iCalendar ICS'
+                'The URL of the iCalendar ICS or local file (t3://file?uid=23)'
             )
             ->addArgument(
                 'pid',
@@ -95,7 +103,7 @@ class ImportCommandController extends Command
      *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -125,26 +133,28 @@ class ImportCommandController extends Command
         // Fetch external URI and write it to a temporary file
         $io->section('Start to checkout the calendar');
 
-        $content = GeneralUtility::getUrl($icsCalendarUri);
-        if (false === $content) {
-            $io->error('Unable to get the content of ' . $icsCalendarUri . '.');
+        try {
+            $icalFile = $this->iCalUrlService->getOrCreateLocalFileForUrl($icsCalendarUri);
+        } catch (UnableToGetFileForUrlException $e) {
+            $io->error('Invalid URL: ' . $e->getMessage());
 
             return 1;
         }
-
-        $icalFile = Environment::getVarPath() . '/transient/.' . 'ical-' . GeneralUtility::shortMD5($icsCalendarUri) . '.ics';
-        $tempResult = GeneralUtility::writeFileToTypo3tempDir($icalFile, $content);
-        if (null !== $tempResult) {
-            $io->error('Unable to write to "' . $icalFile . '". Reason: ' . $tempResult);
+        try {
+            // Parse calendar
+            $events = $this->iCalService->getEvents($icalFile);
+        } catch (\Exception $e) {
+            $io->error('Unable to process events');
+            $io->writeln($e->getMessage());
+            if ($io->isVerbose()) {
+                $io->writeln($e->getTraceAsString());
+            }
 
             return 1;
+        } finally {
+            // Remove temporary file
+            GeneralUtility::unlink_tempfile($icalFile);
         }
-
-        // Parse calendar
-        $events = $this->iCalService->getEvents($icalFile);
-
-        // Remove temporary file
-        unlink($icalFile);
 
         $io->text('Found ' . \count($events) . ' events in ' . $icsCalendarUri);
 

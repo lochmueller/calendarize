@@ -308,6 +308,18 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             'config' => [
                 'eval' => 'trim,required',
+                'renderType' => 'inputLink',
+                'softref' => 'typolink',
+                'fieldControl' => [
+                    'linkPopup' => [
+                        'options' => [
+                            'allowedExtensions' => 'ics',
+                            'blindLinkOptions' => 'folder,mail,page,spec,telephone,tx_calendarize_domain_model_event',
+                            'blindLinkFields' => 'class,target,title',
+                        ],
+                    ],
+                ],
+                'max' => 2048,
             ],
         ],
         'day' => [
