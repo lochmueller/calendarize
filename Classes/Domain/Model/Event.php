@@ -31,7 +31,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * @var string
      * @DatabaseField("string")
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * Slug.
@@ -47,7 +47,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      * @var string
      * @DatabaseField("string")
      */
-    protected $abstract;
+    protected $abstract = '';
 
     /**
      * Description.
@@ -147,7 +147,7 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -164,10 +164,8 @@ class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface
 
     /**
      * Get abstract.
-     *
-     * @return string
      */
-    public function getAbstract()
+    public function getAbstract(): string
     {
         return $this->abstract;
     }
