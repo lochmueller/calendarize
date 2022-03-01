@@ -10,7 +10,7 @@ trait ImportTrait
      * Import ID if the item is based on an ICS structure.
      *
      * @var string|null
-     * @DatabaseField(sql="varchar(250) DEFAULT NULL")
+     * @DatabaseField(sql="varchar(100) DEFAULT NULL")
      */
     protected $importId;
 

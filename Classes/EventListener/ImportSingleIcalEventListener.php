@@ -60,7 +60,8 @@ class ImportSingleIcalEventListener
         $calEvent = $event->getEvent();
         $pid = $event->getPid();
 
-        $eventObj = $this->initializeEventRecord($calEvent->getUid());
+        $importId = \strlen($calEvent->getUid()) <= 100 ? $calEvent->getUid() : md5($calEvent->getUid());
+        $eventObj = $this->initializeEventRecord($importId);
         $this->hydrateEventRecord($eventObj, $calEvent, $pid);
 
         if (null !== $eventObj->getUid() && (int)$eventObj->getUid() > 0) {
