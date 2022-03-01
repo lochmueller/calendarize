@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -61,7 +62,13 @@ class KeSearchIndexer extends AbstractHook
         }
         $languageField = $GLOBALS['TCA'][self::TABLE]['ctrl']['languageField']; // e.g. sys_language_uid
 
-        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
+            $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        } else {
+            $dataMapper = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
+                ->get(DataMapper::class);
+        }
+
         // We use a QueryBuilder instead of the IndexRepository, to avoid problems with workspaces, ...
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
 
@@ -79,7 +86,7 @@ class KeSearchIndexer extends AbstractHook
             ->select('*')
             ->from(self::TABLE)
             ->where($queryBuilder->expr()->in('pid', $pids))
-            ->executeQuery();
+            ->execute();
 
         $indexedCounter = 0;
 

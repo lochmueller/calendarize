@@ -12,6 +12,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -73,7 +74,7 @@ class EventUtility
                 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
             );
 
-        $row = $queryBuilder->executeQuery()->fetchAssociative();
+        $row = $queryBuilder->execute()->fetchAssociative();
 
         if (false === $row) {
             return null;
@@ -87,7 +88,12 @@ class EventUtility
             $row['uid'] = !empty($row['_ORIG_uid']) ? $row['_ORIG_uid'] : $row['uid'];
         }
 
-        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
+            $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        } else {
+            $dataMapper = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
+                ->get(DataMapper::class);
+        }
 
         return $dataMapper->map($modelName, [$row])[0];
     }

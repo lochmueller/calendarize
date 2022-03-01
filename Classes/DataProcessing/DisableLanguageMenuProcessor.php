@@ -111,7 +111,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                     )
                 )
             )
-            ->executeQuery();
+            ->execute();
 
         return $result->fetchFirstColumn();
     }
