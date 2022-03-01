@@ -11,13 +11,13 @@ use HDNET\Calendarize\Utility\TranslateUtility;
 use HDNET\Calendarize\Widgets\DataProvider\IndexAmountDataProvider;
 use HDNET\Calendarize\Widgets\DataProvider\NextEventsDataProvider;
 use Sabre\VObject\Reader;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListWidget;
 use TYPO3\CMS\Dashboard\Widgets\NumberWithIconWidget;
 
-return function (ContainerConfigurator $configurator) {
+return function (ContainerConfigurator $configurator, ContainerBuilder $containerBuilder) {
     $services = $configurator->services();
 
     if (class_exists(Reader::class)) {
@@ -26,9 +26,7 @@ return function (ContainerConfigurator $configurator) {
         $services->alias(ICalServiceInterface::class, DissectICalService::class);
     }
 
-    /** @note was ExtensionManagementUtility::isLoaded('dashboard') before, but class check is more stable in Service.php */
-    $isDashboardExtensionIsLoaded = class_exists(ListWidget::class);
-    if ($isDashboardExtensionIsLoaded) {
+    if ($containerBuilder->hasDefinition(ListWidget::class)) {
         $services->set('dashboard.widgets.calendarizeNextEvents')
             ->class(ListWidget::class)
             ->arg('$view', new Reference('dashboard.views.widget'))
@@ -42,7 +40,8 @@ return function (ContainerConfigurator $configurator) {
                 'height' => 'medium',
                 'width' => 'medium',
             ]);
-
+    }
+    if ($containerBuilder->hasDefinition(NumberWithIconWidget::class)) {
         $services->set('dashboard.widgets.calendarizeIndexAmount')
             ->class(NumberWithIconWidget::class)
             ->arg('$view', new Reference('dashboard.views.widget'))
