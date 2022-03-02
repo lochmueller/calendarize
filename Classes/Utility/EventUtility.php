@@ -74,7 +74,7 @@ class EventUtility
                 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
             );
 
-        $row = $queryBuilder->execute()->fetchAssociative();
+        $row = $queryBuilder->execute()->fetch();
 
         if (false === $row) {
             return null;

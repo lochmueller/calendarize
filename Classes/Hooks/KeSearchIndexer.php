@@ -91,7 +91,7 @@ class KeSearchIndexer extends AbstractHook
         $indexedCounter = 0;
 
         if ($result->rowCount() > 0) {
-            while ($row = $result->fetchAssociative()) {
+            while ($row = $result->fetch()) {
                 try {
                     /** @var Index $index */
                     // Get domainObject to check and call the feature/interface
