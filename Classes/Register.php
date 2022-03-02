@@ -138,7 +138,7 @@ class Register
         $GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = [
             'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
-                'type' => 'user',
+                'type' => 'none',
                 'renderType' => 'calendarizeInfoElement',
                 'parameters' => [
                     'items' => 10,
