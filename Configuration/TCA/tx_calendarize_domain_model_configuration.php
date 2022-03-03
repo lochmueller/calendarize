@@ -135,7 +135,7 @@ $custom = [
             'config' => [
                 'eval' => 'required,date',
                 'dbType' => 'date',
-                'size' => 6,
+                'size' => 13,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -143,7 +143,7 @@ $custom = [
             'config' => [
                 'eval' => 'date',
                 'dbType' => 'date',
-                'size' => 6,
+                'size' => 13,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
@@ -152,7 +152,7 @@ $custom = [
                 'eval' => 'time,required',
                 'renderType' => 'inputDateTime',
                 'default' => 0,
-                'size' => 4,
+                'size' => 10,
             ],
             'displayCond' => [
                 'AND' => [
@@ -165,8 +165,8 @@ $custom = [
             'config' => [
                 'eval' => 'time',
                 'renderType' => 'inputDateTime',
-                'size' => 4,
                 'default' => 0,
+                'size' => 10,
             ],
             'displayCond' => [
                 'AND' => [
@@ -180,13 +180,13 @@ $custom = [
             'onChange' => 'reload',
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
-                'default' => false,
+                'default' => 0,
             ],
         ],
         'open_end_time' => [
             'onChange' => 'reload',
             'config' => [
-                'default' => false,
+                'default' => 0,
             ],
             'displayCond' => [
                 'AND' => [
@@ -241,6 +241,7 @@ $custom = [
             'config' => [
                 'eval' => 'date',
                 'dbType' => 'date',
+                'size' => 13,
             ],
             'displayCond' => [
                 'AND' => [
@@ -251,27 +252,30 @@ $custom = [
         ],
         'till_days' => [
             'config' => [
-                'eval' => 'num,null',
-                'size' => 5,
+                'eval' => 'int,null',
                 'default' => null,
+                'size' => 10,
+                'range' => [
+                    'lower' => 1,
+                ],
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_days_relative' => [
             'onChange' => 'reload',
             'config' => [
-                'config' => [
-                    'eval' => 'null',
-                    'default' => null,
-                ],
+                'default' => 0,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_days_past' => [
             'config' => [
-                'eval' => 'num,null',
-                'size' => 5,
+                'eval' => 'int,null',
                 'default' => null,
+                'size' => 10,
+                'range' => [
+                    'lower' => 0,
+                ],
             ],
             'displayCond' => [
                 'AND' => [
@@ -283,8 +287,11 @@ $custom = [
         'counter_amount' => [
             'config' => [
                 'eval' => 'int',
-                'size' => 5,
+                'size' => 10,
                 'default' => 0,
+                'range' => [
+                    'lower' => 0,
+                ],
             ],
             'displayCond' => [
                 'AND' => [
@@ -296,8 +303,11 @@ $custom = [
         'counter_interval' => [
             'config' => [
                 'eval' => 'int,required',
-                'size' => 5,
+                'size' => 10,
                 'default' => 1,
+                'range' => [
+                    'lower' => 1,
+                ],
             ],
             'displayCond' => [
                 'AND' => [
@@ -375,6 +385,7 @@ $custom = [
                     ],
                 ],
                 'default' => Configuration::DAY_NONE,
+                'maxitems' => 7,
             ],
             'displayCond' => [
                 'OR' => [
@@ -466,6 +477,7 @@ $custom = [
                 ],
                 'default' => '',
             ],
+            'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'import_id' => [
             'config' => [

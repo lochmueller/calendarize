@@ -26,6 +26,7 @@ $custom = [
         ],
         'configurations' => [
             'exclude' => false,
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
