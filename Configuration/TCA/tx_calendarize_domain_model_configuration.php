@@ -69,6 +69,8 @@ $custom = [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
+                'authMode' => 'explicitDeny',
+                'authMode_enforce' => 'strict',
                 'items' => [
                     [
                         TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
@@ -508,6 +510,10 @@ $custom = [
         ],
     ],
 ];
+
+foreach (['start_date', 'end_date', 'start_time', 'end_time', 'all_day', 'open_end_time', 'end_date_dynamic', 'type', 'state', 'handling'] as $column) {
+    $custom['columns'][$column]['exclude'] = false;
+}
 
 $tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
 unset($tca['types']['1']);

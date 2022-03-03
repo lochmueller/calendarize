@@ -19,11 +19,13 @@ $custom = [
     ],
     'columns' => [
         'title' => [
+            'exclude' => false,
             'config' => [
                 'eval' => 'trim,required',
             ],
         ],
         'configurations' => [
+            'exclude' => false,
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_calendarize_domain_model_configuration',
