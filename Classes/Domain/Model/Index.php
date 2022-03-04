@@ -28,7 +28,7 @@ class Index extends AbstractModel
      * @var string
      * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
-    protected $uniqueRegisterKey;
+    protected $uniqueRegisterKey = '';
 
     /**
      * TableName.
@@ -36,7 +36,7 @@ class Index extends AbstractModel
      * @var string
      * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
-    protected $foreignTable;
+    protected $foreignTable = '';
 
     /**
      * The Id of the foreign element.
@@ -44,7 +44,7 @@ class Index extends AbstractModel
      * @var int
      * @DatabaseField("int")
      */
-    protected $foreignUid;
+    protected $foreignUid = 0;
 
     /**
      * Start date.
@@ -68,7 +68,7 @@ class Index extends AbstractModel
      * @var int
      * @DatabaseField("int")
      */
-    protected $startTime;
+    protected $startTime = 0;
 
     /**
      * End time.
@@ -76,7 +76,7 @@ class Index extends AbstractModel
      * @var int
      * @DatabaseField("int")
      */
-    protected $endTime;
+    protected $endTime = 0;
 
     /**
      * AllDay.
@@ -84,7 +84,7 @@ class Index extends AbstractModel
      * @var bool
      * @DatabaseField("bool")
      */
-    protected $allDay;
+    protected $allDay = false;
 
     /**
      * OpenEndTime.
@@ -92,7 +92,7 @@ class Index extends AbstractModel
      * @var bool
      * @DatabaseField("bool")
      */
-    protected $openEndTime;
+    protected $openEndTime = false;
 
     /**
      * State.
@@ -100,7 +100,7 @@ class Index extends AbstractModel
      * @var string
      * @DatabaseField("string")
      */
-    protected $state;
+    protected $state = '';
 
     /**
      * The original object.
@@ -191,7 +191,7 @@ class Index extends AbstractModel
      *
      * @param int $foreignUid
      */
-    public function setForeignUid($foreignUid)
+    public function setForeignUid(int $foreignUid)
     {
         $this->foreignUid = $foreignUid;
     }
@@ -201,7 +201,7 @@ class Index extends AbstractModel
      *
      * @return int
      */
-    public function getForeignUid()
+    public function getForeignUid(): int
     {
         return $this->foreignUid;
     }
@@ -211,7 +211,7 @@ class Index extends AbstractModel
      *
      * @param string $uniqueRegisterKey
      */
-    public function setUniqueRegisterKey($uniqueRegisterKey)
+    public function setUniqueRegisterKey(string $uniqueRegisterKey)
     {
         $this->uniqueRegisterKey = $uniqueRegisterKey;
     }
@@ -221,7 +221,7 @@ class Index extends AbstractModel
      *
      * @return string
      */
-    public function getUniqueRegisterKey()
+    public function getUniqueRegisterKey(): string
     {
         return $this->uniqueRegisterKey;
     }
@@ -231,7 +231,7 @@ class Index extends AbstractModel
      *
      * @param string $foreignTable
      */
-    public function setForeignTable($foreignTable)
+    public function setForeignTable(string $foreignTable)
     {
         $this->foreignTable = $foreignTable;
     }
@@ -241,7 +241,7 @@ class Index extends AbstractModel
      *
      * @return string
      */
-    public function getForeignTable()
+    public function getForeignTable(): string
     {
         return $this->foreignTable;
     }
@@ -251,7 +251,7 @@ class Index extends AbstractModel
      *
      * @param bool $allDay
      */
-    public function setAllDay($allDay)
+    public function setAllDay(bool $allDay)
     {
         $this->allDay = $allDay;
     }
@@ -261,7 +261,7 @@ class Index extends AbstractModel
      *
      * @return bool
      */
-    public function isAllDay()
+    public function isAllDay(): bool
     {
         return (bool)$this->allDay;
     }
@@ -291,7 +291,7 @@ class Index extends AbstractModel
      *
      * @param int $endTime
      */
-    public function setEndTime($endTime)
+    public function setEndTime(int $endTime)
     {
         $this->endTime = $endTime;
     }
@@ -301,7 +301,7 @@ class Index extends AbstractModel
      *
      * @return int
      */
-    public function getEndTime()
+    public function getEndTime(): int
     {
         return $this->endTime;
     }
@@ -331,7 +331,7 @@ class Index extends AbstractModel
      *
      * @param int $startTime
      */
-    public function setStartTime($startTime)
+    public function setStartTime(int $startTime)
     {
         $this->startTime = $startTime;
     }
@@ -341,7 +341,7 @@ class Index extends AbstractModel
      *
      * @return int
      */
-    public function getStartTime()
+    public function getStartTime(): int
     {
         return $this->startTime;
     }
@@ -351,7 +351,7 @@ class Index extends AbstractModel
      *
      * @return string
      */
-    public function getState()
+    public function getState(): string
     {
         return $this->state;
     }
@@ -361,7 +361,7 @@ class Index extends AbstractModel
      *
      * @param string $state
      */
-    public function setState($state)
+    public function setState(string $state)
     {
         $this->state = $state;
     }
@@ -371,7 +371,7 @@ class Index extends AbstractModel
      *
      * @return int
      */
-    public function getSysLanguageUid()
+    public function getSysLanguageUid(): int
     {
         return (int)$this->_languageUid;
     }
@@ -379,7 +379,7 @@ class Index extends AbstractModel
     /**
      * @return bool
      */
-    public function isOpenEndTime()
+    public function isOpenEndTime(): bool
     {
         return $this->openEndTime;
     }
@@ -387,23 +387,23 @@ class Index extends AbstractModel
     /**
      * @param bool $openEndTime
      */
-    public function setOpenEndTime($openEndTime)
+    public function setOpenEndTime(bool $openEndTime)
     {
         $this->openEndTime = $openEndTime;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
     /**
-     * @param string $slug
+     * @param string|null $slug
      */
-    public function setSlug(string $slug): void
+    public function setSlug(?string $slug): void
     {
         $this->slug = $slug;
     }

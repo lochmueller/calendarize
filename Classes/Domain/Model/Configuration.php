@@ -10,6 +10,7 @@ namespace HDNET\Calendarize\Domain\Model;
 use HDNET\Autoloader\Annotation\DatabaseField;
 use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Configuration for time options.
@@ -65,7 +66,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var string
      * @DatabaseField("string")
      */
-    protected $endDateDynamic;
+    protected $endDateDynamic = '';
 
     /**
      * Start time.
@@ -73,7 +74,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var int
      * @DatabaseField("int")
      */
-    protected $startTime;
+    protected $startTime = 0;
 
     /**
      * End time.
@@ -81,7 +82,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var int
      * @DatabaseField("int")
      */
-    protected $endTime;
+    protected $endTime = 0;
 
     /**
      * AllDay.
@@ -89,7 +90,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var bool
      * @DatabaseField("bool")
      */
-    protected $allDay;
+    protected $allDay = false;
 
     /**
      * OpenEndTime.
@@ -97,7 +98,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var bool
      * @DatabaseField("bool")
      */
-    protected $openEndTime;
+    protected $openEndTime = false;
 
     /**
      * External ICS url.
@@ -105,12 +106,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var string
      * @DatabaseField("string")
      */
-    protected $externalIcsUrl;
+    protected $externalIcsUrl = '';
 
     /**
      * Groups.
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\HDNET\Calendarize\Domain\Model\ConfigurationGroup>
+     * @var ObjectStorage<ConfigurationGroup>
      * @DatabaseField("\TYPO3\CMS\Extbase\Persistence\ObjectStorage")
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
@@ -135,7 +136,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Till days.
      *
-     * @var int
+     * @var int|null
      * @DatabaseField(sql="int(11)")
      */
     protected $tillDays;
@@ -146,12 +147,12 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var bool
      * @DatabaseField("Boolean")
      */
-    protected $tillDaysRelative;
+    protected $tillDaysRelative = false;
 
     /**
      * Till days past.
      *
-     * @var int
+     * @var int|null
      * @DatabaseField(sql="int(11)")
      */
     protected $tillDaysPast;
@@ -162,7 +163,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var int
      * @DatabaseField("int")
      */
-    protected $counterAmount;
+    protected $counterAmount = 0;
 
     /**
      * Counter interval.
@@ -170,7 +171,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var int
      * @DatabaseField("int")
      */
-    protected $counterInterval;
+    protected $counterInterval = 1;
 
     /**
      * Recurrence.
@@ -200,7 +201,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function __construct()
     {
-        $this->groups = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->groups = new ObjectStorage();
     }
 
     /**
@@ -208,7 +209,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -218,7 +219,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $type
      */
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -228,9 +229,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return bool
      */
-    public function isAllDay()
+    public function isAllDay(): bool
     {
-        return (bool)$this->allDay;
+        return $this->allDay;
     }
 
     /**
@@ -238,9 +239,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param bool $allDay
      */
-    public function setAllDay($allDay)
+    public function setAllDay(bool $allDay): void
     {
-        $this->allDay = (bool)$allDay;
+        $this->allDay = $allDay;
     }
 
     /**
@@ -268,7 +269,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getEndDateDynamic()
+    public function getEndDateDynamic(): string
     {
         return $this->endDateDynamic;
     }
@@ -278,7 +279,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $endDateDynamic
      */
-    public function setEndDateDynamic($endDateDynamic)
+    public function setEndDateDynamic(string $endDateDynamic): void
     {
         $this->endDateDynamic = $endDateDynamic;
     }
@@ -288,7 +289,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return int
      */
-    public function getEndTime()
+    public function getEndTime(): int
     {
         return $this->endTime;
     }
@@ -298,7 +299,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param int $endTime
      */
-    public function setEndTime($endTime)
+    public function setEndTime(int $endTime): void
     {
         $this->endTime = $endTime;
     }
@@ -328,7 +329,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return int
      */
-    public function getStartTime()
+    public function getStartTime(): int
     {
         return $this->startTime;
     }
@@ -338,7 +339,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param int $startTime
      */
-    public function setStartTime($startTime)
+    public function setStartTime(int $startTime): void
     {
         $this->startTime = $startTime;
     }
@@ -346,23 +347,19 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Get groups.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage<ConfigurationGroup>
      */
-    public function getGroups()
+    public function getGroups(): ObjectStorage
     {
-        if (null === $this->groups) {
-            return new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        }
-
-        return $this->groups;
+        return $this->groups ?? new ObjectStorage();
     }
 
     /**
      * Set groups.
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $groups
+     * @param ObjectStorage $groups
      */
-    public function setGroups($groups)
+    public function setGroups(ObjectStorage $groups): void
     {
         $this->groups = $groups;
     }
@@ -372,7 +369,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getFrequency()
+    public function getFrequency(): string
     {
         return $this->frequency;
     }
@@ -382,7 +379,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $frequency
      */
-    public function setFrequency($frequency)
+    public function setFrequency(string $frequency): void
     {
         $this->frequency = $frequency;
     }
@@ -410,9 +407,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Get till days.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTillDays()
+    public function getTillDays(): ?int
     {
         return $this->tillDays;
     }
@@ -420,9 +417,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set till days.
      *
-     * @param int $tillDays
+     * @param int|null $tillDays
      */
-    public function setTillDays(int $tillDays)
+    public function setTillDays(?int $tillDays): void
     {
         $this->tillDays = $tillDays;
     }
@@ -432,7 +429,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return bool
      */
-    public function isTillDaysRelative()
+    public function isTillDaysRelative(): bool
     {
         return $this->tillDaysRelative;
     }
@@ -442,7 +439,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param bool $tillDaysRelative
      */
-    public function setTillDaysRelative(bool $tillDaysRelative)
+    public function setTillDaysRelative(bool $tillDaysRelative): void
     {
         $this->tillDaysRelative = $tillDaysRelative;
     }
@@ -450,9 +447,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Get till days past.
      *
-     * @return int
+     * @return int|null
      */
-    public function getTillDaysPast()
+    public function getTillDaysPast(): ?int
     {
         return $this->tillDaysPast;
     }
@@ -460,9 +457,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * Set till days past.
      *
-     * @param int $tillDaysPast
+     * @param int|null $tillDaysPast
      */
-    public function setTillDaysPast(int $tillDaysPast)
+    public function setTillDaysPast(?int $tillDaysPast): void
     {
         $this->tillDaysPast = $tillDaysPast;
     }
@@ -472,7 +469,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return int
      */
-    public function getCounterAmount()
+    public function getCounterAmount(): int
     {
         return $this->counterAmount;
     }
@@ -482,7 +479,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param int $counterAmount
      */
-    public function setCounterAmount($counterAmount)
+    public function setCounterAmount(int $counterAmount): void
     {
         $this->counterAmount = $counterAmount;
     }
@@ -492,7 +489,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return int
      */
-    public function getCounterInterval()
+    public function getCounterInterval(): int
     {
         return $this->counterInterval;
     }
@@ -502,7 +499,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param int $counterInterval
      */
-    public function setCounterInterval($counterInterval)
+    public function setCounterInterval(int $counterInterval): void
     {
         $this->counterInterval = $counterInterval;
     }
@@ -512,7 +509,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getExternalIcsUrl()
+    public function getExternalIcsUrl(): string
     {
         return $this->externalIcsUrl;
     }
@@ -522,7 +519,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $externalIcsUrl
      */
-    public function setExternalIcsUrl($externalIcsUrl)
+    public function setExternalIcsUrl(string $externalIcsUrl): void
     {
         $this->externalIcsUrl = $externalIcsUrl;
     }
@@ -532,7 +529,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getDay()
+    public function getDay(): string
     {
         return $this->day;
     }
@@ -542,7 +539,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $day
      */
-    public function setDay($day)
+    public function setDay(string $day): void
     {
         $this->day = $day;
     }
@@ -552,7 +549,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getRecurrence()
+    public function getRecurrence(): string
     {
         return $this->recurrence;
     }
@@ -562,7 +559,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $recurrence
      */
-    public function setRecurrence($recurrence)
+    public function setRecurrence(string $recurrence): void
     {
         $this->recurrence = $recurrence;
     }
@@ -572,7 +569,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getHandling()
+    public function getHandling(): string
     {
         return $this->handling;
     }
@@ -582,7 +579,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $handling
      */
-    public function setHandling($handling)
+    public function setHandling(string $handling): void
     {
         $this->handling = $handling;
     }
@@ -592,9 +589,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @return string
      */
-    public function getState()
+    public function getState(): string
     {
-        return trim($this->state);
+        return $this->state;
     }
 
     /**
@@ -602,7 +599,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      *
      * @param string $state
      */
-    public function setState($state)
+    public function setState(string $state): void
     {
         $this->state = $state;
     }
@@ -610,15 +607,15 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     /**
      * @return bool
      */
-    public function isOpenEndTime()
+    public function isOpenEndTime(): bool
     {
-        return (bool)$this->openEndTime;
+        return $this->openEndTime;
     }
 
     /**
      * @param bool $openEndTime
      */
-    public function setOpenEndTime(bool $openEndTime)
+    public function setOpenEndTime(bool $openEndTime): void
     {
         $this->openEndTime = $openEndTime;
     }

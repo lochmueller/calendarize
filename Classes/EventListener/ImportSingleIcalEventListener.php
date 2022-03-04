@@ -102,10 +102,10 @@ class ImportSingleIcalEventListener
     private function hydrateEventRecord(Event $eventObj, ICalEvent $calEvent, int $pid): void
     {
         $eventObj->setPid($pid);
-        $eventObj->setTitle($calEvent->getTitle());
-        $eventObj->setDescription($calEvent->getDescription());
-        $eventObj->setLocation($calEvent->getLocation());
-        $eventObj->setOrganizer($calEvent->getOrganizer());
+        $eventObj->setTitle($calEvent->getTitle() ?? '');
+        $eventObj->setDescription($calEvent->getDescription() ?? '');
+        $eventObj->setLocation($calEvent->getLocation() ?? '');
+        $eventObj->setOrganizer($calEvent->getOrganizer() ?? '');
 
         $importId = $eventObj->getImportId();
 
