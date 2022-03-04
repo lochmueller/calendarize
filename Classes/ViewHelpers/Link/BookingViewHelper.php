@@ -37,6 +37,6 @@ class BookingViewHelper extends AbstractActionViewHelper
             'index' => $this->arguments['index']->getUid(),
         ];
 
-        $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'bookingPid'));
+        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'bookingPid'));
     }
 }
