@@ -30,7 +30,7 @@ class IfDateUpperViewHelper extends AbstractViewHelper
      * Note: You have to wrap this view helper in an f:if ViewHelper.
      * This VH just return a boolean evaluation value
      *
-     * @return string
+     * @return bool
      */
     public function render()
     {

@@ -209,12 +209,12 @@ class CleanupCommandController extends Command
     protected function processEvent(Repository $repository, AbstractEntity $model, string $modus)
     {
         // define the function for the delete-modus.
-        $delete = function ($repository, $model) {
+        $delete = static function ($repository, $model) {
             $repository->remove($model);
         };
 
         // define the function for the hide-modus.
-        $hide = function ($repository, $model) {
+        $hide = static function ($repository, $model) {
             $model->setHidden(true);
             $repository->update($model);
         };

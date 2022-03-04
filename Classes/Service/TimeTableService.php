@@ -134,7 +134,7 @@ class TimeTableService extends AbstractService
                 $endIn = ($eventEnd > $selectionStart && $eventEnd <= $selectionEnd);
                 $envelope = ($eventStart < $selectionStart && $eventEnd > $selectionEnd);
 
-                if ($startIn && $endIn || $envelope) {
+                if (($startIn && $endIn) || $envelope) {
                     $timeTableSelection[] = $baseValue;
                     break;
                 }

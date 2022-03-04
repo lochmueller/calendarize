@@ -35,9 +35,9 @@ abstract class ICalEventTest extends AbstractUnitTest
      */
     abstract protected function getEvent(string $content): ICalEvent;
 
-    //-----------------------------------------------------
+    // -----------------------------------------------------
     // Tests
-    //-----------------------------------------------------
+    // -----------------------------------------------------
 
     public function testMinimalEmpty()
     {

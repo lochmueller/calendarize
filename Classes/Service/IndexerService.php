@@ -178,7 +178,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 'foreign_uid' => $checkUid,
             ]);
 
-            // Create deleted items for very entry in the live workspace
+            // Create deleted items for every entry in the live workspace
             $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid, 0);
 
             foreach ($liveItems as $liveItem) {
@@ -206,7 +206,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
         if ($workspace) {
             // Placeholder are respect in function updateIndex
-            $currentItems = array_filter($currentItems, function ($item) {
+            $currentItems = array_filter($currentItems, static function ($item) {
                 return VersionState::DELETE_PLACEHOLDER !== $item['t3ver_state'];
             });
         }

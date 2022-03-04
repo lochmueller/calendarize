@@ -101,7 +101,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
     {
         static $tables;
         if (!\is_array($tables)) {
-            $tables = array_map(function ($config) {
+            $tables = array_map(static function ($config) {
                 return $config['tableName'];
             }, GeneralUtility::makeInstance(Register::class)->getRegister());
         }

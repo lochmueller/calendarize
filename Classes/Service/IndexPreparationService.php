@@ -84,7 +84,7 @@ class IndexPreparationService extends AbstractService
     {
         $workspace = isset($record['t3ver_wsid']) ? (int)$record['t3ver_wsid'] : 0;
         $origId = isset($record['t3ver_oid']) ? (int)$record['t3ver_oid'] : 0;
-        $neededItems = array_map(function ($item) use ($workspace, $origId, $record) {
+        $neededItems = array_map(static function ($item) use ($workspace, $origId, $record) {
             $item['t3ver_wsid'] = $workspace;
             // Set relation to the original record
             if ($workspace) {

@@ -110,7 +110,7 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * A redirect that have a event included.
+     * A redirect that have an event included.
      */
     protected function eventExtendedRedirect(string $className, string $eventName, array $variables = [])
     {

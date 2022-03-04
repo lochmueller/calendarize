@@ -33,7 +33,7 @@ class ConfigurationUtility
     {
         self::loadConfiguration();
 
-        return isset(self::$configuration[$name]) ? self::$configuration[$name] : null;
+        return self::$configuration[$name] ?? null;
     }
 
     /**

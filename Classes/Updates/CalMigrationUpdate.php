@@ -860,11 +860,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'year' => 'yearly',
         ];
 
-        if (!isset($freq[$calFrequency])) {
-            return '';
-        }
-
-        return $freq[$calFrequency];
+        return $freq[$calFrequency] ?? '';
     }
 
     /**
@@ -1188,7 +1184,7 @@ class CalMigrationUpdate extends AbstractUpdate
         $connection = $connectionPool->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
         $dbSchema = $connection->getSchemaManager()->createSchema();
 
-        $tableNames = array_map(function ($table) {
+        $tableNames = array_map(static function ($table) {
             return $table->getName();
         }, $dbSchema->getTables());
 

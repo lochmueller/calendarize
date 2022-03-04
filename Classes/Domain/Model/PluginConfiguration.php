@@ -134,7 +134,7 @@ class PluginConfiguration extends AbstractModel
     /**
      * Get title.
      *
-     * @return mixed
+     * @return string
      */
     public function getTitle()
     {

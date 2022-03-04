@@ -6,7 +6,7 @@ $baseDir = dirname(__DIR__, 3);
 
 require $baseDir . '/.Build/vendor/autoload.php';
 
-//$find = new \PhpCsFixer\Finder();
+// $find = new \PhpCsFixer\Finder();
 $finder = PhpCsFixer\Finder::create()
     ->in($baseDir . '/Classes')
     ->in($baseDir . '/Tests/Unit')

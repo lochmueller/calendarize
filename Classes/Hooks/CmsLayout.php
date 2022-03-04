@@ -64,7 +64,7 @@ class CmsLayout extends AbstractHook
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
-        $parts = array_map(function ($element) {
+        $parts = array_map(static function ($element) {
             $split = explode('->', $element);
 
             return ucfirst($split[1]);

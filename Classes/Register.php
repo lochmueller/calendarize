@@ -71,7 +71,7 @@ class Register
     /**
      * Default configuration for the current extension.
      * If you want to use the calendarize features in your own extension,
-     * you have to implement a own configuration.
+     * you have to implement an own configuration.
      *
      * @return array
      */
@@ -115,7 +115,7 @@ class Register
      */
     public static function createTcaConfiguration(array $configuration)
     {
-        $fieldName = isset($configuration['fieldName']) ? $configuration['fieldName'] : 'calendarize';
+        $fieldName = $configuration['fieldName'] ?? 'calendarize';
         $tableName = $configuration['tableName'];
         $typeList = isset($configuration['tcaTypeList']) ? trim($configuration['tcaTypeList']) : '';
         // Configure position of where to put the calendarize fields

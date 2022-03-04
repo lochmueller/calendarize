@@ -63,7 +63,7 @@ class TimeTimeTable extends AbstractTimeTable
     {
         switch ($configuration->getEndDateDynamic()) {
             case Configuration::END_DYNAMIC_1_DAY:
-                $callback = function ($entry) {
+                $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
                         $entry['end_date']->modify('+1 day');
@@ -73,7 +73,7 @@ class TimeTimeTable extends AbstractTimeTable
                 };
                 break;
             case Configuration::END_DYNAMIC_1_WEEK:
-                $callback = function ($entry) {
+                $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
                         $entry['end_date']->modify('+1 week');
@@ -83,7 +83,7 @@ class TimeTimeTable extends AbstractTimeTable
                 };
                 break;
             case Configuration::END_DYNAMIC_END_WEEK:
-                $callback = function ($entry) {
+                $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
                         $entry['end_date']->modify('monday next week');
@@ -94,7 +94,7 @@ class TimeTimeTable extends AbstractTimeTable
                 };
                 break;
             case Configuration::END_DYNAMIC_END_MONTH:
-                $callback = function ($entry) {
+                $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
                         $entry['end_date']->modify('last day of this month');
@@ -104,7 +104,7 @@ class TimeTimeTable extends AbstractTimeTable
                 };
                 break;
             case Configuration::END_DYNAMIC_END_YEAR:
-                $callback = function ($entry) {
+                $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
                         $entry['end_date']->setDate((int)$entry['end_date']->format('Y'), 12, 31);
@@ -250,7 +250,7 @@ class TimeTimeTable extends AbstractTimeTable
      */
     protected function getFrequencyIncrement(Configuration $configuration)
     {
-        $interval = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
+        $interval = max($configuration->getCounterInterval(), 1);
         switch ($configuration->getFrequency()) {
             case Configuration::FREQUENCY_DAILY:
                 $intervalValue = '+' . $interval . ' days';
@@ -296,7 +296,7 @@ class TimeTimeTable extends AbstractTimeTable
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
         $loopEntriesAdded = 0;
-        $intervalCounter = $configuration->getCounterInterval() <= 1 ? 1 : $configuration->getCounterInterval();
+        $intervalCounter = max($configuration->getCounterInterval(), 1);
         for ($i = 0; $loopEntriesAdded < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $lastLoop;
 

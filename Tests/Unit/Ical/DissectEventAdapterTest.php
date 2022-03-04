@@ -21,7 +21,7 @@ class DissectEventAdapterTest extends ICalEventTest
 
     protected function tearDown(): void
     {
-        if (is_scalar($this->tmpFile) && file_exists($this->tmpFile)) {
+        if (\is_scalar($this->tmpFile) && file_exists($this->tmpFile)) {
             unlink($this->tmpFile);
         }
         parent::tearDown();

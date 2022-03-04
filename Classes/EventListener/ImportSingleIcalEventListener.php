@@ -74,7 +74,7 @@ class ImportSingleIcalEventListener
     }
 
     /**
-     * Initializes or gets a event by import id.
+     * Initializes or gets an event by import id.
      *
      * @param string $importId
      *

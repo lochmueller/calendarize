@@ -23,7 +23,7 @@ class DissectICalService extends AbstractService implements ICalServiceInterface
         }
         $events = $parser->getEvents();
 
-        $wrapEvents = function (ICalEvent $event) {
+        $wrapEvents = static function (ICalEvent $event) {
             return new DissectEventAdapter($event);
         };
 

@@ -33,7 +33,7 @@ class FormatUtcDateViewHelper extends DateViewHelper
 
         $date = $arguments['date'];
         if ($date instanceof \DateTimeInterface) {
-            $renderChildrenClosure = function () use ($date) {
+            $renderChildrenClosure = static function () use ($date) {
                 // Convert date to timestamp, so that it can be reparsed.
                 return $date->getTimestamp();
             };
