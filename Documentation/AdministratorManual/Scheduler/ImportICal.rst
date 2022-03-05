@@ -51,6 +51,7 @@ The generation of (event) configurations currently support following properties 
    *  interval (`INTERVAL`)
    *  until / last date (`UNTIL`)
    *  the number of occurrences (`COUNT`)
+   *  (simple) recurrences with monthly/yearly frequencies (e.g. every first Monday into the month) (`BYDAY`, `BYSETPOS`)
 
 In addition to them the **default event** makes use of:
 

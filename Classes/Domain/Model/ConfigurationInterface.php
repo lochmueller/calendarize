@@ -36,6 +36,13 @@ interface ConfigurationInterface
 
     public const FREQUENCY_YEARLY = 'yearly';
 
+    public const VALID_FREQUENCIES = [
+        self::FREQUENCY_DAILY,
+        self::FREQUENCY_WEEKLY,
+        self::FREQUENCY_MONTHLY,
+        self::FREQUENCY_YEARLY,
+    ];
+
     public const DAY_NONE = '';
 
     public const DAY_SPECIAL_WEEKDAY = 'weekday';
