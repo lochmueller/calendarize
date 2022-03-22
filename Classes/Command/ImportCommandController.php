@@ -50,13 +50,11 @@ class ImportCommandController extends Command
     /**
      * ImportCommandController constructor.
      *
-     * @param string|null              $name
      * @param ICalServiceInterface     $iCalService
      * @param EventDispatcherInterface $eventDispatcher
      * @param IndexerService           $indexerService
      */
     public function __construct(
-        string $name = null,
         ICalServiceInterface $iCalService,
         EventDispatcherInterface $eventDispatcher,
         IndexerService $indexerService,
@@ -67,7 +65,7 @@ class ImportCommandController extends Command
         $this->indexerService = $indexerService;
         $this->iCalUrlService = $iCalUrlService;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure()
