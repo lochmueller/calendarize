@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Exception;
@@ -54,7 +55,9 @@ class HelperUtility
      */
     public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
     {
-        $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, true);
+        // Don't store flash messages in CLI context
+        $storeInSession = !Environment::isCli();
+        $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, $storeInSession);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->enqueue($flashMessage);
