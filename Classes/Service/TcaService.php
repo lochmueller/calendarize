@@ -70,7 +70,7 @@ class TcaService extends AbstractService
         $fullRow = $databaseConnection->select(['*'], $table, ['uid' => $params['row']['uid']])->fetch();
 
         $transPointer = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
-        if ($transPointer && (int)$fullRow[$transPointer] > 0) {
+        if ($transPointer && (int)($fullRow[$transPointer] ?? 0) > 0) {
             return;
         }
 
@@ -109,7 +109,7 @@ class TcaService extends AbstractService
     {
         $migrateFields = ['type', 'frequency', 'groups'];
         foreach ($migrateFields as $field) {
-            $row[$field] = \is_array($row[$field]) ? $row[$field][0] : $row[$field];
+            $row[$field] = \is_array($row[$field]) ? array_shift($row[$field]) : $row[$field];
         }
     }
 

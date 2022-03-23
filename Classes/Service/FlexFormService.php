@@ -43,12 +43,11 @@ class FlexFormService extends AbstractService
     public function get($key, $sheet = 'sDEF')
     {
         if (!$this->isValid()) {
-            return;
+            return null;
         }
         $flexFormData = $this->flexFormData['data'];
-        if (\is_array($flexFormData) && \is_array($flexFormData[$sheet]) && \is_array($flexFormData[$sheet]['lDEF']) && \is_array($flexFormData[$sheet]['lDEF'][$key]) && isset($flexFormData[$sheet]['lDEF'][$key]['vDEF'])) {
-            return $flexFormData[$sheet]['lDEF'][$key]['vDEF'];
-        }
+
+        return $flexFormData[$sheet]['lDEF'][$key]['vDEF'] ?? null;
     }
 
     /**

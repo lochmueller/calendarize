@@ -75,7 +75,8 @@ class DateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Format\DateViewHelper
         }
 
         if (false !== strpos($format, '%')) {
-            return strftime($format, (int)$date->format('U'));
+            // Deprecated since PHP 8.1.0
+            return @strftime($format, (int)$date->format('U'));
         }
 
         return $date->format($format);

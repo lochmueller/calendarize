@@ -89,7 +89,7 @@ abstract class AbstractController extends ActionController
     public function initializeAction()
     {
         parent::initializeAction();
-        AbstractBookingRequest::setConfigurations(GeneralUtility::trimExplode(',', $this->settings['configuration']));
+        AbstractBookingRequest::setConfigurations(GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? ''));
     }
 
     /**

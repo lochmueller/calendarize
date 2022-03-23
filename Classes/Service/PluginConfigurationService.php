@@ -40,7 +40,7 @@ class PluginConfigurationService
      */
     public function respectPluginConfiguration(array $settings)
     {
-        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)$settings['pluginConfiguration']);
+        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)($settings['pluginConfiguration'] ?? 0));
         if ($settings['pluginConfiguration'] instanceof PluginConfiguration) {
             $checkFields = [
                 'detailPid',

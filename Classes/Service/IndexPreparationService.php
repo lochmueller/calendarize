@@ -48,7 +48,7 @@ class IndexPreparationService extends AbstractService
 
         $register = Register::getRegister();
         $fieldName = $register[$configurationKey]['fieldName'] ?? 'calendarize';
-        $configurations = GeneralUtility::intExplode(',', $rawRecord[$fieldName], true);
+        $configurations = GeneralUtility::intExplode(',', $rawRecord[$fieldName] ?? '', true);
 
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
         if ($transPointer && (int)$rawRecord[$transPointer] > 0) {

@@ -65,7 +65,7 @@ class Register
      */
     public static function getRegister(): array
     {
-        return \is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']) ? $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] : [];
+        return $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'] ?? [];
     }
 
     /**
