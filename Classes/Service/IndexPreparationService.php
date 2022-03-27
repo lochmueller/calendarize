@@ -132,7 +132,7 @@ class IndexPreparationService extends AbstractService
             }
         }
 
-        if ($languageField && 0 !== (int)$record[$languageField]) {
+        if ($languageField) {
             $language = (int)$record[$languageField];
             foreach (array_keys($neededItems) as $key) {
                 $neededItems[$key]['sys_language_uid'] = $language;
