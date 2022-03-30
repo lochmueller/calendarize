@@ -22,6 +22,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer
+          extensions: pdo
 
       - name: Setup problem matchers
         run: |
@@ -45,8 +46,24 @@ jobs:
       - name: Unit Tests with phpunit
         run: composer run tool:phpunit --
 
+      # start db
+      - name: Start MySQL
+        run: sudo /etc/init.d/mysql start
+
+      # functional tests
+      - name: Functional Tests
+        run: |
+          export typo3DatabaseName="typo3";
+          export typo3DatabaseHost="127.0.0.1";
+          export typo3DatabaseUsername="root";
+          export typo3DatabasePassword="root";
+          composer run tool:phpunit:functional --
+
       - name: Run PHP CS Fixer checks
         run: composer run tool:php-cs-fixer-check
 
 #      - name: Run DepTrac
 #        run: composer run tool:deptrac
+
+      - name: Reset composer.json
+        run: git checkout composer.json;
