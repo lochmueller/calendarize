@@ -31,7 +31,7 @@ class VObjectICalService extends AbstractService implements ICalServiceInterface
             );
         } catch (ParseException $e) {
             // Rethrow the exception to abstract the type
-            throw new UnableToGetEventsException('Unable to parse invalid object.', 1603309056, $e);
+            throw new UnableToGetEventsException($e->getMessage(), 1603309056, $e);
         }
 
         /** @var VEvent[] $events */

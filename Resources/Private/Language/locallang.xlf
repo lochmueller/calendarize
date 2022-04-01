@@ -149,6 +149,18 @@
 				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the start time!
 				</source>
 			</trans-unit>
+			<trans-unit id="flashMessage.missingStartDate.title" resname="flashMessage.missingStartDate.title">
+				<source>Missing start date</source>
+			</trans-unit>
+			<trans-unit id="flashMessage.missingStartDate.text" resname="flashMessage.missingStartDate.text">
+				<source>Missing start date of the configuration!</source>
+			</trans-unit>
+			<trans-unit id="flashMessage.invalidExternalUrl.title" resname="flashMessage.invalidExternalUrl.title">
+				<source>Invalid external URL</source>
+			</trans-unit>
+			<trans-unit id="flashMessage.unableToProcessEvents.title" resname="flashMessage.unableToProcessEvents.title">
+				<source>Unable to process events</source>
+			</trans-unit>
 			<trans-unit id="booking.thankYouMessage">
 				<source>Thank you for your booking request. We will contact you shortly.</source>
 			</trans-unit>

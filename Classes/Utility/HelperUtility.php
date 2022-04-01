@@ -17,6 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Helper Utility.
@@ -53,7 +54,7 @@ class HelperUtility
      *
      * @throws Exception
      */
-    public static function createFlashMessage($message, $title = '', $mode = FlashMessage::OK)
+    public static function createFlashMessage(string $message, string $title = '', int $mode = FlashMessage::OK): void
     {
         // Don't store flash messages in CLI context
         $storeInSession = !Environment::isCli();
@@ -61,6 +62,22 @@ class HelperUtility
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->enqueue($flashMessage);
+    }
+
+    /**
+     * Create a translated flash message.
+     *
+     * @param string $messageKey
+     * @param string $titleKey
+     * @param int    $mode
+     *
+     * @throws Exception
+     */
+    public static function createTranslatedFlashMessage(string $messageKey, string $titleKey = '', int $mode = FlashMessage::OK): void
+    {
+        $message = LocalizationUtility::translate($messageKey, 'calendarize') ?? $messageKey;
+        $title = LocalizationUtility::translate($titleKey, 'calendarize') ?? $titleKey;
+        self::createFlashMessage($message, $title, $mode);
     }
 
     /**

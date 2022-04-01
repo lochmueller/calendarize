@@ -14,6 +14,7 @@ use HDNET\Calendarize\Service\Ical\ICalUrlService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * External service.
@@ -60,8 +61,8 @@ class ExternalTimeTable extends AbstractTimeTable
             $fileName = $this->iCalUrlService->getOrCreateLocalFileForUrl($externalIcsUrl);
         } catch (UnableToGetFileForUrlException $e) {
             HelperUtility::createFlashMessage(
-                'Configuration with invalid ICS URL: ' . $externalIcsUrl . '. ' . $e->getMessage(),
-                'External ICS URL',
+                $e->getMessage(),
+                LocalizationUtility::translate('flashMessage.invalidExternalUrl.title', 'calendarize') ?? '',
                 FlashMessage::ERROR
             );
 
@@ -72,8 +73,8 @@ class ExternalTimeTable extends AbstractTimeTable
             $externalTimes = $this->iCalService->getEvents($fileName);
         } catch (\Exception $e) {
             HelperUtility::createFlashMessage(
-                'Unable to process events: ' . $e->getMessage(),
-                'Unable to process ICS',
+                $e->getMessage(),
+                LocalizationUtility::translate('flashMessage.unableToProcessEvents.title', 'calendarize') ?? '',
                 FlashMessage::ERROR
             );
 

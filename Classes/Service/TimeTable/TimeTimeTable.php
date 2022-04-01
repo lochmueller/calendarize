@@ -11,11 +11,10 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\RecurrenceService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Time service.
@@ -128,7 +127,7 @@ class TimeTimeTable extends AbstractTimeTable
     }
 
     /**
-     * Validate the base entry, if there are logica mistakes.
+     * Validate the base entry, if there are logical mistakes.
      *
      * @param array $baseEntry
      *
@@ -136,45 +135,41 @@ class TimeTimeTable extends AbstractTimeTable
      */
     protected function validateBaseEntry(array $baseEntry): bool
     {
-        $message = null;
+        // Invalid start date
         if (!($baseEntry['start_date'] instanceof \DateTimeInterface)) {
-            $message = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                'There is no usage for a event configuration without start date?!',
-                'No start date?',
+            HelperUtility::createTranslatedFlashMessage(
+                'flashMessage.missingStartDate.text',
+                'flashMessage.missingStartDate.title',
                 FlashMessage::ERROR
             );
-        } elseif ($baseEntry['end_date'] instanceof \DateTimeInterface && $baseEntry['start_date'] > $baseEntry['end_date']) {
-            $message = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                LocalizationUtility::translate(
-                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date.message',
-                    'calendarize'
-                ),
-                LocalizationUtility::translate(
-                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.date',
-                    'calendarize'
-                ),
-                FlashMessage::ERROR
-            );
-        } elseif ($baseEntry['end_date'] instanceof \DateTimeInterface && !$baseEntry['all_day'] && !$baseEntry['open_end_time'] && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y') && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY && $baseEntry['end_time'] > 0) {
-            $message = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                LocalizationUtility::translate(
-                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.time.message',
-                    'calendarize'
-                ),
-                LocalizationUtility::translate(
-                    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:wrong.time',
-                    'calendarize'
-                ),
-                FlashMessage::ERROR
-            );
+
+            return false;
         }
-        if ($message) {
-            $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-            $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
-            $messageQueue->addMessage($message);
+
+        // End date is before start date
+        if ($baseEntry['end_date'] instanceof \DateTimeInterface && $baseEntry['start_date'] > $baseEntry['end_date']) {
+            HelperUtility::createTranslatedFlashMessage(
+                'wrong.date.message',
+                'wrong.date',
+                FlashMessage::ERROR
+            );
+
+            return false;
+        }
+
+        // End date is before start date considering time, all day and open end
+        if (
+            $baseEntry['end_date'] instanceof \DateTimeInterface
+            && !$baseEntry['all_day'] && !$baseEntry['open_end_time']
+            && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y')
+            && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY
+            && $baseEntry['end_time'] > 0
+        ) {
+            HelperUtility::createTranslatedFlashMessage(
+                'wrong.time.message',
+                'wrong.time',
+                FlashMessage::ERROR
+            );
 
             return false;
         }
