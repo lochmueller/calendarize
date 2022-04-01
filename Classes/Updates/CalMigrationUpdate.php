@@ -157,7 +157,7 @@ class CalMigrationUpdate extends AbstractUpdate
                 $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
                 $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
             )
-            ->execute()->fetchAssociative();
+            ->execute()->fetch();
 
         return (int)$count['COUNT(*)'] > 0;
     }
