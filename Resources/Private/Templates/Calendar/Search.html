@@ -1,4 +1,4 @@
-<f:form pageUid="{settings.listPid}">
+<f:form pageUid="{settings.listPid}" id="calendarizeSearchForm">
 	<div class="form-group">
 		<label for="calendarizeStartDate"><f:translate key="search.start_date" extensionName="Calendarize" /></label>
 		<f:form.textfield type="date" name="startDate" id="calendarizeStartDate" class="form-control" value="{startDate -> f:format.date(format: 'Y-m-d')}" />
@@ -11,6 +11,18 @@
 	<f:for each="{configurations}" as="configuration">
 		<f:render partial="{configuration.partialIdentifier}/Search" arguments="{customSearch: customSearch, extended: extended}" />
 	</f:for>
+
+	<div class="form-group d-none">
+		<label for="calendarizePage"><f:translate key="pagination.page" extensionName="Calendarize" /></label>
+		<f:form.textfield
+			type="number"
+			id="calendarizePage"
+			name="currentPage"
+			class="form-control"
+			value="{f:if(condition: currentPage, then: currentPage, else: 1)}"
+			additionalAttributes="{min: '1'}"
+		/>
+	</div>
 
 	<button type="submit" class="btn btn-primary"><f:translate key="search.button_label" extensionName="Calendarize" /></button>
 </f:form>
