@@ -11,6 +11,7 @@ use HDNET\Autoloader\Annotation\SignalClass;
 use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
+use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\CompositeExpression;
@@ -18,8 +19,10 @@ use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\QueryRestrictionInterface;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Install\Updates\ChattyInterface;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 /**
@@ -46,7 +49,7 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
  *    return $variables;
  * }
  */
-class CalMigrationUpdate extends AbstractUpdate
+class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
 {
     /**
      * Import prefix.
@@ -83,6 +86,16 @@ class CalMigrationUpdate extends AbstractUpdate
     }
 
     /**
+     * @var OutputInterface
+     */
+    protected $output;
+
+    public function setOutput(OutputInterface $output): void
+    {
+        $this->output = $output;
+    }
+
+    /**
      * Checks whether updates are required.
      *
      * @param string &$description The description for the update
@@ -112,8 +125,18 @@ class CalMigrationUpdate extends AbstractUpdate
      */
     public function executeUpdate(): bool
     {
+        if (\PHP_VERSION_ID >= 80000 || GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
+            $this->output->writeln(
+                'The Cal migration wizard does not TYPO3 >= 11 and not PHP 8. Please use TYPO3 v10.4!'
+            );
+
+            return false;
+        }
+
         $calIds = $this->getNonMigratedCalIds();
         if (empty($calIds)) {
+            $this->output->writeln('No non-migrated cal entries found!');
+
             return true;
         }
         $dbQueries = [];
@@ -928,13 +951,17 @@ class CalMigrationUpdate extends AbstractUpdate
         $q->select('*')
             ->from($variables['table'])
             ->where(
-                $q->expr()->neq('import_id', $q->createNamedParameter(''))
+                $q->expr()->like('import_id', $q->createNamedParameter(self::IMPORT_PREFIX . '%'))
             );
 
         $dbQueries[] = $q->getSQL();
         $selectResults = $q->execute()->fetchAll();
 
         foreach ($selectResults as $sysCategory) {
+            if (empty($sysCategory['parent'])) {
+                // Skip categories without a parent
+                continue;
+            }
             // update parent, because there are just the old uids
             $q = $this->getQueryBuilder('sys_category');
             $q->update('sys_category')
@@ -973,7 +1000,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $result = $q->execute()->fetchAll();
 
-        return (int)$result[0]['uid'];
+        return (int)($result[0]['uid'] ?? 0);
     }
 
     /**
@@ -1013,7 +1040,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $result = $q->execute()->fetchAll();
 
-        return (int)$result[0]['uid'];
+        return (int)($result[0]['uid'] ?? 0);
     }
 
     /**
@@ -1050,7 +1077,7 @@ class CalMigrationUpdate extends AbstractUpdate
 
         $result = $q->execute()->fetchAll();
 
-        return (int)$result[0]['uid'];
+        return (int)($result[0]['uid'] ?? 0);
     }
 
     /**
@@ -1077,7 +1104,7 @@ class CalMigrationUpdate extends AbstractUpdate
             'frequency' => $this->mapFrequency($calEventRow['freq']),
             'till_date' => (string)$calEventRow['until'] ?: null,
             'counter_amount' => (int)$calEventRow['cnt'],
-            'counter_interval' => (int)$calEventRow['interval'],
+            'counter_interval' => (int)($calEventRow['interval'] ?? 1),
         ];
 
         $variables = [

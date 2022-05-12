@@ -8,6 +8,7 @@ Requirements
 
 - Installed extension calendarize
 - Tables from cal (e.g. :code:`tx_cal_*`, ...)
+- TYPO3 v10.4 (v11 is NOT supported)
 
 Migration
 ---------
