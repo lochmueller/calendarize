@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
+use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -18,6 +19,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Helper Utility.
@@ -57,7 +60,8 @@ class HelperUtility
     public static function createFlashMessage(string $message, string $title = '', int $mode = FlashMessage::OK): void
     {
         // Don't store flash messages in CLI context
-        $storeInSession = !Environment::isCli();
+        // Note: the getUserByContext check is only required for TYPO3 v10 and is fixed in v11 (94418).
+        $storeInSession = !Environment::isCli() && null !== self::getUserByContext();
         $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, $storeInSession);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
@@ -75,8 +79,32 @@ class HelperUtility
      */
     public static function createTranslatedFlashMessage(string $messageKey, string $titleKey = '', int $mode = FlashMessage::OK): void
     {
-        $message = LocalizationUtility::translate($messageKey, 'calendarize') ?? $messageKey;
-        $title = LocalizationUtility::translate($titleKey, 'calendarize') ?? $titleKey;
+        try {
+            $message = LocalizationUtility::translate($messageKey, 'calendarize') ?? $messageKey;
+            $title = LocalizationUtility::translate($titleKey, 'calendarize') ?? $titleKey;
+        } catch (\TypeError $e) {
+            $message = $messageKey;
+            $title = $titleKey;
+        }
+        self::createFlashMessage($message, $title, $mode);
+    }
+
+    /**
+     * Create a flash message with a translated title.
+     *
+     * @param string $messageKey
+     * @param string $titleKey
+     * @param int    $mode
+     *
+     * @throws Exception
+     */
+    public static function createTranslatedTitleFlashMessage(string $message, string $titleKey = '', int $mode = FlashMessage::OK): void
+    {
+        try {
+            $title = LocalizationUtility::translate($titleKey, 'calendarize') ?? $titleKey;
+        } catch (\TypeError $e) {
+            $title = $titleKey;
+        }
         self::createFlashMessage($message, $title, $mode);
     }
 
@@ -90,5 +118,20 @@ class HelperUtility
     public static function getDatabaseConnection($table)
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
+    }
+
+    /**
+     * Gets user object by context.
+     * This class is also used in install tool, where $GLOBALS['BE_USER'] is not set and can be null.
+     *
+     * @return AbstractUserAuthentication|null
+     */
+    protected static function getUserByContext(): ?AbstractUserAuthentication
+    {
+        if (($GLOBALS['TSFE'] ?? null) instanceof TypoScriptFrontendController && $GLOBALS['TSFE']->fe_user instanceof FrontendUserAuthentication) {
+            return $GLOBALS['TSFE']->fe_user;
+        }
+
+        return $GLOBALS['BE_USER'] ?? null;
     }
 }
