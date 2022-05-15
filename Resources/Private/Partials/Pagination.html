@@ -25,11 +25,18 @@
 		<li>…</li>
 	</f:if>
 	<f:for each="{pagination.allPageNumbers}" as="page">
-		<li class="{f:if(condition: '{page} == {paginator.currentPageNumber}', then:'current')}">
-			<f:render section="PaginationLink" arguments="{actionName:actionName, page: page, title: page, searchMode:searchMode}" contentAs="content">
-				{page}
-			</f:render>
-		</li>
+		<f:if condition="{page} == {paginator.currentPageNumber}">
+			<f:then>
+				<li class="current">{page}</li>
+			</f:then>
+			<f:else>
+				<li>
+					<f:render section="PaginationLink" arguments="{actionName:actionName, page: page, title: page, searchMode:searchMode}" contentAs="content">
+						{page}
+					</f:render>
+				</li>
+			</f:else>
+		</f:if>
 	</f:for>
 	<f:if condition="{pagination.hasMorePages}">
 		<li>…</li>
@@ -61,16 +68,14 @@
 <f:section name="PaginationLink">
 	<f:if condition="{searchMode}">
 		<f:then>
-			<a class="page-link"
-				 href="{f:uri.action(action:actionName, arguments:{currentPage: page})}"
+			<a href="#"
 				 title="{title}"
 				 onclick="if(document.getElementById('calendarizePage')){document.getElementById('calendarizePage').value={page};document.getElementById('calendarizeSearchForm').submit();return false;}">
 				{content}
 			</a>
 		</f:then>
 		<f:else>
-			<a class="page-link"
-				 href="{f:uri.action(action:actionName, arguments:{currentPage: page})}"
+			<a href="{f:uri.action(action:actionName, arguments:{currentPage: page})}"
 				 title="{title}">
 				{content}
 			</a>
