@@ -247,6 +247,12 @@ class TimeTimeTable extends AbstractTimeTable
     {
         $interval = max($configuration->getCounterInterval(), 1);
         switch ($configuration->getFrequency()) {
+            case Configuration::FREQUENCY_MINUTELY:
+                $intervalValue = '+' . $interval . ' minutes';
+                break;
+            case Configuration::FREQUENCY_HOURLY:
+                $intervalValue = '+' . $interval . ' hours';
+                break;
             case Configuration::FREQUENCY_DAILY:
                 $intervalValue = '+' . $interval . ' days';
                 break;

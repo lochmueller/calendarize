@@ -258,6 +258,12 @@
 			<trans-unit id="configuration.frequency.">
 				<source>None</source>
 			</trans-unit>
+			<trans-unit id="configuration.frequency.minutely">
+				<source>Every minute</source>
+			</trans-unit>
+			<trans-unit id="configuration.frequency.hourly">
+				<source>Hourly</source>
+			</trans-unit>
 			<trans-unit id="configuration.frequency.daily">
 				<source>Daily</source>
 			</trans-unit>

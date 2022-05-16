@@ -28,6 +28,10 @@ interface ConfigurationInterface
 
     public const FREQUENCY_NONE = '';
 
+    public const FREQUENCY_MINUTELY = 'minutely';
+
+    public const FREQUENCY_HOURLY = 'hourly';
+
     public const FREQUENCY_DAILY = 'daily';
 
     public const FREQUENCY_WEEKLY = 'weekly';
@@ -37,6 +41,8 @@ interface ConfigurationInterface
     public const FREQUENCY_YEARLY = 'yearly';
 
     public const VALID_FREQUENCIES = [
+        self::FREQUENCY_MINUTELY,
+        self::FREQUENCY_HOURLY,
         self::FREQUENCY_DAILY,
         self::FREQUENCY_WEEKLY,
         self::FREQUENCY_MONTHLY,
