@@ -136,7 +136,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         // FREQ (required)
         $frequency = strtolower($rrule['FREQ'] ?? '');
         // The spelling of the frequency in RFC 5545 matches the constants in ConfigurationInterface.
-        // Currently, only a subset of frequencies is implemented (missing "SECONDLY" / "MINUTELY" / "HOURLY")
+        // Currently, only a subset of frequencies is implemented (missing "SECONDLY")
         if (!\in_array($frequency, ConfigurationInterface::VALID_FREQUENCIES)) {
             $this->logger->warning('Invalid frequency="{frequency}" in RRULE.', [
                 'frequency' => $frequency,

@@ -14,6 +14,14 @@ class EventConfigurationServiceTest extends AbstractUnitTest
     {
         return [
             'empty RRULE' => [[], ['frequency' => ConfigurationInterface::FREQUENCY_NONE]],
+            'minutely frequency' => [
+                ['FREQ' => 'MINUTELY'],
+                ['frequency' => ConfigurationInterface::FREQUENCY_MINUTELY],
+            ],
+            'hourly frequency' => [
+                ['FREQ' => 'HOURLY'],
+                ['frequency' => ConfigurationInterface::FREQUENCY_HOURLY],
+            ],
             'daily frequency' => [
                 ['FREQ' => 'DAILY'],
                 ['frequency' => ConfigurationInterface::FREQUENCY_DAILY],

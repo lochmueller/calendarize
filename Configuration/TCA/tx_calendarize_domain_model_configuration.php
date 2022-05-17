@@ -217,6 +217,14 @@ $custom = [
                         Configuration::FREQUENCY_NONE,
                     ],
                     [
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_MINUTELY),
+                        Configuration::FREQUENCY_MINUTELY,
+                    ],
+                    [
+                        TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_HOURLY),
+                        Configuration::FREQUENCY_HOURLY,
+                    ],
+                    [
                         TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_DAILY),
                         Configuration::FREQUENCY_DAILY,
                     ],
