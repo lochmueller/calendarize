@@ -1,10 +1,16 @@
+{namespace c=HDNET\Calendarize\ViewHelpers}
 <!-- move to extension partial -->
 <div class="form-group">
 	<label for="calendarizeFullText"><f:translate key="search.text" extensionName="Calendarize" /></label>
 	<f:form.textfield id="calendarizeFullText" name="customSearch[fullText]" value="{customSearch.fullText}" class="form-control" />
 </div>
 
-<f:comment>
-	<label for="calendarizeCategories">Category</label>
-	<f:form.select options="--- add categories here ---" id="calendarizeCategories" name="customSearch[category]" value="{customSearch.category}" class="form-control" />
-</f:comment>
+<f:if condition="{extended.categories}">
+	Categories:
+	<f:for each="{extended.categories}" as="category">
+		<div class="form-check">
+			<f:form.checkbox name="customSearch[categories][]" value="{category.uid}" id="categoryFilter-{category.uid}" class="form-check-input" checked="{c:inArray(needle: category.uid, haystack:customSearch.categories)}"/>
+			<label for="categoryFilter-{category.uid}" class="form-check-label">{category.title}</label>
+		</div>
+	</f:for>
+</f:if>

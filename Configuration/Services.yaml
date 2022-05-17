@@ -25,6 +25,12 @@ services:
         identifier: 'bookingCountries'
         event: HDNET\Calendarize\Event\GenericActionAssignmentEvent
 
+  HDNET\Calendarize\EventListener\CategoryFilterEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'categoryFilter'
+        event: HDNET\Calendarize\Event\GenericActionAssignmentEvent
+
   HDNET\Calendarize\EventListener\DefaultEventSearchListener:
     tags:
       - name: event.listener
