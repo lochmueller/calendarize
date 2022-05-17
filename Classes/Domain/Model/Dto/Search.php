@@ -8,7 +8,10 @@ class Search
 {
     protected $fullText = '';
 
-    protected $category = 0;
+    /**
+     * @var int[]
+     */
+    protected $categories = [];
 
     public function getFullText(): string
     {
@@ -20,14 +23,40 @@ class Search
         $this->fullText = $fullText;
     }
 
+    /**
+     * @return int
+     *
+     * @deprecated Use categories instead!
+     */
     public function getCategory(): int
     {
-        return $this->category;
+        return $this->categories[0] ?? 0;
     }
 
+    /**
+     * @param int $category
+     *
+     * @deprecated Use categories instead!
+     */
     public function setCategory(int $category): void
     {
-        $this->category = $category;
+        $this->categories = [$category];
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param int[] $categories
+     */
+    public function setCategories(array $categories): void
+    {
+        $this->categories = $categories;
     }
 
     public function isSearch(): bool

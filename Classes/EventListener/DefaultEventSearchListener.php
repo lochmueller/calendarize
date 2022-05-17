@@ -6,6 +6,7 @@ use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
 use HDNET\Calendarize\Register;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class DefaultEventSearchListener
 {
@@ -48,8 +49,14 @@ class DefaultEventSearchListener
         $customSearch = $event->getCustomSearch();
 
         $search = new Search();
-        $search->setFullText(trim((string)$customSearch['fullText'] ?? ''));
-        $search->setCategory((int)$customSearch['category'] ?? 0);
+        $search->setFullText(trim((string)($customSearch['fullText'] ?? '')));
+        if (\is_array($customSearch['categories'])) {
+            $categories = array_map('intval', $customSearch['categories']);
+            $search->setCategories($categories);
+        } elseif (MathUtility::canBeInterpretedAsInteger($customSearch['category'] ?? '')) {
+            // Fallback for previous mode
+            $search->setCategories([(int)$customSearch['category']]);
+        }
 
         return $search;
     }

@@ -47,8 +47,12 @@ class EventRepository extends AbstractRepository
                 $query->like('description', '%' . $search->getFullText() . '%'),
             ]);
         }
-        if ($search->getCategory()) {
-            $constraints['categories'] = $query->contains('categories', $search->getCategory());
+        if ($search->getCategories()) {
+            $categories = [];
+            foreach ($search->getCategories() as $category) {
+                $categories[] = $query->contains('categories', $category);
+            }
+            $constraints['categories'] = $query->logicalOr($categories);
         }
         $query->matching($query->logicalAnd($constraints));
         $rows = $query->execute(true);
