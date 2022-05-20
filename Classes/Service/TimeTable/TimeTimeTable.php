@@ -223,15 +223,26 @@ class TimeTimeTable extends AbstractTimeTable
      */
     protected function createNextLoopEntry(array $loopEntry, string $modification): array
     {
-        /** @var $startDate \DateTime */
-        $startDate = clone $loopEntry['start_date'];
-        $startDate->modify($modification);
-        $loopEntry['start_date'] = $startDate;
+        // Time modification
+        if (str_contains($modification, 'minutes') || str_contains($modification, 'hours')) {
+            $startTime = new \DateTime('@' . $loopEntry['start_time']);
+            $startTime->modify($modification);
+            $loopEntry['start_time'] = $startTime->getTimestamp();
 
-        /** @var $endDate \DateTime */
-        $endDate = clone $loopEntry['end_date'];
-        $endDate->modify($modification);
-        $loopEntry['end_date'] = $endDate;
+            $endTime = new \DateTime('@' . $loopEntry['end_time']);
+            $endTime->modify($modification);
+            $loopEntry['end_time'] = $endTime->getTimestamp();
+        } else {
+            /** @var $startDate \DateTime */
+            $startDate = clone $loopEntry['start_date'];
+            $startDate->modify($modification);
+            $loopEntry['start_date'] = $startDate;
+
+            /** @var $endDate \DateTime */
+            $endDate = clone $loopEntry['end_date'];
+            $endDate->modify($modification);
+            $loopEntry['end_date'] = $endDate;
+        }
 
         return $loopEntry;
     }

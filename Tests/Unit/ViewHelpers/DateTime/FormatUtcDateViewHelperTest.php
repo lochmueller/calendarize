@@ -54,14 +54,12 @@ class FormatUtcDateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expected, $actualResult);
     }
 
-    public function dateIsUtcTimezoneDataProvider()
+    public function dateIsUtcTimezoneDataProvider(): \Generator
     {
-        return [
-            'Bash UTC' => ['Sun Apr 30 03:01:39 UTC 2006', '20060430T030139Z'],
-            'Unix' => ['1607785200', '20201212T150000Z'],
-            'ISO 8601 / Atom' => ['2020-12-12T18:00:00+01:00', '20201212T170000Z'],
-            'DateTime' => [new \DateTime('2012-12-21T08:00:00', new \DateTimeZone('Asia/Shanghai')), '20121221T000000Z'],
-            'DateTimeImmutable' => [new \DateTimeImmutable('2016-07-02T13:01:33', new \DateTimeZone('Indian/Mayotte')), '20160702T100133Z'],
-        ];
+        yield 'Bash UTC' => ['Sun Apr 30 03:01:39 UTC 2006', '20060430T030139Z'];
+        yield 'Unix' => ['1607785200', '20201212T150000Z'];
+        yield 'ISO 8601 / Atom' => ['2020-12-12T18:00:00+01:00', '20201212T170000Z'];
+        yield 'DateTime' => [new \DateTime('2012-12-21T08:00:00', new \DateTimeZone('Asia/Shanghai')), '20121221T000000Z'];
+        yield 'DateTimeImmutable' => [new \DateTimeImmutable('2016-07-02T13:01:33', new \DateTimeZone('Indian/Mayotte')), '20160702T100133Z'];
     }
 }

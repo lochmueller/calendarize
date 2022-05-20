@@ -10,68 +10,66 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class EventConfigurationServiceTest extends AbstractUnitTest
 {
-    public function hydrateRecurringConfigurationDataProvider()
+    public function hydrateRecurringConfigurationDataProvider(): \Generator
     {
-        return [
-            'empty RRULE' => [[], ['frequency' => ConfigurationInterface::FREQUENCY_NONE]],
-            'minutely frequency' => [
-                ['FREQ' => 'MINUTELY'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_MINUTELY],
+        yield 'empty RRULE' => [[], ['frequency' => ConfigurationInterface::FREQUENCY_NONE]];
+        yield 'minutely frequency' => [
+            ['FREQ' => 'MINUTELY'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_MINUTELY],
+        ];
+        yield 'hourly frequency' => [
+            ['FREQ' => 'HOURLY'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_HOURLY],
+        ];
+        yield 'daily frequency' => [
+            ['FREQ' => 'DAILY'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_DAILY],
+        ];
+        yield 'weekly frequency with until' => [
+            ['FREQ' => 'MONTHLY', 'UNTIL' => '20060402T070000Z'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_MONTHLY, 'tillDate' => '2006-04-02'],
+        ];
+        yield 'monthly frequency with count' => [
+            ['FREQ' => 'MONTHLY', 'COUNT' => '3'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_MONTHLY, 'counterAmount' => 2],
+        ];
+        yield 'yearly frequency with interval' => [
+            ['FREQ' => 'YEARLY', 'INTERVAL' => '4'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_YEARLY, 'counterInterval' => 4],
+        ];
+        yield 'monthly on the last Friday' => [
+            ['FREQ' => 'MONTHLY', 'BYDAY' => '-1FR'],
+            [
+                'frequency' => ConfigurationInterface::FREQUENCY_MONTHLY,
+                'recurrence' => ConfigurationInterface::RECURRENCE_LAST,
+                'day' => [ConfigurationInterface::DAY_FRIDAY],
             ],
-            'hourly frequency' => [
-                ['FREQ' => 'HOURLY'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_HOURLY],
+        ];
+        yield 'third Tuesday, Wednesday, or Thursday into the month' => [
+            ['FREQ' => 'MONTHLY', 'BYDAY' => 'TU,WE,TH', 'BYSETPOS' => '3'],
+            [
+                'frequency' => ConfigurationInterface::FREQUENCY_MONTHLY,
+                'recurrence' => ConfigurationInterface::RECURRENCE_THIRD,
+                'day' => [ConfigurationInterface::DAY_TUESDAY, ConfigurationInterface::DAY_WEDNESDAY, ConfigurationInterface::DAY_THURSDAY],
             ],
-            'daily frequency' => [
-                ['FREQ' => 'DAILY'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_DAILY],
-            ],
-            'weekly frequency with until' => [
-                ['FREQ' => 'MONTHLY', 'UNTIL' => '20060402T070000Z'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_MONTHLY, 'tillDate' => '2006-04-02'],
-            ],
-            'monthly frequency with count' => [
-                ['FREQ' => 'MONTHLY', 'COUNT' => '3'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_MONTHLY, 'counterAmount' => 2],
-            ],
-            'yearly frequency with interval' => [
-                ['FREQ' => 'YEARLY', 'INTERVAL' => '4'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_YEARLY, 'counterInterval' => 4],
-            ],
-            'monthly on the last Friday' => [
-                ['FREQ' => 'MONTHLY', 'BYDAY' => '-1FR'],
-                [
-                    'frequency' => ConfigurationInterface::FREQUENCY_MONTHLY,
-                    'recurrence' => ConfigurationInterface::RECURRENCE_LAST,
-                    'day' => [ConfigurationInterface::DAY_FRIDAY],
+        ];
+        yield 'second-to-last weekday of the month (BYDAY as array)' => [
+            ['FREQ' => 'MONTHLY', 'BYDAY' => ['MO', 'TU', 'WE', 'TH', 'FR'], 'BYSETPOS' => '-2'],
+            [
+                'frequency' => ConfigurationInterface::FREQUENCY_MONTHLY,
+                'recurrence' => ConfigurationInterface::RECURRENCE_NEXT_TO_LAST,
+                'day' => [
+                    ConfigurationInterface::DAY_MONDAY,
+                    ConfigurationInterface::DAY_TUESDAY,
+                    ConfigurationInterface::DAY_WEDNESDAY,
+                    ConfigurationInterface::DAY_THURSDAY,
+                    ConfigurationInterface::DAY_FRIDAY,
                 ],
             ],
-            'third Tuesday, Wednesday, or Thursday into the month' => [
-                ['FREQ' => 'MONTHLY', 'BYDAY' => 'TU,WE,TH', 'BYSETPOS' => '3'],
-                [
-                    'frequency' => ConfigurationInterface::FREQUENCY_MONTHLY,
-                    'recurrence' => ConfigurationInterface::RECURRENCE_THIRD,
-                    'day' => [ConfigurationInterface::DAY_TUESDAY, ConfigurationInterface::DAY_WEDNESDAY, ConfigurationInterface::DAY_THURSDAY],
-                ],
-            ],
-            'second-to-last weekday of the month (BYDAY as array)' => [
-                ['FREQ' => 'MONTHLY', 'BYDAY' => ['MO', 'TU', 'WE', 'TH', 'FR'], 'BYSETPOS' => '-2'],
-                [
-                    'frequency' => ConfigurationInterface::FREQUENCY_MONTHLY,
-                    'recurrence' => ConfigurationInterface::RECURRENCE_NEXT_TO_LAST,
-                    'day' => [
-                        ConfigurationInterface::DAY_MONDAY,
-                        ConfigurationInterface::DAY_TUESDAY,
-                        ConfigurationInterface::DAY_WEDNESDAY,
-                        ConfigurationInterface::DAY_THURSDAY,
-                        ConfigurationInterface::DAY_FRIDAY,
-                    ],
-                ],
-            ],
-            'every second week' => [
-                ['FREQ' => 'WEEKLY', 'INTERVAL' => '2'],
-                ['frequency' => ConfigurationInterface::FREQUENCY_WEEKLY, 'counterInterval' => 2],
-            ],
+        ];
+        yield 'every second week' => [
+            ['FREQ' => 'WEEKLY', 'INTERVAL' => '2'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_WEEKLY, 'counterInterval' => 2],
         ];
     }
 

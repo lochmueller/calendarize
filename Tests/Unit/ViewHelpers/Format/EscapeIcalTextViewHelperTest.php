@@ -36,19 +36,17 @@ class EscapeIcalTextViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expected, $actualResult);
     }
 
-    public function textEscapeDataProvider()
+    public function textEscapeDataProvider(): \Generator
     {
-        return [
-            'Backslash' => ['\\', '\\\\'],
-            'Newline' => ["\n", '\n'],
-            'CRLF' => ["\r\n", '\n'],
-            'Semicolon' => [';', '\;'],
-            'Comma' => [',', '\,'],
-            'Colon (not)' => [':', ':'],
-            'Example text' => [
-                "This is a description\nwith a linebreak and a ; , and :",
-                'This is a description\\nwith a linebreak and a \\; \\, and :',
-            ],
+        yield 'Backslash' => ['\\', '\\\\'];
+        yield 'Newline' => ["\n", '\n'];
+        yield 'CRLF' => ["\r\n", '\n'];
+        yield 'Semicolon' => [';', '\;'];
+        yield 'Comma' => [',', '\,'];
+        yield 'Colon (not)' => [':', ':'];
+        yield 'Example text' => [
+            "This is a description\nwith a linebreak and a ; , and :",
+            'This is a description\\nwith a linebreak and a \\; \\, and :',
         ];
     }
 }
