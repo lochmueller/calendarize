@@ -259,7 +259,7 @@
 				<source>None</source>
 			</trans-unit>
 			<trans-unit id="configuration.frequency.minutely">
-				<source>Every minute</source>
+				<source>Minutely</source>
 			</trans-unit>
 			<trans-unit id="configuration.frequency.hourly">
 				<source>Hourly</source>
