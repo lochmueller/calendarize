@@ -146,7 +146,7 @@
 				<source>Wrong time</source>
 			</trans-unit>
 			<trans-unit id="wrong.time.message">
-				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the start time!
+				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the start time! If the end time is 00:00, then the end date must be at least one day later than the start date.
 				</source>
 			</trans-unit>
 			<trans-unit id="flashMessage.missingStartDate.title" resname="flashMessage.missingStartDate.title">
