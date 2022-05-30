@@ -225,12 +225,25 @@ class TimeTimeTable extends AbstractTimeTable
         // Time modification
         if (str_contains($modification, 'minutes') || str_contains($modification, 'hours')) {
             $startTime = new \DateTime('@' . ($loopEntry['start_time'] ?? 0));
+            $compareTime = new \DateTime('@' . ($loopEntry['start_time'] ?? 0));
             $startTime->modify($modification);
             $loopEntry['start_time'] = $startTime->getTimestamp();
 
             $endTime = new \DateTime('@' . ($loopEntry['end_time'] ?? 0));
             $endTime->modify($modification);
             $loopEntry['end_time'] = $endTime->getTimestamp();
+
+            if ($startTime->format('Y-m-d') !== $compareTime->format('Y-m-d')) {
+                /** @var $startDate \DateTime */
+                $startDate = clone $loopEntry['start_date'];
+                $startDate->modify('+1 day');
+                $loopEntry['start_date'] = $startDate;
+
+                /** @var $endDate \DateTime */
+                $endDate = clone $loopEntry['end_date'];
+                $endDate->modify('+1 day');
+                $loopEntry['end_date'] = $endDate;
+            }
         } else {
             /** @var $startDate \DateTime */
             $startDate = clone $loopEntry['start_date'];
