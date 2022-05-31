@@ -48,10 +48,15 @@ class TimeTableServiceTest extends AbstractFunctionalTest
 
     public function configurationProvider(): \Generator
     {
+        $new_configuration = static function (int $pid) {
+            $configuration = new Configuration();
+            $configuration->setPid($pid);
+
+            return $configuration;
+        };
         yield 'simple index Entry' => [
             [
-                1 => (new Configuration())
-                    ->setPid(102)
+                1 => $new_configuration(102)
                     ->setType(Configuration::TYPE_TIME)
                     ->setStartDate(new \DateTime('2022-07-01'))
                     ->setStartTime(60 * 60 * 12)
@@ -63,8 +68,7 @@ class TimeTableServiceTest extends AbstractFunctionalTest
         ];
         yield 'simple index Entry with hourly frequency' => [
             [
-                1 => (new Configuration())
-                    ->setPid(102)
+                1 => $new_configuration(102)
                     ->setType(Configuration::TYPE_TIME)
                     ->setStartDate(new \DateTime('2022-07-01'))
                     ->setStartTime(60 * 60 * 12)
