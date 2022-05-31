@@ -80,7 +80,7 @@ class CategoryFilterEventListener
         $languageUid = GeneralUtility::makeInstance(Context::class)->getAspect('language')->getId();
 
         $queryBuilder->select('sys_category.*')
-            ->distinct()
+            ->groupBy('sys_category.uid')
             ->from('sys_category')
             ->join(
                 'sys_category',
