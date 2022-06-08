@@ -23,6 +23,8 @@ routeEnhancers:
         _controller: 'Calendar::result'
       - routePath: '/{calendarize_page_label}/{currentPage}'
         _controller: 'Calendar::list'
+      - routePath: '/{calendarize_booking_label}/{index}'
+        _controller: 'Booking::booking'
 
     defaultController: 'Calendar::list'
 #    requirements:
@@ -117,3 +119,9 @@ routeEnhancers:
         localeMap:
           - locale: 'de_.*'
             value: 'ergebnis-seite'
+      calendarize_booking_label:
+        type: LocaleModifier
+        default: 'booking'
+        localeMap:
+          - locale: 'de_.*'
+            value: 'buchung'
