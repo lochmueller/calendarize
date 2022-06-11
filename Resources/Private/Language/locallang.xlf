@@ -9,25 +9,63 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
-            <trans-unit id="module.dashboard.group.calendarize.title"><source>Calendarize</source></trans-unit>
-            <trans-unit id="calendarizeNextEvents.title"><source>Next events</source></trans-unit>
-            <trans-unit id="calendarizeNextEvents.description"><source>List of the next events</source></trans-unit>
-            <trans-unit id="calendarizeIndexAmount.title"><source>Calendarize index size</source></trans-unit>
-            <trans-unit id="calendarizeIndexAmount.description"><source>Number of index entries</source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_configuration.open_end_time"><source>Open end?</source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_configuration.end_date_dynamic"><source>End date (dynamic)</source></trans-unit>
-			<trans-unit id="configuration.end_date_dynamic.1day"><source>1 day</source></trans-unit>
-			<trans-unit id="configuration.end_date_dynamic.1week"><source>1 week</source></trans-unit>
-			<trans-unit id="configuration.end_date_dynamic.end_week"><source>End of week</source></trans-unit>
-			<trans-unit id="configuration.end_date_dynamic.end_month"><source>End of month</source></trans-unit>
-			<trans-unit id="configuration.end_date_dynamic.end_year"><source>End of year</source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_event.organizer_link"><source>Organizer link</source></trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_event.location_link"><source>Location link</source></trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_index.open_end_time"><source>Open end?</source></trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_index.slug"><source>Slug</source></trans-unit>
-            <trans-unit id="canceled"><source>Canceled</source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_configuration.state"><source>State</source></trans-unit>
-			<trans-unit id="tx_calendarize_domain_model_index.state"><source>State</source></trans-unit>
+			<trans-unit id="module.dashboard.group.calendarize.title">
+				<source>Calendarize</source>
+			</trans-unit>
+			<trans-unit id="calendarizeNextEvents.title">
+				<source>Next events</source>
+			</trans-unit>
+			<trans-unit id="calendarizeNextEvents.description">
+				<source>List of the next events</source>
+			</trans-unit>
+			<trans-unit id="calendarizeIndexAmount.title">
+				<source>Calendarize index size</source>
+			</trans-unit>
+			<trans-unit id="calendarizeIndexAmount.description">
+				<source>Number of index entries</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.open_end_time">
+				<source>Open end?</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.end_date_dynamic">
+				<source>End date (dynamic)</source>
+			</trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.1day">
+				<source>1 day</source>
+			</trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.1week">
+				<source>1 week</source>
+			</trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.end_week">
+				<source>End of week</source>
+			</trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.end_month">
+				<source>End of month</source>
+			</trans-unit>
+			<trans-unit id="configuration.end_date_dynamic.end_year">
+				<source>End of year</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.organizer_link">
+				<source>Organizer link</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_event.location_link">
+				<source>Location link</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.open_end_time">
+				<source>Open end?</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.slug">
+				<source>Slug</source>
+			</trans-unit>
+			<trans-unit id="canceled">
+				<source>Canceled</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.state">
+				<source>State</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_index.state">
+				<source>State</source>
+			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configurationgroup.import_id">
 				<source>import_id</source>
 			</trans-unit>
@@ -139,14 +177,17 @@
 				<source>Wrong date</source>
 			</trans-unit>
 			<trans-unit id="wrong.date.message">
-				<source>The date of one of the date configurations is wrong. The end date cannot be earlier than the start date.
+				<source>The date of one of the date configurations is wrong. The end date cannot be earlier than the
+					start date.
 				</source>
 			</trans-unit>
 			<trans-unit id="wrong.time">
 				<source>Wrong time</source>
 			</trans-unit>
 			<trans-unit id="wrong.time.message">
-				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the start time! If the end time is 00:00, then the end date must be at least one day later than the start date.
+				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the
+					start time! If the end time is 00:00, then the end date must be at least one day later than the
+					start date.
 				</source>
 			</trans-unit>
 			<trans-unit id="flashMessage.missingStartDate.title" resname="flashMessage.missingStartDate.title">
@@ -158,7 +199,8 @@
 			<trans-unit id="flashMessage.invalidExternalUrl.title" resname="flashMessage.invalidExternalUrl.title">
 				<source>Invalid external URL</source>
 			</trans-unit>
-			<trans-unit id="flashMessage.unableToProcessEvents.title" resname="flashMessage.unableToProcessEvents.title">
+			<trans-unit id="flashMessage.unableToProcessEvents.title"
+						resname="flashMessage.unableToProcessEvents.title">
 				<source>Unable to process events</source>
 			</trans-unit>
 			<trans-unit id="booking.thankYouMessage">
@@ -501,7 +543,8 @@
 				<source>Calendar Booking</source>
 			</trans-unit>
 			<trans-unit id="previewLabel">
-				<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are
+				<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today)
+					are
 					(ignore enable columns)...
 				</source>
 			</trans-unit>
@@ -592,15 +635,15 @@
 			<trans-unit id="tx_calendarize_domain_model_configuration.till_date">
 				<source>Till date</source>
 			</trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_configuration.till_days_past">
-                <source>Till Days Past (only active if Till Days Relative is enabled)</source>
-            </trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_configuration.till_days_relative">
-                <source>Till Days Relative</source>
-            </trans-unit>
-            <trans-unit id="tx_calendarize_domain_model_configuration.till_days">
-                <source>Till Days (only active if Till date is empty)</source>
-            </trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.till_days_past">
+				<source>Till Days Past (only active if Till Days Relative is enabled)</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.till_days_relative">
+				<source>Till Days Relative</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.till_days">
+				<source>Till Days (only active if Till date is empty)</source>
+			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.type">
 				<source>Type</source>
 			</trans-unit>
@@ -680,7 +723,8 @@
 				<source>Open End</source>
 			</trans-unit>
 			<trans-unit id="your_search">
-				<source><![CDATA[Your search in the time from <span class="date-start">%1$s</span> to <span class="date-end">%2$s</span> found these results]]></source>
+				<source>
+					<![CDATA[Your search in the time from <span class="date-start">%1$s</span> to <span class="date-end">%2$s</span> found these results]]></source>
 			</trans-unit>
 			<trans-unit id="search.button_label">
 				<source>Search</source>
