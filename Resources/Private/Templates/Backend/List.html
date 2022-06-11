@@ -22,7 +22,7 @@
 								<be:link.newRecord class="btn btn-primary" table="{table}" pid="{pid}" style="margin-bottom:4px"
 																	 returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
 									<core:icon identifier="actions-document-new"/>
-									{value} on {pids.{pid}}
+									{value} <f:translate key="LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf:on">on</f:translate> {pids.{pid}}
 								</be:link.newRecord>
 							</f:if>
 						</f:for>
@@ -30,7 +30,11 @@
 				</p>
 			</f:then>
 			<f:else>
-				<p>Note: If you create first events in Storage folder, the create buttons will appear in this location</p>
+				<p>
+					<f:translate key="LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf:note.create_events">
+						Note: If you create first events in Storage folder, the create buttons will appear in this location
+					</f:translate>
+				</p>
 			</f:else>
 		</f:if>
 	</fieldset>

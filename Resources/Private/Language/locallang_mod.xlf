@@ -13,6 +13,45 @@
 			<trans-unit id="mlang_labels_tablabel">
 				<source>Calendarize</source>
 			</trans-unit>
-		</body>
-	</file>
+			<trans-unit id="on">
+				<source>on</source>
+			</trans-unit>
+			<trans-unit id="note.create_events">
+				<source>Note: If you create first events in Storage folder, the create buttons will appear in this location</source>
+			</trans-unit>
+			<trans-unit id="filter.page">
+				<source>Page</source>
+			</trans-unit>
+			<trans-unit id="filter.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="filter.sorting_direction">
+				<source>Sorting</source>
+			</trans-unit>
+			<trans-unit id="filter_save">
+				<source>Save options</source>
+			</trans-unit>
+			<trans-unit id="items_lowercase">
+				<source>items</source>
+			</trans-unit>
+			<trans-unit id="table_header.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="table_header.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="table_header.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="table_header.language">
+				<source>Language</source>
+			</trans-unit>
+			<trans-unit id="table_header.id">
+				<source>ID</source>
+			</trans-unit>
+			<trans-unit id="table_header.action">
+				<source>Action</source>
+			</trans-unit>
+        </body>
+    </file>
 </xliff>
