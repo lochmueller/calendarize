@@ -11,6 +11,7 @@ use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
@@ -21,6 +22,9 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
  */
 class BackendController extends AbstractController
 {
+    private const PATH_CALENDARIZE_LOCALLANG = 'LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf';
+    private const PATH_CORE_LOCALLANG = 'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf';
+
     protected $defaultViewObjectName = \TYPO3\CMS\Backend\View\BackendTemplateView::class;
 
     public const OPTIONS_KEY = 'calendarize_be';
@@ -79,6 +83,10 @@ class BackendController extends AbstractController
             'paginator' => $paginator,
             'pagination' => $pagination,
             'totalAmount' => \count($indices),
+            'filterOptions' => [
+                'asc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':ascending') ?: 'ascending',
+                'desc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':descending') ?: 'descending',
+            ],
         ]);
     }
 
@@ -230,5 +238,10 @@ class BackendController extends AbstractController
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
+    }
+
+    protected function getLanguageService(): ?LanguageService
+    {
+        return $GLOBALS['LANG'] ?? null;
     }
 }
