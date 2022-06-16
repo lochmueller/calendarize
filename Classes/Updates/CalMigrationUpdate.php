@@ -276,7 +276,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $db = HelperUtility::getDatabaseConnection($variables['table']);
             $q = $db->createQueryBuilder();
             $q->insert($variables['table'])->values($variables['calendarizeEventRecord']);
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $q->execute();
 
@@ -290,6 +290,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
             $dispatcher = self::getSignalSlotDispatcher();
             $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
+            $this->logger->debug("after performCalEventUpdatePostInsert: " . $variablesPostInsert['event']['uid'] . " dbQueries: " . print_r($variablesPostInsert['dbQueries'],true));
         }
 
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
@@ -324,7 +325,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $q->select('*')->from($variables['table']);
 
         $selectResults = $q->execute()->fetchAll();
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         foreach ($selectResults as $selectResult) {
             $group = [
@@ -344,7 +345,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             );
             $q = $this->getQueryBuilder($table);
             $q->insert(self::CONFIGURATION_GROUP_TABLE)->values($group);
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $q->execute();
         }
@@ -375,7 +376,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         ];
 
         $selectResults = $q->select('*')->from($variables['table'])->execute()->fetchAll();
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         foreach ($selectResults as $group) {
             $importId = explode(':', $group['import_id']);
@@ -398,7 +399,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                     )
                 );
 
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
             $selectResults = $q->execute()->fetchAll();
 
             foreach ($selectResults as $eventUid) {
@@ -449,7 +450,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             ->from('sys_file_reference', 'sfr1')
             ->where($selectWhere);
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
         $selectResults = $q->execute()->fetchAll();
 
         $variables = [
@@ -475,7 +476,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $q = $this->getQueryBuilder('sys_file_reference');
             $q->insert('sys_file_reference')->values($selectResult);
 
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $q->execute();
         }
@@ -491,13 +492,13 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      */
     public function performLinkEventToCategory($calIds, &$dbQueries, &$customMessages)
     {
-        $this->logger->debug('Start performLinkEventToCategory for cals: ', $calIds);
+        $this->logger->debug('Start performLinkEventToCategory');
         $table = 'tx_cal_event_category_mm';
 
         $q = $this->getQueryBuilder($table);
 
         $q->select('*')->from($table);
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         $selectResults = $q->execute()->fetchAll();
 
@@ -528,7 +529,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
                 $q = $this->getQueryBuilder($table);
                 $q->insert($table)->values($insertValues);
-                $dbQueries[] = $q->getSQL();
+                $dbQueries[] = HelperUtility::queryWithParams($q);
 
                 $q->execute();
             }
@@ -647,13 +648,13 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->set($key, $value);
             }
 
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
             $results = $q->execute();
         } else {
             $db = HelperUtility::getDatabaseConnection(self::CONFIGURATION_TABLE);
             $q = $db->createQueryBuilder();
             $q->insert(self::CONFIGURATION_TABLE)->values($configuration);
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $configurationId = $db->lastInsertId(self::CONFIGURATION_TABLE);
 
@@ -742,7 +743,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
         unset($values['uid']);
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         return $q->execute()->fetchAll();
     }
@@ -774,7 +775,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->expr()->eq('import_id', $q->createNamedParameter($eventImportId))
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         return $q->execute()->fetchAll();
     }
@@ -814,7 +815,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 )
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         return $q->execute()->fetchAll();
     }
@@ -842,7 +843,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             ->from($variables['table'])
             ->where('uid_local', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT));
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         $mmResults = $q->execute()->fetchAll();
         foreach ($mmResults as $mmResult) {
@@ -858,7 +859,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                     $q->expr()->eq('uid', $q->createNamedParameter((int)$mmResult['uid_foreign'], \PDO::PARAM_INT))
                 );
 
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $selectResults = $q->execute()->fetchAll();
 
@@ -893,7 +894,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q = $db->createQueryBuilder();
                 $q->insert($variables['table'])->values($variables['configurationRow']);
 
-                $dbQueries[] = $q->getSQL();
+                $dbQueries[] = HelperUtility::queryWithParams($q);
 
                 $q->execute();
 
@@ -948,7 +949,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $q->select('*')
             ->from($variables['table']);
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         $selectResults = $q->execute()->fetchAll();
 
@@ -972,7 +973,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
             $q = $this->getQueryBuilder('sys_category');
             $q->insert('sys_category')->values($sysCategoryRecord);
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $q->execute();
         }
@@ -992,7 +993,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->expr()->like('import_id', $q->createNamedParameter(self::IMPORT_PREFIX . '%'))
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
         $selectResults = $q->execute()->fetchAll();
 
         foreach ($selectResults as $sysCategory) {
@@ -1010,7 +1011,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                     $this->getSysCategoryParentUid(self::IMPORT_PREFIX . (int)$sysCategory['parent'])
                 );
 
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $q->execute();
         }
@@ -1034,7 +1035,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->expr()->eq('import_id', $q->createNamedParameter($importId))
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         $result = $q->execute()->fetchAll();
 
@@ -1074,7 +1075,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->expr()->eq('import_id', $q->createNamedParameter($importId))
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         $result = $q->execute()->fetchAll();
 
@@ -1111,7 +1112,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->expr()->eq('import_id', $q->createNamedParameter($importId))
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
 
         $result = $q->execute()->fetchAll();
 
@@ -1161,7 +1162,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $q->insert($variables['table'])
             ->values($variables['configurationRow']);
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
         $q->execute();
         $recordId = $db->lastInsertId($variables['table']);
 

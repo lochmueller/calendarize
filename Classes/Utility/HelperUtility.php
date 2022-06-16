@@ -134,4 +134,28 @@ class HelperUtility
 
         return $GLOBALS['BE_USER'] ?? null;
     }
+
+    /**
+     * _queryWiParms(): Returns a query with replaced params
+     *
+     * @param object $queryBuilder
+     * @return  string  $query
+     * @version 0.0.1
+     * @since   0.0.1
+     */
+    public static function queryWithParams($queryBuilder)
+    {
+        $query = $queryBuilder->getSQL();
+        $params = $queryBuilder->getParameters();
+        krsort($params);
+//    var_dump(__METHOD__, __LINE__, $query, $params);
+//    die();
+        foreach ($params as $key => $value) {
+            if (!is_double($value)) {
+                $value = '"' . $value . '"';
+            }
+            $query = str_replace(':' . $key, $value, $query);
+        }
+        return $query;
+    }
 }

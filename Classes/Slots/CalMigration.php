@@ -47,7 +47,7 @@ class CalMigration
                 )
             );
 
-        $dbQueries[] = $q->getSQL();
+        $dbQueries[] = HelperUtility::queryWithParams($q);
         $selectResults = $q->execute()->fetchAll();
 
         foreach ($selectResults as $selectResult) {
@@ -62,7 +62,7 @@ class CalMigration
                 ->set('uid_foreign', (int)$recordId)
                 ->set('tablenames', $table);
 
-            $dbQueries[] = $q->getSQL();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
 
             $q->execute();
         }
