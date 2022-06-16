@@ -9,9 +9,13 @@ namespace HDNET\Calendarize\Updates;
 
 use HDNET\Autoloader\Annotation\SignalClass;
 use HDNET\Autoloader\Annotation\SignalName;
+use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Symfony\Component\Console\Output\OutputInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\CompositeExpression;
@@ -49,8 +53,10 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
  *    return $variables;
  * }
  */
-class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
+class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * Import prefix.
      */
@@ -133,13 +139,19 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
             return false;
         }
 
+        $this->logger->debug('Start CalMigration executeUpdate');
         $calIds = $this->getNonMigratedCalIds();
         if (empty($calIds)) {
             $this->output->writeln('No non-migrated cal entries found!');
 
             return true;
         }
+        $this->output->writeln(
+            'Start importing cals (count: ' . count($calIds) . ') ...'
+        );
         $dbQueries = [];
+
+        $this->logger->debug('Start executeUpdate for cals: ', $calIds);
 
         /**
          * @var bool
@@ -158,7 +170,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
             $this->performLinkEventToCategory($calIds, $dbQueries, $customMessages);
         }
         $this->performLinkEventToConfigurationGroup($calIds, $dbQueries, $customMessages);
-
+        $this->finalMessage($calIds);
         return true;
     }
 
@@ -196,6 +208,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     public function performCalEventUpdate($calIds, array &$dbQueries, &$customMessages)
     {
+        $this->logger->debug('Start performCalEventUpdate');
         $table = 'tx_cal_event';
         $q = $this->getQueryBuilder($table);
 
@@ -296,6 +309,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     public function performExceptionEventUpdate($calIds, &$dbQueries, &$customMessages)
     {
+        $this->logger->debug('Start performExceptionEventUpdate');
         $table = 'tx_cal_exception_event_group';
         // ConfigurationGroup für jede ExceptionGroup
 
@@ -324,6 +338,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
                 'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
             ];
 
+            $this->output->writeln(
+                'Start exception event group ' . $variables['table']
+                . ' (import_id ' . $group['import_id'] . '/pid' . $group['pid'] . ') ...'
+            );
             $q = $this->getQueryBuilder($table);
             $q->insert(self::CONFIGURATION_GROUP_TABLE)->values($group);
             $dbQueries[] = $q->getSQL();
@@ -345,6 +363,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     public function performLinkEventToConfigurationGroup($calIds, &$dbQueries, &$customMessages)
     {
+        $this->logger->debug('Start performLinkEventToConfigurationGroup');
+        $this->output->writeln('Start performLinkEventToConfigurationGroup');
         $q = $this->getQueryBuilder(self::CONFIGURATION_GROUP_TABLE);
         $now = new \DateTime();
 
@@ -409,6 +429,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     public function performSysFileReferenceUpdate($calIds, array &$dbQueries, &$customMessages)
     {
+        $this->logger->debug('Start performSysFileReferenceUpdate');
+        $this->output->writeln( 'Start performSysFileReferenceUpdate' );
         $q = $this->getQueryBuilder('tx_cal_event');
 
         $variables = [
@@ -445,6 +467,11 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
             $selectResult['fieldname'] = ('image' === $selectResult['fieldname']) ? 'images' : 'downloads';
             unset($selectResult['uid_foreign'], $selectResult['uid']);
 
+            $this->output->writeln(
+                'Start migrating ' . $selectResult['tablenames']
+                . ' (import_id' . $selectResult['import_id'] . ') ...'
+            );
+
             $q = $this->getQueryBuilder('sys_file_reference');
             $q->insert('sys_file_reference')->values($selectResult);
 
@@ -464,6 +491,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     public function performLinkEventToCategory($calIds, &$dbQueries, &$customMessages)
     {
+        $this->logger->debug('Start performLinkEventToCategory for cals: ', $calIds);
         $table = 'tx_cal_event_category_mm';
 
         $q = $this->getQueryBuilder($table);
@@ -523,6 +551,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     public function performLinkEventToSysCategory($calIds, &$dbQueries, &$customMessages)
     {
+        $this->logger->debug('Start performLinkEventToSysCategory');
+        $this->output->writeln(
+            'Start link events to syscategory (count: ' . count($calIds) . ') ...'
+        );
         $table = 'sys_category_record_mm';
 
         $q = $this->getQueryBuilder($table);
@@ -562,6 +594,11 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
                         $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
                     )->execute();
             } else {
+                // TODO - log deleted 0 eventUid
+                $this->logger->debug("In performLinkEventToSyscategory but event[uid] is $eventUid and trying to delete ");
+                $this->output->writeln(
+                    "In performLinkEventToSyscategory but event[uid] is $eventUid and eventUidOld is $eventUidOld trying to delete foreign tx_cal_event"
+                );
                 $q->delete($table)
                     ->where(
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUid, \PDO::PARAM_INT)),
@@ -792,6 +829,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
      */
     protected function getExceptionConfigurationForExceptionGroup($groupId, &$dbQueries)
     {
+        $this->logger->debug('Start getExceptionConfigurationForExceptionGroup');
         $recordIds = [];
         $variables = [
             'table' => 'tx_cal_exception_event_group_mm',
@@ -1268,5 +1306,16 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface
     public static function getSignalSlotDispatcher(): Dispatcher
     {
         return GeneralUtility::makeInstance(Dispatcher::class);
+    }
+
+    /**
+     * @param array $records
+     * @return void
+     */
+    protected function finalMessage(array $records)
+    {
+        $message = count($records) . ' record(s) in cals. Left cals: ' . count($this->getNonMigratedCalIds());
+        $this->output->writeln($message);
+        $this->logger->debug($message);
     }
 }
