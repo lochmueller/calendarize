@@ -30,4 +30,5 @@ Calendarize - Flexible TYPO3 Calendar
    Templates/Index
    Snippets/Index
    KnownProblems/Index
+   Reference/Index
    ChangeLog/Index
