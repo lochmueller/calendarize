@@ -34,7 +34,7 @@ class LineFoldingViewHelper extends AbstractViewHelper
         return preg_replace(
             // Line folding after 75 characters: RFC-5545/3-1-content-lines
             // Base on: sabre/vobject
-             '/(
+            '/(
                  (?:^.)?         # 1 additional byte in first line because of missing single space (see next line)
                  .{74}           # 75 bytes per line (1 byte is used for a single space added after every CRLF)
                  (?![\x80-\xbf]) # prevent splitting multibyte characters
