@@ -348,8 +348,11 @@ class CalendarController extends AbstractCompatibilityController
             return $this->return404Page();
         }
 
+        $indices = $this->indexRepository->findYear((int)$date->format('Y'));
+
         $this->eventExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findYear((int)$date->format('Y')),
+            'indices' => $indices,
+            'pagination' => $this->getPagination($indices),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
     }
@@ -371,8 +374,11 @@ class CalendarController extends AbstractCompatibilityController
             return $this->return404Page();
         }
 
+        $indices = $this->indexRepository->findQuarter((int)$date->format('Y'), $quarter);
+
         $this->eventExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findQuarter((int)$date->format('Y'), $quarter),
+            'indices' => $indices,
+            'pagination' => $this->getPagination($indices),
             'date' => $date,
             'quarter' => $quarter,
         ], __CLASS__, __FUNCTION__);
@@ -400,11 +406,14 @@ class CalendarController extends AbstractCompatibilityController
             return $this->return404Page();
         }
 
+        $indices = $this->indexRepository->findMonth((int)$date->format('Y'), (int)$date->format('n'));
+
         $this->eventExtendedAssignMultiple([
             'date' => $date,
             'selectDay' => $useCurrentDate,
             'ignoreSelectedDay' => !$useCurrentDate,
-            'indices' => $this->indexRepository->findMonth((int)$date->format('Y'), (int)$date->format('n')),
+            'indices' => $indices,
+            'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
     }
 
@@ -442,9 +451,12 @@ class CalendarController extends AbstractCompatibilityController
             '+6 days' => 1,
         ];
 
+        $indices = $this->indexRepository->findWeek($year, $week, $weekStart);
+
         $this->eventExtendedAssignMultiple([
             'firstDay' => $firstDay,
-            'indices' => $this->indexRepository->findWeek($year, $week, $weekStart),
+            'indices' => $indices,
+            'pagination' => $this->getPagination($indices),
             'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
     }
@@ -473,8 +485,11 @@ class CalendarController extends AbstractCompatibilityController
         $next = clone $date;
         $next->modify('+1 day');
 
+        $indices = $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j'));
+
         $this->eventExtendedAssignMultiple([
-            'indices' => $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j')),
+            'indices' => $indices,
+            'pagination' => $this->getPagination($indices),
             'today' => $date,
             'previous' => $previous,
             'next' => $next,
