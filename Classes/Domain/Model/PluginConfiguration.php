@@ -85,6 +85,14 @@ class PluginConfiguration extends AbstractModel
     protected $yearPid;
 
     /**
+     * Quarter PID.
+     *
+     * @var int
+     * @DatabaseField("int")
+     */
+    protected $quarterPid;
+
+    /**
      * Month PID.
      *
      * @var int
@@ -269,6 +277,26 @@ class PluginConfiguration extends AbstractModel
     public function setYearPid($yearPid)
     {
         $this->yearPid = $yearPid;
+    }
+
+    /**
+     * Get quarter PID.
+     *
+     * @return int
+     */
+    public function getQuarterPid(): int
+    {
+        return $this->quarterPid;
+    }
+
+    /**
+     * Set quarter PID.
+     *
+     * @param int $quarterPid
+     */
+    public function setQuarterPid(int $quarterPid): void
+    {
+        $this->quarterPid = $quarterPid;
     }
 
     /**

@@ -11,7 +11,7 @@ routeEnhancers:
         _controller: 'Calendar::detail'
       - routePath: '/{calendarize_year_label}/{year}'
         _controller: 'Calendar::year'
-      - routePath: '/{calendarize_quarter_label}/{quarter}'
+      - routePath: '/{calendarize_quarter_label}/{year}/{quarter}'
         _controller: 'Calendar::quarter'
       - routePath: '/{calendarize_month_label}/{year}/{month}'
         _controller: 'Calendar::month'

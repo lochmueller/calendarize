@@ -46,6 +46,7 @@ class PluginConfigurationService
                 'detailPid',
                 'listPid',
                 'yearPid',
+                'quarterPid',
                 'monthPid',
                 'weekPid',
                 'dayPid',

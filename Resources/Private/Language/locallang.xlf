@@ -126,6 +126,9 @@
 			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.year_pid">
 				<source>Year PID</source>
 			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.quarter_pid">
+				<source>Quarter PID</source>
+			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_pluginconfiguration.list_pid">
 				<source>List PID</source>
 			</trans-unit>

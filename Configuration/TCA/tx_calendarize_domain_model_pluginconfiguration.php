@@ -77,6 +77,7 @@ $custom = [
         'detail_pid' => $defaultPidConfiguration,
         'list_pid' => $defaultPidConfiguration,
         'year_pid' => $defaultPidConfiguration,
+        'quarter_pid' => $defaultPidConfiguration,
         'month_pid' => $defaultPidConfiguration,
         'week_pid' => $defaultPidConfiguration,
         'day_pid' => $defaultPidConfiguration,
