@@ -16,7 +16,7 @@ Basic sitemap
             provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
             config {
               table = tx_calendarize_domain_model_index
-              pid = <page id('s) containing records>
+              pid = <page id(s) containing records>
               url {
                 pageId = {$plugin.tx_calendarize.settings.defaultDetailPid}
                 fieldToParameterMap {
