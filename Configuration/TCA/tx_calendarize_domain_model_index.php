@@ -24,7 +24,6 @@ $custom = [
         'rootLevel' => -1,
         'label_alt' => 'start_date',
         'label_alt_force' => true,
-        'readOnly' => true,
     ],
     'columns' => [
         'unique_register_key' => [
