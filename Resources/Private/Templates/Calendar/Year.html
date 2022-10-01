@@ -11,7 +11,7 @@
 				<th colspan="4">
 
 					<f:if condition="{settings.yearPid}">
-						<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{date -> c:dateTime.modify(modification: 'first day of last year')})}">
+						<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:'{date -> c:dateTime.modify(modification: \'first day of last year\')}')}">
 							<c:link.year pageUid="{settings.yearPid}" date="{date -> c:dateTime.modify(modification: 'first day of last year')}" section="c{contentObject.uid}">
 								&lt;
 							</c:link.year>
@@ -21,7 +21,7 @@
 					<f:format.date format="Y">{date}</f:format.date>
 
 					<f:if condition="{settings.yearPid}">
-						<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:{date -> c:dateTime.modify(modification: 'first day of next year')})}">
+						<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:'{date -> c:dateTime.modify(modification: \'first day of next year\')}')}">
 							<c:link.year pageUid="{settings.yearPid}" date="{date -> c:dateTime.modify(modification: 'first day of next year')}" section="c{contentObject.uid}">
 								&gt;
 							</c:link.year>

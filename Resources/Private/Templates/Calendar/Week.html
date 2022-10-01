@@ -7,12 +7,12 @@
 	<f:section name="Main">
 		<f:if condition="{settings.weekPid}">
 			<div class="browser">
-				<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{firstDay -> c:dateTime.modify(modification: '-7 day')})}">
+				<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:'{firstDay -> c:dateTime.modify(modification: \'-7 day\')}')}">
 					<c:link.week pageUid="{settings.weekPid}" date="{firstDay -> c:dateTime.modify(modification: '-7 day')}" section="c{contentObject.uid}">
 						&lt;
 					</c:link.week>
 				</f:if>
-				<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:{firstDay -> c:dateTime.modify(modification: '+7 day')})}">
+				<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:'{firstDay -> c:dateTime.modify(modification: \'+7 day\')}')}">
 					<c:link.week pageUid="{settings.weekPid}" date="{firstDay -> c:dateTime.modify(modification: '+7 day')}" section="c{contentObject.uid}">
 						&gt;
 					</c:link.week>

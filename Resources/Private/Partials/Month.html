@@ -5,7 +5,7 @@
 		<tr>
 			<th colspan="7">
 				<f:if condition="{settings.monthPid}">
-					<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:{date -> c:dateTime.modify(modification: 'first day of last month')})}">
+					<f:if condition="{c:ifDateUpper(base: settings.dateLimitBrowserPrev, check:'{date -> c:dateTime.modify(modification: \'first day of last month\')}')}">
 						<c:link.month pageUid="{settings.monthPid}" date="{date -> c:dateTime.modify(modification: 'first day of last month')}" section="c{contentObject.uid}">
 							&lt;
 						</c:link.month>
@@ -13,7 +13,7 @@
 				</f:if>
 				<c:format.date format="%B %Y" resetTimeZone="1">{date}</c:format.date>
 				<f:if condition="{settings.monthPid}">
-					<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:{date -> c:dateTime.modify(modification: 'first day of next month')})}">
+					<f:if condition="{c:ifDateLower(base: settings.dateLimitBrowserNext, check:'{date -> c:dateTime.modify(modification: \'first day of next month\')}')}">
 						<c:link.month pageUid="{settings.monthPid}" date="{date -> c:dateTime.modify(modification: 'first day of next month')}" section="c{contentObject.uid}">
 							&gt;
 						</c:link.month>
