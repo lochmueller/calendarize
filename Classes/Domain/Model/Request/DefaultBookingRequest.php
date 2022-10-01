@@ -18,6 +18,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * First name.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $firstName;
@@ -26,6 +27,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * Last name.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $lastName;
@@ -34,6 +36,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * E-Mail.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      * @Extbase\Validate("EmailAddress")
      */
@@ -50,6 +53,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * Street.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $street;
@@ -58,6 +62,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * House number.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $houseNumber;
@@ -66,6 +71,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * ZIP.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $zip;
@@ -74,6 +80,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * City.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $city;
@@ -82,6 +89,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
      * Country.
      *
      * @var string
+     *
      * @Extbase\Validate("NotEmpty")
      */
     protected $country;

@@ -190,9 +190,9 @@ class TimeTableService extends AbstractService
      * @param array  $record
      * @param string $position
      *
-     * @throws Exception
-     *
      * @return \DateTime
+     *
+     * @throws Exception
      */
     protected function getCompleteDate(array $record, $position)
     {
@@ -220,9 +220,9 @@ class TimeTableService extends AbstractService
      *
      * @param Configuration $configuration
      *
-     * @throws Exception
-     *
      * @return AbstractTimeTable
+     *
+     * @throws Exception
      */
     protected function buildConfigurationHandler(Configuration $configuration): AbstractTimeTable
     {

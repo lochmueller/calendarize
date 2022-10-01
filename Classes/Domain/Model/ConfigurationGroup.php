@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Logical configuration group.
  *
  * @DatabaseTable
+ *
  * @SmartExclude(excludes={"Language"})
  */
 class ConfigurationGroup extends AbstractModel
@@ -25,6 +26,7 @@ class ConfigurationGroup extends AbstractModel
      * Title.
      *
      * @var string
+     *
      * @DatabaseField("string")
      */
     protected $title = '';
@@ -33,6 +35,7 @@ class ConfigurationGroup extends AbstractModel
      * Configurations.
      *
      * @var string
+     *
      * @DatabaseField("string")
      */
     protected $configurations = '';

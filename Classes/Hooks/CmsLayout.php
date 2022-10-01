@@ -43,6 +43,7 @@ class CmsLayout extends AbstractHook
      * @param array $params Parameters to the hook
      *
      * @return string Information about pi1 plugin
+     *
      * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|list_type_Info|calendarize_calendar")
      */
     public function getExtensionSummary(array $params)

@@ -26,6 +26,7 @@ class Index extends AbstractModel
      * The unique register key of the used table/model configuration.
      *
      * @var string
+     *
      * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
     protected $uniqueRegisterKey = '';
@@ -34,6 +35,7 @@ class Index extends AbstractModel
      * TableName.
      *
      * @var string
+     *
      * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
     protected $foreignTable = '';
@@ -42,6 +44,7 @@ class Index extends AbstractModel
      * The Id of the foreign element.
      *
      * @var int
+     *
      * @DatabaseField("int")
      */
     protected $foreignUid = 0;
@@ -50,6 +53,7 @@ class Index extends AbstractModel
      * Start date.
      *
      * @var \DateTime|null
+     *
      * @DatabaseField(sql="date default NULL")
      */
     protected $startDate;
@@ -58,6 +62,7 @@ class Index extends AbstractModel
      * End date.
      *
      * @var \DateTime|null
+     *
      * @DatabaseField(sql="date default NULL")
      */
     protected $endDate;
@@ -66,6 +71,7 @@ class Index extends AbstractModel
      * Start time.
      *
      * @var int
+     *
      * @DatabaseField("int")
      */
     protected $startTime = 0;
@@ -74,6 +80,7 @@ class Index extends AbstractModel
      * End time.
      *
      * @var int
+     *
      * @DatabaseField("int")
      */
     protected $endTime = 0;
@@ -82,6 +89,7 @@ class Index extends AbstractModel
      * AllDay.
      *
      * @var bool
+     *
      * @DatabaseField("bool")
      */
     protected $allDay = false;
@@ -90,6 +98,7 @@ class Index extends AbstractModel
      * OpenEndTime.
      *
      * @var bool
+     *
      * @DatabaseField("bool")
      */
     protected $openEndTime = false;
@@ -98,6 +107,7 @@ class Index extends AbstractModel
      * State.
      *
      * @var string
+     *
      * @DatabaseField("string")
      */
     protected $state = '';
@@ -113,6 +123,7 @@ class Index extends AbstractModel
      * Slug.
      *
      * @var string
+     *
      * @DatabaseField("string")
      */
     protected $slug = '';

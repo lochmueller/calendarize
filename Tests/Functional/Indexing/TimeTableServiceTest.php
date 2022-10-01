@@ -29,6 +29,7 @@ class TimeTableServiceTest extends AbstractFunctionalTest
 
     /**
      * @dataProvider configurationProvider
+     *
      * @group tmp
      */
     public function testIndexConfiguration(array $configurations, callable $assert)

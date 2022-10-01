@@ -72,9 +72,9 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * @param array                                 $convertedChildProperties
      * @param PropertyMappingConfigurationInterface $configuration
      *
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
-     *
      * @return mixed|\TYPO3\CMS\Extbase\Error\Error the target type, or an error object if a user-error occurred
+     *
+     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
      *
      * @api
      */

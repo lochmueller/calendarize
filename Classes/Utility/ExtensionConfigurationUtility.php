@@ -42,9 +42,9 @@ class ExtensionConfigurationUtility
      *
      * @param DomainObjectInterface $event
      *
-     * @throws Exception
-     *
      * @return string
+     *
+     * @throws Exception
      */
     public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event)
     {

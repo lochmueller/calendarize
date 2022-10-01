@@ -401,9 +401,9 @@ class IndexRepository extends AbstractRepository
      * @param int                   $limit
      * @param string                $sort
      *
-     * @throws Exception
-     *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     *
+     * @throws Exception
      */
     public function findByEventTraversing(
         DomainObjectInterface $event,
@@ -516,9 +516,9 @@ class IndexRepository extends AbstractRepository
      * @param int $month
      * @param int $day
      *
-     * @throws Exception
-     *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     *
+     * @throws Exception
      */
     public function findDay(int $year, int $month, int $day)
     {
@@ -576,9 +576,9 @@ class IndexRepository extends AbstractRepository
      *
      * @param DomainObjectInterface $event
      *
-     * @throws Exception
-     *
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     *
+     * @throws Exception
      */
     public function findByEvent(DomainObjectInterface $event)
     {
