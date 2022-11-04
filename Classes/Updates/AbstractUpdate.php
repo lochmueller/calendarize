@@ -2,9 +2,11 @@
 
 namespace HDNET\Calendarize\Updates;
 
+use Symfony\Component\Console\Output\OutputInterface;
+use TYPO3\CMS\Install\Updates\ChattyInterface;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
-abstract class AbstractUpdate implements UpgradeWizardInterface
+abstract class AbstractUpdate implements ChattyInterface, UpgradeWizardInterface
 {
     /**
      * @var string
@@ -16,6 +18,15 @@ abstract class AbstractUpdate implements UpgradeWizardInterface
      */
     protected $title = '';
 
+     /**
+     * @var OutputInterface
+     */
+    protected $output;
+
+    public function setOutput(OutputInterface $output): void
+    {
+        $this->output = $output;
+    }
     public function getDescription(): string
     {
         return $this->description;
