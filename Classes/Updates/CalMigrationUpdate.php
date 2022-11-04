@@ -226,7 +226,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $events = $q->select('*')
             ->from($table)
             ->where(
-                $q->expr()->in('uid', $q->createNamedParameter($calIds, Connection::PARAM_INT_ARRAY))
+                $q->expr()->in('uid', array_map('intval', $calIds))
             )
             ->orderBy('l18n_parent')
             ->execute()->fetchAll();
