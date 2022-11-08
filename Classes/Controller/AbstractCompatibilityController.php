@@ -34,7 +34,6 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
         {
             $response = parent::callActionMethod($request);
             if (isset($this->feedFormats[$request->getFormat()])) {
-                $response = $this->sendHeaderAndFilename($response, $this->feedFormats[$request->getFormat()], $request->getFormat());
                 if ($request->hasArgument('hmac')) {
                     $hmac = $request->getArgument('hmac');
                     if ($this->validatePluginHmac($hmac)) {
@@ -93,7 +92,6 @@ if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
         {
             parent::callActionMethod();
             if (isset($this->feedFormats[$this->request->getFormat()])) {
-                $this->sendHeaderAndFilename($this->feedFormats[$this->request->getFormat()], $this->request->getFormat());
                 if ($this->request->hasArgument('hmac')) {
                     $hmac = $this->request->getArgument('hmac');
                     if ($this->validatePluginHmac($hmac)) {
