@@ -154,8 +154,9 @@ abstract class AbstractController extends ActionController
         $actionMethodName = ucfirst($this->request->getControllerActionName());
         $pluginName = $this->request->getPluginName();
         $controllerName = $this->request->getControllerName();
+        $pluginUid = $this->configurationManager->getContentObject()->data['uid'];
 
-        return $controllerName . $pluginName . $actionMethodName;
+        return $controllerName . $pluginName . $actionMethodName . $pluginUid;
     }
 
     /**
