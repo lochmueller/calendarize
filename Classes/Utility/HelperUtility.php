@@ -136,11 +136,14 @@ class HelperUtility
     }
 
     /**
-     * _queryWiParms(): Returns a query with replaced params
+     * _queryWiParms(): Returns a query with replaced params.
      *
      * @param object $queryBuilder
-     * @return  string  $query
+     *
+     * @return string $query
+     *
      * @version 0.0.1
+     *
      * @since   0.0.1
      */
     public static function queryWithParams($queryBuilder)
@@ -151,11 +154,12 @@ class HelperUtility
 //    var_dump(__METHOD__, __LINE__, $query, $params);
 //    die();
         foreach ($params as $key => $value) {
-            if (!is_double($value)) {
+            if (!\is_float($value)) {
                 $value = '"' . $value . '"';
             }
             $query = str_replace(':' . $key, $value, $query);
         }
+
         return $query;
     }
 }

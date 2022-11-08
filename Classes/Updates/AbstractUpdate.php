@@ -18,7 +18,7 @@ abstract class AbstractUpdate implements ChattyInterface, UpgradeWizardInterface
      */
     protected $title = '';
 
-     /**
+    /**
      * @var OutputInterface
      */
     protected $output;
@@ -27,6 +27,7 @@ abstract class AbstractUpdate implements ChattyInterface, UpgradeWizardInterface
     {
         $this->output = $output;
     }
+
     public function getDescription(): string
     {
         return $this->description;

@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
-use Exception;
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
@@ -44,7 +43,7 @@ class ExtensionConfigurationUtility
      *
      * @return string
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event)
     {
@@ -64,7 +63,7 @@ class ExtensionConfigurationUtility
             }
         }
 
-        throw new Exception('No valid uniqueRegisterKey for: ' . $eventClass, 1236712);
+        throw new \Exception('No valid uniqueRegisterKey for: ' . $eventClass, 1236712);
     }
 
     /**

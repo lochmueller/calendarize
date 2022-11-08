@@ -64,7 +64,7 @@ class ContentElementLayoutService extends AbstractService
         }
         $content = '<p><strong>' . $this->title . '</strong></p>';
         foreach ($this->table as $line) {
-            $content .= '<strong>' . $line[0] . ':</strong>' . ' ' . $line[1] . '<br />';
+            $content .= '<strong>' . $line[0] . ':</strong> ' . $line[1] . '<br />';
         }
 
         return '<pre style="white-space:normal">' . $content . '</pre>';

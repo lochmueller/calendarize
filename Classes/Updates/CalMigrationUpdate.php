@@ -12,11 +12,9 @@ use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
-use Symfony\Component\Console\Output\OutputInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\Connection;
+use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\CompositeExpression;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
@@ -147,7 +145,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             return true;
         }
         $this->output->writeln(
-            'Start importing cals (count: ' . count($calIds) . ') ...'
+            'Start importing cals (count: ' . \count($calIds) . ') ...'
         );
         $dbQueries = [];
 
@@ -171,6 +169,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         }
         $this->performLinkEventToConfigurationGroup($calIds, $dbQueries, $customMessages);
         $this->finalMessage($calIds);
+
         return true;
     }
 
@@ -290,7 +289,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
             $dispatcher = self::getSignalSlotDispatcher();
             $dispatcher->dispatch(__CLASS__, __FUNCTION__ . 'PostInsert', $variablesPostInsert);
-            $this->logger->debug("after performCalEventUpdatePostInsert: " . $variablesPostInsert['event']['uid'] . " dbQueries: " . print_r($variablesPostInsert['dbQueries'],true));
+            $this->logger->debug('after performCalEventUpdatePostInsert: ' . $variablesPostInsert['event']['uid'] . ' dbQueries: ' . print_r($variablesPostInsert['dbQueries'], true));
         }
 
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
@@ -431,7 +430,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
     public function performSysFileReferenceUpdate($calIds, array &$dbQueries, &$customMessages)
     {
         $this->logger->debug('Start performSysFileReferenceUpdate');
-        $this->output->writeln( 'Start performSysFileReferenceUpdate' );
+        $this->output->writeln('Start performSysFileReferenceUpdate');
         $q = $this->getQueryBuilder('tx_cal_event');
 
         $variables = [
@@ -554,7 +553,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
     {
         $this->logger->debug('Start performLinkEventToSysCategory');
         $this->output->writeln(
-            'Start link events to syscategory (count: ' . count($calIds) . ') ...'
+            'Start link events to syscategory (count: ' . \count($calIds) . ') ...'
         );
         $table = 'sys_category_record_mm';
 
@@ -947,7 +946,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         ];
         $recurrenceDay = substr($calByday, -2);
 
-        if (empty($calByday) || !array_key_exists($recurrenceDay, $days)) {
+        if (empty($calByday) || !\array_key_exists($recurrenceDay, $days)) {
             return '';
         }
 
@@ -974,7 +973,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             '-3' => ConfigurationInterface::RECURRENCE_THIRD_LAST,
         ];
         $recurrence = substr($calByday, 0, -2); // cut last 2 chars
-        if (empty($calByday) || !array_key_exists($recurrence,$recurrences)) {
+        if (empty($calByday) || !\array_key_exists($recurrence, $recurrences)) {
             return '';
         }
 
@@ -1369,11 +1368,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
     /**
      * @param array $records
-     * @return void
      */
     protected function finalMessage(array $records)
     {
-        $message = count($records) . ' record(s) in cals. Left cals: ' . count($this->getNonMigratedCalIds());
+        $message = \count($records) . ' record(s) in cals. Left cals: ' . \count($this->getNonMigratedCalIds());
         $this->output->writeln($message);
         $this->logger->debug($message);
     }

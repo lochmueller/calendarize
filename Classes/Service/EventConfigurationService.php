@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
-use Exception;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Ical\EventConfigurationInterface;
@@ -155,7 +154,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
             try {
                 $until = new \DateTime($rrule['UNTIL']);
                 $row['tillDate'] = DateTimeUtility::getDayStart($until);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->logger->warning('Invalid UNTIL="{until}" date in RRULE.', [
                     'until' => $rrule['UNTIL'],
                     'importId' => $importId,
