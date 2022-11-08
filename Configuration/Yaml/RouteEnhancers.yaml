@@ -25,6 +25,8 @@ routeEnhancers:
         _controller: 'Calendar::list'
       - routePath: '/{calendarize_booking_label}/{index}'
         _controller: 'Booking::booking'
+      - routePath: '/export.{format}'
+        _controller: 'Calendar::list'
 
     defaultController: 'Calendar::list'
 #    requirements:
@@ -69,6 +71,8 @@ routeEnhancers:
         type: StaticValueMapper
         map:
           'ics': 'ics'
+          'atom': 'atom'
+          'xml': 'xml'
 
       # Localization
       calendarize_event_label:
