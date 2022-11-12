@@ -34,8 +34,12 @@ class TitleTagViewHelper extends AbstractViewHelper
     {
         $content = trim((string)$renderChildrenClosure());
         if (!empty($content)) {
-            $GLOBALS['TSFE']->altPageTitle = $content;
-            $GLOBALS['TSFE']->indexedDocTitle = $content;
+            if (property_exists($GLOBALS['TSFE'], 'altPageTitle')) {
+                $GLOBALS['TSFE']->altPageTitle = $content;
+            }
+            if (property_exists($GLOBALS['TSFE'], 'indexedDocTitle')) {
+                $GLOBALS['TSFE']->indexedDocTitle = $content;
+            }
         }
 
         if (!empty($content)) {
