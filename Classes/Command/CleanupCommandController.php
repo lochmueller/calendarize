@@ -143,6 +143,7 @@ class CleanupCommandController extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $io->title('Cleanup outdated events');
 
         $repositoryName = $input->getOption('repositoryName');
         $modus = $input->getOption('modus');
@@ -151,11 +152,12 @@ class CleanupCommandController extends Command
         /** @var Repository $repository */
         $repository = GeneralUtility::makeInstance($repositoryName);
 
-        $io->section('Cleanup outdated events');
+        $io->section('Reindex events');
         // Index all events to start on a clean slate
         $this->indexerService->reindexAll();
 
         // repository name -> model name -> table name
+        $io->section('Find outdated events');
         $objectType = ClassNamingUtility::translateRepositoryNameToModelName($repositoryName);
         $tableName = $this->dataMapper->getDataMap($objectType)->getTableName();
 
@@ -169,7 +171,6 @@ class CleanupCommandController extends Command
             return 3;
         }
 
-        $io->section('Find outdated events');
         // events uid, to be precise
         $events = $this->rawIndexRepository->findOutdatedEvents($tableName, $waitingPeriod);
 
@@ -179,6 +180,7 @@ class CleanupCommandController extends Command
             return 0;
         }
 
+        $io->section('Cleanup outdated events now');
         // climb through the events and hide/delete them
         foreach ($events as $event) {
             $uid = (int)$event['foreign_uid'];
@@ -192,7 +194,7 @@ class CleanupCommandController extends Command
 
         $this->persistenceManager->persistAll();
 
-        $io->section('Reindex all events');
+        $io->section('Reindex all events (again)');
         // after all this deleting ... reindex!
         $this->indexerService->reindexAll();
 
