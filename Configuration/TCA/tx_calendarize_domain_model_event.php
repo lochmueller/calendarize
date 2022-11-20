@@ -32,6 +32,7 @@ $custom = [
             ],
         ],
         'import_id' => [
+            'displayCond' => 'HIDE_FOR_NON_ADMINS',
             'config' => [
                 'readOnly' => true,
             ],
