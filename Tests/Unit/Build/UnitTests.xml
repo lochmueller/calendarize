@@ -3,15 +3,14 @@
          colors="true"
          convertErrorsToExceptions="true"
          convertWarningsToExceptions="true"
-         convertNoticesToExceptions="false"
-         convertDeprecationsToExceptions="false"
+         convertNoticesToExceptions="true"
          forceCoversAnnotation="false"
          processIsolation="false"
          stopOnError="false"
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
-         verbose="false"
+         verbose="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
     >
     <testsuites>

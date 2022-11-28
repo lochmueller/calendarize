@@ -99,9 +99,6 @@
 		"tool:phpunit": [
 			"phpunit --configuration=Tests/Unit/Build/UnitTests.xml"
 		],
-		"tool:phpunit:tmp": [
-			"phpunit --configuration=Tests/Unit/Build/UnitTests.xml --group=tmp"
-		],
 		"tool:phpunit:functional": [
 			"phpunit --configuration=Tests/Functional/Build/FunctionalTests.xml"
 		],
