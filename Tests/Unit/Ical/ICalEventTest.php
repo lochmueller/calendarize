@@ -423,6 +423,70 @@ END:VCALENDAR
         self::assertEqualsIgnoringCase('45', $rrule['COUNT']);
     }
 
+    /**
+     * @group tmp
+     */
+    public function testComplexInclLineBreak()
+    {
+        $input = 'BEGIN:VCALENDAR
+PRODID:-//MDaemon Technologies Ltd//MDaemon 21.5.2
+VERSION:2.0
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:W. Europe Standard Time
+BEGIN:STANDARD
+DTSTART:16011005T030000
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
+TZNAME:Standard Time
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010305T020000
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
+TZNAME:Daylight Savings Time
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:202207292022073020220610112913YK18S5
+SEQUENCE:0
+DTSTAMP:20220610T093118Z
+SUMMARY:Collecte
+DESCRIPTION:Lors de la collecte les enregistrements salaires pour le
+ nouveau mois de collecte sont créés. Les listes de salaires sont
+ imprimées sur base des enregistrements salaires existant après la
+ collecte.
+LOCATION:CCSS
+PRIORITY:5
+DTSTART;VALUE=DATE:20220729
+DTEND;VALUE=DATE:20220730
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+BEGIN:VEVENT
+UID:2022072920220730202206101129134X
+SEQUENCE:0
+DTSTAMP:20220610T093118Z
+SUMMARY:Rappels SECUline
+DESCRIPTION:Envoi d&apos\;une lettre de rappel que les salaires du mois
+ de collecte courant n&apos\;ont pas encore été déclarés.
+LOCATION:CCSS
+PRIORITY:5
+DTSTART;VALUE=DATE:20220729
+DTEND;VALUE=DATE:20220730
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+END:VCALENDAR';
+
+        $event = $this->getEvent($input);
+
+        // @todo check Space bewteen lines
+        self::assertEquals('Lors de la collecte les enregistrements salaires pour lenouveau mois de collecte sont créés. Les listes de salaires sontimprimées sur base des enregistrements salaires existant après lacollecte.', $event->getDescription());
+    }
+
     public function testRawData()
     {
         $input = 'BEGIN:VCALENDAR
