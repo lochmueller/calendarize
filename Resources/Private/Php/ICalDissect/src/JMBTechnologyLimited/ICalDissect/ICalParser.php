@@ -47,7 +47,7 @@ class ICalParser
                 if (substr($line, 0, 1) == ' ') {
                     $linesCompacted[count($linesCompacted)-1] .= substr($line, 1);
                 } else {
-                    $linesCompacted[] = trim($line);
+                    $linesCompacted[] = $line;
                 }
             }
 
