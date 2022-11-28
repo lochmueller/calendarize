@@ -148,6 +148,46 @@ END:VCALENDAR
         self::assertEquals('Anniversary of Steve and Julia', $event->getDescription());
     }
 
+    /** @covers ICalEvent::getDescription */
+    public function testDescriptionMultiline()
+    {
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:a0e8c566-849c-4f28-bba4-e2415dda29c9@example.com
+DTSTART:20200917T180000Z
+DTSTAMP:20201024T154452Z
+DESCRIPTION:This is a lo
+ ng description
+  that exists on a long line.
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+        self::assertEquals('This is a long description that exists on a long line.', $event->getDescription());
+    }
+
+    /** @covers ICalEvent::getDescription */
+    public function testDescriptionMultilineTrailingWhitespace()
+    {
+        $input = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:5756402a-c8db-4a6f-842c-db7190f27e54@example.com
+DTSTART:20200917T180000Z
+DTSTAMP:20201024T154452Z
+DESCRIPTION:This is a long 
+ description that 
+ exists on a long line.
+END:VEVENT
+END:VCALENDAR
+';
+        $event = $this->getEvent($input);
+        self::assertEquals('This is a long description that exists on a long line.', $event->getDescription());
+    }
+
     /** @covers ICalEvent::getLocation */
     public function testLocation()
     {

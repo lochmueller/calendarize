@@ -49,6 +49,7 @@ return $config
         'no_singleline_whitespace_before_semicolons' => true,
         'no_superfluous_elseif' => true,
         'no_trailing_comma_in_singleline_array' => true,
+        'no_trailing_whitespace_in_string' => false,
         'no_unneeded_control_parentheses' => true,
         'no_unused_imports' => true,
         'no_useless_else' => true,
