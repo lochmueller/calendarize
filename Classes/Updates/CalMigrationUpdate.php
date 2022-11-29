@@ -944,7 +944,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             'sa' => ConfigurationInterface::DAY_SATURDAY,
             'su' => ConfigurationInterface::DAY_SUNDAY,
         ];
-        $recurrenceDay = substr($calByday, -2);
+        $recurrenceDay = (string)substr($calByday, -2);
 
         if (empty($calByday) || !\array_key_exists($recurrenceDay, $days)) {
             return '';
@@ -972,7 +972,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             '-2' => ConfigurationInterface::RECURRENCE_NEXT_TO_LAST,
             '-3' => ConfigurationInterface::RECURRENCE_THIRD_LAST,
         ];
-        $recurrence = substr($calByday, 0, -2); // cut last 2 chars
+        $recurrence = (string)substr($calByday, 0, -2); // cut last 2 chars
         if (empty($calByday) || !\array_key_exists($recurrence, $recurrences)) {
             return '';
         }
