@@ -526,8 +526,9 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                     'fieldname' => $variables['fieldname'],
                 ];
 
-                $q = $this->getQueryBuilder($table);
-                $q->insert($table)->values($insertValues);
+                $catTable = 'sys_category_record_mm';
+                $q = $this->getQueryBuilder($catTable);
+                $q->insert($catTable)->values($insertValues);
                 $dbQueries[] = HelperUtility::queryWithParams($q);
 
                 $q->execute();
