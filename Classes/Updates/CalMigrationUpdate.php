@@ -168,6 +168,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $this->performLinkEventToCategory($calIds, $dbQueries, $customMessages);
         }
         $this->performLinkEventToConfigurationGroup($calIds, $dbQueries, $customMessages);
+
+        $indexer = GeneralUtility::makeInstance(IndexerService::class);
+        $indexer->reindexAll();
+
         $this->finalMessage($calIds);
 
         return true;
@@ -292,9 +296,6 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $this->logger->debug('after performCalEventUpdatePostInsert: ' . $variablesPostInsert['event']['uid'] . ' dbQueries: ' . print_r($variablesPostInsert['dbQueries'], true));
         }
 
-        $indexer = GeneralUtility::makeInstance(IndexerService::class);
-        $indexer->reindexAll();
-
         return true;
     }
 
@@ -374,10 +375,12 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             'calIds' => $calIds,
         ];
 
-        $selectResults = $q->select('*')->from($variables['table'])->execute()->fetchAll();
+        $configurationGroupResults = $q->select('*')->from($variables['table'])
+            ->where($q->expr()->like('import_id', $q->createNamedParameter(self::IMPORT_PREFIX . '%')))
+            ->execute()->fetchAll();
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        foreach ($selectResults as $group) {
+        foreach ($configurationGroupResults as $group) {
             $importId = explode(':', $group['import_id']);
             $groupId = (int)$importId[1];
 
@@ -639,14 +642,12 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         if ($configurationRow) {
             $configurationRow['groups'] = $this->addValueToCsv($configurationRow['groups'], $configuration['groups']);
 
-            unset($configurationRow['uid']);
-
-            $q = $this->getQueryBuilder(self::CONFIGURATION_GROUP_TABLE);
-            $q->update(self::CONFIGURATION_GROUP_TABLE)
-                ->where('uid', $q->createNamedParameter((int)$configuration['uid'], \PDO::PARAM_INT));
-            foreach ($configurationRow as $key => $value) {
-                $q->set($key, $value);
-            }
+            $q = $this->getQueryBuilder(self::CONFIGURATION_TABLE);
+            $q->update(self::CONFIGURATION_TABLE)
+                ->where(
+                    $q->expr()->eq('uid', $q->createNamedParameter((int)$configurationRow['uid'], \PDO::PARAM_INT))
+                )
+                ->set('groups', $configurationRow['groups']);
 
             $dbQueries[] = HelperUtility::queryWithParams($q);
             $results = $q->execute();
@@ -655,6 +656,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $q = $db->createQueryBuilder();
             $q->insert(self::CONFIGURATION_TABLE)->values($configuration);
             $dbQueries[] = HelperUtility::queryWithParams($q);
+            $q->execute();
 
             $configurationId = $db->lastInsertId(self::CONFIGURATION_TABLE);
 
@@ -717,7 +719,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      * @param array $dbQueries
      * @param array $customMessages
      *
-     * @return array
+     * @return bool
      */
     protected function updateEvent($eventId, $values, &$dbQueries, &$customMessages)
     {
@@ -745,7 +747,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        return $q->execute()->fetchAll();
+        return $q->execute();
     }
 
     /**
@@ -777,7 +779,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        return $q->execute()->fetchAll();
+        return $q->execute()->fetch();
     }
 
     /**
@@ -809,15 +811,15 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             ->from($variables['table'])
             ->where(
                 $q->expr()->andX(
-                    $q->expr()->eq('type', 'group'),
-                    $q->expr()->eq('handling', 'exclude'),
+                    $q->expr()->eq('type', $q->createNamedParameter(ConfigurationInterface::TYPE_GROUP)),
+                    $q->expr()->eq('handling', $q->createNamedParameter(ConfigurationInterface::HANDLING_EXCLUDE)),
                     $q->expr()->in('uid', $variables['event']['calendarize'])
                 )
             );
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        return $q->execute()->fetchAll();
+        return $q->execute()->fetch();
     }
 
     /**
@@ -841,7 +843,9 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
         $q->select('*')
             ->from($variables['table'])
-            ->where('uid_local', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT));
+            ->where(
+                $q->expr()->eq('uid_local', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT))
+            );
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
@@ -877,8 +881,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                     'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
                     'frequency' => $this->mapFrequency($selectResult['freq']),
                     'till_date' => (string)$selectResult['until'] ?: null,
-                    'counter_amount' => (int)$selectResult['cnt'],
-                    'counter_interval' => (int)$selectResult['interval'],
+                    'counter_amount' => ((int)$selectResult['cnt'] > 1) ? (int)$selectResult['cnt'] - 1 : 0,
+                    'counter_interval' => (int)($selectResult['interval'] ?? 1),
                     'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
                     'recurrence' => $this->mapRecurrence($selectResult['byday']),
                     'day' => $this->mapRecurrenceDay($selectResult['byday']),
@@ -998,9 +1002,6 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         ];
 
         $q = $this->getQueryBuilder($variables['table']);
-        $q->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
         $q->select('*')
             ->from($variables['table']);
@@ -1198,7 +1199,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             'all_day' => $calEventRow['allday'],
             'frequency' => $this->mapFrequency($calEventRow['freq']),
             'till_date' => (string)$calEventRow['until'] ?: null,
-            'counter_amount' => (int)$calEventRow['cnt'],
+            'counter_amount' => ((int)$calEventRow['cnt'] > 1) ? (int)$calEventRow['cnt'] - 1 : 0,
             'counter_interval' => (int)($calEventRow['interval'] ?? 1),
             'recurrence' => $this->mapRecurrence($calEventRow['byday']),
             'day' => $this->mapRecurrenceDay($calEventRow['byday']),

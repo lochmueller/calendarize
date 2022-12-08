@@ -90,5 +90,6 @@ Be aware that some things are **not** migrated:
 - TypoScript configurations
 - (Plugins)
 - Some fields and tables (e.g. calendar, locations, attendees, deviations, ...)
+- Deviations
 - Additionally fields by other extensions
 - ...
