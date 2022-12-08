@@ -168,6 +168,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $this->performLinkEventToCategory($calIds, $dbQueries, $customMessages);
         }
         $this->performLinkEventToConfigurationGroup($calIds, $dbQueries, $customMessages);
+        $this->performSingleException($dbQueries, $customMessages);
 
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
         $indexer->reindexAll();
@@ -351,6 +352,63 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         }
 
         return true;
+    }
+
+    /**
+     * Create configuration for exception events that are directly linked to cal events (not groups).
+     * These events can be identified in the table tx_cal_exception_event_mm where tablenames=tx_cal_exception_event.
+     *
+     * @param $dbQueries
+     * @param $customMessages
+     */
+    public function performSingleException(&$dbQueries, &$customMessages): void
+    {
+        $this->logger->debug('Start performSingleException');
+        $this->output->writeln('Start performSingleException');
+
+        $exceptionTable = 'tx_cal_exception_event';
+        $exceptionEventTable = 'tx_cal_exception_event_mm';
+        $db = HelperUtility::getDatabaseConnection(self::CONFIGURATION_TABLE);
+
+        // Fetch all exception events which are directly linked to cal event
+        // With the join we directly get the cal event id in one query
+        $q = $this->getQueryBuilder($exceptionTable);
+        $q->select($exceptionTable . '.*', 'uid_local')
+            ->from($exceptionTable)
+            ->innerJoin(
+                $exceptionTable,
+                $exceptionEventTable,
+                'mm',
+                $q->expr()->eq('mm.uid_foreign', $q->quoteIdentifier('uid'))
+            )
+            ->where($q->expr()->eq('tablenames', $q->createNamedParameter($exceptionTable)));
+
+        $dbQueries[] = HelperUtility::queryWithParams($q);
+        $selectResults = $q->execute();
+
+        while ($result = $selectResults->fetch()) {
+            // Create a configuration
+            $configuration = $this->getConfigurationFromException($result);
+            $configuration['handling'] = ConfigurationInterface::HANDLING_EXCLUDE;
+
+            // Insert the configuration
+            $q = $this->getQueryBuilder(self::CONFIGURATION_TABLE);
+            $q->insert(self::CONFIGURATION_TABLE)->values($configuration)->execute();
+            $dbQueries[] = HelperUtility::queryWithParams($q);
+            $configurationId = (int)$db->lastInsertId(self::CONFIGURATION_TABLE);
+
+            // Link the configuration
+            $eventImportId = self::IMPORT_PREFIX . (int)$result['uid_local'];
+            $linkResult = $this->addConfigurationIdToEvent($eventImportId, $configurationId, $dbQueries, $customMessages);
+
+            if (!$linkResult) {
+                $this->logger->error('Unable to link configuration {configurationId} (single exception) to event {event}!', [
+                    'configurationId' => $configurationId,
+                    'event' => $eventImportId,
+                    'configuration' => $result,
+                ]);
+            }
+        }
     }
 
     /**
@@ -868,25 +926,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
             $selectResults = $q->execute()->fetchAll();
 
             foreach ($selectResults as $selectResult) {
-                $configurationRow = [
-                    'pid' => $selectResult['pid'],
-                    'tstamp' => $selectResult['tstamp'],
-                    'crdate' => $selectResult['crdate'],
-                    'type' => 'time',
-                    'handling' => 'include',
-                    'start_date' => (string)$selectResult['start_date'] ?: null,
-                    'end_date' => (string)$selectResult['end_date'] ?: null,
-                    'start_time' => (int)$selectResult['start_time'],
-                    'end_time' => (int)$selectResult['end_time'],
-                    'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
-                    'frequency' => $this->mapFrequency($selectResult['freq']),
-                    'till_date' => (string)$selectResult['until'] ?: null,
-                    'counter_amount' => ((int)$selectResult['cnt'] > 1) ? (int)$selectResult['cnt'] - 1 : 0,
-                    'counter_interval' => (int)($selectResult['interval'] ?? 1),
-                    'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
-                    'recurrence' => $this->mapRecurrence($selectResult['byday']),
-                    'day' => $this->mapRecurrenceDay($selectResult['byday']),
-                ];
+                $configurationRow = $this->getConfigurationFromException($selectResult);
 
                 $variables = [
                     'table' => self::CONFIGURATION_TABLE,
@@ -1376,5 +1416,35 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $message = \count($records) . ' record(s) in cals. Left cals: ' . \count($this->getNonMigratedCalIds());
         $this->output->writeln($message);
         $this->logger->debug($message);
+    }
+
+    /**
+     * @param $selectResult
+     *
+     * @return array
+     */
+    protected function getConfigurationFromException($selectResult): array
+    {
+        $configurationRow = [
+            'pid' => $selectResult['pid'],
+            'tstamp' => $selectResult['tstamp'],
+            'crdate' => $selectResult['crdate'],
+            'type' => ConfigurationInterface::TYPE_TIME,
+            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            'start_date' => (string)$selectResult['start_date'] ?: null,
+            'end_date' => (string)$selectResult['end_date'] ?: null,
+            'start_time' => (int)$selectResult['start_time'],
+            'end_time' => (int)$selectResult['end_time'],
+            'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
+            'frequency' => $this->mapFrequency($selectResult['freq']),
+            'till_date' => (string)$selectResult['until'] ?: null,
+            'counter_amount' => ((int)$selectResult['cnt'] > 1) ? (int)$selectResult['cnt'] - 1 : 0,
+            'counter_interval' => (int)($selectResult['interval'] ?? 1),
+            'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
+            'recurrence' => $this->mapRecurrence($selectResult['byday']),
+            'day' => $this->mapRecurrenceDay($selectResult['byday']),
+        ];
+
+        return $configurationRow;
     }
 }

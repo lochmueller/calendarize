@@ -139,6 +139,27 @@ class CalMigrationUpdateTest extends FunctionalTestCase
         self::assertCount(1, $groups[1]->getConfigurationIds());
     }
 
+    public function testExceptionSingle()
+    {
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/cal-exception-single.csv');
+
+        $successful = $this->subject->executeUpdate();
+
+        self::assertTrue($successful);
+
+        /** @var Event $event */
+        $event = $this->eventRepository->findOneByImportId('calMigration:12');
+
+        self::assertNotNull($event);
+
+        /** @var Configuration[] $calendarize */
+        $calendarize = $event->getCalendarize()->toArray();
+        self::assertCount(2, $calendarize);
+
+        // Check correct amount of indices = 3 - 1 = 2
+        self::assertEquals(2, $this->rawIndexRepository->countAllEvents('tx_calendarize_domain_model_event', $event->getUid()));
+    }
+
     // Translated l10n/l18n events
     // Images
 }
