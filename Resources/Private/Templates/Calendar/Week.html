@@ -28,7 +28,7 @@
 		<div class="row">
 			<f:for each="{weekConfiguration}" key="modify" as="cols">
 				<div class="col-md-{cols}">
-					<f:format.date format="{settings.dateFormat}">{firstDay -> c:dateTime.modify(modification: modify)}</f:format.date>
+					<f:format.date format="{f:translate(key: 'dateFormat')}">{firstDay -> c:dateTime.modify(modification: modify)}</f:format.date>
 					<ul>
 						<f:for each="{indices}" as="index">
 							<f:if condition="{c:dateTime.indexOnDay(index: index, day:firstDay, modification: modify)}">

@@ -10,12 +10,6 @@ plugin.tx_calendarize {
     # cat=calendarize//0030; type=int+; label=Start of the week: Start of the week (1 Mo - 7 Su) - ISO-8601 / http://php.net/manual/de/function.date.php 'N' / http://php.net/manual/de/function.date.php#119974
     weekStart = 1
 
-    # cat=calendarize//0040; type=string; label=Date format: date format - http://php.net/manual/de/function.date.php
-    dateFormat = d.m.Y
-
-    # cat=calendarize//0050; type=string; label=Time format: time format - http://php.net/manual/de/function.date.php
-    timeFormat = H:i
-
     # cat=calendarize//0060; type=boolean; label=Moment.js: Experimental: Use Moment.js for date and time output
     useMomentJsDateAndTimeOutput = 0
 

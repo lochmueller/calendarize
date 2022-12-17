@@ -197,7 +197,7 @@ abstract class AbstractController extends ActionController
      */
     protected function checkStaticTemplateIsIncluded()
     {
-        if (!isset($this->settings['dateFormat'])) {
+        if (!isset($this->settings['dateLimitBrowserPrev'])) {
             $this->addFlashMessage(
                 'Basic configuration settings are missing. It seems, that the Static Extension TypoScript is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
                 'Configuration Error',

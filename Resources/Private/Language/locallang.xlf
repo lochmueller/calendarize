@@ -9,6 +9,12 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+			<trans-unit id="dateFormat">
+				<source>d.m.Y</source>
+			</trans-unit>
+			<trans-unit id="timeFormat">
+				<source>H:i</source>
+			</trans-unit>
 			<trans-unit id="module.dashboard.group.calendarize.title">
 				<source>Calendarize</source>
 			</trans-unit>

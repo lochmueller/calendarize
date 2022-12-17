@@ -3,8 +3,6 @@ plugin.tx_calendarize {
     dateLimitBrowserPrev = {$plugin.tx_calendarize.settings.dateLimitBrowserPrev}
     dateLimitBrowserNext = {$plugin.tx_calendarize.settings.dateLimitBrowserNext}
     weekStart = {$plugin.tx_calendarize.settings.weekStart}
-    dateFormat = {$plugin.tx_calendarize.settings.dateFormat}
-    timeFormat = {$plugin.tx_calendarize.settings.timeFormat}
     useMomentJsDateAndTimeOutput = {$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}
     useMomentFullCalendarIo = {$plugin.tx_calendarize.settings.useMomentFullCalendarIo}
     listStartTime = {$plugin.tx_calendarize.settings.listStartTime}
