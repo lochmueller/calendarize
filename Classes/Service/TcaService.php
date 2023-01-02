@@ -54,7 +54,7 @@ class TcaService extends AbstractService
     public function eventTitle(array &$params, $object)
     {
         // if record has no title
-        if (!MathUtility::canBeInterpretedAsInteger($params['row']['uid'])) {
+        if (isset($params['row']['uid']) && !MathUtility::canBeInterpretedAsInteger($params['row']['uid'])) {
             return;
         }
 
