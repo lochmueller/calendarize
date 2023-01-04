@@ -1,7 +1,12 @@
 <?php
 
 declare(strict_types=1);
+
+use HDNET\Autoloader\Utility\ModelUtility;
+
 defined('TYPO3') or exit();
+
+$GLOBALS['TCA']['tt_content'] = ModelUtility::getTcaOverrideInformation('calendarize', 'tt_content');
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'calendarize',
