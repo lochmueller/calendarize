@@ -150,7 +150,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
         $origId = isset($rawRecord['t3ver_oid']) ? (int)$rawRecord['t3ver_oid'] : 0;
 
-        if (VersionState::DELETE_PLACEHOLDER === $rawRecord['t3ver_state']) {
+        if (VersionState::DELETE_PLACEHOLDER === ($rawRecord['t3ver_state'] ?? false)) {
             // Remove all entries in current workspace that are related to the current item
             $this->rawIndexRepository->deleteByIdentifier([
                 't3ver_wsid' => $workspace,
@@ -207,7 +207,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         if ($workspace) {
             // Placeholder are respect in function updateIndex
             $currentItems = array_filter($currentItems, static function ($item) {
-                return VersionState::DELETE_PLACEHOLDER !== $item['t3ver_state'];
+                return VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
             });
         }
 

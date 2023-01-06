@@ -99,7 +99,7 @@ class RawIndexRepository extends AbstractRawRepository
 
         // @todo check
         $result = array_values(array_filter($result, static function ($item) {
-            return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== $item['t3ver_state'];
+            return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
         }));
 
         return $result;
