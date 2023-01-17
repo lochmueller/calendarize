@@ -226,10 +226,19 @@ class TimeTableService extends AbstractService
     protected function buildConfigurationHandler(Configuration $configuration): AbstractTimeTable
     {
         $handler = 'HDNET\\Calendarize\\Service\\TimeTable\\' . ucfirst($configuration->getType()) . 'TimeTable';
-        if (!class_exists($handler)) {
-            throw new \Exception('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 1236781);
+        if (class_exists($handler)) {
+            return GeneralUtility::makeInstance($handler);
         }
 
-        return GeneralUtility::makeInstance($handler);
+        /** @var SecondaryTimeTableService $secondaryTimeTableService */
+        $secondaryTimeTableService = GeneralUtility::makeInstance(SecondaryTimeTableService::class);
+        $services = $secondaryTimeTableService->getSecondaryTimeTables();
+        foreach ($services as $service) {
+            if ($service->getIdentifier() === $configuration->getType()) {
+                return $service;
+            }
+        }
+
+        throw new \Exception('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 1236781);
     }
 }

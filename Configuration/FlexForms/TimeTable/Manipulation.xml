@@ -1,0 +1,38 @@
+<T3DataStructure>
+    <meta type="array">
+        <langChildren type="integer">0</langChildren>
+        <langDisable type="integer">1</langDisable>
+    </meta>
+    <sheets>
+        <general>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>General configuration</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.fixedStartTime>
+                        <TCEforms>
+                            <label>Fix start time</label>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputDateTime</renderType>
+                                <eval>time,null</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.fixedStartTime>
+                    <settings.fixedEndTime>
+                        <TCEforms>
+                            <label>Fix end time</label>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputDateTime</renderType>
+                                <eval>time,null</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.fixedEndTime>
+                </el>
+            </ROOT>
+        </general>
+    </sheets>
+</T3DataStructure>

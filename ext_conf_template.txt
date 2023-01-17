@@ -18,3 +18,6 @@ tillDaysPast =
 
 # cat=basic/enable; type=boolean; label=Respect times in time frame constraints: Per default IndexRepository->addTimeFrameConstraints() only checks start_date and end_date. If you want the actual times to be respected (e.g. if settings.overrideStartRelative is set to 'now') enable this option.
 respectTimesInTimeFrameConstraints = 0
+
+# cat=timeTable/addon; type=boolean; label=Manipulation: Time table configuration to manipulate the dates based on some configurations
+timeTableManipulation = 0

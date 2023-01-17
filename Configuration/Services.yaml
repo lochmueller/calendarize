@@ -4,8 +4,15 @@ services:
     autoconfigure: true
     public: false
 
+  _instanceof:
+    HDNET\Calendarize\Service\TimeTable\TimeTableInterface:
+      tags: [ 'app.time_table' ]
+
   HDNET\Calendarize\:
     resource: '../Classes/*'
+
+  HDNET\Calendarize\Service\SecondaryTimeTableService:
+    arguments: [ !tagged { tag: 'app.time_table' } ]
 
   HDNET\Calendarize\EventListener\CalendarizeFieldListener:
     tags:

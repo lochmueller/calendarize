@@ -218,6 +218,15 @@ class Configuration extends AbstractModel implements ConfigurationInterface
     protected $hidden = false;
 
     /**
+     * Flexform.
+     *
+     * @var string
+     *
+     * @DatabaseField("string")
+     */
+    protected $flexForm = '';
+
+    /**
      * Configuration constructor.
      */
     public function __construct()
@@ -699,5 +708,21 @@ class Configuration extends AbstractModel implements ConfigurationInterface
         $this->hidden = $hidden;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFlexForm(): string
+    {
+        return $this->flexForm;
+    }
+
+    /**
+     * @param string $flexForm
+     */
+    public function setFlexForm(string $flexForm): void
+    {
+        $this->flexForm = $flexForm;
     }
 }

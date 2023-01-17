@@ -5,8 +5,10 @@ declare(strict_types=1);
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Service\SecondaryTimeTableService;
 use HDNET\Calendarize\Service\TcaService;
 use HDNET\Calendarize\Utility\TranslateUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 $base = ModelUtility::getTcaInformation(Configuration::class);
 
@@ -43,6 +45,12 @@ $timeType = str_replace(
     $timeType
 );
 
+$timeType = str_replace(
+    ',flex_form',
+    '',
+    $timeType
+);
+
 $baseConfiguration = '--palette--;;base';
 $timeType = str_replace(
     'type,handling,state',
@@ -51,6 +59,37 @@ $timeType = str_replace(
 );
 
 $extendTab = ',--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended';
+
+// TimeTables
+$timeTables = [
+    [
+        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
+        Configuration::TYPE_TIME,
+    ],
+    [
+        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_GROUP),
+        Configuration::TYPE_GROUP,
+    ],
+    [
+        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXTERNAL),
+        Configuration::TYPE_EXTERNAL,
+    ],
+];
+
+$flexForms = [];
+
+/** @var SecondaryTimeTableService $secondaryTimeTableService */
+$secondaryTimeTableService = GeneralUtility::makeInstance(SecondaryTimeTableService::class);
+$services = $secondaryTimeTableService->getSecondaryTimeTables();
+
+if (!empty($services)) {
+    array_unshift($timeTables, ['Primary', '--div--']);
+    $timeTables[] = ['Secondary', '--div--'];
+    foreach ($services as $service) {
+        $timeTables[] = [$service->getLabel(), $service->getIdentifier()];
+        $flexForms[$service->getIdentifier()] = $service->getFlexForm();
+    }
+}
 
 $custom = [
     'ctrl' => [
@@ -71,21 +110,15 @@ $custom = [
                 'renderType' => 'selectSingle',
                 'authMode' => 'explicitDeny',
                 'authMode_enforce' => 'strict',
-                'items' => [
-                    [
-                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
-                        Configuration::TYPE_TIME,
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_GROUP),
-                        Configuration::TYPE_GROUP,
-                    ],
-                    [
-                        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXTERNAL),
-                        Configuration::TYPE_EXTERNAL,
-                    ],
-                ],
+                'items' => $timeTables,
                 'default' => Configuration::TYPE_TIME,
+            ],
+        ],
+        'flex_form' => [
+            'config' => [
+                'type' => 'flex',
+                'ds_pointerField' => 'type',
+                'ds' => $flexForms,
             ],
         ],
         'handling' => [
@@ -530,6 +563,13 @@ $custom = [
         ],
     ],
 ];
+
+if (!empty($services)) {
+    foreach ($services as $service) {
+        $custom['ctrl']['typeicon_classes'][$service->getIdentifier()] = 'apps-calendarize-type-' . Configuration::TYPE_TIME;
+        $custom['types'][$service->getIdentifier()]['showitem'] = $service->getTcaServiceTypeFields();
+    }
+}
 
 foreach (['start_date', 'end_date', 'start_time', 'end_time', 'all_day', 'open_end_time', 'end_date_dynamic', 'type', 'state', 'handling'] as $column) {
     $custom['columns'][$column]['exclude'] = false;
