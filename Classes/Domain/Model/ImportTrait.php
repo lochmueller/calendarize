@@ -11,7 +11,7 @@ trait ImportTrait
      *
      * @var string|null
      *
-     * @DatabaseField(sql="varchar(100) DEFAULT NULL")
+     * @DatabaseField(sql="varchar(150) DEFAULT NULL")
      */
     protected $importId;
 
