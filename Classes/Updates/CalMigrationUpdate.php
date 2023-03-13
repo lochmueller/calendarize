@@ -34,6 +34,7 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
  * Example:
  * /**
  *  * @SignalClass("HDNET\Calendarize\Updates\CalMigrationUpdate")
+ *
  *  * @SignalName("getCalendarizeEventUid")
  *
  *  *@return array

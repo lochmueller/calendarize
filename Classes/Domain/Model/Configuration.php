@@ -125,6 +125,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * @var ObjectStorage<ConfigurationGroup>
      *
      * @DatabaseField("\TYPO3\CMS\Extbase\Persistence\ObjectStorage")
+     *
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $groups;
