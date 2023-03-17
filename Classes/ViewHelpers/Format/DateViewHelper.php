@@ -8,20 +8,29 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * DateViewHelper.
  */
-class DateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Format\DateViewHelper
+class DateViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
-     * Initialize arguments.
+     * Needed as child node's output can return a DateTime object which can't be escaped
+     *
+     * @var bool
      */
-    public function initializeArguments()
+    protected $escapeChildren = false;
+
+    public function initializeArguments(): void
     {
-        parent::initializeArguments();
-        $this->registerArgument('resetTimeZone', 'bool', '', false, false);
+        $this->registerArgument('date', 'mixed', 'Either an object implementing DateTimeInterface or a string that is accepted by DateTime constructor');
+        $this->registerArgument('format', 'string', 'Format String which is taken to format the Date/Time', false, '');
+        $this->registerArgument('base', 'mixed', 'A base time (an object implementing DateTimeInterface or a string) used if $date is a relative date specification. Defaults to current time.');
     }
 
     /**

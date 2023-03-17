@@ -17,18 +17,28 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
-class IconForRecordViewHelper extends \TYPO3\CMS\Core\ViewHelpers\IconForRecordViewHelper
+class IconForRecordViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    use CompileWithRenderStatic;
+
     /**
-     * Initializes the arguments.
+     * ViewHelper returns HTML, thus we need to disable output escaping
+     *
+     * @var bool
      */
-    public function initializeArguments()
+    protected $escapeOutput = false;
+
+    public function initializeArguments(): void
     {
-        parent::initializeArguments();
-        $this->registerArgument('uid', 'int', '', true);
-        $this->overrideArgument('row', 'array', 'the record row', false);
+        $this->registerArgument('table', 'string', 'the table for the record icon', true);
+        $this->registerArgument('row', 'array', 'the record row', true);
+        $this->registerArgument('size', 'string', 'the icon size', false, Icon::SIZE_SMALL);
+        $this->registerArgument('alternativeMarkupIdentifier', 'string', 'alternative markup identifier', false);
     }
 
     /**

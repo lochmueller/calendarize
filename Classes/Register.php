@@ -47,7 +47,7 @@ class Register
     public static function getDefaultAutoloader(): array
     {
         return [
-            'Hooks',
+            // 'Hooks',
             'Slots',
             'SmartObjects',
             'FlexForms',

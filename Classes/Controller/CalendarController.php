@@ -24,7 +24,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -36,16 +35,6 @@ use TYPO3\CMS\Extbase\Service\ImageService;
  */
 class CalendarController extends AbstractCompatibilityController
 {
-    /**
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
-
-    public function __construct(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
     /**
      * Init all actions.
      */
@@ -276,7 +265,7 @@ class CalendarController extends AbstractCompatibilityController
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
                 if (class_exists($repositoryName)) {
-                    $repository = $this->objectManager->get($repositoryName);
+                    $repository = GeneralUtility::makeInstance($repositoryName);
                     $event = $repository->findByUid($uid);
 
                     $this->addCacheTags(['calendarize_' . lcfirst($value['uniqueRegisterKey']) . '_' . $event->getUid()]);

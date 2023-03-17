@@ -23,7 +23,7 @@ class BookingRequestValidator extends AbstractValidator
      *
      * @param mixed $value
      */
-    protected function isValid($value)
+    protected function isValid(mixed $value): void
     {
         /** @var ConjunctionValidator $validator */
         $validator = GeneralUtility::makeInstance(ValidatorResolver::class)->getBaseValidatorConjunction(\get_class($value));

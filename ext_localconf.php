@@ -35,39 +35,23 @@ defined('TYPO3') or exit();
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
 
+    // hooks
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['calendarize_calendar'] =
+        \HDNET\Calendarize\Hooks\CmsLayout::class . '->calendarize_calendar';
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration']['calendarize'] =
+        \HDNET\Calendarize\Hooks\KeSearchIndexer::class;
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['customIndexer']['calendarize'] =
+        \HDNET\Calendarize\Hooks\KeSearchIndexer::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['calendarize'] =
+        \HDNET\Calendarize\Hooks\ProcessCmdmapClass::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['calendarize'] =
+        \HDNET\Calendarize\Hooks\ProcessCmdmapClass::class;
+
     // Include new content elements to modWizards
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig("
         @import 'EXT:calendarize/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig'
         @import 'EXT:calendarize/Configuration/TsConfig/Page/TCEMAIN/LinkHandler.tsconfig'
     ");
-
-    $svgIcons = [
-        'ext-calendarize-wizard-icon' => 'Extension.svg',
-    ];
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    foreach ($svgIcons as $identifier => $path) {
-        $iconRegistry->registerIcon(
-            $identifier,
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:calendarize/Resources/Public/Icons/' . $path]
-        );
-    }
-
-    $bitmapIcons = [
-        // module icon
-        'apps-pagetree-folder-contains-calendarize' => 'apps-pagetree-folder-contains-calendarize.svg',
-        // configuration types
-        'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME => 'Configuration.png',
-        'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_GROUP => 'ConfigurationGroupType.png',
-        'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_EXTERNAL => 'ConfigurationExternal.png',
-    ];
-    foreach ($bitmapIcons as $identifier => $path) {
-        $iconRegistry->registerIcon(
-            $identifier,
-            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-            ['source' => 'EXT:calendarize/Resources/Public/Icons/' . $path]
-        );
-    }
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1591803668] = [
         'nodeName' => 'calendarizeInfoElement',
@@ -76,6 +60,8 @@ defined('TYPO3') or exit();
     ];
 
     if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('workspaces')) {
-        \HDNET\Autoloader\Utility\ExtendedUtility::addXclass(\TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer::class, \HDNET\Calendarize\Xclass\WorkspaceRemoteServer::class);
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer::class] = [
+            'className' => \HDNET\Calendarize\Xclass\WorkspaceRemoteServer::class,
+        ];
     }
 })();
