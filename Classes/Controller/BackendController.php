@@ -9,25 +9,38 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Register;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Attribute\Controller;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 
 /**
  * BackendController.
  */
+#[Controller]
 class BackendController extends AbstractController
 {
-    private const PATH_CALENDARIZE_LOCALLANG = 'LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf';
     private const PATH_CORE_LOCALLANG = 'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf';
 
-    protected $defaultViewObjectName = \TYPO3\CMS\Backend\View\BackendTemplateView::class;
-
     public const OPTIONS_KEY = 'calendarize_be';
+
+    public function __construct(
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
+        ConfigurationManagerInterface $configurationManager
+    ) {
+        $this->configurationManager = $configurationManager;
+        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+        $this->arguments = GeneralUtility::makeInstance(Arguments::class);
+    }
 
     public function initializeListAction()
     {
@@ -50,7 +63,7 @@ class BackendController extends AbstractController
     /**
      * Basic backend list.
      */
-    public function listAction(OptionRequest $options = null, int $currentPage = 1)
+    public function listAction(OptionRequest $options = null, int $currentPage = 1): ResponseInterface
     {
         if (null === $options) {
             $options = $this->getOptions();
@@ -70,7 +83,8 @@ class BackendController extends AbstractController
         }
         $pagination = new SimplePagination($paginator);
 
-        $this->view->assignMultiple([
+        $view = $this->moduleTemplateFactory->create($this->request);
+        $view->assignMultiple([
             'indices' => $indices,
             'typeLocations' => $typeLocations,
             'types' => $this->getTypes(),
@@ -79,15 +93,16 @@ class BackendController extends AbstractController
             'options' => $options,
             'paginator' => $paginator,
             'pagination' => $pagination,
-            'totalAmount' => \count($indices),
+            'totalAmount' => count($indices),
             'filterOptions' => [
                 'asc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':ascending') ?: 'ascending',
                 'desc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':descending') ?: 'descending',
             ],
         ]);
+        return $view->renderResponse('Backend/List');
     }
 
-    protected function getPids(array $typeLocations)
+    protected function getPids(array $typeLocations): array
     {
         $pids = [];
         foreach ($typeLocations as $locations) {
@@ -151,11 +166,8 @@ class BackendController extends AbstractController
      *
      * @return array
      */
-    protected function getDifferentTypesAndLocations()
+    protected function getDifferentTypesAndLocations(): array
     {
-        /**
-         * @var array<int>
-         */
         $mountPoints = $this->getAllowedDbMounts();
 
         $typeLocations = [];
@@ -174,7 +186,7 @@ class BackendController extends AbstractController
      *
      * @return array
      */
-    protected function getTypes()
+    protected function getTypes(): array
     {
         $types = [];
 
@@ -200,9 +212,9 @@ class BackendController extends AbstractController
         }
 
         // check if any mountpoint is in rootline
-        $rootline = BackendUtility::BEgetRootLine($pageId, '');
+        $rootline = BackendUtility::BEgetRootLine($pageId);
         foreach ($rootline as $entry) {
-            if (\in_array((int)$entry['uid'], $mountPoints)) {
+            if (in_array((int)$entry['uid'], $mountPoints)) {
                 return true;
             }
         }

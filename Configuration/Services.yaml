@@ -67,3 +67,10 @@ services:
       - name: console.command
         command: 'calendarize:reindex'
         schedulable: true
+
+  HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest:
+    tags:
+      - name: extbase.type_converter
+        priority: 1
+        target: HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest
+        sources: array

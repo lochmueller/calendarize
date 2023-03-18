@@ -4,13 +4,23 @@ $calendarizeIcons = [
     'ext-calendarize-wizard-icon' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:calendarize/Resources/Public/Icons/Extension.svg'
-    ]
+    ],
+    'apps-pagetree-folder-contains-calendarize' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:calendarize/Resources/Public/Icons/apps-pagetree-folder-contains-calendarize.svg'
+    ],
 ];
 
 $bitmapIcons = [
-    // module icon
-    'apps-pagetree-folder-contains-calendarize' => 'apps-pagetree-folder-contains-calendarize.svg',
     // configuration types
+    'calendarize-cal-dav' => 'CalDav.png',
+    'calendarize-configuration' => 'Configuration.png',
+    'calendarize-configuration-external' => 'ConfigurationExternal.png',
+    'calendarize-configuration-group' => 'ConfigurationGroup.png',
+    'calendarize-configuration-group-Type' => 'ConfigurationGroupType.png',
+    'calendarize-event' => 'Event.png',
+    'calendarize-index' => 'Index.png',
+    'calendarize-plugin-configuration' => 'PluginConfiguration.png',
     'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_TIME => 'Configuration.png',
     'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_GROUP => 'ConfigurationGroupType.png',
     'apps-calendarize-type-' . \HDNET\Calendarize\Domain\Model\Configuration::TYPE_EXTERNAL => 'ConfigurationExternal.png',

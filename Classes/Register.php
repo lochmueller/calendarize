@@ -47,14 +47,14 @@ class Register
     public static function getDefaultAutoloader(): array
     {
         return [
-            // 'Hooks',
-            'Slots',
             'SmartObjects',
-            'FlexForms',
-            'Icon',
-            'CommandController',
-            'StaticTyposcript',
-            'TypeConverter',
+            // 'Hooks', see ext_localconf.php
+            // 'Slots', @todo replace with event listener
+            // 'FlexForms', see Overrides/tt_content.php
+            // 'Icon', see Icons.php
+            // 'CommandController', see services.yaml
+            // 'StaticTyposcript', see Overrides/sys_template.php
+            // 'TypeConverter', see services.yaml
         ];
     }
 

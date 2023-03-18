@@ -2,115 +2,110 @@
 
 declare(strict_types=1);
 
-use HDNET\Autoloader\Utility\ArrayUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Calendarize\Domain\Model\Configuration;
-use HDNET\Calendarize\Service\SecondaryTimeTableService;
 use HDNET\Calendarize\Service\TcaService;
 use HDNET\Calendarize\Utility\TranslateUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-$base = ModelUtility::getTcaInformation(Configuration::class);
+$ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
-$timeType = str_replace(
-    '--palette--;LLL:EXT:hdnet/Resources/Private/Language/locallang.xlf:language;language',
-    '',
-    $base['types']['1']['showitem']
-);
-$timeType = str_replace(
-    ',frequency',
-    ',--div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.frequency,frequency',
-    $timeType
-);
-$timeType = str_replace(',external_ics_url', '', $timeType);
-$timeType = str_replace(',groups', '', $timeType);
-$timeType = str_replace(
-    ',start_date,end_date,end_date_dynamic',
-    ',--palette--;;date',
-    $timeType
-);
-$timeType = str_replace(
-    ',start_time,end_time,all_day,open_end_time',
-    ',--palette--;;time',
-    $timeType
-);
-$timeType = str_replace(
-    ',till_date,till_days,till_days_relative,till_days_past,counter_amount',
-    ',--palette--;;termination_condition',
-    $timeType
-);
-$timeType = str_replace(
-    ',counter_interval,recurrence,day',
-    ',--palette--;;frequency_configuration',
-    $timeType
-);
-
-$timeType = str_replace(
-    ',flex_form',
-    '',
-    $timeType
-);
-
-$baseConfiguration = '--palette--;;base';
-$timeType = str_replace(
-    'type,handling,state',
-    $baseConfiguration,
-    $timeType
-);
-
-$extendTab = ',--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended';
-
-// TimeTables
-$timeTables = [
-    [
-        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_TIME),
-        Configuration::TYPE_TIME,
-    ],
-    [
-        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_GROUP),
-        Configuration::TYPE_GROUP,
-    ],
-    [
-        TranslateUtility::getLll('configuration.type.' . Configuration::TYPE_EXTERNAL),
-        Configuration::TYPE_EXTERNAL,
-    ],
-];
-
-$flexForms = [];
-
-/** @var SecondaryTimeTableService $secondaryTimeTableService */
-$secondaryTimeTableService = GeneralUtility::makeInstance(SecondaryTimeTableService::class);
-$services = $secondaryTimeTableService->getSecondaryTimeTables();
-
-if (!empty($services)) {
-    array_unshift($timeTables, ['Primary', '--div--']);
-    $timeTables[] = ['Secondary', '--div--'];
-    foreach ($services as $service) {
-        $timeTables[] = [$service->getLabel(), $service->getIdentifier()];
-        $flexForms[$service->getIdentifier()] = $service->getFlexForm();
-    }
-}
-
-$custom = [
+return [
     'ctrl' => [
-        'type' => 'type',
+        'crdate' => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'delete' => 'deleted',
+        'dividers2tabs' => '1',
+        'enablecolumns' => [
+            'disabled' => 'hidden',
+            'endtime' => 'endtime',
+            'fe_group' => 'fe_group',
+            'starttime' => 'starttime',
+        ],
+        'editlock' => 'editlock',
+        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle',
         'hideTable' => true,
+        'iconfile' => 'EXT:calendarize/Resources/Public/Icons/Configuration.png',
+        'label' => 'type',
+        'languageField' => 'sys_language_uid',
+        'origUid' => 't3_origuid',
+        'searchFields' => 'type,handling,state,start_date,end_date,end_date_dynamic,start_time,end_time,all_day,
+            open_end_time,external_ics_url,groups,frequency,till_date,till_days,till_days_relative,till_days_past,
+            counter_amount,counter_interval,recurrence,day,import_id',
+        'sortby' => 'sorting',
+        'title' =>  $ll . 'tx_calendarize_domain_model_configuration',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'transOrigPointerField' => 'l10n_parent',
+        'tstamp' => 'tstamp',
+        'type' => 'type',
         'typeicon_classes' => [
-            Configuration::TYPE_TIME => 'apps-calendarize-type-' . Configuration::TYPE_TIME,
-            Configuration::TYPE_GROUP => 'apps-calendarize-type-' . Configuration::TYPE_GROUP,
             Configuration::TYPE_EXTERNAL => 'apps-calendarize-type-' . Configuration::TYPE_EXTERNAL,
+            Configuration::TYPE_GROUP => 'apps-calendarize-type-' . Configuration::TYPE_GROUP,
+            Configuration::TYPE_TIME => 'apps-calendarize-type-' . Configuration::TYPE_TIME,
         ],
         'typeicon_column' => 'type',
-        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle',
+        'versioningWS' => 1,
+        'security' => [
+            'ignorePageTypeRestriction' => true
+        ]
     ],
     'columns' => [
+        'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
+        'editlock' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:editlock',
+            'config' => [
+                'type' => 'check',
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true,
+                ],
+            ],
+        ],
+        'hidden' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
+            'config' => [
+                'type' => 'check',
+            ],
+        ],
+        'starttime' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime,int',
+                'default' => 0,
+            ],
+            'l10n_mode' => 'exclude',
+            'l10n_display' => 'defaultAsReadonly',
+        ],
+        'endtime' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime,int',
+                'default' => 0,
+                'range' => [
+                    'upper' => mktime(0, 0, 0, 1, 1, 2038),
+                ],
+            ],
+            'l10n_mode' => 'exclude',
+            'l10n_display' => 'defaultAsReadonly',
+        ],
         'type' => [
+            'label' => $ll. 'tx_calendarize_domain_model_configuration.type',
+            'exclude' => false,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'authMode' => 'explicitDeny',
                 'authMode_enforce' => 'strict',
-                'items' => $timeTables,
+                'items' => [
+                    [$ll . 'configuration.type.time', 'time'],
+                    [$ll . 'configuration.type.group', 'group'],
+                    [$ll . 'configuration.type.external', 'external'],
+                ],
                 'default' => Configuration::TYPE_TIME,
             ],
         ],
@@ -118,7 +113,7 @@ $custom = [
             'config' => [
                 'type' => 'flex',
                 'ds_pointerField' => 'type',
-                'ds' => $flexForms,
+                'ds' => '',
             ],
         ],
         'handling' => [
@@ -157,7 +152,7 @@ $custom = [
                         Configuration::STATE_DEFAULT,
                     ],
                     [
-                        'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:configuration.state.canceled',
+                        $ll . 'configuration.state.canceled',
                         Configuration::STATE_CANCELED,
                     ],
                 ],
@@ -165,7 +160,11 @@ $custom = [
             ],
         ],
         'start_date' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.start_date',
+            'exclude' => false,
             'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'eval' => 'required,date',
                 'dbType' => 'date',
                 'size' => 13,
@@ -173,7 +172,11 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'end_date' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.end_date',
+            'exclude' => false,
             'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'eval' => 'date',
                 'dbType' => 'date',
                 'size' => 13,
@@ -181,9 +184,12 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'start_time' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.start_time',
+            'exclude' => false,
             'config' => [
-                'eval' => 'time,required',
+                'type' => 'input',
                 'renderType' => 'inputDateTime',
+                'eval' => 'time,required',
                 'default' => 0,
                 'size' => 10,
             ],
@@ -195,9 +201,12 @@ $custom = [
             ],
         ],
         'end_time' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.end_time',
+            'exclude' => false,
             'config' => [
-                'eval' => 'time',
+                'type' => 'input',
                 'renderType' => 'inputDateTime',
+                'eval' => 'time',
                 'default' => 0,
                 'size' => 10,
             ],
@@ -210,15 +219,21 @@ $custom = [
             ],
         ],
         'all_day' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.all_day',
+            'exclude' => false,
             'onChange' => 'reload',
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
+                'type' => 'check',
                 'default' => 0,
             ],
         ],
         'open_end_time' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.open_end_time',
+            'exclude' => false,
             'onChange' => 'reload',
             'config' => [
+                'type' => 'check',
                 'default' => 0,
             ],
             'displayCond' => [
@@ -229,6 +244,8 @@ $custom = [
             ],
         ],
         'groups' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.groups',
+            'exclude' => true,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
@@ -240,6 +257,8 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_GROUP,
         ],
         'frequency' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.frequency',
+            'exclude' => true,
             'onChange' => 'reload',
             'config' => [
                 'type' => 'select',
@@ -279,7 +298,11 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_date' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.till_date',
+            'exclude' => true,
             'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'eval' => 'date',
                 'dbType' => 'date',
                 'size' => 13,
@@ -292,7 +315,10 @@ $custom = [
             ],
         ],
         'till_days' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.till_days',
+            'exclude' => true,
             'config' => [
+                'type' => 'input',
                 'eval' => 'int,null',
                 'default' => null,
                 'size' => 10,
@@ -303,14 +329,20 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_days_relative' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.till_days_relative',
+            'exclude' => true,
             'onChange' => 'reload',
             'config' => [
+                'type' => 'check',
                 'default' => 0,
             ],
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'till_days_past' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.till_days_past',
+            'exclude' => true,
             'config' => [
+                'type' => 'input',
                 'eval' => 'int,null',
                 'default' => null,
                 'size' => 10,
@@ -326,7 +358,10 @@ $custom = [
             ],
         ],
         'counter_amount' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.counter_amount',
+            'exclude' => true,
             'config' => [
+                'type' => 'input',
                 'eval' => 'int',
                 'size' => 10,
                 'default' => 0,
@@ -342,7 +377,10 @@ $custom = [
             ],
         ],
         'counter_interval' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.counter_interval',
+            'exclude' => true,
             'config' => [
+                'type' => 'input',
                 'eval' => 'int,required',
                 'size' => 10,
                 'default' => 1,
@@ -358,8 +396,11 @@ $custom = [
             ],
         ],
         'external_ics_url' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.external_ics_url',
+            'exclude' => true,
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             'config' => [
+                'type' => 'input',
                 'eval' => 'trim,required',
                 'renderType' => 'inputLink',
                 'softref' => 'typolink',
@@ -376,6 +417,8 @@ $custom = [
             ],
         ],
         'day' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.day',
+            'exclude' => true,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingleBox',
@@ -436,6 +479,8 @@ $custom = [
             ],
         ],
         'recurrence' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.recurrence',
+            'exclude' => true,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -487,6 +532,8 @@ $custom = [
             ],
         ],
         'end_date_dynamic' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.end_date_dynamic',
+            'exclude' => true,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -521,61 +568,69 @@ $custom = [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
         ],
         'import_id' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.import_id',
+            'exclude' => true,
             'config' => [
+                'type' => 'input',
                 'readOnly' => true,
             ],
         ],
     ],
     'palettes' => [
         'base' => [
-            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:base_configuration',
+            'label' =>  $ll . 'base_configuration',
             'showitem' => 'type,handling,state',
         ],
         'date' => [
-            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:date.duration',
+            'label' => $ll . 'date.duration',
             'showitem' => 'start_date,end_date,end_date_dynamic',
         ],
         'time' => [
-            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:time',
+            'label' => $ll . 'time',
             'showitem' => 'start_time,end_time,open_end_time,--linebreak--,all_day',
         ],
         'termination_condition' => [
-            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:termination_condition',
+            'label' => $ll . 'termination_condition',
             'showitem' => 'till_date,till_days,till_days_relative,till_days_past,--linebreak--,counter_amount',
         ],
         'frequency_configuration' => [
-            'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:frequency_configuration',
+            'label' => $ll . 'frequency_configuration',
             'showitem' => 'counter_interval,recurrence,day',
         ],
         'access' => [
             'showitem' => 'starttime, endtime, --linebreak--, hidden',
         ],
+        'language' => [
+            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource',
+        ],
     ],
     'types' => [
         Configuration::TYPE_TIME => [
-            'showitem' => $timeType,
+            'showitem' => '
+                --palette--;;base,
+                --palette--;;date,
+                --palette--;;time,
+                --div--;' . $ll . 'tx_calendarize_domain_model_configuration.frequency,frequency,
+                --palette--;;termination_condition,
+                --palette--;;frequency_configuration,import_id,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+            ',
         ],
         Configuration::TYPE_GROUP => [
-            'showitem' => $baseConfiguration . ',groups' . $extendTab,
+            'showitem' => '
+                --palette--;;base,groups,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+            ',
         ],
         Configuration::TYPE_EXTERNAL => [
-            'showitem' => $baseConfiguration . ',external_ics_url' . $extendTab,
+            'showitem' => '
+                --palette--;;base,external_ics_url,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+            ',
         ],
     ],
 ];
-
-if (!empty($services)) {
-    foreach ($services as $service) {
-        $custom['ctrl']['typeicon_classes'][$service->getIdentifier()] = 'apps-calendarize-type-' . Configuration::TYPE_TIME;
-        $custom['types'][$service->getIdentifier()]['showitem'] = $service->getTcaServiceTypeFields();
-    }
-}
-
-foreach (['start_date', 'end_date', 'start_time', 'end_time', 'all_day', 'open_end_time', 'end_date_dynamic', 'type', 'state', 'handling'] as $column) {
-    $custom['columns'][$column]['exclude'] = false;
-}
-
-$tca = ArrayUtility::mergeRecursiveDistinct($base, $custom);
-unset($tca['types']['1']);
-
-return $tca;

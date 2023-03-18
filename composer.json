@@ -35,7 +35,7 @@
 	"require": {
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"typo3/cms-core": "^10.4||^11.5|| ^12.2 || dev-main",
+		"typo3/cms-core": "^10.4 || ^11.5|| ^12.2 || dev-main",
 		"lochmueller/autoloader": ">=7.3.5 || dev-master",
 		"sabre/vobject": "^4.2"
 	},
