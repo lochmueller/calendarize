@@ -81,7 +81,7 @@ class DateFieldUpdate extends AbstractUpdate
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
         /** @var QueryBuilder $queryBuilder */
-        $schemaManager = $queryBuilder->getConnection()->getSchemaManager();
+        $schemaManager = $queryBuilder->getConnection()->createSchemaManager();
         if (!$schemaManager->tablesExist($tableName)) {
             return false;
         }

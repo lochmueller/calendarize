@@ -126,13 +126,13 @@ class PopulateEventSlugs extends AbstractUpdate
             ->count('uid')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq($field, $queryBuilder->createNamedParameter('')),
                     $queryBuilder->expr()->isNull($field)
                 )
             )
-            ->execute()
-            ->fetchColumn();
+            ->executeQuery()
+            ->fetchFirstColumn();
 
         return $numberOfEntries > 0;
     }

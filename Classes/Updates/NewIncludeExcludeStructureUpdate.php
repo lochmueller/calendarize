@@ -44,13 +44,13 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
         $q->count('handling')
             ->from($table)
             ->where(
-                $q->expr()->orX(
+                $q->expr()->or(
                     $q->expr()->eq('handling', $q->quote('')),
                     $q->expr()->isNull('handling')
                 )
             );
 
-        $count = $q->execute()->fetchColumn(0);
+        $count = $q->executeQuery()->fetchFirstColumn();
 
         if ($count > 0) {
             $description = 'We will update ' . $count . ' calendarize configurations';

@@ -1348,7 +1348,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
     {
         $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
         $connection = $connectionPool->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $dbSchema = $connection->getSchemaManager()->createSchema();
+        $dbSchema = $connection->createSchemaManager()->introspectSchema();
 
         $tableNames = array_map(static function ($table) {
             return $table->getName();
