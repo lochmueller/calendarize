@@ -7,9 +7,6 @@
 defined('TYPO3') or exit();
 
 (function () {
-    \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'calendarize', \HDNET\Calendarize\Register::getDefaultAutoloader());
-    \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getGroupCalendarizeConfiguration());
-
     if (!(bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
         \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
     }
@@ -36,8 +33,6 @@ defined('TYPO3') or exit();
     $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
 
     // hooks
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['calendarize_calendar'] =
-        \HDNET\Calendarize\Hooks\CmsLayout::class . '->calendarize_calendar';
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration']['calendarize'] =
         \HDNET\Calendarize\Hooks\KeSearchIndexer::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['customIndexer']['calendarize'] =
@@ -59,7 +54,7 @@ defined('TYPO3') or exit();
         'class' => \HDNET\Calendarize\Form\Element\CalendarizeInfoElement::class,
     ];
 
-    if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('workspaces')) {
+    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('workspaces')) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer::class] = [
             'className' => \HDNET\Calendarize\Xclass\WorkspaceRemoteServer::class,
         ];

@@ -7,17 +7,10 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Annotation\SmartExclude;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Logical configuration group.
- *
- * @DatabaseTable
- *
- * @SmartExclude(excludes={"Language"})
  */
 class ConfigurationGroup extends AbstractModel
 {
@@ -26,8 +19,6 @@ class ConfigurationGroup extends AbstractModel
      * Title.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $title = '';
 
@@ -35,8 +26,6 @@ class ConfigurationGroup extends AbstractModel
      * Configurations.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $configurations = '';
 

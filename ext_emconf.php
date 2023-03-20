@@ -16,7 +16,6 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '10.4.0-11.5.99',
             'php' => '7.4.0-8.99.99',
-            'autoloader' => '7.3.5-7.99.99',
         ],
         'suggests' => [
             'dashboard' => '10.4.12-11.5.99',

@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
-use HDNET\Autoloader\Annotation\SignalClass;
-use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
@@ -33,10 +31,6 @@ use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
  * If using the slots please use the m with func_get_args!
  * Example:
  * /**
- *  * @SignalClass("HDNET\Calendarize\Updates\CalMigrationUpdate")
- *
- *  * @SignalName("getCalendarizeEventUid")
- *
  *  *@return array
  *  *
  * public function getCalendarizeEventUid()

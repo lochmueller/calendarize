@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -126,7 +127,7 @@ class CalendarController extends AbstractCompatibilityController
     ) {
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
-            $this->forward('detail');
+            return new ForwardResponse('detail');
         }
 
         $this->addCacheTags(['calendarize_latest']);
@@ -146,6 +147,7 @@ class CalendarController extends AbstractCompatibilityController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
@@ -176,7 +178,7 @@ class CalendarController extends AbstractCompatibilityController
     ) {
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
-            $this->forward('detail');
+            return new ForwardResponse('detail');
         }
 
         $this->addCacheTags(['calendarize_result']);
@@ -196,6 +198,7 @@ class CalendarController extends AbstractCompatibilityController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
@@ -228,7 +231,7 @@ class CalendarController extends AbstractCompatibilityController
     ) {
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
-            $this->forward('detail');
+            return new ForwardResponse('detail');
         }
 
         $this->addCacheTags(['calendarize_list']);
@@ -249,6 +252,7 @@ class CalendarController extends AbstractCompatibilityController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
@@ -289,6 +293,7 @@ class CalendarController extends AbstractCompatibilityController
             'pagination' => $this->getPagination($fetchEvent),
             'indices' => $fetchEvent,
         ]);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
@@ -315,6 +320,7 @@ class CalendarController extends AbstractCompatibilityController
             'indices' => $indices,
             'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**

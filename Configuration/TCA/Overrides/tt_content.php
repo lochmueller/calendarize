@@ -7,7 +7,7 @@ defined('TYPO3') or exit();
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'calendarize',
     'Calendar',
-    \HDNET\Calendarize\Utility\TranslateUtility::getLll('pluginName')
+    'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName'
 );
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['calendarize_calendar'] = 'layout, select_key';

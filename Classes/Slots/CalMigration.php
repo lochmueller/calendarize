@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Slots;
 
-use HDNET\Autoloader\Annotation\SignalClass;
-use HDNET\Autoloader\Annotation\SignalName;
 use HDNET\Calendarize\Updates\CalMigrationUpdate;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
@@ -23,10 +21,6 @@ class CalMigration
      * Update the sys_file_reference table for tx_cal_event files like images.
      *
      * @see \HDNET\Calendarize\Updates\CalMigrationUpdate::performCalEventUpdate()
-     *
-     * @SignalClass(value="HDNET\Calendarize\Updates\CalMigrationUpdate")
-     *
-     * @SignalName(value="performCalEventUpdatePostInsert")
      *
      * @return array
      */

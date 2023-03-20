@@ -15,7 +15,7 @@
 
 ## Calendarize infrastructure
 
-* [EXT:calendarize](https://github.com/lochmueller/calendarize) (Base calendar extension base on [EXT:autoloader](https://github.com/lochmueller/autoloader))
+* [EXT:calendarize](https://github.com/lochmueller/calendarize)
 * [EXT:calendarize_pages](https://github.com/lochmueller/calendarize_pages) (Calendarize for pages)
 * [EXT:calendarize_content](https://github.com/lochmueller/calendarize_content) (Calendarize for tt_content)
 * [EXT:calendarize_news](https://github.com/lochmueller/calendarize_news) (Calendarize for news)

@@ -604,7 +604,7 @@ class IndexRepository extends AbstractRepository
             return $this->overridePageIds;
         }
 
-        $configurationManager = $this->objectManager->get(ConfigurationManagerInterface::class);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
         $frameworkConfig = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $storagePages = isset($frameworkConfig['persistence']['storagePid']) ? GeneralUtility::intExplode(
             ',',
@@ -722,17 +722,17 @@ class IndexRepository extends AbstractRepository
                 // We split up greaterThan and equal to check more conditions on the same day
                 // e.g. if it is either allDay, openEnd or the end time is after the start time
                 // (endDate > $startDate) || (endDate == $startDate && (allDay || openEndTime || endTime >= $startTime))
-                $dateConstraints[] = $query->logicalOr([
+                $dateConstraints[] = $query->logicalOr(
                     $query->greaterThan('endDate', $startDate),
-                    $query->logicalAnd([
+                    $query->logicalAnd(
                         $query->equals('endDate', $startDate),
-                        $query->logicalOr([
+                        $query->logicalOr(
                             $query->equals('allDay', true),
                             $query->equals('openEndTime', true),
                             $query->greaterThanOrEqual('endTime', $startTime),
-                        ]),
-                    ]),
-                ]);
+                        ),
+                    ),
+                );
             }
         }
 
@@ -746,20 +746,20 @@ class IndexRepository extends AbstractRepository
             } else {
                 $endTime = DateTimeUtility::getDaySecondsOfDateTime($end);
 
-                $dateConstraints[] = $query->logicalOr([
+                $dateConstraints[] = $query->logicalOr(
                     $query->lessThan('startDate', $endDate),
-                    $query->logicalAnd([
+                    $query->logicalAnd(
                         $query->equals('startDate', $endDate),
-                        $query->logicalOr([
+                        $query->logicalOr(
                             $query->equals('allDay', true),
                             $query->lessThanOrEqual('startTime', $endTime),
-                        ]),
-                    ]),
-                ]);
+                        ),
+                    ),
+                );
             }
         }
 
-        $constraints['dateTimeFrame'] = $query->logicalAnd($dateConstraints);
+        $constraints['dateTimeFrame'] = $query->logicalAnd(...$dateConstraints);
     }
 
     /**

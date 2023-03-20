@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
 
-use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Service\IndexerService;
@@ -23,10 +22,8 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * KE Search Indexer.
- *
- * @Hook(locations={"TYPO3_CONF_VARS|EXTCONF|ke_search|registerIndexerConfiguration", "TYPO3_CONF_VARS|EXTCONF|ke_search|customIndexer"})
  */
-class KeSearchIndexer extends AbstractHook
+class KeSearchIndexer
 {
     public const KEY = 'calendarize';
     public const TABLE = IndexerService::TABLE_NAME;

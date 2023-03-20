@@ -16,14 +16,10 @@ class TranslateUtility
 {
     /**
      * Set the right path and extension for translations in PHP.
-     *
-     * @param string $key
-     *
-     * @return string|null
      */
-    public static function get($key)
+    public static function get(string $key): string
     {
-        if (\defined('TYPO3_MODE') && TYPO3_MODE === 'FE' && !\is_object($GLOBALS['TSFE'])) {
+        if (\defined('TYPO3_MODE') && TYPO3 === 'FE' && !\is_object($GLOBALS['TSFE'])) {
             // check wrong eID context. Do not call "LocalizationUtility::translate" in eID context, if there is no
             // valid TypoScriptFrontendController. Skip this call by returning just the $key!
             return $key;
@@ -34,13 +30,9 @@ class TranslateUtility
 
     /**
      * Get the LLL string.
-     *
-     * @param string $key
-     *
-     * @return string
      */
     public static function getLll(string $key): string
     {
-        return \HDNET\Autoloader\Utility\TranslateUtility::getLllString($key, 'calendarize', 'locallang.xlf');
+        return 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:' . $key;
     }
 }

@@ -50,6 +50,12 @@ services:
         identifier: 'defaultEventConstraints'
         event: HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent
 
+  HDNET\Calendarize\EventListener\PreviewRenderingEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'getExtensionSummary'
+        event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
+
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command

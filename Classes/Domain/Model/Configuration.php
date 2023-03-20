@@ -7,15 +7,11 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Configuration for time options.
- *
- * @DatabaseTable
  */
 class Configuration extends AbstractModel implements ConfigurationInterface
 {
@@ -24,8 +20,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Type.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $type = self::TYPE_TIME;
 
@@ -33,8 +27,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Handling.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $handling = self::HANDLING_INCLUDE;
 
@@ -42,8 +34,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * State.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $state = self::STATE_DEFAULT;
 
@@ -51,8 +41,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Start date.
      *
      * @var \DateTime|null
-     *
-     * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $startDate;
 
@@ -60,8 +48,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * End date.
      *
      * @var \DateTime|null
-     *
-     * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $endDate;
 
@@ -69,8 +55,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * End date dynamic.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $endDateDynamic = '';
 
@@ -78,8 +62,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Start time.
      *
      * @var int
-     *
-     * @DatabaseField("int")
      */
     protected $startTime = 0;
 
@@ -87,8 +69,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * End time.
      *
      * @var int
-     *
-     * @DatabaseField("int")
      */
     protected $endTime = 0;
 
@@ -96,8 +76,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * AllDay.
      *
      * @var bool
-     *
-     * @DatabaseField("bool")
      */
     protected $allDay = false;
 
@@ -105,8 +83,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * OpenEndTime.
      *
      * @var bool
-     *
-     * @DatabaseField("bool")
      */
     protected $openEndTime = false;
 
@@ -114,8 +90,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * External ICS url.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $externalIcsUrl = '';
 
@@ -123,8 +97,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Groups.
      *
      * @var ObjectStorage<ConfigurationGroup>
-     *
-     * @DatabaseField("\TYPO3\CMS\Extbase\Persistence\ObjectStorage")
      *
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
@@ -134,8 +106,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Frequency.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $frequency = self::FREQUENCY_NONE;
 
@@ -143,8 +113,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Till date.
      *
      * @var \DateTime|null
-     *
-     * @DatabaseField(type="\DateTime", sql="date default NULL")
      */
     protected $tillDate;
 
@@ -152,8 +120,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Till days.
      *
      * @var int|null
-     *
-     * @DatabaseField(sql="int(11)")
      */
     protected $tillDays;
 
@@ -161,8 +127,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Till days relative.
      *
      * @var bool
-     *
-     * @DatabaseField("Boolean")
      */
     protected $tillDaysRelative = false;
 
@@ -170,8 +134,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Till days past.
      *
      * @var int|null
-     *
-     * @DatabaseField(sql="int(11)")
      */
     protected $tillDaysPast;
 
@@ -179,8 +141,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Counter amount.
      *
      * @var int
-     *
-     * @DatabaseField("int")
      */
     protected $counterAmount = 0;
 
@@ -188,8 +148,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Counter interval.
      *
      * @var int
-     *
-     * @DatabaseField("int")
      */
     protected $counterInterval = 1;
 
@@ -197,8 +155,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Recurrence.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $recurrence = self::RECURRENCE_NONE;
 
@@ -206,8 +162,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Day property.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $day = self::DAY_NONE;
 
@@ -222,8 +176,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      * Flexform.
      *
      * @var string
-     *
-     * @DatabaseField("string")
      */
     protected $flexForm = '';
 

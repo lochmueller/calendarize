@@ -33,7 +33,7 @@ class AbstractRepository extends Repository
     public function matchAndExecute(QueryInterface $query, array $constraints = [])
     {
         if (!empty($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
+            $query->matching($query->logicalAnd(...$constraints));
         }
 
         return $query->execute();
