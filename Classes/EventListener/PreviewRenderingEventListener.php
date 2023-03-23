@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\EventListener;
 
-use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 
 class PreviewRenderingEventListener
 {
     public function __construct(
         protected FlexFormService $flexFormService,
-        protected ContentElementLayoutService $layoutService
+        protected ContentElementLayoutService $layoutService,
+        protected IconFactory $iconFactory
     ) {
     }
 
-    public function __invoke(PageContentPreviewRenderingEvent $event)
+    public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
         $record = $event->getRecord();
         if ('calendarize_calendar' !== $record['list_type']) {
@@ -33,9 +34,8 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
-        $extensionIconUsage = PathUtility::getAbsoluteWebPath(GeneralUtility::getFileAbsFileName($extensionIcon));
-        $this->layoutService->setTitle('<img src="' . $extensionIconUsage . '" width="32" height="32" /> Calendarize');
+        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', Icon::SIZE_SMALL)->render();
+        $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
@@ -65,7 +65,7 @@ class PreviewRenderingEventListener
             );
         }
 
-        if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
+        if ($this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
         $useRelativeDate = (bool)$this->flexFormService->get('settings.useRelativeDate', 'main');
@@ -97,7 +97,7 @@ class PreviewRenderingEventListener
     /**
      * Add page IDs to the preview of the element.
      */
-    protected function addPageIdsToTable()
+    protected function addPageIdsToTable(): void
     {
         $pageIdsNames = [
             'detailPid',

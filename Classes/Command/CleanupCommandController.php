@@ -33,76 +33,21 @@ class CleanupCommandController extends Command
     public const MODUS_HIDDEN = 'hide';
     public const MODUS_DELETED = 'delete';
     public const DEFAULT_WAIT_PERIOD = 14;
-    public const DEFAULT_CLEANUP_REPOSITORY = \HDNET\Calendarize\Domain\Repository\EventRepository::class;
+    public const DEFAULT_CLEANUP_REPOSITORY = EventRepository::class;
 
-    /**
-     * @var PersistenceManager
-     */
-    protected $persistenceManager;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var RawIndexRepository
-     */
-    protected $rawIndexRepository;
-
-    /**
-     * @var DataMapper
-     */
-    protected $dataMapper;
-
-    /**
-     * @var IndexerService
-     */
-    protected $indexerService;
-
-    /**
-     * @param PersistenceManager $persistenceManager
-     */
-    public function injectPersistenceManager(PersistenceManager $persistenceManager): void
-    {
-        $this->persistenceManager = $persistenceManager;
-    }
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @param DataMapper $dataMapper
-     */
-    public function injectDataMapper(DataMapper $dataMapper): void
-    {
-        $this->dataMapper = $dataMapper;
-    }
-
-    /**
-     * @param RawIndexRepository $rawIndexRepository
-     */
-    public function injectRawIndexRepository(RawIndexRepository $rawIndexRepository): void
-    {
-        $this->rawIndexRepository = $rawIndexRepository;
-    }
-
-    /**
-     * @param IndexerService $indexerService
-     */
-    public function injectIndexerService(IndexerService $indexerService): void
-    {
-        $this->indexerService = $indexerService;
+    public function __construct(
+        protected PersistenceManager $persistenceManager,
+        protected EventDispatcherInterface $eventDispatcher,
+        protected RawIndexRepository $rawIndexRepository,
+        protected IndexerService $indexerService,
+        protected DataMapper $dataMapper
+    ) {
+        parent::__construct();
     }
 
     protected function configure()
     {
-        $this->setDescription('Remove outdated events to keep a small footprint')
+        $this
             ->addOption(
                 'repositoryName',
                 'r',
@@ -198,7 +143,7 @@ class CleanupCommandController extends Command
         // after all this deleting ... reindex!
         $this->indexerService->reindexAll();
 
-        return 0;
+        return self::SUCCESS;
     }
 
     /**

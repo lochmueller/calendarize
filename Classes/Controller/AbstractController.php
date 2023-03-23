@@ -81,7 +81,7 @@ abstract class AbstractController extends ActionController
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-        $this->settings = $this->pluginConfigurationService->respectPluginConfiguration((array)$this->settings);
+        $this->settings = $this->pluginConfigurationService->respectPluginConfiguration($this->settings);
         $this->arguments = GeneralUtility::makeInstance(Arguments::class);
     }
 

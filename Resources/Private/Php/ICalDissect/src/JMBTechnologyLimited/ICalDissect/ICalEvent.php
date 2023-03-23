@@ -132,13 +132,12 @@ class ICalEvent
 
         $out = new \DateTime('', $this->timeZoneUTC);
         if (!$isUTC) {
-
             // Is Timezone in Keyword Properties?
             if (substr($keywordProperties, 0, 5) == 'TZID=') {
                 try {
                     $timeZone = new \DateTimeZone(strtok(substr($keywordProperties, 5), ';'));
                     $out->setTimezone($timeZone);
-                } catch (\Exception $e) {}
+                } catch (\Exception $exception) {}
             }
         }
         $out->setDate((int)$date[1], (int)$date[2], (int)$date[3]);

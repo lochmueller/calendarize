@@ -10,16 +10,16 @@ use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Typolink\DatabaseRecordLinkBuilder as BaseDatabaseRecordLinkBuilderAlias;
 use TYPO3\CMS\Frontend\Typolink\LinkResultInterface;
 use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 
 /**
  * DatabaseRecordLinkBuilder.
  */
-class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRecordLinkBuilder
+class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
 {
     public function build(array &$linkDetails, string $linkText, string $target, array $conf): LinkResultInterface
     {
@@ -54,9 +54,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
             $localContentObjectRenderer->parameters = $this->contentObjectRenderer->parameters;
             $link = $localContentObjectRenderer->typoLink($linkText, $typoScriptConfiguration);
 
-            $this->contentObjectRenderer->lastTypoLinkLD = $localContentObjectRenderer->lastTypoLinkLD;
-            $this->contentObjectRenderer->lastTypoLinkUrl = $localContentObjectRenderer->lastTypoLinkUrl;
-            $this->contentObjectRenderer->lastTypoLinkTarget = $localContentObjectRenderer->lastTypoLinkTarget;
+            $this->contentObjectRenderer->lastTypoLinkResult = $localContentObjectRenderer->lastTypoLinkResult;
 
             // nasty workaround so typolink stops putting a link together, there is a link already built
             throw new UnableToLinkException('', 1491130170, null, $link);
@@ -67,16 +65,14 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
 
     protected function getIndexForEventUid($table, $uid): int
     {
-        $indexRepository = GeneralUtility::makeInstance(ObjectManager::class)->get(IndexRepository::class);
-        $register = Register::getRegister();
+        $indexRepository = GeneralUtility::makeInstance(IndexRepository::class);
 
         $event = null;
-        foreach ($register as $key => $value) {
+        foreach (Register::getRegister() as $value) {
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
                 if (class_exists($repositoryName)) {
-                    $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-                    $repository = $objectManager->get($repositoryName);
+                    $repository = GeneralUtility::makeInstance($repositoryName);
                     $event = $repository->findByUid($uid);
                 }
             }
@@ -87,7 +83,7 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
         }
 
         $fetchEvent = $indexRepository->findByEventTraversing($event, true, false, 1)->toArray();
-        if (\count($fetchEvent) <= 0) {
+        if (count($fetchEvent) <= 0) {
             $fetchEvent = $indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING)->toArray();
         }
 
@@ -101,10 +97,10 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
     protected function getEventTables(): array
     {
         static $tables;
-        if (!\is_array($tables)) {
+        if (!is_array($tables)) {
             $tables = array_map(static function ($config) {
                 return $config['tableName'];
-            }, GeneralUtility::makeInstance(Register::class)->getRegister());
+            }, Register::getRegister());
         }
 
         return $tables;

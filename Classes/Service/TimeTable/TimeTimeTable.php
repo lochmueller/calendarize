@@ -119,7 +119,7 @@ class TimeTimeTable extends AbstractTimeTable
         }
 
         $new = [];
-        foreach ($times as $hash => $record) {
+        foreach ($times as $record) {
             $target = $callback($record);
             $new[$this->calculateEntryKey($target)] = $target;
         }

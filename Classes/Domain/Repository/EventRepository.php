@@ -102,7 +102,7 @@ class EventRepository extends AbstractRepository
             if (empty($result)) {
                 $result = $this->indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
             }
-        } catch (\Exception $ex) {
+        } catch (\Exception $exception) {
             return null;
         }
 

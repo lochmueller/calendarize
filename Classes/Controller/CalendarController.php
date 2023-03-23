@@ -7,21 +7,23 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
-use GeorgRinger\NumberedPagination\NumberedPagination;
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Event\DetermineSearchEvent;
+use HDNET\Calendarize\Event\PaginationEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\EventUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -45,7 +47,7 @@ class CalendarController extends AbstractCompatibilityController
 
         parent::initializeAction();
         if (isset($this->settings['format'])) {
-            $this->request->setFormat($this->settings['format']);
+            $this->request = $this->request->withFormat($this->settings['format']);
         }
         $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true));
         $additionalSlotArguments = [
@@ -101,38 +103,27 @@ class CalendarController extends AbstractCompatibilityController
 
     /**
      * Latest action.
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $week
-     *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
-     *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
+    #[Extbase\IgnoreValidation(['argumentName' => 'startDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function latestAction(
         Index $index = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
         array $customSearch = [],
-        $year = null,
-        $month = null,
-        $week = null
-    ) {
+        int $year = 0,
+        int $month = 0,
+        int $week = 0
+    ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
+        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
         }
 
         $this->addCacheTags(['calendarize_latest']);
 
-        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
+        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, 0, $week);
 
         $this->eventExtendedAssignMultiple([
             'indices' => $search['indices'],
@@ -152,38 +143,27 @@ class CalendarController extends AbstractCompatibilityController
 
     /**
      * Result action.
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $week
-     *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
-     *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
+    #[Extbase\IgnoreValidation(['argumentName' => 'startDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function resultAction(
         Index $index = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
         array $customSearch = [],
-        $year = null,
-        $month = null,
-        $week = null
-    ) {
+        int $year = 0,
+        int $month = 0,
+        int $week = 0
+    ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
+        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
         }
 
         $this->addCacheTags(['calendarize_result']);
 
-        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, null, $week);
+        $search = $this->determineSearch($startDate, $endDate, $customSearch, $year, $month, 0, $week);
 
         $this->eventExtendedAssignMultiple([
             'indices' => $search['indices'],
@@ -203,34 +183,22 @@ class CalendarController extends AbstractCompatibilityController
 
     /**
      * List action.
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Index $index
-     * @param \DateTime                             $startDate
-     * @param \DateTime                             $endDate
-     * @param array                                 $customSearch *
-     * @param int                                   $year
-     * @param int                                   $month
-     * @param int                                   $day
-     * @param int                                   $week
-     *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
-     *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
+    #[Extbase\IgnoreValidation(['argumentName' => 'startDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function listAction(
         Index $index = null,
         \DateTime $startDate = null,
         \DateTime $endDate = null,
         array $customSearch = [],
-        $year = null,
-        $month = null,
-        $day = null,
-        $week = null
-    ) {
+        int $year = 0,
+        int $month = 0,
+        int $day = 0,
+        int $week = 0
+    ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
+        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
         }
 
@@ -258,14 +226,14 @@ class CalendarController extends AbstractCompatibilityController
     /**
      * Shortcut.
      */
-    public function shortcutAction()
+    public function shortcutAction(): ResponseInterface
     {
         $this->addCacheTags(['calendarize_shortcut']);
         list($table, $uid) = explode(':', $GLOBALS['TSFE']->currentRecord);
         $register = Register::getRegister();
 
         $event = null;
-        foreach ($register as $key => $value) {
+        foreach ($register as $value) {
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
                 if (class_exists($repositoryName)) {
@@ -279,13 +247,13 @@ class CalendarController extends AbstractCompatibilityController
         }
 
         if (!($event instanceof DomainObjectInterface)) {
-            return 'Invalid object';
+            return $this->htmlResponse('Invalid object');
         }
 
         $limitEvents = (int)($this->settings['shortcutLimitEvents'] ?? 1);
 
         $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, $limitEvents);
-        if (\count($fetchEvent) <= 0) {
+        if (count($fetchEvent) <= 0) {
             $fetchEvent = $this->indexRepository->findByEventTraversing($event, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING);
         }
 
@@ -298,20 +266,15 @@ class CalendarController extends AbstractCompatibilityController
 
     /**
      * Past action.
-     *
-     * @param int    $limit
-     * @param string $sort
-     *
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
     public function pastAction(
-        $limit = 100,
-        $sort = 'ASC'
-    ) {
+        int $limit = 100,
+        string $sort = 'ASC'
+    ): ResponseInterface {
         $this->addCacheTags(['calendarize_past']);
 
-        $limit = (int)($this->settings['limit']);
-        $sort = $this->settings['sorting'];
+        $limit = $limit ?: (int)($this->settings['limit']);
+        $sort = $sort ?: $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
         $listStartTime = $this->settings['listStartTime'];
         $indices = $this->indexRepository->findByPast($limit, $sort, $listStartTime);
@@ -325,17 +288,15 @@ class CalendarController extends AbstractCompatibilityController
 
     /**
      * Year action.
-     *
-     * @param int $year
      */
-    public function yearAction($year = null)
+    public function yearAction(int $year = 0): ResponseInterface
     {
         $this->addCacheTags(['calendarize_year']);
 
-        // use the thrid day, to avoid time shift problems in the timezone
+        // use the third day, to avoid time shift problems in the timezone
         $date = DateTimeUtility::normalizeDateTime(3, 1, $year);
         $now = DateTimeUtility::getNow();
-        if (null === $year || $now->format('Y') === $date->format('Y')) {
+        if (0 === $year || $now->format('Y') === $date->format('Y')) {
             $date = $now;
         }
 
@@ -350,6 +311,7 @@ class CalendarController extends AbstractCompatibilityController
             'pagination' => $this->getPagination($indices),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
@@ -357,8 +319,10 @@ class CalendarController extends AbstractCompatibilityController
      *
      * @param int $year
      * @param int $quarter 1-4
+     *
+     * @return ResponseInterface
      */
-    public function quarterAction(int $year = null, int $quarter = null)
+    public function quarterAction(int $year = 0, int $quarter = 1): ResponseInterface
     {
         $this->addCacheTags(['calendarize_quarter']);
 
@@ -377,16 +341,13 @@ class CalendarController extends AbstractCompatibilityController
             'date' => $date,
             'quarter' => $quarter,
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
      * Month action.
-     *
-     * @param int $year
-     * @param int $month
-     * @param int $day
      */
-    public function monthAction($year = null, $month = null, $day = null)
+    public function monthAction(int $year = 0, int $month = 0, int $day = 0): ResponseInterface
     {
         $this->addCacheTags(['calendarize_month']);
 
@@ -410,15 +371,13 @@ class CalendarController extends AbstractCompatibilityController
             'indices' => $indices,
             'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
      * Week action.
-     *
-     * @param int|null $year
-     * @param int|null $week
      */
-    public function weekAction(?int $year = null, ?int $week = null)
+    public function weekAction(int $year = null, int $week = null): ResponseInterface
     {
         $this->addCacheTags(['calendarize_week']);
 
@@ -454,6 +413,7 @@ class CalendarController extends AbstractCompatibilityController
             'pagination' => $this->getPagination($indices),
             'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
@@ -462,8 +422,10 @@ class CalendarController extends AbstractCompatibilityController
      * @param int $year
      * @param int $month
      * @param int $day
+     *
+     * @return ResponseInterface
      */
-    public function dayAction($year = null, $month = null, $day = null)
+    public function dayAction(int $year = 0, int $month = 0, int $day = 0): ResponseInterface
     {
         $this->addCacheTags(['calendarize_day']);
 
@@ -480,7 +442,11 @@ class CalendarController extends AbstractCompatibilityController
         $next = clone $date;
         $next->modify('+1 day');
 
-        $indices = $this->indexRepository->findDay((int)$date->format('Y'), (int)$date->format('n'), (int)$date->format('j'));
+        $indices = $this->indexRepository->findDay(
+            (int)$date->format('Y'),
+            (int)$date->format('n'),
+            (int)$date->format('j')
+        );
 
         $this->eventExtendedAssignMultiple([
             'indices' => $indices,
@@ -489,16 +455,13 @@ class CalendarController extends AbstractCompatibilityController
             'previous' => $previous,
             'next' => $next,
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
      * Detail action.
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Index $index
-     *
-     * @return string
      */
-    public function detailAction(Index $index = null)
+    public function detailAction(Index $index = null): ResponseInterface
     {
         if (null === $index) {
             // handle fallback for "strange language settings"
@@ -511,7 +474,7 @@ class CalendarController extends AbstractCompatibilityController
 
             if (null === $index) {
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
-                    return (string)TranslateUtility::get('noEventDetailView');
+                    return $this->htmlResponse(TranslateUtility::get('noEventDetailView'));
                 }
                 $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
             }
@@ -524,9 +487,9 @@ class CalendarController extends AbstractCompatibilityController
 
         $this->addCacheTags(
             ['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_'
-            . lcfirst($uniqueRegisterKey)
-            . '_'
-            . $originalObject->getUid(), ]
+                . lcfirst($uniqueRegisterKey)
+                . '_'
+                . $originalObject->getUid(),]
         );
 
         // Meta tags
@@ -542,7 +505,7 @@ class CalendarController extends AbstractCompatibilityController
                 $imageService = GeneralUtility::makeInstance(ImageService::class);
                 $processingInstructions = ['minWidth' => 600, 'minHeight' => 315, 'maxWidth' => 1200, 'maxHeight' => 630];
                 $processedImage = $imageService->applyProcessingInstructions($images[0]->getOriginalResource(), $processingInstructions);
-                $imageUrl = $this->request->getBaseUri() . $imageService->getImageUri($processedImage);
+                $imageUrl = $this->getBaseUri() . $imageService->getImageUri($processedImage);
                 $metaTagManagerRegistry->getManagerForProperty('og:image')->addProperty('og:image', $imageUrl);
             }
         }
@@ -551,23 +514,26 @@ class CalendarController extends AbstractCompatibilityController
             'index' => $index,
             'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'),
         ], __CLASS__, __FUNCTION__);
-
-        return $this->view->render();
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
      * Render the search view.
      *
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
-     * @param array     $customSearch
+     * @param ?\DateTime $startDate
+     * @param ?\DateTime $endDate
+     * @param array $customSearch
      *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $startDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $endDate
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation $customSearch
+     * @return ResponseInterface
      */
-    public function searchAction(\DateTime $startDate = null, \DateTime $endDate = null, array $customSearch = [])
-    {
+    #[Extbase\IgnoreValidation(['argumentName' => 'startDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
+    #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
+    public function searchAction(
+        \DateTime $startDate = null,
+        \DateTime $endDate = null,
+        array $customSearch = []
+    ): ResponseInterface {
         $this->addCacheTags(['calendarize_search']);
 
         $baseDate = DateTimeUtility::getNow();
@@ -587,12 +553,13 @@ class CalendarController extends AbstractCompatibilityController
             'customSearch' => $customSearch,
             'configurations' => $this->getCurrentConfigurations(),
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
      * Render single items.
      */
-    public function singleAction()
+    public function singleAction(): ResponseInterface
     {
         $this->addCacheTags(['calendarize_single']);
 
@@ -617,18 +584,19 @@ class CalendarController extends AbstractCompatibilityController
         // fetch index
         foreach ($selections as $selection) {
             $this->indexRepository->setIndexTypes([$selection['configuration']['uniqueRegisterKey']]);
+
             $dummyIndex = new Index();
             $dummyIndex->setForeignTable($selection['configuration']['tableName']);
             $dummyIndex->setForeignUid((int)$selection['uid']);
 
             $result = $this->indexRepository->findByTraversing($dummyIndex);
             $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
-            if (\is_object($index)) {
+            if (is_object($index)) {
                 $indicies[] = $index;
             } else {
                 $result = $this->indexRepository->findByTraversing($dummyIndex, false, true);
                 $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
-                if (\is_object($index)) {
+                if (is_object($index)) {
                     $indicies[] = $index;
                 }
             }
@@ -638,44 +606,35 @@ class CalendarController extends AbstractCompatibilityController
             'indicies' => $indicies,
             'configurations' => $configurations,
         ], __CLASS__, __FUNCTION__);
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
      * Build the search structure.
-     *
-     * @param \DateTime|null $startDate
-     * @param \DateTime|null $endDate
-     * @param array          $customSearch
-     * @param int            $year
-     * @param int            $month
-     * @param int            $day
-     * @param int            $week
-     *
-     * @return array
      */
     protected function determineSearch(
         \DateTime $startDate = null,
         \DateTime $endDate = null,
         array $customSearch = [],
-        $year = null,
-        $month = null,
-        $day = null,
-        $week = null
-    ) {
+        int $year = 0,
+        int $month = 0,
+        int $day = 0,
+        int $week = 0
+    ): array {
         $searchMode = false;
         $this->checkWrongDateOrder($startDate, $endDate);
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
             $limit = (int)($this->settings['limit'] ?? 0);
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch, $limit);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month) && MathUtility::canBeInterpretedAsInteger($day)) {
-            $indices = $this->indexRepository->findDay((int)$year, (int)$month, (int)$day);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($month)) {
-            $indices = $this->indexRepository->findMonth((int)$year, (int)$month);
-        } elseif (MathUtility::canBeInterpretedAsInteger($year) && MathUtility::canBeInterpretedAsInteger($week)) {
-            $indices = $this->indexRepository->findWeek((int)$year, (int)$week, (int)($this->settings['weekStart'] ?? 1));
-        } elseif (MathUtility::canBeInterpretedAsInteger($year)) {
-            $indices = $this->indexRepository->findYear((int)$year);
+        } elseif ($year > 0 && $month > 0 && $day > 0) {
+            $indices = $this->indexRepository->findDay($year, $month, $day);
+        } elseif ($year > 0 && $month > 0) {
+            $indices = $this->indexRepository->findMonth($year, $month);
+        } elseif ($year > 0 && $week > 0) {
+            $indices = $this->indexRepository->findWeek($year, $week, (int)($this->settings['weekStart'] ?? 1));
+        } elseif ($year > 0) {
+            $indices = $this->indexRepository->findYear($year);
         } else {
             // check if relative dates are enabled
             if ($this->settings['useRelativeDate'] ?? false) {
@@ -685,7 +644,7 @@ class CalendarController extends AbstractCompatibilityController
                 }
                 try {
                     $relativeDate = new \DateTime($overrideStartDateRelative);
-                } catch (\Exception $e) {
+                } catch (\Exception $exception) {
                     $relativeDate = DateTimeUtility::getNow();
                 }
                 $overrideStartDate = $relativeDate->getTimestamp();
@@ -695,7 +654,7 @@ class CalendarController extends AbstractCompatibilityController
                     try {
                         $relativeDate->modify($overrideEndDateRelative);
                         $overrideEndDate = $relativeDate->getTimestamp();
-                    } catch (\Exception $e) {
+                    } catch (\Exception $exception) {
                         // do nothing $overrideEndDate is 0
                     }
                 }
@@ -750,16 +709,25 @@ class CalendarController extends AbstractCompatibilityController
     {
         $paginateConfiguration = $this->settings['paginateConfiguration'] ?? [];
         $itemsPerPage = (int)($paginateConfiguration['itemsPerPage'] ?: 10);
-        $maximumNumberOfLinks = (int)($paginateConfiguration['maximumNumberOfLinks'] ?: 10);
-
+        $maximumNumberOfLinks = (int)($paginateConfiguration['maximumNumberOfLinks'] ?? 10);
         $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
 
         $paginator = new QueryResultPaginator($queryResult, $currentPage, $itemsPerPage);
-        if (class_exists(NumberedPagination::class)) {
-            $pagination = new NumberedPagination($paginator, $maximumNumberOfLinks);
-        } else {
-            $pagination = new SimplePagination($paginator);
-        }
+        $pagination = new SimplePagination($paginator);
+
+        $event = new PaginationEvent(
+            $paginator,
+            $pagination,
+            $paginateConfiguration,
+            [
+                'itemsPerPage' => $itemsPerPage,
+                'maximumNumberOfLinks' => $maximumNumberOfLinks,
+                'currentPage' => $currentPage,
+            ]
+        );
+        $this->eventDispatcher->dispatch($event);
+        $paginator = $event->getPaginator();
+        $pagination = $event->getPagination();
 
         return [
             'paginator' => $paginator,
@@ -769,35 +737,39 @@ class CalendarController extends AbstractCompatibilityController
 
     /**
      * Get the allowed actions.
-     *
-     * @return array
      */
     protected function getAllowedActions(): array
     {
-        $configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $configuration = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
         $allowedActions = [];
         foreach ($configuration['controllerConfiguration'] as $controllerName => $controllerActions) {
             $allowedActions[$controllerName] = $controllerActions['actions'];
         }
 
-        return \is_array($allowedActions[__CLASS__]) ? $allowedActions[__CLASS__] : [];
+        return is_array($allowedActions[__CLASS__]) ? $allowedActions[__CLASS__] : [];
     }
 
     /**
      * Get the current configurations.
-     *
-     * @return array
      */
-    protected function getCurrentConfigurations()
+    protected function getCurrentConfigurations(): array
     {
         $configurations = GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true);
         $return = [];
         foreach (Register::getRegister() as $key => $configuration) {
-            if (\in_array($key, $configurations, true)) {
+            if (in_array($key, $configurations, true)) {
                 $return[] = $configuration;
             }
         }
 
         return $return;
+    }
+
+    protected function getBaseUri(): string
+    {
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        return $request->getAttribute('normalizedParams')->getSiteUrl();
     }
 }

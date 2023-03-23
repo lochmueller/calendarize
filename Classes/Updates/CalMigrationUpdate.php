@@ -12,41 +12,20 @@ use HDNET\Calendarize\Service\IndexerService;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\CompositeExpression;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\QueryRestrictionInterface;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\CMS\Install\Updates\ChattyInterface;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
-/**
- * CalMigrationUpdate.
- *
- * If using the slots please use the m with func_get_args!
- * Example:
- * /**
- *  *@return array
- *  *
- * public function getCalendarizeEventUid()
- * {
- *    $args = func_get_args();
- *    list($table, $dbQueries, $call) = $args;
- *
- *    $variables = [
- *        'table'     => self::EVENT_TABLE,
- *        'dbQueries' => $dbQueries
- *    ];
- *
- *    return $variables;
- * }
- */
-class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, LoggerAwareInterface
+#[UpgradeWizard('calendarize_calMigrationUpdate')]
+class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -70,55 +49,40 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      */
     public const CONFIGURATION_GROUP_TABLE = 'tx_calendarize_domain_model_configurationgroup';
 
-    /**
-     * The human-readable title of the upgrade wizard.
-     *
-     * @var string
-     */
-    protected $title = 'Migrate cal event structures to the new calendarize event structures.
-    Try to migrate all cal information and place the new calendarize event models in the same folder
-    as the cal-records. Please note: the migration will be create calendarize default models.';
-
-    public function getIdentifier(): string
+    public function getTitle(): string
     {
-        return 'calendarize_calMigration';
+        return 'Migrate cal event structures';
     }
 
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
-
-    public function setOutput(OutputInterface $output): void
+    public function getDescription(): string
     {
-        $this->output = $output;
+        return 'Migrate cal event structures to the new calendarize event structures.
+        Try to migrate all cal information and place the new calendarize event models in the same folder
+        as the cal-records. Please note: the migration will be create calendarize default models.';
     }
 
-    /**
-     * Checks whether updates are required.
-     *
-     * @param string &$description The description for the update
-     *
-     * @return bool Whether an update is required (TRUE) or not (FALSE)
-     */
-    public function checkForUpdate(&$description)
+    public function getPrerequisites(): array
     {
-        $nonMigratedCalIds = $this->getNonMigratedCalIds();
-        $count = \count($nonMigratedCalIds);
-        if (0 === $count) {
-            return false;
-        }
-        $description = 'There ' . ($count > 1 ? 'are ' . $count : 'is ' . $count) . ' non migrated EXT:cal event
-        ' . ($count > 1 ? 's' : '') . '. Run the update process to migrate the events to EXT:calendarize events.';
+        return [
+            DatabaseUpdatedPrerequisite::class,
+        ];
+    }
 
-        return true;
+    public function updateNecessary(): bool
+    {
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connection = $connectionPool->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
+        $dbSchema = $connection->createSchemaManager()->introspectSchema();
+
+        $tableNames = array_map(static function ($table) {
+            return $table->getName();
+        }, $dbSchema->getTables());
+
+        return in_array('tx_cal_event', $tableNames);
     }
 
     /**
      * Performs the accordant updates.
-     *
-     * @param array &$dbQueries      Queries done in this update
-     * @param mixed &$customMessages Custom messages
      *
      * @return bool Whether everything went smoothly or not
      */
@@ -152,10 +116,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $calUsesSysCategories = $this->isCalWithSysCategories();
 
         if (!$calUsesSysCategories) {
-            $this->performSysCategoryUpdate($calIds, $dbQueries, $customMessages);
+            $this->performSysCategoryUpdate($calIds, $dbQueries);
         }
-        $this->performSysFileReferenceUpdate($calIds, $dbQueries, $customMessages);
-        $this->performExceptionEventUpdate($calIds, $dbQueries, $customMessages);
+        $this->performSysFileReferenceUpdate($calIds, $dbQueries);
+        $this->performExceptionEventUpdate($calIds, $dbQueries);
         $this->performCalEventUpdate($calIds, $dbQueries, $customMessages);
         if ($calUsesSysCategories) {
             $this->performLinkEventToSysCategory($calIds, $dbQueries, $customMessages);
@@ -205,7 +169,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return bool
      */
-    public function performCalEventUpdate($calIds, array &$dbQueries, &$customMessages)
+    public function performCalEventUpdate($calIds, array &$dbQueries, &$customMessages): bool
     {
         $this->logger->debug('Start performCalEventUpdate');
         $table = 'tx_cal_event';
@@ -304,7 +268,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return bool
      */
-    public function performExceptionEventUpdate($calIds, &$dbQueries, &$customMessages)
+    public function performExceptionEventUpdate($calIds, &$dbQueries): bool
     {
         $this->logger->debug('Start performExceptionEventUpdate');
         $table = 'tx_cal_exception_event_group';
@@ -356,7 +320,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      * @param $dbQueries
      * @param $customMessages
      */
-    public function performSingleException(&$dbQueries, &$customMessages): void
+    public function performSingleException(&$dbQueries): void
     {
         $this->logger->debug('Start performSingleException');
         $this->output->writeln('Start performSingleException');
@@ -394,7 +358,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
             // Link the configuration
             $eventImportId = self::IMPORT_PREFIX . (int)$result['uid_local'];
-            $linkResult = $this->addConfigurationIdToEvent($eventImportId, $configurationId, $dbQueries, $customMessages);
+            $linkResult = $this->addConfigurationIdToEvent($eventImportId, $configurationId, $dbQueries);
 
             if (!$linkResult) {
                 $this->logger->error('Unable to link configuration {configurationId} (single exception) to event {event}!', [
@@ -415,7 +379,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return bool
      */
-    public function performLinkEventToConfigurationGroup($calIds, &$dbQueries, &$customMessages)
+    public function performLinkEventToConfigurationGroup($calIds, &$dbQueries): bool
     {
         $this->logger->debug('Start performLinkEventToConfigurationGroup');
         $this->output->writeln('Start performLinkEventToConfigurationGroup');
@@ -468,7 +432,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                     'groups' => $group['uid'],
                 ];
 
-                $this->updateEventWithConfiguration($eventImportId, $configurationRow, $dbQueries, $customMessages);
+                $this->updateEventWithConfiguration($eventImportId, $configurationRow, $dbQueries);
             }
         }
 
@@ -483,7 +447,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      * @param array $dbQueries
      * @param       $customMessages
      */
-    public function performSysFileReferenceUpdate($calIds, array &$dbQueries, &$customMessages)
+    public function performSysFileReferenceUpdate($calIds, array &$dbQueries)
     {
         $this->logger->debug('Start performSysFileReferenceUpdate');
         $this->output->writeln('Start performSysFileReferenceUpdate');
@@ -545,7 +509,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      * @param array $dbQueries
      * @param array $customMessages
      */
-    public function performLinkEventToCategory($calIds, &$dbQueries, &$customMessages)
+    public function performLinkEventToCategory($calIds, &$dbQueries): void
     {
         $this->logger->debug('Start performLinkEventToCategory');
         $table = 'tx_cal_event_category_mm';
@@ -567,11 +531,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         $variables = $dispatcher->dispatch(__CLASS__, __FUNCTION__, $variables);
 
         foreach ($selectResults as $mm) {
-            $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries, $customMessages);
+            $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $mm['uid_local'], $dbQueries);
             $categoryUid = (int)$this->getCalendarizeCategoryUid(
                 self::IMPORT_PREFIX . $mm['uid_foreign'],
-                $dbQueries,
-                $customMessages
+                $dbQueries
             );
 
             if (0 !== $eventUid && 0 !== $categoryUid) {
@@ -606,7 +569,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      * @param array $dbQueries
      * @param array $customMessages
      */
-    public function performLinkEventToSysCategory($calIds, &$dbQueries, &$customMessages)
+    public function performLinkEventToSysCategory($calIds, &$dbQueries): void
     {
         $this->logger->debug('Start performLinkEventToSysCategory');
         $this->output->writeln(
@@ -637,7 +600,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         foreach ($selectResults as $mm) {
             $eventUidOld = (int)$mm['uid_foreign'];
             // event id is in uid_foreign
-            $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $eventUidOld, $dbQueries, $customMessages);
+            $eventUid = (int)$this->getCalendarizeEventUid(self::IMPORT_PREFIX . $eventUidOld, $dbQueries);
 
             $q = $this->getQueryBuilder($table);
             if (0 !== $eventUid) {
@@ -689,9 +652,9 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return array
      */
-    protected function updateEventWithConfiguration($eventImportId, $configuration, &$dbQueries, &$customMessages)
+    protected function updateEventWithConfiguration($eventImportId, $configuration, &$dbQueries)
     {
-        $configurationRow = $this->findEventExcludeConfiguration($eventImportId, $dbQueries, $customMessages);
+        $configurationRow = $this->findEventExcludeConfiguration($eventImportId, $dbQueries);
         if ($configurationRow) {
             $configurationRow['groups'] = $this->addValueToCsv($configurationRow['groups'], $configuration['groups']);
 
@@ -713,7 +676,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
             $configurationId = $db->lastInsertId(self::CONFIGURATION_TABLE);
 
-            $results = $this->addConfigurationIdToEvent($eventImportId, $configurationId, $dbQueries, $customMessages);
+            $results = $this->addConfigurationIdToEvent($eventImportId, $configurationId, $dbQueries);
         }
 
         return $results;
@@ -752,16 +715,16 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return array|bool
      */
-    protected function addConfigurationIdToEvent($eventImportId, $configurationId, &$dbQueries, &$customMessages)
+    protected function addConfigurationIdToEvent($eventImportId, $configurationId, &$dbQueries)
     {
-        $event = $this->findEventByImportId($eventImportId, $dbQueries, $customMessages);
+        $event = $this->findEventByImportId($eventImportId, $dbQueries);
         if (!$event) {
             return false;
         }
 
         $event['calendarize'] = $this->addValueToCsv($event['calendarize'], $configurationId);
 
-        return $this->updateEvent($event['uid'], $event, $dbQueries, $customMessages);
+        return $this->updateEvent($event['uid'], $event, $dbQueries);
     }
 
     /**
@@ -774,7 +737,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return bool
      */
-    protected function updateEvent($eventId, $values, &$dbQueries, &$customMessages)
+    protected function updateEvent($eventId, $values, &$dbQueries)
     {
         $q = $this->getQueryBuilder(self::EVENT_TABLE);
 
@@ -812,7 +775,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return array|bool
      */
-    protected function findEventByImportId($eventImportId, &$dbQueries, &$customMessages)
+    protected function findEventByImportId($eventImportId, &$dbQueries)
     {
         $q = $this->getQueryBuilder(self::EVENT_TABLE);
 
@@ -844,9 +807,9 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return array|bool
      */
-    protected function findEventExcludeConfiguration($eventImportId, &$dbQueries, &$customMessages)
+    protected function findEventExcludeConfiguration($eventImportId, &$dbQueries)
     {
-        $event = $this->findEventByImportId($eventImportId, $dbQueries, $customMessages);
+        $event = $this->findEventByImportId($eventImportId, $dbQueries);
 
         if (!$event) {
             return false;
@@ -973,7 +936,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return string
      */
-    protected function mapRecurrenceDay($calByday)
+    protected function mapRecurrenceDay($calByday): string
     {
         $days = [
             'mo' => ConfigurationInterface::DAY_MONDAY,
@@ -1000,7 +963,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return string
      */
-    protected function mapRecurrence($calByday)
+    protected function mapRecurrence($calByday): string
     {
         $recurrences = [
             '1' => ConfigurationInterface::RECURRENCE_FIRST,
@@ -1025,9 +988,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @param       $calIds
      * @param array $dbQueries
-     * @param       $customMessages
      */
-    protected function performSysCategoryUpdate($calIds, array &$dbQueries, &$customMessages)
+    protected function performSysCategoryUpdate($calIds, array &$dbQueries): void
     {
         // first migrate from tx_cal_category to sys_category
         $variables = [
@@ -1111,12 +1073,8 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
     /**
      * Return the parentUid for the 'sys_category' entry on base of the import_id.
-     *
-     * @param string $importId
-     *
-     * @return int
      */
-    protected function getSysCategoryParentUid($importId)
+    protected function getSysCategoryParentUid(string $importId): int
     {
         $table = 'sys_category';
         $q = $this->getQueryBuilder($table);
@@ -1127,9 +1085,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
                 $q->expr()->eq('import_id', $q->createNamedParameter($importId))
             );
 
-        $dbQueries[] = HelperUtility::queryWithParams($q);
-
-        $result = $q->execute()->fetchAll();
+        $result = $q->executeQuery()->fetchAllAssociative();
 
         return (int)($result[0]['uid'] ?? 0);
     }
@@ -1140,11 +1096,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @param string $importId
      * @param array  $dbQueries
-     * @param array  $customMessages
      *
      * @return int
      */
-    protected function getCalendarizeEventUid($importId, &$dbQueries, &$customMessages)
+    protected function getCalendarizeEventUid($importId, &$dbQueries): int
     {
         $variables = [
             'table' => self::EVENT_TABLE,
@@ -1182,11 +1137,10 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @param string $importId
      * @param array  $dbQueries
-     * @param array  $customMessages
      *
      * @return int
      */
-    protected function getCalendarizeCategoryUid($importId, &$dbQueries, &$customMessages)
+    protected function getCalendarizeCategoryUid($importId, &$dbQueries): int
     {
         $variables = [
             'table' => 'sys_category',
@@ -1219,7 +1173,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return int
      */
-    protected function buildConfigurations($calEventRow, &$dbQueries)
+    protected function buildConfigurations($calEventRow, &$dbQueries): mixed
     {
         $configurationRow = [
             'pid' => $calEventRow['pid'],
@@ -1279,7 +1233,7 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
      *
      * @return array
      */
-    protected function getNonMigratedCalIds()
+    protected function getNonMigratedCalIds(): mixed
     {
         $checkImportIds = [];
         $nonMigrated = [];
@@ -1338,24 +1292,44 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
         return $variables['nonMigrated'];
     }
 
-    public function updateNecessary(): bool
+    /**
+     * @param array $records
+     */
+    protected function finalMessage(array $records)
     {
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $connection = $connectionPool->getConnectionByName(ConnectionPool::DEFAULT_CONNECTION_NAME);
-        $dbSchema = $connection->createSchemaManager()->introspectSchema();
-
-        $tableNames = array_map(static function ($table) {
-            return $table->getName();
-        }, $dbSchema->getTables());
-
-        return \in_array('tx_cal_event', $tableNames);
+        $message = \count($records) . ' record(s) in cals. Left cals: ' . \count($this->getNonMigratedCalIds());
+        $this->output->writeln($message);
+        $this->logger->debug($message);
     }
 
-    public function getPrerequisites(): array
+    /**
+     * @param $selectResult
+     *
+     * @return array
+     */
+    protected function getConfigurationFromException($selectResult): array
     {
-        return [
-            DatabaseUpdatedPrerequisite::class,
+        $configurationRow = [
+            'pid' => $selectResult['pid'],
+            'tstamp' => $selectResult['tstamp'],
+            'crdate' => $selectResult['crdate'],
+            'type' => ConfigurationInterface::TYPE_TIME,
+            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
+            'start_date' => (string)$selectResult['start_date'] ?: null,
+            'end_date' => (string)$selectResult['end_date'] ?: null,
+            'start_time' => (int)$selectResult['start_time'],
+            'end_time' => (int)$selectResult['end_time'],
+            'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
+            'frequency' => $this->mapFrequency($selectResult['freq']),
+            'till_date' => (string)$selectResult['until'] ?: null,
+            'counter_amount' => ((int)$selectResult['cnt'] > 1) ? (int)$selectResult['cnt'] - 1 : 0,
+            'counter_interval' => (int)($selectResult['interval'] ?? 1),
+            'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
+            'recurrence' => $this->mapRecurrence($selectResult['byday']),
+            'day' => $this->mapRecurrenceDay($selectResult['byday']),
         ];
+
+        return $configurationRow;
     }
 
     private function getQueryBuilder(string $table): QueryBuilder
@@ -1395,51 +1369,9 @@ class CalMigrationUpdate extends AbstractUpdate implements ChattyInterface, Logg
 
     /**
      * Get the signal slot dispatcher.
-     *
-     * @return Dispatcher
      */
-    public static function getSignalSlotDispatcher(): Dispatcher
+    public static function getSignalSlotDispatcher(): EventDispatcher
     {
-        return GeneralUtility::makeInstance(Dispatcher::class);
-    }
-
-    /**
-     * @param array $records
-     */
-    protected function finalMessage(array $records)
-    {
-        $message = \count($records) . ' record(s) in cals. Left cals: ' . \count($this->getNonMigratedCalIds());
-        $this->output->writeln($message);
-        $this->logger->debug($message);
-    }
-
-    /**
-     * @param $selectResult
-     *
-     * @return array
-     */
-    protected function getConfigurationFromException($selectResult): array
-    {
-        $configurationRow = [
-            'pid' => $selectResult['pid'],
-            'tstamp' => $selectResult['tstamp'],
-            'crdate' => $selectResult['crdate'],
-            'type' => ConfigurationInterface::TYPE_TIME,
-            'handling' => ConfigurationInterface::HANDLING_INCLUDE,
-            'start_date' => (string)$selectResult['start_date'] ?: null,
-            'end_date' => (string)$selectResult['end_date'] ?: null,
-            'start_time' => (int)$selectResult['start_time'],
-            'end_time' => (int)$selectResult['end_time'],
-            'all_day' => (null === $selectResult['start_time'] && null === $selectResult['end_time']) ? 1 : 0,
-            'frequency' => $this->mapFrequency($selectResult['freq']),
-            'till_date' => (string)$selectResult['until'] ?: null,
-            'counter_amount' => ((int)$selectResult['cnt'] > 1) ? (int)$selectResult['cnt'] - 1 : 0,
-            'counter_interval' => (int)($selectResult['interval'] ?? 1),
-            'import_id' => self::IMPORT_PREFIX . $selectResult['uid'],
-            'recurrence' => $this->mapRecurrence($selectResult['byday']),
-            'day' => $this->mapRecurrenceDay($selectResult['byday']),
-        ];
-
-        return $configurationRow;
+        return GeneralUtility::makeInstance(EventDispatcher::class);
     }
 }

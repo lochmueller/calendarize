@@ -8,7 +8,7 @@ use HDNET\Calendarize\Service\IndexerService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\FrontendWorkspaceRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -50,7 +50,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
             return $processedData;
         }
         $availableLanguages = $this->getAvailableLanguages($indexId);
-        if (\in_array(-1, $availableLanguages)) {
+        if (in_array(-1, $availableLanguages)) {
             // Skip check if languages = [ALL] is selected
             return $processedData;
         }
@@ -91,14 +91,14 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->getRestrictions()->add(
-            GeneralUtility::makeInstance(FrontendWorkspaceRestriction::class)
+            GeneralUtility::makeInstance(WorkspaceRestriction::class)
         );
 
         $result = $queryBuilder
             ->select($languageField)
             ->from(self::TABLE)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     // Current language of the record
                     $queryBuilder->expr()->eq(
                         'uid',
@@ -111,15 +111,11 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                     )
                 )
             )
-            ->execute();
+            ->executeQuery();
 
-        return $result->fetchFirstColumn();
+        return $result->fetchFirstColumn()[0];
     }
 
-    /**
-     * @param array $menu
-     * @param array $availableLanguages
-     */
     protected function handleMenu(array &$menu, array $availableLanguages): void
     {
         foreach ($menu as &$item) {
@@ -132,14 +128,11 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                     $item['available'] = false;
                     $item['availableReason'] = 'calendarize';
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
             }
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getIndexId(): int
     {
         $indexId = 0;
@@ -154,9 +147,6 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         return $indexId;
     }
 
-    /**
-     * @return ServerRequestInterface
-     */
     protected function getRequest(): ServerRequestInterface
     {
         return $GLOBALS['TYPO3_REQUEST'];

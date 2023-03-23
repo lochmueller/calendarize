@@ -28,49 +28,20 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 class ImportCommandController extends Command
 {
     /**
-     * @var ICalServiceInterface
-     */
-    protected $iCalService;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var IndexerService
-     */
-    protected $indexerService;
-
-    /**
-     * @var ICalUrlService
-     */
-    protected $iCalUrlService;
-
-    /**
      * ImportCommandController constructor.
-     *
-     * @param ICalServiceInterface     $iCalService
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param IndexerService           $indexerService
      */
     public function __construct(
-        ICalServiceInterface $iCalService,
-        EventDispatcherInterface $eventDispatcher,
-        IndexerService $indexerService,
-        ICalUrlService $iCalUrlService
+        protected ICalServiceInterface $iCalService,
+        protected EventDispatcherInterface $eventDispatcher,
+        protected IndexerService $indexerService,
+        protected ICalUrlService $iCalUrlService
     ) {
-        $this->iCalService = $iCalService;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->indexerService = $indexerService;
-        $this->iCalUrlService = $iCalUrlService;
-
         parent::__construct();
     }
 
     protected function configure()
     {
-        $this->setDescription('Imports a iCalendar ICS into a page ID')
+        $this
             ->addArgument(
                 'icsCalendarUri',
                 InputArgument::REQUIRED,
@@ -180,6 +151,6 @@ class ImportCommandController extends Command
         $io->section('Run Reindex process after import');
         $this->indexerService->reindexAll();
 
-        return 0;
+        return self::SUCCESS;
     }
 }

@@ -153,8 +153,6 @@ class BackendController extends AbstractController
 
     /**
      * Persists options data.
-     *
-     * @param OptionRequest $options
      */
     protected function setOptions(OptionRequest $options)
     {
@@ -163,8 +161,6 @@ class BackendController extends AbstractController
 
     /**
      * Get the different locations for new entries.
-     *
-     * @return array
      */
     protected function getDifferentTypesAndLocations(): array
     {
@@ -183,8 +179,6 @@ class BackendController extends AbstractController
 
     /**
      * Get the different types.
-     *
-     * @return array
      */
     protected function getTypes(): array
     {
@@ -199,11 +193,6 @@ class BackendController extends AbstractController
 
     /**
      * Check if access to page is allowed for current user.
-     *
-     * @param int   $pageId
-     * @param array $mountPoints
-     *
-     * @return bool
      */
     protected function isPageAllowed(int $pageId, array $mountPoints): bool
     {
@@ -241,10 +230,7 @@ class BackendController extends AbstractController
         return [$dbMounts];
     }
 
-    /**
-     * @return BackendUserAuthentication
-     */
-    protected function getBackendUser(): BackendUserAuthentication
+    protected function getBackendUser(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

@@ -112,7 +112,7 @@ class EventUtility
         }
 
         // Old backend request (e.g. install tool wizards)
-        if (\defined('TYPO3_MODE') && TYPO3_MODE === 'BE') {
+        if (\defined('TYPO3') && TYPO3 == 'BE') {
             return true;
         }
 

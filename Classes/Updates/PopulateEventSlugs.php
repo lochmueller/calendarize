@@ -10,35 +10,26 @@ use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
+#[UpgradeWizard('calendarize_populateEventSlugs')]
 class PopulateEventSlugs extends AbstractUpdate
 {
-    protected $title = 'Introduce URL parts ("slugs") to calendarize event model';
+    protected string $title = 'Introduce URL parts ("slugs") to calendarize event model';
 
-    protected $description = 'Updates slug field of EXT:calendarize event records and runs a reindex';
+    protected string $description = 'Updates slug field of EXT:calendarize event records and runs a reindex';
 
-    /**
-     * @var string
-     */
-    protected $table = 'tx_calendarize_domain_model_event';
+    protected string $table = 'tx_calendarize_domain_model_event';
 
-    /**
-     * @var string
-     */
-    protected $fieldName = 'slug';
+    protected string $fieldName = 'slug';
 
     /**
-     * @var IndexerService
+     * PopulateEventSlugs constructor.
      */
-    protected $indexerService;
-
-    /**
-     * PupulateEventSlugs constructor.
-     */
-    public function __construct()
-    {
-        $this->indexerService = GeneralUtility::makeInstance(IndexerService::class);
+    public function __construct(
+        protected IndexerService $indexerService
+    ) {
     }
 
     public function getIdentifier(): string
@@ -69,12 +60,12 @@ class PopulateEventSlugs extends AbstractUpdate
             ->select('*')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq($field, $queryBuilder->createNamedParameter('')),
                     $queryBuilder->expr()->isNull($field)
                 )
             )
-            ->execute();
+            ->executeQuery();
 
         $fieldConfig = $GLOBALS['TCA'][$table]['columns'][$field]['config'];
         $evalInfo = !empty($fieldConfig['eval']) ? GeneralUtility::trimExplode(',', $fieldConfig['eval'], true) : [];
@@ -83,7 +74,7 @@ class PopulateEventSlugs extends AbstractUpdate
         $hasToBeUniqueInPid = \in_array('uniqueInPid', $evalInfo, true);
         /** @var SlugHelper $slugHelper */
         $slugHelper = GeneralUtility::makeInstance(SlugHelper::class, $table, $field, $fieldConfig);
-        while ($record = $statement->fetch()) {
+        while ($record = $statement->fetchAssociative()) {
             $recordId = (int)$record['uid'];
             $pid = (int)$record['pid'];
             $slug = $slugHelper->generate($record, $pid);
@@ -132,7 +123,7 @@ class PopulateEventSlugs extends AbstractUpdate
                 )
             )
             ->executeQuery()
-            ->fetchFirstColumn();
+            ->fetchFirstColumn()[0];
 
         return $numberOfEntries > 0;
     }

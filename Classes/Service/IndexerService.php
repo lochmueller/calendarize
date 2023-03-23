@@ -148,7 +148,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         }
 
         $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
-        $origId = isset($rawRecord['t3ver_oid']) ? (int)$rawRecord['t3ver_oid'] : 0;
 
         if (VersionState::DELETE_PLACEHOLDER === ($rawRecord['t3ver_state'] ?? false)) {
             // Remove all entries in current workspace that are related to the current item
@@ -179,7 +178,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             ]);
 
             // Create deleted items for every entry in the live workspace
-            $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid, 0);
+            $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid);
 
             foreach ($liveItems as $liveItem) {
                 $liveItem['t3ver_state'] = VersionState::DELETE_PLACEHOLDER;

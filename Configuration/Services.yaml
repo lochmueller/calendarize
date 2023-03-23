@@ -60,18 +60,21 @@ services:
     tags:
       - name: console.command
         command: 'calendarize:cleanup'
+        description: 'Remove outdated events to keep a small footprint'
         schedulable: true
 
   HDNET\Calendarize\Command\ImportCommandController:
     tags:
       - name: console.command
         command: 'calendarize:import'
+        description: 'Imports a iCalendar ICS into a page ID'
         schedulable: true
 
   HDNET\Calendarize\Command\ReindexCommandController:
     tags:
       - name: console.command
         command: 'calendarize:reindex'
+        description: 'Reindex all events'
         schedulable: true
 
   HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest:

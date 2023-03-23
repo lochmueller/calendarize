@@ -7,8 +7,25 @@
 defined('TYPO3') or exit();
 
 (function () {
+    $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']['ConfigurationGroup'] = [
+        'uniqueRegisterKey' => 'ConfigurationGroup',
+        'title' => 'Calendarize Configuration Group',
+        'modelName' => \HDNET\Calendarize\Domain\Model\ConfigurationGroup::class,
+        'partialIdentifier' => 'ConfigurationGroup',
+        'tableName' => 'tx_calendarize_domain_model_configurationgroup',
+        'required' => true,
+        'fieldName' => 'configurations',
+    ];
+
     if (!(bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
-        \HDNET\Calendarize\Register::extLocalconf(\HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration());
+        $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']['Event'] = [
+            'uniqueRegisterKey' => 'Event',
+            'title' => 'Calendarize Event',
+            'modelName' => \HDNET\Calendarize\Domain\Model\Event::class,
+            'partialIdentifier' => 'Event',
+            'tableName' => 'tx_calendarize_domain_model_event',
+            'required' => true,
+        ];
     }
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -23,12 +40,6 @@ defined('TYPO3') or exit();
             \HDNET\Calendarize\Controller\BookingController::class => 'booking,send',
         ]
     );
-
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_calMigration'] = \HDNET\Calendarize\Updates\CalMigrationUpdate::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_newIncludeExcludeStructure'] = \HDNET\Calendarize\Updates\NewIncludeExcludeStructureUpdate::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_dateField'] = \HDNET\Calendarize\Updates\DateFieldUpdate::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_tillDateField'] = \HDNET\Calendarize\Updates\TillDateFieldUpdate::class;
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['calendarize_populateEventSlugs'] = \HDNET\Calendarize\Updates\PopulateEventSlugs::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
 

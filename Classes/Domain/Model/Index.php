@@ -22,103 +22,77 @@ class Index extends AbstractModel
 {
     /**
      * The unique register key of the used table/model configuration.
-     *
-     * @var string
      */
-    protected $uniqueRegisterKey = '';
+    protected string $uniqueRegisterKey = '';
 
     /**
      * TableName.
-     *
-     * @var string
      */
-    protected $foreignTable = '';
+    protected string $foreignTable = '';
 
     /**
      * The Id of the foreign element.
-     *
-     * @var int
      */
-    protected $foreignUid = 0;
+    protected int $foreignUid = 0;
 
     /**
      * Start date.
-     *
-     * @var \DateTime|null
      */
-    protected $startDate;
+    protected ?\DateTime $startDate = null;
 
     /**
      * End date.
-     *
-     * @var \DateTime|null
      */
-    protected $endDate;
+    protected ?\DateTime $endDate = null;
 
     /**
      * Start time.
-     *
-     * @var int
      */
-    protected $startTime = 0;
+    protected int $startTime = 0;
 
     /**
      * End time.
-     *
-     * @var int
      */
-    protected $endTime = 0;
+    protected int $endTime = 0;
 
     /**
      * AllDay.
-     *
-     * @var bool
      */
-    protected $allDay = false;
+    protected bool $allDay = false;
 
     /**
      * OpenEndTime.
-     *
-     * @var bool
      */
-    protected $openEndTime = false;
+    protected bool $openEndTime = false;
 
     /**
      * State.
-     *
-     * @var string
      */
-    protected $state = '';
+    protected string $state = '';
 
     /**
      * The original object.
-     *
-     * @var AbstractEntity
      */
-    protected $originalObject;
+    protected ?AbstractEntity $originalObject;
 
     /**
      * Slug.
-     *
-     * @var string
      */
-    protected $slug = '';
+    protected string $slug = '';
 
     /**
      * Get the original record for the current index.
      *
-     * @return AbstractEntity
-     *
      * @throws InvalidConfigurationException
      */
-    public function getOriginalObject()
+    public function getOriginalObject(): ?AbstractEntity
     {
         if (null === $this->originalObject) {
             $configuration = $this->getConfiguration();
             if (empty($configuration)) {
                 throw new InvalidConfigurationException('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
-            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$this->getForeignUid());
+            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
         }
 
         return $this->originalObject;
@@ -235,8 +209,6 @@ class Index extends AbstractModel
 
     /**
      * Set all day.
-     *
-     * @param bool $allDay
      */
     public function setAllDay(bool $allDay)
     {
@@ -245,12 +217,10 @@ class Index extends AbstractModel
 
     /**
      * Is all day.
-     *
-     * @return bool
      */
     public function isAllDay(): bool
     {
-        return (bool)$this->allDay;
+        return $this->allDay;
     }
 
     /**

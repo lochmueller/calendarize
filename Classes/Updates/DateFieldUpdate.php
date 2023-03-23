@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Schema\Column;
+use Doctrine\DBAL\Types\DateType;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 
+#[UpgradeWizard('calendarize_dateFieldUpdate')]
 class DateFieldUpdate extends AbstractUpdate
 {
-    protected $title = 'Calendarize Date Field';
+    protected string $title = 'Calendarize Date Field';
 
-    protected $description = 'This wizard migrates the existing start and end dates in the ' .
+    protected string $description = 'This wizard migrates the existing start and end dates in the ' .
         'database from a timestamp to a real date. This enables dates before 1970 and after 2038.';
 
-    protected $migrationMap = [
+    protected array $migrationMap = [
         'tx_calendarize_domain_model_configuration' => [
             'start_date',
             'end_date',
@@ -25,11 +29,6 @@ class DateFieldUpdate extends AbstractUpdate
             'end_date',
         ],
     ];
-
-    public function getIdentifier(): string
-    {
-        return 'calendarize_dateField';
-    }
 
     public function executeUpdate(): bool
     {
@@ -46,7 +45,7 @@ class DateFieldUpdate extends AbstractUpdate
 
     protected function executeUpdateForTableFieldDateTimeMigration(string $tableName, string $fieldName)
     {
-        $tmpField = $fieldName . '_' . GeneralUtility::shortMD5((string)microtime(), 5);
+        $tmpField = $fieldName . '_' . substr(md5((string)microtime()), 0, 10);
 
         $sqlQueries = [
             'ALTER TABLE ' . $tableName . ' ADD COLUMN ' . $tmpField . ' int(11) NOT NULL DEFAULT \'0\'',
@@ -77,23 +76,22 @@ class DateFieldUpdate extends AbstractUpdate
         return false;
     }
 
-    protected function updateNecessaryForTableFieldDateTimeMigration(string $tableName, string $fieldName)
+    protected function updateNecessaryForTableFieldDateTimeMigration(string $tableName, string $fieldName): bool
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
-        /** @var QueryBuilder $queryBuilder */
-        $schemaManager = $queryBuilder->getConnection()->createSchemaManager();
+        /** @var Connection $connection */
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
+        $schemaManager = $connection->createSchemaManager();
         if (!$schemaManager->tablesExist($tableName)) {
             return false;
         }
 
         $columns = $schemaManager->listTableColumns($tableName);
-        if (!isset($columns[$fieldName]) || !($columns[$fieldName] instanceof \Doctrine\DBAL\Schema\Column)) {
+        if (!isset($columns[$fieldName]) || !($columns[$fieldName] instanceof Column)) {
             return false;
         }
-        /** @var \Doctrine\DBAL\Schema\Column $checkField */
         $checkField = $columns[$fieldName];
 
-        return !($checkField->getType() instanceof \Doctrine\DBAL\Types\DateType);
+        return !($checkField->getType() instanceof DateType);
     }
 
     public function getPrerequisites(): array

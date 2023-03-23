@@ -22,7 +22,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
-class IconForRecordViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+class IconForRecordViewHelper extends AbstractViewHelper
 {
     use CompileWithRenderStatic;
 
@@ -38,20 +38,19 @@ class IconForRecordViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstract
         $this->registerArgument('table', 'string', 'the table for the record icon', true);
         $this->registerArgument('row', 'array', 'the record row', true);
         $this->registerArgument('size', 'string', 'the icon size', false, Icon::SIZE_SMALL);
-        $this->registerArgument('alternativeMarkupIdentifier', 'string', 'alternative markup identifier', false);
+        $this->registerArgument('alternativeMarkupIdentifier', 'string', 'alternative markup identifier');
     }
 
     /**
-     * @param array                     $arguments
-     * @param \Closure                  $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,#
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $arguments['row'] = BackendUtility::getRecordWSOL($arguments['table'], $arguments['uid']);
-        if (!\is_array($arguments['row'])) {
+        if (!is_array($arguments['row'])) {
             $arguments['row'] = [];
         }
 
