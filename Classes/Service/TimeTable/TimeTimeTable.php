@@ -8,11 +8,12 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Service\RecurrenceService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -61,7 +62,7 @@ class TimeTimeTable extends AbstractTimeTable
     protected function respectDynamicEndDates(array &$times, Configuration $configuration)
     {
         switch ($configuration->getEndDateDynamic()) {
-            case Configuration::END_DYNAMIC_1_DAY:
+            case ConfigurationInterface::END_DYNAMIC_1_DAY:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -71,7 +72,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_1_WEEK:
+            case ConfigurationInterface::END_DYNAMIC_1_WEEK:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -81,7 +82,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_END_WEEK:
+            case ConfigurationInterface::END_DYNAMIC_END_WEEK:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -92,7 +93,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_END_MONTH:
+            case ConfigurationInterface::END_DYNAMIC_END_MONTH:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -102,7 +103,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_END_YEAR:
+            case ConfigurationInterface::END_DYNAMIC_END_YEAR:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -140,7 +141,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'flashMessage.missingStartDate.text',
                 'flashMessage.missingStartDate.title',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return false;
@@ -151,7 +152,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.date.message',
                 'wrong.date',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return false;
@@ -167,7 +168,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.time.message',
                 'wrong.time',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return false;
@@ -266,31 +267,31 @@ class TimeTimeTable extends AbstractTimeTable
      *
      * @return string
      */
-    protected function getFrequencyIncrement(Configuration $configuration)
+    protected function getFrequencyIncrement(Configuration $configuration): string
     {
         $interval = max($configuration->getCounterInterval(), 1);
         switch ($configuration->getFrequency()) {
-            case Configuration::FREQUENCY_MINUTELY:
+            case ConfigurationInterface::FREQUENCY_MINUTELY:
                 $intervalValue = '+' . $interval . ' minutes';
                 break;
-            case Configuration::FREQUENCY_HOURLY:
+            case ConfigurationInterface::FREQUENCY_HOURLY:
                 $intervalValue = '+' . $interval . ' hours';
                 break;
-            case Configuration::FREQUENCY_DAILY:
+            case ConfigurationInterface::FREQUENCY_DAILY:
                 $intervalValue = '+' . $interval . ' days';
                 break;
-            case Configuration::FREQUENCY_WEEKLY:
+            case ConfigurationInterface::FREQUENCY_WEEKLY:
                 $intervalValue = '+' . $interval . ' weeks';
                 break;
-            case Configuration::FREQUENCY_MONTHLY:
-                if (Configuration::RECURRENCE_NONE !== $configuration->getRecurrence()) {
-                    return false;
+            case ConfigurationInterface::FREQUENCY_MONTHLY:
+                if (ConfigurationInterface::RECURRENCE_NONE !== $configuration->getRecurrence()) {
+                    return '';
                 }
                 $intervalValue = '+' . $interval . ' months';
                 break;
-            case Configuration::FREQUENCY_YEARLY:
-                if (Configuration::RECURRENCE_NONE !== $configuration->getRecurrence()) {
-                    return false;
+            case ConfigurationInterface::FREQUENCY_YEARLY:
+                if (ConfigurationInterface::RECURRENCE_NONE !== $configuration->getRecurrence()) {
+                    return '';
                 }
                 $intervalValue = '+' . $interval . ' years';
                 break;
@@ -311,7 +312,10 @@ class TimeTimeTable extends AbstractTimeTable
      */
     protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
     {
-        if (Configuration::RECURRENCE_NONE === $configuration->getRecurrence() || Configuration::DAY_NONE === $configuration->getDay()) {
+        if (
+            ConfigurationInterface::RECURRENCE_NONE === $configuration->getRecurrence()
+            || ConfigurationInterface::DAY_NONE === $configuration->getDay()
+        ) {
             return;
         }
 
@@ -325,14 +329,14 @@ class TimeTimeTable extends AbstractTimeTable
             $loopEntry = $lastLoop;
 
             $dateTime = false;
-            if (Configuration::FREQUENCY_MONTHLY === $configuration->getFrequency()) {
+            if (ConfigurationInterface::FREQUENCY_MONTHLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextMonth(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
                     $configuration->getDay(),
                     $intervalCounter
                 );
-            } elseif (Configuration::FREQUENCY_YEARLY === $configuration->getFrequency()) {
+            } elseif (ConfigurationInterface::FREQUENCY_YEARLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextYear(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
@@ -350,13 +354,19 @@ class TimeTimeTable extends AbstractTimeTable
 
             $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
 
-            if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+            if (
+                $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface
+                && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']
+            ) {
                 break;
             }
 
             $lastLoop = $loopEntry;
 
-            if ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+            if (
+                $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface
+                && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']
+            ) {
                 continue;
             }
 

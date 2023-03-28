@@ -82,26 +82,29 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
 
-            $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
-            $q->getRestrictions()
+            $queryBuilder = HelperUtility::getQueryBuilder($tableName);
+            $queryBuilder
+                ->getRestrictions()
                 ->removeAll()
                 ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
-            $q->select('uid')
+            $queryBuilder
+                ->select('uid')
                 ->from($tableName);
 
-            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] ? (bool)$GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] : false;
+            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS']
+                && (bool)$GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'];
             if ($worksSpaceSupport) {
-                $q->addOrderBy('t3ver_wsid', 'ASC');
+                $queryBuilder->addOrderBy('t3ver_wsid', 'ASC');
             }
 
             $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
             if ($transPointer) {
                 // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
                 // overlays can connect with l10n_parent to the right default record.
-                $q->addOrderBy((string)$transPointer, 'ASC');
+                $queryBuilder->addOrderBy((string)$transPointer, 'ASC');
             }
-            $rows = $q->execute()->fetchAll();
+            $rows = $queryBuilder->executeQuery()->fetchAllAssociative();
             foreach ($rows as $row) {
                 $this->updateIndex($key, $tableName, (int)$row['uid']);
             }

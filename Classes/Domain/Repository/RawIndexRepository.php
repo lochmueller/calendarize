@@ -41,7 +41,7 @@ class RawIndexRepository extends AbstractRawRepository
                 $q->expr()->lt('max_end_date', $q->createNamedParameter($now->format('Y-m-d')))
             );
 
-        return $q->execute()->fetchAll();
+        return $q->executeQuery()->fetchAllAssociative();
     }
 
     /**
@@ -80,7 +80,7 @@ class RawIndexRepository extends AbstractRawRepository
         $q->select('*')
             ->from($this->tableName)
             ->where(
-                $q->expr()->andX(
+                $q->expr()->and(
                     $q->expr()->gte('start_date', $q->createNamedParameter($dateTime->format('Y-m-d'))),
                     $q->expr()->eq('foreign_table', $q->createNamedParameter($foreignTable)),
                     $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
@@ -90,7 +90,7 @@ class RawIndexRepository extends AbstractRawRepository
             ->addOrderBy('start_time', 'ASC')
             ->setMaxResults($limit);
 
-        $result = (array)$q->execute()->fetchAll();
+        $result = (array)$q->executeQuery()->fetchAllAssociative();
 
         foreach ($result as $key => $row) {
             BackendUtility::workspaceOL($this->tableName, $row, $workspace);
@@ -127,8 +127,8 @@ class RawIndexRepository extends AbstractRawRepository
         $q->delete($this->tableName)
             ->where(
                 $q->expr()->notIn('unique_register_key', $validKeys)
-            )->execute();
+            );
 
-        return (bool)$q->execute();
+        return (bool)$q->executeStatement();
     }
 }

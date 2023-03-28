@@ -179,8 +179,8 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
         $locations = $this->getQueryBuilder($locationTable)
             ->select('*')
             ->from($locationTable)
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
         $locationByUid = [];
         foreach ($locations as $location) {
             $locationByUid[$location['uid']] = $location['name'];
@@ -284,7 +284,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $q->select('*')->from($variables['table']);
 
-        $selectResults = $q->execute()->fetchAll();
+        $selectResults = $q->executeQuery()->fetchAllAssociative();
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
         foreach ($selectResults as $selectResult) {
@@ -307,7 +307,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             $q->insert(self::CONFIGURATION_GROUP_TABLE)->values($group);
             $dbQueries[] = HelperUtility::queryWithParams($q);
 
-            $q->execute();
+            $q->executeStatement();
         }
 
         return true;
@@ -343,16 +343,16 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             ->where($q->expr()->eq('tablenames', $q->createNamedParameter($exceptionTable)));
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
-        $selectResults = $q->execute();
+        $selectResults = $q->executeQuery();
 
-        while ($result = $selectResults->fetch()) {
+        while ($result = $selectResults->fetchAssociative()) {
             // Create a configuration
             $configuration = $this->getConfigurationFromException($result);
             $configuration['handling'] = ConfigurationInterface::HANDLING_EXCLUDE;
 
             // Insert the configuration
             $q = $this->getQueryBuilder(self::CONFIGURATION_TABLE);
-            $q->insert(self::CONFIGURATION_TABLE)->values($configuration)->execute();
+            $q->insert(self::CONFIGURATION_TABLE)->values($configuration)->executeStatement();
             $dbQueries[] = HelperUtility::queryWithParams($q);
             $configurationId = (int)$db->lastInsertId(self::CONFIGURATION_TABLE);
 
@@ -394,7 +394,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $configurationGroupResults = $q->select('*')->from($variables['table'])
             ->where($q->expr()->like('import_id', $q->createNamedParameter(self::IMPORT_PREFIX . '%')))
-            ->execute()->fetchAll();
+            ->executeQuery()->fetchAllAssociative();
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
         foreach ($configurationGroupResults as $group) {
@@ -412,14 +412,14 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             $q->select('uid_local')
                 ->from($variables['table'])
                 ->where(
-                    $q->expr()->andX(
+                    $q->expr()->and(
                         $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_exception_event_group')),
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter((int)$groupId, \PDO::PARAM_INT))
                     )
                 );
 
             $dbQueries[] = HelperUtility::queryWithParams($q);
-            $selectResults = $q->execute()->fetchAll();
+            $selectResults = $q->executeQuery()->fetchAllAssociative();
 
             foreach ($selectResults as $eventUid) {
                 $eventImportId = self::IMPORT_PREFIX . (int)$eventUid['uid_local'];
@@ -445,7 +445,6 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
      *
      * @param       $calIds
      * @param array $dbQueries
-     * @param       $customMessages
      */
     public function performSysFileReferenceUpdate($calIds, array &$dbQueries)
     {
@@ -470,7 +469,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             ->where($selectWhere);
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
-        $selectResults = $q->execute()->fetchAll();
+        $selectResults = $q->executeQuery()->fetchAllAssociative();
 
         $variables = [
             'table' => self::EVENT_TABLE,
@@ -497,7 +496,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
             $dbQueries[] = HelperUtility::queryWithParams($q);
 
-            $q->execute();
+            $q->executeStatement();
         }
     }
 
@@ -519,7 +518,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
         $q->select('*')->from($table);
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        $selectResults = $q->execute()->fetchAll();
+        $selectResults = $q->executeQuery()->fetchAllAssociative();
 
         $variables = [
             'tablenames' => self::EVENT_TABLE,
@@ -550,7 +549,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                 $q->insert($catTable)->values($insertValues);
                 $dbQueries[] = HelperUtility::queryWithParams($q);
 
-                $q->execute();
+                $q->executeStatement();
             }
         }
     }
@@ -587,7 +586,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                 $q->expr()->neq('uid_foreign', $q->createNamedParameter(0, \PDO::PARAM_INT))
             )->groupBy('uid_foreign');
 
-        $selectResults = $q->execute()->fetchAll();
+        $selectResults = $q->executeQuery()->fetchAllAssociative();
 
         $variables = [
             'tablenames' => self::EVENT_TABLE,
@@ -612,7 +611,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUidOld, \PDO::PARAM_INT)),
                         $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
                         $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
-                    )->execute();
+                    )->executeStatement();
             } else {
                 // TODO - log deleted 0 eventUid
                 $this->logger->debug("In performLinkEventToSyscategory but event[uid] is $eventUid and trying to delete ");
@@ -634,12 +633,12 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
         $q->delete($table)
             ->where(
                 $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
-                $q->expr()->orX(
+                $q->expr()->or(
                     $q->expr()->eq('fieldname', $q->createNamedParameter('')),
                     $q->expr()->eq('uid_local', $q->createNamedParameter(0, \PDO::PARAM_INT)),
                     $q->expr()->eq('uid_foreign', $q->createNamedParameter(0, \PDO::PARAM_INT))
                 )
-            )->execute();
+            )->executeStatement();
     }
 
     /**
@@ -666,13 +665,13 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                 ->set('groups', $configurationRow['groups']);
 
             $dbQueries[] = HelperUtility::queryWithParams($q);
-            $results = $q->execute();
+            $results = $q->executeStatement();
         } else {
             $db = HelperUtility::getDatabaseConnection(self::CONFIGURATION_TABLE);
             $q = $db->createQueryBuilder();
             $q->insert(self::CONFIGURATION_TABLE)->values($configuration);
             $dbQueries[] = HelperUtility::queryWithParams($q);
-            $q->execute();
+            $q->executeStatement();
 
             $configurationId = $db->lastInsertId(self::CONFIGURATION_TABLE);
 
@@ -763,7 +762,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        return $q->execute();
+        return $q->executeStatement();
     }
 
     /**
@@ -795,7 +794,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        return $q->execute()->fetch();
+        return $q->executeQuery()->fetchAssociative();
     }
 
     /**
@@ -826,7 +825,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
         $q->select('*')
             ->from($variables['table'])
             ->where(
-                $q->expr()->andX(
+                $q->expr()->and(
                     $q->expr()->eq('type', $q->createNamedParameter(ConfigurationInterface::TYPE_GROUP)),
                     $q->expr()->eq('handling', $q->createNamedParameter(ConfigurationInterface::HANDLING_EXCLUDE)),
                     $q->expr()->in('uid', $variables['event']['calendarize'])
@@ -835,7 +834,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        return $q->execute()->fetch();
+        return $q->executeQuery()->fetchAssociative();
     }
 
     /**
@@ -865,7 +864,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        $mmResults = $q->execute()->fetchAll();
+        $mmResults = $q->executeQuery()->fetchAllAssociative();
         foreach ($mmResults as $mmResult) {
             $variables = [
                 'table' => 'tx_cal_exception_event',
@@ -881,7 +880,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
             $dbQueries[] = HelperUtility::queryWithParams($q);
 
-            $selectResults = $q->execute()->fetchAll();
+            $selectResults = $q->executeQuery()->fetchAllAssociative();
 
             foreach ($selectResults as $selectResult) {
                 $configurationRow = $this->getConfigurationFromException($selectResult);
@@ -1005,7 +1004,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        $selectResults = $q->execute()->fetchAll();
+        $selectResults = $q->executeQuery()->fetchAllAssociative();
 
         foreach ($selectResults as $category) {
             $sysCategoryRecord = [
@@ -1029,7 +1028,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             $q->insert('sys_category')->values($sysCategoryRecord);
             $dbQueries[] = HelperUtility::queryWithParams($q);
 
-            $q->execute();
+            $q->executeStatement();
         }
 
         // second rewrite the tree
@@ -1048,7 +1047,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             );
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
-        $selectResults = $q->execute()->fetchAll();
+        $selectResults = $q->executeQuery()->fetchAllAssociative();
 
         foreach ($selectResults as $sysCategory) {
             if (empty($sysCategory['parent'])) {
@@ -1067,7 +1066,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
             $dbQueries[] = HelperUtility::queryWithParams($q);
 
-            $q->execute();
+            $q->executeStatement();
         }
     }
 
@@ -1124,7 +1123,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        $result = $q->execute()->fetchAll();
+        $result = $q->executeQuery()->fetchAllAssociative();
 
         return (int)($result[0]['uid'] ?? 0);
     }
@@ -1160,7 +1159,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $dbQueries[] = HelperUtility::queryWithParams($q);
 
-        $result = $q->execute()->fetchAll();
+        $result = $q->executeQuery()->fetchAllAssociative();
 
         return (int)($result[0]['uid'] ?? 0);
     }
@@ -1243,8 +1242,8 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $events = $q->select('uid')
             ->from($table)
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($events as $event) {
             $checkImportIds[] = '"' . self::IMPORT_PREFIX . $event['uid'] . '"';
@@ -1270,8 +1269,8 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             ->where(
                 $q->expr()->in('import_id', $checkImportIds)
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($migratedRows as $migratedRow) {
             $importId = (int)str_replace(self::IMPORT_PREFIX, '', $migratedRow['import_id']);
@@ -1334,7 +1333,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
     private function getQueryBuilder(string $table): QueryBuilder
     {
-        $queryBuilder = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
+        $queryBuilder = HelperUtility::getQueryBuilder($table);
 
         // This adds a custom restriction similar to DeletedRestriction
         // When 'cal' is not installed there is no TCA definition.
@@ -1359,7 +1358,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                             }
                         }
 
-                        return $expressionBuilder->andX(...$constraints);
+                        return $expressionBuilder->and(...$constraints);
                     }
                 });
         }

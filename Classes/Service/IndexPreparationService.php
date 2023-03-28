@@ -20,14 +20,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class IndexPreparationService extends AbstractService
 {
-    /**
-     * @var SlugService
-     */
-    protected $slugService;
-
-    public function __construct(SlugService $slugService)
+    public function __construct(protected SlugService $slugService)
     {
-        $this->slugService = $slugService;
     }
 
     /**
@@ -48,7 +42,7 @@ class IndexPreparationService extends AbstractService
 
         $register = Register::getRegister();
         $fieldName = $register[$configurationKey]['fieldName'] ?? 'calendarize';
-        $configurations = GeneralUtility::intExplode(',', $rawRecord[$fieldName] ?? '', true);
+        $configurations = GeneralUtility::intExplode(',', (string)($rawRecord[$fieldName] ?? ''), true);
 
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
         if ($transPointer && (int)$rawRecord[$transPointer] > 0) {
