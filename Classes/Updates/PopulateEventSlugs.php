@@ -123,7 +123,7 @@ class PopulateEventSlugs extends AbstractUpdate
                 )
             )
             ->executeQuery()
-            ->fetchFirstColumn()[0];
+            ->fetchOne();
 
         return $numberOfEntries > 0;
     }

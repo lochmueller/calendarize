@@ -88,7 +88,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
                 )
             );
 
-        $count = $q->executeQuery()->fetchFirstColumn()[0];
+        $count = $q->executeQuery()->fetchOne();
 
         if ($count > 0) {
             $this->description = 'We will update ' . $count . ' calendarize configurations';

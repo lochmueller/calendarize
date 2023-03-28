@@ -155,7 +155,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                 $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
                 $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
             )
-            ->execute()->fetch();
+            ->executeQuery()->fetchOne();
 
         return (int)$count['COUNT(*)'] > 0;
     }
