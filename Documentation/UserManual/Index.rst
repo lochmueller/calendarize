@@ -6,6 +6,7 @@ For users
 
    GettingStarted
    CreateRecurringEventWithExceptions
+   Plugin/Index
 
 ..
    Records/Event/Index

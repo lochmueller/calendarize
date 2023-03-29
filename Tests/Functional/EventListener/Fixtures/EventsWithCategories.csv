@@ -1,0 +1,28 @@
+tx_calendarize_domain_model_event,,,,,,,,,,,,,,
+,uid,pid,sys_language_uid,title,calendarize,categories,,,,,,,,
+,10,0,0,No Category,0,0,,,,,,,,
+,11,0,0,Only Category A,0,1,,,,,,,,
+,12,0,0,Only Category B,0,0,,,,,,,,
+,13,0,0,Category B and C,0,0,,,,,,,,
+"tt_content",,,,,,,,,,,,,,
+,"uid","pid","sorting","deleted","sys_language_uid","l18n_parent","t3_origuid","t3ver_wsid","t3ver_state","t3ver_stage","t3ver_oid","header","image","categories"
+,20,0,0,0,0,0,0,0,0,0,0,"Element with Category A",0,1
+,21,0,0,0,0,0,0,0,0,0,0,"Element with Category A and B",0,2
+,22,0,0,0,0,0,0,0,0,0,0,"Element with Category B and C",0,2
+sys_category,,,,,,,,,,,,,,
+,uid,pid,sorting,deleted,sys_language_uid,l10n_parent,t3_origuid,t3ver_wsid,t3ver_state,t3ver_stage,t3ver_oid,title,parent,items
+,30,0,256,0,0,0,0,0,0,0,0,Category A,0,0
+,31,0,512,0,0,0,0,0,0,0,0,Category B,0,0
+,32,0,768,0,0,0,0,0,0,0,0,Category C,0,0
+,33,0,1024,0,0,0,0,0,0,0,0,Category A.A,28,0
+sys_category_record_mm,,,,,,,,,,,,,,
+,uid_local,uid_foreign,tablenames,sorting,sorting_foreign,fieldname,,,,,,,,
+,30,11,tx_calendarize_domain_model_event,0,1,categories,,,,,,,,
+,31,12,tx_calendarize_domain_model_event,0,1,categories,,,,,,,,
+,31,13,tx_calendarize_domain_model_event,0,1,categories,,,,,,,,
+,32,13,tx_calendarize_domain_model_event,0,2,categories,,,,,,,,
+,30,20,tt_content,0,1,categories,,,,,,,,
+,30,21,tt_content,0,1,categories,,,,,,,,
+,31,21,tt_content,0,2,categories,,,,,,,,
+,31,22,tt_content,0,1,categories,,,,,,,,
+,32,22,tt_content,0,2,categories,,,,,,,,

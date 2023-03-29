@@ -5,20 +5,20 @@ namespace HDNET\Calendarize\Event;
 final class IndexRepositoryDefaultConstraintEvent
 {
     public function __construct(
-        private array $indexIds,
+        private array $foreignIds,
         private readonly array $indexTypes,
         private readonly array $additionalSlotArguments
     ) {
     }
 
-    public function getIndexIds(): array
+    public function getForeignIds(): array
     {
-        return $this->indexIds;
+        return $this->foreignIds;
     }
 
-    public function setIndexIds(array $indexIds): void
+    public function setForeignIds(array $foreignIds): void
     {
-        $this->indexIds = $indexIds;
+        $this->foreignIds = $foreignIds;
     }
 
     public function getIndexTypes(): array
@@ -29,5 +29,21 @@ final class IndexRepositoryDefaultConstraintEvent
     public function getAdditionalSlotArguments(): array
     {
         return $this->additionalSlotArguments;
+    }
+
+    /**
+     * @deprecated use {@see getForeignIds} instead
+     */
+    public function getIndexIds(): array
+    {
+        return $this->getForeignIds();
+    }
+
+    /**
+     * @deprecated use {@see setForeignIds} instead
+     */
+    public function setIndexIds(array $indexIds): void
+    {
+        $this->setForeignIds($indexIds);
     }
 }

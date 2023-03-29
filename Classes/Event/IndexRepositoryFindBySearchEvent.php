@@ -4,7 +4,7 @@ namespace HDNET\Calendarize\Event;
 
 final class IndexRepositoryFindBySearchEvent
 {
-    private array $indexIds = [];
+    private array $foreignIds = [];
 
     public function __construct(
         protected ?\DateTimeInterface $startDate,
@@ -15,14 +15,30 @@ final class IndexRepositoryFindBySearchEvent
     ) {
     }
 
-    public function getIndexIds(): array
+    public function getForeignIds(): array
     {
-        return $this->indexIds;
+        return $this->foreignIds;
     }
 
+    public function setForeignIds(array $foreignIds): void
+    {
+        $this->foreignIds = $foreignIds;
+    }
+
+    /**
+     * @deprecated use {@see getForeignIds} instead
+     */
+    public function getIndexIds(): array
+    {
+        return $this->getForeignIds();
+    }
+
+    /**
+     * @deprecated use {@see setForeignIds} instead
+     */
     public function setIndexIds(array $indexIds): void
     {
-        $this->indexIds = $indexIds;
+        $this->setForeignIds($indexIds);
     }
 
     public function getStartDate(): ?\DateTimeInterface

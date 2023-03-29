@@ -39,9 +39,9 @@ class DefaultEventSearchListener
         // Blocks result (displaying no event) on no search match (empty id array)
         $searchTermIds[] = -1;
 
-        $indexIds = $event->getIndexIds();
-        $indexIds['tx_calendarize_domain_model_event'] = $searchTermIds;
-        $event->setIndexIds($indexIds);
+        $foreignIds = $event->getForeignIds();
+        $foreignIds['tx_calendarize_domain_model_event'] = $searchTermIds;
+        $event->setForeignIds($foreignIds);
     }
 
     protected function getSearchDto(IndexRepositoryFindBySearchEvent $event): Search

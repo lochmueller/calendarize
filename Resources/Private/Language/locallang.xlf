@@ -569,6 +569,21 @@
 			<trans-unit id="sortBy">
 				<source>Sort by</source>
 			</trans-unit>
+			<trans-unit id="categoryConjunction">
+				<source>Category mode</source>
+			</trans-unit>
+			<trans-unit id="categoryConjunction.description">
+				<source>Limit the results to the specified categories. The categories are defined in the Categories tab of this content element and/or in the Plugin Configuration.</source>
+			</trans-unit>
+			<trans-unit id="categoryConjunction.all">
+				<source>Don't care, show all</source>
+			</trans-unit>
+			<trans-unit id="categoryConjunction.or">
+				<source>Show items with selected categories (OR)</source>
+			</trans-unit>
+			<trans-unit id="categoryConjunction.and">
+				<source>Show items with selected categories (AND)</source>
+			</trans-unit>
 			<trans-unit id="startingpoint">
 				<source>Startingpoint</source>
 			</trans-unit>

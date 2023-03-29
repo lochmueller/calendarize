@@ -201,6 +201,34 @@
 						</TCEforms>
 					</settings.configuration>
 
+					<!-- Category Mode -->
+					<settings.categoryConjunction>
+						<TCEforms>
+							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction</label>
+							<description>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.description</description>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items>
+									<numIndex index="0">
+										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.all</label>
+										<value>all</value>
+									</numIndex>
+									<numIndex index="1">
+										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.or</label>
+										<value>or</value>
+									</numIndex>
+									<numIndex index="2">
+										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.and</label>
+										<value>and</value>
+									</numIndex>
+								</items>
+								<default>or</default>
+							</config>
+                            <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_search,calendarize_result,calendarize_single</displayCond>
+						</TCEforms>
+					</settings.categoryConjunction>
+
 					<!-- Calendar configuration -->
 					<settings.sortBy>
 						<TCEforms>
