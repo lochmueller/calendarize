@@ -35,42 +35,18 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      */
     public const TABLE_NAME = 'tx_calendarize_domain_model_index';
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var IndexPreparationService
-     */
-    protected $preparationService;
-
-    /**
-     * @var RawIndexRepository
-     */
-    protected $rawIndexRepository;
-
-    /**
-     * @var SlugService
-     */
-    protected $slugService;
-
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        IndexPreparationService $preparationService,
-        SlugService $slugService,
-        RawIndexRepository $rawIndexRepository
+        protected EventDispatcherInterface $eventDispatcher,
+        protected IndexPreparationService $preparationService,
+        protected SlugService $slugService,
+        protected RawIndexRepository $rawIndexRepository
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->preparationService = $preparationService;
-        $this->slugService = $slugService;
-        $this->rawIndexRepository = $rawIndexRepository;
     }
 
     /**
      * Reindex all elements.
      */
-    public function reindexAll()
+    public function reindexAll(): void
     {
         $this->logger->debug('Start reindex ALL process');
 
@@ -115,12 +91,8 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Reindex the given element.
-     *
-     * @param string $configurationKey
-     * @param string $tableName
-     * @param int    $uid
      */
-    public function reindex(string $configurationKey, string $tableName, int $uid)
+    public function reindex(string $configurationKey, string $tableName, int $uid): void
     {
         $this->logger->debug('Start reindex SINGLE ' . $tableName . ':' . $uid);
 
@@ -135,12 +107,8 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Build the index for one element.
-     *
-     * @param string $configurationKey
-     * @param string $tableName
-     * @param int    $uid
      */
-    protected function updateIndex(string $configurationKey, string $tableName, int $uid)
+    protected function updateIndex(string $configurationKey, string $tableName, int $uid): void
     {
         $rawRecord = BackendUtility::getRecord($tableName, $uid);
 
@@ -197,13 +165,13 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Insert and/or update the needed index records.
-     *
-     * @param array  $neededItems
-     * @param string $tableName
-     * @param int    $uid
      */
-    protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid, int $workspace = 0)
-    {
+    protected function insertAndUpdateNeededItems(
+        array $neededItems,
+        string $tableName,
+        int $uid,
+        int $workspace = 0
+    ): void {
         $currentItems = $this->rawIndexRepository->findAllEvents($tableName, $uid, $workspace);
 
         if ($workspace) {
@@ -247,8 +215,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Generates a slug and inserts the records in the db.
-     *
-     * @param array $neededItems
      */
     protected function generateSlugAndInsert(array $neededItems, int $workspace = 0): void
     {
@@ -265,11 +231,9 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Remove Index items of the given table of records
-     * that are deleted or do not exists anymore.
-     *
-     * @param string $tableName
+     * that are deleted or do not exist anymore.
      */
-    protected function removeInvalidRecordIndex($tableName)
+    protected function removeInvalidRecordIndex(string $tableName)
     {
         $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
         $q->getRestrictions()
@@ -279,7 +243,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $q->select('uid')
             ->from($tableName);
 
-        $rows = $q->execute()->fetchAll();
+        $rows = $q->executeQuery()->fetchAllAssociative();
 
         $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
         $q->delete(self::TABLE_NAME)
@@ -297,15 +261,13 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             );
         }
 
-        $q->execute();
+        $q->executeStatement();
     }
 
     /**
      * Remove index Items of configurations that are not valid anymore.
-     *
-     * @return bool
      */
-    protected function removeInvalidConfigurationIndex()
+    protected function removeInvalidConfigurationIndex(): bool
     {
         $this->logger->debug('Log invalid index items of old configurations');
 

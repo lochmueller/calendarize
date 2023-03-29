@@ -28,20 +28,145 @@ defined('TYPO3') or exit();
         ];
     }
 
+    $calendar = \HDNET\Calendarize\Controller\CalendarController::class;
+    $booking = \HDNET\Calendarize\Controller\BookingController::class;
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'ListDetail',
+        [
+            $calendar => 'list,detail',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'List',
+        [
+            $calendar => 'list',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Detail',
+        [
+            $calendar => 'detail',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Search',
+        [
+            $calendar => 'search',
+        ],
+        [
+            $calendar => 'search',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Result',
+        [
+            $calendar => 'result',
+        ],
+        [
+            $calendar => 'result',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Latest',
+        [
+            $calendar => 'latest',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Single',
+        [
+            $calendar => 'single',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Year',
+        [
+            $calendar => 'year',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Quarter',
+        [
+            $calendar => 'quarter',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Month',
+        [
+            $calendar => 'month',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Week',
+        [
+            $calendar => 'week',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Day',
+        [
+            $calendar => 'day',
+        ]
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Past',
+        [
+            $calendar => 'past',
+        ]
+    );
+
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'calendarize',
         'Calendar',
         [
-            \HDNET\Calendarize\Controller\CalendarController::class => 'list,past,latest,year,quater,month,week,day,detail,search,result,single,shortcut',
-            \HDNET\Calendarize\Controller\BookingController::class => 'booking,send',
+            $calendar => 'list,past,latest,year,quater,month,week,day,detail,search,result,single,shortcut',
+            $booking => 'booking,send',
         ],
         [
-            \HDNET\Calendarize\Controller\CalendarController::class => 'search,result',
-            \HDNET\Calendarize\Controller\BookingController::class => 'booking,send',
+            $calendar => 'search,result',
+            $booking => 'booking,send',
         ]
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Booking',
+        [
+            $booking => 'booking,send',
+        ],
+        [
+            $booking => 'booking,send',
+        ]
+    );
+
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] =
+        \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
 
     // hooks
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration']['calendarize'] =

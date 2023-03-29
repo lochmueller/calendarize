@@ -161,7 +161,8 @@ class TimeTimeTable extends AbstractTimeTable
         // End date is before start date considering time, all day and open end
         if (
             $baseEntry['end_date'] instanceof \DateTimeInterface
-            && !$baseEntry['all_day'] && !$baseEntry['open_end_time']
+            && !$baseEntry['all_day']
+            && !$baseEntry['open_end_time']
             && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y')
             && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY
         ) {
@@ -296,7 +297,7 @@ class TimeTimeTable extends AbstractTimeTable
                 $intervalValue = '+' . $interval . ' years';
                 break;
             default:
-                $intervalValue = false;
+                $intervalValue = '';
         }
 
         return $intervalValue;

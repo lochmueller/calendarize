@@ -14,7 +14,7 @@ use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -29,24 +29,14 @@ use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
  */
 abstract class AbstractController extends ActionController
 {
-    /**
-     * The index repository.
-     *
-     * @var \HDNET\Calendarize\Domain\Repository\IndexRepository
-     */
-    protected $indexRepository;
+    protected IndexRepository $indexRepository;
 
-    /**
-     * @var PluginConfigurationService
-     */
-    protected $pluginConfigurationService;
+    protected PluginConfigurationService $pluginConfigurationService;
 
     /**
      * The feed formats and content types.
-     *
-     * @var array
      */
-    protected $feedFormats = [
+    protected array $feedFormats = [
         'ics' => 'text/calendar',
         'xml' => 'application/xml',
         'atom' => 'application/rss+xml',
@@ -54,8 +44,6 @@ abstract class AbstractController extends ActionController
 
     /**
      * Inject plugin configuration service.
-     *
-     * @param PluginConfigurationService $pluginConfigurationService
      */
     public function injectPluginConfigurationService(PluginConfigurationService $pluginConfigurationService)
     {
@@ -64,8 +52,6 @@ abstract class AbstractController extends ActionController
 
     /**
      * Inject index repository.
-     *
-     * @param \HDNET\Calendarize\Domain\Repository\IndexRepository $indexRepository
      */
     public function injectIndexRepository(IndexRepository $indexRepository)
     {
@@ -74,8 +60,6 @@ abstract class AbstractController extends ActionController
 
     /**
      * Inject the configuration manager.
-     *
-     * @param ConfigurationManagerInterface $configurationManager
      */
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
@@ -91,13 +75,15 @@ abstract class AbstractController extends ActionController
     public function initializeAction()
     {
         parent::initializeAction();
-        AbstractBookingRequest::setConfigurations(GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? ''));
+        AbstractBookingRequest::setConfigurations(
+            GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '')
+        );
     }
 
     /**
      * Extend the variables by the event and name and assign the variable to the view.
      */
-    protected function eventExtendedAssignMultiple(array $variables, string $className, string $eventName)
+    protected function eventExtendedAssignMultiple(array $variables, string $className, string $eventName): void
     {
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [];
@@ -114,8 +100,11 @@ abstract class AbstractController extends ActionController
     /**
      * A redirect that have an event included.
      */
-    protected function eventExtendedRedirect(string $className, string $eventName, array $variables = [])
-    {
+    protected function eventExtendedRedirect(
+        string $className,
+        string $eventName,
+        array $variables = []
+    ): ResponseInterface {
         // set default variables for the redirect
         if (empty($variables)) {
             $variables['extended'] = [
@@ -135,7 +124,7 @@ abstract class AbstractController extends ActionController
         $this->eventDispatcher->dispatch($event);
         $variables = $event->getVariables();
 
-        $this->redirect(
+        return $this->redirect(
             $variables['extended']['actionName'],
             $variables['extended']['controllerName'],
             $variables['extended']['extensionName'],
@@ -148,8 +137,6 @@ abstract class AbstractController extends ActionController
 
     /**
      * Return the controllerName, pluginName and actionName.
-     *
-     * @return string
      */
     protected function getStringForPluginHmac(): string
     {
@@ -164,11 +151,9 @@ abstract class AbstractController extends ActionController
     /**
      * Calculate the plugin Hmac.
      *
-     * @return string $hmac
-     *
-     * @see \TYPO3\CMS\Extbase\Security\Cryptography\HashService::generateHmac()
+     * @see HashService::generateHmac
      */
-    protected function calculatePluginHmac()
+    protected function calculatePluginHmac(): string
     {
         $string = $this->getStringForPluginHmac();
 
@@ -178,11 +163,7 @@ abstract class AbstractController extends ActionController
     }
 
     /**
-     * \TYPO3\CMS\Extbase\Security\Cryptography\HashService::validateHmac().
-     *
-     * @param string $hmac
-     *
-     * @return bool
+     * @see HashService::validateHmac
      */
     protected function validatePluginHmac(string $hmac): bool
     {
@@ -197,36 +178,21 @@ abstract class AbstractController extends ActionController
     /**
      * Check if the static template is included.
      */
-    protected function checkStaticTemplateIsIncluded()
+    protected function checkStaticTemplateIsIncluded(): void
     {
         if (!isset($this->settings['dateLimitBrowserPrev'])) {
             $this->addFlashMessage(
                 'Basic configuration settings are missing. It seems, that the Static Extension TypoScript is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
                 'Configuration Error',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
         }
     }
 
     /**
-     * Change the page title.
-     *
-     * @param string $title
-     */
-    protected function changePageTitle($title)
-    {
-        /** @var TypoScriptFrontendController $frontendController */
-        $frontendController = $GLOBALS['TSFE'];
-        $frontendController->page['title'] = $title;
-        $frontendController->indexedDocTitle = $title;
-    }
-
-    /**
      * Add cache tags.
-     *
-     * @param array $tags
      */
-    protected function addCacheTags(array $tags)
+    protected function addCacheTags(array $tags): void
     {
         if ($GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
             $GLOBALS['TSFE']->addCacheTags($tags);

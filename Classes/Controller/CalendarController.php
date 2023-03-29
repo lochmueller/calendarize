@@ -622,7 +622,7 @@ class CalendarController extends AbstractCompatibilityController
         int $week = 0
     ): array {
         $searchMode = false;
-        $this->checkWrongDateOrder($startDate, $endDate);
+        [$startDate, $endDate] = $this->checkWrongDateOrder($startDate, $endDate);
         if ($startDate || $endDate || !empty($customSearch)) {
             $searchMode = true;
             $limit = (int)($this->settings['limit'] ?? 0);
@@ -667,7 +667,8 @@ class CalendarController extends AbstractCompatibilityController
                 ($this->settings['listStartTime'] ?? 0),
                 (int)($this->settings['listStartTimeOffsetHours'] ?? 0),
                 $overrideStartDate,
-                $overrideEndDate
+                $overrideEndDate,
+                (bool)($this->settings['ignoreStoragePid'] ?? false)
             );
         }
 
@@ -690,27 +691,29 @@ class CalendarController extends AbstractCompatibilityController
         return $event->getVariables();
     }
 
-    protected function checkWrongDateOrder(\DateTime &$startDate = null, \DateTime &$endDate = null)
+    protected function checkWrongDateOrder(\DateTime $startDate = null, \DateTime &$endDate = null): array
     {
         if ($startDate && $endDate && $endDate < $startDate) {
             // End date is before start date. So use start and end equals!
-            $endDate = clone $startDate;
+            $tmp = $startDate;
+            $startDate = $endDate;
+            $endDate = $tmp;
+            unset($tmp);
         }
+        return [$startDate, $endDate];
     }
 
     /**
      * Creates the pagination logic for the results.
-     *
-     * @param QueryResultInterface $queryResult
-     *
-     * @return array
      */
     protected function getPagination(QueryResultInterface $queryResult): array
     {
         $paginateConfiguration = $this->settings['paginateConfiguration'] ?? [];
         $itemsPerPage = (int)($paginateConfiguration['itemsPerPage'] ?: 10);
         $maximumNumberOfLinks = (int)($paginateConfiguration['maximumNumberOfLinks'] ?? 10);
-        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+        $currentPage = $this->request->hasArgument('currentPage') ?
+            (int)$this->request->getArgument('currentPage')
+            : 1;
 
         $paginator = new QueryResultPaginator($queryResult, $currentPage, $itemsPerPage);
         $pagination = new SimplePagination($paginator);

@@ -38,11 +38,12 @@ class BackendController extends AbstractController
         ConfigurationManagerInterface $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+        $this->settings = $this->configurationManager
+            ->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
         $this->arguments = GeneralUtility::makeInstance(Arguments::class);
     }
 
-    public function initializeListAction()
+    public function initializeListAction(): void
     {
         $optionsConfiguration = $this->arguments->getArgument('options')->getPropertyMappingConfiguration();
 
@@ -132,8 +133,6 @@ class BackendController extends AbstractController
 
     /**
      * Get option request.
-     *
-     * @return OptionRequest
      */
     protected function getOptions(): OptionRequest
     {

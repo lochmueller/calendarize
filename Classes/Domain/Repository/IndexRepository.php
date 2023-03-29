@@ -23,6 +23,7 @@ use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
  * Index repository.
@@ -48,10 +49,8 @@ class IndexRepository extends AbstractRepository
 
     /**
      * Override page ids.
-     *
-     * @var array
      */
-    protected $overridePageIds;
+    protected ?array $overridePageIds;
 
     /**
      * @var EventDispatcherInterface
@@ -102,7 +101,7 @@ class IndexRepository extends AbstractRepository
      * @param array         $allowedPages
      * @param bool          $ignoreEnableFields
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findAllForBackend(OptionRequest $options, array $allowedPages = [], bool $ignoreEnableFields = true)
     {
@@ -154,22 +153,15 @@ class IndexRepository extends AbstractRepository
 
     /**
      * Find List.
-     *
-     * @param int        $limit
-     * @param int|string $listStartTime
-     * @param int        $startOffsetHours
-     * @param int        $overrideStartDate
-     * @param int        $overrideEndDate
-     *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findList(
-        $limit = 0,
-        $listStartTime = 0,
-        $startOffsetHours = 0,
-        $overrideStartDate = 0,
-        $overrideEndDate = 0
-    ) {
+        int $limit = 0,
+        int|string $listStartTime = 0,
+        int $startOffsetHours = 0,
+        int $overrideStartDate = 0,
+        int $overrideEndDate = 0,
+        bool $ignoreStoragePid = false
+    ): array|QueryResultInterface {
         $startTime = DateTimeUtility::getNow();
         $endTime = null;
 
@@ -187,7 +179,12 @@ class IndexRepository extends AbstractRepository
             $endTime = DateTimeUtility::getNow()->setTimestamp($overrideEndDate);
         }
 
+        if ($ignoreStoragePid) {
+            $this->overridePageIds = [];
+        }
+
         $result = $this->findByTimeSlot($startTime, $endTime);
+
         if ($limit > 0) {
             $query = $result->getQuery();
             $query->setLimit($limit);
@@ -205,7 +202,7 @@ class IndexRepository extends AbstractRepository
      * @param array                   $customSearch
      * @param int                     $limit
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findBySearch(
         \DateTimeInterface $startDate = null,
@@ -300,7 +297,7 @@ class IndexRepository extends AbstractRepository
      * @param int    $limit
      * @param string $sort
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findByPast(
         $limit,
@@ -329,7 +326,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Find by Index UIDs.
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findByUids(
         array $uids
@@ -353,7 +350,7 @@ class IndexRepository extends AbstractRepository
      * @param string     $sort
      * @param bool       $useIndexTime
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findByTraversing(
         Index $index,
@@ -400,7 +397,7 @@ class IndexRepository extends AbstractRepository
      * @param int                   $limit
      * @param string                $sort
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      *
      * @throws \Exception
      */
@@ -448,7 +445,7 @@ class IndexRepository extends AbstractRepository
      *
      * @param int $year
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findYear(int $year)
     {
@@ -464,7 +461,7 @@ class IndexRepository extends AbstractRepository
      * @param int $year
      * @param int $quarter
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findQuarter(int $year, int $quarter)
     {
@@ -481,7 +478,7 @@ class IndexRepository extends AbstractRepository
      * @param int $year
      * @param int $month
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findMonth(int $year, int $month)
     {
@@ -498,7 +495,7 @@ class IndexRepository extends AbstractRepository
      * @param int $week
      * @param int $weekStart See documentation for settings.weekStart
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findWeek(int $year, int $week, int $weekStart = 1)
     {
@@ -515,7 +512,7 @@ class IndexRepository extends AbstractRepository
      * @param int $month
      * @param int $day
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      *
      * @throws \Exception
      */
@@ -552,14 +549,11 @@ class IndexRepository extends AbstractRepository
 
     /**
      * Find by time slot.
-     *
-     * @param \DateTimeInterface|null $startTime
-     * @param \DateTimeInterface|null $endTime
-     *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByTimeSlot(?\DateTimeInterface $startTime, ?\DateTimeInterface $endTime = null)
-    {
+    public function findByTimeSlot(
+        ?\DateTimeInterface $startTime,
+        ?\DateTimeInterface $endTime = null
+    ): array|QueryResultInterface {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
@@ -575,7 +569,7 @@ class IndexRepository extends AbstractRepository
      *
      * @param DomainObjectInterface $event
      *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      *
      * @throws \Exception
      */
@@ -595,10 +589,8 @@ class IndexRepository extends AbstractRepository
 
     /**
      * storage page selection.
-     *
-     * @return array
      */
-    protected function getStoragePageIds()
+    protected function getStoragePageIds(): array
     {
         if (null !== $this->overridePageIds) {
             return $this->overridePageIds;
@@ -622,12 +614,8 @@ class IndexRepository extends AbstractRepository
 
     /**
      * Get the default constraint for the queries.
-     *
-     * @param QueryInterface $query
-     *
-     * @return array
      */
-    protected function getDefaultConstraints(QueryInterface $query)
+    protected function getDefaultConstraints(QueryInterface $query): array
     {
         $constraints = [];
         if (!empty($this->indexTypes)) {
@@ -764,13 +752,8 @@ class IndexRepository extends AbstractRepository
 
     /**
      * Get the sorting.
-     *
-     * @param string $direction
-     * @param string $field
-     *
-     * @return array
      */
-    protected function getSorting($direction, $field = '')
+    protected function getSorting(string $direction, string $field = ''): array
     {
         if ('withrangelast' === $field) {
             return [

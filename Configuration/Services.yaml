@@ -83,3 +83,6 @@ services:
         priority: 1
         target: HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest
         sources: array
+
+  HDNET\Calendarize\Service\PluginConfigurationService:
+    public: true

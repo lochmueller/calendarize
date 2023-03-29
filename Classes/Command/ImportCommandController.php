@@ -27,9 +27,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class ImportCommandController extends Command
 {
-    /**
-     * ImportCommandController constructor.
-     */
     public function __construct(
         protected ICalServiceInterface $iCalService,
         protected EventDispatcherInterface $eventDispatcher,
@@ -65,14 +62,9 @@ class ImportCommandController extends Command
     /**
      * Executes the command for importing a iCalendar ICS into a page ID.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int 0 if everything went fine, or an exit code
-     *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -80,16 +72,15 @@ class ImportCommandController extends Command
         if (!GeneralUtility::isValidUrl($icsCalendarUri)) {
             $io->error('You have to enter a valid URL to the iCalendar ICS');
 
-            return 1;
+            return self::FAILURE;
         }
 
-        $pid = $input->getArgument('pid');
+        $pid = (int)$input->getArgument('pid');
         if (!MathUtility::canBeInterpretedAsInteger($pid)) {
             $io->error('You have to enter a valid PID for the new created elements');
 
-            return 1;
+            return self::FAILURE;
         }
-        $pid = (int)$pid;
 
         // Process skip
         $since = $input->getOption('since');
@@ -107,7 +98,7 @@ class ImportCommandController extends Command
         } catch (UnableToGetFileForUrlException $e) {
             $io->error('Invalid URL: ' . $e->getMessage());
 
-            return 1;
+            return self::FAILURE;
         }
         try {
             // Parse calendar
@@ -119,7 +110,7 @@ class ImportCommandController extends Command
                 $io->writeln($e->getTraceAsString());
             }
 
-            return 1;
+            return self::FAILURE;
         } finally {
             // Remove temporary file
             GeneralUtility::unlink_tempfile($icalFile);

@@ -72,10 +72,6 @@ class PluginConfigurationService
 
     /**
      * Build the plugin configuration object.
-     *
-     * @param int $uid
-     *
-     * @return object|null
      */
     protected function buildPluginConfigurationObject(int $uid): ?object
     {
