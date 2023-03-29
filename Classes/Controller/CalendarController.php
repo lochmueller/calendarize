@@ -276,7 +276,7 @@ class CalendarController extends AbstractCompatibilityController
         $limit = $limit ?: (int)($this->settings['limit']);
         $sort = $sort ?: $this->settings['sorting'];
         $this->checkStaticTemplateIsIncluded();
-        $listStartTime = $this->settings['listStartTime'];
+        $listStartTime = (string)$this->settings['listStartTime'];
         $indices = $this->indexRepository->findByPast($limit, $sort, $listStartTime);
 
         $this->eventExtendedAssignMultiple([

@@ -24,9 +24,6 @@ use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
-/**
- * Abstract controller.
- */
 abstract class AbstractController extends ActionController
 {
     protected IndexRepository $indexRepository;
@@ -83,7 +80,7 @@ abstract class AbstractController extends ActionController
     /**
      * Extend the variables by the event and name and assign the variable to the view.
      */
-    protected function eventExtendedAssignMultiple(array $variables, string $className, string $eventName): void
+    protected function eventExtendedAssignMultiple(array $variables, string $className, string $functionName): void
     {
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [];
@@ -91,7 +88,7 @@ abstract class AbstractController extends ActionController
         $variables['settings'] = $this->settings;
         $variables['contentObject'] = $this->configurationManager->getContentObject()->data;
 
-        $event = new GenericActionAssignmentEvent($variables, $className, $eventName);
+        $event = new GenericActionAssignmentEvent($variables, $className, $functionName);
         $this->eventDispatcher->dispatch($event);
 
         $this->view->assignMultiple($event->getVariables());

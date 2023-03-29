@@ -7,7 +7,7 @@ final class GenericActionAssignmentEvent
     public function __construct(
         private array $variables,
         private readonly string $className,
-        private readonly string $eventName
+        private readonly string $functionName
     ) {
     }
 
@@ -21,9 +21,17 @@ final class GenericActionAssignmentEvent
         return $this->className;
     }
 
+    public function getFunctionName(): string
+    {
+        return $this->functionName;
+    }
+
+    /**
+     * @deprecated use getFunctionName instead
+     */
     public function getEventName(): string
     {
-        return $this->eventName;
+        return $this->functionName;
     }
 
     public function setVariables(array $variables): void

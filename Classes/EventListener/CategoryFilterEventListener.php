@@ -23,7 +23,7 @@ class CategoryFilterEventListener
 
     public function __invoke(GenericActionAssignmentEvent $event)
     {
-        if (CalendarController::class !== $event->getClassName() || 'searchAction' !== $event->getEventName()) {
+        if (CalendarController::class !== $event->getClassName() || 'searchAction' !== $event->getFunctionName()) {
             return;
         }
         if (!$this->checkConfiguration($event->getVariables()['configurations'] ?? [], $this->itemTableName)) {
