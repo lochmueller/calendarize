@@ -82,7 +82,11 @@ class EventConfigurationServiceTest extends AbstractUnitTest
     public function testHydrateRecurringConfiguration(array $rrule, array $expected): void
     {
         $subject = $this->getAccessibleMock(EventConfigurationService::class, ['dummy']);
-        $subject->setLogger(new NullLogger());
+        $logger = $this->createMock(NullLogger::class);
+        $logger->expects(self::never())->method('error');
+        $logger->expects(self::never())->method('warning');
+        $subject->setLogger($logger);
+
         $row = $subject->_call('mapRruleToConfiguration', $rrule);
 
         if (isset($row['day'])) {
