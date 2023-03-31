@@ -223,7 +223,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                     // Check if the current slug starts with the new slug
                     // Prevents regeneration for slugs with counting suffixes (added before insertion)
                     // False positives are possible (e.g. single event where a part gets removed)
-                    if (0 !== mb_stripos($currentItem['slug'] ?? '', $neededItem['slug'], 0, 'utf-8')) {
+                    if (!empty($neededItem['slug']) && 0 !== mb_stripos($currentItem['slug'] ?? '', $neededItem['slug'], 0, 'utf-8')) {
                         // Slug changed
                         continue;
                     }
