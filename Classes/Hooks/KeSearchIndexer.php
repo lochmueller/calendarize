@@ -29,11 +29,8 @@ class KeSearchIndexer
 
     /**
      * Register the indexer configuration.
-     *
-     * @param array  $params
-     * @param object $pObj
      */
-    public function registerIndexerConfiguration(&$params, $pObj)
+    public function registerIndexerConfiguration(array &$params, ?object $pObj): void
     {
         $newArray = [
             'Calendarize Indexer',

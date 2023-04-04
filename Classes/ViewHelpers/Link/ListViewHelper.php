@@ -12,7 +12,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class ListViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'list';
+    protected string $actionName = 'list';
 
     /**
      * Init arguments.

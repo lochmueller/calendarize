@@ -31,6 +31,7 @@ final class GenericActionAssignmentEvent
      */
     public function getEventName(): string
     {
+        trigger_error('Use GenericActionRedirectEvent::getFunctionName() instead', E_USER_DEPRECATED);
         return $this->functionName;
     }
 

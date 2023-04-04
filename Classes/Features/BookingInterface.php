@@ -13,7 +13,7 @@ namespace HDNET\Calendarize\Features;
 interface BookingInterface
 {
     /**
-     * Is the given event is bookable.
+     * If the given event is bookable.
      */
     public function isBookable(): bool;
 }

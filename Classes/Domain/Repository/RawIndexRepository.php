@@ -70,9 +70,9 @@ class RawIndexRepository extends AbstractRawRepository
         int $limit = 5,
         int $workspace = 0
     ): array {
-        $q = $this->getQueryBuilder();
+        $queryBuilder = $this->getQueryBuilder();
 
-        $q->getRestrictions()
+        $queryBuilder->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(WorkspaceRestriction::class, $workspace));
@@ -82,20 +82,29 @@ class RawIndexRepository extends AbstractRawRepository
             $uid = $liveId;
         }
 
-        $q->select('*')
+        $queryBuilder->select('*')
             ->from($this->tableName)
             ->where(
-                $q->expr()->and(
-                    $q->expr()->gte('start_date', $q->createNamedParameter($dateTime->format('Y-m-d'))),
-                    $q->expr()->eq('foreign_table', $q->createNamedParameter($foreignTable)),
-                    $q->expr()->eq('foreign_uid', $q->createNamedParameter($uid, \PDO::PARAM_INT))
+                $queryBuilder->expr()->and(
+                    $queryBuilder->expr()->gte(
+                        'start_date',
+                        $queryBuilder->createNamedParameter($dateTime->format('Y-m-d'))
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'foreign_table',
+                        $queryBuilder->createNamedParameter($foreignTable)
+                    ),
+                    $queryBuilder->expr()->eq(
+                        'foreign_uid',
+                        $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                    )
                 )
             )
             ->addOrderBy('start_date', 'ASC')
             ->addOrderBy('start_time', 'ASC')
             ->setMaxResults($limit);
 
-        $result = $q->executeQuery()->fetchAllAssociative();
+        $result = $queryBuilder->executeQuery()->fetchAllAssociative();
 
         foreach ($result as $key => $row) {
             BackendUtility::workspaceOL($this->tableName, $row, $workspace);
@@ -103,11 +112,14 @@ class RawIndexRepository extends AbstractRawRepository
         }
 
         // @todo check
-        $result = array_values(array_filter($result, static function ($item) {
-            return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
-        }));
-
-        return $result;
+        return array_values(
+            array_filter(
+                $result,
+                static function ($item) {
+                    return is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
+                }
+            )
+        );
     }
 
     /**

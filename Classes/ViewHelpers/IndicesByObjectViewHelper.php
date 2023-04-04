@@ -24,15 +24,12 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class IndicesByObjectViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var IndexRepository
-     */
-    protected $indexRepository;
+    protected IndexRepository $indexRepository;
 
     /**
      * @param IndexRepository $indexRepository
      */
-    public function injectIndexRepository(IndexRepository $indexRepository)
+    public function injectIndexRepository(IndexRepository $indexRepository): void
     {
         $this->indexRepository = $indexRepository;
     }
@@ -52,10 +49,8 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
 
     /**
      * Render method.
-     *
-     * @return array
      */
-    public function render()
+    public function render(): array
     {
         /** @var AbstractEntity $object */
         $object = $this->arguments['object'];

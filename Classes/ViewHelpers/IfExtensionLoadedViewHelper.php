@@ -18,7 +18,7 @@ class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('extensionKey', 'string', 'The extension key of the extension', true);

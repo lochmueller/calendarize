@@ -12,7 +12,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class WeekViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'week';
+    protected string $actionName = 'week';
 
     /**
      * Init arguments.

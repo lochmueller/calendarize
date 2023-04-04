@@ -19,7 +19,7 @@ class EventRepository extends AbstractRepository
 {
     protected IndexRepository $indexRepository;
 
-    public function injectIndexRepository(IndexRepository $indexRepository)
+    public function injectIndexRepository(IndexRepository $indexRepository): void
     {
         $this->indexRepository = $indexRepository;
     }
@@ -76,14 +76,20 @@ class EventRepository extends AbstractRepository
         /** @var Event $event */
         $event = $this->findByUid($uid);
 
-        if (!\is_object($event)) {
+        if (!is_object($event)) {
             return null;
         }
 
         try {
             $result = $this->indexRepository->findByEventTraversing($event, true, false, 1);
             if (empty($result)) {
-                $result = $this->indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING);
+                $result = $this->indexRepository->findByEventTraversing(
+                    $event,
+                    false,
+                    true,
+                    1,
+                    QueryInterface::ORDER_DESCENDING
+                );
             }
         } catch (\Exception $exception) {
             return null;

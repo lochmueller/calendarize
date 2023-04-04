@@ -26,14 +26,8 @@ class IndexPreparationService extends AbstractService
 
     /**
      * Build the index for one element.
-     *
-     * @param string $configurationKey
-     * @param string $tableName
-     * @param int    $uid
-     *
-     * @return array
      */
-    public function prepareIndex($configurationKey, $tableName, $uid)
+    public function prepareIndex(string $configurationKey, string $tableName, int $uid): array
     {
         $rawRecord = BackendUtility::getRecord($tableName, $uid);
         if (!$rawRecord) {
@@ -103,7 +97,11 @@ class IndexPreparationService extends AbstractService
 
         if ($transPointer && (int)$record[$transPointer] > 0) {
             foreach ($neededItems as $key => $value) {
-                $originalRecord = BackendUtility::getRecord($value['foreign_table'], $value['foreign_uid'], $transPointer);
+                $originalRecord = BackendUtility::getRecord(
+                    $value['foreign_table'],
+                    $value['foreign_uid'],
+                    $transPointer
+                );
 
                 $searchFor = $value;
                 $searchFor['foreign_uid'] = (int)$originalRecord[$transPointer];
@@ -119,7 +117,13 @@ class IndexPreparationService extends AbstractService
                     }
                 }
 
-                $result = $q->select('uid')->from(IndexerService::TABLE_NAME)->andWhere(...$where)->execute()->fetch();
+                $result = $q
+                    ->select('uid')
+                    ->from(IndexerService::TABLE_NAME)
+                    ->andWhere(...$where)
+                    ->executeQuery()
+                    ->fetchAssociative();
+
                 if (isset($result['uid'])) {
                     $neededItems[$key]['l10n_parent'] = (int)$result['uid'];
                 }
@@ -136,12 +140,8 @@ class IndexPreparationService extends AbstractService
 
     /**
      * Add the enable field information.
-     *
-     * @param array  $neededItems
-     * @param string $tableName
-     * @param array  $record
      */
-    protected function addEnableFieldInformation(array &$neededItems, $tableName, array $record)
+    protected function addEnableFieldInformation(array &$neededItems, string $tableName, array $record): void
     {
         $enableFields = $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns'] ?? [];
         if (!$enableFields) {
@@ -169,12 +169,8 @@ class IndexPreparationService extends AbstractService
 
     /**
      * Add the ctrl field information.
-     *
-     * @param array  $neededItems
-     * @param string $tableName
-     * @param array  $record
      */
-    protected function addCtrlFieldInformation(array &$neededItems, $tableName, array $record)
+    protected function addCtrlFieldInformation(array &$neededItems, string $tableName, array $record): void
     {
         $ctrl = $GLOBALS['TCA'][$tableName]['ctrl'] ?? [];
         if (!$ctrl) {
@@ -196,10 +192,6 @@ class IndexPreparationService extends AbstractService
 
     /**
      * Add slug to each index.
-     *
-     * @param array  $neededItems
-     * @param string $uniqueRegisterKey
-     * @param array  $record
      */
     protected function addSlugInformation(array &$neededItems, string $uniqueRegisterKey, array $record): void
     {
@@ -211,10 +203,8 @@ class IndexPreparationService extends AbstractService
 
     /**
      * Prepare the record for the database insert.
-     *
-     * @param $record
      */
-    protected function prepareRecordForDatabase(&$record)
+    protected function prepareRecordForDatabase(array &$record): void
     {
         foreach ($record as $key => $value) {
             if ($value instanceof \DateTimeInterface) {

@@ -32,7 +32,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
      *
      * @return array
      */
-    protected function getItems(\DateTime $date, \DateTime $originalDate = null)
+    protected function getItems(\DateTime $date, \DateTime $originalDate = null): array
     {
         if (null === $originalDate) {
             $originalDate = clone $date;

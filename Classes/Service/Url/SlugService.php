@@ -22,20 +22,11 @@ class SlugService extends AbstractService
     protected const TABLE_NAME = 'tx_calendarize_domain_model_index';
     protected const SLUG_NAME = 'slug';
 
-    /**
-     * @var RecordStateFactory
-     */
-    protected $stateFactory;
+    protected RecordStateFactory $stateFactory;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var bool
-     */
-    protected $useDate;
+    protected bool $useDate;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {

@@ -12,7 +12,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class DayViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'day';
+    protected string $actionName = 'day';
 
     /**
      * Init arguments.

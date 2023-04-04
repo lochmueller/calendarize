@@ -61,7 +61,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Set the index types.
      */
-    public function setIndexTypes(array $types)
+    public function setIndexTypes(array $types): void
     {
         $this->indexTypes = $types;
     }
@@ -69,7 +69,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Override page IDs.
      */
-    public function setOverridePageIds(array $overridePageIds)
+    public function setOverridePageIds(array $overridePageIds): void
     {
         $this->overridePageIds = $overridePageIds;
     }
@@ -469,7 +469,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Set the default sorting direction.
      */
-    public function setDefaultSortingDirection(string $direction, string $field = '')
+    public function setDefaultSortingDirection(string $direction, string $field = ''): void
     {
         $this->defaultOrderings = $this->getSorting($direction, $field);
     }

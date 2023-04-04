@@ -63,9 +63,15 @@ class Index extends AbstractModel
         if (null === $this->originalObject) {
             $configuration = $this->getConfiguration();
             if (empty($configuration)) {
-                throw new InvalidConfigurationException('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
+                throw new InvalidConfigurationException(
+                    'No valid configuration for the current index: ' . $this->getUniqueRegisterKey(),
+                    123678123
+                );
             }
-            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, $this->getForeignUid());
+            $this->originalObject = EventUtility::getOriginalRecordByConfiguration(
+                $configuration,
+                $this->getForeignUid()
+            );
         }
 
         return $this->originalObject;
@@ -73,8 +79,6 @@ class Index extends AbstractModel
 
     /**
      * Get the current configuration.
-     *
-     * @return array
      */
     public function getConfiguration(): array
     {
@@ -89,8 +93,6 @@ class Index extends AbstractModel
 
     /**
      * Get the complete start date.
-     *
-     * @return \DateTime|null
      */
     public function getStartDateComplete(): ?\DateTime
     {
@@ -104,8 +106,6 @@ class Index extends AbstractModel
 
     /**
      * Get the complete end date.
-     *
-     * @return \DateTime|null
      */
     public function getEndDateComplete(): ?\DateTime
     {
@@ -122,18 +122,14 @@ class Index extends AbstractModel
 
     /**
      * Set foreign uid.
-     *
-     * @param int $foreignUid
      */
-    public function setForeignUid(int $foreignUid)
+    public function setForeignUid(int $foreignUid): void
     {
         $this->foreignUid = $foreignUid;
     }
 
     /**
      * Get foreign uid.
-     *
-     * @return int
      */
     public function getForeignUid(): int
     {
@@ -142,18 +138,14 @@ class Index extends AbstractModel
 
     /**
      * Set unique register key.
-     *
-     * @param string $uniqueRegisterKey
      */
-    public function setUniqueRegisterKey(string $uniqueRegisterKey)
+    public function setUniqueRegisterKey(string $uniqueRegisterKey): void
     {
         $this->uniqueRegisterKey = $uniqueRegisterKey;
     }
 
     /**
      * Get unique register key.
-     *
-     * @return string
      */
     public function getUniqueRegisterKey(): string
     {
@@ -162,18 +154,14 @@ class Index extends AbstractModel
 
     /**
      * Set foreign table.
-     *
-     * @param string $foreignTable
      */
-    public function setForeignTable(string $foreignTable)
+    public function setForeignTable(string $foreignTable): void
     {
         $this->foreignTable = $foreignTable;
     }
 
     /**
      * Get foreign table.
-     *
-     * @return string
      */
     public function getForeignTable(): string
     {
@@ -183,7 +171,7 @@ class Index extends AbstractModel
     /**
      * Set all day.
      */
-    public function setAllDay(bool $allDay)
+    public function setAllDay(bool $allDay): void
     {
         $this->allDay = $allDay;
     }
@@ -198,38 +186,30 @@ class Index extends AbstractModel
 
     /**
      * Set end date.
-     *
-     * @param \DateTime|null $endDate
      */
     public function setEndDate(?\DateTime $endDate): void
     {
-        $this->endDate = DateTimeUtility::fixDateTimeForDb($endDate);
+        $this->endDate = $endDate;
     }
 
     /**
      * Get end date.
-     *
-     * @return \DateTime|null
      */
     public function getEndDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->endDate);
+        return $this->endDate;
     }
 
     /**
      * Set end time.
-     *
-     * @param int $endTime
      */
-    public function setEndTime(int $endTime)
+    public function setEndTime(int $endTime): void
     {
         $this->endTime = $endTime;
     }
 
     /**
      * Get end time.
-     *
-     * @return int
      */
     public function getEndTime(): int
     {
@@ -238,38 +218,30 @@ class Index extends AbstractModel
 
     /**
      * Set start date.
-     *
-     * @param \DateTime|null $startDate
      */
     public function setStartDate(?\DateTime $startDate): void
     {
-        $this->startDate = DateTimeUtility::fixDateTimeForDb($startDate);
+        $this->startDate = $startDate;
     }
 
     /**
      * Get start date.
-     *
-     * @return \DateTime|null
      */
     public function getStartDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->startDate);
+        return $this->startDate;
     }
 
     /**
      * Set start time.
-     *
-     * @param int $startTime
      */
-    public function setStartTime(int $startTime)
+    public function setStartTime(int $startTime): void
     {
         $this->startTime = $startTime;
     }
 
     /**
      * Get start time.
-     *
-     * @return int
      */
     public function getStartTime(): int
     {
@@ -278,8 +250,6 @@ class Index extends AbstractModel
 
     /**
      * Get state.
-     *
-     * @return string
      */
     public function getState(): string
     {
@@ -288,51 +258,35 @@ class Index extends AbstractModel
 
     /**
      * Set state.
-     *
-     * @param string $state
      */
-    public function setState(string $state)
+    public function setState(string $state): void
     {
         $this->state = $state;
     }
 
     /**
      * Get sys language uid.
-     *
-     * @return int
      */
     public function getSysLanguageUid(): int
     {
         return (int)$this->_languageUid;
     }
 
-    /**
-     * @return bool
-     */
     public function isOpenEndTime(): bool
     {
         return $this->openEndTime;
     }
 
-    /**
-     * @param bool $openEndTime
-     */
-    public function setOpenEndTime(bool $openEndTime)
+    public function setOpenEndTime(bool $openEndTime): void
     {
         $this->openEndTime = $openEndTime;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string|null $slug
-     */
     public function setSlug(?string $slug): void
     {
         $this->slug = $slug;

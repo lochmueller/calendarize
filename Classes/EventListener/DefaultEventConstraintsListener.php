@@ -10,38 +10,50 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 class DefaultEventConstraintsListener
 {
-    public function __invoke(IndexRepositoryDefaultConstraintEvent $event)
+    public function __invoke(IndexRepositoryDefaultConstraintEvent $event): void
     {
-        if (!empty($event->getIndexTypes()) && !\in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)) {
+        if (
+            !empty($event->getIndexTypes())
+            && !in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)
+        ) {
             return;
         }
 
         $table = 'sys_category_record_mm';
-        $db = HelperUtility::getDatabaseConnection($table);
-        $q = $db->createQueryBuilder();
+        $queryBuilder = HelperUtility::getQueryBuilder($table);
 
         $additionalSlotArguments = $event->getAdditionalSlotArguments();
 
         $categoryIds = [];
-        if (isset($additionalSlotArguments['contentRecord']['uid']) && MathUtility::canBeInterpretedAsInteger($additionalSlotArguments['contentRecord']['uid'])) {
-            $rows = $q->select('uid_local')
+        if (
+            isset($additionalSlotArguments['contentRecord']['uid'])
+            && MathUtility::canBeInterpretedAsInteger($additionalSlotArguments['contentRecord']['uid'])
+        ) {
+            $rows = $queryBuilder
+                ->select('uid_local')
                 ->from($table)
                 ->where(
-                    $q->expr()->andX(
-                        $q->expr()->eq('tablenames', $q->quote('tt_content')),
-                        $q->expr()->eq('fieldname', $q->quote('categories')),
-                        $q->expr()->eq('uid_foreign', $q->createNamedParameter($additionalSlotArguments['contentRecord']['uid']))
+                    $queryBuilder->expr()->and(
+                        $queryBuilder->expr()->eq('tablenames', $queryBuilder->quote('tt_content')),
+                        $queryBuilder->expr()->eq('fieldname', $queryBuilder->quote('categories')),
+                        $queryBuilder->expr()->eq(
+                            'uid_foreign',
+                            $queryBuilder->createNamedParameter($additionalSlotArguments['contentRecord']['uid'])
+                        )
                     )
                 )
-                ->execute()
-                ->fetchAll();
+                ->executeQuery()
+                ->fetchAllAssociative();
 
             foreach ($rows as $row) {
                 $categoryIds[] = (int)$row['uid_local'];
             }
         }
 
-        if (isset($additionalSlotArguments['settings']['pluginConfiguration']) && $additionalSlotArguments['settings']['pluginConfiguration'] instanceof PluginConfiguration) {
+        if (
+            isset($additionalSlotArguments['settings']['pluginConfiguration'])
+            && $additionalSlotArguments['settings']['pluginConfiguration'] instanceof PluginConfiguration
+        ) {
             /** @var PluginConfiguration $pluginConfiguration */
             $pluginConfiguration = $additionalSlotArguments['settings']['pluginConfiguration'];
             $categories = $pluginConfiguration->getCategories();
@@ -54,16 +66,17 @@ class DefaultEventConstraintsListener
             return;
         }
 
-        $q->resetQueryParts();
-        $rows = $q->select('uid_foreign')
+        $queryBuilder = HelperUtility::getQueryBuilder($table);
+        $rows = $queryBuilder
+            ->select('uid_foreign')
             ->from('sys_category_record_mm')
             ->where(
-                $q->expr()->in('uid_local', $categoryIds),
-                $q->expr()->eq('tablenames', $q->quote($this->getTableName())),
-                $q->expr()->eq('fieldname', $q->quote('categories'))
+                $queryBuilder->expr()->in('uid_local', $queryBuilder->createNamedParameter($categoryIds)),
+                $queryBuilder->expr()->eq('tablenames', $queryBuilder->quote($this->getTableName())),
+                $queryBuilder->expr()->eq('fieldname', $queryBuilder->quote('categories'))
             )
-            ->execute()
-            ->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         $indexIds = $event->getIndexIds();
         foreach ($rows as $row) {
@@ -78,17 +91,14 @@ class DefaultEventConstraintsListener
      * Table name.
      *
      * Note: This complete class is for the Event Model of the calendarize extension.
-     * If you use a own model with special search criteria you have to register your
+     * If you use an own model with special search criteria you have to register your
      * own custom Slot. If you only want the category logic for your model, you can
-     * easily register a own slot that is based on this class. Thean you only have
+     * easily register an own slot that is based on this class. Then you only have
      * to overwrite the tableName property.
-     *
-     * @return string
      */
-    protected function getTableName()
+    protected function getTableName(): string
     {
         $config = Register::getDefaultCalendarizeConfiguration();
-
-        return $config['tableName'];
+        return (string)($config['tableName'] ?? '');
     }
 }

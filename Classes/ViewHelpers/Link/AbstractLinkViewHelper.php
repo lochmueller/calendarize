@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
@@ -25,10 +26,8 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
 
     /**
      * Store the last href to avoid escaping for the URI view Helper.
-     *
-     * @var string
      */
-    protected $lastHref = '';
+    protected string $lastHref = '';
 
     /**
      * Arguments initialization.
@@ -47,18 +46,16 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     }
 
     /**
-     * render the link.
-     *
-     * @param int|null $pageUid          target page. See TypoLink destination
-     * @param array    $additionalParams query parameters to be attached to the resulting URI
-     * @param bool     $absolute
-     *
-     * @return string Rendered page URI
+     * Render the link.
      */
-    public function renderLink($pageUid = null, array $additionalParams = [], $absolute = false, $section = '')
-    {
+    public function renderLink(
+        ?int $pageUid = null,
+        array $additionalParams = [],
+        bool $absolute = false,
+        $section = ''
+    ): string {
         /** @var UriBuilder $uriBuilder */
-        $uriBuilder = $this->renderingContext->getControllerContext()->getUriBuilder();
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         // $uriBuilder = $this->renderingContext->getUriBuilder(); // Typo3 11 and later
         $this->lastHref = $uriBuilder->reset()
             ->setTargetPageUid($pageUid)
@@ -79,16 +76,11 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
 
     /**
      * Get the right page Uid.
-     *
-     * @param int         $pageUid
-     * @param string|null $contextName
-     *
-     * @return int
      */
-    protected function getPageUid($pageUid, $contextName = null)
+    protected function getPageUid(int $pageUid, ?string $contextName = null): int
     {
         if (MathUtility::canBeInterpretedAsInteger($pageUid) && $pageUid > 0) {
-            return (int)$pageUid;
+            return $pageUid;
         }
         if (null === $contextName && $this->actionName) {
             $contextName = $this->actionName . 'Pid';

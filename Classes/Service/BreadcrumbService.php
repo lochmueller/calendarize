@@ -17,11 +17,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class BreadcrumbService extends AbstractService
 {
-    /**
-     * @param string $content
-     * @param array  $configuration
-     */
-    public function generate(string $content, array $configuration)
+    public function generate(string $content, array $configuration): string
     {
         $arguments = GeneralUtility::_GET('tx_calendarize_calendar');
         $indexUid = isset($arguments['index']) ? (int)$arguments['index'] : 0;
@@ -56,12 +52,12 @@ class BreadcrumbService extends AbstractService
         return $contentObjectRenderer->stdWrap($content, $configuration);
     }
 
-    protected function getEventByIndex(array $row)
+    protected function getEventByIndex(array $row): ?array
     {
         return BackendUtility::getRecordWSOL($row['foreign_table'], (int)$row['foreign_uid']);
     }
 
-    protected function getIndex(int $uid)
+    protected function getIndex(int $uid): ?array
     {
         return BackendUtility::getRecordWSOL('tx_calendarize_domain_model_index', $uid);
     }

@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Calendarize\Utility\DateTimeUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -114,7 +113,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getEndDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->endDate);
+        return $this->endDate;
     }
 
     /**
@@ -122,7 +121,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function setEndDate(?\DateTime $endDate): self
     {
-        $this->endDate = DateTimeUtility::fixDateTimeForDb($endDate);
+        $this->endDate = $endDate;
 
         return $this;
     }
@@ -168,7 +167,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getStartDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->startDate);
+        return $this->startDate;
     }
 
     /**
@@ -176,7 +175,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function setStartDate(?\DateTime $startDate): self
     {
-        $this->startDate = DateTimeUtility::fixDateTimeForDb($startDate);
+        $this->startDate = $startDate;
 
         return $this;
     }
@@ -240,7 +239,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getTillDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->tillDate);
+        return $this->tillDate;
     }
 
     /**
@@ -248,7 +247,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function setTillDate(?\DateTime $tillDate): self
     {
-        $this->tillDate = DateTimeUtility::fixDateTimeForDb($tillDate);
+        $this->tillDate = $tillDate;
 
         return $this;
     }

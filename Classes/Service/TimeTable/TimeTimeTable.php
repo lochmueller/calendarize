@@ -28,7 +28,7 @@ class TimeTimeTable extends AbstractTimeTable
      * @param array         $times
      * @param Configuration $configuration
      */
-    public function handleConfiguration(array &$times, Configuration $configuration)
+    public function handleConfiguration(array &$times, Configuration $configuration): void
     {
         $startTime = $configuration->isAllDay() ? null : $configuration->getStartTime();
         $endTime = $configuration->isAllDay() ? null : $configuration->getEndTime();
@@ -55,11 +55,8 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Respect the selection of dynamic enddates.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
      */
-    protected function respectDynamicEndDates(array &$times, Configuration $configuration)
+    protected function respectDynamicEndDates(array &$times, Configuration $configuration): void
     {
         switch ($configuration->getEndDateDynamic()) {
             case ConfigurationInterface::END_DYNAMIC_1_DAY:
@@ -129,10 +126,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Validate the base entry, if there are logical mistakes.
-     *
-     * @param array $baseEntry
-     *
-     * @return bool
      */
     protected function validateBaseEntry(array $baseEntry): bool
     {
@@ -180,14 +173,13 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Add frequency items.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     * @param array         $tillDateConfiguration
      */
-    protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
-    {
+    protected function addFrequencyItems(
+        array &$times,
+        Configuration $configuration,
+        array $baseEntry,
+        array $tillDateConfiguration
+    ): void {
         $frequencyIncrement = $this->getFrequencyIncrement($configuration);
         if (!$frequencyIncrement) {
             return;
@@ -199,13 +191,19 @@ class TimeTimeTable extends AbstractTimeTable
         for ($i = 0; $loopEntriesAdded < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
-            if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+            if (
+                $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface
+                && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']
+            ) {
                 break;
             }
 
             $lastLoop = $loopEntry;
 
-            if ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+            if (
+                $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface
+                && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']
+            ) {
                 continue;
             }
 
@@ -216,11 +214,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Create the next loop entry.
-     *
-     * @param array  $loopEntry
-     * @param string $modification
-     *
-     * @return array
      */
     protected function createNextLoopEntry(array $loopEntry, string $modification): array
     {
@@ -263,10 +256,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Get the frequency date increment.
-     *
-     * @param Configuration $configuration
-     *
-     * @return string
      */
     protected function getFrequencyIncrement(Configuration $configuration): string
     {
@@ -305,14 +294,13 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Add recurrence items.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     * @param array         $tillDateConfiguration
      */
-    protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
-    {
+    protected function addRecurrenceItems(
+        array &$times,
+        Configuration $configuration,
+        array $baseEntry,
+        array $tillDateConfiguration
+    ): void {
         if (
             ConfigurationInterface::RECURRENCE_NONE === $configuration->getRecurrence()
             || ConfigurationInterface::DAY_NONE === $configuration->getDay()
@@ -320,6 +308,7 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
 
+        /** @var RecurrenceService $recurrenceService */
         $recurrenceService = GeneralUtility::makeInstance(RecurrenceService::class);
         $amountCounter = $configuration->getCounterAmount();
         $maxLimit = $this->getFrequencyLimitPerItem();
@@ -378,14 +367,13 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Remove the base entry if necessary.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     * @param array         $tillDateConfiguration
      */
-    protected function removeBaseEntryIfNecessary(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
-    {
+    protected function removeBaseEntryIfNecessary(
+        array &$times,
+        Configuration $configuration,
+        array $baseEntry,
+        array $tillDateConfiguration
+    ): void {
         $baseEntryKey = $this->calculateEntryKey($baseEntry);
         $tillDate = $configuration->getTillDate();
 
@@ -393,21 +381,24 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
 
-        // if the till date is set via the till day feature and if the base entry does not match the till date condition remove it from times
-        if (!$tillDate instanceof \DateTimeInterface && $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $baseEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+        // if the till date is set via the till day feature and if the base entry does not
+        // match the till date condition remove it from times
+        if (
+            !$tillDate instanceof \DateTimeInterface
+            && $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface
+            && $baseEntry['start_date'] > $tillDateConfiguration['tillDate']
+        ) {
             unset($times[$baseEntryKey]);
-        } elseif ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $baseEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
-            // till date past can only be set via the till date day feature, if the base entry does not match the till date past condition remove it from times
+        } elseif (
+            $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface
+            && $baseEntry['end_date'] < $tillDateConfiguration['tillDatePast']
+        ) {
+            // till date past can only be set via the till date day feature, if the base entry
+            // does not match the till date past condition remove it from times
             unset($times[$baseEntryKey]);
         }
     }
 
-    /**
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     *
-     * @return array
-     */
     protected function getTillDateConfiguration(Configuration $configuration, array $baseEntry): array
     {
         // get values from item configuration
@@ -454,8 +445,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Get the limit of the frequency.
-     *
-     * @return int
      */
     protected function getFrequencyLimitPerItem(): int
     {

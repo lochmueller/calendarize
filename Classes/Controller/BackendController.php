@@ -17,9 +17,6 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 
@@ -34,13 +31,8 @@ class BackendController extends AbstractController
     public const OPTIONS_KEY = 'calendarize_be';
 
     public function __construct(
-        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
-        ConfigurationManagerInterface $configurationManager
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory
     ) {
-        $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager
-            ->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-        $this->arguments = GeneralUtility::makeInstance(Arguments::class);
     }
 
     public function initializeListAction(): void
@@ -153,7 +145,7 @@ class BackendController extends AbstractController
     /**
      * Persists options data.
      */
-    protected function setOptions(OptionRequest $options)
+    protected function setOptions(OptionRequest $options): void
     {
         $GLOBALS['BE_USER']->setAndSaveSessionData(self::OPTIONS_KEY, serialize($options));
     }

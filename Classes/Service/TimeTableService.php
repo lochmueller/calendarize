@@ -14,7 +14,6 @@ use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -23,28 +22,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TimeTableService extends AbstractService
 {
-    /**
-     * @var ConfigurationRepository
-     */
-    protected $configurationRepository;
-
-    /**
-     * @param ConfigurationRepository $configurationRepository
-     */
-    public function __construct(ConfigurationRepository $configurationRepository)
+    public function __construct(protected ConfigurationRepository $configurationRepository)
     {
-        $this->configurationRepository = $configurationRepository;
     }
 
     /**
      * Build the timetable for the given configuration matrix (sorted).
-     *
-     * @param array $ids
-     * @param int   $workspace
-     *
-     * @return array
      */
-    public function getTimeTablesByConfigurationIds(array $ids, int $workspace)
+    public function getTimeTablesByConfigurationIds(array $ids, int $workspace): array
     {
         $timeTable = [];
         if (!$ids) {
@@ -187,7 +172,7 @@ class TimeTableService extends AbstractService
         /** @var \DateTime $base */
         $base = clone $record[$position . '_date'];
 
-        if (is_int($record[$position . '_time']) && (int)$record[$position . '_time'] > 0) {
+        if (is_int($record[$position . '_time']) && $record[$position . '_time'] > 0) {
             // Fix handling, if the time field contains a complete timestamp
             $seconds = $record[$position . '_time'] % DateTimeUtility::SECONDS_DAY;
             $base->setTime(0, 0, 0);

@@ -67,11 +67,11 @@ abstract class AbstractCompatibilityController extends AbstractController
         switch ($this->request->getFormat()) {
             case 'ics':
                 // Use CRLF, see https://tools.ietf.org/html/rfc5545#section-3.1
-                echo str_replace("\n", "\r\n", (string)$response->getBody()->getContents());
+                echo str_replace("\n", "\r\n", $response->getBody()->getContents());
                 break;
 
             default:
-                echo (string)$response->getBody()->getContents();
+                echo $response->getBody()->getContents();
                 break;
         }
 

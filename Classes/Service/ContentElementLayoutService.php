@@ -14,24 +14,18 @@ class ContentElementLayoutService extends AbstractService
 {
     /**
      * Title of the element.
-     *
-     * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * Table information.
-     *
-     * @var array
      */
-    protected $table = [];
+    protected array $table = [];
 
     /**
      * Set the title.
-     *
-     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
         $this->table = [];
@@ -39,11 +33,8 @@ class ContentElementLayoutService extends AbstractService
 
     /**
      * Add one row to the table.
-     *
-     * @param string $label
-     * @param mixed  $value
      */
-    public function addRow($label, $value)
+    public function addRow(string $label, mixed $value): void
     {
         $this->table[] = [
             $label,
@@ -54,10 +45,8 @@ class ContentElementLayoutService extends AbstractService
     /**
      * Render the settings as table for Web>Page module
      * System settings are displayed in mono font.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         if (!$this->table) {
             return '';

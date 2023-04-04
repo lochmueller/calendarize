@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\EventListener;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use HDNET\Calendarize\Controller\CalendarController;
 use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\LanguageAspect;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,9 +20,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class CategoryFilterEventListener
 {
     protected string $itemTableName = 'tx_calendarize_domain_model_event';
+
     protected string $itemFieldName = 'categories';
 
-    public function __invoke(GenericActionAssignmentEvent $event)
+    public function __invoke(GenericActionAssignmentEvent $event): void
     {
         if (CalendarController::class !== $event->getClassName() || 'searchAction' !== $event->getFunctionName()) {
             return;
@@ -40,11 +42,6 @@ class CategoryFilterEventListener
 
     /**
      * Check if the event configuration is active.
-     *
-     * @param array  $configurations
-     * @param string $tableName
-     *
-     * @return bool
      */
     protected function checkConfiguration(array $configurations, string $tableName): bool
     {
@@ -59,25 +56,22 @@ class CategoryFilterEventListener
 
     /**
      * Gets all used categories of the default Event (self::itemTableName).
-     *
-     * @param string $tableName
-     * @param string $fieldName
-     *
-     * @return array
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     protected function getCategories(string $tableName, string $fieldName): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('sys_category');
 
-        $queryBuilder->getRestrictions()
+        $queryBuilder
+            ->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
 
-        $languageUid = GeneralUtility::makeInstance(Context::class)->getAspect('language')->getId();
+        /** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
+        /** @var LanguageAspect $languageAspect */
+        $languageAspect = $context->getAspect('language');
+        $languageUid = $languageAspect->getId();
 
         $queryBuilder->select('sys_category.*')
             ->groupBy('sys_category.uid')
@@ -92,7 +86,7 @@ class CategoryFilterEventListener
                 )
             )
             ->where(
-                $queryBuilder->expr()->andX(
+                $queryBuilder->expr()->and(
                     $queryBuilder->expr()->eq(
                         'sys_category_record_mm.tablenames',
                         $queryBuilder->createNamedParameter($tableName, \PDO::PARAM_STR)
@@ -103,12 +97,14 @@ class CategoryFilterEventListener
                     ),
                     $queryBuilder->expr()->in(
                         'sys_category.sys_language_uid',
-                        $queryBuilder->createNamedParameter([-1, $languageUid], Connection::PARAM_INT_ARRAY)
+                        $queryBuilder->createNamedParameter([-1, $languageUid], ArrayParameterType::INTEGER)
                     )
                 )
             )
             ->orderBy('sys_category.title', 'ASC');
 
-        return $queryBuilder->execute()->fetchAll();
+        return $queryBuilder
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 }

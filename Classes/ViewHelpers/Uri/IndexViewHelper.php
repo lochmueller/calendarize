@@ -7,10 +7,12 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
+use HDNET\Calendarize\ViewHelpers\Link\IndexViewHelper as BaseIndexViewHelper;
+
 /**
  * Uri to the index.
  */
-class IndexViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\IndexViewHelper
+class IndexViewHelper extends BaseIndexViewHelper
 {
     /**
      * Render the uri to the given index.

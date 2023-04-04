@@ -12,23 +12,11 @@ namespace HDNET\Calendarize\Features;
  */
 interface FeedInterface
 {
-    /**
-     * Get the feed title.
-     */
     public function getFeedTitle(): string;
 
-    /**
-     * Get the feed abstract.
-     */
     public function getFeedAbstract(): string;
 
-    /**
-     * Get the feed content.
-     */
     public function getFeedContent(): string;
 
-    /**
-     * Get the feed location.
-     */
     public function getFeedLocation(): string;
 }

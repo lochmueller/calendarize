@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class RecurrenceService extends AbstractService implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
+
     /**
      * direction up.
      */
@@ -30,46 +31,37 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Get the date if the configuration of the next month.
-     *
-     * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
-     * @param int       $interval
-     *
-     * @return \DateTime
      */
-    public function getRecurrenceForNextMonth(\DateTime $date, string $recurrence, string $day, int $interval = 1)
-    {
+    public function getRecurrenceForNextMonth(
+        \DateTime $date,
+        string $recurrence,
+        string $day,
+        int $interval = 1
+    ): \DateTime {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' month');
     }
 
     /**
      * Get the date if the configuration of the next year.
-     *
-     * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
-     * @param int       $interval
-     *
-     * @return \DateTime
      */
-    public function getRecurrenceForNextYear(\DateTime $date, string $recurrence, string $day, int $interval = 1)
-    {
+    public function getRecurrenceForNextYear(
+        \DateTime $date,
+        string $recurrence,
+        string $day,
+        int $interval = 1
+    ): \DateTime {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' year');
     }
 
     /**
      * Get the date if the configuration of the current month.
-     *
-     * @param \DateTime $date
-     * @param string    $recurrence
-     * @param string    $day
-     * @param string    $modify
-     *
-     * @return \DateTime|false
      */
-    protected function getRecurrenceForCurrentMonth(\DateTime $date, string $recurrence, string $day, string $modify)
-    {
+    protected function getRecurrenceForCurrentMonth(
+        \DateTime $date,
+        string $recurrence,
+        string $day,
+        string $modify
+    ): \DateTime|false {
         // clone and reset and move to next month
         $dateTime = clone $date;
         $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
@@ -106,10 +98,6 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Numbers are match against the date format 'N' 1 => mon till 7 => sun.
-     *
-     * @param string $day
-     *
-     * @return array
      */
     protected function getValidDays(string $dayString): array
     {
@@ -163,21 +151,22 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Find the modified in the current month.
-     *
-     * @param \DateTime $dateTime
-     * @param string    $direction
-     * @param array     $validDays
-     * @param int       $position
-     *
-     * @return \DateTime|false
      */
-    protected function findDayInCurrentMonth(\DateTime $dateTime, string $direction, array $validDays, int $position = 1)
-    {
+    protected function findDayInCurrentMonth(
+        \DateTime $dateTime,
+        string $direction,
+        array $validDays,
+        int $position = 1
+    ): \DateTime|false {
         if (self::DIRECTION_UP === $direction) {
             $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
             $modify = '+1 day';
         } else {
-            $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), (int)$dateTime->format('t'));
+            $dateTime->setDate(
+                (int)$dateTime->format('Y'),
+                (int)$dateTime->format('m'),
+                (int)$dateTime->format('t')
+            );
             $modify = '-1 day';
         }
         $validMonth = $dateTime->format('Y-m');

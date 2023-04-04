@@ -12,7 +12,7 @@ use HDNET\Calendarize\Exception\UnableToGetFileForUrlException;
 use HDNET\Calendarize\Service\Ical\ICalServiceInterface;
 use HDNET\Calendarize\Service\Ical\ICalUrlService;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -22,10 +22,8 @@ class ExternalTimeTable extends AbstractTimeTable
 {
     /**
      * Ical service.
-     *
-     * @var ICalServiceInterface
      */
-    protected $iCalService;
+    protected ICalServiceInterface $iCalService;
 
     /**
      * @var ICalUrlService
@@ -34,26 +32,21 @@ class ExternalTimeTable extends AbstractTimeTable
 
     /**
      * Inject ical service.
-     *
-     * @param ICalServiceInterface $iCalService
      */
-    public function injectICalServiceInterface(ICalServiceInterface $iCalService)
+    public function injectICalServiceInterface(ICalServiceInterface $iCalService): void
     {
         $this->iCalService = $iCalService;
     }
 
-    public function injectICalUrlService(ICalUrlService $icalUrlService)
+    public function injectICalUrlService(ICalUrlService $icalUrlService): void
     {
         $this->iCalUrlService = $icalUrlService;
     }
 
     /**
      * Modify the given times via the configuration.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
      */
-    public function handleConfiguration(array &$times, Configuration $configuration)
+    public function handleConfiguration(array &$times, Configuration $configuration): void
     {
         $externalIcsUrl = $configuration->getExternalIcsUrl();
         try {
@@ -62,7 +55,7 @@ class ExternalTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedTitleFlashMessage(
                 $e->getMessage(),
                 'flashMessage.invalidExternalUrl.title',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return;
@@ -74,7 +67,7 @@ class ExternalTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedTitleFlashMessage(
                 $e->getMessage(),
                 'flashMessage.unableToProcessEvents.title',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return;

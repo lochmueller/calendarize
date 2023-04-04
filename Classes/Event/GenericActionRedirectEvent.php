@@ -7,7 +7,7 @@ final class GenericActionRedirectEvent
     public function __construct(
         private array $variables,
         private readonly string $className,
-        private readonly string $eventName
+        private readonly string $functionName
     ) {
     }
 
@@ -21,9 +21,18 @@ final class GenericActionRedirectEvent
         return $this->className;
     }
 
+    public function getFunctionName(): string
+    {
+        return $this->functionName;
+    }
+
+    /**
+     * @deprecated use getFunctionName instead
+     */
     public function getEventName(): string
     {
-        return $this->eventName;
+        trigger_error('Use GenericActionRedirectEvent::getFunctionName() instead', E_USER_DEPRECATED);
+        return $this->functionName;
     }
 
     public function setVariables(array $variables): void

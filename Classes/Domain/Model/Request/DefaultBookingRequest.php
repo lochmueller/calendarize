@@ -55,7 +55,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set first name.
      */
-    public function setFirstName(string $firstName)
+    public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -71,7 +71,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set last name.
      */
-    public function setLastName(string $lastName)
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -87,7 +87,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set E-Mail.
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -103,7 +103,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set phone.
      */
-    public function setPhone(string $phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
@@ -119,7 +119,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set street.
      */
-    public function setStreet(string $street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
@@ -135,7 +135,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set house number.
      */
-    public function setHouseNumber(string $houseNumber)
+    public function setHouseNumber(string $houseNumber): void
     {
         $this->houseNumber = $houseNumber;
     }
@@ -151,7 +151,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set ZIP.
      */
-    public function setZip(string $zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
@@ -167,7 +167,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set city.
      */
-    public function setCity(string $city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
@@ -183,7 +183,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set country.
      */
-    public function setCountry(string $country)
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
@@ -199,7 +199,7 @@ class DefaultBookingRequest extends AbstractBookingRequest
     /**
      * Set message.
      */
-    public function setMessage(string $message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }

@@ -27,10 +27,8 @@ class ModifyViewHelper extends AbstractViewHelper
 
     /**
      * Modify the given datetime by the string modification.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): \DateTime|false
     {
         $dateTime = $this->arguments['dateTime'];
 

@@ -23,7 +23,7 @@ class Register
      *
      * @param array $configuration
      */
-    public static function extTables(array $configuration)
+    public static function extTables(array $configuration): void
     {
         self::createTcaConfiguration($configuration);
         self::registerItem($configuration);
@@ -34,7 +34,7 @@ class Register
      *
      * @param array $configuration
      */
-    public static function extLocalconf(array $configuration)
+    public static function extLocalconf(array $configuration): void
     {
         self::registerItem($configuration);
     }
@@ -77,7 +77,7 @@ class Register
      */
     public static function getDefaultCalendarizeConfiguration(): array
     {
-        $configuration = [
+        return [
             'uniqueRegisterKey' => self::UNIQUE_REGISTER_KEY,
             'title' => 'Calendarize Event',
             'modelName' => Event::class,
@@ -88,8 +88,6 @@ class Register
             // 'overrideBookingRequestModel' => \NAME\SPACE\CLASS\Name::class,
             // 'fieldName' => 'xxxx', // default is "calendarize"
         ];
-
-        return $configuration;
     }
 
     /**
@@ -113,7 +111,7 @@ class Register
      *
      * @param array $configuration
      */
-    public static function createTcaConfiguration(array $configuration)
+    public static function createTcaConfiguration(array $configuration): void
     {
         $fieldName = $configuration['fieldName'] ?? 'calendarize';
         $tableName = $configuration['tableName'];
@@ -145,7 +143,12 @@ class Register
                 ],
             ],
         ];
-        ExtensionManagementUtility::addToAllTCAtypes($tableName, $fieldName . ',calendarize_info', $typeList, $position);
+        ExtensionManagementUtility::addToAllTCAtypes(
+            $tableName,
+            $fieldName . ',calendarize_info',
+            $typeList,
+            $position
+        );
     }
 
     /**
@@ -153,7 +156,7 @@ class Register
      *
      * @param array $configuration
      */
-    protected static function registerItem(array $configuration)
+    protected static function registerItem(array $configuration): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize'][$configuration['uniqueRegisterKey']] = $configuration;
     }

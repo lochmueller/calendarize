@@ -12,7 +12,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class YearViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'year';
+    protected string $actionName = 'year';
 
     /**
      * Init arguments.

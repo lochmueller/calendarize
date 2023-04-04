@@ -23,17 +23,19 @@ class ProcessCmdmapClass
 {
     /**
      * Handle CMD.
-     *
-     * @param string      $command
-     * @param string      $table
-     * @param int         $uid
-     * @param mixed       $value
-     * @param DataHandler $handler
-     * @param mixed       $pasteUpdate
-     * @param mixed       $pasteDatamap
      */
-    public function processCmdmap_postProcess($command, $table, $uid, $value, $handler, $pasteUpdate, $pasteDatamap)
-    {
+    public function processCmdmap_postProcess(
+        int|string $command,
+        string $table,
+        int|string $uid,
+        mixed $value,
+        DataHandler $handler,
+        false|array $pasteUpdate,
+        array $pasteDatamap
+    ): void {
+        /** @var IndexerService $indexer */
+        $indexer = GeneralUtility::makeInstance(IndexerService::class);
+        /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
         $workspaceId = $context->getPropertyFromAspect('workspace', 'id');
 
@@ -45,10 +47,9 @@ class ProcessCmdmapClass
                     $parent = $this->findParentEventInThisTable($configuration['tableName'], (int)$uid);
                     if (count($parent)) {
                         $parentConfigurations = GeneralUtility::trimExplode(',', $parent['calendarize']);
-                        // we just re-index the last given configuration (this is just a workaround - but indexing of all leads
-                        // to the behaviour, that only the first one is really indexed)
-                        if ($uid == $parentConfigurations[\count($parentConfigurations) - 1]) {
-                            $indexer = GeneralUtility::makeInstance(IndexerService::class);
+                        // we just re-index the last given configuration (this is just a workaround - but indexing
+                        // of all leads to the behaviour, that only the first one is really indexed)
+                        if ($uid == $parentConfigurations[count($parentConfigurations) - 1]) {
                             $indexer->reindex($key, $configuration['tableName'], (int)$parent['uid']);
                         }
                     }
@@ -62,7 +63,6 @@ class ProcessCmdmapClass
                     }
                 }
 
-                $indexer = GeneralUtility::makeInstance(IndexerService::class);
                 $indexer->reindex($key, $table, (int)$uid);
             }
         }
@@ -76,7 +76,8 @@ class ProcessCmdmapClass
         }
 
         /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table)->createQueryBuilder();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable($table);
 
         return $queryBuilder
             ->select('uid', 'calendarize')
@@ -84,11 +85,21 @@ class ProcessCmdmapClass
             ->where(
                 $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq('calendarize', $uid),
-                    $queryBuilder->expr()->like('calendarize', $queryBuilder->createNamedParameter($uid . ',%')),
-                    $queryBuilder->expr()->like('calendarize', $queryBuilder->createNamedParameter('%,' . $uid)),
-                    $queryBuilder->expr()->like('calendarize', $queryBuilder->createNamedParameter('%,' . $uid . ',%'))
+                    $queryBuilder->expr()->like(
+                        'calendarize',
+                        $queryBuilder->createNamedParameter($uid . ',%')
+                    ),
+                    $queryBuilder->expr()->like(
+                        'calendarize',
+                        $queryBuilder->createNamedParameter('%,' . $uid)
+                    ),
+                    $queryBuilder->expr()->like(
+                        'calendarize',
+                        $queryBuilder->createNamedParameter('%,' . $uid . ',%')
+                    )
                 )
-            )->executeQuery()
+            )
+            ->executeQuery()
             ->fetchAssociative();
     }
 }

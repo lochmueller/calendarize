@@ -24,14 +24,13 @@ class TitleTagViewHelper extends AbstractViewHelper
     /**
      * Render the title function.
      *
-     * @param array                     $arguments
-     * @param \Closure                  $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
         $content = trim((string)$renderChildrenClosure());
         if (!empty($content)) {
             if (property_exists($GLOBALS['TSFE'], 'altPageTitle')) {

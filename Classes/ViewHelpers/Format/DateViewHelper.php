@@ -44,7 +44,8 @@ class DateViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         $format = $arguments['format'];
-        $base = $arguments['base'] ?? GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('date', 'timestamp');
+        $base = $arguments['base'] ?? GeneralUtility::makeInstance(Context::class)
+            ->getPropertyFromAspect('date', 'timestamp');
         if (is_string($base)) {
             $base = trim($base);
         }
@@ -68,12 +69,17 @@ class DateViewHelper extends AbstractViewHelper
 
         if (!$date instanceof \DateTimeInterface) {
             try {
-                $base = $base instanceof \DateTimeInterface ? (int)$base->format('U') : (int)strtotime((MathUtility::canBeInterpretedAsInteger($base) ? '@' : '') . $base);
+                $base = $base instanceof \DateTimeInterface
+                    ? (int)$base->format('U')
+                    : (int)strtotime((MathUtility::canBeInterpretedAsInteger($base) ? '@' : '') . $base);
                 $dateTimestamp = strtotime((MathUtility::canBeInterpretedAsInteger($date) ? '@' : '') . $date, $base);
                 $date = new \DateTime('@' . $dateTimestamp);
                 $date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
             } catch (\Exception $exception) {
-                throw new Exception('"' . $date . '" could not be parsed by \DateTime constructor: ' . $exception->getMessage(), 1241722579);
+                throw new Exception(
+                    '"' . $date . '" could not be parsed by \DateTime constructor: ' . $exception->getMessage(),
+                    1241722579
+                );
             }
         }
 
@@ -82,7 +88,7 @@ class DateViewHelper extends AbstractViewHelper
             $date = new \DateTime($date->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
         }
 
-        if (false !== strpos($format, '%')) {
+        if (str_contains($format, '%')) {
             // Deprecated since PHP 8.1.0
             return @strftime($format, (int)$date->format('U'));
         }

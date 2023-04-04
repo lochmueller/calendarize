@@ -42,7 +42,7 @@ abstract class AbstractController extends ActionController
     /**
      * Inject plugin configuration service.
      */
-    public function injectPluginConfigurationService(PluginConfigurationService $pluginConfigurationService)
+    public function injectPluginConfigurationService(PluginConfigurationService $pluginConfigurationService): void
     {
         $this->pluginConfigurationService = $pluginConfigurationService;
     }
@@ -50,7 +50,7 @@ abstract class AbstractController extends ActionController
     /**
      * Inject index repository.
      */
-    public function injectIndexRepository(IndexRepository $indexRepository)
+    public function injectIndexRepository(IndexRepository $indexRepository): void
     {
         $this->indexRepository = $indexRepository;
     }
@@ -58,10 +58,12 @@ abstract class AbstractController extends ActionController
     /**
      * Inject the configuration manager.
      */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
-        $this->settings = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+        $this->settings = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+        );
         $this->settings = $this->pluginConfigurationService->respectPluginConfiguration($this->settings);
         $this->arguments = GeneralUtility::makeInstance(Arguments::class);
     }
@@ -69,7 +71,7 @@ abstract class AbstractController extends ActionController
     /**
      * Init all actions.
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         parent::initializeAction();
         AbstractBookingRequest::setConfigurations(

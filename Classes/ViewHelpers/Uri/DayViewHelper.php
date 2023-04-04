@@ -7,10 +7,12 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
+use HDNET\Calendarize\ViewHelpers\Link\DayViewHelper as BaseDayViewHelper;
+
 /**
  * Uri to the day.
  */
-class DayViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\DayViewHelper
+class DayViewHelper extends BaseDayViewHelper
 {
     /**
      * Render the uri to the given day.

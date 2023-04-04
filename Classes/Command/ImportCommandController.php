@@ -53,8 +53,8 @@ class ImportCommandController extends Command
                 'since',
                 's',
                 InputOption::VALUE_OPTIONAL,
-                "Imports all events since the given date.\n"
-                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . "\n"
+                'Imports all events since the given date.' . LF
+                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . LF
                 . '(Note: use --since="-x days" syntax on the console)'
             );
     }
@@ -95,19 +95,19 @@ class ImportCommandController extends Command
 
         try {
             $icalFile = $this->iCalUrlService->getOrCreateLocalFileForUrl($icsCalendarUri);
-        } catch (UnableToGetFileForUrlException $e) {
-            $io->error('Invalid URL: ' . $e->getMessage());
+        } catch (UnableToGetFileForUrlException $exception) {
+            $io->error('Invalid URL: ' . $exception->getMessage());
 
             return self::FAILURE;
         }
         try {
             // Parse calendar
             $events = $this->iCalService->getEvents($icalFile);
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $io->error('Unable to process events');
-            $io->writeln($e->getMessage());
+            $io->writeln($exception->getMessage());
             if ($io->isVerbose()) {
-                $io->writeln($e->getTraceAsString());
+                $io->writeln($exception->getTraceAsString());
             }
 
             return self::FAILURE;
@@ -116,10 +116,10 @@ class ImportCommandController extends Command
             GeneralUtility::unlink_tempfile($icalFile);
         }
 
-        $io->text('Found ' . \count($events) . ' events in ' . $icsCalendarUri);
+        $io->text('Found ' . count($events) . ' events in ' . $icsCalendarUri);
 
         $io->section('Send ImportSingleIcalEvent for each event');
-        $io->progressStart(\count($events));
+        $io->progressStart(count($events));
 
         $skipCount = $dispatchCount = 0;
         foreach ($events as $event) {

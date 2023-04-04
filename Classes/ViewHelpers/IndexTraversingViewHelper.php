@@ -25,15 +25,9 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class IndexTraversingViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var IndexRepository
-     */
-    protected $indexRepository;
+    protected IndexRepository $indexRepository;
 
-    /**
-     * @param IndexRepository $indexRepository
-     */
-    public function injectIndexRepository(IndexRepository $indexRepository)
+    public function injectIndexRepository(IndexRepository $indexRepository): void
     {
         $this->indexRepository = $indexRepository;
     }
@@ -41,7 +35,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('index', Index::class, '', true);
@@ -54,10 +48,8 @@ class IndexTraversingViewHelper extends AbstractViewHelper
 
     /**
      * Render method.
-     *
-     * @return array
      */
-    public function render()
+    public function render(): array
     {
         return $this->indexRepository->findByTraversing(
             $this->arguments['index'],

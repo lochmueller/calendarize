@@ -62,8 +62,8 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         $configuration->setImportId($importId);
         $configuration->setPid($pid);
 
-        $configuration->setType(Configuration::TYPE_TIME);
-        $configuration->setHandling(Configuration::HANDLING_INCLUDE);
+        $configuration->setType(ConfigurationInterface::TYPE_TIME);
+        $configuration->setHandling(ConfigurationInterface::HANDLING_INCLUDE);
         $configuration->setState($event->getState());
         $configuration->setAllDay($event->isAllDay());
 
@@ -109,12 +109,12 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
     /**
      * Hydrates the configuration with recurrent configuration.
      * Invalid values are skipped.
-     *
-     * @param Configuration $configuration
-     * @param array         $rrule
      */
-    protected function hydrateRecurringConfiguration(Configuration $configuration, array $rrule, string $importId = ''): void
-    {
+    protected function hydrateRecurringConfiguration(
+        Configuration $configuration,
+        array $rrule,
+        string $importId = ''
+    ): void {
         $row = $this->mapRruleToConfiguration($rrule, $importId);
 
         // Get default values, so that all values are "reset" and independent of the previous import

@@ -29,10 +29,8 @@ class IfDateLowerViewHelper extends AbstractViewHelper
      *
      * Note: You have to wrap this view helper in an f:if ViewHelper.
      * This VH just return a boolean evaluation value
-     *
-     * @return bool
      */
-    public function render()
+    public function render(): bool
     {
         $base = $this->arguments['base'];
         $check = $this->arguments['check'];

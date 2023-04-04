@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class AbstractActionViewHelper extends AbstractLinkViewHelper
 {
-    protected $extensionName = 'Calendarize';
-    protected $pluginName = 'Calendar';
-    protected $controllerName = 'Calendar';
-    protected $actionName;
+    protected string $extensionName = 'Calendarize';
+
+    protected string $pluginName = 'Calendar';
+    protected string $controllerName = 'Calendar';
+    protected string $actionName;
 
     public function initializeArguments()
     {
@@ -24,13 +26,8 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
 
     /**
      * Render a link with action and controller.
-     *
-     * @param array $controllerArguments
-     * @param null  $pageUid
-     *
-     * @return mixed|string
      */
-    public function renderExtbaseLink(array $controllerArguments = [], $pageUid = null)
+    public function renderExtbaseLink(array $controllerArguments = [], ?int $pageUid = null): string
     {
         $absolute = $this->arguments['absolute'] ?? false;
         $pageUid = $pageUid ?? $this->getPageUid($this->arguments['pageUid'] ?? '');
@@ -38,7 +35,7 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
         $section = $this->arguments['section'] ?? '';
 
         /** @var UriBuilder $uriBuilder */
-        $uriBuilder = $this->renderingContext->getControllerContext()->getUriBuilder();
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         // $uriBuilder = $this->renderingContext->getUriBuilder(); // Typo3 11 and later
         $this->lastHref = $uriBuilder->reset()
             ->setTargetPageUid($pageUid)

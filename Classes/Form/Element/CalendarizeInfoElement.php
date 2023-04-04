@@ -10,7 +10,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CalendarizeInfoElement extends AbstractFormElement
 {
-    public function render()
+    public function render(): array
     {
         $result = $this->initializeResultArray();
 

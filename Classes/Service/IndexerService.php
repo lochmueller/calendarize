@@ -80,7 +80,9 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 // overlays can connect with l10n_parent to the right default record.
                 $queryBuilder->addOrderBy((string)$transPointer, 'ASC');
             }
-            $rows = $queryBuilder->executeQuery()->fetchAllAssociative();
+            $rows = $queryBuilder
+                ->executeQuery()
+                ->fetchAllAssociative();
             foreach ($rows as $row) {
                 $this->updateIndex($key, $tableName, (int)$row['uid']);
             }
@@ -233,7 +235,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      * Remove Index items of the given table of records
      * that are deleted or do not exist anymore.
      */
-    protected function removeInvalidRecordIndex(string $tableName)
+    protected function removeInvalidRecordIndex(string $tableName): void
     {
         $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
         $q->getRestrictions()

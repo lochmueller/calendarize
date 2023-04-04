@@ -9,6 +9,7 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Repository\AbstractRepository;
 use HDNET\Calendarize\Event\DetermineSearchEvent;
 use HDNET\Calendarize\Event\PaginationEvent;
 use HDNET\Calendarize\Register;
@@ -41,7 +42,7 @@ class CalendarController extends AbstractCompatibilityController
     /**
      * Init all actions.
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->addCacheTags(['calendarize']);
 
@@ -237,6 +238,7 @@ class CalendarController extends AbstractCompatibilityController
             if ($value['tableName'] === $table) {
                 $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
                 if (class_exists($repositoryName)) {
+                    /** @var AbstractRepository $repository */
                     $repository = GeneralUtility::makeInstance($repositoryName);
                     $event = $repository->findByUid($uid);
 
@@ -496,6 +498,7 @@ class CalendarController extends AbstractCompatibilityController
         if ($index->getOriginalObject() instanceof Event) {
             /** @var Event $event */
             $event = $index->getOriginalObject();
+            /** @var MetaTagManagerRegistry $metaTagManagerRegistry */
             $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
             $metaTagManagerRegistry->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
             $metaTagManagerRegistry->getManagerForProperty('og:description')->addProperty('og:description', $event->getAbstract());

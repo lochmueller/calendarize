@@ -20,6 +20,7 @@ class ReindexCommandController extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var IndexerService $indexer */
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
         $indexer->reindexAll();
 

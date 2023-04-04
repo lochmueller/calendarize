@@ -43,7 +43,7 @@ class DateFieldUpdate extends AbstractUpdate
         return true;
     }
 
-    protected function executeUpdateForTableFieldDateTimeMigration(string $tableName, string $fieldName)
+    protected function executeUpdateForTableFieldDateTimeMigration(string $tableName, string $fieldName): void
     {
         $tmpField = $fieldName . '_' . substr(md5((string)microtime()), 0, 10);
 

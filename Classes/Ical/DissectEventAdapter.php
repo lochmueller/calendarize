@@ -17,8 +17,6 @@ class DissectEventAdapter implements ICalEvent
 
     /**
      * DissectEvent constructor.
-     *
-     * @param JMBTICalEvent $event
      */
     public function __construct(JMBTICalEvent $event)
     {

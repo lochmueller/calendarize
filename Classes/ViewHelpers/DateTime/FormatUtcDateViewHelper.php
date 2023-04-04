@@ -33,10 +33,6 @@ class FormatUtcDateViewHelper extends AbstractViewHelper
     /**
      * Format dateTime to the UTC timezone.
      *
-     * @param array                     $arguments
-     * @param \Closure                  $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return string
      *
      * @throws Exception

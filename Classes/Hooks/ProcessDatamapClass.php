@@ -24,15 +24,14 @@ class ProcessDatamapClass
 
     /**
      * Hook into the after database operations.
-     *
-     * @param             $status
-     * @param             $table
-     * @param             $identifier
-     * @param             $fieldArray
-     * @param DataHandler $dataHandler
      */
-    public function processDatamap_afterDatabaseOperations($status, $table, $identifier, $fieldArray, DataHandler $dataHandler)
-    {
+    public function processDatamap_afterDatabaseOperations(
+        string $status,
+        string $table,
+        int|string $identifier,
+        array $fieldArray,
+        DataHandler $dataHandler
+    ): void {
         $register = Register::getRegister();
         foreach ($register as $configuration) {
             if ($configuration['tableName'] === $table) {
@@ -46,16 +45,15 @@ class ProcessDatamapClass
 
     /**
      * Process the reindex after all operations.
-     *
-     * @param DataHandler $dataHandler
      */
-    public function processDatamap_afterAllOperations(DataHandler $dataHandler)
+    public function processDatamap_afterAllOperations(DataHandler $dataHandler): void
     {
         if (!$this->indexItems) {
             return;
         }
         $register = Register::getRegister();
 
+        /** @var IndexerService $indexer */
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
         foreach ($register as $key => $configuration) {
             foreach ($this->indexItems as $table => $identifiers) {

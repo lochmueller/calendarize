@@ -14,12 +14,8 @@ class DaysInMonthViewHelper extends AbstractLoopViewHelper
 {
     /**
      * Get items.
-     *
-     * @param \DateTime $date
-     *
-     * @return array
      */
-    protected function getItems(\DateTime $date)
+    protected function getItems(\DateTime $date): array
     {
         $daysInMonth = $date->format('t');
         $days = [];

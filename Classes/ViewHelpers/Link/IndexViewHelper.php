@@ -14,7 +14,7 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class IndexViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'detail';
+    protected string $actionName = 'detail';
 
     /**
      * Init arguments.
@@ -36,6 +36,6 @@ class IndexViewHelper extends AbstractActionViewHelper
             'index' => $this->arguments['index']->getUid(),
         ];
 
-        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'detailPid'));
+        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid((int)$this->arguments['pageUid'], 'detailPid'));
     }
 }

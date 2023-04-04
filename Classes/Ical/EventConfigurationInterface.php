@@ -16,6 +16,7 @@ interface EventConfigurationInterface
      * Value for starTime if the event is allDay.
      */
     public const ALLDAY_START_TIME = 0;
+
     /**
      * Value for endTime if the event is allDay.
      */

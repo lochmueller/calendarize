@@ -192,7 +192,8 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                 $q->expr()->in('uid', array_map('intval', $calIds))
             )
             ->orderBy('l18n_parent')
-            ->execute()->fetchAll();
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         foreach ($events as $event) {
             // Get the parent id of the event record
@@ -241,7 +242,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             $q->insert($variables['table'])->values($variables['calendarizeEventRecord']);
             $dbQueries[] = HelperUtility::queryWithParams($q);
 
-            $q->execute();
+            $q->executeStatement();
 
             $variablesPostInsert = [
                 'calendarizeEventRecord' => $calendarizeEventRecord,
@@ -446,7 +447,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
      * @param       $calIds
      * @param array $dbQueries
      */
-    public function performSysFileReferenceUpdate($calIds, array &$dbQueries)
+    public function performSysFileReferenceUpdate($calIds, array &$dbQueries): void
     {
         $this->logger->debug('Start performSysFileReferenceUpdate');
         $this->output->writeln('Start performSysFileReferenceUpdate');
@@ -580,10 +581,10 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
 
         $q->select('uid_foreign')->from($table)
             ->where(
-                $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
-                $q->expr()->eq('fieldname', $q->createNamedParameter('category_id')),
-                $q->expr()->neq('uid_local', $q->createNamedParameter(0, \PDO::PARAM_INT)),
-                $q->expr()->neq('uid_foreign', $q->createNamedParameter(0, \PDO::PARAM_INT))
+                $q->expr()->eq('tablenames', $q->quote('tx_cal_event')),
+                $q->expr()->eq('fieldname', $q->quote('category_id')),
+                $q->expr()->neq('uid_local', 0),
+                $q->expr()->neq('uid_foreign', 0)
             )->groupBy('uid_foreign');
 
         $selectResults = $q->executeQuery()->fetchAllAssociative();
@@ -609,8 +610,8 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                     ->set('uid_foreign', $eventUid)
                     ->where(
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUidOld, \PDO::PARAM_INT)),
-                        $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
-                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
+                        $q->expr()->eq('tablenames', $q->quote('tx_cal_event')),
+                        $q->expr()->eq('fieldname', $q->quote('category_id'))
                     )->executeStatement();
             } else {
                 // TODO - log deleted 0 eventUid
@@ -621,8 +622,8 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
                 $q->delete($table)
                     ->where(
                         $q->expr()->eq('uid_foreign', $q->createNamedParameter($eventUid, \PDO::PARAM_INT)),
-                        $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
-                        $q->expr()->eq('fieldname', $q->createNamedParameter('category_id'))
+                        $q->expr()->eq('tablenames', $q->quote('tx_cal_event')),
+                        $q->expr()->eq('fieldname', $q->quote('category_id'))
                     )
                     ->execute();
             }
@@ -632,7 +633,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
         $q = $this->getQueryBuilder($table);
         $q->delete($table)
             ->where(
-                $q->expr()->eq('tablenames', $q->createNamedParameter('tx_cal_event')),
+                $q->expr()->eq('tablenames', $q->quote('tx_cal_event')),
                 $q->expr()->or(
                     $q->expr()->eq('fieldname', $q->createNamedParameter('')),
                     $q->expr()->eq('uid_local', $q->createNamedParameter(0, \PDO::PARAM_INT)),

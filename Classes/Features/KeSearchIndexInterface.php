@@ -14,25 +14,11 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 interface KeSearchIndexInterface
 {
-    /**
-     * Get the title.
-     */
     public function getKeSearchTitle(Index $index): string;
 
-    /**
-     * Get the abstract.
-     */
     public function getKeSearchAbstract(Index $index): string;
 
-    /**
-     * Get the content.
-     */
     public function getKeSearchContent(Index $index): string;
 
-    /**
-     * Get the tags.
-     *
-     * @return string Comma separated list of tags, e.g. '#syscat1#,#syscat2#'
-     */
     public function getKeSearchTags(Index $index): string;
 }

@@ -50,10 +50,8 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
 
     /**
      * Render the element.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         $variableContainer = $this->renderingContext->getVariableProvider();
 
@@ -88,10 +86,6 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
 
     /**
      * Get the items.
-     *
-     * @param \DateTime $date
-     *
-     * @return array
      */
-    abstract protected function getItems(\DateTime $date);
+    abstract protected function getItems(\DateTime $date): array;
 }

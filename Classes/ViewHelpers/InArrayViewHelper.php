@@ -14,13 +14,16 @@ class InArrayViewHelper extends AbstractViewHelper
 {
     use CompileWithRenderStatic;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('needle', 'mixed', 'The searched value.', true);
         $this->registerArgument('haystack', 'array', 'The array.', true);
         $this->registerArgument('strict', 'boolean', 'If true then the function will also check the types.', false, false);
     }
 
+    /**
+     * @return bool
+     */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
@@ -30,6 +33,6 @@ class InArrayViewHelper extends AbstractViewHelper
             return false;
         }
 
-        return \in_array($arguments['needle'], $arguments['haystack'], $arguments['strict']);
+        return in_array($arguments['needle'], $arguments['haystack'], $arguments['strict']);
     }
 }

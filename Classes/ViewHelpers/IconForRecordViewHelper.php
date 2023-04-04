@@ -45,7 +45,7 @@ class IconForRecordViewHelper extends AbstractViewHelper
      * @return string
      */
     public static function renderStatic(
-        array $arguments,#
+        array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {

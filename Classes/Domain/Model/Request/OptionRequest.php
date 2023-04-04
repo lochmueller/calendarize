@@ -35,7 +35,7 @@ class OptionRequest extends AbstractModel
         return $this->sorting;
     }
 
-    public function setSorting(string $sorting)
+    public function setSorting(string $sorting): void
     {
         $this->sorting = $sorting;
     }
@@ -45,7 +45,7 @@ class OptionRequest extends AbstractModel
         return $this->direction;
     }
 
-    public function setDirection(string $direction)
+    public function setDirection(string $direction): void
     {
         $this->direction = $direction;
     }
@@ -55,7 +55,7 @@ class OptionRequest extends AbstractModel
         return $this->type;
     }
 
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }

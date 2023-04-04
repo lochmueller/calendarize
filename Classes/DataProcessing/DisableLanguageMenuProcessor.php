@@ -123,7 +123,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                 continue;
             }
             try {
-                $availability = \in_array((int)$item['languageId'], $availableLanguages);
+                $availability = in_array((int)$item['languageId'], $availableLanguages);
                 if (!$availability) {
                     $item['available'] = false;
                     $item['availableReason'] = 'calendarize';

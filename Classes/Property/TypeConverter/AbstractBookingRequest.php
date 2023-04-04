@@ -10,8 +10,6 @@ namespace HDNET\Calendarize\Property\TypeConverter;
 use HDNET\Calendarize\Domain\Model\Request\DefaultBookingRequest;
 use HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest as BaseAbstractBookingRequest;
 use HDNET\Calendarize\Register;
-use TYPO3\CMS\Extbase\Error\Error;
-use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -50,7 +48,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
     /**
      * Set configurations.
      */
-    public static function setConfigurations(array $configurations)
+    public static function setConfigurations(array $configurations): void
     {
         self::$configurations = $configurations;
     }
@@ -66,22 +64,13 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * - An instance of \TYPO3\CMS\Extbase\Error\Error -- This will be a user-visible error message later on.
      * Furthermore, it should throw an Exception if an unexpected failure (like a security error) occurred or a configuration issue happened.
      *
-     * @param mixed                                 $source
-     * @param string                                $targetType
-     * @param array                                 $convertedChildProperties
-     * @param PropertyMappingConfigurationInterface $configuration
-     *
-     * @return mixed|Error the target type, or an error object if a user-error occurred
-     *
-     * @throws TypeConverterException thrown in case a developer error occurred
-     *
      * @api
      */
     public function convertFrom(
         $source,
         string $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ) {
         $bookingRequest = $this->getBookingRequestModel();
         foreach ($source as $key => $value) {

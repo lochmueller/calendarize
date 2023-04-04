@@ -7,10 +7,12 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
+use HDNET\Calendarize\ViewHelpers\Link\ListViewHelper as BaseListViewHelper;
+
 /**
  * Uri to the list.
  */
-class ListViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\ListViewHelper
+class ListViewHelper extends BaseListViewHelper
 {
     /**
      * Render the uri to the given list.

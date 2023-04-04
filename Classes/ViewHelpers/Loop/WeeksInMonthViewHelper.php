@@ -31,7 +31,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
      *
      * @return array
      */
-    protected function getItems(\DateTime $date)
+    protected function getItems(\DateTime $date): array
     {
         $weeks = [];
 

@@ -10,22 +10,13 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 class DefaultEventSearchListener
 {
-    /**
-     * @var EventRepository
-     */
-    protected $eventRepository;
-
-    /**
-     * @param EventRepository $eventRepository
-     */
-    public function __construct(EventRepository $eventRepository)
+    public function __construct(protected EventRepository $eventRepository)
     {
-        $this->eventRepository = $eventRepository;
     }
 
-    public function __invoke(IndexRepositoryFindBySearchEvent $event)
+    public function __invoke(IndexRepositoryFindBySearchEvent $event): void
     {
-        if (!\in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)) {
+        if (!in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)) {
             return;
         }
 
@@ -50,7 +41,7 @@ class DefaultEventSearchListener
 
         $search = new Search();
         $search->setFullText(trim((string)($customSearch['fullText'] ?? '')));
-        if (\is_array($customSearch['categories'])) {
+        if (is_array($customSearch['categories'])) {
             $categories = array_map('intval', $customSearch['categories']);
             $search->setCategories($categories);
         } elseif (MathUtility::canBeInterpretedAsInteger($customSearch['category'] ?? '')) {
