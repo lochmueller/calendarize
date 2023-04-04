@@ -56,17 +56,11 @@ class DateTimeUtility
 
     /**
      * Convert a Week/Year combination to a DateTime of the first day of week.
-     *
-     * @param int $week
-     * @param int $year
-     * @param int $startDay
-     *
-     * @return \DateTime
      */
-    public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
+    public static function convertWeekYear2DayMonthYear(int $week, int $year, int $startDay = 1): \DateTime
     {
         $date = self::getNow();
-        $date->setTime(0, 0, 0);
+        $date->setTime(0, 0);
         $date->setISODate($year, $week, $startDay);
 
         return $date;
@@ -75,31 +69,23 @@ class DateTimeUtility
     /**
      * Time zone is set by the TYPO3 core.
      *
-     * @return \DateTimeZone
-     *
      * @see \TYPO3\CMS\Core\Core\Bootstrap->setDefaultTimezone()
      */
-    public static function getTimeZone()
+    public static function getTimeZone(): \DateTimeZone
     {
         return new \DateTimeZone(date_default_timezone_get());
     }
 
     /**
      * Time zone that is always UTC.
-     *
-     * @return \DateTimeZone
      */
-    public static function getUtcTimeZone()
+    public static function getUtcTimeZone(): \DateTimeZone
     {
         return new \DateTimeZone('UTC');
     }
 
     /**
      * Get the time seconds of the given date (TYPO3 Backend style).
-     *
-     * @param \DateTimeInterface $dateTime
-     *
-     * @return int
      */
     public static function getDaySecondsOfDateTime(\DateTimeInterface $dateTime): int
     {
@@ -111,30 +97,20 @@ class DateTimeUtility
 
     /**
      * Get the time seconds of the given date (TYPO3 Backend style) in the server timezone.
-     *
-     * @param \DateTimeInterface $dateTime
-     *
-     * @return int
      */
     public static function getNormalizedDaySecondsOfDateTime(\DateTimeInterface $dateTime): int
     {
         $date = self::normalizeDateTimeSingle($dateTime);
-
         return self::getDaySecondsOfDateTime($date);
     }
 
     /**
      * Sets the time seconds on the given date.
-     *
-     * @param \DateTime $date
-     * @param int       $seconds
-     *
-     * @return \DateTime
      */
     public static function setSecondsOfDateTime(\DateTime $date, int $seconds): \DateTime
     {
         $date = clone $date;
-        $date->setTime(0, 0, 0);
+        $date->setTime(0, 0);
         $date->modify("+$seconds seconds");
 
         return $date;
@@ -142,15 +118,12 @@ class DateTimeUtility
 
     /**
      * Get a normalize date time object.
-     *
-     * @param int|null $day
-     * @param int|null $month
-     * @param int|null $year
-     *
-     * @return \DateTime
      */
-    public static function normalizeDateTime($day = null, $month = null, $year = null): \DateTime
-    {
+    public static function normalizeDateTime(
+        int|null $day = null,
+        int|null $month = null,
+        int|null $year = null
+    ): \DateTime {
         $date = self::getNow();
         // Check if this date should handle always in UTC
         // $date->setTimezone(self::getUtcTimeZone());
@@ -164,7 +137,7 @@ class DateTimeUtility
             $day = $date->format('d');
         }
         $date->setDate((int)$year, (int)$month, (int)$day);
-        $date->setTime(0, 0, 0);
+        $date->setTime(0, 0);
         if ($date->format('m') > $month) {
             $date->modify('last day of last month');
         } elseif ($date->format('m') < $month) {
@@ -175,29 +148,21 @@ class DateTimeUtility
     }
 
     /**
-     * Normalize quartar.
-     *
-     * @param int|null $quarter
-     *
-     * @return int
+     * Normalize quarter.
      */
     public static function normalizeQuarter(int $quarter = null): int
     {
         if (null === $quarter) {
-            $quarter = self::getQuartar(self::getNow());
+            $quarter = self::getQuarter(self::getNow());
         }
 
         return MathUtility::forceIntegerInRange((int)$quarter, 1, 4);
     }
 
     /**
-     * Normalize quartar.
-     *
-     * @param \DateTimeInterface $date
-     *
-     * @return int
+     * Normalize quarter.
      */
-    public static function getQuartar(\DateTimeInterface $date): int
+    public static function getQuarter(\DateTimeInterface $date): int
     {
         $month = (int)$date->format('n');
 
@@ -206,15 +171,11 @@ class DateTimeUtility
 
     /**
      * Reset the DateTime.
-     *
-     * @param int|string|\DateTimeInterface|null $dateTime
-     *
-     * @return \DateTime
      */
-    public static function resetTime($dateTime = null): \DateTime
+    public static function resetTime(string|\DateTimeInterface $dateTime = null): \DateTime
     {
         $dateTime = self::normalizeDateTimeSingle($dateTime);
-        $dateTime->setTime(0, 0, 0);
+        $dateTime->setTime(0, 0);
 
         return $dateTime;
     }
@@ -222,15 +183,12 @@ class DateTimeUtility
     /**
      * Get a normalized date time object in a specific timezone.
      *
-     * @param int|string|\DateTimeInterface|null $dateInformation
-     * @param \DateTimeZone|null                 $timezone        Timezone to normalize to. Defaults to the self::getTimeZone().
-     *
-     * @return \DateTime
-     *
      * @throws \Exception
      */
-    public static function normalizeDateTimeSingle($dateInformation = null, \DateTimeZone $timezone = null): \DateTime
-    {
+    public static function normalizeDateTimeSingle(
+        int|string|\DateTimeInterface|null $dateInformation = null,
+        \DateTimeZone $timezone = null
+    ): \DateTime {
         $timezone = $timezone ?? self::getTimeZone();
         $date = self::getNow();
 
@@ -243,7 +201,8 @@ class DateTimeUtility
             );
         } elseif (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :
-            // The $timezone parameter and the current timezone are ignored [ie. set to UTC] when the $time parameter [...] is a UNIX timestamp (e.g. @946684800) [...]
+            // The $timezone parameter and the current timezone are ignored [i.e. set to UTC] when
+            // the $time parameter [...] is a UNIX timestamp (e.g. @946684800) [...]
             $date = new \DateTime("@$dateInformation");
         } elseif (\is_string($dateInformation) && \in_array($dateInformation[0], ['-', '+'])) {
             $date = self::getNow();
@@ -262,8 +221,6 @@ class DateTimeUtility
     /**
      * Get the current date (normalized optimized for queries, because SIM_ACCESS_TIME is rounded to minutes)
      * in the current timezone.
-     *
-     * @return \DateTime
      */
     public static function getNow(): \DateTime
     {
@@ -276,26 +233,18 @@ class DateTimeUtility
      * Alias for resetTime.
      *
      * @see resetTime()
-     *
-     * @param int|string|\DateTimeInterface|null $dateInformation
-     *
-     * @return \DateTime
      */
-    public static function getDayStart($dateInformation): \DateTime
+    public static function getDayStart(string|\DateTimeInterface $dateInformation): \DateTime
     {
         return self::resetTime($dateInformation);
     }
 
     /**
      * Get the End of the given day.
-     *
-     * @param int|string|\DateTimeInterface|null $dateInformation
-     *
-     * @return \DateTime
      */
-    public static function getDayEnd($dateInformation): \DateTime
+    public static function getDayEnd(string|\DateTimeInterface $dateInformation): \DateTime
     {
-        $dateTime = self::getDayStart($dateInformation);
+        $dateTime = self::resetTime($dateInformation);
         $dateTime->setTime(23, 59, 59);
 
         return $dateTime;
@@ -305,19 +254,10 @@ class DateTimeUtility
      * Converts DateTime objects for native dates, so that they are stored "as is".
      * This is required for Typo3 versions before 11, since they are formatted in UTC, but shouldn't.
      *
-     * @param \DateTime|null $date
-     *
-     * @return \DateTime|null
+     * @deprecated wax used for fixing TYPO3 11 UTC error
      */
     public static function fixDateTimeForDb(?\DateTime $date): ?\DateTime
     {
-        if ($date instanceof \DateTimeInterface) {
-            $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-            if ($typo3Version->getMajorVersion() < 11) {
-                $date = new \DateTime($date->format('Y-m-d\TH:i:s'), self::getUtcTimeZone());
-            }
-        }
-
         return $date;
     }
 
@@ -325,20 +265,10 @@ class DateTimeUtility
      * Converts the native date object from UTC to the local timezone.
      * This is required for Typo3 versions before 11, since the dates in the db are assumed as UTC, but aren't.
      *
-     * @param \DateTime|null $date
-     *
-     * @return \DateTime|null
+     * @deprecated wax used for fixing TYPO3 11 UTC error
      */
     public static function fixDateTimeForExtbase(?\DateTime $date): ?\DateTime
     {
-        if ($date instanceof \DateTimeInterface) {
-            $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-            if ($typo3Version->getMajorVersion() < 11) {
-                $date = (clone $date)->setTimezone(self::getUtcTimeZone());
-                $date = new \DateTime($date->format('Y-m-d\TH:i:s'), self::getTimeZone());
-            }
-        }
-
         return $date;
     }
 }

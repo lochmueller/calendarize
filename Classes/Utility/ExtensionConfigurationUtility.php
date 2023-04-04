@@ -17,19 +17,13 @@ class ExtensionConfigurationUtility
 {
     /**
      * Configuration cache.
-     *
-     * @var array
      */
-    protected static $configuration;
+    protected static array $configuration = [];
 
     /**
      * Get the given configuration value.
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
-    public static function get($name)
+    public static function get(string $name): mixed
     {
         self::loadConfiguration();
 
@@ -39,27 +33,22 @@ class ExtensionConfigurationUtility
     /**
      * Return the Unique Register Key by the given EventModel.
      *
-     * @param DomainObjectInterface $event
-     *
-     * @return string
-     *
      * @throws \Exception
      */
-    public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event)
+    public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event): string
     {
         self::loadConfiguration();
 
-        $eventClass = \get_class($event);
+        $eventClass = get_class($event);
         foreach (self::$configuration as $configuration) {
             if ($configuration['modelName'] === $eventClass) {
                 return $configuration['uniqueRegisterKey'];
             }
-            if (isset($configuration['subClasses']) && \is_array($configuration['subClasses'])) {
-                foreach ($configuration['subClasses'] as $subClass) {
-                    if ($subClass === $eventClass) {
-                        return $configuration['uniqueRegisterKey'];
-                    }
-                }
+            if (isset($configuration['subClasses'])
+                && is_array($configuration['subClasses'])
+                && in_array($eventClass, $configuration['subClasses'])
+            ) {
+                return $configuration['uniqueRegisterKey'];
             }
         }
 
@@ -69,7 +58,7 @@ class ExtensionConfigurationUtility
     /**
      * Load the current configuration.
      */
-    protected static function loadConfiguration()
+    protected static function loadConfiguration(): void
     {
         if (null === self::$configuration) {
             self::$configuration = Register::getRegister();

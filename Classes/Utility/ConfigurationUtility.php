@@ -17,19 +17,13 @@ class ConfigurationUtility
 {
     /**
      * Configuration cache.
-     *
-     * @var array
      */
-    protected static $configuration;
+    protected static ?array $configuration = null;
 
     /**
      * Get the given configuration value.
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
-    public static function get($name)
+    public static function get(string $name): mixed
     {
         self::loadConfiguration();
 
@@ -39,10 +33,11 @@ class ConfigurationUtility
     /**
      * Load the current configuration.
      */
-    protected static function loadConfiguration()
+    protected static function loadConfiguration(): void
     {
         if (null === self::$configuration) {
-            self::$configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('calendarize');
+            self::$configuration = (array)GeneralUtility::makeInstance(ExtensionConfiguration::class)
+                ->get('calendarize');
         }
     }
 }

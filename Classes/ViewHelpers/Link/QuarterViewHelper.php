@@ -35,7 +35,7 @@ class QuarterViewHelper extends AbstractActionViewHelper
         $date = $this->arguments['date'];
         $pluginArgs = [
             'year' => $date->format('Y'),
-            'quarter' => DateTimeUtility::getQuartar($date),
+            'quarter' => DateTimeUtility::getQuarter($date),
         ];
 
         return $this->renderExtbaseLink($pluginArgs);
