@@ -15,120 +15,66 @@ use HDNET\Calendarize\Domain\Model\AbstractModel;
  */
 class OptionRequest extends AbstractModel
 {
-    /**
-     * Sorting.
-     *
-     * @var string
-     */
-    protected $sorting = 'start_date';
+    protected string $sorting = 'start_date';
 
-    /**
-     * Direction.
-     *
-     * @var string
-     */
-    protected $direction = 'asc';
+    protected string $direction = 'asc';
 
-    /**
-     * Type.
-     *
-     * @var string
-     */
-    protected $type = '';
+    protected string $type = '';
 
-    /**
-     * @var \DateTime|null
-     */
-    protected $startDate;
+    protected ?\DateTime $startDate = null;
 
-    /**
-     * @var \DateTime|null
-     */
-    protected $endDate;
+    protected ?\DateTime $endDate = null;
 
-    /**
-     * @return array
-     */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['sorting', 'direction', 'pid', 'type', 'startDate', 'endDate'];
     }
 
-    /**
-     * @return string
-     */
-    public function getSorting()
+    public function getSorting(): string
     {
         return $this->sorting;
     }
 
-    /**
-     * @param string $sorting
-     */
-    public function setSorting($sorting)
+    public function setSorting(string $sorting)
     {
         $this->sorting = $sorting;
     }
 
-    /**
-     * @return string
-     */
-    public function getDirection()
+    public function getDirection(): string
     {
         return $this->direction;
     }
 
-    /**
-     * @param string $direction
-     */
-    public function setDirection($direction)
+    public function setDirection(string $direction)
     {
         $this->direction = $direction;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
 
-    /**
-     * @param \DateTime|null $startDate
-     */
     public function setStartDate(?\DateTime $startDate): void
     {
         $this->startDate = $startDate;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getEndDate(): ?\DateTime
     {
         return $this->endDate;
     }
 
-    /**
-     * @param \DateTime|null $endDate
-     */
     public function setEndDate(?\DateTime $endDate): void
     {
         $this->endDate = $endDate;

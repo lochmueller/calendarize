@@ -47,9 +47,6 @@ class PopulateEventSlugs extends AbstractUpdate
 
     /**
      * Populate the slug fields in the table using SlugHelper.
-     *
-     * @param string $table
-     * @param string $field
      */
     public function populateSlugs(string $table, string $field): void
     {
@@ -101,11 +98,6 @@ class PopulateEventSlugs extends AbstractUpdate
 
     /**
      * Check if any slug field in the table has an empty value.
-     *
-     * @param string $table
-     * @param string $field
-     *
-     * @return bool
      */
     protected function checkEmptySlug(string $table, string $field): bool
     {

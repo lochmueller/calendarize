@@ -24,32 +24,24 @@ interface EventConfigurationInterface
     /**
      * Get the start date.
      * The date is converted to the local timezone and set to the beginning of the day.
-     *
-     * @return \DateTime|null
      */
     public function getStartDate(): ?\DateTime;
 
     /**
      * Get the inclusive end date.
      * The date is converted to the local timezone and set to the beginning of the day.
-     *
-     * @return \DateTime|null
      */
     public function getEndDate(): ?\DateTime;
 
     /**
      * Get start time.
      * The time is calculated in the local timezone.
-     *
-     * @return int
      */
     public function getStartTime(): int;
 
     /**
      * Get end time.
      * The time is calculated in the local timezone.
-     *
-     * @return int
      */
     public function getEndTime(): int;
 
@@ -61,29 +53,21 @@ interface EventConfigurationInterface
      * have a DATE value type for the "DTSTART" property instead of the
      * default value type of DATE-TIME. If such a "VEVENT" has a "DTEND"
      * property, it MUST be specified as a DATE value also.
-     *
-     * @return bool
      */
     public function isAllDay(): bool;
 
     /**
      * Get openEndTime.
-     *
-     * @return bool
      */
     public function isOpenEndTime(): bool;
 
     /**
      * Get state.
-     *
-     * @return string
      */
     public function getState(): string;
 
     /**
      * Get repeating rules.
-     *
-     * @return array
      */
     public function getRRule(): array;
 }

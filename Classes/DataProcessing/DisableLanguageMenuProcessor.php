@@ -113,7 +113,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
             )
             ->executeQuery();
 
-        return $result->fetchFirstColumn()[0];
+        return $result->fetchOne();
     }
 
     protected function handleMenu(array &$menu, array $availableLanguages): void
@@ -136,12 +136,13 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
     protected function getIndexId(): int
     {
         $indexId = 0;
+        $request = $this->getRequest();
         /** @var PageArguments $pageArguments */
-        $pageArguments = $this->getRequest()->getAttribute('routing');
+        $pageArguments = $request->getAttribute('routing');
         if (isset($pageArguments->getRouteArguments()['tx_calendarize_calendar']['index'])) {
             $indexId = (int)$pageArguments->getRouteArguments()['tx_calendarize_calendar']['index'];
-        } elseif (isset($this->getRequest()->getQueryParams()['tx_calendarize_calendar']['index'])) {
-            $indexId = (int)$this->getRequest()->getQueryParams()['tx_calendarize_calendar']['index'];
+        } elseif (isset($request->getQueryParams()['tx_calendarize_calendar']['index'])) {
+            $indexId = (int)$request->getQueryParams()['tx_calendarize_calendar']['index'];
         }
 
         return $indexId;

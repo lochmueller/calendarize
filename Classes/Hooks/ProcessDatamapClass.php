@@ -19,10 +19,8 @@ class ProcessDatamapClass
 {
     /**
      * Index the given items.
-     *
-     * @var array
      */
-    protected $indexItems = [];
+    protected array $indexItems = [];
 
     /**
      * Hook into the after database operations.

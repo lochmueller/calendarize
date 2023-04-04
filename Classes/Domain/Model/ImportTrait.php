@@ -6,10 +6,8 @@ trait ImportTrait
 {
     /**
      * Import ID if the item is based on an ICS structure.
-     *
-     * @var string|null
      */
-    protected $importId;
+    protected ?string $importId = null;
 
     public function getImportId(): ?string
     {

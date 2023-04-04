@@ -12,6 +12,7 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Typolink\DatabaseRecordLinkBuilder as BaseDatabaseRecordLinkBuilderAlias;
 use TYPO3\CMS\Frontend\Typolink\LinkResultInterface;
 use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
@@ -25,7 +26,8 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
     {
         if (isset($linkDetails['identifier']) && \in_array($linkDetails['identifier'], $this->getEventTables(), true)) {
             $eventId = $linkDetails['uid'];
-            $defaultPid = (int)($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
+            $controller = $this->getTypoScriptFrontendController();
+            $defaultPid = (int)($controller->tmpl->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
             if ($defaultPid <= 0) {
                 throw new \Exception('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
             }
@@ -50,11 +52,11 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
                 ], '&'),
             ];
 
-            $localContentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-            $localContentObjectRenderer->parameters = $this->contentObjectRenderer->parameters;
-            $link = $localContentObjectRenderer->typoLink($linkText, $typoScriptConfiguration);
+            $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+            $contentObjectRenderer->parameters = $this->contentObjectRenderer->parameters;
+            $link = $contentObjectRenderer->typoLink($linkText, $typoScriptConfiguration);
 
-            $this->contentObjectRenderer->lastTypoLinkResult = $localContentObjectRenderer->lastTypoLinkResult;
+            $this->contentObjectRenderer->lastTypoLinkResult = $contentObjectRenderer->lastTypoLinkResult;
 
             // nasty workaround so typolink stops putting a link together, there is a link already built
             throw new UnableToLinkException('', 1491130170, null, $link);

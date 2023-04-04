@@ -8,7 +8,10 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Property\TypeConverter;
 
 use HDNET\Calendarize\Domain\Model\Request\DefaultBookingRequest;
+use HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest as BaseAbstractBookingRequest;
 use HDNET\Calendarize\Register;
+use TYPO3\CMS\Extbase\Error\Error;
+use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -30,7 +33,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
      *
      * @var string
      */
-    protected $targetType = \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest::class;
+    protected $targetType = BaseAbstractBookingRequest::class;
 
     /**
      * Priority.
@@ -41,17 +44,13 @@ class AbstractBookingRequest extends AbstractTypeConverter
 
     /**
      * Current configurations.
-     *
-     * @var array
      */
-    protected static $configurations = [];
+    protected static array $configurations = [];
 
     /**
      * Set configurations.
-     *
-     * @param array $configurations
      */
-    public static function setConfigurations($configurations)
+    public static function setConfigurations(array $configurations)
     {
         self::$configurations = $configurations;
     }
@@ -72,15 +71,15 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * @param array                                 $convertedChildProperties
      * @param PropertyMappingConfigurationInterface $configuration
      *
-     * @return mixed|\TYPO3\CMS\Extbase\Error\Error the target type, or an error object if a user-error occurred
+     * @return mixed|Error the target type, or an error object if a user-error occurred
      *
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
+     * @throws TypeConverterException thrown in case a developer error occurred
      *
      * @api
      */
     public function convertFrom(
         $source,
-        $targetType,
+        string $targetType,
         array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
@@ -92,18 +91,16 @@ class AbstractBookingRequest extends AbstractTypeConverter
         return $bookingRequest;
     }
 
-    /**
-     * Get the right request model.
-     *
-     * @return \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest
-     */
-    protected function getBookingRequestModel()
+    protected function getBookingRequestModel(): BaseAbstractBookingRequest
     {
         $register = Register::getRegister();
         foreach (self::$configurations as $configurationKey) {
             foreach ($register as $key => $configuration) {
                 if ($key === $configurationKey) {
-                    if (isset($configuration['overrideBookingRequestModel']) && class_exists($configuration['overrideBookingRequestModel'])) {
+                    if (
+                        isset($configuration['overrideBookingRequestModel'])
+                        && class_exists($configuration['overrideBookingRequestModel'])
+                    ) {
                         $class = $configuration['overrideBookingRequestModel'];
 
                         return new $class();

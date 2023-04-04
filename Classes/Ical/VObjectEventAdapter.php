@@ -11,24 +11,16 @@ use Sabre\VObject\Property;
 
 class VObjectEventAdapter implements ICalEvent
 {
-    /**
-     * @var VEvent
-     */
-    protected $event;
+    protected VEvent $event;
 
     /**
      * VObjectEvent constructor.
-     *
-     * @param VEvent $event
      */
     public function __construct(VEvent $event)
     {
         $this->event = $event;
     }
 
-    /**
-     * @return VEvent
-     */
     public function getEvent(): VEvent
     {
         return $this->event;

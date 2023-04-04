@@ -12,7 +12,7 @@ use TYPO3\CMS\Core\Versioning\VersionState;
 
 class RawIndexRepository extends AbstractRawRepository
 {
-    protected $tableName = 'tx_calendarize_domain_model_index';
+    protected string $tableName = 'tx_calendarize_domain_model_index';
 
     /**
      * Find outdated events.
@@ -63,8 +63,13 @@ class RawIndexRepository extends AbstractRawRepository
     /**
      * Find the next events (ignore enable fields).
      */
-    public function findEventsAfterStartDate(string $foreignTable, int $uid, \DateTime $dateTime, int $limit = 5, int $workspace = 0): array
-    {
+    public function findEventsAfterStartDate(
+        string $foreignTable,
+        int $uid,
+        \DateTime $dateTime,
+        int $limit = 5,
+        int $workspace = 0
+    ): array {
         $q = $this->getQueryBuilder();
 
         $q->getRestrictions()
@@ -90,7 +95,7 @@ class RawIndexRepository extends AbstractRawRepository
             ->addOrderBy('start_time', 'ASC')
             ->setMaxResults($limit);
 
-        $result = (array)$q->executeQuery()->fetchAllAssociative();
+        $result = $q->executeQuery()->fetchAllAssociative();
 
         foreach ($result as $key => $row) {
             BackendUtility::workspaceOL($this->tableName, $row, $workspace);
@@ -113,22 +118,22 @@ class RawIndexRepository extends AbstractRawRepository
     public function countAllEvents(string $tableName, int $uid, int $workspace = 0): int
     {
         // Select all to check workspaces in the right way
-        return \count($this->findAllEvents($tableName, $uid, $workspace));
+        return count($this->findAllEvents($tableName, $uid, $workspace));
     }
 
-    public function deleteNotInUniqueRegisterKey(array $validKeys)
+    public function deleteNotInUniqueRegisterKey(array $validKeys): bool
     {
-        $q = $this->getQueryBuilder();
+        $queryBuilder = $this->getQueryBuilder();
 
         foreach ($validKeys as $key => $value) {
-            $validKeys[$key] = $q->createNamedParameter($value);
+            $validKeys[$key] = $queryBuilder->createNamedParameter($value);
         }
 
-        $q->delete($this->tableName)
+        $queryBuilder->delete($this->tableName)
             ->where(
-                $q->expr()->notIn('unique_register_key', $validKeys)
+                $queryBuilder->expr()->notIn('unique_register_key', $validKeys)
             );
 
-        return (bool)$q->executeStatement();
+        return (bool)$queryBuilder->executeStatement();
     }
 }

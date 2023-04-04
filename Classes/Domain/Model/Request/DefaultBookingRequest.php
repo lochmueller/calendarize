@@ -15,71 +15,37 @@ use TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator;
  */
 class DefaultBookingRequest extends AbstractBookingRequest
 {
-    /**
-     * First name.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $firstName;
 
-    /**
-     * Last name.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $lastName;
 
-    /**
-     * E-Mail.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     #[Extbase\Validate(['validator' => EmailAddressValidator::class])]
     protected string $email;
 
-    /**
-     * Phone.
-     */
     protected string $phone;
 
-    /**
-     * Street.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $street;
 
-    /**
-     * House number.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $houseNumber;
 
-    /**
-     * ZIP.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $zip;
 
-    /**
-     * City.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $city;
 
-    /**
-     * Country.
-     */
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $country;
 
-    /**
-     * Message.
-     *
-     * @var string
-     */
     protected string $message;
 
     /**
      * Get first name.
-     *
-     * @return string
      */
     public function getFirstName(): string
     {
@@ -88,8 +54,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set first name.
-     *
-     * @param string $firstName
      */
     public function setFirstName(string $firstName)
     {
@@ -98,8 +62,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get last name.
-     *
-     * @return string
      */
     public function getLastName(): string
     {
@@ -108,8 +70,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set last name.
-     *
-     * @param string $lastName
      */
     public function setLastName(string $lastName)
     {
@@ -118,8 +78,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get E-Mail.
-     *
-     * @return string
      */
     public function getEmail(): string
     {
@@ -128,8 +86,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set E-Mail.
-     *
-     * @param string $email
      */
     public function setEmail(string $email)
     {
@@ -138,8 +94,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get phone.
-     *
-     * @return string
      */
     public function getPhone(): string
     {
@@ -148,8 +102,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set phone.
-     *
-     * @param string $phone
      */
     public function setPhone(string $phone)
     {
@@ -158,8 +110,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get street.
-     *
-     * @return string
      */
     public function getStreet(): string
     {
@@ -168,8 +118,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set street.
-     *
-     * @param string $street
      */
     public function setStreet(string $street)
     {
@@ -178,8 +126,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get house number.
-     *
-     * @return string
      */
     public function getHouseNumber(): string
     {
@@ -188,8 +134,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set house number.
-     *
-     * @param string $houseNumber
      */
     public function setHouseNumber(string $houseNumber)
     {
@@ -198,8 +142,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get ZIP.
-     *
-     * @return string
      */
     public function getZip(): string
     {
@@ -208,8 +150,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set ZIP.
-     *
-     * @param string $zip
      */
     public function setZip(string $zip)
     {
@@ -218,8 +158,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get city.
-     *
-     * @return string
      */
     public function getCity(): string
     {
@@ -228,8 +166,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set city.
-     *
-     * @param string $city
      */
     public function setCity(string $city)
     {
@@ -238,8 +174,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get country.
-     *
-     * @return string
      */
     public function getCountry(): string
     {
@@ -248,8 +182,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set country.
-     *
-     * @param string $country
      */
     public function setCountry(string $country)
     {
@@ -258,8 +190,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Get message.
-     *
-     * @return string
      */
     public function getMessage(): string
     {
@@ -268,8 +198,6 @@ class DefaultBookingRequest extends AbstractBookingRequest
 
     /**
      * Set message.
-     *
-     * @param string $message
      */
     public function setMessage(string $message)
     {

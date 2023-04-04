@@ -16,35 +16,21 @@ interface KeSearchIndexInterface
 {
     /**
      * Get the title.
-     *
-     * @param Index $index
-     *
-     * @return string
      */
     public function getKeSearchTitle(Index $index): string;
 
     /**
      * Get the abstract.
-     *
-     * @param Index $index
-     *
-     * @return string
      */
     public function getKeSearchAbstract(Index $index): string;
 
     /**
      * Get the content.
-     *
-     * @param Index $index
-     *
-     * @return string
      */
     public function getKeSearchContent(Index $index): string;
 
     /**
      * Get the tags.
-     *
-     * @param Index $index
      *
      * @return string Comma separated list of tags, e.g. '#syscat1#,#syscat2#'
      */

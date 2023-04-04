@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -46,11 +45,6 @@ class KeSearchIndexer
 
     /**
      * Calendarize indexer for ke_search.
-     *
-     * @param array         $indexerConfig Configuration from TYPO3 Backend
-     * @param IndexerRunner $indexerObject reference to indexer class
-     *
-     * @return string|null
      */
     public function customIndexer(array &$indexerConfig, IndexerRunner &$indexerObject): string
     {
@@ -59,15 +53,11 @@ class KeSearchIndexer
         }
         $languageField = $GLOBALS['TCA'][self::TABLE]['ctrl']['languageField']; // e.g. sys_language_uid
 
-        if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
-            $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
-        } else {
-            $dataMapper = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
-                ->get(DataMapper::class);
-        }
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
 
         // We use a QueryBuilder instead of the IndexRepository, to avoid problems with workspaces, ...
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable(self::TABLE);
 
         // Don't fetch hidden, deleted or workspace elements, but the elements
         // with frontend user group access restrictions or time (start / stop)
@@ -83,12 +73,12 @@ class KeSearchIndexer
             ->select('*')
             ->from(self::TABLE)
             ->where($queryBuilder->expr()->in('pid', $pids))
-            ->execute();
+            ->executeQuery();
 
         $indexedCounter = 0;
 
         if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) {
+            while ($row = $result->fetchAssociative()) {
                 try {
                     /** @var Index $index */
                     // Get domainObject to check and call the feature/interface

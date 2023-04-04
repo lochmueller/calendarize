@@ -10,13 +10,10 @@ final class IndexAllEvent
 
     public const POSITION_POST = 'post';
 
-    private $indexerService;
-    private $position;
-
-    public function __construct(IndexerService $indexerService, string $position)
-    {
-        $this->indexerService = $indexerService;
-        $this->position = $position;
+    public function __construct(
+        private readonly IndexerService $indexerService,
+        private readonly string $position
+    ) {
     }
 
     public function getIndexerService(): IndexerService

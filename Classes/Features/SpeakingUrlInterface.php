@@ -14,8 +14,6 @@ interface SpeakingUrlInterface
 {
     /**
      * Get the base for the realurl alias.
-     *
-     * @return string
      */
     public function getRealUrlAliasBase(): string;
 }

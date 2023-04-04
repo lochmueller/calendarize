@@ -8,9 +8,6 @@ use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 
 final class BaseSlugGenerationEvent
 {
-    /**
-     * BaseSlugGenerationEvent constructor.
-     */
     public function __construct(
         private readonly string $uniqueRegisterKey,
         private readonly DomainObjectInterface $model,

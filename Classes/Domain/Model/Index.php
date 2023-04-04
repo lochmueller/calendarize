@@ -25,49 +25,25 @@ class Index extends AbstractModel
      */
     protected string $uniqueRegisterKey = '';
 
-    /**
-     * TableName.
-     */
     protected string $foreignTable = '';
 
     /**
-     * The Id of the foreign element.
+     * The uid of the foreign element.
      */
     protected int $foreignUid = 0;
 
-    /**
-     * Start date.
-     */
     protected ?\DateTime $startDate = null;
 
-    /**
-     * End date.
-     */
     protected ?\DateTime $endDate = null;
 
-    /**
-     * Start time.
-     */
     protected int $startTime = 0;
 
-    /**
-     * End time.
-     */
     protected int $endTime = 0;
 
-    /**
-     * AllDay.
-     */
     protected bool $allDay = false;
 
-    /**
-     * OpenEndTime.
-     */
     protected bool $openEndTime = false;
 
-    /**
-     * State.
-     */
     protected string $state = '';
 
     /**
@@ -75,9 +51,6 @@ class Index extends AbstractModel
      */
     protected ?AbstractEntity $originalObject;
 
-    /**
-     * Slug.
-     */
     protected string $slug = '';
 
     /**

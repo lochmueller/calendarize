@@ -8,7 +8,7 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 
 abstract class AbstractRawRepository
 {
-    protected $tableName;
+    protected string $tableName;
 
     public function deleteByIdentifier(array $idents): bool
     {
@@ -32,6 +32,6 @@ abstract class AbstractRawRepository
 
     protected function getQueryBuilder(): QueryBuilder
     {
-        return $this->getDatabaseConnection()->createQueryBuilder();
+        return HelperUtility::getQueryBuilder($this->tableName);
     }
 }

@@ -8,35 +8,21 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use HDNET\Calendarize\Domain\Model\AbstractModel;
+use HDNET\Calendarize\Domain\Model\Index;
 
 /**
  * AbstractBookingRequest.
  */
 abstract class AbstractBookingRequest extends AbstractModel
 {
-    /**
-     * Index.
-     *
-     * @var \HDNET\Calendarize\Domain\Model\Index
-     */
-    protected $index;
+    protected Index $index;
 
-    /**
-     * Get index.
-     *
-     * @return \HDNET\Calendarize\Domain\Model\Index
-     */
-    public function getIndex()
+    public function getIndex(): Index
     {
         return $this->index;
     }
 
-    /**
-     * Set index.
-     *
-     * @param \HDNET\Calendarize\Domain\Model\Index $index
-     */
-    public function setIndex($index)
+    public function setIndex(Index $index): void
     {
         $this->index = $index;
     }
