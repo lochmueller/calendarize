@@ -46,7 +46,7 @@ class Index extends AbstractModel
     /**
      * The original object.
      */
-    protected ?AbstractEntity $originalObject;
+    protected ?AbstractEntity $originalObject = null;
 
     protected string $slug = '';
 
