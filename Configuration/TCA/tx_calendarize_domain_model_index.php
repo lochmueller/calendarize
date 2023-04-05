@@ -144,20 +144,20 @@ return [
             'exclude' => 1,
             'label' => $ll . 'tx_calendarize_domain_model_index.start_date',
             'config' => [
-                'type' => 'input',
+                'type' => 'datetime',
                 'readOnly' => true,
                 'dbType' => 'date',
-                'eval' => 'date',
+                'format' => 'date',
             ],
         ],
         'end_date' => [
             'exclude' => 1,
             'label' => $ll . 'tx_calendarize_domain_model_index.end_date',
             'config' => [
-                'type' => 'input',
+                'type' => 'datetime',
                 'readOnly' => true,
                 'dbType' => 'date',
-                'eval' => 'date',
+                'format' => 'date',
             ],
         ],
         'start_time' => [
