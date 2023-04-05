@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Time service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service\TimeTable;
@@ -157,7 +154,8 @@ class TimeTimeTable extends AbstractTimeTable
             && !$baseEntry['all_day']
             && !$baseEntry['open_end_time']
             && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y')
-            && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY
+            && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY
+            > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY
         ) {
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.time.message',

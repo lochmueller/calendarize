@@ -27,9 +27,12 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
         if (isset($linkDetails['identifier']) && \in_array($linkDetails['identifier'], $this->getEventTables(), true)) {
             $eventId = $linkDetails['uid'];
             $controller = $this->getTypoScriptFrontendController();
-            $defaultPid = (int)($controller->tmpl->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
+            $defaultPid = (int)($controller->tmpl
+                ->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
             if ($defaultPid <= 0) {
-                throw new \Exception('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
+                throw new \Exception(
+                    'You have to configure calendarize:defaultDetailPid to use the linkhandler function'
+                );
             }
 
             $indexUid = $this->getIndexForEventUid($linkDetails['identifier'], $eventId);
@@ -86,7 +89,9 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
 
         $fetchEvent = $indexRepository->findByEventTraversing($event, true, false, 1)->toArray();
         if (count($fetchEvent) <= 0) {
-            $fetchEvent = $indexRepository->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING)->toArray();
+            $fetchEvent = $indexRepository
+                ->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING)
+                ->toArray();
         }
 
         if (empty($fetchEvent)) {

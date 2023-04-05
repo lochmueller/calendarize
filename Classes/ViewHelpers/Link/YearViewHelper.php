@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the year.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -17,7 +14,7 @@ class YearViewHelper extends AbstractActionViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('date', \DateTimeInterface::class, '', true);

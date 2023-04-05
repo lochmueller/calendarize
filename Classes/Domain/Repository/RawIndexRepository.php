@@ -24,24 +24,24 @@ class RawIndexRepository extends AbstractRawRepository
         $now = DateTimeUtility::getNow();
         $now->sub(new \DateInterval($interval));
 
-        $q = $this->getQueryBuilder();
-        $q->getRestrictions()
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
 
-        $q->select('foreign_uid')
+        $queryBuilder->select('foreign_uid')
             ->addSelectLiteral(
-                $q->expr()->max('end_date', 'max_end_date')
+                $queryBuilder->expr()->max('end_date', 'max_end_date')
             )
             ->from($this->tableName)
-            ->where($q->expr()->eq('foreign_table', $q->createNamedParameter($tableName)))
+            ->where($queryBuilder->expr()->eq('foreign_table', $queryBuilder->createNamedParameter($tableName)))
             ->groupBy('foreign_uid')
             ->having(
-                $q->expr()->lt('max_end_date', $q->createNamedParameter($now->format('Y-m-d')))
+                $queryBuilder->expr()->lt('max_end_date', $queryBuilder->createNamedParameter($now->format('Y-m-d')))
             );
 
-        return $q->executeQuery()->fetchAllAssociative();
+        return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 
     /**

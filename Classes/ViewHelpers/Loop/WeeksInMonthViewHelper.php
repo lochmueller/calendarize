@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Weeks in month view helper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
@@ -18,7 +15,7 @@ class WeeksInMonthViewHelper extends AbstractLoopViewHelper
      *
      * @api
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('weekStartsAt', 'int', 'Number between 1 and 7', true, 1);

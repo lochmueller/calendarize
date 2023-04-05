@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Calendar.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
@@ -33,6 +30,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Calendar.
@@ -50,7 +48,9 @@ class CalendarController extends AbstractCompatibilityController
         if (isset($this->settings['format'])) {
             $this->request = $this->request->withFormat($this->settings['format']);
         }
-        $this->indexRepository->setIndexTypes(GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true));
+        $this->indexRepository->setIndexTypes(
+            GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true)
+        );
         $additionalSlotArguments = [
             'contentRecord' => $this->configurationManager->getContentObject()->data,
             'settings' => $this->settings,
@@ -59,7 +59,10 @@ class CalendarController extends AbstractCompatibilityController
 
         if (isset($this->settings['sorting'])) {
             if (isset($this->settings['sortBy'])) {
-                $this->indexRepository->setDefaultSortingDirection($this->settings['sorting'], $this->settings['sortBy']);
+                $this->indexRepository->setDefaultSortingDirection(
+                    $this->settings['sorting'],
+                    $this->settings['sortBy']
+                );
             } else {
                 $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
             }
@@ -92,7 +95,10 @@ class CalendarController extends AbstractCompatibilityController
             $configuration = ExtensionConfigurationUtility::get($configurationName);
 
             // get Event by Configuration and Uid
-            $event = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$this->request->getArgument('event'));
+            $event = EventUtility::getOriginalRecordByConfiguration(
+                $configuration,
+                (int)$this->request->getArgument('event')
+            );
             $index = $this->indexRepository->findByEventTraversing($event, true, false, 1)->getFirst();
 
             // if there is a valid index in the event
@@ -230,7 +236,8 @@ class CalendarController extends AbstractCompatibilityController
     public function shortcutAction(): ResponseInterface
     {
         $this->addCacheTags(['calendarize_shortcut']);
-        list($table, $uid) = explode(':', $GLOBALS['TSFE']->currentRecord);
+
+        list($table, $uid) = explode(':', $this->getTypoScriptFrontendController()->currentRecord);
         $register = Register::getRegister();
 
         $event = null;
@@ -242,7 +249,9 @@ class CalendarController extends AbstractCompatibilityController
                     $repository = GeneralUtility::makeInstance($repositoryName);
                     $event = $repository->findByUid($uid);
 
-                    $this->addCacheTags(['calendarize_' . lcfirst($value['uniqueRegisterKey']) . '_' . $event->getUid()]);
+                    $this->addCacheTags(
+                        ['calendarize_' . lcfirst($value['uniqueRegisterKey']) . '_' . $event->getUid()]
+                    );
                     break;
                 }
             }
@@ -256,7 +265,8 @@ class CalendarController extends AbstractCompatibilityController
 
         $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, $limitEvents);
         if (count($fetchEvent) <= 0) {
-            $fetchEvent = $this->indexRepository->findByEventTraversing($event, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING);
+            $fetchEvent = $this->indexRepository
+                ->findByEventTraversing($event, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING);
         }
 
         $this->view->assignMultiple([
@@ -385,7 +395,8 @@ class CalendarController extends AbstractCompatibilityController
 
         $now = DateTimeUtility::getNow();
         if (null === $year) {
-            $year = (int)$now->format('o'); // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
+            // 'o' instead of 'Y': http://php.net/manual/en/function.date.php#106974
+            $year = (int)$now->format('o');
         }
         if (null === $week) {
             $week = (int)$now->format('W');
@@ -501,13 +512,22 @@ class CalendarController extends AbstractCompatibilityController
             /** @var MetaTagManagerRegistry $metaTagManagerRegistry */
             $metaTagManagerRegistry = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
             $metaTagManagerRegistry->getManagerForProperty('og:title')->addProperty('og:title', $event->getTitle());
-            $metaTagManagerRegistry->getManagerForProperty('og:description')->addProperty('og:description', $event->getAbstract());
+            $metaTagManagerRegistry->getManagerForProperty('og:description')
+                ->addProperty('og:description', $event->getAbstract());
 
             $images = $event->getImages();
             if (isset($images[0])) {
                 $imageService = GeneralUtility::makeInstance(ImageService::class);
-                $processingInstructions = ['minWidth' => 600, 'minHeight' => 315, 'maxWidth' => 1200, 'maxHeight' => 630];
-                $processedImage = $imageService->applyProcessingInstructions($images[0]->getOriginalResource(), $processingInstructions);
+                $processingInstructions = [
+                    'minWidth' => 600,
+                    'minHeight' => 315,
+                    'maxWidth' => 1200,
+                    'maxHeight' => 630]
+                ;
+                $processedImage = $imageService->applyProcessingInstructions(
+                    $images[0]->getOriginalResource(),
+                    $processingInstructions
+                );
                 $imageUrl = $this->getBaseUri() . $imageService->getImageUri($processedImage);
                 $metaTagManagerRegistry->getManagerForProperty('og:image')->addProperty('og:image', $imageUrl);
             }
@@ -545,7 +565,9 @@ class CalendarController extends AbstractCompatibilityController
         }
         if (!($endDate instanceof \DateTimeInterface)) {
             $endDate = clone $startDate;
-            $modify = \is_string($this->settings['searchEndModifier']) ? $this->settings['searchEndModifier'] : '+30 days';
+            $modify = is_string($this->settings['searchEndModifier'])
+                ? $this->settings['searchEndModifier']
+                : '+30 days';
             $endDate->modify($modify);
         }
         $this->checkWrongDateOrder($startDate, $endDate);
@@ -777,5 +799,10 @@ class CalendarController extends AbstractCompatibilityController
     {
         $request = $GLOBALS['TYPO3_REQUEST'];
         return $request->getAttribute('normalizedParams')->getSiteUrl();
+    }
+
+    protected function getTypoScriptFrontendController(): TypoScriptFrontendController
+    {
+        return $GLOBALS['TSFE'];
     }
 }

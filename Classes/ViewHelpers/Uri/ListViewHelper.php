@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Uri to the list.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;

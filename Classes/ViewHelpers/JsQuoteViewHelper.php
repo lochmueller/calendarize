@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Quote JS.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
@@ -17,7 +14,7 @@ class JsQuoteViewHelper extends AbstractViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('content', 'string', 'Override content', false);

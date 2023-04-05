@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Index repository.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Repository;
@@ -284,7 +281,9 @@ class IndexRepository extends AbstractRepository
         $constraints = $this->getDefaultConstraints($query);
         $this->addTimeFrameConstraints($constraints, $query, null, $now);
 
-        $sort = QueryInterface::ORDER_ASCENDING === $sort ? QueryInterface::ORDER_ASCENDING : QueryInterface::ORDER_DESCENDING;
+        $sort = QueryInterface::ORDER_ASCENDING === $sort
+            ? QueryInterface::ORDER_ASCENDING
+            : QueryInterface::ORDER_DESCENDING;
         $query->setOrderings($this->getSorting($sort));
         if ($limit > 0) {
             $query->setLimit($limit);

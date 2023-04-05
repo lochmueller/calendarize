@@ -55,7 +55,11 @@ class SlugService extends AbstractService
         // Get domain model
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
         /** @var DomainObjectInterface $model */
-        $model = EventUtility::getOriginalRecordByConfigurationInWorkspace($configuration, (int)$record['uid'], $record['t3ver_wsid'] ?? 0);
+        $model = EventUtility::getOriginalRecordByConfigurationInWorkspace(
+            $configuration,
+            (int)$record['uid'],
+            $record['t3ver_wsid'] ?? 0
+        );
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
 

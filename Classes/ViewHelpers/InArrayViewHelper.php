@@ -18,7 +18,13 @@ class InArrayViewHelper extends AbstractViewHelper
     {
         $this->registerArgument('needle', 'mixed', 'The searched value.', true);
         $this->registerArgument('haystack', 'array', 'The array.', true);
-        $this->registerArgument('strict', 'boolean', 'If true then the function will also check the types.', false, false);
+        $this->registerArgument(
+            'strict',
+            'boolean',
+            'If true then the function will also check the types.',
+            false,
+            false
+        );
     }
 
     /**

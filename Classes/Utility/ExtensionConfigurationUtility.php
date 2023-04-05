@@ -1,8 +1,5 @@
 <?php
 
-/**
- * ExtensionConfiguration Utility.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
@@ -44,7 +41,8 @@ class ExtensionConfigurationUtility
             if ($configuration['modelName'] === $eventClass) {
                 return $configuration['uniqueRegisterKey'];
             }
-            if (isset($configuration['subClasses'])
+            if (
+                isset($configuration['subClasses'])
                 && is_array($configuration['subClasses'])
                 && in_array($eventClass, $configuration['subClasses'])
             ) {

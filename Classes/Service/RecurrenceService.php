@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Recurrence service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -90,7 +87,10 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
             case ConfigurationInterface::RECURRENCE_FIFTH:
                 return $this->findDayInCurrentMonth($dateTime, self::DIRECTION_UP, $days, 5);
             default:
-                $this->logger->notice('Invalid recurrence "{recurrence}" in frequency configuration.', ['recurrence' => $recurrence]);
+                $this->logger->notice(
+                    'Invalid recurrence "{recurrence}" in frequency configuration.',
+                    ['recurrence' => $recurrence]
+                );
 
                 return false;
         }

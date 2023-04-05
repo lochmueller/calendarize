@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to anything ;).
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -32,7 +29,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * Arguments initialization.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();

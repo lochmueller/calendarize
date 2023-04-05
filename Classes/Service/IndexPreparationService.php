@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Helper class for the IndexService
- * Prepare the index.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -47,7 +43,10 @@ class IndexPreparationService extends AbstractService
         $neededItems = [];
         if ($configurations) {
             $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
-            $neededItems = $timeTableService->getTimeTablesByConfigurationIds($configurations, (int)$rawRecord['t3ver_wsid']);
+            $neededItems = $timeTableService->getTimeTablesByConfigurationIds(
+                $configurations,
+                (int)$rawRecord['t3ver_wsid']
+            );
             foreach ($neededItems as $key => $record) {
                 $record['foreign_table'] = $tableName;
                 $record['foreign_uid'] = $uid;
@@ -106,18 +105,17 @@ class IndexPreparationService extends AbstractService
                 $searchFor = $value;
                 $searchFor['foreign_uid'] = (int)$originalRecord[$transPointer];
 
-                $db = HelperUtility::getDatabaseConnection(IndexerService::TABLE_NAME);
-                $q = $db->createQueryBuilder();
+                $queryBuilder = HelperUtility::getQueryBuilder(IndexerService::TABLE_NAME);
                 $where = [];
                 foreach ($searchFor as $field => $val) {
                     if (\is_string($val)) {
-                        $where[] = $q->expr()->eq($field, $q->quote($val));
+                        $where[] = $queryBuilder->expr()->eq($field, $queryBuilder->quote($val));
                     } else {
-                        $where[] = $q->expr()->eq($field, (int)$val);
+                        $where[] = $queryBuilder->expr()->eq($field, (int)$val);
                     }
                 }
 
-                $result = $q
+                $result = $queryBuilder
                     ->select('uid')
                     ->from(IndexerService::TABLE_NAME)
                     ->andWhere(...$where)

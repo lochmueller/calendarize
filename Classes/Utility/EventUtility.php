@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Event utility.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
@@ -58,8 +55,11 @@ class EventUtility
      *
      * @return DomainObjectInterface|null
      */
-    public static function getOriginalRecordByConfigurationInWorkspace(array $configuration, int $uid, int $workspaceId): ?DomainObjectInterface
-    {
+    public static function getOriginalRecordByConfigurationInWorkspace(
+        array $configuration,
+        int $uid,
+        int $workspaceId
+    ): ?DomainObjectInterface {
         $table = $configuration['tableName'];
         $modelName = $configuration['modelName'];
 
@@ -100,13 +100,15 @@ class EventUtility
         }
 
         // Modern (TYPO3_REQUEST) Backend request
-        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
-            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+        if (
+            ($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
+        ) {
             return true;
         }
 
         // Old backend request (e.g. install tool wizards)
-        if (\defined('TYPO3') && TYPO3 == 'BE') {
+        if (defined('TYPO3') && TYPO3 == 'BE') {
             return true;
         }
 

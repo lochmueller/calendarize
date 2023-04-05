@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Uri to the quarter.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Abstract controller.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;

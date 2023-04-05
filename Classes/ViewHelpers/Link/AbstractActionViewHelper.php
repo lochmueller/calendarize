@@ -15,13 +15,13 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
     protected string $controllerName = 'Calendar';
     protected string $actionName;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
 
-        $this->registerArgument('section', 'string', 'The anchor to be added to the URI', false);
-        $this->registerArgument('pageUid', 'int', 'Target page', false);
-        $this->registerArgument('absolute', 'bool', 'If set, the URI of the rendered link is absolute', false);
+        $this->registerArgument('section', 'string', 'The anchor to be added to the URI');
+        $this->registerArgument('pageUid', 'int', 'Target page');
+        $this->registerArgument('absolute', 'bool', 'If set, the URI of the rendered link is absolute');
     }
 
     /**

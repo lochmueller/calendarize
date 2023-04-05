@@ -1,8 +1,5 @@
 <?php
 
-/**
- * External service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service\TimeTable;
@@ -83,6 +80,7 @@ class ExternalTimeTable extends AbstractTimeTable
                 'end_time' => $event->getEndTime(),
                 'all_day' => $event->isAllDay(),
                 'open_end_time' => $event->isOpenEndTime(),
+                // @todo: shouldnt this be not overridden?
                 'state' => $event->getState(),
             ];
             $time['pid'] = $configuration->getPid();

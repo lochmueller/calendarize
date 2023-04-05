@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Translate helper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;

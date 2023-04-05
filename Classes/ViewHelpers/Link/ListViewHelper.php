@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the list.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -17,7 +14,7 @@ class ListViewHelper extends AbstractActionViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
     }

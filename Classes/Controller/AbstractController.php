@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Abstract controller.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
@@ -181,7 +178,8 @@ abstract class AbstractController extends ActionController
     {
         if (!isset($this->settings['dateLimitBrowserPrev'])) {
             $this->addFlashMessage(
-                'Basic configuration settings are missing. It seems, that the Static Extension TypoScript is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
+                'Basic configuration settings are missing. It seems, that the Static Extension TypoScript
+                 is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
                 'Configuration Error',
                 ContextualFeedbackSeverity::ERROR
             );

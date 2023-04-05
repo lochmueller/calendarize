@@ -1,8 +1,5 @@
 <?php
 
-/**
- * LanguageInformationViewHelper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
@@ -23,20 +20,14 @@ class LanguageInformationViewHelper extends AbstractViewHelper
     protected static array $flags = [];
 
     /**
-     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper.
-     *
-     * @see isOutputEscapingEnabled()
-     *
      * @var bool
-     *
-     * @api
      */
     protected $escapeOutput = false;
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('languageUid', 'int', 'Language UID', true);

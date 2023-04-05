@@ -28,7 +28,7 @@ class NextEventsDataProvider implements ListDataProviderInterface
         $query->setLimit(15);
         $indices = $query->execute()->toArray();
 
-        return array_map(function(Index $index) {
+        return array_map(function (Index $index) {
             try {
                 /** @var StandaloneView $standaloneView */
                 $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);

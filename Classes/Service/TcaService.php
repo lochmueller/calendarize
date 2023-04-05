@@ -1,8 +1,5 @@
 <?php
 
-/**
- * TCA service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -130,7 +127,9 @@ class TcaService extends AbstractService
         if ($row['start_date']) {
             try {
                 $dateStart = BackendUtility::date((new \DateTime($row['start_date']))->getTimestamp());
-                $dateEnd = BackendUtility::date((new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp());
+                $dateEnd = BackendUtility::date(
+                    (new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp()
+                );
                 $title .= $dateStart;
                 if ($dateStart !== $dateEnd) {
                     $title .= ' - ' . $dateEnd;

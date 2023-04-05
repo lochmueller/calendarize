@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Index traversing.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
@@ -18,7 +15,8 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  *
  * <code title="Traversing thru future and past occurings of the event">
  * {namespace c=HDNET\Calendarize\ViewHelpers}
- * <f:for each="{c:indexTraversing(index:'{index}', future: 1, past: 0, limit: 10, sort: 'ASC', useIndexTime: 1)}" as="futureEvent">
+ * <f:for each="{c:indexTraversing(index:'{index}', future: 1, past: 0, limit: 10, sort: 'ASC', useIndexTime: 1)}"
+ *    as="futureEvent">
  *  <f:debug>{futureEvent}</f:debug>
  * </f:for>
  * </code>

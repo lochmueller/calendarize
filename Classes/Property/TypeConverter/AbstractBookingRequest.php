@@ -1,8 +1,5 @@
 <?php
 
-/**
- * AbstractBookingRequest.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Property\TypeConverter;
@@ -60,9 +57,11 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * The return value can be one of three types:
      * - an arbitrary object, or a simple type (which has been created while mapping).
      *   This is the normal case.
-     * - NULL, indicating that this object should *not* be mapped (i.e. a "File Upload" Converter could return NULL if no file has been uploaded, and a silent failure should occur.
+     * - NULL, indicating that this object should *not* be mapped (i.e. a "File Upload"
+     *   Converter could return NULL if no file has been uploaded, and a silent failure should occur.
      * - An instance of \TYPO3\CMS\Extbase\Error\Error -- This will be a user-visible error message later on.
-     * Furthermore, it should throw an Exception if an unexpected failure (like a security error) occurred or a configuration issue happened.
+     *   Furthermore, it should throw an Exception if an unexpected failure (like a security error) occurred
+     *   or a configuration issue happened.
      *
      * @api
      */

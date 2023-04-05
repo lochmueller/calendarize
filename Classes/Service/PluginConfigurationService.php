@@ -1,8 +1,5 @@
 <?php
 
-/**
- * PluginConfigurationService.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -15,7 +12,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class PluginConfigurationService
 {
-     public function __construct(
+    public function __construct(
         protected EventDispatcherInterface $eventDispatcher
     ) {
     }

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Modify a DateTime.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
@@ -18,7 +15,7 @@ class ModifyViewHelper extends AbstractViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('modification', 'string', 'DateTime Object Modification String', true, '');

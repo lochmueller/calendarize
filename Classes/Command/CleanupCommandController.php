@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Cleanup the event models.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Command;
@@ -102,7 +99,8 @@ class CleanupCommandController extends Command
 
         $io->text('Tablename ' . $tableName);
 
-        if (self::MODE_HIDDEN === $mode
+        if (
+            self::MODE_HIDDEN === $mode
             && !isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']['disabled'])
         ) {
             $io->error('Cannot hide events due to missing hidden/disabled field.');

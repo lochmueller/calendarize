@@ -1,8 +1,5 @@
 <?php
 
-/**
- * TCA information.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -46,7 +43,12 @@ class TcaInformation extends AbstractService
         /** @var RawIndexRepository $rawIndexRepository */
         $rawIndexRepository = GeneralUtility::makeInstance(RawIndexRepository::class);
         $count = $rawIndexRepository->countAllEvents($tableName, $uid, WorkspaceUtility::getCurrentWorkspaceId());
-        $next = $rawIndexRepository->findNextEvents($tableName, $uid, $limit, WorkspaceUtility::getCurrentWorkspaceId());
+        $next = $rawIndexRepository->findNextEvents(
+            $tableName,
+            $uid,
+            $limit,
+            WorkspaceUtility::getCurrentWorkspaceId()
+        );
         return sprintf(TranslateUtility::get('previewLabel'), $count, $limit) . $this->getEventList($next);
     }
 

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Hook for data map processing.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;

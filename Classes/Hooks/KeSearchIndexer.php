@@ -1,8 +1,5 @@
 <?php
 
-/**
- * KE Search Indexer.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
@@ -110,7 +107,8 @@ class KeSearchIndexer
                         $title,                                     // record title
                         self::KEY,                                  // content type
                         $indexerConfig['targetpid'],                // target PID: where is the single view?
-                        $fullContent,                               // indexed content, includes the title (linebreak after title)
+                        // indexed content, includes the title (linebreak after title)
+                        $fullContent,
                         $originalObject->getKeSearchTags($index),   // tags for faceted search
                         $params,                                    // typolink params for singleview
                         $abstract,                                  // abstract; shown in result list if not empty

@@ -81,11 +81,17 @@ class PreviewRenderingEventListener
         } else {
             $overrideStartDate = (int)$this->flexFormService->get('settings.overrideStartdate', 'main');
             if ($overrideStartDate) {
-                $this->layoutService->addRow(TranslateUtility::get('override.startdate'), BackendUtility::datetime($overrideStartDate));
+                $this->layoutService->addRow(
+                    TranslateUtility::get('override.startdate'),
+                    BackendUtility::datetime($overrideStartDate)
+                );
             }
             $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
             if ($overrideEndDate) {
-                $this->layoutService->addRow(TranslateUtility::get('override.enddate'), BackendUtility::datetime($overrideEndDate));
+                $this->layoutService->addRow(
+                    TranslateUtility::get('override.enddate'),
+                    BackendUtility::datetime($overrideEndDate)
+                );
             }
         }
 

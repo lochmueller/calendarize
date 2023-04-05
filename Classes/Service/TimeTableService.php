@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Time table builder service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -212,6 +209,9 @@ class TimeTableService extends AbstractService
             }
         }
 
-        throw new \Exception('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 1236781);
+        throw new \Exception(
+            'There is no TimeTable handler for the given configuration type: ' . $configuration->getType(),
+            1236781
+        );
     }
 }

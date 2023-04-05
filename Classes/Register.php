@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Register the calendarize objects.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize;
@@ -47,7 +44,7 @@ class Register
     public static function getDefaultAutoloader(): array
     {
         return [
-            'SmartObjects',
+            // 'SmartObjects', replaced with tca and sql
             // 'Hooks', see ext_localconf.php
             // 'Slots', @todo replace with event listener
             // 'FlexForms', see Overrides/tt_content.php

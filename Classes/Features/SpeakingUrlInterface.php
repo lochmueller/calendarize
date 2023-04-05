@@ -1,12 +1,10 @@
 <?php
 
-/**
- * RealURL features.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Features;
 
+// @todo: still in use?
 /**
  * RealURL features.
  */

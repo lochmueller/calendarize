@@ -1,8 +1,5 @@
 <?php
 
-/**
- * BookingRequestValidator.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Validation\Validator;

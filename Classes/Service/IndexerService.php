@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Index the given events.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -76,8 +73,8 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
             $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
             if ($transPointer) {
-                // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
-                // overlays can connect with l10n_parent to the right default record.
+                // Note: In localized tables, it is important, that the "default language records" are indexed first,
+                // so the overlays can connect with l10n_parent to the right default record.
                 $queryBuilder->addOrderBy((string)$transPointer, 'ASC');
             }
             $rows = $queryBuilder
@@ -98,13 +95,17 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     {
         $this->logger->debug('Start reindex SINGLE ' . $tableName . ':' . $uid);
 
-        $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE));
+        $this->eventDispatcher->dispatch(
+            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE)
+        );
 
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
 
-        $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST));
+        $this->eventDispatcher->dispatch(
+            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST)
+        );
     }
 
     /**
@@ -237,20 +238,22 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      */
     protected function removeInvalidRecordIndex(string $tableName): void
     {
-        $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
-        $q->getRestrictions()
+        $queryBuilder = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
+        $queryBuilder->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
-        $q->select('uid')
+        $queryBuilder->select('uid')
             ->from($tableName);
 
-        $rows = $q->executeQuery()->fetchAllAssociative();
+        $rows = $queryBuilder
+            ->executeQuery()
+            ->fetchAllAssociative();
 
-        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
-        $q->delete(self::TABLE_NAME)
+        $queryBuilder = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
+        $queryBuilder->delete(self::TABLE_NAME)
             ->where(
-                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName))
+                $queryBuilder->expr()->eq('foreign_table', $queryBuilder->createNamedParameter($tableName))
             );
 
         $ids = [];
@@ -258,12 +261,12 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $ids[] = $row['uid'];
         }
         if ($ids) {
-            $q->andWhere(
-                $q->expr()->notIn('foreign_uid', $ids)
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->notIn('foreign_uid', $ids)
             );
         }
 
-        $q->executeStatement();
+        $queryBuilder->executeStatement();
     }
 
     /**
