@@ -56,7 +56,7 @@ class SlugService extends AbstractService
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
         /** @var DomainObjectInterface $model */
         $model = EventUtility::getOriginalRecordByConfigurationInWorkspace(
-            $configuration,
+            $configuration ?? [],
             (int)$record['uid'],
             $record['t3ver_wsid'] ?? 0
         );

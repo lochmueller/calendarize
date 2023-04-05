@@ -15,7 +15,7 @@ class ExtensionConfigurationUtility
     /**
      * Configuration cache.
      */
-    protected static array $configuration = [];
+    protected static ?array $configuration = null;
 
     /**
      * Get the given configuration value.

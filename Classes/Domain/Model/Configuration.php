@@ -43,11 +43,11 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     protected ?\DateTime $tillDate = null;
 
-    protected ?int $tillDays = 0;
+    protected ?int $tillDays = null;
 
     protected bool $tillDaysRelative = false;
 
-    protected ?int $tillDaysPast = 0;
+    protected ?int $tillDaysPast = null;
 
     protected int $counterAmount = 0;
 

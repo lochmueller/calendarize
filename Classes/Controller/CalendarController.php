@@ -696,7 +696,7 @@ class CalendarController extends AbstractCompatibilityController
                 (bool)($this->settings['ignoreStoragePid'] ?? false)
             );
         }
-
+        $indices->rewind();
         $event = new DetermineSearchEvent([
             'indices' => $indices,
             'searchMode' => $searchMode,
