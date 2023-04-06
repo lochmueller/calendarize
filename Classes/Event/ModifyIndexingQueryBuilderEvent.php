@@ -4,7 +4,7 @@ namespace HDNET\Calendarize\Event;
 
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 
-final class ModifyIndexingQueryBuilder
+final class ModifyIndexingQueryBuilderEvent
 {
     public function __construct(
         private QueryBuilder $queryBuilder,
