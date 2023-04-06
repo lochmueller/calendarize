@@ -8,6 +8,7 @@ use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Event\IndexAllEvent;
 use HDNET\Calendarize\Event\IndexPreUpdateEvent;
 use HDNET\Calendarize\Event\IndexSingleEvent;
+use HDNET\Calendarize\Event\ModifyIndexingQueryBuilder;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\ArrayUtility;
@@ -77,6 +78,11 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 // so the overlays can connect with l10n_parent to the right default record.
                 $queryBuilder->addOrderBy((string)$transPointer, 'ASC');
             }
+
+            $event = new ModifyIndexingQueryBuilder($queryBuilder, $configuration);
+            $this->eventDispatcher->dispatch($event);
+            $queryBuilder = $event->getQueryBuilder();
+
             $rows = $queryBuilder
                 ->executeQuery()
                 ->fetchAllAssociative();
