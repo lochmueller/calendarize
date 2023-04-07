@@ -394,12 +394,21 @@ class CalendarController extends AbstractCompatibilityController
     public function monthAction($year = null, $month = null, $day = null)
     {
         $this->addCacheTags(['calendarize_month']);
+        $arguments = $this->request->getArguments();
 
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
         $now = DateTimeUtility::getNow();
         $useCurrentDate = $now->format('Y-m') === $date->format('Y-m');
-        if ($useCurrentDate) {
-            $date = $now;
+
+        if(isset($arguments['index'])) {
+            /** @var Index $index */
+            $index = $this->indexRepository->findByUid($arguments['index']);
+            $date = $index->getStartDate();
+        }
+        else {
+            if ($useCurrentDate) {
+                $date = $now;
+            }
         }
 
         if ($this->isDateOutOfTypoScriptConfiguration($date)) {
