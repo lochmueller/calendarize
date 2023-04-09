@@ -400,12 +400,11 @@ class CalendarController extends AbstractCompatibilityController
         $now = DateTimeUtility::getNow();
         $useCurrentDate = $now->format('Y-m') === $date->format('Y-m');
 
-        if(isset($arguments['index'])) {
+        if (isset($arguments['index'])) {
             /** @var Index $index */
             $index = $this->indexRepository->findByUid($arguments['index']);
             $date = $index->getStartDate();
-        }
-        else {
+        } else {
             if ($useCurrentDate) {
                 $date = $now;
             }
