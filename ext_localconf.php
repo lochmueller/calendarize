@@ -6,32 +6,46 @@
 
 defined('TYPO3') or exit();
 
+use HDNET\Calendarize\Controller\BookingController;
+use HDNET\Calendarize\Controller\CalendarController;
+use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
+use HDNET\Calendarize\Domain\Model\Event;
+use HDNET\Calendarize\Form\Element\CalendarizeInfoElement;
+use HDNET\Calendarize\Hooks\KeSearchIndexer;
+use HDNET\Calendarize\Hooks\ProcessCmdmapClass;
+use HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder;
+use HDNET\Calendarize\Utility\ConfigurationUtility;
+use HDNET\Calendarize\Xclass\WorkspaceRemoteServer;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
+
 (function () {
     $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']['ConfigurationGroup'] = [
         'uniqueRegisterKey' => 'ConfigurationGroup',
         'title' => 'Calendarize Configuration Group',
-        'modelName' => \HDNET\Calendarize\Domain\Model\ConfigurationGroup::class,
+        'modelName' => ConfigurationGroup::class,
         'partialIdentifier' => 'ConfigurationGroup',
         'tableName' => 'tx_calendarize_domain_model_configurationgroup',
         'required' => true,
         'fieldName' => 'configurations',
     ];
 
-    if (!(bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
+    if (!(bool)ConfigurationUtility::get('disableDefaultEvent')) {
         $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']['Event'] = [
             'uniqueRegisterKey' => 'Event',
             'title' => 'Calendarize Event',
-            'modelName' => \HDNET\Calendarize\Domain\Model\Event::class,
+            'modelName' => Event::class,
             'partialIdentifier' => 'Event',
             'tableName' => 'tx_calendarize_domain_model_event',
             'required' => true,
         ];
     }
 
-    $calendar = \HDNET\Calendarize\Controller\CalendarController::class;
-    $booking = \HDNET\Calendarize\Controller\BookingController::class;
+    $calendar = CalendarController::class;
+    $booking = BookingController::class;
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'ListDetail',
         [
@@ -39,7 +53,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'List',
         [
@@ -47,7 +61,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Detail',
         [
@@ -55,7 +69,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Search',
         [
@@ -66,7 +80,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Result',
         [
@@ -77,7 +91,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Latest',
         [
@@ -85,7 +99,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Single',
         [
@@ -93,7 +107,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Year',
         [
@@ -101,7 +115,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Quarter',
         [
@@ -109,7 +123,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Month',
         [
@@ -117,7 +131,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Week',
         [
@@ -125,7 +139,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Day',
         [
@@ -133,7 +147,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Past',
         [
@@ -141,7 +155,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Calendar',
         [
@@ -154,7 +168,7 @@ defined('TYPO3') or exit();
         ]
     );
 
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'calendarize',
         'Booking',
         [
@@ -165,21 +179,20 @@ defined('TYPO3') or exit();
         ]
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] =
-        \HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder::class;
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = DatabaseRecordLinkBuilder::class;
 
     // hooks
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration']['calendarize'] =
-        \HDNET\Calendarize\Hooks\KeSearchIndexer::class;
+        KeSearchIndexer::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['customIndexer']['calendarize'] =
-        \HDNET\Calendarize\Hooks\KeSearchIndexer::class;
+        KeSearchIndexer::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['calendarize'] =
-        \HDNET\Calendarize\Hooks\ProcessCmdmapClass::class;
+        ProcessCmdmapClass::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['calendarize'] =
-        \HDNET\Calendarize\Hooks\ProcessCmdmapClass::class;
+        ProcessCmdmapClass::class;
 
     // Include new content elements to modWizards
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig("
+    ExtensionManagementUtility::addPageTSConfig("
         @import 'EXT:calendarize/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig'
         @import 'EXT:calendarize/Configuration/TsConfig/Page/TCEMAIN/LinkHandler.tsconfig'
     ");
@@ -187,12 +200,12 @@ defined('TYPO3') or exit();
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1591803668] = [
         'nodeName' => 'calendarizeInfoElement',
         'priority' => 40,
-        'class' => \HDNET\Calendarize\Form\Element\CalendarizeInfoElement::class,
+        'class' => CalendarizeInfoElement::class,
     ];
 
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('workspaces')) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer::class] = [
-            'className' => \HDNET\Calendarize\Xclass\WorkspaceRemoteServer::class,
+    if (ExtensionManagementUtility::isLoaded('workspaces')) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][RemoteServer::class] = [
+            'className' => WorkspaceRemoteServer::class,
         ];
     }
 })();
