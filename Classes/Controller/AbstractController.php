@@ -7,6 +7,7 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
 use HDNET\Calendarize\Event\GenericActionRedirectEvent;
+use HDNET\Calendarize\Event\InitializeActionEvent;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -71,6 +72,17 @@ abstract class AbstractController extends ActionController
     public function initializeAction(): void
     {
         parent::initializeAction();
+
+        $event = new InitializeActionEvent(
+            $this->arguments,
+            $this->settings,
+            static::class,
+            $this->actionMethodName
+        );
+        $this->eventDispatcher->dispatch($event);
+        $this->arguments = $event->getArguments();
+        $this->settings = $event->getSettings();
+
         AbstractBookingRequest::setConfigurations(
             GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '')
         );
@@ -85,7 +97,7 @@ abstract class AbstractController extends ActionController
         $variables['extended'] = [];
         $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
         $variables['settings'] = $this->settings;
-        $variables['contentObject'] = $this->configurationManager->getContentObject()->data;
+        $variables['contentObject'] = $this->request->getAttribute('currentContentObject')->data->data;
 
         $event = new GenericActionAssignmentEvent($variables, $className, $functionName);
         $this->eventDispatcher->dispatch($event);
@@ -139,7 +151,7 @@ abstract class AbstractController extends ActionController
         $actionMethodName = ucfirst($this->request->getControllerActionName());
         $pluginName = $this->request->getPluginName();
         $controllerName = $this->request->getControllerName();
-        $pluginUid = $this->configurationManager->getContentObject()->data['uid'];
+        $pluginUid = $this->request->getAttribute('currentContentObject')->data['uid'];
 
         return $controllerName . $pluginName . $actionMethodName . $pluginUid;
     }

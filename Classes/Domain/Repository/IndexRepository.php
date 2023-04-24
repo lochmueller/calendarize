@@ -46,7 +46,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Override page ids.
      */
-    protected ?array $overridePageIds;
+    protected ?array $overridePageIds = [];
 
     protected EventDispatcherInterface $eventDispatcher;
 

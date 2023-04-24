@@ -48,25 +48,6 @@ class CalendarController extends AbstractCompatibilityController
         if (isset($this->settings['format'])) {
             $this->request = $this->request->withFormat($this->settings['format']);
         }
-        $this->indexRepository->setIndexTypes(
-            GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true)
-        );
-        $additionalSlotArguments = [
-            'contentRecord' => $this->configurationManager->getContentObject()->data,
-            'settings' => $this->settings,
-        ];
-        $this->indexRepository->setAdditionalSlotArguments($additionalSlotArguments);
-
-        if (isset($this->settings['sorting'])) {
-            if (isset($this->settings['sortBy'])) {
-                $this->indexRepository->setDefaultSortingDirection(
-                    $this->settings['sorting'],
-                    $this->settings['sortBy']
-                );
-            } else {
-                $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
-            }
-        }
 
         if (isset($this->arguments['startDate'])) {
             $this->arguments['startDate']->getPropertyMappingConfiguration()
@@ -84,6 +65,36 @@ class CalendarController extends AbstractCompatibilityController
                     'Y-m-d'
                 );
         }
+
+        $this->modifyIndexRepository();
+        $this->redirectDetailWithEvent();
+    }
+
+    protected function modifyIndexRepository(): void
+    {
+        $this->indexRepository->setIndexTypes(
+            GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true)
+        );
+        $additionalSlotArguments = [
+            'contentRecord' => $this->request->getAttribute('currentContentObject')->data,
+            'settings' => $this->settings,
+        ];
+        $this->indexRepository->setAdditionalSlotArguments($additionalSlotArguments);
+
+        if (isset($this->settings['sorting'])) {
+            if (isset($this->settings['sortBy'])) {
+                $this->indexRepository->setDefaultSortingDirection(
+                    $this->settings['sorting'],
+                    $this->settings['sortBy']
+                );
+            } else {
+                $this->indexRepository->setDefaultSortingDirection($this->settings['sorting']);
+            }
+        }
+    }
+
+    protected function redirectDetailWithEvent(): void
+    {
         if ($this->request->hasArgument('event') && 'detailAction' === $this->actionMethodName) {
             // default configuration
             $configurationName = $this->settings['configuration'] ?? '';
