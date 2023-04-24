@@ -8,6 +8,7 @@ use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
 use HDNET\Calendarize\Event\GenericActionRedirectEvent;
 use HDNET\Calendarize\Event\InitializeActionEvent;
+use HDNET\Calendarize\Event\InitializeViewEvent;
 use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -74,18 +75,35 @@ abstract class AbstractController extends ActionController
         parent::initializeAction();
 
         $event = new InitializeActionEvent(
+            $this->request,
             $this->arguments,
             $this->settings,
             static::class,
             $this->actionMethodName
         );
         $this->eventDispatcher->dispatch($event);
+        $this->request = $event->getRequest();
         $this->arguments = $event->getArguments();
         $this->settings = $event->getSettings();
 
         AbstractBookingRequest::setConfigurations(
             GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '')
         );
+    }
+
+    protected function initializeView(): void
+    {
+        $event = new InitializeViewEvent(
+            $this->request,
+            $this->arguments,
+            $this->settings,
+            static::class,
+            $this->actionMethodName
+        );
+        $this->eventDispatcher->dispatch($event);
+        $this->request = $event->getRequest();
+        $this->arguments = $event->getArguments();
+        $this->settings = $event->getSettings();
     }
 
     /**

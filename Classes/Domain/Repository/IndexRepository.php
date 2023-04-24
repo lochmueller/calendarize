@@ -660,7 +660,7 @@ class IndexRepository extends AbstractRepository
             }
         }
 
-        $constraints['dateTimeFrame'] = $query->logicalAnd(...$dateConstraints);
+        $constraints[] = $query->logicalAnd(...$dateConstraints);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace HDNET\Calendarize\Event;
 
 final class IndexRepositoryFindBySearchEvent
 {
-    private array $indexIds;
+    private array $indexIds = [];
 
     public function __construct(
         protected \DateTimeInterface $startDate,

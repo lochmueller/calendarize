@@ -5,7 +5,7 @@ namespace HDNET\Calendarize\Event;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\Request;
 
-final class InitializeActionEvent
+final class InitializeViewEvent
 {
     public function __construct(
         private Request $request,
