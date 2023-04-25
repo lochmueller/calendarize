@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\EventListener;
 
 use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
 use HDNET\Calendarize\Register;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
 class DefaultEventSearchListener
 {
@@ -26,7 +30,12 @@ class DefaultEventSearchListener
             return;
         }
 
+        /** @var Typo3QuerySettings $querySettings */
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        $querySettings->setRespectStoragePage(false);
+        $this->eventRepository->setDefaultQuerySettings($querySettings);
         $searchTermIds = $this->eventRepository->findBySearch($search);
+
         // Blocks result (displaying no event) on no search match (empty id array)
         $searchTermIds[] = -1;
 
@@ -41,6 +50,7 @@ class DefaultEventSearchListener
 
         $search = new Search();
         $search->setFullText(trim((string)($customSearch['fullText'] ?? '')));
+
         if (is_array($customSearch['categories'])) {
             $categories = array_map('intval', $customSearch['categories']);
             $search->setCategories($categories);
