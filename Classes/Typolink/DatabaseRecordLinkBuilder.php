@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 
 /**
  * DatabaseRecordLinkBuilder.
@@ -38,8 +36,22 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
                 return parent::build($linkDetails, $linkText, $target, $conf);
             }
 
-            $typoScriptConfiguration = [
-                'parameter' => $defaultPid,
+            $this->populateRecordLinkConfiguration($linkDetails['identifier'], $defaultPid, $indexUid);
+        }
+
+        return parent::build($linkDetails, $linkText, $target, $conf);
+    }
+
+    /**
+     * We simply have to provide the configuration for the record links of the current event type.
+     * The rest is done by our parent which takes care of stuff like CSS classes added in the BE to a link.
+     */
+    protected function populateRecordLinkConfiguration(string $eventTable, int $pageUid, int $indexUid): void
+    {
+        $this->getTypoScriptFrontendController()
+            ->tmpl
+            ->setup['config.']['recordLinks.'][$eventTable . '.']['typolink.'] = [
+                'parameter' => $pageUid,
                 'additionalParams' => HttpUtility::buildQueryString([
                     'tx_calendarize_calendar' => [
                         'index' => $indexUid,
@@ -48,20 +60,6 @@ class DatabaseRecordLinkBuilder extends \TYPO3\CMS\Frontend\Typolink\DatabaseRec
                     ],
                 ], '&'),
             ];
-
-            $localContentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-            $localContentObjectRenderer->parameters = $this->contentObjectRenderer->parameters;
-            $link = $localContentObjectRenderer->typoLink($linkText, $typoScriptConfiguration);
-
-            $this->contentObjectRenderer->lastTypoLinkLD = $localContentObjectRenderer->lastTypoLinkLD;
-            $this->contentObjectRenderer->lastTypoLinkUrl = $localContentObjectRenderer->lastTypoLinkUrl;
-            $this->contentObjectRenderer->lastTypoLinkTarget = $localContentObjectRenderer->lastTypoLinkTarget;
-
-            // nasty workaround so typolink stops putting a link together, there is a link already built
-            throw new UnableToLinkException('', 1491130170, null, $link);
-        }
-
-        return parent::build($linkDetails, $linkText, $target, $conf);
     }
 
     protected function getIndexForEventUid($table, $uid): int
