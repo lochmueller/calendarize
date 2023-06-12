@@ -74,7 +74,7 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
 
         $fakeIndex = new Index();
         $fakeIndex->setForeignTable($config['tableName']);
-        $fakeIndex->setForeignUid($object->getUid());
+        $fakeIndex->setForeignUid($object->_getProperty('_localizedUid') ?: $object->getUid());
 
         return $this->indexRepository->findByTraversing(
             $fakeIndex,
