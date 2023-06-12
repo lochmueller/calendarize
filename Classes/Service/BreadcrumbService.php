@@ -9,7 +9,6 @@ namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -36,7 +35,6 @@ class BreadcrumbService extends AbstractService
         if (null === $index) {
             return $content;
         }
-
 
         $title = $this->getEventByIndex($index)->getTitle();
         $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
