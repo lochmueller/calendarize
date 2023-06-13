@@ -7,9 +7,11 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use HDNET\Calendarize\Domain\Model\Index;
+use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -34,11 +36,11 @@ class BreadcrumbService extends AbstractService
             return $content;
         }
 
-        $event = $this->getEventByIndex($index);
+        $title = $this->getEventByIndex($index)->getTitle();
         $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 
         if (isset($configuration['doNotLinkIt']) && (bool)$configuration['doNotLinkIt']) {
-            $content = $event['title'];
+            $content = $title;
         } else {
             $linkConfiguration = [
                 'parameter' => $GLOBALS['TSFE']->id,
@@ -50,19 +52,19 @@ class BreadcrumbService extends AbstractService
                     ],
                 ], '&'),
             ];
-            $content = $contentObjectRenderer->typoLink($event['title'], $linkConfiguration);
+            $content = $contentObjectRenderer->typoLink($title, $linkConfiguration);
         }
 
         return $contentObjectRenderer->stdWrap($content, $configuration);
     }
 
-    protected function getEventByIndex(array $row)
+    protected function getEventByIndex(Index $index): AbstractEntity
     {
-        return BackendUtility::getRecordWSOL($row['foreign_table'], (int)$row['foreign_uid']);
+        return $index->getOriginalObject();
     }
 
-    protected function getIndex(int $uid)
+    protected function getIndex(int $uid): Index
     {
-        return BackendUtility::getRecordWSOL('tx_calendarize_domain_model_index', $uid);
+        return GeneralUtility::makeInstance(IndexRepository::class)->findByUid($uid);
     }
 }
