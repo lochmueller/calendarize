@@ -316,7 +316,7 @@ class CalendarController extends AbstractCompatibilityController
     ) {
         if ($this->request->hasArgument('format')) {
             if ($this->request->getArgument('format') != 'html') {
-                return $this->return404Page();;
+                return $this->return404Page();
             }
         }
 
@@ -343,7 +343,7 @@ class CalendarController extends AbstractCompatibilityController
     {
         if ($this->request->hasArgument('format')) {
             if ($this->request->getArgument('format') != 'html') {
-                return $this->return404Page();;
+                return $this->return404Page();
             }
         }
 
@@ -379,7 +379,7 @@ class CalendarController extends AbstractCompatibilityController
     {
         if ($this->request->hasArgument('format')) {
             if ($this->request->getArgument('format') != 'html') {
-                return $this->return404Page();;
+                return $this->return404Page();
             }
         }
 
@@ -413,7 +413,7 @@ class CalendarController extends AbstractCompatibilityController
     {
         if ($this->request->hasArgument('format')) {
             if ($this->request->getArgument('format') != 'html') {
-                return $this->return404Page();;
+                return $this->return404Page();
             }
         }
 
@@ -459,7 +459,7 @@ class CalendarController extends AbstractCompatibilityController
     {
         if ($this->request->hasArgument('format')) {
             if ($this->request->getArgument('format') != 'html') {
-                return $this->return404Page();;
+                return $this->return404Page();
             }
         }
 
@@ -510,7 +510,7 @@ class CalendarController extends AbstractCompatibilityController
     {
         if ($this->request->hasArgument('format')) {
             if ($this->request->getArgument('format') != 'html') {
-                return $this->return404Page();;
+                return $this->return404Page();
             }
         }
 
