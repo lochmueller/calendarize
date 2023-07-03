@@ -314,6 +314,12 @@ class CalendarController extends AbstractCompatibilityController
         $limit = 100,
         $sort = 'ASC'
     ) {
+        if ($this->request->hasArgument('format')) {
+            if ($this->request->getArgument('format') != 'html') {
+                return $this->return404Page();;
+            }
+        }
+
         $this->addCacheTags(['calendarize_past']);
 
         $limit = (int)($this->settings['limit']);
@@ -335,6 +341,12 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function yearAction($year = null)
     {
+        if ($this->request->hasArgument('format')) {
+            if ($this->request->getArgument('format') != 'html') {
+                return $this->return404Page();;
+            }
+        }
+
         $this->addCacheTags(['calendarize_year']);
 
         // use the thrid day, to avoid time shift problems in the timezone
@@ -365,6 +377,12 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function quarterAction(int $year = null, int $quarter = null)
     {
+        if ($this->request->hasArgument('format')) {
+            if ($this->request->getArgument('format') != 'html') {
+                return $this->return404Page();;
+            }
+        }
+
         $this->addCacheTags(['calendarize_quarter']);
 
         $quarter = DateTimeUtility::normalizeQuarter($quarter);
@@ -393,6 +411,12 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function monthAction($year = null, $month = null, $day = null)
     {
+        if ($this->request->hasArgument('format')) {
+            if ($this->request->getArgument('format') != 'html') {
+                return $this->return404Page();;
+            }
+        }
+
         $this->addCacheTags(['calendarize_month']);
         $arguments = $this->request->getArguments();
 
@@ -433,6 +457,12 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function weekAction(?int $year = null, ?int $week = null)
     {
+        if ($this->request->hasArgument('format')) {
+            if ($this->request->getArgument('format') != 'html') {
+                return $this->return404Page();;
+            }
+        }
+
         $this->addCacheTags(['calendarize_week']);
 
         $now = DateTimeUtility::getNow();
@@ -478,6 +508,12 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function dayAction($year = null, $month = null, $day = null)
     {
+        if ($this->request->hasArgument('format')) {
+            if ($this->request->getArgument('format') != 'html') {
+                return $this->return404Page();;
+            }
+        }
+
         $this->addCacheTags(['calendarize_day']);
 
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
