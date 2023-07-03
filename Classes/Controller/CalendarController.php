@@ -315,7 +315,7 @@ class CalendarController extends AbstractCompatibilityController
         $sort = 'ASC'
     ) {
         if ($this->request->hasArgument('format')) {
-            if ($this->request->getArgument('format') != 'html') {
+            if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
             }
         }
@@ -342,7 +342,7 @@ class CalendarController extends AbstractCompatibilityController
     public function yearAction($year = null)
     {
         if ($this->request->hasArgument('format')) {
-            if ($this->request->getArgument('format') != 'html') {
+            if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
             }
         }
@@ -378,7 +378,7 @@ class CalendarController extends AbstractCompatibilityController
     public function quarterAction(int $year = null, int $quarter = null)
     {
         if ($this->request->hasArgument('format')) {
-            if ($this->request->getArgument('format') != 'html') {
+            if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
             }
         }
@@ -412,7 +412,7 @@ class CalendarController extends AbstractCompatibilityController
     public function monthAction($year = null, $month = null, $day = null)
     {
         if ($this->request->hasArgument('format')) {
-            if ($this->request->getArgument('format') != 'html') {
+            if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
             }
         }
@@ -458,7 +458,7 @@ class CalendarController extends AbstractCompatibilityController
     public function weekAction(?int $year = null, ?int $week = null)
     {
         if ($this->request->hasArgument('format')) {
-            if ($this->request->getArgument('format') != 'html') {
+            if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
             }
         }
@@ -509,7 +509,7 @@ class CalendarController extends AbstractCompatibilityController
     public function dayAction($year = null, $month = null, $day = null)
     {
         if ($this->request->hasArgument('format')) {
-            if ($this->request->getArgument('format') != 'html') {
+            if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
             }
         }
