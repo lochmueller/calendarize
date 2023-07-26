@@ -109,13 +109,6 @@ return [
                 'default' => Configuration::TYPE_TIME,
             ],
         ],
-        'flex_form' => [
-            'config' => [
-                'type' => 'flex',
-                'ds_pointerField' => 'type',
-                'ds' => '',
-            ],
-        ],
         'handling' => [
             'onChange' => 'reload',
             'config' => [
