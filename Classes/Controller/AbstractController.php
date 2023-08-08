@@ -115,7 +115,7 @@ abstract class AbstractController extends ActionController
         $variables['extended'] = [];
         $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
         $variables['settings'] = $this->settings;
-        $variables['contentObject'] = $this->request->getAttribute('currentContentObject')->data->data;
+        $variables['contentObject'] = $this->request->getAttribute('currentContentObject')->data;
 
         $event = new GenericActionAssignmentEvent($variables, $className, $functionName);
         $this->eventDispatcher->dispatch($event);
