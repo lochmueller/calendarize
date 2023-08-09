@@ -7,8 +7,8 @@ final class IndexRepositoryFindBySearchEvent
     private array $indexIds = [];
 
     public function __construct(
-        protected \DateTimeInterface $startDate,
-        protected \DateTimeInterface $endDate,
+        protected ?\DateTimeInterface $startDate,
+        protected ?\DateTimeInterface $endDate,
         protected array $customSearch,
         protected array $indexTypes,
         protected bool $emptyPreResult
@@ -25,7 +25,7 @@ final class IndexRepositoryFindBySearchEvent
         $this->indexIds = $indexIds;
     }
 
-    public function getStartDate(): \DateTimeInterface
+    public function getStartDate(): ?\DateTimeInterface
     {
         return $this->startDate;
     }
@@ -35,7 +35,7 @@ final class IndexRepositoryFindBySearchEvent
         $this->startDate = $startDate;
     }
 
-    public function getEndDate(): \DateTimeInterface
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->endDate;
     }
