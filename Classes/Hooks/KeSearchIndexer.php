@@ -141,7 +141,7 @@ class KeSearchIndexer extends AbstractHook
                     $indexerObject->storeInIndex(...$storeArguments);
                     ++$indexedCounter;
                 } catch (\Exception $exception) {
-                    $indexerObject->logger->error("Unable to index ${$row['uid']}: " . $exception->getMessage());
+                    $indexerObject->logger->error("Unable to index " . $row['uid'] . ": " . $exception->getMessage());
                 }
             }
         } else {
