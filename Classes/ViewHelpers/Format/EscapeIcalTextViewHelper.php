@@ -23,7 +23,7 @@ class EscapeIcalTextViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('value', 'string', 'Value to format');
@@ -35,10 +35,8 @@ class EscapeIcalTextViewHelper extends AbstractViewHelper
      * @return string the altered string
      *
      * @see https://tools.ietf.org/html/rfc5545#section-3.3.11
-     *
-     * @api
      */
-    public function render()
+    public function render(): string
     {
         $value = $this->arguments['value'];
         if (null === $value) {

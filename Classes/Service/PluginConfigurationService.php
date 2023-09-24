@@ -1,8 +1,5 @@
 <?php
 
-/**
- * PluginConfigurationService.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -13,34 +10,21 @@ use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-/**
- * PluginConfigurationService.
- */
 class PluginConfigurationService
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(
+        protected EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     /**
      * Respect plugin configuration.
-     *
-     * @param array $settings
-     *
-     * @return array
      */
-    public function respectPluginConfiguration(array $settings)
+    public function respectPluginConfiguration(array $settings): array
     {
-        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject((int)($settings['pluginConfiguration'] ?? 0));
+        $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject(
+            (int)($settings['pluginConfiguration'] ?? 0)
+        );
         if ($settings['pluginConfiguration'] instanceof PluginConfiguration) {
             $checkFields = [
                 'detailPid',
@@ -55,7 +39,7 @@ class PluginConfigurationService
             ];
 
             foreach ($checkFields as $checkField) {
-                if (\in_array(trim($settings[$checkField]), ['', '0'], true)) {
+                if (in_array(trim($settings[$checkField]), ['', '0'], true)) {
                     $function = 'get' . ucfirst($checkField);
                     $settings[$checkField] = $settings['pluginConfiguration']->$function();
                 }
@@ -70,12 +54,8 @@ class PluginConfigurationService
 
     /**
      * Add the configurations to the given Plugin configuration.
-     *
-     * @param array $config
-     *
-     * @return array
      */
-    public function addConfig($config)
+    public function addConfig(array $config): array
     {
         foreach (Register::getRegister() as $key => $configuration) {
             $config['items'][] = [
@@ -89,28 +69,27 @@ class PluginConfigurationService
 
     /**
      * Build the plugin configuration object.
-     *
-     * @param int $uid
-     *
-     * @return object|null
      */
-    protected function buildPluginConfigurationObject($uid)
+    protected function buildPluginConfigurationObject(int $uid): ?object
     {
         $table = 'tx_calendarize_domain_model_pluginconfiguration';
 
         $db = HelperUtility::getDatabaseConnection($table);
-        $row = $db->select(['*'], $table, ['uid' => (int)$uid])->fetch();
+        $row = $db
+            ->select(['*'], $table, ['uid' => $uid])
+            ->fetchAssociative();
 
         if (!isset($row['model_name'])) {
-            return;
+            return null;
         }
 
         $query = HelperUtility::getQuery($row['model_name']);
-        $query->getQuerySettings()
+        $query
+            ->getQuerySettings()
             ->setRespectStoragePage(false);
-        $query->matching($query->equals('uid', $uid));
-
-        return $query->execute()
+        return $query
+            ->matching($query->equals('uid', $uid))
+            ->execute()
             ->getFirst();
     }
 }

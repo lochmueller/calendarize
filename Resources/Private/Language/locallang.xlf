@@ -463,7 +463,7 @@
 				<source>Mode</source>
 			</trans-unit>
 			<trans-unit id="mode.booking">
-				<source>Booking</source>
+				<source>Calendarize - Booking</source>
 			</trans-unit>
 			<trans-unit id="mode.bookingSend">
 				<source>Booking</source>
@@ -487,7 +487,7 @@
 				<source>Month</source>
 			</trans-unit>
 			<trans-unit id="mode.normal">
-				<source>Normal</source>
+				<source>Calendarize - Normal</source>
 			</trans-unit>
 			<trans-unit id="mode.result">
 				<source>Search result</source>
@@ -496,7 +496,7 @@
 				<source>Search</source>
 			</trans-unit>
 			<trans-unit id="mode.special">
-				<source>Special Views</source>
+				<source>Calendarize - Special Views</source>
 			</trans-unit>
 			<trans-unit id="mode.single">
 				<source>Single</source>

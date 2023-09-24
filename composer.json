@@ -33,11 +33,9 @@
 		}
 	],
 	"require": {
-		"php": "^7.4||^8.0",
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"typo3/cms-core": "^10.4||^11.5",
-		"lochmueller/autoloader": ">=7.3.5",
+		"typo3/cms-core": "^11.5|| ^12.4",
 		"sabre/vobject": "^4.2"
 	},
 	"replace": {

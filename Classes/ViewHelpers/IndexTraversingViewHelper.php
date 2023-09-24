@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Index traversing.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
@@ -18,22 +15,17 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  *
  * <code title="Traversing thru future and past occurings of the event">
  * {namespace c=HDNET\Calendarize\ViewHelpers}
- * <f:for each="{c:indexTraversing(index:'{index}', future: 1, past: 0, limit: 10, sort: 'ASC', useIndexTime: 1)}" as="futureEvent">
+ * <f:for each="{c:indexTraversing(index:'{index}', future: 1, past: 0, limit: 10, sort: 'ASC', useIndexTime: 1)}"
+ *    as="futureEvent">
  *  <f:debug>{futureEvent}</f:debug>
  * </f:for>
  * </code>
  */
 class IndexTraversingViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var IndexRepository
-     */
-    protected $indexRepository;
+    protected IndexRepository $indexRepository;
 
-    /**
-     * @param IndexRepository $indexRepository
-     */
-    public function injectIndexRepository(IndexRepository $indexRepository)
+    public function injectIndexRepository(IndexRepository $indexRepository): void
     {
         $this->indexRepository = $indexRepository;
     }
@@ -41,7 +33,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('index', Index::class, '', true);
@@ -54,10 +46,8 @@ class IndexTraversingViewHelper extends AbstractViewHelper
 
     /**
      * Render method.
-     *
-     * @return array
      */
-    public function render()
+    public function render(): array
     {
         return $this->indexRepository->findByTraversing(
             $this->arguments['index'],

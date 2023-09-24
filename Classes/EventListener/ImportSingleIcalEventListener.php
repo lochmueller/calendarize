@@ -9,6 +9,7 @@ use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Event\ImportSingleIcalEvent;
 use HDNET\Calendarize\Ical\ICalEvent;
 use HDNET\Calendarize\Service\EventConfigurationService;
+use HDNET\Calendarize\Utility\ConfigurationUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -17,43 +18,19 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 class ImportSingleIcalEventListener
 {
     /**
-     * Event repository.
-     *
-     * @var EventRepository
-     */
-    private $eventRepository;
-
-    /**
-     * @var PersistenceManager
-     */
-    private $persistenceManager;
-
-    /**
-     * @var EventConfigurationService
-     */
-    private $eventConfigurationService;
-
-    /**
      * ImportSingleIcalEventListener constructor.
-     *
-     * @param EventRepository           $eventRepository
-     * @param PersistenceManager        $persistenceManager
-     * @param EventConfigurationService $eventConfigurationService
      */
     public function __construct(
-        EventRepository $eventRepository,
-        PersistenceManager $persistenceManager,
-        EventConfigurationService $eventConfigurationService
+        private readonly EventRepository $eventRepository,
+        private readonly PersistenceManager $persistenceManager,
+        private readonly EventConfigurationService $eventConfigurationService
     ) {
-        $this->eventRepository = $eventRepository;
-        $this->persistenceManager = $persistenceManager;
-        $this->eventConfigurationService = $eventConfigurationService;
     }
 
-    public function __invoke(ImportSingleIcalEvent $event)
+    public function __invoke(ImportSingleIcalEvent $event): void
     {
-        // TODO: Workaround to disable default event. Look for better solution!
-        if ((bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
+        // @todo: Workaround to disable default event. Look for better solution!
+        if ((bool)ConfigurationUtility::get('disableDefaultEvent')) {
             return;
         }
 

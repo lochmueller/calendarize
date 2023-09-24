@@ -1,16 +1,15 @@
 <?php
 
-/**
- * Uri to the week.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
+use HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper as BaseWeekViewHelper;
+
 /**
  * Uri to the week.
  */
-class WeekViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\WeekViewHelper
+class WeekViewHelper extends BaseWeekViewHelper
 {
     /**
      * Render the uri to the given week.

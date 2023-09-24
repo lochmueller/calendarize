@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Index the given events.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -11,6 +8,7 @@ use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Event\IndexAllEvent;
 use HDNET\Calendarize\Event\IndexPreUpdateEvent;
 use HDNET\Calendarize\Event\IndexSingleEvent;
+use HDNET\Calendarize\Event\ModifyIndexingQueryBuilderEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\Url\SlugService;
 use HDNET\Calendarize\Utility\ArrayUtility;
@@ -35,42 +33,18 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      */
     public const TABLE_NAME = 'tx_calendarize_domain_model_index';
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var IndexPreparationService
-     */
-    protected $preparationService;
-
-    /**
-     * @var RawIndexRepository
-     */
-    protected $rawIndexRepository;
-
-    /**
-     * @var SlugService
-     */
-    protected $slugService;
-
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        IndexPreparationService $preparationService,
-        SlugService $slugService,
-        RawIndexRepository $rawIndexRepository
+        protected EventDispatcherInterface $eventDispatcher,
+        protected IndexPreparationService $preparationService,
+        protected SlugService $slugService,
+        protected RawIndexRepository $rawIndexRepository
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->preparationService = $preparationService;
-        $this->slugService = $slugService;
-        $this->rawIndexRepository = $rawIndexRepository;
     }
 
     /**
      * Reindex all elements.
      */
-    public function reindexAll()
+    public function reindexAll(): void
     {
         $this->logger->debug('Start reindex ALL process');
 
@@ -82,26 +56,36 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $tableName = $configuration['tableName'];
             $this->removeInvalidRecordIndex($tableName);
 
-            $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
-            $q->getRestrictions()
+            $queryBuilder = HelperUtility::getQueryBuilder($tableName);
+            $queryBuilder
+                ->getRestrictions()
                 ->removeAll()
                 ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
-            $q->select('uid')
+            $queryBuilder
+                ->select('uid')
                 ->from($tableName);
 
-            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] ? (bool)$GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'] : false;
+            $worksSpaceSupport = $GLOBALS['TCA'][$tableName]['ctrl']['versioningWS']
+                && (bool)$GLOBALS['TCA'][$tableName]['ctrl']['versioningWS'];
             if ($worksSpaceSupport) {
-                $q->addOrderBy('t3ver_wsid', 'ASC');
+                $queryBuilder->addOrderBy('t3ver_wsid', 'ASC');
             }
 
             $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
             if ($transPointer) {
-                // Note: In localized tables, it is important, that the "default language records" are indexed first, so the
-                // overlays can connect with l10n_parent to the right default record.
-                $q->addOrderBy((string)$transPointer, 'ASC');
+                // Note: In localized tables, it is important, that the "default language records" are indexed first,
+                // so the overlays can connect with l10n_parent to the right default record.
+                $queryBuilder->addOrderBy((string)$transPointer, 'ASC');
             }
-            $rows = $q->execute()->fetchAll();
+
+            $event = new ModifyIndexingQueryBuilderEvent($queryBuilder, $configuration);
+            $this->eventDispatcher->dispatch($event);
+            $queryBuilder = $event->getQueryBuilder();
+
+            $rows = $queryBuilder
+                ->executeQuery()
+                ->fetchAllAssociative();
             foreach ($rows as $row) {
                 $this->updateIndex($key, $tableName, (int)$row['uid']);
             }
@@ -112,32 +96,28 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Reindex the given element.
-     *
-     * @param string $configurationKey
-     * @param string $tableName
-     * @param int    $uid
      */
-    public function reindex(string $configurationKey, string $tableName, int $uid)
+    public function reindex(string $configurationKey, string $tableName, int $uid): void
     {
         $this->logger->debug('Start reindex SINGLE ' . $tableName . ':' . $uid);
 
-        $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE));
+        $this->eventDispatcher->dispatch(
+            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE)
+        );
 
         $this->removeInvalidConfigurationIndex();
         $this->removeInvalidRecordIndex($tableName);
         $this->updateIndex($configurationKey, $tableName, $uid);
 
-        $this->eventDispatcher->dispatch(new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST));
+        $this->eventDispatcher->dispatch(
+            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST)
+        );
     }
 
     /**
      * Build the index for one element.
-     *
-     * @param string $configurationKey
-     * @param string $tableName
-     * @param int    $uid
      */
-    protected function updateIndex(string $configurationKey, string $tableName, int $uid)
+    protected function updateIndex(string $configurationKey, string $tableName, int $uid): void
     {
         $rawRecord = BackendUtility::getRecord($tableName, $uid);
 
@@ -148,7 +128,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         }
 
         $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
-        $origId = isset($rawRecord['t3ver_oid']) ? (int)$rawRecord['t3ver_oid'] : 0;
 
         if (VersionState::DELETE_PLACEHOLDER === ($rawRecord['t3ver_state'] ?? false)) {
             // Remove all entries in current workspace that are related to the current item
@@ -166,6 +145,10 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $this->reindex($configurationKey, $tableName, $liveId);
         }
 
+        if (!$rawRecord['calendarize']) {
+            return;
+        }
+
         $neededItems = $this->preparationService->prepareIndex($configurationKey, $tableName, $uid);
 
         $this->logger->debug('Update index of ' . $tableName . ':' . $uid . ' in  workspace ' . $workspace);
@@ -179,7 +162,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             ]);
 
             // Create deleted items for every entry in the live workspace
-            $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid, 0);
+            $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid);
 
             foreach ($liveItems as $liveItem) {
                 $liveItem['t3ver_state'] = VersionState::DELETE_PLACEHOLDER;
@@ -195,13 +178,13 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Insert and/or update the needed index records.
-     *
-     * @param array  $neededItems
-     * @param string $tableName
-     * @param int    $uid
      */
-    protected function insertAndUpdateNeededItems(array $neededItems, string $tableName, int $uid, int $workspace = 0)
-    {
+    protected function insertAndUpdateNeededItems(
+        array $neededItems,
+        string $tableName,
+        int $uid,
+        int $workspace = 0
+    ): void {
         $currentItems = $this->rawIndexRepository->findAllEvents($tableName, $uid, $workspace);
 
         if ($workspace) {
@@ -245,8 +228,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Generates a slug and inserts the records in the db.
-     *
-     * @param array $neededItems
      */
     protected function generateSlugAndInsert(array $neededItems, int $workspace = 0): void
     {
@@ -263,26 +244,26 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
     /**
      * Remove Index items of the given table of records
-     * that are deleted or do not exists anymore.
-     *
-     * @param string $tableName
+     * that are deleted or do not exist anymore.
      */
-    protected function removeInvalidRecordIndex($tableName)
+    protected function removeInvalidRecordIndex(string $tableName): void
     {
-        $q = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
-        $q->getRestrictions()
+        $queryBuilder = HelperUtility::getDatabaseConnection($tableName)->createQueryBuilder();
+        $queryBuilder->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
 
-        $q->select('uid')
+        $queryBuilder->select('uid')
             ->from($tableName);
 
-        $rows = $q->execute()->fetchAll();
+        $rows = $queryBuilder
+            ->executeQuery()
+            ->fetchAllAssociative();
 
-        $q = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
-        $q->delete(self::TABLE_NAME)
+        $queryBuilder = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
+        $queryBuilder->delete(self::TABLE_NAME)
             ->where(
-                $q->expr()->eq('foreign_table', $q->createNamedParameter($tableName))
+                $queryBuilder->expr()->eq('foreign_table', $queryBuilder->createNamedParameter($tableName))
             );
 
         $ids = [];
@@ -290,20 +271,18 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $ids[] = $row['uid'];
         }
         if ($ids) {
-            $q->andWhere(
-                $q->expr()->notIn('foreign_uid', $ids)
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->notIn('foreign_uid', $ids)
             );
         }
 
-        $q->execute();
+        $queryBuilder->executeStatement();
     }
 
     /**
      * Remove index Items of configurations that are not valid anymore.
-     *
-     * @return bool
      */
-    protected function removeInvalidConfigurationIndex()
+    protected function removeInvalidConfigurationIndex(): bool
     {
         $this->logger->debug('Log invalid index items of old configurations');
 

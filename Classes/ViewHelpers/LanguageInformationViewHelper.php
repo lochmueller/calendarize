@@ -1,8 +1,5 @@
 <?php
 
-/**
- * LanguageInformationViewHelper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
@@ -19,26 +16,18 @@ class LanguageInformationViewHelper extends AbstractViewHelper
 {
     /**
      * Flags.
-     *
-     * @var array
      */
-    protected static $flags = [];
+    protected static array $flags = [];
 
     /**
-     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper.
-     *
-     * @see isOutputEscapingEnabled()
-     *
      * @var bool
-     *
-     * @api
      */
     protected $escapeOutput = false;
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('languageUid', 'int', 'Language UID', true);
@@ -47,10 +36,8 @@ class LanguageInformationViewHelper extends AbstractViewHelper
 
     /**
      * Render.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         $langUid = (int)$this->arguments['languageUid'];
         $pid = (int)$this->arguments['pid'];
@@ -66,8 +53,9 @@ class LanguageInformationViewHelper extends AbstractViewHelper
         $out = '';
         $title = htmlspecialchars($sysLanguages[$langUid]['title']);
         if ($sysLanguages[$langUid]['flagIcon']) {
-            $out .= '<span title="' . $title . '">' . $iconFactory->getIcon($sysLanguages[$langUid]['flagIcon'], Icon::SIZE_SMALL)->render() . '</span>';
-            $out .= '&nbsp;';
+            $out .= '<span title="' . $title . '">'
+                . $iconFactory->getIcon($sysLanguages[$langUid]['flagIcon'], Icon::SIZE_SMALL)->render()
+                . '</span>&nbsp;';
         }
         $out .= $title;
 

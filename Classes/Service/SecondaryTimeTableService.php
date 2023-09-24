@@ -10,7 +10,7 @@ class SecondaryTimeTableService extends AbstractService
 {
     protected array $timeTableServices;
 
-    public function __construct(iterable $timeTableServices)
+    public function __construct(\Traversable $timeTableServices)
     {
         $this->timeTableServices = iterator_to_array($timeTableServices);
     }

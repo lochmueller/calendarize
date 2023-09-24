@@ -1,20 +1,32 @@
 <?php
 
 declare(strict_types=1);
+
 defined('TYPO3') or exit();
 
-if (!(bool)\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
-    \HDNET\Calendarize\Register::extTables(
-        \HDNET\Calendarize\Register::getDefaultCalendarizeConfiguration()
-    );
+if (!\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')) {
+    $GLOBALS['TCA']['tx_calendarize_domain_model_event']['columns']['calendarize'] = [
+        'label' => 'Calendarize',
+        'l10n_mode' => 'exclude',
+        'config' => [
+            'type' => 'inline',
+            'foreign_table' => 'tx_calendarize_domain_model_configuration',
+            'minitems' => 1,
+            'maxitems' => 99,
+            'behaviour' => [
+                'enableCascadingDelete' => true,
+            ],
+        ],
+    ];
+    $GLOBALS['TCA']['tx_calendarize_domain_model_event']['columns']['calendarize_info'] = [
+        'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
+        'config' => [
+            'type' => 'none',
+            'renderType' => 'calendarizeInfoElement',
+            'parameters' => [
+                'items' => 10,
+            ],
+        ],
+    ];
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-        'calendarize',
-        'tx_calendarize_domain_model_event',
-        'categories',
-        [
-            // Allow backend users to edit this record
-            'exclude' => false,
-        ]
-    );
 }

@@ -1,15 +1,10 @@
 <?php
 
-/**
- * PluginConfiguration.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Annotation\SmartExclude;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -21,129 +16,41 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class PluginConfiguration extends AbstractModel
 {
-    /**
-     * Title.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $title;
+    protected string $title = '';
 
-    /**
-     * Model name.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $modelName;
+    protected string $modelName = '';
 
     /**
      * Configuration / Element Type / Record Type.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
      */
-    protected $configuration;
+    protected string $configuration = '';
 
-    /**
-     * Storage PID.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $storagePid;
+    protected string $storagePid;
 
-    /**
-     * Recursive.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $recursive;
+    protected int $recursive;
 
-    /**
-     * Detail PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $detailPid;
+    protected int $detailPid;
 
-    /**
-     * List PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $listPid;
+    protected int $listPid;
 
-    /**
-     * Year PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $yearPid;
+    protected int $yearPid;
 
-    /**
-     * Quarter PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $quarterPid;
+    protected int $quarterPid;
 
-    /**
-     * Month PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $monthPid;
+    protected int $monthPid;
 
-    /**
-     * Week PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $weekPid;
+    protected int $weekPid;
 
-    /**
-     * Day PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $dayPid;
+    protected int $dayPid;
 
-    /**
-     * Booking PID.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $bookingPid;
+    protected int $bookingPid;
 
     /**
      * Categories.
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @var ObjectStorage<Category>
      */
-    protected $categories;
+    protected ObjectStorage $categories;
 
     /**
      * Build up the plugin configuration.
@@ -153,286 +60,142 @@ class PluginConfiguration extends AbstractModel
         $this->categories = new ObjectStorage();
     }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Set title.
-     *
-     * @param mixed $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Get configuration.
-     *
-     * @return string
-     */
-    public function getConfiguration()
+    public function getModelName(): string
+    {
+        return $this->modelName;
+    }
+
+    public function setModelName(string $modelName): void
+    {
+        $this->modelName = $modelName;
+    }
+
+    public function getConfiguration(): string
     {
         return $this->configuration;
     }
 
-    /**
-     * Set configuration.
-     *
-     * @param string $configuration
-     */
-    public function setConfiguration($configuration)
+    public function setConfiguration(string $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * Get storage PID.
-     *
-     * @return string
-     */
-    public function getStoragePid()
+    public function getStoragePid(): string
     {
         return $this->storagePid;
     }
 
-    /**
-     * Set storage PID.
-     *
-     * @param string $storagePid
-     */
-    public function setStoragePid($storagePid)
+    public function setStoragePid(string $storagePid): void
     {
         $this->storagePid = $storagePid;
     }
 
-    /**
-     * Get recursive.
-     *
-     * @return int
-     */
-    public function getRecursive()
+    public function getRecursive(): int
     {
         return $this->recursive;
     }
 
-    /**
-     * Set recursive.
-     *
-     * @param int $recursive
-     */
-    public function setRecursive($recursive)
+    public function setRecursive(int $recursive): void
     {
         $this->recursive = $recursive;
     }
 
-    /**
-     * Get detail PID.
-     *
-     * @return int
-     */
-    public function getDetailPid()
+    public function getDetailPid(): int
     {
         return $this->detailPid;
     }
 
-    /**
-     * Set detail PID.
-     *
-     * @param int $detailPid
-     */
-    public function setDetailPid($detailPid)
+    public function setDetailPid(int $detailPid): void
     {
         $this->detailPid = $detailPid;
     }
 
-    /**
-     * Get list PID.
-     *
-     * @return int
-     */
-    public function getListPid()
+    public function getListPid(): int
     {
         return $this->listPid;
     }
 
-    /**
-     * Set list PID.
-     *
-     * @param int $listPid
-     */
-    public function setListPid($listPid)
+    public function setListPid(int $listPid): void
     {
         $this->listPid = $listPid;
     }
 
-    /**
-     * Get year PID.
-     *
-     * @return int
-     */
-    public function getYearPid()
+    public function getYearPid(): int
     {
         return $this->yearPid;
     }
 
-    /**
-     * Set year PID.
-     *
-     * @param int $yearPid
-     */
-    public function setYearPid($yearPid)
+    public function setYearPid(int $yearPid): void
     {
         $this->yearPid = $yearPid;
     }
 
-    /**
-     * Get quarter PID.
-     *
-     * @return int
-     */
     public function getQuarterPid(): int
     {
         return $this->quarterPid;
     }
 
-    /**
-     * Set quarter PID.
-     *
-     * @param int $quarterPid
-     */
     public function setQuarterPid(int $quarterPid): void
     {
         $this->quarterPid = $quarterPid;
     }
 
-    /**
-     * Get month PID.
-     *
-     * @return int
-     */
-    public function getMonthPid()
+    public function getMonthPid(): int
     {
         return $this->monthPid;
     }
 
-    /**
-     * Set month PID.
-     *
-     * @param int $monthPid
-     */
-    public function setMonthPid($monthPid)
+    public function setMonthPid(int $monthPid): void
     {
         $this->monthPid = $monthPid;
     }
 
-    /**
-     * Get week PID.
-     *
-     * @return int
-     */
-    public function getWeekPid()
+    public function getWeekPid(): int
     {
         return $this->weekPid;
     }
 
-    /**
-     * Set week PID.
-     *
-     * @param int $weekPid
-     */
-    public function setWeekPid($weekPid)
+    public function setWeekPid(int $weekPid): void
     {
         $this->weekPid = $weekPid;
     }
 
-    /**
-     * Get day PID.
-     *
-     * @return int
-     */
-    public function getDayPid()
+    public function getDayPid(): int
     {
         return $this->dayPid;
     }
 
-    /**
-     * Set day PID.
-     *
-     * @param int $dayPid
-     */
-    public function setDayPid($dayPid)
+    public function setDayPid(int $dayPid): void
     {
         $this->dayPid = $dayPid;
     }
 
-    /**
-     * Get booking PID.
-     *
-     * @return int
-     */
-    public function getBookingPid()
+    public function getBookingPid(): int
     {
         return $this->bookingPid;
     }
 
-    /**
-     * Set booking PID.
-     *
-     * @param int $bookingPid
-     */
-    public function setBookingPid($bookingPid)
+    public function setBookingPid(int $bookingPid): void
     {
         $this->bookingPid = $bookingPid;
     }
 
-    /**
-     * Get method name.
-     *
-     * @return string
-     */
-    public function getModelName()
-    {
-        return $this->modelName;
-    }
-
-    /**
-     * Set method name.
-     *
-     * @param string $modelName
-     */
-    public function setModelName($modelName)
-    {
-        $this->modelName = $modelName;
-    }
-
-    /**
-     * Get categories.
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
     public function getCategories(): ObjectStorage
     {
-        if (!($this->categories instanceof ObjectStorage)) {
-            return new ObjectStorage();
-        }
-
         return $this->categories;
     }
 
-    /**
-     * Set categories.
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
-     */
-    public function setCategories(ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }

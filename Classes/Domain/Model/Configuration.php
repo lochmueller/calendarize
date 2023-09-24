@@ -1,231 +1,65 @@
 <?php
 
-/**
- * Configuration for time options.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Calendarize\Utility\DateTimeUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Configuration for time options.
- *
- * @DatabaseTable
  */
 class Configuration extends AbstractModel implements ConfigurationInterface
 {
     use ImportTrait;
-    /**
-     * Type.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $type = self::TYPE_TIME;
 
-    /**
-     * Handling.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $handling = self::HANDLING_INCLUDE;
+    protected string $type = self::TYPE_TIME;
 
-    /**
-     * State.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $state = self::STATE_DEFAULT;
+    protected string $handling = self::HANDLING_INCLUDE;
 
-    /**
-     * Start date.
-     *
-     * @var \DateTime|null
-     *
-     * @DatabaseField(type="\DateTime", sql="date default NULL")
-     */
-    protected $startDate;
+    protected string $state = self::STATE_DEFAULT;
 
-    /**
-     * End date.
-     *
-     * @var \DateTime|null
-     *
-     * @DatabaseField(type="\DateTime", sql="date default NULL")
-     */
-    protected $endDate;
+    protected ?\DateTime $startDate = null;
 
-    /**
-     * End date dynamic.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $endDateDynamic = '';
+    protected ?\DateTime $endDate = null;
 
-    /**
-     * Start time.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $startTime = 0;
+    protected string $endDateDynamic = '';
 
-    /**
-     * End time.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $endTime = 0;
+    protected int $startTime = 0;
 
-    /**
-     * AllDay.
-     *
-     * @var bool
-     *
-     * @DatabaseField("bool")
-     */
-    protected $allDay = false;
+    protected int $endTime = 0;
 
-    /**
-     * OpenEndTime.
-     *
-     * @var bool
-     *
-     * @DatabaseField("bool")
-     */
-    protected $openEndTime = false;
+    protected bool $allDay = false;
 
-    /**
-     * External ICS url.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $externalIcsUrl = '';
+    protected bool $openEndTime = false;
 
-    /**
-     * Groups.
-     *
-     * @var ObjectStorage<ConfigurationGroup>
-     *
-     * @DatabaseField("\TYPO3\CMS\Extbase\Persistence\ObjectStorage")
-     *
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
-     */
-    protected $groups;
+    protected string $externalIcsUrl = '';
 
-    /**
-     * Frequency.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $frequency = self::FREQUENCY_NONE;
+    #[Extbase\ORM\Lazy]
+    protected ObjectStorage $groups;
 
-    /**
-     * Till date.
-     *
-     * @var \DateTime|null
-     *
-     * @DatabaseField(type="\DateTime", sql="date default NULL")
-     */
-    protected $tillDate;
+    protected string $frequency = self::FREQUENCY_NONE;
 
-    /**
-     * Till days.
-     *
-     * @var int|null
-     *
-     * @DatabaseField(sql="int(11)")
-     */
-    protected $tillDays;
+    protected ?\DateTime $tillDate = null;
 
-    /**
-     * Till days relative.
-     *
-     * @var bool
-     *
-     * @DatabaseField("Boolean")
-     */
-    protected $tillDaysRelative = false;
+    protected ?int $tillDays = null;
 
-    /**
-     * Till days past.
-     *
-     * @var int|null
-     *
-     * @DatabaseField(sql="int(11)")
-     */
-    protected $tillDaysPast;
+    protected bool $tillDaysRelative = false;
 
-    /**
-     * Counter amount.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $counterAmount = 0;
+    protected ?int $tillDaysPast = null;
 
-    /**
-     * Counter interval.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $counterInterval = 1;
+    protected int $counterAmount = 0;
 
-    /**
-     * Recurrence.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $recurrence = self::RECURRENCE_NONE;
+    protected int $counterInterval = 1;
 
-    /**
-     * Day property.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $day = self::DAY_NONE;
+    protected string $recurrence = self::RECURRENCE_NONE;
 
-    /**
-     * Hidden.
-     *
-     * @var bool
-     */
-    protected $hidden = false;
+    protected string $day = self::DAY_NONE;
 
-    /**
-     * Flexform.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $flexForm = '';
+    protected bool $hidden = false;
+
+    protected string $flexForm = '';
 
     /**
      * Configuration constructor.
@@ -237,8 +71,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get type.
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -247,8 +79,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set type.
-     *
-     * @param string $type
      */
     public function setType(string $type): self
     {
@@ -259,8 +89,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Is all day.
-     *
-     * @return bool
      */
     public function isAllDay(): bool
     {
@@ -269,8 +97,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set all day.
-     *
-     * @param bool $allDay
      */
     public function setAllDay(bool $allDay): self
     {
@@ -281,30 +107,24 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get end date.
-     *
-     * @return \DateTime|null
      */
     public function getEndDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->endDate);
+        return $this->endDate;
     }
 
     /**
      * Set end date.
-     *
-     * @param \DateTime|null $endDate
      */
     public function setEndDate(?\DateTime $endDate): self
     {
-        $this->endDate = DateTimeUtility::fixDateTimeForDb($endDate);
+        $this->endDate = $endDate;
 
         return $this;
     }
 
     /**
      * Get end date dynamic.
-     *
-     * @return string
      */
     public function getEndDateDynamic(): string
     {
@@ -313,8 +133,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set end date dynamic.
-     *
-     * @param string $endDateDynamic
      */
     public function setEndDateDynamic(string $endDateDynamic): self
     {
@@ -325,8 +143,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get end time.
-     *
-     * @return int
      */
     public function getEndTime(): int
     {
@@ -335,8 +151,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set end time.
-     *
-     * @param int $endTime
      */
     public function setEndTime(int $endTime): self
     {
@@ -347,30 +161,24 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get start date.
-     *
-     * @return \DateTime|null
      */
     public function getStartDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->startDate);
+        return $this->startDate;
     }
 
     /**
      * Set start date.
-     *
-     * @param \DateTime|null $startDate
      */
     public function setStartDate(?\DateTime $startDate): self
     {
-        $this->startDate = DateTimeUtility::fixDateTimeForDb($startDate);
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     /**
      * Get start time.
-     *
-     * @return int
      */
     public function getStartTime(): int
     {
@@ -379,8 +187,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set start time.
-     *
-     * @param int $startTime
      */
     public function setStartTime(int $startTime): self
     {
@@ -391,8 +197,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get groups.
-     *
-     * @return ObjectStorage<ConfigurationGroup>
      */
     public function getGroups(): ObjectStorage
     {
@@ -401,8 +205,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set groups.
-     *
-     * @param ObjectStorage $groups
      */
     public function setGroups(ObjectStorage $groups): self
     {
@@ -413,8 +215,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get frequency.
-     *
-     * @return string
      */
     public function getFrequency(): string
     {
@@ -423,8 +223,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set frequency.
-     *
-     * @param string $frequency
      */
     public function setFrequency(string $frequency): self
     {
@@ -435,30 +233,24 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get till date.
-     *
-     * @return \DateTime|null
      */
     public function getTillDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->tillDate);
+        return $this->tillDate;
     }
 
     /**
      * Set till date.
-     *
-     * @param \DateTime|null $tillDate
      */
     public function setTillDate(?\DateTime $tillDate): self
     {
-        $this->tillDate = DateTimeUtility::fixDateTimeForDb($tillDate);
+        $this->tillDate = $tillDate;
 
         return $this;
     }
 
     /**
      * Get till days.
-     *
-     * @return int|null
      */
     public function getTillDays(): ?int
     {
@@ -467,8 +259,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set till days.
-     *
-     * @param int|null $tillDays
      */
     public function setTillDays(?int $tillDays): self
     {
@@ -479,8 +269,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Is till days relative.
-     *
-     * @return bool
      */
     public function isTillDaysRelative(): bool
     {
@@ -489,8 +277,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set till days relative.
-     *
-     * @param bool $tillDaysRelative
      */
     public function setTillDaysRelative(bool $tillDaysRelative): self
     {
@@ -501,8 +287,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get till days past.
-     *
-     * @return int|null
      */
     public function getTillDaysPast(): ?int
     {
@@ -511,8 +295,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set till days past.
-     *
-     * @param int|null $tillDaysPast
      */
     public function setTillDaysPast(?int $tillDaysPast): self
     {
@@ -523,8 +305,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get counter amount.
-     *
-     * @return int
      */
     public function getCounterAmount(): int
     {
@@ -533,8 +313,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set counter amount.
-     *
-     * @param int $counterAmount
      */
     public function setCounterAmount(int $counterAmount): self
     {
@@ -545,8 +323,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get counter interval.
-     *
-     * @return int
      */
     public function getCounterInterval(): int
     {
@@ -555,8 +331,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set counter interval.
-     *
-     * @param int $counterInterval
      */
     public function setCounterInterval(int $counterInterval): self
     {
@@ -567,8 +341,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get external ICS URL.
-     *
-     * @return string
      */
     public function getExternalIcsUrl(): string
     {
@@ -577,8 +349,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set external ICS URL.
-     *
-     * @param string $externalIcsUrl
      */
     public function setExternalIcsUrl(string $externalIcsUrl): self
     {
@@ -589,8 +359,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get day.
-     *
-     * @return string
      */
     public function getDay(): string
     {
@@ -599,8 +367,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set day.
-     *
-     * @param string $day
      */
     public function setDay(string $day): self
     {
@@ -611,8 +377,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get recurrence.
-     *
-     * @return string
      */
     public function getRecurrence(): string
     {
@@ -621,8 +385,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set recurrence.
-     *
-     * @param string $recurrence
      */
     public function setRecurrence(string $recurrence): self
     {
@@ -633,8 +395,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get handling.
-     *
-     * @return string
      */
     public function getHandling(): string
     {
@@ -643,8 +403,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set handling.
-     *
-     * @param string $handling
      */
     public function setHandling(string $handling): self
     {
@@ -655,8 +413,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Get state.
-     *
-     * @return string
      */
     public function getState(): string
     {
@@ -665,8 +421,6 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     /**
      * Set state.
-     *
-     * @param string $state
      */
     public function setState(string $state): self
     {
@@ -675,17 +429,11 @@ class Configuration extends AbstractModel implements ConfigurationInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isOpenEndTime(): bool
     {
         return $this->openEndTime;
     }
 
-    /**
-     * @param bool $openEndTime
-     */
     public function setOpenEndTime(bool $openEndTime): self
     {
         $this->openEndTime = $openEndTime;
@@ -693,17 +441,11 @@ class Configuration extends AbstractModel implements ConfigurationInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @param bool $hidden
-     */
     public function setHidden(bool $hidden): self
     {
         $this->hidden = $hidden;
@@ -711,17 +453,11 @@ class Configuration extends AbstractModel implements ConfigurationInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getFlexForm(): string
     {
         return $this->flexForm;
     }
 
-    /**
-     * @param string $flexForm
-     */
     public function setFlexForm(string $flexForm): void
     {
         $this->flexForm = $flexForm;

@@ -1,302 +1,202 @@
 <?php
 
-/**
- * DefaultBookingRequest.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model\Request;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator;
 
 /**
  * DefaultBookingRequest.
  */
 class DefaultBookingRequest extends AbstractBookingRequest
 {
-    /**
-     * First name.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $firstName;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $firstName;
 
-    /**
-     * Last name.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $lastName;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $lastName;
 
-    /**
-     * E-Mail.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     * @Extbase\Validate("EmailAddress")
-     */
-    protected $email;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    #[Extbase\Validate(['validator' => EmailAddressValidator::class])]
+    protected string $email;
 
-    /**
-     * Phone.
-     *
-     * @var string
-     */
-    protected $phone;
+    protected string $phone;
 
-    /**
-     * Street.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $street;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $street;
 
-    /**
-     * House number.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $houseNumber;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $houseNumber;
 
-    /**
-     * ZIP.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $zip;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $zip;
 
-    /**
-     * City.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $city;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $city;
 
-    /**
-     * Country.
-     *
-     * @var string
-     *
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $country;
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $country;
 
-    /**
-     * Message.
-     *
-     * @var string
-     */
-    protected $message;
+    protected string $message;
 
     /**
      * Get first name.
-     *
-     * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
     /**
      * Set first name.
-     *
-     * @param string $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
     }
 
     /**
      * Get last name.
-     *
-     * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
     /**
      * Set last name.
-     *
-     * @param string $lastName
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
 
     /**
      * Get E-Mail.
-     *
-     * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * Set E-Mail.
-     *
-     * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
     /**
      * Get phone.
-     *
-     * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
     /**
      * Set phone.
-     *
-     * @param string $phone
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
 
     /**
      * Get street.
-     *
-     * @return string
      */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
 
     /**
      * Set street.
-     *
-     * @param string $street
      */
-    public function setStreet($street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
 
     /**
      * Get house number.
-     *
-     * @return string
      */
-    public function getHouseNumber()
+    public function getHouseNumber(): string
     {
         return $this->houseNumber;
     }
 
     /**
      * Set house number.
-     *
-     * @param string $houseNumber
      */
-    public function setHouseNumber($houseNumber)
+    public function setHouseNumber(string $houseNumber): void
     {
         $this->houseNumber = $houseNumber;
     }
 
     /**
      * Get ZIP.
-     *
-     * @return string
      */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
     /**
      * Set ZIP.
-     *
-     * @param string $zip
      */
-    public function setZip($zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
 
     /**
      * Get city.
-     *
-     * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
     /**
      * Set city.
-     *
-     * @param string $city
      */
-    public function setCity($city)
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
     /**
      * Get country.
-     *
-     * @return string
      */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
 
     /**
      * Set country.
-     *
-     * @param string $country
      */
-    public function setCountry($country)
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
 
     /**
      * Get message.
-     *
-     * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
     /**
      * Set message.
-     *
-     * @param string $message
      */
-    public function setMessage($message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }

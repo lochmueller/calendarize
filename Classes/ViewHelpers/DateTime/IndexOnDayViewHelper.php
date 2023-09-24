@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Check if the given Index is on the given day.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\DateTime;
@@ -20,7 +17,7 @@ class IndexOnDayViewHelper extends AbstractViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('day', \DateTimeInterface::class, 'Day to check against the Indices', true);
@@ -31,10 +28,8 @@ class IndexOnDayViewHelper extends AbstractViewHelper
 
     /**
      * Check if the index or one of the given indices is on the given day.
-     *
-     * @return bool
      */
-    public function render()
+    public function render(): bool
     {
         /** @var \DateTimeInterface $day */
         $day = $this->arguments['day'];

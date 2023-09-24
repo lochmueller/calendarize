@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Abstract time table service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service\TimeTable;
@@ -19,53 +16,36 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 abstract class AbstractTimeTable extends AbstractService
 {
     /**
-     * Time table service.
-     *
-     * @var \HDNET\Calendarize\Service\TimeTableService
+     * Timetable service.
      */
-    protected $timeTableService;
+    protected TimeTableService $timeTableService;
 
     /**
-     * Inject time table service.
-     *
-     * @param \HDNET\Calendarize\Service\TimeTableService $timeTableService
+     * Inject timetable service.
      */
-    public function injectTimeTableService(TimeTableService $timeTableService)
+    public function injectTimeTableService(TimeTableService $timeTableService): void
     {
         $this->timeTableService = $timeTableService;
     }
 
     /**
      * Modify the given times via the configuration.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
      */
-    abstract public function handleConfiguration(array &$times, Configuration $configuration);
+    abstract public function handleConfiguration(array &$times, Configuration $configuration): void;
 
     /**
-     * Build a single time table by group.
-     *
-     * @param ConfigurationGroup $group
-     *
-     * @return array
+     * Build a single timetable by group.
      */
-    protected function buildSingleTimeTableByGroup(ConfigurationGroup $group)
+    protected function buildSingleTimeTableByGroup(ConfigurationGroup $group): array
     {
-        $this->timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
-
         return $this->timeTableService->getTimeTablesByConfigurationIds($group->getConfigurationIds(), 0);
     }
 
     /**
      * Calculate a hash for the key of the given entry.
-     * This prevent double entries in the index.
-     *
-     * @param array $entry
-     *
-     * @return string
+     * This prevents double entries in the index.
      */
-    protected function calculateEntryKey(array $entry)
+    protected function calculateEntryKey(array $entry): string
     {
         // crc32 may be faster but have more collision-potential
         return hash('md5', json_encode($entry));

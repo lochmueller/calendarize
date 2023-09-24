@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Booking interface.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Features;
@@ -13,9 +10,7 @@ namespace HDNET\Calendarize\Features;
 interface BookingInterface
 {
     /**
-     * Is the given event is bookable.
-     *
-     * @return bool
+     * If the given event is bookable.
      */
     public function isBookable(): bool;
 }

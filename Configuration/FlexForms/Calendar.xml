@@ -12,88 +12,6 @@
 				<type>array</type>
 				<el>
 
-					<!-- View -->
-					<switchableControllerActions>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode</label>
-							<onChange>reload</onChange>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.normal</numIndex>
-										<numIndex index="1">--div--</numIndex>
-									</numIndex>
-									<numIndex index="1">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.listDetail</numIndex>
-										<numIndex index="1">Calendar->list;Calendar->detail</numIndex>
-									</numIndex>
-									<numIndex index="2">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.list</numIndex>
-										<numIndex index="1">Calendar->list</numIndex>
-									</numIndex>
-									<numIndex index="3">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.detail</numIndex>
-										<numIndex index="1">Calendar->detail</numIndex>
-									</numIndex>
-									<numIndex index="4">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.search</numIndex>
-										<numIndex index="1">Calendar->search</numIndex>
-									</numIndex>
-									<numIndex index="5">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.result</numIndex>
-										<numIndex index="1">Calendar->result</numIndex>
-									</numIndex>
-									<numIndex index="6">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.latest</numIndex>
-										<numIndex index="1">Calendar->latest</numIndex>
-									</numIndex>
-									<numIndex index="7">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.single</numIndex>
-										<numIndex index="1">Calendar->single</numIndex>
-									</numIndex>
-									<numIndex index="8">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.special</numIndex>
-										<numIndex index="1">--div--</numIndex>
-									</numIndex>
-									<numIndex index="9">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.year</numIndex>
-										<numIndex index="1">Calendar->year</numIndex>
-									</numIndex>
-									<numIndex index="10">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.quarter</numIndex>
-										<numIndex index="1">Calendar->quarter</numIndex>
-									</numIndex>
-									<numIndex index="11">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.month</numIndex>
-										<numIndex index="1">Calendar->month</numIndex>
-									</numIndex>
-									<numIndex index="12">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.week</numIndex>
-										<numIndex index="1">Calendar->week</numIndex>
-									</numIndex>
-									<numIndex index="13">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.day</numIndex>
-										<numIndex index="1">Calendar->day</numIndex>
-									</numIndex>
-									<numIndex index="14">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.past</numIndex>
-										<numIndex index="1">Calendar->past</numIndex>
-									</numIndex>
-									<numIndex index="15">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
-										<numIndex index="1">--div--</numIndex>
-									</numIndex>
-									<numIndex index="16">
-										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking</numIndex>
-										<numIndex index="1">Booking->booking;Booking->send</numIndex>
-									</numIndex>
-								</items>
-							</config>
-						</TCEforms>
-					</switchableControllerActions>
-
 					<!-- Calendar configuration -->
 					<settings.pluginConfiguration>
 						<TCEforms>
@@ -107,8 +25,8 @@
 								<size>1</size>
 								<items>
 									<numIndex index="0">
-										<numIndex index="0"></numIndex>
-										<numIndex index="1"></numIndex>
+										<numIndex index="0"/>
+										<numIndex index="1"/>
 									</numIndex>
 								</items>
 							</config>
@@ -121,10 +39,10 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:limit</label>
 							<displayCond>
 								<OR>
-									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
-									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->past</numIndex>
+									<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -139,7 +57,7 @@
 					<settings.singleItems>
 						<TCEforms>
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:singleItems</label>
-							<displayCond>FIELD:switchableControllerActions:=:Calendar->single</displayCond>
+							<displayCond>FIELD:parentRec.list_type:=:calendarize_single</displayCond>
 							<config>
 								<type>group</type>
 								<internal_type>db</internal_type>
@@ -155,11 +73,11 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:hide.pagination.teaser</label>
 							<displayCond>
 								<OR>
-									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
-									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->result</numIndex>
-									<numIndex index="3">FIELD:switchableControllerActions:=:Calendar->past</numIndex>
+									<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
+									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -172,9 +90,9 @@
 							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
 							<displayCond>
 								<OR>
-									<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-									<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-									<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+									<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
 								</OR>
 							</displayCond>
 							<onChange>reload</onChange>
@@ -190,9 +108,9 @@
 								<AND>
 									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
 									<OR>
-										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
@@ -210,9 +128,9 @@
 								<AND>
 									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
 									<OR>
-										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
@@ -230,9 +148,9 @@
 								<AND>
 									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
 									<OR>
-										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
@@ -249,9 +167,9 @@
 								<AND>
 									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
 									<OR>
-										<numIndex index="0">FIELD:switchableControllerActions:=:Calendar->list;Calendar->detail</numIndex>
-										<numIndex index="1">FIELD:switchableControllerActions:=:Calendar->list</numIndex>
-										<numIndex index="2">FIELD:switchableControllerActions:=:Calendar->latest</numIndex>
+										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
 									</OR>
 								</AND>
 							</displayCond>
@@ -358,7 +276,7 @@
 								<items type="array">
 									<numIndex index="1" type="array">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:inherit</numIndex>
-										<numIndex index="1"></numIndex>
+										<numIndex index="1"/>
 									</numIndex>
 									<numIndex index="2" type="array">
 										<numIndex index="0">LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.0</numIndex>

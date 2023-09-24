@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Import.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Command;
@@ -27,50 +24,18 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class ImportCommandController extends Command
 {
-    /**
-     * @var ICalServiceInterface
-     */
-    protected $iCalService;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var IndexerService
-     */
-    protected $indexerService;
-
-    /**
-     * @var ICalUrlService
-     */
-    protected $iCalUrlService;
-
-    /**
-     * ImportCommandController constructor.
-     *
-     * @param ICalServiceInterface     $iCalService
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param IndexerService           $indexerService
-     */
     public function __construct(
-        ICalServiceInterface $iCalService,
-        EventDispatcherInterface $eventDispatcher,
-        IndexerService $indexerService,
-        ICalUrlService $iCalUrlService
+        protected ICalServiceInterface $iCalService,
+        protected EventDispatcherInterface $eventDispatcher,
+        protected IndexerService $indexerService,
+        protected ICalUrlService $iCalUrlService
     ) {
-        $this->iCalService = $iCalService;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->indexerService = $indexerService;
-        $this->iCalUrlService = $iCalUrlService;
-
         parent::__construct();
     }
 
     protected function configure()
     {
-        $this->setDescription('Imports a iCalendar ICS into a page ID')
+        $this
             ->addArgument(
                 'icsCalendarUri',
                 InputArgument::REQUIRED,
@@ -85,8 +50,8 @@ class ImportCommandController extends Command
                 'since',
                 's',
                 InputOption::VALUE_OPTIONAL,
-                "Imports all events since the given date.\n"
-                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . "\n"
+                'Imports all events since the given date.' . LF
+                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . LF
                 . '(Note: use --since="-x days" syntax on the console)'
             );
     }
@@ -94,14 +59,9 @@ class ImportCommandController extends Command
     /**
      * Executes the command for importing a iCalendar ICS into a page ID.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int 0 if everything went fine, or an exit code
-     *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -109,16 +69,15 @@ class ImportCommandController extends Command
         if (!GeneralUtility::isValidUrl($icsCalendarUri)) {
             $io->error('You have to enter a valid URL to the iCalendar ICS');
 
-            return 1;
+            return self::FAILURE;
         }
 
-        $pid = $input->getArgument('pid');
+        $pid = (int)$input->getArgument('pid');
         if (!MathUtility::canBeInterpretedAsInteger($pid)) {
             $io->error('You have to enter a valid PID for the new created elements');
 
-            return 1;
+            return self::FAILURE;
         }
-        $pid = (int)$pid;
 
         // Process skip
         $since = $input->getOption('since');
@@ -133,31 +92,31 @@ class ImportCommandController extends Command
 
         try {
             $icalFile = $this->iCalUrlService->getOrCreateLocalFileForUrl($icsCalendarUri);
-        } catch (UnableToGetFileForUrlException $e) {
-            $io->error('Invalid URL: ' . $e->getMessage());
+        } catch (UnableToGetFileForUrlException $exception) {
+            $io->error('Invalid URL: ' . $exception->getMessage());
 
-            return 1;
+            return self::FAILURE;
         }
         try {
             // Parse calendar
             $events = $this->iCalService->getEvents($icalFile);
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             $io->error('Unable to process events');
-            $io->writeln($e->getMessage());
+            $io->writeln($exception->getMessage());
             if ($io->isVerbose()) {
-                $io->writeln($e->getTraceAsString());
+                $io->writeln($exception->getTraceAsString());
             }
 
-            return 1;
+            return self::FAILURE;
         } finally {
             // Remove temporary file
             GeneralUtility::unlink_tempfile($icalFile);
         }
 
-        $io->text('Found ' . \count($events) . ' events in ' . $icsCalendarUri);
+        $io->text('Found ' . count($events) . ' events in ' . $icsCalendarUri);
 
         $io->section('Send ImportSingleIcalEvent for each event');
-        $io->progressStart(\count($events));
+        $io->progressStart(count($events));
 
         $skipCount = $dispatchCount = 0;
         foreach ($events as $event) {
@@ -180,6 +139,6 @@ class ImportCommandController extends Command
         $io->section('Run Reindex process after import');
         $this->indexerService->reindexAll();
 
-        return 0;
+        return self::SUCCESS;
     }
 }

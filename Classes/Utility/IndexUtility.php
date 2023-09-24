@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Index utility.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
@@ -17,16 +14,13 @@ class IndexUtility
     /**
      * Check if the Index is part of the range.
      *
-     * @param Index              $index
-     * @param \DateTimeInterface $rangeStart
-     * @param \DateTimeInterface $rangeEnd
-     *
      * @see IndexRepository::addTimeFrameConstraints
-     *
-     * @return bool
      */
-    public static function isIndexInRange($index, \DateTimeInterface $rangeStart, \DateTimeInterface $rangeEnd)
-    {
+    public static function isIndexInRange(
+        Index $index,
+        \DateTimeInterface $rangeStart,
+        \DateTimeInterface $rangeEnd
+    ): bool {
         $indexStart = $index->getStartDateComplete();
         $indexEnd = $index->getEndDateComplete();
 

@@ -6,39 +6,29 @@ namespace HDNET\Calendarize\Ical;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use JMBTechnologyLimited\ICalDissect\ICalEvent as JMBTICalEvent;
 
 /**
  * Class DissectEvent.
  */
 class DissectEventAdapter implements ICalEvent
 {
-    /**
-     * @var \JMBTechnologyLimited\ICalDissect\ICalEvent
-     */
-    protected $event;
+    protected JMBTICalEvent $event;
 
     /**
      * DissectEvent constructor.
-     *
-     * @param \JMBTechnologyLimited\ICalDissect\ICalEvent $event
      */
-    public function __construct(\JMBTechnologyLimited\ICalDissect\ICalEvent $event)
+    public function __construct(JMBTICalEvent $event)
     {
         $this->event = $event;
     }
 
-    /**
-     * @return array
-     */
     public function getRawData(): array
     {
         return $this->event->getRaw();
     }
 
-    /**
-     * @return \JMBTechnologyLimited\ICalDissect\ICalEvent
-     */
-    public function getEvent(): \JMBTechnologyLimited\ICalDissect\ICalEvent
+    public function getEvent(): JMBTICalEvent
     {
         return $this->event;
     }

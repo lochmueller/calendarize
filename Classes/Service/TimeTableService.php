@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Time table builder service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -14,7 +11,7 @@ use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -22,28 +19,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TimeTableService extends AbstractService
 {
-    /**
-     * @var ConfigurationRepository
-     */
-    protected $configurationRepository;
-
-    /**
-     * @param ConfigurationRepository $configurationRepository
-     */
-    public function __construct(ConfigurationRepository $configurationRepository)
+    public function __construct(protected ConfigurationRepository $configurationRepository)
     {
-        $this->configurationRepository = $configurationRepository;
     }
 
     /**
      * Build the timetable for the given configuration matrix (sorted).
-     *
-     * @param array $ids
-     * @param int   $workspace
-     *
-     * @return array
      */
-    public function getTimeTablesByConfigurationIds(array $ids, int $workspace)
+    public function getTimeTablesByConfigurationIds(array $ids, int $workspace): array
     {
         $timeTable = [];
         if (!$ids) {
@@ -73,7 +56,7 @@ class TimeTableService extends AbstractService
                 HelperUtility::createFlashMessage(
                     $exception->getMessage(),
                     'Index invalid',
-                    FlashMessage::ERROR
+                    ContextualFeedbackSeverity::ERROR
                 );
                 continue;
             }
@@ -103,13 +86,8 @@ class TimeTableService extends AbstractService
 
     /**
      * Selects events by given times.
-     *
-     * @param array $base
-     * @param array $selectBy
-     *
-     * @return array
      */
-    public function selectTimesBy($base, $selectBy)
+    public function selectTimesBy(array $base, array $selectBy): array
     {
         $timeTableSelection = [];
 
@@ -117,7 +95,7 @@ class TimeTableService extends AbstractService
             try {
                 $eventStart = $this->getCompleteDate($baseValue, 'start');
                 $eventEnd = $this->getCompleteDate($baseValue, 'end');
-            } catch (\Exception $ex) {
+            } catch (\Exception $expression) {
                 continue;
             }
 
@@ -125,7 +103,7 @@ class TimeTableService extends AbstractService
                 try {
                     $selectionStart = $this->getCompleteDate($selectByValue, 'start');
                     $selectionEnd = $this->getCompleteDate($selectByValue, 'end');
-                } catch (\Exception $ex) {
+                } catch (\Exception $expression) {
                     continue;
                 }
 
@@ -145,19 +123,14 @@ class TimeTableService extends AbstractService
 
     /**
      * Remove excluded events.
-     *
-     * @param array $base
-     * @param $remove
-     *
-     * @return array
      */
-    public function checkAndRemoveTimes($base, $remove)
+    public function checkAndRemoveTimes(array $base, array $remove): array
     {
         foreach ($base as $key => $value) {
             try {
                 $eventStart = $this->getCompleteDate($value, 'start');
                 $eventEnd = $this->getCompleteDate($value, 'end');
-            } catch (\Exception $ex) {
+            } catch (\Exception $expression) {
                 continue;
             }
 
@@ -165,7 +138,7 @@ class TimeTableService extends AbstractService
                 try {
                     $removeStart = $this->getCompleteDate($removeValue, 'start');
                     $removeEnd = $this->getCompleteDate($removeValue, 'end');
-                } catch (\Exception $ex) {
+                } catch (\Exception $expression) {
                     continue;
                 }
 
@@ -175,7 +148,6 @@ class TimeTableService extends AbstractService
 
                 if ($startIn || $endIn || $envelope) {
                     unset($base[$key]);
-                    continue;
                 }
             }
         }
@@ -186,26 +158,24 @@ class TimeTableService extends AbstractService
     /**
      * Get the complete day.
      *
-     * @param array  $record
-     * @param string $position
-     *
-     * @return \DateTime
-     *
      * @throws \Exception
      */
-    protected function getCompleteDate(array $record, $position)
+    protected function getCompleteDate(array $record, string $position): \DateTime
     {
         if (!($record[$position . '_date'] instanceof \DateTimeInterface)) {
             throw new \Exception('no valid record', 1236781);
         }
+
         /** @var \DateTime $base */
         $base = clone $record[$position . '_date'];
-        if (\is_int($record[$position . '_time']) && (int)$record[$position . '_time'] > 0) {
+
+        if (is_int($record[$position . '_time']) && $record[$position . '_time'] > 0) {
             // Fix handling, if the time field contains a complete timestamp
             $seconds = $record[$position . '_time'] % DateTimeUtility::SECONDS_DAY;
             $base->setTime(0, 0, 0);
             $base->modify('+ ' . $seconds . ' seconds');
         }
+
         if ($record['all_day'] && 'end' === $position) {
             $base->setTime(0, 0, 0);
             $base->modify('+1 day');
@@ -239,6 +209,9 @@ class TimeTableService extends AbstractService
             }
         }
 
-        throw new \Exception('There is no TimeTable handler for the given configuration type: ' . $configuration->getType(), 1236781);
+        throw new \Exception(
+            'There is no TimeTable handler for the given configuration type: ' . $configuration->getType(),
+            1236781
+        );
     }
 }

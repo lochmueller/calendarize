@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Work on flex forms.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -16,17 +13,13 @@ class FlexFormService extends AbstractService
 {
     /**
      * Flex form data.
-     *
-     * @var array
      */
-    protected $flexFormData = [];
+    protected array $flexFormData = [];
 
     /**
      * oad the given flex form into the service.
-     *
-     * @param string $xml
      */
-    public function load($xml)
+    public function load(string $xml): void
     {
         $this->flexFormData = GeneralUtility::xml2array($xml);
     }
@@ -35,12 +28,9 @@ class FlexFormService extends AbstractService
      * Get field value from flex form configuration,
      * including checks if flex form configuration is available.
      *
-     * @param string $key   name of the key
-     * @param string $sheet name of the sheet
-     *
      * @return string|null if nothing found, value if found
      */
-    public function get($key, $sheet = 'sDEF')
+    public function get(string $key, string $sheet = 'sDEF'): ?string
     {
         if (!$this->isValid()) {
             return null;
@@ -52,11 +42,9 @@ class FlexFormService extends AbstractService
 
     /**
      * Check if the flex form get valid data.
-     *
-     * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
-        return \is_array($this->flexFormData) && isset($this->flexFormData['data']);
+        return isset($this->flexFormData['data']);
     }
 }

@@ -20,17 +20,13 @@ class LineFoldingViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @param array                     $arguments
-     * @param \Closure                  $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return string
      */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ): string {
+    ) {
         return preg_replace(
             // Line folding after 75 characters: RFC-5545/3-1-content-lines
             // Base on: sabre/vobject

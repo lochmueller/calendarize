@@ -1,13 +1,10 @@
 <?php
 
-/**
- * TCA service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
-use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -21,25 +18,23 @@ class TcaService extends AbstractService
 {
     /**
      * Render the configuration title.
-     *
-     * @param array  $params
-     * @param object $object
      */
-    public function configurationTitle(array &$params, $object)
+    public function configurationTitle(array &$params, ?object $_ = null): void
     {
         $row = $params['row'];
         $this->migrateFormEngineRow($row);
 
-        $handling = \is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
-        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type']) . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
+        $handling = is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
+        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type'])
+            . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
         switch ($row['type']) {
-            case Configuration::TYPE_TIME:
+            case ConfigurationInterface::TYPE_TIME:
                 $params['title'] .= $this->getConfigurationTitleTime($row);
                 break;
-            case Configuration::TYPE_GROUP:
+            case ConfigurationInterface::TYPE_GROUP:
                 $params['title'] .= $this->getConfigurationGroupTitle($row);
                 break;
-            case Configuration::TYPE_EXTERNAL:
+            case ConfigurationInterface::TYPE_EXTERNAL:
                 $params['title'] .= 'URL: ' . $row['external_ics_url'];
                 break;
         }
@@ -47,11 +42,8 @@ class TcaService extends AbstractService
 
     /**
      * Add configurations to event titles.
-     *
-     * @param array  $params
-     * @param object $object
      */
-    public function eventTitle(array &$params, $object)
+    public function eventTitle(array &$params, ?object $_): void
     {
         // if record has no title
         if (!MathUtility::canBeInterpretedAsInteger($params['row']['uid'] ?? '')) {
@@ -90,7 +82,7 @@ class TcaService extends AbstractService
                 ) ?? [],
                 'title' => '',
             ];
-            $this->configurationTitle($paramsInternal, null);
+            $this->configurationTitle($paramsInternal);
             $configurations[$key] = strip_tags($paramsInternal['title']);
         }
         $params['title'] .= ' / ' . implode(' / ', $configurations);
@@ -99,25 +91,19 @@ class TcaService extends AbstractService
     /**
      * The new FormEngine prepare the select as array
      * Migrate it to the old behavior.
-     *
-     * @param array $row
      */
-    protected function migrateFormEngineRow(array &$row)
+    protected function migrateFormEngineRow(array &$row): void
     {
         $migrateFields = ['type', 'frequency', 'groups'];
         foreach ($migrateFields as $field) {
-            $row[$field] = \is_array($row[$field]) ? array_shift($row[$field]) : $row[$field];
+            $row[$field] = is_array($row[$field]) ? array_shift($row[$field]) : $row[$field];
         }
     }
 
     /**
      * Get group title.
-     *
-     * @param $row
-     *
-     * @return string
      */
-    protected function getConfigurationGroupTitle($row)
+    protected function getConfigurationGroupTitle(array $row): string
     {
         $title = '';
         $groups = GeneralUtility::trimExplode(',', $row['groups'], true);
@@ -134,18 +120,16 @@ class TcaService extends AbstractService
 
     /**
      * Get the title for a configuration time.
-     *
-     * @param $row
-     *
-     * @return string
      */
-    protected function getConfigurationTitleTime($row)
+    protected function getConfigurationTitleTime(array $row): string
     {
         $title = '';
         if ($row['start_date']) {
             try {
                 $dateStart = BackendUtility::date((new \DateTime($row['start_date']))->getTimestamp());
-                $dateEnd = BackendUtility::date((new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp());
+                $dateEnd = BackendUtility::date(
+                    (new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp()
+                );
                 $title .= $dateStart;
                 if ($dateStart !== $dateEnd) {
                     $title .= ' - ' . $dateEnd;
@@ -163,7 +147,7 @@ class TcaService extends AbstractService
                 $title .= ' - ' . BackendUtility::time($row['end_time'] % DateTimeUtility::SECONDS_DAY, false);
             }
         }
-        if ($row['frequency'] && Configuration::FREQUENCY_NONE !== $row['frequency']) {
+        if ($row['frequency'] && ConfigurationInterface::FREQUENCY_NONE !== $row['frequency']) {
             $title .= ' <br /><i>' . TranslateUtility::get('configuration.frequency.' . $row['frequency']) . '</i>';
         }
 

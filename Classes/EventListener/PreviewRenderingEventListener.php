@@ -1,67 +1,41 @@
 <?php
 
-/**
- * Render the CMS layout.
- */
 declare(strict_types=1);
 
-namespace HDNET\Calendarize\Hooks;
+namespace HDNET\Calendarize\EventListener;
 
-use HDNET\Autoloader\Annotation\Hook;
-use HDNET\Autoloader\Utility\IconUtility;
 use HDNET\Calendarize\Service\ContentElementLayoutService;
 use HDNET\Calendarize\Service\FlexFormService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
 
-/**
- * Render the CMS layout.
- *
- * @see News extension (Thanks Georg)
- */
-class CmsLayout extends AbstractHook
+class PreviewRenderingEventListener
 {
-    /**
-     * Flex form service.
-     *
-     * @var FlexFormService
-     */
-    protected $flexFormService;
+    public function __construct(
+        protected FlexFormService $flexFormService,
+        protected ContentElementLayoutService $layoutService,
+        protected IconFactory $iconFactory
+    ) {
+    }
 
-    /**
-     * Content element data.
-     *
-     * @var ContentElementLayoutService
-     */
-    protected $layoutService;
-
-    /**
-     * Returns information about this extension plugin.
-     *
-     * @param array $params Parameters to the hook
-     *
-     * @return string Information about pi1 plugin
-     *
-     * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|cms/layout/class.tx_cms_layout.php|list_type_Info|calendarize_calendar")
-     */
-    public function getExtensionSummary(array $params)
+    public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
-        if ('calendarize_calendar' !== $params['row']['list_type']) {
-            return '';
+        $record = $event->getRecord();
+        if ('calendarize_calendar' !== $record['list_type']) {
+            return;
         }
 
-        $this->flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
-        $this->flexFormService->load($params['row']['pi_flexform']);
+        $this->flexFormService->load($record['pi_flexform']);
         if (!$this->flexFormService->isValid()) {
-            return '';
+            return;
         }
 
-        $extensionIcon = IconUtility::getByExtensionKey('calendarize', true);
-        $extensionIconUsage = PathUtility::getAbsoluteWebPath(GeneralUtility::getFileAbsFileName($extensionIcon));
-        $this->layoutService = GeneralUtility::makeInstance(ContentElementLayoutService::class);
-        $this->layoutService->setTitle('<img src="' . $extensionIconUsage . '" width="32" height="32" /> Calendarize');
+        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', Icon::SIZE_SMALL)->render();
+        $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
         $actions = $this->flexFormService->get('switchableControllerActions', 'main');
         $parts = GeneralUtility::trimExplode(';', $actions, true);
@@ -91,7 +65,7 @@ class CmsLayout extends AbstractHook
             );
         }
 
-        if ((bool)$this->flexFormService->get('settings.hidePagination', 'main')) {
+        if ($this->flexFormService->get('settings.hidePagination', 'main')) {
             $this->layoutService->addRow(TranslateUtility::get('hide.pagination.teaser'), '!!!');
         }
         $useRelativeDate = (bool)$this->flexFormService->get('settings.useRelativeDate', 'main');
@@ -107,23 +81,29 @@ class CmsLayout extends AbstractHook
         } else {
             $overrideStartDate = (int)$this->flexFormService->get('settings.overrideStartdate', 'main');
             if ($overrideStartDate) {
-                $this->layoutService->addRow(TranslateUtility::get('override.startdate'), BackendUtility::datetime($overrideStartDate));
+                $this->layoutService->addRow(
+                    TranslateUtility::get('override.startdate'),
+                    BackendUtility::datetime($overrideStartDate)
+                );
             }
             $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
             if ($overrideEndDate) {
-                $this->layoutService->addRow(TranslateUtility::get('override.enddate'), BackendUtility::datetime($overrideEndDate));
+                $this->layoutService->addRow(
+                    TranslateUtility::get('override.enddate'),
+                    BackendUtility::datetime($overrideEndDate)
+                );
             }
         }
 
         $this->addPageIdsToTable();
 
-        return $this->layoutService->render();
+        $event->setPreviewContent($this->layoutService->render());
     }
 
     /**
      * Add page IDs to the preview of the element.
      */
-    protected function addPageIdsToTable()
+    protected function addPageIdsToTable(): void
     {
         $pageIdsNames = [
             'detailPid',

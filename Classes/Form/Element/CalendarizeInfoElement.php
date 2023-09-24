@@ -10,7 +10,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CalendarizeInfoElement extends AbstractFormElement
 {
-    public function render()
+    public function render(): array
     {
         $result = $this->initializeResultArray();
 
@@ -24,7 +24,11 @@ class CalendarizeInfoElement extends AbstractFormElement
         /** @var TcaInformation $tcaInformation */
         $tcaInformation = GeneralUtility::makeInstance(TcaInformation::class);
 
-        $result['html'] = $tcaInformation->renderPreviewField((string)$this->data['tableName'], (int)$this->data['vanillaUid'], $previewLimit);
+        $result['html'] = $tcaInformation->renderPreviewField(
+            (string)$this->data['tableName'],
+            (int)$this->data['vanillaUid'],
+            $previewLimit
+        );
 
         return $result;
     }

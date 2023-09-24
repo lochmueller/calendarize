@@ -12,7 +12,7 @@ abstract class AbstractFunctionalTest extends FunctionalTestCase
 {
     protected $coreExtensionsToLoad = ['workspaces'];
 
-    protected $testExtensionsToLoad = ['typo3conf/ext/autoloader', 'typo3conf/ext/calendarize'];
+    protected $testExtensionsToLoad = ['typo3conf/ext/calendarize'];
 
     /**
      * Sets up this test case.

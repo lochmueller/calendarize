@@ -1,13 +1,10 @@
 <?php
 
-/**
- * LanguageViewHelper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
 
-use TYPO3\CMS\Core\Http\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 
 /**
@@ -17,17 +14,17 @@ class LanguageViewHelper extends AbstractViewHelper
 {
     /**
      * Get the current language ISO code.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
-        /** @var ServerRequest $request */
-        $request = $GLOBALS['TYPO3_REQUEST'];
-
         /** @var SiteLanguage $language */
-        $language = $request->getAttribute('language');
+        $language = $this->getRequest()->getAttribute('language');
 
-        return $language->getTwoLetterIsoCode();
+        return $language->getLocale()->getLanguageCode();
+    }
+
+    protected function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Months in year view Helper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
@@ -19,7 +16,7 @@ class MonthsInYearViewHelper extends AbstractLoopViewHelper
      *
      * @return array
      */
-    protected function getItems(\DateTime $date)
+    protected function getItems(\DateTime $date): array
     {
         $months = [];
         $originalDate = clone $date;

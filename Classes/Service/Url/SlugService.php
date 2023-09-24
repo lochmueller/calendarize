@@ -22,20 +22,11 @@ class SlugService extends AbstractService
     protected const TABLE_NAME = 'tx_calendarize_domain_model_index';
     protected const SLUG_NAME = 'slug';
 
-    /**
-     * @var RecordStateFactory
-     */
-    protected $stateFactory;
+    protected RecordStateFactory $stateFactory;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var bool
-     */
-    protected $useDate;
+    protected bool $useDate;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
@@ -64,7 +55,11 @@ class SlugService extends AbstractService
         // Get domain model
         $configuration = ExtensionConfigurationUtility::get($uniqueRegisterKey);
         /** @var DomainObjectInterface $model */
-        $model = EventUtility::getOriginalRecordByConfigurationInWorkspace($configuration, (int)$record['uid'], $record['t3ver_wsid'] ?? 0);
+        $model = EventUtility::getOriginalRecordByConfigurationInWorkspace(
+            $configuration ?? [],
+            (int)$record['uid'],
+            $record['t3ver_wsid'] ?? 0
+        );
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
 

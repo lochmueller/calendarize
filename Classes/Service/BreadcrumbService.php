@@ -1,8 +1,5 @@
 <?php
 
-/**
- * BreadcrumbService.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
@@ -19,11 +16,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class BreadcrumbService extends AbstractService
 {
-    /**
-     * @param string $content
-     * @param array  $configuration
-     */
-    public function generate(string $content, array $configuration)
+    public function generate(string $content, array $configuration): string
     {
         $arguments = GeneralUtility::_GET('tx_calendarize_calendar');
         $indexUid = isset($arguments['index']) ? (int)$arguments['index'] : 0;
@@ -63,7 +56,8 @@ class BreadcrumbService extends AbstractService
         return $index->getOriginalObject();
     }
 
-    protected function getIndex(int $uid): Index
+
+    protected function getIndex(int $uid): ?Index
     {
         return GeneralUtility::makeInstance(IndexRepository::class)->findByUid($uid);
     }

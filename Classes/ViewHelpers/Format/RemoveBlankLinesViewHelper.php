@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Format;
 
+use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
@@ -11,7 +12,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  *
  * Removes blank lines (including spaces).
  */
-class RemoveBlankLinesViewHelper extends \HDNET\Calendarize\ViewHelpers\AbstractViewHelper
+class RemoveBlankLinesViewHelper extends AbstractViewHelper
 {
     /**
      * @var bool
@@ -19,17 +20,13 @@ class RemoveBlankLinesViewHelper extends \HDNET\Calendarize\ViewHelpers\Abstract
     protected $escapeOutput = false;
 
     /**
-     * @param array                     $arguments
-     * @param \Closure                  $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
      * @return string
      */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ): string {
+    ) {
         return trim(preg_replace(
             '/[\r\n]+\s*[\r\n]+/',
             "\n",

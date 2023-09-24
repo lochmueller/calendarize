@@ -8,7 +8,7 @@ use HDNET\Calendarize\Service\IndexerService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\Restriction\FrontendWorkspaceRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -36,12 +36,17 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
      * @param ContentObjectRenderer $cObj                       The data of the content element or page
      * @param array                 $contentObjectConfiguration The configuration of Content Object
      * @param array                 $processorConfiguration     The configuration of this processor
-     * @param array                 $processedData              Key/value store of processed data (e.g. to be passed to a Fluid View)
+     * @param array                 $processedData              Key/value store of processed data
+     * (e.g. to be passed to a Fluid View)
      *
      * @return array the processed data as key/value store
      */
-    public function process(ContentObjectRenderer $cObj, array $contentObjectConfiguration, array $processorConfiguration, array $processedData): array
-    {
+    public function process(
+        ContentObjectRenderer $cObj,
+        array $contentObjectConfiguration,
+        array $processorConfiguration,
+        array $processedData
+    ): array {
         if (!$processorConfiguration['menus']) {
             return $processedData;
         }
@@ -50,7 +55,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
             return $processedData;
         }
         $availableLanguages = $this->getAvailableLanguages($indexId);
-        if (\in_array(-1, $availableLanguages)) {
+        if (in_array(-1, $availableLanguages)) {
             // Skip check if languages = [ALL] is selected
             return $processedData;
         }
@@ -91,14 +96,14 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->getRestrictions()->add(
-            GeneralUtility::makeInstance(FrontendWorkspaceRestriction::class)
+            GeneralUtility::makeInstance(WorkspaceRestriction::class)
         );
 
         $result = $queryBuilder
             ->select($languageField)
             ->from(self::TABLE)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     // Current language of the record
                     $queryBuilder->expr()->eq(
                         'uid',
@@ -111,15 +116,11 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                     )
                 )
             )
-            ->execute();
+            ->executeQuery();
 
-        return $result->fetchFirstColumn();
+        return $result->fetchOne();
     }
 
-    /**
-     * @param array $menu
-     * @param array $availableLanguages
-     */
     protected function handleMenu(array &$menu, array $availableLanguages): void
     {
         foreach ($menu as &$item) {
@@ -127,36 +128,31 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                 continue;
             }
             try {
-                $availability = \in_array((int)$item['languageId'], $availableLanguages);
+                $availability = in_array((int)$item['languageId'], $availableLanguages);
                 if (!$availability) {
                     $item['available'] = false;
                     $item['availableReason'] = 'calendarize';
                 }
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
             }
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getIndexId(): int
     {
         $indexId = 0;
+        $request = $this->getRequest();
         /** @var PageArguments $pageArguments */
-        $pageArguments = $this->getRequest()->getAttribute('routing');
+        $pageArguments = $request->getAttribute('routing');
         if (isset($pageArguments->getRouteArguments()['tx_calendarize_calendar']['index'])) {
             $indexId = (int)$pageArguments->getRouteArguments()['tx_calendarize_calendar']['index'];
-        } elseif (isset($this->getRequest()->getQueryParams()['tx_calendarize_calendar']['index'])) {
-            $indexId = (int)$this->getRequest()->getQueryParams()['tx_calendarize_calendar']['index'];
+        } elseif (isset($request->getQueryParams()['tx_calendarize_calendar']['index'])) {
+            $indexId = (int)$request->getQueryParams()['tx_calendarize_calendar']['index'];
         }
 
         return $indexId;
     }
 
-    /**
-     * @return ServerRequestInterface
-     */
     protected function getRequest(): ServerRequestInterface
     {
         return $GLOBALS['TYPO3_REQUEST'];

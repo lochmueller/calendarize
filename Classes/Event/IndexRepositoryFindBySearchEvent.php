@@ -4,33 +4,15 @@ namespace HDNET\Calendarize\Event;
 
 final class IndexRepositoryFindBySearchEvent
 {
-    /**
-     * @var array
-     */
-    private $indexIds;
+    private array $indexIds = [];
 
-    private $startDate;
-    private $endDate;
-    private $customSearch;
-
-    /**
-     * @var array
-     */
-    private $indexTypes;
-
-    /**
-     * @var bool
-     */
-    private $emptyPreResult;
-
-    public function __construct(array $indexIds, $startDate, $endDate, $customSearch, array $indexTypes, bool $emptyPreResult)
-    {
-        $this->indexIds = $indexIds;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
-        $this->customSearch = $customSearch;
-        $this->indexTypes = $indexTypes;
-        $this->emptyPreResult = $emptyPreResult;
+    public function __construct(
+        protected ?\DateTimeInterface $startDate,
+        protected ?\DateTimeInterface $endDate,
+        protected array $customSearch,
+        protected array $indexTypes,
+        protected bool $emptyPreResult
+    ) {
     }
 
     public function getIndexIds(): array
@@ -38,19 +20,39 @@ final class IndexRepositoryFindBySearchEvent
         return $this->indexIds;
     }
 
-    public function getStartDate()
+    public function setIndexIds(array $indexIds): void
+    {
+        $this->indexIds = $indexIds;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
     {
         return $this->startDate;
     }
 
-    public function getEndDate()
+    public function setStartDate(\DateTimeInterface $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->endDate;
     }
 
-    public function getCustomSearch()
+    public function setEndDate(\DateTimeInterface $endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
+    public function getCustomSearch(): array
     {
         return $this->customSearch;
+    }
+
+    public function setCustomSearch(array $customSearch): void
+    {
+        $this->customSearch = $customSearch;
     }
 
     public function getIndexTypes(): array
@@ -58,24 +60,14 @@ final class IndexRepositoryFindBySearchEvent
         return $this->indexTypes;
     }
 
+    public function setIndexTypes(array $indexTypes): void
+    {
+        $this->indexTypes = $indexTypes;
+    }
+
     public function isEmptyPreResult(): bool
     {
         return $this->emptyPreResult;
-    }
-
-    public function setIndexIds(array $indexIds): void
-    {
-        $this->indexIds = $indexIds;
-    }
-
-    public function setStartDate($startDate): void
-    {
-        $this->startDate = $startDate;
-    }
-
-    public function setEndDate($endDate): void
-    {
-        $this->endDate = $endDate;
     }
 
     public function setEmptyPreResult(bool $emptyPreResult): void

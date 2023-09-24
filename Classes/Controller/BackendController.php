@@ -1,14 +1,14 @@
 <?php
 
-/**
- * BackendController.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Register;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Attribute\Controller;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
@@ -20,16 +20,19 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 /**
  * BackendController.
  */
+#[Controller]
 class BackendController extends AbstractController
 {
-    private const PATH_CALENDARIZE_LOCALLANG = 'LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf';
     private const PATH_CORE_LOCALLANG = 'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf';
-
-    protected $defaultViewObjectName = \TYPO3\CMS\Backend\View\BackendTemplateView::class;
 
     public const OPTIONS_KEY = 'calendarize_be';
 
-    public function initializeListAction()
+    public function __construct(
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory
+    ) {
+    }
+
+    public function initializeListAction(): void
     {
         $optionsConfiguration = $this->arguments->getArgument('options')->getPropertyMappingConfiguration();
 
@@ -50,7 +53,7 @@ class BackendController extends AbstractController
     /**
      * Basic backend list.
      */
-    public function listAction(OptionRequest $options = null, int $currentPage = 1)
+    public function listAction(OptionRequest $options = null, int $currentPage = 1): ResponseInterface
     {
         if (null === $options) {
             $options = $this->getOptions();
@@ -70,7 +73,8 @@ class BackendController extends AbstractController
         }
         $pagination = new SimplePagination($paginator);
 
-        $this->view->assignMultiple([
+        $view = $this->moduleTemplateFactory->create($this->request);
+        $view->assignMultiple([
             'indices' => $indices,
             'typeLocations' => $typeLocations,
             'types' => $this->getTypes(),
@@ -79,15 +83,16 @@ class BackendController extends AbstractController
             'options' => $options,
             'paginator' => $paginator,
             'pagination' => $pagination,
-            'totalAmount' => \count($indices),
+            'totalAmount' => count($indices),
             'filterOptions' => [
                 'asc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':ascending') ?: 'ascending',
                 'desc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':descending') ?: 'descending',
             ],
         ]);
+        return $view->renderResponse('Backend/List');
     }
 
-    protected function getPids(array $typeLocations)
+    protected function getPids(array $typeLocations): array
     {
         $pids = [];
         foreach ($typeLocations as $locations) {
@@ -117,8 +122,6 @@ class BackendController extends AbstractController
 
     /**
      * Get option request.
-     *
-     * @return OptionRequest
      */
     protected function getOptions(): OptionRequest
     {
@@ -138,24 +141,17 @@ class BackendController extends AbstractController
 
     /**
      * Persists options data.
-     *
-     * @param OptionRequest $options
      */
-    protected function setOptions(OptionRequest $options)
+    protected function setOptions(OptionRequest $options): void
     {
         $GLOBALS['BE_USER']->setAndSaveSessionData(self::OPTIONS_KEY, serialize($options));
     }
 
     /**
      * Get the different locations for new entries.
-     *
-     * @return array
      */
-    protected function getDifferentTypesAndLocations()
+    protected function getDifferentTypesAndLocations(): array
     {
-        /**
-         * @var array<int>
-         */
         $mountPoints = $this->getAllowedDbMounts();
 
         $typeLocations = [];
@@ -171,10 +167,8 @@ class BackendController extends AbstractController
 
     /**
      * Get the different types.
-     *
-     * @return array
      */
-    protected function getTypes()
+    protected function getTypes(): array
     {
         $types = [];
 
@@ -187,11 +181,6 @@ class BackendController extends AbstractController
 
     /**
      * Check if access to page is allowed for current user.
-     *
-     * @param int   $pageId
-     * @param array $mountPoints
-     *
-     * @return bool
      */
     protected function isPageAllowed(int $pageId, array $mountPoints): bool
     {
@@ -200,9 +189,9 @@ class BackendController extends AbstractController
         }
 
         // check if any mountpoint is in rootline
-        $rootline = BackendUtility::BEgetRootLine($pageId, '');
+        $rootline = BackendUtility::BEgetRootLine($pageId);
         foreach ($rootline as $entry) {
-            if (\in_array((int)$entry['uid'], $mountPoints)) {
+            if (in_array((int)$entry['uid'], $mountPoints)) {
                 return true;
             }
         }
@@ -229,10 +218,7 @@ class BackendController extends AbstractController
         return [$dbMounts];
     }
 
-    /**
-     * @return BackendUserAuthentication
-     */
-    protected function getBackendUser(): BackendUserAuthentication
+    protected function getBackendUser(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

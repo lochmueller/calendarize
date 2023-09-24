@@ -1,18 +1,16 @@
 <?php
 
-/**
- * Time service.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service\TimeTable;
 
 use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Service\RecurrenceService;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -27,7 +25,7 @@ class TimeTimeTable extends AbstractTimeTable
      * @param array         $times
      * @param Configuration $configuration
      */
-    public function handleConfiguration(array &$times, Configuration $configuration)
+    public function handleConfiguration(array &$times, Configuration $configuration): void
     {
         $startTime = $configuration->isAllDay() ? null : $configuration->getStartTime();
         $endTime = $configuration->isAllDay() ? null : $configuration->getEndTime();
@@ -54,14 +52,11 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Respect the selection of dynamic enddates.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
      */
-    protected function respectDynamicEndDates(array &$times, Configuration $configuration)
+    protected function respectDynamicEndDates(array &$times, Configuration $configuration): void
     {
         switch ($configuration->getEndDateDynamic()) {
-            case Configuration::END_DYNAMIC_1_DAY:
+            case ConfigurationInterface::END_DYNAMIC_1_DAY:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -71,7 +66,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_1_WEEK:
+            case ConfigurationInterface::END_DYNAMIC_1_WEEK:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -81,7 +76,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_END_WEEK:
+            case ConfigurationInterface::END_DYNAMIC_END_WEEK:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -92,7 +87,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_END_MONTH:
+            case ConfigurationInterface::END_DYNAMIC_END_MONTH:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -102,7 +97,7 @@ class TimeTimeTable extends AbstractTimeTable
                     return $entry;
                 };
                 break;
-            case Configuration::END_DYNAMIC_END_YEAR:
+            case ConfigurationInterface::END_DYNAMIC_END_YEAR:
                 $callback = static function ($entry) {
                     if ($entry['start_date'] instanceof \DateTime) {
                         $entry['end_date'] = clone $entry['start_date'];
@@ -119,7 +114,7 @@ class TimeTimeTable extends AbstractTimeTable
         }
 
         $new = [];
-        foreach ($times as $hash => $record) {
+        foreach ($times as $record) {
             $target = $callback($record);
             $new[$this->calculateEntryKey($target)] = $target;
         }
@@ -128,10 +123,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Validate the base entry, if there are logical mistakes.
-     *
-     * @param array $baseEntry
-     *
-     * @return bool
      */
     protected function validateBaseEntry(array $baseEntry): bool
     {
@@ -140,7 +131,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'flashMessage.missingStartDate.text',
                 'flashMessage.missingStartDate.title',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return false;
@@ -151,7 +142,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.date.message',
                 'wrong.date',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return false;
@@ -160,14 +151,16 @@ class TimeTimeTable extends AbstractTimeTable
         // End date is before start date considering time, all day and open end
         if (
             $baseEntry['end_date'] instanceof \DateTimeInterface
-            && !$baseEntry['all_day'] && !$baseEntry['open_end_time']
+            && !$baseEntry['all_day']
+            && !$baseEntry['open_end_time']
             && $baseEntry['start_date']->format('d.m.Y') === $baseEntry['end_date']->format('d.m.Y')
-            && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY
+            && $baseEntry['start_time'] % DateTimeUtility::SECONDS_DAY
+            > $baseEntry['end_time'] % DateTimeUtility::SECONDS_DAY
         ) {
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.time.message',
                 'wrong.time',
-                FlashMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return false;
@@ -178,14 +171,13 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Add frequency items.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     * @param array         $tillDateConfiguration
      */
-    protected function addFrequencyItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
-    {
+    protected function addFrequencyItems(
+        array &$times,
+        Configuration $configuration,
+        array $baseEntry,
+        array $tillDateConfiguration
+    ): void {
         $frequencyIncrement = $this->getFrequencyIncrement($configuration);
         if (!$frequencyIncrement) {
             return;
@@ -197,13 +189,19 @@ class TimeTimeTable extends AbstractTimeTable
         for ($i = 0; $loopEntriesAdded < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
-            if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+            if (
+                $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface
+                && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']
+            ) {
                 break;
             }
 
             $lastLoop = $loopEntry;
 
-            if ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+            if (
+                $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface
+                && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']
+            ) {
                 continue;
             }
 
@@ -214,11 +212,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Create the next loop entry.
-     *
-     * @param array  $loopEntry
-     * @param string $modification
-     *
-     * @return array
      */
     protected function createNextLoopEntry(array $loopEntry, string $modification): array
     {
@@ -261,41 +254,37 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Get the frequency date increment.
-     *
-     * @param Configuration $configuration
-     *
-     * @return string
      */
-    protected function getFrequencyIncrement(Configuration $configuration)
+    protected function getFrequencyIncrement(Configuration $configuration): string
     {
         $interval = max($configuration->getCounterInterval(), 1);
         switch ($configuration->getFrequency()) {
-            case Configuration::FREQUENCY_MINUTELY:
+            case ConfigurationInterface::FREQUENCY_MINUTELY:
                 $intervalValue = '+' . $interval . ' minutes';
                 break;
-            case Configuration::FREQUENCY_HOURLY:
+            case ConfigurationInterface::FREQUENCY_HOURLY:
                 $intervalValue = '+' . $interval . ' hours';
                 break;
-            case Configuration::FREQUENCY_DAILY:
+            case ConfigurationInterface::FREQUENCY_DAILY:
                 $intervalValue = '+' . $interval . ' days';
                 break;
-            case Configuration::FREQUENCY_WEEKLY:
+            case ConfigurationInterface::FREQUENCY_WEEKLY:
                 $intervalValue = '+' . $interval . ' weeks';
                 break;
-            case Configuration::FREQUENCY_MONTHLY:
-                if (Configuration::RECURRENCE_NONE !== $configuration->getRecurrence()) {
-                    return false;
+            case ConfigurationInterface::FREQUENCY_MONTHLY:
+                if (ConfigurationInterface::RECURRENCE_NONE !== $configuration->getRecurrence()) {
+                    return '';
                 }
                 $intervalValue = '+' . $interval . ' months';
                 break;
-            case Configuration::FREQUENCY_YEARLY:
-                if (Configuration::RECURRENCE_NONE !== $configuration->getRecurrence()) {
-                    return false;
+            case ConfigurationInterface::FREQUENCY_YEARLY:
+                if (ConfigurationInterface::RECURRENCE_NONE !== $configuration->getRecurrence()) {
+                    return '';
                 }
                 $intervalValue = '+' . $interval . ' years';
                 break;
             default:
-                $intervalValue = false;
+                $intervalValue = '';
         }
 
         return $intervalValue;
@@ -303,18 +292,21 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Add recurrence items.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     * @param array         $tillDateConfiguration
      */
-    protected function addRecurrenceItems(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
-    {
-        if (Configuration::RECURRENCE_NONE === $configuration->getRecurrence() || Configuration::DAY_NONE === $configuration->getDay()) {
+    protected function addRecurrenceItems(
+        array &$times,
+        Configuration $configuration,
+        array $baseEntry,
+        array $tillDateConfiguration
+    ): void {
+        if (
+            ConfigurationInterface::RECURRENCE_NONE === $configuration->getRecurrence()
+            || ConfigurationInterface::DAY_NONE === $configuration->getDay()
+        ) {
             return;
         }
 
+        /** @var RecurrenceService $recurrenceService */
         $recurrenceService = GeneralUtility::makeInstance(RecurrenceService::class);
         $amountCounter = $configuration->getCounterAmount();
         $maxLimit = $this->getFrequencyLimitPerItem();
@@ -325,14 +317,14 @@ class TimeTimeTable extends AbstractTimeTable
             $loopEntry = $lastLoop;
 
             $dateTime = false;
-            if (Configuration::FREQUENCY_MONTHLY === $configuration->getFrequency()) {
+            if (ConfigurationInterface::FREQUENCY_MONTHLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextMonth(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
                     $configuration->getDay(),
                     $intervalCounter
                 );
-            } elseif (Configuration::FREQUENCY_YEARLY === $configuration->getFrequency()) {
+            } elseif (ConfigurationInterface::FREQUENCY_YEARLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextYear(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
@@ -350,13 +342,19 @@ class TimeTimeTable extends AbstractTimeTable
 
             $loopEntry = $this->createNextLoopEntry($loopEntry, $frequencyIncrement);
 
-            if ($tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+            if (
+                $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface
+                && $loopEntry['start_date'] > $tillDateConfiguration['tillDate']
+            ) {
                 break;
             }
 
             $lastLoop = $loopEntry;
 
-            if ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
+            if (
+                $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface
+                && $loopEntry['end_date'] < $tillDateConfiguration['tillDatePast']
+            ) {
                 continue;
             }
 
@@ -367,14 +365,13 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Remove the base entry if necessary.
-     *
-     * @param array         $times
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     * @param array         $tillDateConfiguration
      */
-    protected function removeBaseEntryIfNecessary(array &$times, Configuration $configuration, array $baseEntry, array $tillDateConfiguration)
-    {
+    protected function removeBaseEntryIfNecessary(
+        array &$times,
+        Configuration $configuration,
+        array $baseEntry,
+        array $tillDateConfiguration
+    ): void {
         $baseEntryKey = $this->calculateEntryKey($baseEntry);
         $tillDate = $configuration->getTillDate();
 
@@ -382,21 +379,24 @@ class TimeTimeTable extends AbstractTimeTable
             return;
         }
 
-        // if the till date is set via the till day feature and if the base entry does not match the till date condition remove it from times
-        if (!$tillDate instanceof \DateTimeInterface && $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface && $baseEntry['start_date'] > $tillDateConfiguration['tillDate']) {
+        // if the till date is set via the till day feature and if the base entry does not
+        // match the till date condition remove it from times
+        if (
+            !$tillDate instanceof \DateTimeInterface
+            && $tillDateConfiguration['tillDate'] instanceof \DateTimeInterface
+            && $baseEntry['start_date'] > $tillDateConfiguration['tillDate']
+        ) {
             unset($times[$baseEntryKey]);
-        } elseif ($tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface && $baseEntry['end_date'] < $tillDateConfiguration['tillDatePast']) {
-            // till date past can only be set via the till date day feature, if the base entry does not match the till date past condition remove it from times
+        } elseif (
+            $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface
+            && $baseEntry['end_date'] < $tillDateConfiguration['tillDatePast']
+        ) {
+            // till date past can only be set via the till date day feature, if the base entry
+            // does not match the till date past condition remove it from times
             unset($times[$baseEntryKey]);
         }
     }
 
-    /**
-     * @param Configuration $configuration
-     * @param array         $baseEntry
-     *
-     * @return array
-     */
     protected function getTillDateConfiguration(Configuration $configuration, array $baseEntry): array
     {
         // get values from item configuration
@@ -430,7 +430,7 @@ class TimeTimeTable extends AbstractTimeTable
         }
 
         // get actual tillDatePast
-        if (\is_int($tillDaysPast)) {
+        if (is_int($tillDaysPast)) {
             $tillDatePast = clone $tillDaysBaseDate;
             $tillDatePast->modify('-' . $tillDaysPast . ' day');
         }
@@ -443,8 +443,6 @@ class TimeTimeTable extends AbstractTimeTable
 
     /**
      * Get the limit of the frequency.
-     *
-     * @return int
      */
     protected function getFrequencyLimitPerItem(): int
     {

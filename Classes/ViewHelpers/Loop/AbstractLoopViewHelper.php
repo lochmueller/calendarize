@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Abstraction for loop view helper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
@@ -15,33 +12,19 @@ use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 abstract class AbstractLoopViewHelper extends AbstractViewHelper
 {
     /**
-     * Specifies whether the escaping interceptors should be disabled or enabled for the result of renderChildren() calls within this ViewHelper.
-     *
-     * @see isChildrenEscapingEnabled()
-     *
-     * Note: If this is NULL the value of $this->escapingInterceptorEnabled is considered for backwards compatibility
-     *
      * @var bool
-     *
-     * @api
      */
     protected $escapeChildren = false;
 
     /**
-     * Specifies whether the escaping interceptors should be disabled or enabled for the render-result of this ViewHelper.
-     *
-     * @see isOutputEscapingEnabled()
-     *
      * @var bool
-     *
-     * @api
      */
     protected $escapeOutput = false;
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('date', \DateTimeInterface::class, 'DateTimeInterface Object', true);
@@ -50,10 +33,8 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
 
     /**
      * Render the element.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         $variableContainer = $this->renderingContext->getVariableProvider();
 
@@ -88,10 +69,6 @@ abstract class AbstractLoopViewHelper extends AbstractViewHelper
 
     /**
      * Get the items.
-     *
-     * @param \DateTime $date
-     *
-     * @return array
      */
-    abstract protected function getItems(\DateTime $date);
+    abstract protected function getItems(\DateTime $date): array;
 }

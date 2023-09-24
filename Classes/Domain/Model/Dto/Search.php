@@ -6,12 +6,12 @@ namespace HDNET\Calendarize\Domain\Model\Dto;
 
 class Search
 {
-    protected $fullText = '';
+    protected string $fullText = '';
 
     /**
      * @var int[]
      */
-    protected $categories = [];
+    protected array $categories = [];
 
     public function getFullText(): string
     {
@@ -30,6 +30,10 @@ class Search
      */
     public function getCategory(): int
     {
+        trigger_error(
+            'HDNET\Calendarize\Domain\Model\Dto\Search::getCategory',
+            E_USER_DEPRECATED
+        );
         return $this->categories[0] ?? 0;
     }
 
@@ -40,20 +44,18 @@ class Search
      */
     public function setCategory(int $category): void
     {
+        trigger_error(
+            'HDNET\Calendarize\Domain\Model\Dto\Search::setCategory',
+            E_USER_DEPRECATED
+        );
         $this->categories = [$category];
     }
 
-    /**
-     * @return int[]
-     */
     public function getCategories(): array
     {
         return $this->categories;
     }
 
-    /**
-     * @param int[] $categories
-     */
     public function setCategories(array $categories): void
     {
         $this->categories = $categories;
@@ -61,6 +63,6 @@ class Search
 
     public function isSearch(): bool
     {
-        return 0 !== $this->getCategory() || '' !== $this->getFullText();
+        return 0 !== reset($this->categories) || '' !== $this->getFullText();
     }
 }

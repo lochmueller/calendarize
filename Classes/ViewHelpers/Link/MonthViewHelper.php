@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the month.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -12,12 +9,12 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class MonthViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'month';
+    protected string $actionName = 'month';
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('date', \DateTimeInterface::class, '', true);

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the index.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -14,12 +11,12 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class IndexViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'detail';
+    protected string $actionName = 'detail';
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('index', Index::class, '', true);
@@ -36,6 +33,6 @@ class IndexViewHelper extends AbstractActionViewHelper
             'index' => $this->arguments['index']->getUid(),
         ];
 
-        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'detailPid'));
+        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid((int)$this->arguments['pageUid'], 'detailPid'));
     }
 }

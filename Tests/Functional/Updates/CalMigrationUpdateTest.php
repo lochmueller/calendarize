@@ -24,7 +24,6 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 class CalMigrationUpdateTest extends FunctionalTestCase
 {
     protected $testExtensionsToLoad = [
-        'typo3conf/ext/autoloader',
         'typo3conf/ext/calendarize',
         'typo3conf/ext/calendarize/Tests/Functional/Fixtures/Extensions/cal',
     ];

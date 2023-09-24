@@ -4,14 +4,10 @@ namespace HDNET\Calendarize\Event;
 
 final class DetermineSearchEvent
 {
-    private $variables = [];
-
-    private $settings = [];
-
-    public function __construct(array $variables, array $settings)
-    {
-        $this->variables = $variables;
-        $this->settings = $settings;
+    public function __construct(
+        private array $variables,
+        private readonly array $settings
+    ) {
     }
 
     public function getVariables(): array
