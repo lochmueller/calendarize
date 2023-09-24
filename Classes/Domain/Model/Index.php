@@ -60,10 +60,7 @@ class Index extends AbstractModel
         if (null === $this->originalObject) {
             $configuration = $this->getConfiguration();
             if (empty($configuration)) {
-                throw new InvalidConfigurationException(
-                    'No valid configuration for the current index: ' . $this->getUniqueRegisterKey(),
-                    123678123
-                );
+                throw new InvalidConfigurationException('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
             }
             $this->originalObject = EventUtility::getOriginalRecordByConfiguration(
                 $configuration,

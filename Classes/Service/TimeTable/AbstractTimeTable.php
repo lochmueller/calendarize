@@ -8,7 +8,6 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Service\TimeTableService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Abstract time table service.

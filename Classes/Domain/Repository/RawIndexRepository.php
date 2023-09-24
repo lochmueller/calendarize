@@ -116,7 +116,7 @@ class RawIndexRepository extends AbstractRawRepository
             array_filter(
                 $result,
                 static function ($item) {
-                    return is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
+                    return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
                 }
             )
         );
@@ -130,7 +130,7 @@ class RawIndexRepository extends AbstractRawRepository
     public function countAllEvents(string $tableName, int $uid, int $workspace = 0): int
     {
         // Select all to check workspaces in the right way
-        return count($this->findAllEvents($tableName, $uid, $workspace));
+        return \count($this->findAllEvents($tableName, $uid, $workspace));
     }
 
     public function deleteNotInUniqueRegisterKey(array $validKeys): bool

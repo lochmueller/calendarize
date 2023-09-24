@@ -89,6 +89,7 @@ class EventUtility
 
         /** @var DataMapper $dataMapper */
         $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+
         return $dataMapper->map($modelName, [$row])[0];
     }
 
@@ -108,7 +109,7 @@ class EventUtility
         }
 
         // Old backend request (e.g. install tool wizards)
-        if (defined('TYPO3') && TYPO3 == 'BE') {
+        if (\defined('TYPO3') && TYPO3 == 'BE') {
             return true;
         }
 

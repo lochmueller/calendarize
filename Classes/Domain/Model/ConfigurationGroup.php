@@ -30,7 +30,7 @@ class ConfigurationGroup extends AbstractModel
     }
 
     /**
-     * Get configuration ids
+     * Get configuration ids.
      */
     public function getConfigurationIds(): array
     {

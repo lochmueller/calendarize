@@ -30,7 +30,7 @@ class HelperUtility
      */
     public static function getQuery(string|object $objectName): QueryInterface
     {
-        $objectName = is_object($objectName) ? get_class($objectName) : $objectName;
+        $objectName = \is_object($objectName) ? $objectName::class : $objectName;
         /** @var PersistenceManagerInterface $manager */
         static $manager = null;
         if (null === $manager) {

@@ -36,15 +36,15 @@ class ExtensionConfigurationUtility
     {
         self::loadConfiguration();
 
-        $eventClass = get_class($event);
+        $eventClass = $event::class;
         foreach (self::$configuration as $configuration) {
             if ($configuration['modelName'] === $eventClass) {
                 return $configuration['uniqueRegisterKey'];
             }
             if (
                 isset($configuration['subClasses'])
-                && is_array($configuration['subClasses'])
-                && in_array($eventClass, $configuration['subClasses'])
+                && \is_array($configuration['subClasses'])
+                && \in_array($eventClass, $configuration['subClasses'])
             ) {
                 return $configuration['uniqueRegisterKey'];
             }

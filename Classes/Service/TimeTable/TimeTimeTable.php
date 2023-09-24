@@ -430,7 +430,7 @@ class TimeTimeTable extends AbstractTimeTable
         }
 
         // get actual tillDatePast
-        if (is_int($tillDaysPast)) {
+        if (\is_int($tillDaysPast)) {
             $tillDatePast = clone $tillDaysBaseDate;
             $tillDatePast->modify('-' . $tillDaysPast . ' day');
         }

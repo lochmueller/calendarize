@@ -34,7 +34,7 @@ class NextEventsDataProvider implements ListDataProviderInterface
                 $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
                 $standaloneView->setPartialRootPaths([
                     'EXT:calendarize/Resources/Private/Partials/',
-                    'EXT:calendarize_premium/Resources/Private/Partials/'
+                    'EXT:calendarize_premium/Resources/Private/Partials/',
                 ]);
 
                 $titlePartial = $index->getConfiguration()['partialIdentifier'] . '/Title';

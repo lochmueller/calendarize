@@ -145,6 +145,7 @@ class SlugService extends AbstractService
             $recordData['pid'],
             $recordData['uid'] ?? ''
         );
+
         /* @noinspection PhpUnhandledExceptionInspection */
         return $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)
             ->buildSlugForUniqueInTable($recordData['slug'], $state);

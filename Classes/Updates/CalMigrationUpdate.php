@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
-use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
-use HDNET\Calendarize\Service\IndexerService;
-use HDNET\Calendarize\Utility\HelperUtility;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -54,7 +51,7 @@ class CalMigrationUpdate extends AbstractUpdate implements LoggerAwareInterface
             return $table->getName();
         }, $dbSchema->getTables());
 
-        return in_array('tx_cal_event', $tableNames);
+        return \in_array('tx_cal_event', $tableNames);
     }
 
     /**

@@ -135,7 +135,7 @@ class CalendarController extends AbstractCompatibilityController
         int $week = 0
     ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions(), true)) {
+        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
         }
 
@@ -156,6 +156,7 @@ class CalendarController extends AbstractCompatibilityController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -175,7 +176,7 @@ class CalendarController extends AbstractCompatibilityController
         int $week = 0
     ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions(), true)) {
+        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
         }
 
@@ -196,6 +197,7 @@ class CalendarController extends AbstractCompatibilityController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -216,7 +218,7 @@ class CalendarController extends AbstractCompatibilityController
         int $week = 0
     ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
-        if (($index instanceof Index) && in_array('detail', $this->getAllowedActions(), true)) {
+        if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
         }
 
@@ -238,6 +240,7 @@ class CalendarController extends AbstractCompatibilityController
                 'week' => $week,
             ],
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -275,7 +278,7 @@ class CalendarController extends AbstractCompatibilityController
         $limitEvents = (int)($this->settings['shortcutLimitEvents'] ?? 1);
 
         $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, $limitEvents);
-        if (count($fetchEvent) <= 0) {
+        if (\count($fetchEvent) <= 0) {
             $fetchEvent = $this->indexRepository
                 ->findByEventTraversing($event, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING);
         }
@@ -284,6 +287,7 @@ class CalendarController extends AbstractCompatibilityController
             'pagination' => $this->getPagination($fetchEvent),
             'indices' => $fetchEvent,
         ]);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -311,6 +315,7 @@ class CalendarController extends AbstractCompatibilityController
             'indices' => $indices,
             'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -345,6 +350,7 @@ class CalendarController extends AbstractCompatibilityController
             'pagination' => $this->getPagination($indices),
             'date' => $date,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -381,6 +387,7 @@ class CalendarController extends AbstractCompatibilityController
             'date' => $date,
             'quarter' => $quarter,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -425,6 +432,7 @@ class CalendarController extends AbstractCompatibilityController
             'indices' => $indices,
             'pagination' => $this->getPagination($indices),
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -474,6 +482,7 @@ class CalendarController extends AbstractCompatibilityController
             'pagination' => $this->getPagination($indices),
             'weekConfiguration' => $weekConfiguration,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -522,6 +531,7 @@ class CalendarController extends AbstractCompatibilityController
             'previous' => $previous,
             'next' => $next,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -556,7 +566,7 @@ class CalendarController extends AbstractCompatibilityController
             ['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_'
                 . lcfirst($uniqueRegisterKey)
                 . '_'
-                . $originalObject->getUid(),]
+                . $originalObject->getUid(), ]
         );
 
         // Meta tags
@@ -591,6 +601,7 @@ class CalendarController extends AbstractCompatibilityController
             'index' => $index,
             'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'),
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -599,7 +610,7 @@ class CalendarController extends AbstractCompatibilityController
      *
      * @param ?\DateTime $startDate
      * @param ?\DateTime $endDate
-     * @param array $customSearch
+     * @param array      $customSearch
      *
      * @return ResponseInterface
      */
@@ -619,7 +630,7 @@ class CalendarController extends AbstractCompatibilityController
         }
         if (!($endDate instanceof \DateTimeInterface)) {
             $endDate = clone $startDate;
-            $modify = is_string($this->settings['searchEndModifier'])
+            $modify = \is_string($this->settings['searchEndModifier'])
                 ? $this->settings['searchEndModifier']
                 : '+30 days';
             $endDate->modify($modify);
@@ -632,6 +643,7 @@ class CalendarController extends AbstractCompatibilityController
             'customSearch' => $customSearch,
             'configurations' => $this->getCurrentConfigurations(),
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -670,12 +682,12 @@ class CalendarController extends AbstractCompatibilityController
 
             $result = $this->indexRepository->findByTraversing($dummyIndex);
             $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
-            if (is_object($index)) {
+            if (\is_object($index)) {
                 $indicies[] = $index;
             } else {
                 $result = $this->indexRepository->findByTraversing($dummyIndex, false, true);
                 $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
-                if (is_object($index)) {
+                if (\is_object($index)) {
                     $indicies[] = $index;
                 }
             }
@@ -685,6 +697,7 @@ class CalendarController extends AbstractCompatibilityController
             'indicies' => $indicies,
             'configurations' => $configurations,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -779,6 +792,7 @@ class CalendarController extends AbstractCompatibilityController
             $endDate = $tmp;
             unset($tmp);
         }
+
         return [$startDate, $endDate];
     }
 
@@ -830,7 +844,7 @@ class CalendarController extends AbstractCompatibilityController
             $allowedActions[$controllerName] = $controllerActions['actions'];
         }
 
-        return is_array($allowedActions[__CLASS__]) ? $allowedActions[__CLASS__] : [];
+        return \is_array($allowedActions[__CLASS__]) ? $allowedActions[__CLASS__] : [];
     }
 
     /**
@@ -841,7 +855,7 @@ class CalendarController extends AbstractCompatibilityController
         $configurations = GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '', true);
         $return = [];
         foreach (Register::getRegister() as $key => $configuration) {
-            if (in_array($key, $configurations, true)) {
+            if (\in_array($key, $configurations, true)) {
                 $return[] = $configuration;
             }
         }
@@ -852,6 +866,7 @@ class CalendarController extends AbstractCompatibilityController
     protected function getBaseUri(): string
     {
         $request = $GLOBALS['TYPO3_REQUEST'];
+
         return $request->getAttribute('normalizedParams')->getSiteUrl();
     }
 

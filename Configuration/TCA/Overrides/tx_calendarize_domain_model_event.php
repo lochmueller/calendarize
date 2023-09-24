@@ -28,5 +28,4 @@ if (!\HDNET\Calendarize\Utility\ConfigurationUtility::get('disableDefaultEvent')
             ],
         ],
     ];
-
 }

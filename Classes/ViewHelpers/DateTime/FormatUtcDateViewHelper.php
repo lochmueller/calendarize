@@ -17,7 +17,7 @@ class FormatUtcDateViewHelper extends AbstractViewHelper
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
-     * Needed as child node's output can return a DateTime object which can't be escaped
+     * Needed as child node's output can return a DateTime object which can't be escaped.
      *
      * @var bool
      */

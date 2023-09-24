@@ -83,12 +83,13 @@ class BackendController extends AbstractController
             'options' => $options,
             'paginator' => $paginator,
             'pagination' => $pagination,
-            'totalAmount' => count($indices),
+            'totalAmount' => \count($indices),
             'filterOptions' => [
                 'asc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':ascending') ?: 'ascending',
                 'desc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':descending') ?: 'descending',
             ],
         ]);
+
         return $view->renderResponse('Backend/List');
     }
 
@@ -191,7 +192,7 @@ class BackendController extends AbstractController
         // check if any mountpoint is in rootline
         $rootline = BackendUtility::BEgetRootLine($pageId);
         foreach ($rootline as $entry) {
-            if (in_array((int)$entry['uid'], $mountPoints)) {
+            if (\in_array((int)$entry['uid'], $mountPoints)) {
                 return true;
             }
         }

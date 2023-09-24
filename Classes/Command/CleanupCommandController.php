@@ -111,9 +111,9 @@ class CleanupCommandController extends Command
         // events uid, to be precise
         $events = $this->rawIndexRepository->findOutdatedEvents($tableName, $waitingPeriod);
 
-        $io->text('Found ' . count($events) . ' Events ready to process.');
+        $io->text('Found ' . \count($events) . ' Events ready to process.');
 
-        if (0 === count($events) || true === $input->getOption('dry-run')) {
+        if (0 === \count($events) || true === $input->getOption('dry-run')) {
             return self::SUCCESS;
         }
 

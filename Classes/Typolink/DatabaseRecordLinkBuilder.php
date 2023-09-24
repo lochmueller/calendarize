@@ -11,13 +11,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Typolink\DatabaseRecordLinkBuilder as BaseDatabaseRecordLinkBuilderAlias;
 use TYPO3\CMS\Frontend\Typolink\LinkResultInterface;
-use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
-
 
 /**
  * DatabaseRecordLinkBuilder.
@@ -32,9 +27,7 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
             $defaultPid = (int)($controller->tmpl
                 ->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
             if ($defaultPid <= 0) {
-                throw new \Exception(
-                    'You have to configure calendarize:defaultDetailPid to use the linkhandler function'
-                );
+                throw new \Exception('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
             }
 
             $indexUid = $this->getIndexForEventUid($linkDetails['identifier'], $eventId);
@@ -94,7 +87,7 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
         }
 
         $fetchEvent = $indexRepository->findByEventTraversing($event, true, false, 1)->toArray();
-        if (count($fetchEvent) <= 0) {
+        if (\count($fetchEvent) <= 0) {
             $fetchEvent = $indexRepository
                 ->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING)
                 ->toArray();
@@ -110,7 +103,7 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
     protected function getEventTables(): array
     {
         static $tables;
-        if (!is_array($tables)) {
+        if (!\is_array($tables)) {
             $tables = array_map(static function ($config) {
                 return $config['tableName'];
             }, Register::getRegister());

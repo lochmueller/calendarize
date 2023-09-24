@@ -31,8 +31,8 @@ return [
         'label_alt' => 'start_date',
         'label_alt_force' => true,
         'security' => [
-            'ignorePageTypeRestriction' => true
-        ]
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'columns' => [
         'fe_group' => [

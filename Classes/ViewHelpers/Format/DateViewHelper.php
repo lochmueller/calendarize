@@ -20,7 +20,7 @@ class DateViewHelper extends AbstractViewHelper
     use CompileWithContentArgumentAndRenderStatic;
 
     /**
-     * Needed as child node's output can return a DateTime object which can't be escaped
+     * Needed as child node's output can return a DateTime object which can't be escaped.
      *
      * @var bool
      */
@@ -62,7 +62,7 @@ class DateViewHelper extends AbstractViewHelper
         $format = $arguments['format'];
         $base = $arguments['base'] ?? GeneralUtility::makeInstance(Context::class)
             ->getPropertyFromAspect('date', 'timestamp');
-        if (is_string($base)) {
+        if (\is_string($base)) {
             $base = trim($base);
         }
 
@@ -75,7 +75,7 @@ class DateViewHelper extends AbstractViewHelper
             return '';
         }
 
-        if (is_string($date)) {
+        if (\is_string($date)) {
             $date = trim($date);
         }
 
@@ -92,10 +92,7 @@ class DateViewHelper extends AbstractViewHelper
                 $date = new \DateTime('@' . $dateTimestamp);
                 $date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
             } catch (\Exception $exception) {
-                throw new Exception(
-                    '"' . $date . '" could not be parsed by \DateTime constructor: ' . $exception->getMessage(),
-                    1241722579
-                );
+                throw new Exception('"' . $date . '" could not be parsed by \DateTime constructor: ' . $exception->getMessage(), 1241722579);
             }
         }
 

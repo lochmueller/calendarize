@@ -21,7 +21,7 @@ class BookingRequestValidator extends AbstractValidator
     {
         /** @var ConjunctionValidator $validator */
         $validator = GeneralUtility::makeInstance(ValidatorResolver::class)
-            ->getBaseValidatorConjunction(get_class($value));
+            ->getBaseValidatorConjunction($value::class);
         $result = $validator->validate($value);
         foreach ($result->getFlattenedErrors() as $property => $errors) {
             foreach ($errors as $error) {

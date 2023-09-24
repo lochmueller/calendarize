@@ -73,6 +73,6 @@ abstract class AbstractCompatibilityController extends AbstractController
         }
 
         header('HTTP/1.1 200 OK');
-        die();
+        exit();
     }
 }

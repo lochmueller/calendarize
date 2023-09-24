@@ -31,7 +31,7 @@ return [
             open_end_time,external_ics_url,groups,frequency,till_date,till_days,till_days_relative,till_days_past,
             counter_amount,counter_interval,recurrence,day,import_id',
         'sortby' => 'sorting',
-        'title' =>  $ll . 'tx_calendarize_domain_model_configuration',
+        'title' => $ll . 'tx_calendarize_domain_model_configuration',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'transOrigPointerField' => 'l10n_parent',
         'tstamp' => 'tstamp',
@@ -44,8 +44,8 @@ return [
         'typeicon_column' => 'type',
         'versioningWS' => 1,
         'security' => [
-            'ignorePageTypeRestriction' => true
-        ]
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'columns' => [
         'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
@@ -94,7 +94,7 @@ return [
             'l10n_display' => 'defaultAsReadonly',
         ],
         'type' => [
-            'label' => $ll. 'tx_calendarize_domain_model_configuration.type',
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.type',
             'exclude' => false,
             'config' => [
                 'type' => 'select',
@@ -571,7 +571,7 @@ return [
     ],
     'palettes' => [
         'base' => [
-            'label' =>  $ll . 'base_configuration',
+            'label' => $ll . 'base_configuration',
             'showitem' => 'type,handling,state',
         ],
         'date' => [

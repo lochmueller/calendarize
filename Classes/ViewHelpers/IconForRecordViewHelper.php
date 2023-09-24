@@ -15,7 +15,7 @@ class IconForRecordViewHelper extends AbstractViewHelper
     use CompileWithRenderStatic;
 
     /**
-     * ViewHelper returns HTML, thus we need to disable output escaping
+     * ViewHelper returns HTML, thus we need to disable output escaping.
      *
      * @var bool
      */
@@ -38,7 +38,7 @@ class IconForRecordViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         $arguments['row'] = BackendUtility::getRecordWSOL($arguments['table'], $arguments['uid']);
-        if (!is_array($arguments['row'])) {
+        if (!\is_array($arguments['row'])) {
             $arguments['row'] = [];
         }
 

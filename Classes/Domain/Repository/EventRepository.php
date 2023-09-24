@@ -73,7 +73,7 @@ class EventRepository extends AbstractRepository
         /** @var Event $event */
         $event = $this->findByUid($uid);
 
-        if (!is_object($event)) {
+        if (!\is_object($event)) {
             return null;
         }
 
@@ -96,7 +96,7 @@ class EventRepository extends AbstractRepository
             return null;
         }
 
-        /** @var Index $index */
+        /* @var Index $index */
         return $result->getFirst();
     }
 }

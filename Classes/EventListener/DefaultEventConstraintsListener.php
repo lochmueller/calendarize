@@ -14,7 +14,7 @@ class DefaultEventConstraintsListener
     {
         if (
             !empty($event->getIndexTypes())
-            && !in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)
+            && !\in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)
         ) {
             return;
         }
@@ -99,6 +99,7 @@ class DefaultEventConstraintsListener
     protected function getTableName(): string
     {
         $config = Register::getDefaultCalendarizeConfiguration();
+
         return (string)($config['tableName'] ?? '');
     }
 }

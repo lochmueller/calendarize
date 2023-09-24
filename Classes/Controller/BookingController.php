@@ -25,6 +25,7 @@ class BookingController extends AbstractCompatibilityController
         $this->eventExtendedAssignMultiple([
             'index' => $index,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 
@@ -40,6 +41,7 @@ class BookingController extends AbstractCompatibilityController
         $this->eventExtendedAssignMultiple([
             'request' => $request,
         ], __CLASS__, __FUNCTION__);
+
         return $this->htmlResponse($this->view->render());
     }
 }

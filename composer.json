@@ -33,6 +33,7 @@
 		}
 	],
 	"require": {
+		"php": "^8.0",
 		"ext-json": "*",
 		"ext-pdo": "*",
 		"typo3/cms-core": "^11.5|| ^12.4",

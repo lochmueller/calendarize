@@ -478,7 +478,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findByTimeSlot(
         ?\DateTimeInterface $startTime,
-        ?\DateTimeInterface $endTime = null
+        \DateTimeInterface $endTime = null
     ): array|QueryResultInterface {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -520,6 +520,7 @@ class IndexRepository extends AbstractRepository
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
         $frameworkConfig = $configurationManager
             ->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+
         return isset($frameworkConfig['persistence']['storagePid']) ?
             GeneralUtility::intExplode(',', $frameworkConfig['persistence']['storagePid']) :
             [];
@@ -564,8 +565,8 @@ class IndexRepository extends AbstractRepository
     protected function addTimeFrameConstraints(
         array &$constraints,
         QueryInterface $query,
-        ?\DateTimeInterface $startTime = null,
-        ?\DateTimeInterface $endTime = null
+        \DateTimeInterface $startTime = null,
+        \DateTimeInterface $endTime = null
     ): void {
         /** @var AddTimeFrameConstraintsEvent $event */
         $event = $this->eventDispatcher->dispatch(new AddTimeFrameConstraintsEvent(

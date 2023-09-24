@@ -22,7 +22,7 @@ class CalMigration
      */
     public function updateSysFileReference(): array
     {
-        $args = func_get_args();
+        $args = \func_get_args();
         list($calendarizeEventRecord, $event, $table, $recordId, $dbQueries) = $args;
 
         $queryBuilder = HelperUtility::getQueryBuilder('sys_file_reference');

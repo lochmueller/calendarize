@@ -113,10 +113,10 @@ class ImportCommandController extends Command
             GeneralUtility::unlink_tempfile($icalFile);
         }
 
-        $io->text('Found ' . count($events) . ' events in ' . $icsCalendarUri);
+        $io->text('Found ' . \count($events) . ' events in ' . $icsCalendarUri);
 
         $io->section('Send ImportSingleIcalEvent for each event');
-        $io->progressStart(count($events));
+        $io->progressStart(\count($events));
 
         $skipCount = $dispatchCount = 0;
         foreach ($events as $event) {

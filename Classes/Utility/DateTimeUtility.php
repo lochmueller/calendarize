@@ -98,6 +98,7 @@ class DateTimeUtility
     public static function getNormalizedDaySecondsOfDateTime(\DateTimeInterface $dateTime): int
     {
         $date = self::normalizeDateTimeSingle($dateTime);
+
         return self::getDaySecondsOfDateTime($date);
     }
 
@@ -117,9 +118,9 @@ class DateTimeUtility
      * Get a normalize date time object.
      */
     public static function normalizeDateTime(
-        int|null $day = null,
-        int|null $month = null,
-        int|null $year = null
+        int $day = null,
+        int $month = null,
+        int $year = null
     ): \DateTime {
         $date = self::getNow();
         // Check if this date should handle always in UTC
@@ -183,7 +184,7 @@ class DateTimeUtility
      * @throws \Exception
      */
     public static function normalizeDateTimeSingle(
-        int|string|\DateTimeInterface|null $dateInformation = null,
+        int|string|\DateTimeInterface $dateInformation = null,
         \DateTimeZone $timezone = null
     ): \DateTime {
         $timezone = $timezone ?? self::getTimeZone();

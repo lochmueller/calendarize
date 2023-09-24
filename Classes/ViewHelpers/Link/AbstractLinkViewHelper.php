@@ -46,7 +46,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
      * Render the link.
      */
     public function renderLink(
-        ?int $pageUid = null,
+        int $pageUid = null,
         array $additionalParams = [],
         bool $absolute = false,
         $section = ''
@@ -74,7 +74,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * Get the right page Uid.
      */
-    protected function getPageUid(int $pageUid, ?string $contextName = null): int
+    protected function getPageUid(int $pageUid, string $contextName = null): int
     {
         if (MathUtility::canBeInterpretedAsInteger($pageUid) && $pageUid > 0) {
             return $pageUid;

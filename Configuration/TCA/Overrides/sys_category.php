@@ -9,8 +9,8 @@ $temporaryColumns = [
         'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sys_category.import_id',
         'exclude' => true,
         'config' => [
-            'type' => 'input'
-        ]
-    ]
+            'type' => 'input',
+        ],
+    ],
 ];
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('sys_category', $temporaryColumns);

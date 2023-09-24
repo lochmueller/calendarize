@@ -37,7 +37,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
      * @param array                 $contentObjectConfiguration The configuration of Content Object
      * @param array                 $processorConfiguration     The configuration of this processor
      * @param array                 $processedData              Key/value store of processed data
-     * (e.g. to be passed to a Fluid View)
+     *                                                          (e.g. to be passed to a Fluid View)
      *
      * @return array the processed data as key/value store
      */
@@ -55,7 +55,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
             return $processedData;
         }
         $availableLanguages = $this->getAvailableLanguages($indexId);
-        if (in_array(-1, $availableLanguages)) {
+        if (\in_array(-1, $availableLanguages)) {
             // Skip check if languages = [ALL] is selected
             return $processedData;
         }
@@ -128,7 +128,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                 continue;
             }
             try {
-                $availability = in_array((int)$item['languageId'], $availableLanguages);
+                $availability = \in_array((int)$item['languageId'], $availableLanguages);
                 if (!$availability) {
                     $item['available'] = false;
                     $item['availableReason'] = 'calendarize';

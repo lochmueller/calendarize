@@ -42,11 +42,11 @@ class ProcessCmdmapClass
                 // do nothing with the event itself. The configuration is the last one, which is published
                 if ('tx_calendarize_domain_model_configuration' == $table) {
                     $parent = $this->findParentEventInThisTable($configuration['tableName'], (int)$uid);
-                    if (count($parent)) {
+                    if (\count($parent)) {
                         $parentConfigurations = GeneralUtility::trimExplode(',', $parent['calendarize']);
                         // we just re-index the last given configuration (this is just a workaround - but indexing
                         // of all leads to the behaviour, that only the first one is really indexed)
-                        if ($uid == $parentConfigurations[count($parentConfigurations) - 1]) {
+                        if ($uid == $parentConfigurations[\count($parentConfigurations) - 1]) {
                             $indexer->reindex($key, $configuration['tableName'], (int)$parent['uid']);
                         }
                     }

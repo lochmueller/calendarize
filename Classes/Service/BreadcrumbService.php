@@ -56,7 +56,6 @@ class BreadcrumbService extends AbstractService
         return $index->getOriginalObject();
     }
 
-
     protected function getIndex(int $uid): ?Index
     {
         return GeneralUtility::makeInstance(IndexRepository::class)->findByUid($uid);

@@ -39,7 +39,7 @@ class PluginConfigurationService
             ];
 
             foreach ($checkFields as $checkField) {
-                if (in_array(trim($settings[$checkField]), ['', '0'], true)) {
+                if (\in_array(trim($settings[$checkField]), ['', '0'], true)) {
                     $function = 'get' . ucfirst($checkField);
                     $settings[$checkField] = $settings['pluginConfiguration']->$function();
                 }
@@ -87,6 +87,7 @@ class PluginConfigurationService
         $query
             ->getQuerySettings()
             ->setRespectStoragePage(false);
+
         return $query
             ->matching($query->equals('uid', $uid))
             ->execute()

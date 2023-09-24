@@ -19,12 +19,12 @@ class TcaService extends AbstractService
     /**
      * Render the configuration title.
      */
-    public function configurationTitle(array &$params, ?object $_ = null): void
+    public function configurationTitle(array &$params, object $_ = null): void
     {
         $row = $params['row'];
         $this->migrateFormEngineRow($row);
 
-        $handling = is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
+        $handling = \is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
         $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type'])
             . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
         switch ($row['type']) {
@@ -96,7 +96,7 @@ class TcaService extends AbstractService
     {
         $migrateFields = ['type', 'frequency', 'groups'];
         foreach ($migrateFields as $field) {
-            $row[$field] = is_array($row[$field]) ? array_shift($row[$field]) : $row[$field];
+            $row[$field] = \is_array($row[$field]) ? array_shift($row[$field]) : $row[$field];
         }
     }
 

@@ -39,6 +39,6 @@ class InArrayViewHelper extends AbstractViewHelper
             return false;
         }
 
-        return in_array($arguments['needle'], $arguments['haystack'], $arguments['strict']);
+        return \in_array($arguments['needle'], $arguments['haystack'], $arguments['strict']);
     }
 }

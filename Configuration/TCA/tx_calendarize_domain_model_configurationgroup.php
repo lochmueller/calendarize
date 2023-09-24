@@ -21,7 +21,7 @@ return [
         'origUid' => 't3_origuid',
         'searchFields' => 'uid,title',
         'sortby' => 'sorting',
-        'title' =>  $ll . 'tx_calendarize_domain_model_configuration',
+        'title' => $ll . 'tx_calendarize_domain_model_configuration',
         'tstamp' => 'tstamp',
         'versioningWS' => 1,
     ],
@@ -105,8 +105,8 @@ return [
                 'minitems' => 1,
                 'maxitems' => 99,
                 'behaviour' => [
-                    'enableCascadingDelete' => true
-                ]
+                    'enableCascadingDelete' => true,
+                ],
             ],
         ],
         'calendarize_info' => [
