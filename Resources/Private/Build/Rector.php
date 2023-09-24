@@ -13,14 +13,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
     $parameters->set(Option::SETS, [
-        Typo3SetList::TYPO3_104,
         Typo3SetList::TYPO3_11,
+        #Typo3SetList::TYPO3_12,
     ]);
 
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
-    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_73);
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_80);
     $parameters->set(Typo3Option::OUTPUT_CHANGELOG, true);
 
     $parameters->set(Option::SKIP, [

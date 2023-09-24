@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Xclass;
 
 use HDNET\Calendarize\Service\IndexerService;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
 
@@ -17,7 +18,7 @@ class WorkspaceRemoteServer extends RemoteServer
      *
      * @return array $data
      */
-    public function getWorkspaceInfos($parameter)
+    public function getWorkspaceInfos($parameter, ServerRequestInterface $request)
     {
         // To avoid too much work we use -1 to indicate that every page is relevant
         $pageId = $parameter->id > 0 ? $parameter->id : -1;
