@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Days in month view helper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
@@ -14,12 +11,8 @@ class DaysInMonthViewHelper extends AbstractLoopViewHelper
 {
     /**
      * Get items.
-     *
-     * @param \DateTime $date
-     *
-     * @return array
      */
-    protected function getItems(\DateTime $date)
+    protected function getItems(\DateTime $date): array
     {
         $daysInMonth = $date->format('t');
         $days = [];

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Event utility.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
@@ -12,7 +9,6 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -59,8 +55,11 @@ class EventUtility
      *
      * @return DomainObjectInterface|null
      */
-    public static function getOriginalRecordByConfigurationInWorkspace(array $configuration, int $uid, int $workspaceId): ?DomainObjectInterface
-    {
+    public static function getOriginalRecordByConfigurationInWorkspace(
+        array $configuration,
+        int $uid,
+        int $workspaceId
+    ): ?DomainObjectInterface {
         $table = $configuration['tableName'];
         $modelName = $configuration['modelName'];
 
@@ -74,7 +73,7 @@ class EventUtility
                 $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT))
             );
 
-        $row = $queryBuilder->execute()->fetch();
+        $row = $queryBuilder->executeQuery()->fetchAssociative();
 
         if (false === $row) {
             return null;
@@ -88,13 +87,8 @@ class EventUtility
             $row['uid'] = !empty($row['_ORIG_uid']) ? $row['_ORIG_uid'] : $row['uid'];
         }
 
-        if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() > 10) {
-            $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
-        } else {
-            $dataMapper = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class)
-                ->get(DataMapper::class);
-        }
-
+        /** @var DataMapper $dataMapper */
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
         return $dataMapper->map($modelName, [$row])[0];
     }
 
@@ -106,13 +100,15 @@ class EventUtility
         }
 
         // Modern (TYPO3_REQUEST) Backend request
-        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
-            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
+        if (
+            ($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
+        ) {
             return true;
         }
 
         // Old backend request (e.g. install tool wizards)
-        if (\defined('TYPO3_MODE') && TYPO3_MODE === 'BE') {
+        if (defined('TYPO3') && TYPO3 == 'BE') {
             return true;
         }
 

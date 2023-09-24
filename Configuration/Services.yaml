@@ -50,20 +50,39 @@ services:
         identifier: 'defaultEventConstraints'
         event: HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent
 
+  HDNET\Calendarize\EventListener\PreviewRenderingEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'getExtensionSummary'
+        event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent
+
   HDNET\Calendarize\Command\CleanupCommandController:
     tags:
       - name: console.command
         command: 'calendarize:cleanup'
+        description: 'Remove outdated events to keep a small footprint'
         schedulable: true
 
   HDNET\Calendarize\Command\ImportCommandController:
     tags:
       - name: console.command
         command: 'calendarize:import'
+        description: 'Imports a iCalendar ICS into a page ID'
         schedulable: true
 
   HDNET\Calendarize\Command\ReindexCommandController:
     tags:
       - name: console.command
         command: 'calendarize:reindex'
+        description: 'Reindex all events'
         schedulable: true
+
+  HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest:
+    tags:
+      - name: extbase.type_converter
+        priority: 1
+        target: HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest
+        sources: array
+
+  HDNET\Calendarize\Service\PluginConfigurationService:
+    public: true

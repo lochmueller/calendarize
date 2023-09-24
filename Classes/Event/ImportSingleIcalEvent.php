@@ -9,44 +9,19 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 final class ImportSingleIcalEvent implements StoppableEventInterface
 {
-    /**
-     * @var ICalEvent
-     */
-    private $event;
+    private bool $stopped = false;
 
-    /**
-     * @var int
-     */
-    private $pid;
-
-    /**
-     * @var bool
-     */
-    private $stopped = false;
-
-    /**
-     * ImportSingleEvent constructor.
-     *
-     * @param ICalEvent $event
-     * @param int       $pid
-     */
-    public function __construct(ICalEvent $event, int $pid)
-    {
-        $this->event = $event;
-        $this->pid = $pid;
+    public function __construct(
+        private readonly ICalEvent $event,
+        private readonly int $pid
+    ) {
     }
 
-    /**
-     * @return ICalEvent
-     */
     public function getEvent(): ICalEvent
     {
         return $this->event;
     }
 
-    /**
-     * @return int
-     */
     public function getPid(): int
     {
         return $this->pid;

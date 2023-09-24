@@ -11,11 +11,8 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 class ManipulationTimeTable extends AbstractTimeTable implements TimeTableInterface
 {
-    protected FlexFormService $flexFormService;
-
-    public function __construct(FlexFormService $flexFormService)
+    public function __construct(protected FlexFormService $flexFormService)
     {
-        $this->flexFormService = $flexFormService;
     }
 
     private function loadFlexForm($flexFormString): array
@@ -49,7 +46,7 @@ class ManipulationTimeTable extends AbstractTimeTable implements TimeTableInterf
         return 'FILE:EXT:calendarize/Configuration/FlexForms/TimeTable/Manipulation.xml';
     }
 
-    public function handleConfiguration(array &$times, Configuration $configuration)
+    public function handleConfiguration(array &$times, Configuration $configuration): void
     {
         $settings = $this->flexFormService->convertFlexFormContentToArray($configuration->getFlexForm());
         if (MathUtility::canBeInterpretedAsInteger($settings['settings']['fixedStartTime'] ?? null)) {

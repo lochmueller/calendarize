@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the quarter.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -14,12 +11,12 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
  */
 class QuarterViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'quarter';
+    protected string $actionName = 'quarter';
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('date', \DateTimeInterface::class, '', true);
@@ -35,7 +32,7 @@ class QuarterViewHelper extends AbstractActionViewHelper
         $date = $this->arguments['date'];
         $pluginArgs = [
             'year' => $date->format('Y'),
-            'quarter' => DateTimeUtility::getQuartar($date),
+            'quarter' => DateTimeUtility::getQuarter($date),
         ];
 
         return $this->renderExtbaseLink($pluginArgs);

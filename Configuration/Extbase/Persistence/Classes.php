@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
-use HDNET\Autoloader\Utility\ExtbasePersistenceUtility;
-
-return ExtbasePersistenceUtility::getClassMappingForExtension('calendarize');
+return [
+    \HDNET\Calendarize\Domain\Model\SysCategory::class => [
+        'tableName' => 'sys_category',
+    ],
+    \HDNET\Calendarize\Domain\Model\SysFileReference::class => [
+        'tableName' => 'sys_file_reference',
+    ],
+];

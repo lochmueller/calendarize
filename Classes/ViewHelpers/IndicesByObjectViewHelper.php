@@ -17,22 +17,20 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  *
  * <code title="Get all events of a custom model">
  * {namespace c=HDNET\Calendarize\ViewHelpers}
- * <f:for each="{c:indicesByObject(object:'{yourObject}', future: 1, past: 0, limit: 10, sort: 'ASC')}" as="futureEvent">
+ * <f:for each="{c:indicesByObject(object:'{yourObject}', future: 1, past: 0, limit: 10, sort: 'ASC')}"
+ *   as="futureEvent">
  *  <f:debug>{futureEvent}</f:debug>
  * </f:for>
  * </code>
  */
 class IndicesByObjectViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var IndexRepository
-     */
-    protected $indexRepository;
+    protected IndexRepository $indexRepository;
 
     /**
      * @param IndexRepository $indexRepository
      */
-    public function injectIndexRepository(IndexRepository $indexRepository)
+    public function injectIndexRepository(IndexRepository $indexRepository): void
     {
         $this->indexRepository = $indexRepository;
     }
@@ -40,7 +38,7 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('object', AbstractEntity::class, '', true);
@@ -52,10 +50,8 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
 
     /**
      * Render method.
-     *
-     * @return array
      */
-    public function render()
+    public function render(): array
     {
         /** @var AbstractEntity $object */
         $object = $this->arguments['object'];

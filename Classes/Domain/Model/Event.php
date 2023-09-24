@@ -4,144 +4,71 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Annotation\EnableRichText;
 use HDNET\Calendarize\Features\FeedInterface;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Event (Default) for the calendarize function.
- *
- * @DatabaseTable
  */
 class Event extends AbstractModel implements FeedInterface, SpeakingUrlInterface, KeSearchIndexInterface
 {
     use ImportTrait;
-    /**
-     * Title.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $title = '';
 
-    /**
-     * Slug.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $slug = '';
+    protected string $title = '';
 
-    /**
-     * Abstract / Teaser.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $abstract = '';
+    protected string $slug = '';
 
-    /**
-     * Description.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     *
-     * @EnableRichText
-     */
-    protected $description = '';
+    protected string $abstract = '';
 
-    /**
-     * Location.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $location = '';
+    protected string $description = '';
 
-    /**
-     * Location link.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $locationLink = '';
+    protected string $location = '';
 
-    /**
-     * Organizer.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $organizer = '';
+    protected string $locationLink = '';
 
-    /**
-     * Organizer link.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $organizerLink = '';
+    protected string $organizer = '';
+
+    protected string $organizerLink = '';
 
     /**
      * Images.
      *
      * @var ObjectStorage<FileReference>
-     *
-     * @DatabaseField("\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>")
-     *
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
-    protected $images;
+    #[Extbase\ORM\Lazy]
+    protected ObjectStorage $images;
 
     /**
      * Downloads.
      *
      * @var ObjectStorage<FileReference>
-     *
-     * @DatabaseField("\TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>")
-     *
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
-    protected $downloads;
+    #[Extbase\ORM\Lazy]
+    protected ObjectStorage $downloads;
 
     /**
      * Relation field. It is just used by the importer of the default events.
      * You do not need this field, if you don't use the default Event.
      *
      * @var ObjectStorage<Configuration>
-     *
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $calendarize;
+    #[Extbase\ORM\Cascade(['value' => 'remove'])]
+    protected ObjectStorage $calendarize;
 
     /**
      * Categories.
      *
      * @var ObjectStorage<Category>
      */
-    protected $categories;
+    protected ObjectStorage $categories;
 
-    /**
-     * Hidden.
-     *
-     * @var bool
-     */
-    protected $hidden = false;
+    protected bool $hidden = false;
 
     /**
      * Build up the object.

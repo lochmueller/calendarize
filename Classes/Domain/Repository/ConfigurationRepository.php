@@ -1,11 +1,10 @@
 <?php
 
-/**
- * Configuration repository.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Repository;
+
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
  * Configuration repository.
@@ -14,12 +13,9 @@ class ConfigurationRepository extends AbstractRepository
 {
     /**
      * Find by Index UIDs.
-     *
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByUids(
-        array $uids
-    ) {
+    public function findByUids(array $uids): array|QueryResultInterface
+    {
         $query = $this->createQuery();
 
         return $this->matchAndExecute($query, [

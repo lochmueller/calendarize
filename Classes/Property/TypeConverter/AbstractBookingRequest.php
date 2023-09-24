@@ -1,13 +1,11 @@
 <?php
 
-/**
- * AbstractBookingRequest.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Property\TypeConverter;
 
 use HDNET\Calendarize\Domain\Model\Request\DefaultBookingRequest;
+use HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest as BaseAbstractBookingRequest;
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
@@ -30,7 +28,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
      *
      * @var string
      */
-    protected $targetType = \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest::class;
+    protected $targetType = BaseAbstractBookingRequest::class;
 
     /**
      * Priority.
@@ -41,17 +39,13 @@ class AbstractBookingRequest extends AbstractTypeConverter
 
     /**
      * Current configurations.
-     *
-     * @var array
      */
-    protected static $configurations = [];
+    protected static array $configurations = [];
 
     /**
      * Set configurations.
-     *
-     * @param array $configurations
      */
-    public static function setConfigurations($configurations)
+    public static function setConfigurations(array $configurations): void
     {
         self::$configurations = $configurations;
     }
@@ -63,26 +57,19 @@ class AbstractBookingRequest extends AbstractTypeConverter
      * The return value can be one of three types:
      * - an arbitrary object, or a simple type (which has been created while mapping).
      *   This is the normal case.
-     * - NULL, indicating that this object should *not* be mapped (i.e. a "File Upload" Converter could return NULL if no file has been uploaded, and a silent failure should occur.
+     * - NULL, indicating that this object should *not* be mapped (i.e. a "File Upload"
+     *   Converter could return NULL if no file has been uploaded, and a silent failure should occur.
      * - An instance of \TYPO3\CMS\Extbase\Error\Error -- This will be a user-visible error message later on.
-     * Furthermore, it should throw an Exception if an unexpected failure (like a security error) occurred or a configuration issue happened.
-     *
-     * @param mixed                                 $source
-     * @param string                                $targetType
-     * @param array                                 $convertedChildProperties
-     * @param PropertyMappingConfigurationInterface $configuration
-     *
-     * @return mixed|\TYPO3\CMS\Extbase\Error\Error the target type, or an error object if a user-error occurred
-     *
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\TypeConverterException thrown in case a developer error occurred
+     *   Furthermore, it should throw an Exception if an unexpected failure (like a security error) occurred
+     *   or a configuration issue happened.
      *
      * @api
      */
     public function convertFrom(
         $source,
-        $targetType,
+        string $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ) {
         $bookingRequest = $this->getBookingRequestModel();
         foreach ($source as $key => $value) {
@@ -92,18 +79,16 @@ class AbstractBookingRequest extends AbstractTypeConverter
         return $bookingRequest;
     }
 
-    /**
-     * Get the right request model.
-     *
-     * @return \HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest
-     */
-    protected function getBookingRequestModel()
+    protected function getBookingRequestModel(): BaseAbstractBookingRequest
     {
         $register = Register::getRegister();
         foreach (self::$configurations as $configurationKey) {
             foreach ($register as $key => $configuration) {
                 if ($key === $configurationKey) {
-                    if (isset($configuration['overrideBookingRequestModel']) && class_exists($configuration['overrideBookingRequestModel'])) {
+                    if (
+                        isset($configuration['overrideBookingRequestModel'])
+                        && class_exists($configuration['overrideBookingRequestModel'])
+                    ) {
                         $class = $configuration['overrideBookingRequestModel'];
 
                         return new $class();

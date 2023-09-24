@@ -1,14 +1,9 @@
 <?php
 
-/**
- * Index information.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
 use HDNET\Calendarize\Exception\InvalidConfigurationException;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
@@ -24,125 +19,56 @@ class Index extends AbstractModel
 {
     /**
      * The unique register key of the used table/model configuration.
-     *
-     * @var string
-     *
-     * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
      */
-    protected $uniqueRegisterKey = '';
+    protected string $uniqueRegisterKey = '';
+
+    protected string $foreignTable = '';
 
     /**
-     * TableName.
-     *
-     * @var string
-     *
-     * @DatabaseField(sql="varchar(150) DEFAULT '' NOT NULL")
+     * The uid of the foreign element.
      */
-    protected $foreignTable = '';
+    protected int $foreignUid = 0;
 
-    /**
-     * The Id of the foreign element.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $foreignUid = 0;
+    protected ?\DateTime $startDate = null;
 
-    /**
-     * Start date.
-     *
-     * @var \DateTime|null
-     *
-     * @DatabaseField(sql="date default NULL")
-     */
-    protected $startDate;
+    protected ?\DateTime $endDate = null;
 
-    /**
-     * End date.
-     *
-     * @var \DateTime|null
-     *
-     * @DatabaseField(sql="date default NULL")
-     */
-    protected $endDate;
+    protected int $startTime = 0;
 
-    /**
-     * Start time.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $startTime = 0;
+    protected int $endTime = 0;
 
-    /**
-     * End time.
-     *
-     * @var int
-     *
-     * @DatabaseField("int")
-     */
-    protected $endTime = 0;
+    protected bool $allDay = false;
 
-    /**
-     * AllDay.
-     *
-     * @var bool
-     *
-     * @DatabaseField("bool")
-     */
-    protected $allDay = false;
+    protected bool $openEndTime = false;
 
-    /**
-     * OpenEndTime.
-     *
-     * @var bool
-     *
-     * @DatabaseField("bool")
-     */
-    protected $openEndTime = false;
-
-    /**
-     * State.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $state = '';
+    protected string $state = '';
 
     /**
      * The original object.
-     *
-     * @var AbstractEntity
      */
-    protected $originalObject;
+    protected ?AbstractEntity $originalObject = null;
 
-    /**
-     * Slug.
-     *
-     * @var string
-     *
-     * @DatabaseField("string")
-     */
-    protected $slug = '';
+    protected string $slug = '';
 
     /**
      * Get the original record for the current index.
      *
-     * @return AbstractEntity
-     *
      * @throws InvalidConfigurationException
      */
-    public function getOriginalObject()
+    public function getOriginalObject(): ?AbstractEntity
     {
         if (null === $this->originalObject) {
             $configuration = $this->getConfiguration();
             if (empty($configuration)) {
-                throw new InvalidConfigurationException('No valid configuration for the current index: ' . $this->getUniqueRegisterKey(), 123678123);
+                throw new InvalidConfigurationException(
+                    'No valid configuration for the current index: ' . $this->getUniqueRegisterKey(),
+                    123678123
+                );
             }
-            $this->originalObject = EventUtility::getOriginalRecordByConfiguration($configuration, (int)$this->getForeignUid());
+            $this->originalObject = EventUtility::getOriginalRecordByConfiguration(
+                $configuration,
+                $this->getForeignUid()
+            );
         }
 
         return $this->originalObject;
@@ -150,8 +76,6 @@ class Index extends AbstractModel
 
     /**
      * Get the current configuration.
-     *
-     * @return array
      */
     public function getConfiguration(): array
     {
@@ -166,8 +90,6 @@ class Index extends AbstractModel
 
     /**
      * Get the complete start date.
-     *
-     * @return \DateTime|null
      */
     public function getStartDateComplete(): ?\DateTime
     {
@@ -181,8 +103,6 @@ class Index extends AbstractModel
 
     /**
      * Get the complete end date.
-     *
-     * @return \DateTime|null
      */
     public function getEndDateComplete(): ?\DateTime
     {
@@ -199,18 +119,14 @@ class Index extends AbstractModel
 
     /**
      * Set foreign uid.
-     *
-     * @param int $foreignUid
      */
-    public function setForeignUid(int $foreignUid)
+    public function setForeignUid(int $foreignUid): void
     {
         $this->foreignUid = $foreignUid;
     }
 
     /**
      * Get foreign uid.
-     *
-     * @return int
      */
     public function getForeignUid(): int
     {
@@ -219,18 +135,14 @@ class Index extends AbstractModel
 
     /**
      * Set unique register key.
-     *
-     * @param string $uniqueRegisterKey
      */
-    public function setUniqueRegisterKey(string $uniqueRegisterKey)
+    public function setUniqueRegisterKey(string $uniqueRegisterKey): void
     {
         $this->uniqueRegisterKey = $uniqueRegisterKey;
     }
 
     /**
      * Get unique register key.
-     *
-     * @return string
      */
     public function getUniqueRegisterKey(): string
     {
@@ -239,18 +151,14 @@ class Index extends AbstractModel
 
     /**
      * Set foreign table.
-     *
-     * @param string $foreignTable
      */
-    public function setForeignTable(string $foreignTable)
+    public function setForeignTable(string $foreignTable): void
     {
         $this->foreignTable = $foreignTable;
     }
 
     /**
      * Get foreign table.
-     *
-     * @return string
      */
     public function getForeignTable(): string
     {
@@ -259,58 +167,46 @@ class Index extends AbstractModel
 
     /**
      * Set all day.
-     *
-     * @param bool $allDay
      */
-    public function setAllDay(bool $allDay)
+    public function setAllDay(bool $allDay): void
     {
         $this->allDay = $allDay;
     }
 
     /**
      * Is all day.
-     *
-     * @return bool
      */
     public function isAllDay(): bool
     {
-        return (bool)$this->allDay;
+        return $this->allDay;
     }
 
     /**
      * Set end date.
-     *
-     * @param \DateTime|null $endDate
      */
     public function setEndDate(?\DateTime $endDate): void
     {
-        $this->endDate = DateTimeUtility::fixDateTimeForDb($endDate);
+        $this->endDate = $endDate;
     }
 
     /**
      * Get end date.
-     *
-     * @return \DateTime|null
      */
     public function getEndDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->endDate);
+        return $this->endDate;
     }
 
     /**
      * Set end time.
-     *
-     * @param int $endTime
      */
-    public function setEndTime(int $endTime)
+    public function setEndTime(int $endTime): void
     {
         $this->endTime = $endTime;
     }
 
     /**
      * Get end time.
-     *
-     * @return int
      */
     public function getEndTime(): int
     {
@@ -319,38 +215,30 @@ class Index extends AbstractModel
 
     /**
      * Set start date.
-     *
-     * @param \DateTime|null $startDate
      */
     public function setStartDate(?\DateTime $startDate): void
     {
-        $this->startDate = DateTimeUtility::fixDateTimeForDb($startDate);
+        $this->startDate = $startDate;
     }
 
     /**
      * Get start date.
-     *
-     * @return \DateTime|null
      */
     public function getStartDate(): ?\DateTime
     {
-        return DateTimeUtility::fixDateTimeForExtbase($this->startDate);
+        return $this->startDate;
     }
 
     /**
      * Set start time.
-     *
-     * @param int $startTime
      */
-    public function setStartTime(int $startTime)
+    public function setStartTime(int $startTime): void
     {
         $this->startTime = $startTime;
     }
 
     /**
      * Get start time.
-     *
-     * @return int
      */
     public function getStartTime(): int
     {
@@ -359,8 +247,6 @@ class Index extends AbstractModel
 
     /**
      * Get state.
-     *
-     * @return string
      */
     public function getState(): string
     {
@@ -369,51 +255,35 @@ class Index extends AbstractModel
 
     /**
      * Set state.
-     *
-     * @param string $state
      */
-    public function setState(string $state)
+    public function setState(string $state): void
     {
         $this->state = $state;
     }
 
     /**
      * Get sys language uid.
-     *
-     * @return int
      */
     public function getSysLanguageUid(): int
     {
         return (int)$this->_languageUid;
     }
 
-    /**
-     * @return bool
-     */
     public function isOpenEndTime(): bool
     {
         return $this->openEndTime;
     }
 
-    /**
-     * @param bool $openEndTime
-     */
-    public function setOpenEndTime(bool $openEndTime)
+    public function setOpenEndTime(bool $openEndTime): void
     {
         $this->openEndTime = $openEndTime;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string|null $slug
-     */
     public function setSlug(?string $slug): void
     {
         $this->slug = $slug;

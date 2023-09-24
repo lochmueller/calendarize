@@ -1,8 +1,5 @@
 <?php
 
-/**
- * IfExtensionLoadedViewHelper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
@@ -18,7 +15,7 @@ class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('extensionKey', 'string', 'The extension key of the extension', true);

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the booking page.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -14,13 +11,14 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class BookingViewHelper extends AbstractActionViewHelper
 {
-    protected $controllerName = 'Booking';
-    protected $actionName = 'booking';
+    protected string $controllerName = 'Booking';
+
+    protected string $actionName = 'booking';
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('index', Index::class, '', true);
@@ -37,6 +35,9 @@ class BookingViewHelper extends AbstractActionViewHelper
             'index' => $this->arguments['index']->getUid(),
         ];
 
-        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid($this->arguments['pageUid'], 'bookingPid'));
+        return $this->renderExtbaseLink(
+            $pluginArgs,
+            $this->getPageUid((int)$this->arguments['pageUid'], 'bookingPid')
+        );
     }
 }

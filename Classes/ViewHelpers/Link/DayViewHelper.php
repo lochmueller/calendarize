@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Link to the day.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
@@ -12,12 +9,12 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class DayViewHelper extends AbstractActionViewHelper
 {
-    protected $actionName = 'day';
+    protected string $actionName = 'day';
 
     /**
      * Init arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('date', \DateTimeInterface::class, '', true);

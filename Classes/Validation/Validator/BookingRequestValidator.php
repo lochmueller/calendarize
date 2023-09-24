@@ -1,8 +1,5 @@
 <?php
 
-/**
- * BookingRequestValidator.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Validation\Validator;
@@ -18,20 +15,18 @@ use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 class BookingRequestValidator extends AbstractValidator
 {
     /**
-     * Check if $value is valid. If it is not valid, needs to add an error
-     * to result.
-     *
-     * @param mixed $value
+     * Check if $value is valid. If it is not valid, needs to add an error to result.
      */
-    protected function isValid($value)
+    protected function isValid(mixed $value): void
     {
         /** @var ConjunctionValidator $validator */
-        $validator = GeneralUtility::makeInstance(ValidatorResolver::class)->getBaseValidatorConjunction(\get_class($value));
-        /** @var \TYPO3\CMS\Extbase\Error\Result $result */
+        $validator = GeneralUtility::makeInstance(ValidatorResolver::class)
+            ->getBaseValidatorConjunction(get_class($value));
         $result = $validator->validate($value);
         foreach ($result->getFlattenedErrors() as $property => $errors) {
             foreach ($errors as $error) {
-                $this->result->forProperty($property)
+                $this->result
+                    ->forProperty($property)
                     ->addError($error);
             }
         }

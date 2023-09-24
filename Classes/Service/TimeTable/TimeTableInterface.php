@@ -18,5 +18,5 @@ interface TimeTableInterface
 
     public function getFlexForm(): string;
 
-    public function handleConfiguration(array &$times, Configuration $configuration);
+    public function handleConfiguration(array &$times, Configuration $configuration): void;
 }

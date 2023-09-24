@@ -1,16 +1,15 @@
 <?php
 
-/**
- * Uri to the booking.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Uri;
 
+use HDNET\Calendarize\ViewHelpers\Link\BookingViewHelper as BaseBookingViewHelper;
+
 /**
  * Uri to the booking.
  */
-class BookingViewHelper extends \HDNET\Calendarize\ViewHelpers\Link\BookingViewHelper
+class BookingViewHelper extends BaseBookingViewHelper
 {
     /**
      * Render the uri to the given booking.

@@ -16,10 +16,8 @@ class CalendarizeFieldListener
 
     /**
      * Get the calendarize string for the registered tables.
-     *
-     * @return string
      */
-    protected function getCalendarizeDatabaseString()
+    protected function getCalendarizeDatabaseString(): string
     {
         $sql = [];
         foreach (Register::getRegister() as $configuration) {

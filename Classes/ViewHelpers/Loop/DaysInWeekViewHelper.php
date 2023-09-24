@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Days in week view helper.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Loop;
@@ -18,7 +15,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
      *
      * @api
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('weekStartsAt', 'int', 'Number between 1 and 7', true, 1);
@@ -32,7 +29,7 @@ class DaysInWeekViewHelper extends AbstractLoopViewHelper
      *
      * @return array
      */
-    protected function getItems(\DateTime $date, \DateTime $originalDate = null)
+    protected function getItems(\DateTime $date, \DateTime $originalDate = null): array
     {
         if (null === $originalDate) {
             $originalDate = clone $date;

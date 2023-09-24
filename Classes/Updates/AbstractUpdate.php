@@ -8,20 +8,11 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 abstract class AbstractUpdate implements ChattyInterface, UpgradeWizardInterface
 {
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $description = '';
 
-    /**
-     * @var string
-     */
-    protected $title = '';
+    protected string $title = '';
 
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
+    protected OutputInterface $output;
 
     public function setOutput(OutputInterface $output): void
     {

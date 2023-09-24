@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Cleanup the event models.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Command;
 
-use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Event\CleanupEvent;
@@ -30,79 +26,24 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class CleanupCommandController extends Command
 {
-    public const MODUS_HIDDEN = 'hide';
-    public const MODUS_DELETED = 'delete';
+    public const MODE_HIDDEN = 'hide';
+    public const MODE_DELETED = 'delete';
     public const DEFAULT_WAIT_PERIOD = 14;
-    public const DEFAULT_CLEANUP_REPOSITORY = \HDNET\Calendarize\Domain\Repository\EventRepository::class;
+    public const DEFAULT_CLEANUP_REPOSITORY = EventRepository::class;
 
-    /**
-     * @var PersistenceManager
-     */
-    protected $persistenceManager;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var RawIndexRepository
-     */
-    protected $rawIndexRepository;
-
-    /**
-     * @var DataMapper
-     */
-    protected $dataMapper;
-
-    /**
-     * @var IndexerService
-     */
-    protected $indexerService;
-
-    /**
-     * @param PersistenceManager $persistenceManager
-     */
-    public function injectPersistenceManager(PersistenceManager $persistenceManager): void
-    {
-        $this->persistenceManager = $persistenceManager;
-    }
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @param DataMapper $dataMapper
-     */
-    public function injectDataMapper(DataMapper $dataMapper): void
-    {
-        $this->dataMapper = $dataMapper;
-    }
-
-    /**
-     * @param RawIndexRepository $rawIndexRepository
-     */
-    public function injectRawIndexRepository(RawIndexRepository $rawIndexRepository): void
-    {
-        $this->rawIndexRepository = $rawIndexRepository;
-    }
-
-    /**
-     * @param IndexerService $indexerService
-     */
-    public function injectIndexerService(IndexerService $indexerService): void
-    {
-        $this->indexerService = $indexerService;
+    public function __construct(
+        protected PersistenceManager $persistenceManager,
+        protected EventDispatcherInterface $eventDispatcher,
+        protected RawIndexRepository $rawIndexRepository,
+        protected IndexerService $indexerService,
+        protected DataMapper $dataMapper
+    ) {
+        parent::__construct();
     }
 
     protected function configure()
     {
-        $this->setDescription('Remove outdated events to keep a small footprint')
+        $this
             ->addOption(
                 'repositoryName',
                 'r',
@@ -115,7 +56,7 @@ class CleanupCommandController extends Command
                 'm',
                 InputOption::VALUE_REQUIRED,
                 'What to do with cleaned Events? Set them \'hide\' or \'delete\'',
-                self::MODUS_HIDDEN
+                self::MODE_HIDDEN
             )
             ->addOption(
                 'waitingPeriod',
@@ -134,19 +75,14 @@ class CleanupCommandController extends Command
     /**
      * Cleanup the event models.
      * Remove outdated events to keep a small footprint. This gain maybe a little more performance.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Cleanup outdated events');
 
         $repositoryName = $input->getOption('repositoryName');
-        $modus = $input->getOption('modus');
+        $mode = $input->getOption('modus');
         $waitingPeriod = (int)$input->getOption('waitingPeriod');
 
         /** @var Repository $repository */
@@ -163,32 +99,30 @@ class CleanupCommandController extends Command
 
         $io->text('Tablename ' . $tableName);
 
-        if (self::MODUS_HIDDEN === $modus
+        if (
+            self::MODE_HIDDEN === $mode
             && !isset($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']['disabled'])
         ) {
             $io->error('Cannot hide events due to missing hidden/disabled field.');
 
-            return 3;
+            return self::FAILURE;
         }
 
         // events uid, to be precise
         $events = $this->rawIndexRepository->findOutdatedEvents($tableName, $waitingPeriod);
 
-        $io->text('Found ' . \count($events) . ' Events ready to process.');
+        $io->text('Found ' . count($events) . ' Events ready to process.');
 
-        if (0 === \count($events) || true === $input->getOption('dry-run')) {
-            return 0;
+        if (0 === count($events) || true === $input->getOption('dry-run')) {
+            return self::SUCCESS;
         }
 
         $io->section('Cleanup outdated events now');
         // climb through the events and hide/delete them
         foreach ($events as $event) {
-            $uid = (int)$event['foreign_uid'];
-
             /** @var AbstractEntity $model */
-            $model = $repository->findByUid($uid);
-
-            $this->processEvent($repository, $model, $modus);
+            $model = $repository->findByUid((int)$event['foreign_uid']);
+            $this->processEvent($repository, $model, $mode);
         }
         $io->text('Events processed.');
 
@@ -198,36 +132,32 @@ class CleanupCommandController extends Command
         // after all this deleting ... reindex!
         $this->indexerService->reindexAll();
 
-        return 0;
+        return self::SUCCESS;
     }
 
     /**
      * Process the found Event and delete or hide it.
-     *
-     * @param EventRepository $repository
-     * @param Event           $model
-     * @param string          $modus
      */
-    protected function processEvent(Repository $repository, AbstractEntity $model, string $modus)
+    protected function processEvent(Repository $repository, AbstractEntity $model, string $mode): void
     {
-        // define the function for the delete-modus.
+        // define the function for the delete-mode.
         $delete = static function ($repository, $model) {
             $repository->remove($model);
         };
 
-        // define the function for the hide-modus.
+        // define the function for the hide-mode.
         $hide = static function ($repository, $model) {
             $model->setHidden(true);
             $repository->update($model);
         };
 
-        if (self::MODUS_DELETED === $modus) {
+        if (self::MODE_DELETED === $mode) {
             $function = $delete;
         } else {
             $function = $hide;
         }
 
-        $event = new CleanupEvent($modus, $repository, $model, $function);
+        $event = new CleanupEvent($mode, $repository, $model, $function);
         $this->eventDispatcher->dispatch($event);
 
         $myFunction = $event->getFunction();

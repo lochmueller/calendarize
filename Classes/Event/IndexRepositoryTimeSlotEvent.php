@@ -6,20 +6,10 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 final class IndexRepositoryTimeSlotEvent
 {
-    /**
-     * @var array
-     */
-    private $constraints;
-
-    /**
-     * @var QueryInterface
-     */
-    private $query;
-
-    public function __construct(array $constraints, QueryInterface $query)
-    {
-        $this->constraints = $constraints;
-        $this->query = $query;
+    public function __construct(
+        private array $constraints,
+        private readonly QueryInterface $query
+    ) {
     }
 
     public function getConstraints(): array

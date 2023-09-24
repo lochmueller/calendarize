@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Hook for cmd map processing.
- */
 declare(strict_types=1);
 
 namespace HDNET\Calendarize\Hooks;
 
-use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -19,24 +15,24 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Hook for cmd map processing.
- *
- * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tcemain.php|processCmdmapClass")
  */
-class ProcessCmdmapClass extends AbstractHook
+class ProcessCmdmapClass
 {
     /**
      * Handle CMD.
-     *
-     * @param string      $command
-     * @param string      $table
-     * @param int         $uid
-     * @param mixed       $value
-     * @param DataHandler $handler
-     * @param mixed       $pasteUpdate
-     * @param mixed       $pasteDatamap
      */
-    public function processCmdmap_postProcess($command, $table, $uid, $value, $handler, $pasteUpdate, $pasteDatamap)
-    {
+    public function processCmdmap_postProcess(
+        int|string $command,
+        string $table,
+        int|string $uid,
+        mixed $value,
+        DataHandler $handler,
+        false|array $pasteUpdate,
+        array $pasteDatamap
+    ): void {
+        /** @var IndexerService $indexer */
+        $indexer = GeneralUtility::makeInstance(IndexerService::class);
+        /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
         $workspaceId = $context->getPropertyFromAspect('workspace', 'id');
 
@@ -46,12 +42,11 @@ class ProcessCmdmapClass extends AbstractHook
                 // do nothing with the event itself. The configuration is the last one, which is published
                 if ('tx_calendarize_domain_model_configuration' == $table) {
                     $parent = $this->findParentEventInThisTable($configuration['tableName'], (int)$uid);
-                    if (\is_array($parent)) {
+                    if (count($parent)) {
                         $parentConfigurations = GeneralUtility::trimExplode(',', $parent['calendarize']);
-                        // we just re-index the last given configuration (this is just a workaround - but indexing of all leads
-                        // to the behaviour, that only the first one is really indexed)
-                        if ($uid == $parentConfigurations[\count($parentConfigurations) - 1]) {
-                            $indexer = GeneralUtility::makeInstance(IndexerService::class);
+                        // we just re-index the last given configuration (this is just a workaround - but indexing
+                        // of all leads to the behaviour, that only the first one is really indexed)
+                        if ($uid == $parentConfigurations[count($parentConfigurations) - 1]) {
                             $indexer->reindex($key, $configuration['tableName'], (int)$parent['uid']);
                         }
                     }
@@ -65,31 +60,43 @@ class ProcessCmdmapClass extends AbstractHook
                     }
                 }
 
-                $indexer = GeneralUtility::makeInstance(IndexerService::class);
                 $indexer->reindex($key, $table, (int)$uid);
             }
         }
     }
 
-    protected function findParentEventInThisTable($table, $uid)
+    protected function findParentEventInThisTable(string $table, int $uid): array
     {
-        // there is no calendarize field and we will not find our parent there
+        // there is no calendarize field, and we will not find our parent there
         if ('tx_calendarize_domain_model_configurationgroup' == $table) {
-            return false;
+            return [];
         }
 
         /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table)->createQueryBuilder();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable($table);
 
-        return $queryBuilder->select('uid', 'calendarize')
+        return $queryBuilder
+            ->select('uid', 'calendarize')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq('calendarize', $uid),
-                    $queryBuilder->expr()->like('calendarize', $queryBuilder->createNamedParameter($uid . ',%')),
-                    $queryBuilder->expr()->like('calendarize', $queryBuilder->createNamedParameter('%,' . $uid)),
-                    $queryBuilder->expr()->like('calendarize', $queryBuilder->createNamedParameter('%,' . $uid . ',%'))
+                    $queryBuilder->expr()->like(
+                        'calendarize',
+                        $queryBuilder->createNamedParameter($uid . ',%')
+                    ),
+                    $queryBuilder->expr()->like(
+                        'calendarize',
+                        $queryBuilder->createNamedParameter('%,' . $uid)
+                    ),
+                    $queryBuilder->expr()->like(
+                        'calendarize',
+                        $queryBuilder->createNamedParameter('%,' . $uid . ',%')
+                    )
                 )
-            )->execute()->fetchAssociative();
+            )
+            ->executeQuery()
+            ->fetchAssociative();
     }
 }
