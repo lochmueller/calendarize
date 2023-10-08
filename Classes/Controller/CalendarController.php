@@ -396,6 +396,7 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function monthAction(int $year = 0, int $month = 0, int $day = 0): ResponseInterface
     {
+        $this->checkStaticTemplateIsIncluded();
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
@@ -406,6 +407,7 @@ class CalendarController extends AbstractCompatibilityController
         $arguments = $this->request->getArguments();
 
         $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
+
         $now = DateTimeUtility::getNow();
         $useCurrentDate = $now->format('Y-m') === $date->format('Y-m');
 

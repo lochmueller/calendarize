@@ -64,7 +64,7 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
                 ], '&'),
             ];
 
-        return parent::build($linkDetails, $linkText, $target, $conf);
+        parent::build($linkDetails, $linkText, $target, $conf);
     }
 
     protected function getIndexForEventUid($table, $uid): int

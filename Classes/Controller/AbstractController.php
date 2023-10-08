@@ -206,7 +206,7 @@ abstract class AbstractController extends ActionController
      */
     protected function checkStaticTemplateIsIncluded(): void
     {
-        if (!isset($this->settings['dateLimitBrowserPrev'])) {
+        if (!array_key_exists('dateLimitBrowserPrev', $this->settings)) {
             $this->addFlashMessage(
                 'Basic configuration settings are missing. It seems, that the Static Extension TypoScript
                  is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
@@ -228,8 +228,8 @@ abstract class AbstractController extends ActionController
 
     protected function isDateOutOfTypoScriptConfiguration(\DateTime $dateTime): bool
     {
-        $prev = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserPrev']);
-        $next = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserNext']);
+        $prev = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserPrev'] ?? null);
+        $next = DateTimeUtility::normalizeDateTimeSingle($this->settings['dateLimitBrowserNext'] ?? null);
 
         return $prev > $dateTime || $next < $dateTime;
     }

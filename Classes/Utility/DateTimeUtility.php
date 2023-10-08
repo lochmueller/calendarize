@@ -125,13 +125,13 @@ class DateTimeUtility
         $date = self::getNow();
         // Check if this date should handle always in UTC
         // $date->setTimezone(self::getUtcTimeZone());
-        if (!MathUtility::canBeInterpretedAsInteger($year)) {
+        if (!MathUtility::canBeInterpretedAsInteger($year) || $year === 0) {
             $year = $date->format('Y');
         }
-        if (!MathUtility::canBeInterpretedAsInteger($month)) {
+        if (!MathUtility::canBeInterpretedAsInteger($month) || $month === 0) {
             $month = $date->format('m');
         }
-        if (!MathUtility::canBeInterpretedAsInteger($day)) {
+        if (!MathUtility::canBeInterpretedAsInteger($day) || $day === 0) {
             $day = $date->format('d');
         }
         $date->setDate((int)$year, (int)$month, (int)$day);
