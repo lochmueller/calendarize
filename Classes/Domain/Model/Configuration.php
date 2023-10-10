@@ -36,6 +36,9 @@ class Configuration extends AbstractModel implements ConfigurationInterface
 
     protected string $externalIcsUrl = '';
 
+    /**
+     * @var ObjectStorage<ConfigurationGroup>
+     */
     #[Extbase\ORM\Lazy]
     protected ObjectStorage $groups;
 
