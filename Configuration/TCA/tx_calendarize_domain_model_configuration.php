@@ -156,7 +156,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'eval' => 'required,date',
+                'eval' => 'date',
+                'required' => true,
                 'dbType' => 'date',
                 'size' => 13,
             ],
@@ -180,7 +181,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'eval' => 'time,required',
+                'eval' => 'time',
+                'required' => true,
                 'default' => 0,
                 'size' => 10,
             ],
@@ -372,7 +374,8 @@ return [
             'exclude' => true,
             'config' => [
                 'type' => 'input',
-                'eval' => 'int,required',
+                'eval' => 'int',
+                'required' => true,
                 'size' => 10,
                 'default' => 1,
                 'range' => [
@@ -392,7 +395,8 @@ return [
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             'config' => [
                 'type' => 'input',
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
                 'renderType' => 'inputLink',
                 'softref' => 'typolink',
                 'fieldControl' => [

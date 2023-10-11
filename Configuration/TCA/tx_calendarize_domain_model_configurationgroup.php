@@ -92,7 +92,8 @@ return [
             'exclude' => false,
             'config' => [
                 'type' => 'input',
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'configurations' => [
