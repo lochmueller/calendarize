@@ -11,7 +11,6 @@ $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 return [
     'ctrl' => [
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
