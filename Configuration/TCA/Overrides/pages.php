@@ -8,9 +8,9 @@ defined('TYPO3') or exit();
     $icon = 'apps-pagetree-folder-contains-calendarize';
 
     $GLOBALS['TCA']['pages']['columns']['module']['config']['items'][] = [
-        0 => 'Calendarize',
-        1 => 'calendarize',
-        2 => $icon,
+        'label' => 'Calendarize',
+        'value' => 'calendarize',
+        'icon' => $icon,
     ];
     $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes']['contains-calendarize'] = $icon;
 })();
