@@ -396,21 +396,13 @@ return [
             'exclude' => true,
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_EXTERNAL,
             'config' => [
-                'type' => 'input',
-                'eval' => 'trim',
+                'type' => 'link',
                 'required' => true,
-                'renderType' => 'inputLink',
-                'softref' => 'typolink',
-                'fieldControl' => [
-                    'linkPopup' => [
-                        'options' => [
-                            'allowedExtensions' => 'ics',
-                            'blindLinkOptions' => 'folder,mail,page,spec,telephone,tx_calendarize_domain_model_event',
-                            'blindLinkFields' => 'class,target,title',
-                        ],
-                    ],
+                'allowedTypes' => ['file', 'url'],
+                'appearance' => [
+                    'allowedFileExtensions' => ['ics'],
+                    'allowedOptions' => [],
                 ],
-                'max' => 2048,
             ],
         ],
         'day' => [
