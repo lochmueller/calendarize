@@ -312,7 +312,8 @@ return [
             'exclude' => true,
             'config' => [
                 'type' => 'input',
-                'eval' => 'int,null',
+                'eval' => 'int',
+                'nullable' => true,
                 'default' => null,
                 'size' => 10,
                 'range' => [
@@ -336,7 +337,8 @@ return [
             'exclude' => true,
             'config' => [
                 'type' => 'input',
-                'eval' => 'int,null',
+                'eval' => 'int',
+                'nullable' => true,
                 'default' => null,
                 'size' => 10,
                 'range' => [
