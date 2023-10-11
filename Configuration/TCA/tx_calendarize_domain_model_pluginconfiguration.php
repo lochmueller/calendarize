@@ -20,7 +20,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'dividers2tabs' => true,
         'sortby' => 'sorting',
         'delete' => 'deleted',
         'searchFields' => 'title,model_name,configuration,storage_pid,recursive,detail_pid,list_pid,year_pid,

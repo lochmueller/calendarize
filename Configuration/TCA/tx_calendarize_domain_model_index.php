@@ -20,7 +20,6 @@ return [
         'label' => 'unique_register_key',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'dividers2tabs' => true,
         'sortby' => 'sorting',
         'delete' => 'deleted',
         'searchFields' => 'unique_register_key,foreign_table,foreign_uid,start_date,end_date,start_time,end_time,

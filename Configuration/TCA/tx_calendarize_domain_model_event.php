@@ -22,7 +22,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'dividers2tabs' => true,
         'sortby' => 'sorting',
         'delete' => 'deleted',
         'searchFields' => 'uid,title,description',

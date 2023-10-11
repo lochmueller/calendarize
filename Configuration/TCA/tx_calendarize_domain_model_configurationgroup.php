@@ -8,7 +8,6 @@ return [
     'ctrl' => [
         'crdate' => 'crdate',
         'delete' => 'deleted',
-        'dividers2tabs' => '1',
         'enablecolumns' => [
             'disabled' => 'hidden',
             'endtime' => 'endtime',

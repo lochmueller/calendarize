@@ -13,7 +13,6 @@ return [
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
-        'dividers2tabs' => '1',
         'enablecolumns' => [
             'disabled' => 'hidden',
             'endtime' => 'endtime',
