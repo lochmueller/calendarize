@@ -30,6 +30,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
@@ -396,6 +397,21 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function monthAction(int $year = 0, int $month = 0, int $day = 0): ResponseInterface
     {
+        // @todo Check how we could map the arguments automatically
+        $params = $this->request->getQueryParams();
+        $calendarize = $params['tx_calendarize_calendar'] ?? [];
+
+        if ($year === 0) {
+            $year = (int)($calendarize['year'] ?? 0);
+        }
+        if ($month === 0) {
+            $month = (int)($calendarize['month'] ?? 0);
+        }
+        if ($day === 0) {
+            $day = (int)($calendarize['day'] ?? 0);
+        }
+
+
         $this->checkStaticTemplateIsIncluded();
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
