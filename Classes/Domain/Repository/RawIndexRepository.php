@@ -102,6 +102,7 @@ class RawIndexRepository extends AbstractRawRepository
             )
             ->addOrderBy('start_date', 'ASC')
             ->addOrderBy('start_time', 'ASC')
+            ->addOrderBy('uid', 'ASC')
             ->setMaxResults($limit);
 
         $result = $queryBuilder->executeQuery()->fetchAllAssociative();
