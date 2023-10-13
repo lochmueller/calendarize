@@ -36,6 +36,7 @@ class IndexRepository extends AbstractRepository
     protected $defaultOrderings = [
         'start_date' => QueryInterface::ORDER_ASCENDING,
         'start_time' => QueryInterface::ORDER_ASCENDING,
+        'uid' => QueryInterface::ORDER_ASCENDING,
     ];
 
     /**
@@ -99,11 +100,13 @@ class IndexRepository extends AbstractRepository
             $query->setOrderings([
                 'start_date' => QueryInterface::ORDER_ASCENDING,
                 'start_time' => QueryInterface::ORDER_ASCENDING,
+                'uid' => QueryInterface::ORDER_ASCENDING,
             ]);
         } else {
             $query->setOrderings([
                 'start_date' => QueryInterface::ORDER_DESCENDING,
                 'start_time' => QueryInterface::ORDER_DESCENDING,
+                'uid' => QueryInterface::ORDER_DESCENDING,
             ]);
         }
 
@@ -674,6 +677,7 @@ class IndexRepository extends AbstractRepository
                 'endDate' => $direction,
                 'startDate' => $direction,
                 'startTime' => $direction,
+                'uid' => $direction,
             ];
         }
         if ('end' !== $field) {
@@ -683,6 +687,7 @@ class IndexRepository extends AbstractRepository
         return [
             $field . 'Date' => $direction,
             $field . 'Time' => $direction,
+            'uid' => $direction,
         ];
     }
 }
