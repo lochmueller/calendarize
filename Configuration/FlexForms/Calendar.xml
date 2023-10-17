@@ -115,9 +115,7 @@
 								</AND>
 							</displayCond>
 							<config>
-								<type>input</type>
-								<eval>datetime</eval>
-								<renderType>inputDateTime</renderType>
+								<type>datetime</type>
 							</config>
 						</TCEforms>
 					</settings.overrideStartdate>
@@ -135,9 +133,7 @@
 								</AND>
 							</displayCond>
 							<config>
-								<type>input</type>
-								<eval>datetime</eval>
-								<renderType>inputDateTime</renderType>
+								<type>datetime</type>
 							</config>
 						</TCEforms>
 					</settings.overrideEnddate>
