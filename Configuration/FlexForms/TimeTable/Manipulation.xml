@@ -15,9 +15,9 @@
                         <TCEforms>
                             <label>Fix start time</label>
                             <config>
-                                <type>input</type>
-                                <renderType>inputDateTime</renderType>
-                                <eval>time,null</eval>
+                                <type>datetime</type>
+                                <format>time</format>
+                                <nullable>1</nullable>
                             </config>
                         </TCEforms>
                     </settings.fixedStartTime>
@@ -25,9 +25,9 @@
                         <TCEforms>
                             <label>Fix end time</label>
                             <config>
-                                <type>input</type>
-                                <renderType>inputDateTime</renderType>
-                                <eval>time,null</eval>
+                                <type>datetime</type>
+                                <format>time</format>
+                                <nullable>1</nullable>
                             </config>
                         </TCEforms>
                     </settings.fixedEndTime>

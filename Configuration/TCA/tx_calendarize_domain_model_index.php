@@ -20,7 +20,6 @@ return [
         'label' => 'unique_register_key',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'dividers2tabs' => true,
         'sortby' => 'sorting',
         'delete' => 'deleted',
         'searchFields' => 'unique_register_key,foreign_table,foreign_uid,start_date,end_date,start_time,end_time,
@@ -45,16 +44,16 @@ return [
                 'maxitems' => 20,
                 'items' => [
                     0 => [
-                        0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
-                        1 => -1,
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
+                        'value' => -1,
                     ],
                     1 => [
-                        0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
-                        1 => -2,
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
+                        'value' => -2,
                     ],
                     2 => [
-                        0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
-                        1 => '--div--',
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
+                        'value' => '--div--',
                     ],
                 ],
                 'exclusiveKeys' => '-1,-2',
@@ -107,8 +106,8 @@ return [
                 'default' => 0,
                 'items' => [
                     0 => [
-                        0 => '',
-                        1 => 0,
+                        'label' => '',
+                        'value' => 0,
                     ],
                 ],
                 'foreign_table' => 'tx_calendarize_domain_model_index',

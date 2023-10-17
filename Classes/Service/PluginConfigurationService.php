@@ -59,8 +59,8 @@ class PluginConfigurationService
     {
         foreach (Register::getRegister() as $key => $configuration) {
             $config['items'][] = [
-                $configuration['title'],
-                $key,
+                'label' => $configuration['title'],
+                'value' => $key,
             ];
         }
 

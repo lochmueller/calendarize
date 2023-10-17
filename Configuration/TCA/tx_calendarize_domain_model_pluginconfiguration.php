@@ -20,7 +20,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'dividers2tabs' => true,
         'sortby' => 'sorting',
         'delete' => 'deleted',
         'searchFields' => 'title,model_name,configuration,storage_pid,recursive,detail_pid,list_pid,year_pid,
@@ -38,16 +37,16 @@ return [
                 'maxitems' => 20,
                 'items' => [
                     0 => [
-                        0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
-                        1 => -1,
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
+                        'value' => -1,
                     ],
                     1 => [
-                        0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
-                        1 => -2,
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
+                        'value' => -2,
                     ],
                     2 => [
-                        0 => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
-                        1 => '--div--',
+                        'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
+                        'value' => '--div--',
                     ],
                 ],
                 'exclusiveKeys' => '-1,-2',
@@ -110,8 +109,8 @@ return [
                 'default' => 0,
                 'items' => [
                     0 => [
-                        0 => '',
-                        1 => 0,
+                        'label' => '',
+                        'value' => 0,
                     ],
                 ],
                 'foreign_table' => 'tx_calendarize_domain_model_pluginconfiguration',
@@ -140,8 +139,8 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     0 => [
-                        0 => 'Default',
-                        1 => 'HDNET\\Calendarize\\Domain\\Model\\PluginConfiguration',
+                        'label' => 'Default',
+                        'value' => \HDNET\Calendarize\Domain\Model\PluginConfiguration::class,
                     ],
                 ],
             ],
@@ -178,32 +177,32 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     0 => [
-                        0 => $ll . 'inherit',
-                        1 => '',
+                        'label' => $ll . 'inherit',
+                        'value' => '',
                     ],
                     1 => [
-                        0 => $ll . 'recursive.I.0',
-                        1 => '0',
+                        'label' => $ll . 'recursive.I.0',
+                        'value' => '0',
                     ],
                     2 => [
-                        0 => $ll . 'recursive.I.1',
-                        1 => '1',
+                        'label' => $ll . 'recursive.I.1',
+                        'value' => '1',
                     ],
                     3 => [
-                        0 => $ll . 'recursive.I.2',
-                        1 => '2',
+                        'label' => $ll . 'recursive.I.2',
+                        'value' => '2',
                     ],
                     4 => [
-                        0 => $ll . 'recursive.I.3',
-                        1 => '3',
+                        'label' => $ll . 'recursive.I.3',
+                        'value' => '3',
                     ],
                     5 => [
-                        0 => $ll . 'recursive.I.4',
-                        1 => '4',
+                        'label' => $ll . 'recursive.I.4',
+                        'value' => '4',
                     ],
                     6 => [
-                        0 => $ll . 'recursive.I.5',
-                        1 => '250',
+                        'label' => $ll . 'recursive.I.5',
+                        'value' => '250',
                     ],
                 ],
                 'minitems' => 1,
