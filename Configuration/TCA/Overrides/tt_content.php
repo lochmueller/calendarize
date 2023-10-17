@@ -20,7 +20,7 @@ foreach (['ListDetail', 'List', 'Detail', 'Search', 'Result', 'Latest', 'Single'
         'calendarize_normal'
     );
 
-    $pluginName = 'calendarize_' . lcfirst($name);
+    $pluginName = 'calendarize_' . strtolower($name);
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginName] = 'layout, select_key';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginName] = 'pi_flexform';
 
@@ -46,7 +46,7 @@ foreach (['Year', 'Quarter', 'Month', 'Week', 'Day', 'Past'] as $name) {
         'calendarize_special'
     );
 
-    $pluginName = 'calendarize_' . lcfirst($name);
+    $pluginName = 'calendarize_' . strtolower($name);
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginName] = 'layout, select_key';
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginName] = 'pi_flexform';
 
