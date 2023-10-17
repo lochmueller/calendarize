@@ -1,5 +1,6 @@
 mod.wizards.newContentElement.wizardItems.calendarize.header = Calendarize Elements
 mod.wizards.newContentElement.wizardItems.calendarize.show = *
+mod.wizards.newContentElement.wizardItems.calendarize.after = common
 mod.wizards.newContentElement.wizardItems.calendarize.elements {
   calendarize_detail {
     iconIdentifier = ext-calendarize-wizard-icon
