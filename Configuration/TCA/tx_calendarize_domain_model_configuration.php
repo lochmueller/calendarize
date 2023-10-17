@@ -302,8 +302,7 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.till_days',
             'exclude' => true,
             'config' => [
-                'type' => 'input',
-                'eval' => 'int',
+                'type' => 'number',
                 'nullable' => true,
                 'default' => null,
                 'size' => 10,
@@ -327,8 +326,7 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.till_days_past',
             'exclude' => true,
             'config' => [
-                'type' => 'input',
-                'eval' => 'int',
+                'type' => 'number',
                 'nullable' => true,
                 'default' => null,
                 'size' => 10,
@@ -347,8 +345,7 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.counter_amount',
             'exclude' => true,
             'config' => [
-                'type' => 'input',
-                'eval' => 'int',
+                'type' => 'number',
                 'size' => 10,
                 'default' => 0,
                 'range' => [
@@ -366,8 +363,7 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.counter_interval',
             'exclude' => true,
             'config' => [
-                'type' => 'input',
-                'eval' => 'int',
+                'type' => 'number',
                 'required' => true,
                 'size' => 10,
                 'default' => 1,
