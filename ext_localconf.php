@@ -13,6 +13,7 @@ use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Form\Element\CalendarizeInfoElement;
 use HDNET\Calendarize\Hooks\KeSearchIndexer;
 use HDNET\Calendarize\Hooks\ProcessCmdmapClass;
+use HDNET\Calendarize\Hooks\ProcessDatamapClass;
 use HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Xclass\WorkspaceRemoteServer;
@@ -189,7 +190,7 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['calendarize'] =
         ProcessCmdmapClass::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['calendarize'] =
-        ProcessCmdmapClass::class;
+        ProcessDatamapClass::class;
 
     // Include new content elements to modWizards
     ExtensionManagementUtility::addPageTSConfig("
