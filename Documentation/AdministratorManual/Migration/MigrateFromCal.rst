@@ -6,9 +6,14 @@ This will help you to migrate data from cal to calendarize.
 Requirements
 ------------
 
-- Installed extension calendarize
-- Tables from cal (e.g. :code:`tx_cal_*`, ...)
-- TYPO3 v10.4 (v11 is NOT supported)
+..  attention::
+   - Installed extension calendarize (version 12)
+   - Tables from cal (e.g. :code:`tx_cal_*`, ...)
+   - TYPO3 v10.4 (v11 is NOT supported)
+
+   .. deprecated:: 13
+      Was removed in calendarize 13 and later
+
 
 Migration
 ---------
