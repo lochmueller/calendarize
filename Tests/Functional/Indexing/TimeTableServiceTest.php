@@ -9,11 +9,11 @@ use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Domain\Repository\ConfigurationRepository;
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Service\TimeTableService;
-use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTest;
+use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTestCase;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class TimeTableServiceTest extends AbstractFunctionalTest
+class TimeTableServiceTest extends AbstractFunctionalTestCase
 {
     /**
      * @var RawIndexRepository
@@ -47,7 +47,7 @@ class TimeTableServiceTest extends AbstractFunctionalTest
         $assert($result);
     }
 
-    public function configurationProvider(): \Generator
+    public static function configurationProvider(): \Generator
     {
         $new_configuration = static function (int $pid) {
             $configuration = new Configuration();

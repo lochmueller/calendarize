@@ -9,7 +9,7 @@ use HDNET\Calendarize\Ical\ICalEvent;
 use JMBTechnologyLimited\ICalDissect\ICalParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class DissectEventAdapterTest extends ICalEventTest
+class DissectEventAdapterTest extends ICalEventTestCase
 {
     protected $tmpFile;
 
@@ -42,7 +42,7 @@ class DissectEventAdapterTest extends ICalEventTest
         return new DissectEventAdapter($parser->getEvents()[0]);
     }
 
-    public function testDuration()
+    public function testDuration(): void
     {
         self::markTestSkipped('The DissectEventAdapter does not support DURATION.');
         parent::testDuration();

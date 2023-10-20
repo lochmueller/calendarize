@@ -1,0 +1,14 @@
+"tx_calendarize_domain_model_event"
+,"uid","pid","title","calendarize"
+# Live with Workspace override
+,1,1,"Live Event",1
+,2,1,"Workspace Override",2
+# workspace only
+,3,1,"Workspace only",3
+# Live only
+,4,1,"Live always",4
+# Live only 2
+,5,1,"Live always" 2,5
+# Live exists, workspace deleted
+,6,1,"Live exists",6
+,7,1,"Live exists",7

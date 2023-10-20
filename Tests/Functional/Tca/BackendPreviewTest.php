@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Tests\Functional\Tca;
 
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
-use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTest;
+use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class BackendPreviewTest extends AbstractFunctionalTest
+class BackendPreviewTest extends AbstractFunctionalTestCase
 {
     /**
      * @var RawIndexRepository
@@ -22,11 +22,11 @@ class BackendPreviewTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $this->importDataSet(ORIGINAL_ROOT . 'typo3conf/ext/calendarize/Tests/Functional/Tca/Fixtures/tx_calendarize_domain_model_index.xml');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/tx_calendarize_domain_model_index.csv');
         $this->rawIndexRepository = GeneralUtility::makeInstance(RawIndexRepository::class);
     }
 
-    public function testOutputOfLiveEvents()
+    public function testOutputOfLiveEvents(): void
     {
         $resultLive = $this->rawIndexRepository->findNextEvents('tx_calendarize_domain_model_event', 1, 5, 0);
         $resultWorkspace = $this->rawIndexRepository->findNextEvents('tx_calendarize_domain_model_event', 1, 5, 91);

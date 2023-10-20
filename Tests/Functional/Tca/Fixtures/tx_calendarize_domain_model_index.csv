@@ -1,0 +1,10 @@
+"tx_calendarize_domain_model_index"
+,uid,pid,"unique_register_key","foreign_table","start_date","foreign_uid","all_day"
+# Live
+,1,1,"Event","tx_calendarize_domain_model_event","2026-04-01",1,0
+# Workspace Overlay
+,2,1,"Event","tx_calendarize_domain_model_event","2026-04-13",1,1
+# Workspace only; t3ver_oid --> check https://github.com/TYPO3/typo3/commit/74899ecfd076d7e53d8891ac26794e8b1f2b9c2f#diff-8234e04e4b4b23ef0e6eaa10ad29f2ee48884f05fd69bdf71ef569b60a52f7c1
+,4,1,"Event","tx_calendarize_domain_model_event","2026-04-16",1,1
+# Live only
+,5,1,"Event","tx_calendarize_domain_model_event","2026-04-29",1,1

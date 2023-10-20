@@ -4,13 +4,13 @@ namespace HDNET\Calendarize\Tests\Unit\Service;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Service\EventConfigurationService;
-use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
+use HDNET\Calendarize\Tests\Unit\AbstractUnitTestCase;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class EventConfigurationServiceTest extends AbstractUnitTest
+class EventConfigurationServiceTest extends AbstractUnitTestCase
 {
-    public function hydrateRecurringConfigurationDataProvider(): \Generator
+    public static function hydrateRecurringConfigurationDataProvider(): \Generator
     {
         yield 'empty RRULE' => [[], ['frequency' => ConfigurationInterface::FREQUENCY_NONE]];
         yield 'minutely frequency' => [
@@ -81,7 +81,7 @@ class EventConfigurationServiceTest extends AbstractUnitTest
      */
     public function testHydrateRecurringConfiguration(array $rrule, array $expected): void
     {
-        $subject = $this->getAccessibleMock(EventConfigurationService::class, ['dummy']);
+        $subject = $this->getAccessibleMock(EventConfigurationService::class, null);
         $logger = $this->createMock(NullLogger::class);
         $logger->expects(self::never())->method('error');
         $logger->expects(self::never())->method('warning');

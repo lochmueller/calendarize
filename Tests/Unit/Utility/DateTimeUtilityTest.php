@@ -8,13 +8,13 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
-use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
+use HDNET\Calendarize\Tests\Unit\AbstractUnitTestCase;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /**
  * DateTimeUtilityTest.
  */
-class DateTimeUtilityTest extends AbstractUnitTest
+class DateTimeUtilityTest extends AbstractUnitTestCase
 {
     public function testDaySecondsOfDateTime()
     {

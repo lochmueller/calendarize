@@ -6,11 +6,11 @@ namespace HDNET\Calendarize\Tests\Functional\Indexing;
 
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Service\IndexerService;
-use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTest;
+use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTestCase;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class FullReindexTest extends AbstractFunctionalTest
+class FullReindexTest extends AbstractFunctionalTestCase
 {
     /**
      * @var RawIndexRepository
@@ -24,8 +24,8 @@ class FullReindexTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $this->importDataSet(ORIGINAL_ROOT . 'typo3conf/ext/calendarize/Tests/Functional/Indexing/Fixtures/tx_calendarize_domain_model_configuration.xml');
-        $this->importDataSet(ORIGINAL_ROOT . 'typo3conf/ext/calendarize/Tests/Functional/Indexing/Fixtures/tx_calendarize_domain_model_event.xml');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/tx_calendarize_domain_model_configuration.csv');
+        $this->importCSVDataSet(__DIR__ . '/Fixtures/tx_calendarize_domain_model_event.csv');
         $this->rawIndexRepository = GeneralUtility::makeInstance(RawIndexRepository::class);
     }
 

@@ -9,13 +9,13 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Tests\Unit\DateTime;
 
 use HDNET\Calendarize\Domain\Model\Index;
-use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
+use HDNET\Calendarize\Tests\Unit\AbstractUnitTestCase;
 use HDNET\Calendarize\Utility\IndexUtility;
 
 /**
  * IndexUtilityTest.
  */
-class IndexUtilityTest extends AbstractUnitTest
+class IndexUtilityTest extends AbstractUnitTestCase
 {
     public function testIndexInRange()
     {

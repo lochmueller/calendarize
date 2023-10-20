@@ -1,27 +1,27 @@
-<phpunit backupGlobals="false"
-         bootstrap="../../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertWarningsToExceptions="true"
-         convertNoticesToExceptions="true"
-         forceCoversAnnotation="false"
-         processIsolation="false"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
-         stopOnSkipped="false"
-         verbose="true"
-         beStrictAboutTestsThatDoNotTestAnything="false"
-    >
-    <testsuites>
-        <testsuite name="EXT:calendarize tests">
-            <directory>../../Unit/</directory>
-        </testsuite>
-
-    </testsuites>
-    <php>
-        <const name="TYPO3_MODE" value="BE" />
-        <ini name="display_errors" value="1" />
-        <env name="TYPO3_CONTEXT" value="Testing" />
-    </php>
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
+    backupGlobals="false"
+    bootstrap="../../../.Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
+    colors="true"
+    processIsolation="false"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    requireCoverageMetadata="false"
+    cacheDirectory=".phpunit.cache"
+>
+  <testsuites>
+    <testsuite name="EXT:calendarize tests">
+      <directory>../../Unit/</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <const name="TYPO3_MODE" value="BE"/>
+    <ini name="display_errors" value="1"/>
+    <env name="TYPO3_CONTEXT" value="Testing"/>
+  </php>
 </phpunit>

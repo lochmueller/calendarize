@@ -6,16 +6,16 @@ namespace HDNET\Calendarize\Tests\Unit\Ical;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Ical\ICalEvent;
-use HDNET\Calendarize\Tests\Unit\AbstractUnitTest;
+use HDNET\Calendarize\Tests\Unit\AbstractUnitTestCase;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 
 /** @coversDefaultClass ICalEvent */
-abstract class ICalEventTest extends AbstractUnitTest
+abstract class ICalEventTestCase extends AbstractUnitTestCase
 {
     /**
      * @var string Backup of current timezone, it is manipulated in tests
      */
-    protected $timezone;
+    protected string $timezone;
 
     protected function setUp(): void
     {
@@ -31,6 +31,8 @@ abstract class ICalEventTest extends AbstractUnitTest
     }
 
     /**
+     * @param string $content
+     *
      * @return ICalEvent
      */
     abstract protected function getEvent(string $content): ICalEvent;
@@ -39,7 +41,7 @@ abstract class ICalEventTest extends AbstractUnitTest
     // Tests
     // -----------------------------------------------------
 
-    public function testMinimalEmpty()
+    public function testMinimalEmpty(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -62,7 +64,7 @@ END:VCALENDAR
         self::assertEquals(ConfigurationInterface::STATE_DEFAULT, $event->getState());
     }
 
-    public function testAllGetters()
+    public function testAllGetters(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -96,7 +98,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getUid */
-    public function testUid()
+    public function testUid(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -113,7 +115,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getTitle */
-    public function testTitle()
+    public function testTitle(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -131,7 +133,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getDescription */
-    public function testDescription()
+    public function testDescription(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -149,7 +151,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getDescription */
-    public function testDescriptionMultiline()
+    public function testDescriptionMultiline(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -169,7 +171,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getDescription */
-    public function testDescriptionMultilineTrailingWhitespace()
+    public function testDescriptionMultilineTrailingWhitespace(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -189,7 +191,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getLocation */
-    public function testLocation()
+    public function testLocation(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -207,7 +209,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getOrganizer */
-    public function testOrganizer()
+    public function testOrganizer(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -226,7 +228,7 @@ END:VCALENDAR
     }
 
     /** @covers ICalEvent::getState */
-    public function testStateCanceled()
+    public function testStateCanceled(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -243,7 +245,7 @@ END:VCALENDAR
         self::assertEquals(ConfigurationInterface::STATE_CANCELED, $event->getState());
     }
 
-    public function testDateAndTime()
+    public function testDateAndTime(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -265,7 +267,7 @@ END:VCALENDAR
         self::assertFalse($event->isAllDay());
     }
 
-    public function testAllDayMultipleDays()
+    public function testAllDayMultipleDays(): void
     {
         /* RFC 5545 Section 3.6.1 (Page 55)
          * The following is an example of the "VEVENT" calendar component
@@ -297,7 +299,7 @@ END:VCALENDAR
         self::assertTrue($event->isAllDay());
     }
 
-    public function testAllDayOneDay()
+    public function testAllDayOneDay(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -319,7 +321,7 @@ END:VCALENDAR
         self::assertTrue($event->isAllDay());
     }
 
-    public function testAllDayNoDtEnd()
+    public function testAllDayNoDtEnd(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -340,7 +342,7 @@ END:VCALENDAR
         self::assertEquals(ICalEvent::ALLDAY_END_TIME, $event->getEndTime());
     }
 
-    public function testDateAndTimeTimzone()
+    public function testDateAndTimeTimzone(): void
     {
         $timezone = new \DateTimeZone('America/Los_Angeles');
         date_default_timezone_set($timezone->getName());
@@ -369,7 +371,7 @@ END:VCALENDAR
         self::assertFalse($event->isAllDay());
     }
 
-    public function testUnknownTimezone()
+    public function testUnknownTimezone(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -392,7 +394,7 @@ END:VCALENDAR
         self::assertFalse($event->isAllDay());
     }
 
-    public function testAllDayTimezone()
+    public function testAllDayTimezone(): void
     {
         date_default_timezone_set('America/Los_Angeles');
         $input = 'BEGIN:VCALENDAR
@@ -415,7 +417,7 @@ END:VCALENDAR
         self::assertTrue($event->isAllDay());
     }
 
-    public function testDuration()
+    public function testDuration(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -437,7 +439,7 @@ END:VCALENDAR
         self::assertFalse($event->isAllDay());
     }
 
-    public function testRRule()
+    public function testRRule(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -463,7 +465,7 @@ END:VCALENDAR
         self::assertEqualsIgnoringCase('45', $rrule['COUNT']);
     }
 
-    public function testRawData()
+    public function testRawData(): void
     {
         $input = 'BEGIN:VCALENDAR
 VERSION:2.0

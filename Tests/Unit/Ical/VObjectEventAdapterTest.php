@@ -8,7 +8,7 @@ use HDNET\Calendarize\Ical\ICalEvent;
 use HDNET\Calendarize\Ical\VObjectEventAdapter;
 use Sabre\VObject\Reader;
 
-class VObjectEventAdapterTest extends ICalEventTest
+class VObjectEventAdapterTest extends ICalEventTestCase
 {
     protected function getEvent(string $content): ICalEvent
     {
