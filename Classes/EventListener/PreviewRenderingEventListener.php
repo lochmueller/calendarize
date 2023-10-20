@@ -11,8 +11,10 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Provides backend preview for calendarize plugins.
+ */
 class PreviewRenderingEventListener
 {
     public function __construct(
@@ -25,7 +27,7 @@ class PreviewRenderingEventListener
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
         $record = $event->getRecord();
-        if ('calendarize_calendar' !== $record['list_type']) {
+        if (!str_starts_with($record['list_type'] ?? '', 'calendarize_')) {
             return;
         }
 
@@ -37,16 +39,8 @@ class PreviewRenderingEventListener
         $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', Icon::SIZE_SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
-        $actions = $this->flexFormService->get('switchableControllerActions', 'main');
-        $parts = GeneralUtility::trimExplode(';', $actions, true);
-        $parts = array_map(static function ($element) {
-            $split = explode('->', $element);
-
-            return ucfirst($split[1]);
-        }, $parts);
-        $actionKey = lcfirst(implode('', $parts));
-
-        $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $actionKey));
+        $listType = explode('_', $record['list_type'], 2)[1] ?? '';
+        $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $listType));
 
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {

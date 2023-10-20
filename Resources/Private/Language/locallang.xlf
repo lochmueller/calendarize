@@ -465,7 +465,7 @@
 			<trans-unit id="mode.booking">
 				<source>Calendarize - Booking</source>
 			</trans-unit>
-			<trans-unit id="mode.bookingSend">
+			<trans-unit id="mode.bookingsend">
 				<source>Booking</source>
 			</trans-unit>
 			<trans-unit id="mode.day">
@@ -480,7 +480,7 @@
 			<trans-unit id="mode.list">
 				<source>List only</source>
 			</trans-unit>
-			<trans-unit id="mode.listDetail">
+			<trans-unit id="mode.listdetail">
 				<source>List + Detail</source>
 			</trans-unit>
 			<trans-unit id="mode.month">

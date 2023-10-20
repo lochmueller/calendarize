@@ -15,7 +15,7 @@ foreach (['ListDetail', 'List', 'Detail', 'Search', 'Result', 'Latest', 'Single'
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'calendarize',
         $name,
-        'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.' . lcfirst($name),
+        'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.' . strtolower($name),
         null,
         'calendarize_normal'
     );
@@ -41,7 +41,7 @@ foreach (['Year', 'Quarter', 'Month', 'Week', 'Day', 'Past'] as $name) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'calendarize',
         $name,
-        'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.' . lcfirst($name),
+        'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.' . strtolower($name),
         null,
         'calendarize_special'
     );

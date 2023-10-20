@@ -31,7 +31,7 @@ mod.wizards.newContentElement.wizardItems.calendarize.elements {
   }
   calendarize_listdetail {
     iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.listDetail
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.listdetail
     description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
     tt_content_defValues {
       CType = list
