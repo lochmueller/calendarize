@@ -6,7 +6,10 @@
 
 <tr>
 	<td>
-		<c:iconForRecord table="{index.foreignTable}" uid="{index.originalObject.uid}" />
+        <core:iconForRecord
+            table="{index.foreignTable}"
+            row="{c:be.recordRow(table:index.foreignTable, uid:index.originalObject.uid)}"
+        />
 		<be:link.editRecord uid="{index.foreignUid}" table="{index.configuration.tableName}"
 												returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
 			<f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" />
