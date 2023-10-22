@@ -9,7 +9,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
  */
 class MonthViewHelper extends AbstractActionViewHelper
 {
-    protected string $actionName = 'month';
+    protected ?string $actionName = 'month';
 
     /**
      * Init arguments.

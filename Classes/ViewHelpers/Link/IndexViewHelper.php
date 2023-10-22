@@ -11,7 +11,7 @@ use HDNET\Calendarize\Domain\Model\Index;
  */
 class IndexViewHelper extends AbstractActionViewHelper
 {
-    protected string $actionName = 'detail';
+    protected ?string $actionName = 'detail';
 
     /**
      * Init arguments.

@@ -23,8 +23,6 @@ routeEnhancers:
         _controller: 'Calendar::result'
       - routePath: '/{calendarize_page_label}/{currentPage}'
         _controller: 'Calendar::list'
-      - routePath: '/{calendarize_booking_label}/{index}'
-        _controller: 'Booking::booking'
       - routePath: '/export.{format}'
         _controller: 'Calendar::list'
 
@@ -123,6 +121,19 @@ routeEnhancers:
         localeMap:
           - locale: 'de_.*'
             value: 'ergebnis-seite'
+
+  CalendarizeBooking:
+    type: Extbase
+    extension: Calendarize
+    plugin: Booking
+    routes:
+      - routePath: '/{calendarize_booking_label}/{index}'
+        _controller: 'Booking::booking'
+    aspects:
+      index:
+        type: PersistedAliasMapper
+        tableName: tx_calendarize_domain_model_index
+        routeFieldName: slug
       calendarize_booking_label:
         type: LocaleModifier
         default: 'booking'

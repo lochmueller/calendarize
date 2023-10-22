@@ -11,7 +11,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
  */
 class QuarterViewHelper extends AbstractActionViewHelper
 {
-    protected string $actionName = 'quarter';
+    protected ?string $actionName = 'quarter';
 
     /**
      * Init arguments.

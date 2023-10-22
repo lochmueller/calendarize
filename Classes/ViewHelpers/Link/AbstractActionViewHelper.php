@@ -9,11 +9,11 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 class AbstractActionViewHelper extends AbstractLinkViewHelper
 {
-    protected string $extensionName = 'Calendarize';
+    protected ?string $extensionName = 'Calendarize';
 
-    protected string $pluginName = 'Calendar';
-    protected string $controllerName = 'Calendar';
-    protected string $actionName;
+    protected ?string $pluginName = 'Calendar';
+    protected ?string $controllerName = 'Calendar';
+    protected ?string $actionName;
 
     public function initializeArguments(): void
     {

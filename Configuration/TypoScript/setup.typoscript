@@ -47,6 +47,26 @@ plugin.tx_calendarize {
   }
 }
 
+# Changes the namespace of the plugins so that the controller accept tx_calendarize_calendar query parameters.
+# This way we can use e.g. tx_calendarize_calendar[index] for all plugins (except booking).
+# Otherwise, the ViewHelper links to the wrong plugin or, with a undefined plugin, the detail action is ambiguous (detail, listdetail)
+# This is also consistent to previous versions of calendarize.
+plugin {
+  tx_calendarize_listdetail.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_list.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_detail.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_search.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_result.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_latest.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_single.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_year.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_quarter.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_month.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_week.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_day.view.pluginNamespace = tx_calendarize_calendar
+  tx_calendarize_past.view.pluginNamespace = tx_calendarize_calendar
+}
+
 ["{$plugin.tx_calendarize.settings.useMomentJsDateAndTimeOutput}" == "1"]
   page.includeJSFooterlibs.moment = https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js
   page.includeJSFooterlibs.moment.external = 1
