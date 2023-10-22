@@ -4,13 +4,24 @@ declare(strict_types=1);
 
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Service\TcaService;
-use HDNET\Calendarize\Utility\TranslateUtility;
 
 $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
 return [
     'ctrl' => [
+        'title' => $ll . 'tx_calendarize_domain_model_configuration',
+        'label' => 'type',
+        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle',
+        'hideTable' => true,
+        'type' => 'type',
+        'languageField' => 'sys_language_uid',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'transOrigPointerField' => 'l10n_parent',
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'tstamp' => 'tstamp',
         'crdate' => 'crdate',
+        'sortby' => 'sorting',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -19,36 +30,55 @@ return [
             'starttime' => 'starttime',
         ],
         'editlock' => 'editlock',
-        'formattedLabel_userFunc' => TcaService::class . '->configurationTitle',
-        'hideTable' => true,
         'iconfile' => 'EXT:calendarize/Resources/Public/Icons/Configuration.png',
-        'label' => 'type',
-        'languageField' => 'sys_language_uid',
-        'origUid' => 't3_origuid',
-        'searchFields' => 'type,handling,state,start_date,end_date,end_date_dynamic,start_time,end_time,all_day,
-            open_end_time,external_ics_url,groups,frequency,till_date,till_days,till_days_relative,till_days_past,
-            counter_amount,counter_interval,recurrence,day,import_id',
-        'sortby' => 'sorting',
-        'title' => $ll . 'tx_calendarize_domain_model_configuration',
-        'transOrigDiffSourceField' => 'l10n_diffsource',
-        'transOrigPointerField' => 'l10n_parent',
-        'tstamp' => 'tstamp',
-        'type' => 'type',
+        'typeicon_column' => 'type',
         'typeicon_classes' => [
             Configuration::TYPE_EXTERNAL => 'apps-calendarize-type-' . Configuration::TYPE_EXTERNAL,
             Configuration::TYPE_GROUP => 'apps-calendarize-type-' . Configuration::TYPE_GROUP,
             Configuration::TYPE_TIME => 'apps-calendarize-type-' . Configuration::TYPE_TIME,
         ],
-        'typeicon_column' => 'type',
-        'versioningWS' => 1,
+        'searchFields' => 'type,handling,state,start_date,end_date,end_date_dynamic,start_time,end_time,all_day,
+            open_end_time,external_ics_url,groups,frequency,till_date,till_days,till_days_relative,till_days_past,
+            counter_amount,counter_interval,recurrence,day,import_id',
         'security' => [
             'ignorePageTypeRestriction' => true,
         ],
     ],
     'columns' => [
+        'sys_language_uid' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
+            'config' => [
+                'type' => 'language',
+            ],
+        ],
+        'l10n_parent' => [
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    [
+                        'label' => '',
+                        'value' => 0,
+                    ],
+                ],
+                'foreign_table' => 'tx_calendarize_domain_model_configuration',
+                'foreign_table_where' => 'AND {#tx_calendarize_domain_model_configuration}.{#pid}=###CURRENT_PID###'
+                    . ' AND {#tx_calendarize_domain_model_configuration}.{#sys_language_uid} IN (-1,0)',
+                'default' => 0,
+            ],
+        ],
+        'l10n_diffsource' => [
+            'config' => [
+                'type' => 'passthrough',
+                'default' => '',
+            ],
+        ],
         'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
         'editlock' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:editlock',
             'config' => [
                 'type' => 'check',
@@ -58,7 +88,7 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -89,7 +119,6 @@ return [
         ],
         'type' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.type',
-            'exclude' => false,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -104,25 +133,26 @@ return [
             ],
         ],
         'handling' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.handling',
             'onChange' => 'reload',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        'label' => TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_INCLUDE),
+                        'label' => $ll . 'configuration.handling.' . Configuration::HANDLING_INCLUDE,
                         'value' => Configuration::HANDLING_INCLUDE,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_EXCLUDE),
+                        'label' => $ll . 'configuration.handling.' . Configuration::HANDLING_EXCLUDE,
                         'value' => Configuration::HANDLING_EXCLUDE,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_OVERRIDE),
+                        'label' => $ll . 'configuration.handling.' . Configuration::HANDLING_OVERRIDE,
                         'value' => Configuration::HANDLING_OVERRIDE,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.handling.' . Configuration::HANDLING_CUTOUT),
+                        'label' => $ll . 'configuration.handling.' . Configuration::HANDLING_CUTOUT,
                         'value' => Configuration::HANDLING_CUTOUT,
                     ],
                 ],
@@ -130,6 +160,7 @@ return [
             ],
         ],
         'state' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configuration.state',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -148,7 +179,6 @@ return [
         ],
         'start_date' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.start_date',
-            'exclude' => false,
             'config' => [
                 'type' => 'datetime',
                 'format' => 'date',
@@ -160,7 +190,6 @@ return [
         ],
         'end_date' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.end_date',
-            'exclude' => false,
             'config' => [
                 'type' => 'datetime',
                 'format' => 'date',
@@ -171,7 +200,6 @@ return [
         ],
         'start_time' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.start_time',
-            'exclude' => false,
             'config' => [
                 'type' => 'datetime',
                 'format' => 'time',
@@ -188,7 +216,6 @@ return [
         ],
         'end_time' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.end_time',
-            'exclude' => false,
             'config' => [
                 'type' => 'datetime',
                 'format' => 'time',
@@ -205,7 +232,6 @@ return [
         ],
         'all_day' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.all_day',
-            'exclude' => false,
             'onChange' => 'reload',
             'displayCond' => 'FIELD:type:=:' . Configuration::TYPE_TIME,
             'config' => [
@@ -215,7 +241,6 @@ return [
         ],
         'open_end_time' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.open_end_time',
-            'exclude' => false,
             'onChange' => 'reload',
             'config' => [
                 'type' => 'check',
@@ -250,31 +275,31 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_NONE),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_NONE,
                         'value' => Configuration::FREQUENCY_NONE,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_MINUTELY),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_MINUTELY,
                         'value' => Configuration::FREQUENCY_MINUTELY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_HOURLY),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_HOURLY,
                         'value' => Configuration::FREQUENCY_HOURLY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_DAILY),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_DAILY,
                         'value' => Configuration::FREQUENCY_DAILY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_WEEKLY),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_WEEKLY,
                         'value' => Configuration::FREQUENCY_WEEKLY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_MONTHLY),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_MONTHLY,
                         'value' => Configuration::FREQUENCY_MONTHLY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.frequency.' . Configuration::FREQUENCY_YEARLY),
+                        'label' => $ll . 'configuration.frequency.' . Configuration::FREQUENCY_YEARLY,
                         'value' => Configuration::FREQUENCY_YEARLY,
                     ],
                 ],
@@ -400,47 +425,47 @@ return [
                 'renderType' => 'selectSingleBox',
                 'items' => [
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_MONDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_MONDAY,
                         'value' => Configuration::DAY_MONDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_TUESDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_TUESDAY,
                         'value' => Configuration::DAY_TUESDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_WEDNESDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_WEDNESDAY,
                         'value' => Configuration::DAY_WEDNESDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_THURSDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_THURSDAY,
                         'value' => Configuration::DAY_THURSDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_FRIDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_FRIDAY,
                         'value' => Configuration::DAY_FRIDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SATURDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_SATURDAY,
                         'value' => Configuration::DAY_SATURDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SUNDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_SUNDAY,
                         'value' => Configuration::DAY_SUNDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_SPECIAL_WEEKDAY,
                         'value' => Configuration::DAY_SPECIAL_WEEKDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_SPECIAL_BUSINESS,
                         'value' => Configuration::DAY_SPECIAL_BUSINESS,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_SPECIAL_WORKDAY,
                         'value' => Configuration::DAY_SPECIAL_WORKDAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND),
+                        'label' => $ll . 'configuration.day.' . Configuration::DAY_SPECIAL_WEEKEND,
                         'value' => Configuration::DAY_SPECIAL_WEEKEND,
                     ],
                 ],
@@ -462,39 +487,39 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NONE),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_NONE,
                         'value' => Configuration::RECURRENCE_NONE,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FIRST),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_FIRST,
                         'value' => Configuration::RECURRENCE_FIRST,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_SECOND),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_SECOND,
                         'value' => Configuration::RECURRENCE_SECOND,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_THIRD),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_THIRD,
                         'value' => Configuration::RECURRENCE_THIRD,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FOURTH),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_FOURTH,
                         'value' => Configuration::RECURRENCE_FOURTH,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_FIFTH),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_FIFTH,
                         'value' => Configuration::RECURRENCE_FIFTH,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_LAST),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_LAST,
                         'value' => Configuration::RECURRENCE_LAST,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_NEXT_TO_LAST,
                         'value' => Configuration::RECURRENCE_NEXT_TO_LAST,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.recurrence.' . Configuration::RECURRENCE_THIRD_LAST),
+                        'label' => $ll . 'configuration.recurrence.' . Configuration::RECURRENCE_THIRD_LAST,
                         'value' => Configuration::RECURRENCE_THIRD_LAST,
                     ],
                 ],
@@ -509,7 +534,6 @@ return [
         ],
         'end_date_dynamic' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.end_date_dynamic',
-            'exclude' => true,
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -519,23 +543,23 @@ return [
                         'value' => '',
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_1_DAY),
+                        'label' => $ll . 'configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_1_DAY,
                         'value' => Configuration::END_DYNAMIC_1_DAY,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_1_WEEK),
+                        'label' => $ll . 'configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_1_WEEK,
                         'value' => Configuration::END_DYNAMIC_1_WEEK,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_WEEK),
+                        'label' => $ll . 'configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_WEEK,
                         'value' => Configuration::END_DYNAMIC_END_WEEK,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_MONTH),
+                        'label' => $ll . 'configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_MONTH,
                         'value' => Configuration::END_DYNAMIC_END_MONTH,
                     ],
                     [
-                        'label' => TranslateUtility::getLll('configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_YEAR),
+                        'label' => $ll . 'configuration.end_date_dynamic.' . Configuration::END_DYNAMIC_END_YEAR,
                         'value' => Configuration::END_DYNAMIC_END_YEAR,
                     ],
                 ],
@@ -574,9 +598,11 @@ return [
             'showitem' => 'counter_interval,recurrence,day',
         ],
         'access' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access',
             'showitem' => 'starttime, endtime, --linebreak--, hidden',
         ],
         'language' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.language',
             'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource',
         ],
     ],
@@ -586,13 +612,14 @@ return [
                 --palette--;;base,
                 --palette--;;date,
                 --palette--;;time,
-                --div--;' . $ll . 'tx_calendarize_domain_model_configuration.frequency,frequency,
+                --div--;' . $ll . 'tx_calendarize_domain_model_configuration.frequency,
+                frequency,
                 --palette--;;termination_condition,
                 --palette--;;frequency_configuration,import_id,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                 --palette--;;language,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
+                --palette--;;access,
                 --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
             ',
         ],

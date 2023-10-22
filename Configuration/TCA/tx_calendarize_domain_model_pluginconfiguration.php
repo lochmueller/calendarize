@@ -6,6 +6,15 @@ $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
 return [
     'ctrl' => [
+        'title' => $ll . 'tx_calendarize_domain_model_pluginconfiguration',
+        'label' => 'title',
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'sortby' => 'sorting',
+        'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
@@ -13,18 +22,9 @@ return [
             'fe_group' => 'fe_group',
         ],
         'editlock' => 'editlock',
-        'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
-        'transOrigDiffSourceField' => 'l10n_diffsource',
-        'title' => $ll . 'tx_calendarize_domain_model_pluginconfiguration',
-        'label' => 'title',
-        'tstamp' => 'tstamp',
-        'crdate' => 'crdate',
-        'sortby' => 'sorting',
-        'delete' => 'deleted',
+        'iconfile' => 'EXT:calendarize/Resources/Public/Icons/PluginConfiguration.png',
         'searchFields' => 'title,model_name,configuration,storage_pid,recursive,detail_pid,list_pid,year_pid,
             quarter_pid,month_pid,week_pid,day_pid,booking_pid',
-        'iconfile' => 'EXT:calendarize/Resources/Public/Icons/PluginConfiguration.png',
     ],
     'columns' => [
         'fe_group' => [
@@ -54,7 +54,7 @@ return [
             ],
         ],
         'editlock' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:editlock',
             'config' => [
                 'type' => 'check',
@@ -64,7 +64,7 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -87,14 +87,14 @@ return [
                 'type' => 'datetime',
                 'default' => 0,
                 'range' => [
-                    'upper' => 2145913200,
+                    'upper' => mktime(0, 0, 0, 1, 1, 2038),
                 ],
             ],
             'l10n_mode' => 'exclude',
             'l10n_display' => 'defaultAsReadonly',
         ],
         'sys_language_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'language',
@@ -123,7 +123,7 @@ return [
             ],
         ],
         'title' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.title',
             'config' => [
                 'type' => 'input',
@@ -132,7 +132,7 @@ return [
             ],
         ],
         'model_name' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.model_name',
             'config' => [
                 'type' => 'select',
@@ -146,7 +146,7 @@ return [
             ],
         ],
         'configuration' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.configuration',
             'config' => [
                 'type' => 'select',
@@ -158,7 +158,7 @@ return [
             ],
         ],
         'storage_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.storage_pid',
             'config' => [
                 'type' => 'group',
@@ -169,7 +169,7 @@ return [
             ],
         ],
         'recursive' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.recursive',
             'config' => [
                 'type' => 'select',
@@ -210,7 +210,7 @@ return [
             ],
         ],
         'detail_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.detail_pid',
             'config' => [
                 'type' => 'group',
@@ -223,7 +223,7 @@ return [
             ],
         ],
         'list_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.list_pid',
             'config' => [
                 'type' => 'group',
@@ -236,7 +236,7 @@ return [
             ],
         ],
         'year_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.year_pid',
             'config' => [
                 'type' => 'group',
@@ -249,7 +249,7 @@ return [
             ],
         ],
         'quarter_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.quarter_pid',
             'config' => [
                 'type' => 'group',
@@ -262,7 +262,7 @@ return [
             ],
         ],
         'month_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.month_pid',
             'config' => [
                 'type' => 'group',
@@ -275,7 +275,7 @@ return [
             ],
         ],
         'week_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.week_pid',
             'config' => [
                 'type' => 'group',
@@ -288,7 +288,7 @@ return [
             ],
         ],
         'day_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.day_pid',
             'config' => [
                 'type' => 'group',
@@ -301,7 +301,7 @@ return [
             ],
         ],
         'booking_pid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.booking_pid',
             'config' => [
                 'type' => 'group',
@@ -314,30 +314,19 @@ return [
             ],
         ],
         'categories' => [
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.categories',
             'config' => [
                 'type' => 'category',
-                'foreign_table' => 'sys_category',
-                'size' => 20,
-                'foreign_table_where' => ' AND {#sys_category}.{#sys_language_uid} IN (-1, 0)',
-                'relationship' => 'manyToMany',
-                'maxitems' => 99999,
-                'default' => 0,
-                'MM' => 'sys_category_record_mm',
-                'MM_opposite_field' => 'items',
-                'MM_match_fields' => [
-                    'tablenames' => 'tx_calendarize_domain_model_pluginconfiguration',
-                    'fieldname' => 'categories',
-                ],
             ],
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.categories',
-            'exclude' => true,
         ],
     ],
     'palettes' => [
         'language' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.language',
             'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource',
         ],
         'access' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access',
             'showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group',
         ],
     ],
@@ -346,9 +335,11 @@ return [
             'showitem' => '
                 title,model_name,configuration,
                 --div--;PID,detail_pid,list_pid,year_pid,quarter_pid,month_pid,week_pid,day_pid,booking_pid,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,--palette--;;language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
+                --palette--;;access,
+                --div--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.tabs.category,categories,
                 --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
             ',
         ],

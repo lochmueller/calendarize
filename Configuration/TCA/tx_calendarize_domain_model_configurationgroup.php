@@ -6,7 +6,13 @@ $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
 return [
     'ctrl' => [
+        'title' => $ll . 'tx_calendarize_domain_model_configurationgroup',
+        'label' => 'title',
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'tstamp' => 'tstamp',
         'crdate' => 'crdate',
+        'sortby' => 'sorting',
         'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
@@ -16,35 +22,12 @@ return [
         ],
         'editlock' => 'editlock',
         'iconfile' => 'EXT:calendarize/Resources/Public/Icons/ConfigurationGroup.png',
-        'label' => 'title',
-        'origUid' => 't3_origuid',
         'searchFields' => 'uid,title',
-        'sortby' => 'sorting',
-        'title' => $ll . 'tx_calendarize_domain_model_configuration',
-        'tstamp' => 'tstamp',
-        'versioningWS' => 1,
-    ],
-    'palettes' => [
-        'access' => [
-            'showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group',
-        ],
-    ],
-    'types' => [
-        '1' => [
-            'showitem' => '
-                title,configurations,calendarize_info,import_id,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                --palette--;;language,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
-                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
-            ',
-        ],
     ],
     'columns' => [
         'fe_group' => $GLOBALS['TCA']['tt_content']['columns']['fe_group'],
         'editlock' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:editlock',
             'config' => [
                 'type' => 'check',
@@ -54,7 +37,7 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -85,7 +68,6 @@ return [
         ],
         'title' => [
             'label' => $ll . 'tx_calendarize_domain_model_configurationgroup.title',
-            'exclude' => false,
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim',
@@ -114,6 +96,30 @@ return [
                     'items' => 10,
                 ],
             ],
+        ],
+        'import_id' => [
+            'label' => $ll . 'tx_calendarize_domain_model_configurationgroup.import_id',
+            'exclude' => true,
+            'config' => [
+                'type' => 'input',
+                'readOnly' => true,
+            ],
+        ],
+    ],
+    'palettes' => [
+        'access' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access',
+            'showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group',
+        ],
+    ],
+    'types' => [
+        '1' => [
+            'showitem' => '
+                title,configurations,calendarize_info,import_id,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;access,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+            ',
         ],
     ],
 ];

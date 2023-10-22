@@ -6,6 +6,18 @@ $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
 return [
     'ctrl' => [
+        'title' => $ll . 'tx_calendarize_domain_model_event',
+        'label' => 'title',
+        'label_userFunc' => 'HDNET\\Calendarize\\Service\\TcaService->eventTitle',
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
+        'versioningWS' => true,
+        'origUid' => 't3_origuid',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
+        'sortby' => 'sorting',
+        'delete' => 'deleted',
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
@@ -13,21 +25,9 @@ return [
             'fe_group' => 'fe_group',
         ],
         'editlock' => 'editlock',
-        'languageField' => 'sys_language_uid',
-        'transOrigPointerField' => 'l10n_parent',
-        'transOrigDiffSourceField' => 'l10n_diffsource',
-        'versioningWS' => true,
-        'origUid' => 't3_origuid',
-        'title' => $ll . 'tx_calendarize_domain_model_event',
-        'label' => 'title',
-        'tstamp' => 'tstamp',
-        'crdate' => 'crdate',
-        'sortby' => 'sorting',
-        'delete' => 'deleted',
-        'searchFields' => 'uid,title,description',
         'iconfile' => 'EXT:calendarize/Resources/Public/Icons/Event.png',
         'thumbnail' => 'images',
-        'label_userFunc' => 'HDNET\\Calendarize\\Service\\TcaService->eventTitle',
+        'searchFields' => 'uid,title,description',
     ],
     'columns' => [
         'fe_group' => [
@@ -57,7 +57,7 @@ return [
             ],
         ],
         'editlock' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:editlock',
             'config' => [
                 'type' => 'check',
@@ -67,7 +67,7 @@ return [
             ],
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -90,14 +90,14 @@ return [
                 'type' => 'datetime',
                 'default' => 0,
                 'range' => [
-                    'upper' => 2145913200,
+                    'upper' => mktime(0, 0, 0, 1, 1, 2038),
                 ],
             ],
             'l10n_mode' => 'exclude',
             'l10n_display' => 'defaultAsReadonly',
         ],
         'sys_language_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'language',
@@ -127,7 +127,6 @@ return [
             ],
         ],
         'title' => [
-            'exclude' => false,
             'label' => $ll . 'tx_calendarize_domain_model_event.title',
             'config' => [
                 'type' => 'input',
@@ -136,7 +135,6 @@ return [
             'l10n_mode' => 'prefixLangTitle',
         ],
         'slug' => [
-            'exclude' => false,
             'label' => $ll . 'tx_calendarize_domain_model_event.slug',
             'config' => [
                 'type' => 'slug',
@@ -155,14 +153,12 @@ return [
             ],
         ],
         'abstract' => [
-            'exclude' => false,
             'label' => $ll . 'tx_calendarize_domain_model_event.abstract',
             'config' => [
                 'type' => 'text',
             ],
         ],
         'description' => [
-            'exclude' => false,
             'label' => $ll . 'tx_calendarize_domain_model_event.description',
             'config' => [
                 'type' => 'text',
@@ -173,35 +169,35 @@ return [
             'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
         ],
         'location' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.location',
             'config' => [
                 'type' => 'input',
             ],
         ],
         'location_link' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.location_link',
             'config' => [
                 'type' => 'link',
             ],
         ],
         'organizer' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.organizer',
             'config' => [
                 'type' => 'input',
             ],
         ],
         'organizer_link' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.organizer_link',
             'config' => [
                 'type' => 'link',
             ],
         ],
         'images' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.images',
             'config' => [
                 'type' => 'file',
@@ -209,25 +205,16 @@ return [
             ],
         ],
         'downloads' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.downloads',
             'config' => [
                 'type' => 'file',
                 'allowed' => '',
                 'disallowed' => '',
-                'foreign_table' => 'sys_file_reference',
-                'foreign_field' => 'uid_foreign',
-                'foreign_sortby' => 'sorting_foreign',
-                'foreign_table_field' => 'tablenames',
-                'foreign_match_fields' => [
-                    'fieldname' => 'downloads',
-                ],
-                'foreign_label' => 'uid_local',
-                'foreign_selector' => 'uid_local',
             ],
         ],
         'import_id' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => $ll . 'tx_calendarize_domain_model_event.import_id',
             'config' => [
                 'type' => 'input',
@@ -238,21 +225,8 @@ return [
         'categories' => [
             'config' => [
                 'type' => 'category',
-                'foreign_table' => 'sys_category',
-                'size' => 20,
-                'foreign_table_where' => ' AND {#sys_category}.{#sys_language_uid} IN (-1, 0)',
-                'relationship' => 'manyToMany',
-                'maxitems' => 99999,
-                'default' => 0,
-                'MM' => 'sys_category_record_mm',
-                'MM_opposite_field' => 'items',
-                'MM_match_fields' => [
-                    'tablenames' => 'tx_calendarize_domain_model_event',
-                    'fieldname' => 'categories',
-                ],
             ],
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.categories',
-            'exclude' => true,
         ],
         'calendarize' => [
             'label' => 'Calendarize',
@@ -286,9 +260,11 @@ return [
     ],
     'palettes' => [
         'language' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.language',
             'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource',
         ],
         'access' => [
+            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access',
             'showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group',
         ],
     ],
@@ -300,8 +276,10 @@ return [
                 --palette--;;language,
                 --div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:files,images,downloads,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
-                --div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:dateOptions, calendarize, calendarize_info
+                --palette--;;access,
+                --div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:dateOptions,calendarize,calendarize_info,
+                --div--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.tabs.category,categories,
+                --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
             ',
         ],
     ],
