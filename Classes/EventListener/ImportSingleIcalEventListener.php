@@ -38,7 +38,7 @@ class ImportSingleIcalEventListener
         $pid = $event->getPid();
 
         $importId = \strlen($calEvent->getUid()) <= 100 ? $calEvent->getUid() : md5($calEvent->getUid());
-        $eventObj = $this->initializeEventRecord($importId);
+        $eventObj = $this->initializeEventRecord($importId, $pid);
         $this->hydrateEventRecord($eventObj, $calEvent, $pid);
 
         if (null !== $eventObj->getUid() && (int)$eventObj->getUid() > 0) {
@@ -54,12 +54,13 @@ class ImportSingleIcalEventListener
      * Initializes or gets an event by import id.
      *
      * @param string $importId
+     * @param int    $pid
      *
      * @return Event
      */
-    private function initializeEventRecord(string $importId): Event
+    private function initializeEventRecord(string $importId, int $pid): Event
     {
-        $eventObj = $this->eventRepository->findOneByImportId($importId);
+        $eventObj = $this->eventRepository->findOneByImportId($importId, $pid);
 
         if (!($eventObj instanceof Event)) {
             $eventObj = new Event();
