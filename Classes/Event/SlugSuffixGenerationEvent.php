@@ -9,6 +9,7 @@ final class SlugSuffixGenerationEvent
     public function __construct(
         private readonly string $uniqueRegisterKey,
         private readonly array $record,
+        private readonly string $baseSlug,
         private string $slug
     ) {
     }
@@ -21,6 +22,11 @@ final class SlugSuffixGenerationEvent
     public function getRecord(): array
     {
         return $this->record;
+    }
+
+    public function getBaseSlug(): string
+    {
+        return $this->baseSlug;
     }
 
     public function getSlug(): string

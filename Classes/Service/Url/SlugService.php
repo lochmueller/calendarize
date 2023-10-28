@@ -123,6 +123,7 @@ class SlugService extends AbstractService
             $addFields[$key]['slug'] = $this->eventDispatcher->dispatch(new SlugSuffixGenerationEvent(
                 $uniqueRegisterKey,
                 $item,
+                $base,
                 $indexSlug
             ))->getSlug();
         }
