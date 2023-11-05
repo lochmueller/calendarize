@@ -1,6 +1,8 @@
+..  include:: /Includes.txt
+
 Templates
 =========
 
-.. toctree::
+..  toctree::
 
-	Changing/Index
+    Changing/Index

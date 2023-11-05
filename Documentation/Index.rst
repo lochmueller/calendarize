@@ -3,32 +3,32 @@ Calendarize - Flexible TYPO3 Calendar
 =====================================
 
 :Rendered:
-      |today|
+    |today|
 
 :Classification:
-      calendarize
+    calendarize
 
 :Keywords:
-      forEditors, forAdmins, forBeginners, forIntermediates
+    forEditors, forAdmins, forBeginners, forIntermediates
 
 :Author:
-      Tim Lochmüller
+    Tim Lochmüller
 
 :Email:
-      tim@fruit-lab.de
+    tim@fruit-lab.de
 
 :Language:
-      en
+    en
 
-.. toctree::
-   :titlesonly:
+..  toctree::
+    :titlesonly:
 
-   Introduction/Index
-   UserManual/Index
-   AdministratorManual/Index
-   DeveloperManual/Index
-   Templates/Index
-   Snippets/Index
-   KnownProblems/Index
-   Reference/Index
-   ChangeLog/Index
+    Introduction/Index
+    UserManual/Index
+    AdministratorManual/Index
+    DeveloperManual/Index
+    Templates/Index
+    Snippets/Index
+    KnownProblems/Index
+    Reference/Index
+    ChangeLog/Index

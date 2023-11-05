@@ -1,12 +1,14 @@
+..  include:: /Includes.txt
+
 Snippets
 ========
 
 Get the event title of the current page (e.g. for Breadcrumb navigations):
 
-.. code-block:: typoscript
+..  code-block:: typoscript
 
-  lib.eventTitle = CONTENT
-  lib.eventTitle {
+    lib.eventTitle = CONTENT
+    lib.eventTitle {
       table = tx_calendarize_domain_model_event
       select {
         # YOUR Staorge PID here
@@ -20,6 +22,6 @@ Get the event title of the current page (e.g. for Breadcrumb navigations):
       renderObj = TEXT
       renderObj.field = title
       renderObj.htmlSpecialChars = 1
-  }
-  page.1000 < lib.eventTitle
-  page.1000.wrap = <h3>|</h3>
+    }
+    page.1000 < lib.eventTitle
+    page.1000.wrap = <h3>|</h3>

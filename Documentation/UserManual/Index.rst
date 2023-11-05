@@ -1,14 +1,16 @@
+..  include:: /Includes.txt
+
 For users
 =========
 
-.. toctree::
-   :titlesonly:
+..  toctree::
+    :titlesonly:
 
-   GettingStarted
-   CreateRecurringEventWithExceptions
-   Plugin/Index
+    GettingStarted
+    CreateRecurringEventWithExceptions
+    Plugin/Index
 
 ..
-   Records/Event/Index
-   Records/Configuration/Index
-   Records/ConfigurationGroup/Index
+    Records/Event/Index
+    Records/Configuration/Index
+    Records/ConfigurationGroup/Index

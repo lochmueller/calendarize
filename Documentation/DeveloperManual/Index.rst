@@ -1,10 +1,12 @@
+..  include:: /Includes.txt
+
 For developers
 ==============
 
-.. toctree::
+..  toctree::
 
-   OwnEvents/Index
-   Features/Index
-   Features/SpeakingUrl
-   Bookings
-   TypoScript
+    OwnEvents/Index
+    Features/Index
+    Features/SpeakingUrl
+    Bookings
+    TypoScript

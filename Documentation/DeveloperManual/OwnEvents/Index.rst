@@ -1,26 +1,28 @@
+..  include:: /Includes.txt
+
 Own events
 ----------
 
-.. _ownevents:
+..  _ownevents:
 
 The concept of the calendarize extension is the creation of own models and tables that should be part of the calendar output.
 
-.. code-block:: php
+..  code-block:: php
 
-	// in ext_tables.php
-	$configuration = [...];
-	\HDNET\Calendarize\Register::extTables($configuration);
+    // in ext_tables.php
+    $configuration = [...];
+    \HDNET\Calendarize\Register::extTables($configuration);
 
-.. code-block:: php
+..  code-block:: php
 
-	// in ext_localconf.php
-	$configuration = [...];
-	\HDNET\Calendarize\Register::extLocalconf($configuration);
+    // in ext_localconf.php
+    $configuration = [...];
+    \HDNET\Calendarize\Register::extLocalconf($configuration);
 
 
 The following code show the configuration that should be the same in ext_tables and ext_localconf:
 
-.. code-block:: php
+..  code-block:: php
 
     $configuration = [
         'uniqueRegisterKey' => 'MyEvent', // A unique Key for the register (e.g. you Extension Key + "Event")
@@ -36,7 +38,7 @@ Beginning with Typo3 version 8.5 frontend requests no longer load ext_tables.php
 The only exception is if a backend user is logged in to the backend at the same time to initialize the admin panel or frontend editing.
 In order to load the needed column mapping for your Model, you have to override the tca configuration for the corresponding table:
 
-.. code-block:: php
+..  code-block:: php
 
     // in Configuration/TCA/Overrides/<tx_extension_domain_model_event>.php
     \HDNET\Calendarize\Register::createTcaConfiguration($configuration);
@@ -44,7 +46,7 @@ In order to load the needed column mapping for your Model, you have to override 
 To modify the amount of items shown in the preview you can change the amount in the ext_tables.php after calling the Register::extTables method.
 The default value is 10 items.
 
-.. code-block:: php
+..  code-block:: php
 
-	// in ext_tables.php
-	$GLOBALS['TCA']['tx_myextension_domain_model_myevent']['columns']['calendarize_info']['config']['items'] = 25;
+    // in ext_tables.php
+    $GLOBALS['TCA']['tx_myextension_domain_model_myevent']['columns']['calendarize_info']['config']['items'] = 25;

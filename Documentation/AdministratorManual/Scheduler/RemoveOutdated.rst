@@ -1,4 +1,6 @@
-.. _removeoutdated:
+..  include:: /Includes.txt
+
+..  _removeoutdated:
 
 Remove outdated events
 ======================
@@ -10,10 +12,10 @@ This must be true for all indices of a single event.
 This task also supports custom events.
 
 
-1. Add a new Scheduler Task
-2. Select the class :guilabel:`Execute console commands`
-3. Select :guilabel:`Frequency` for the execution
-4. Go to section :guilabel:`Schedulable Command. Save and reopen to define
-   command arguments` at the bottom.
-5. Select :guilabel:`calendarize:cleanup` (press save)
-6. Select the options you want to execute the queue with.
+#.  Add a new Scheduler Task
+#.  Select the class :guilabel:`Execute console commands`
+#.  Select :guilabel:`Frequency` for the execution
+#.  Go to section :guilabel:`Schedulable Command. Save and reopen to define
+    command arguments` at the bottom.
+#.  Select :guilabel:`calendarize:cleanup` (press save)
+#.  Select the options you want to execute the queue with.

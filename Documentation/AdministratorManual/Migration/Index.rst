@@ -1,10 +1,10 @@
-.. include:: ../../Includes.txt
+..  include:: /Includes.txt
 
 =========
 Migration
 =========
 
-.. toctree::
-   :titlesonly:
+..  toctree::
+    :titlesonly:
 
-   MigrateFromCal
+    MigrateFromCal

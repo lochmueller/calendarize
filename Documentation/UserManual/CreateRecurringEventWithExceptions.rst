@@ -1,6 +1,6 @@
-.. include:: ../Includes.txt
+..  include:: /Includes.txt
 
-.. _createRecurringEventsWithExceptions:
+..  _createRecurringEventsWithExceptions:
 
 Create recurring event with exceptions
 ======================================
@@ -18,47 +18,47 @@ Through this the exceptions can be reused in multiple events and easier maintain
 Realization
 -----------
 
-.. rst-class:: bignums-xxl
+..  rst-class:: bignums-xxl
 
-1. Create a configuration group
+1.  Create a configuration group
 
-   #. Create a new configuration group
+    #.  Create a new configuration group
 
-   #. Add configurations with time frames which should be excluded (:guilabel:`Handling` should still be :code:`Include`)
+    #.  Add configurations with time frames which should be excluded (:guilabel:`Handling` should still be :code:`Include`)
 
-      .. image:: ../Images/User/configuration-group-holidays.png
-         :alt: New configuration group with multiple configurations
-         :class: with-shadow
-         :scale: 65
+        ..  image:: ../Images/User/configuration-group-holidays.png
+            :alt: New configuration group with multiple configurations
+            :class: with-shadow
+            :scale: 65
 
 
-2. Create a recurring event
+2.  Create a recurring event
 
-   #. Create an Event and fill in the mandatory fields.
+    #.  Create an Event and fill in the mandatory fields.
 
-   #. Add a configuration with a weekly frequency and a till date.
+    #.  Add a configuration with a weekly frequency and a till date.
 
-      .. image:: ../Images/User/event-recurring-frequency.png
-         :alt: Event configuration on the frequency tab
-         :class: with-shadow
-         :scale: 65
+        ..  image:: ../Images/User/event-recurring-frequency.png
+            :alt: Event configuration on the frequency tab
+            :class: with-shadow
+            :scale: 65
 
-   #. Add an additional configuration and set :guilabel:`Type` to :code:`Group` and the :guilabel:`Handling` to :code:`Exclude`.
+    #.  Add an additional configuration and set :guilabel:`Type` to :code:`Group` and the :guilabel:`Handling` to :code:`Exclude`.
 
-   #. Fill in the field :guilabel:`Groups` by selecting the previously created group.
+    #.  Fill in the field :guilabel:`Groups` by selecting the previously created group.
 
-      .. image:: ../Images/User/event-exclude-group.png
-         :alt: Event configuration on the frequency tab
-         :class: with-shadow
-         :scale: 65
+        ..  image:: ../Images/User/event-exclude-group.png
+            :alt: Event configuration on the frequency tab
+            :class: with-shadow
+            :scale: 65
 
-   #. Save and repeat this for other events.
+    #.  Save and repeat this for other events.
 
-3. Check the result
+3.  Check the result
 
-   Inspect the dates in :guilabel:`Calendarize (Information - Save to refresh...)` or in the frontend.
+    Inspect the dates in :guilabel:`Calendarize (Information - Save to refresh...)` or in the frontend.
 
-.. note::
+..  note::
 
-   Group configurations are valid event models, so they might be displayed by themselves in the frontend.
-   Use :guilabel:`Configuration (record type)` in the plugin to prevent this.
+    Group configurations are valid event models, so they might be displayed by themselves in the frontend.
+    Use :guilabel:`Configuration (record type)` in the plugin to prevent this.

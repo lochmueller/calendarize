@@ -1,12 +1,12 @@
-.. include:: ../../Includes.txt
+..  include:: /Includes.txt
 
-.. _dataProcessing:
+..  _dataProcessing:
 
 ===============
 Data processing
 ===============
 
-.. toctree::
-   :titlesonly:
+..  toctree::
+    :titlesonly:
 
-   LanguageMenuProcessor
+    LanguageMenuProcessor

@@ -1,9 +1,4 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../../Includes.txt
+..  include:: /Includes.txt
 
 =============
 Configuration
@@ -16,8 +11,8 @@ Via the constant editor, you can adapt template path and feed options. There are
 The last step is, place the plugins on your pages. The view is always related to the configured PIDs. That means, if you create a month view and set a detailPid, the template will render detail links to events.
 If you leave the detailPid empty and select the monthPid, no events are in the output and the month view is a "small month view". Just try same combinations :)
 
-.. toctree::
-        :titlesonly:
+..  toctree::
+    :titlesonly:
 
-        Sitemap
-        Breadcrumb
+    Sitemap
+    Breadcrumb

@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+..  include:: /Includes.txt
 
 Bookings
 ========
@@ -10,22 +10,22 @@ This is up to custom extensions.
 Needs to be implemented
 -----------------------
 
-*  :ref:`PSR-14 Event listener <t3coreapi:EventDispatcherImplementation>` for :php:`GenericActionAssignmentEvent` (`className=BookingController`)
+*   :ref:`PSR-14 Event listener <t3coreapi:EventDispatcherImplementation>` for :php:`GenericActionAssignmentEvent` (`className=BookingController`)
 
-   * Contains the :php:`BookingRequest` with the submitted data
+    *   Contains the :php:`BookingRequest` with the submitted data
 
-*  Processing the booking
+*   Processing the booking
 
-   *  Database
-   *  Email notification
-   *  Configuration
-   *  ...
+    *    Database
+    *    Email notification
+    *    Configuration
+    *    ...
 
-*  For *custom data fields*
+*   For *custom data fields*
 
-   *  Custom BookingRequest (like :php:`DefaultBookingRequest`)
-   *  Custom HTML template (`Templates/Booking/Booking.html`)
+    *   Custom BookingRequest (like :php:`DefaultBookingRequest`)
+    *   Custom HTML template (`Templates/Booking/Booking.html`)
 
-*  For *custom events*
+*   For *custom events*
 
-   *  Add the feature :php:`BookingInterface` to your event
+    *   Add the feature :php:`BookingInterface` to your event

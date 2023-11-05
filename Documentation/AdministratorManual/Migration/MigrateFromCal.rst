@@ -1,3 +1,5 @@
+..  include:: /Includes.txt
+
 Migration from cal to calendarize
 =================================
 
@@ -7,12 +9,12 @@ Requirements
 ------------
 
 ..  attention::
-   - Installed extension calendarize (version 12)
-   - Tables from cal (e.g. :code:`tx_cal_*`, ...)
-   - TYPO3 v10.4 (v11 is NOT supported)
+    * Installed extension calendarize (version 12)
+    * Tables from cal (e.g. :code:`tx_cal_*`, ...)
+    * TYPO3 v10.4 (v11 is NOT supported)
 
-   .. deprecated:: 13
-      Was removed in calendarize 13 and later
+    ..  deprecated:: 13
+        Was removed in calendarize 13 and later
 
 
 Migration
@@ -25,20 +27,20 @@ The migration is an upgrade wizard and listed inside the admin tool.
 Inside the :guilabel:`Upgrade > Upgrade Wizard` and you should be listed as "Migrate cal event structures to the new calendarize event structures. [...]".
 
 
-.. important::
-   The wizard is only displayed, if the table :code:`tx_cal_event` exists.
+..  important::
+    The wizard is only displayed, if the table :code:`tx_cal_event` exists.
 
 
 It is also possible to execute the wizard from the command line.
 
-.. code-block:: bash
+..  code-block:: bash
 
-   # Run using the identifier 'calendarize_calMigration'
-   ./vendor/bin/typo3 upgrade:run calendarize_calMigration
+    # Run using the identifier 'calendarize_calMigration'
+    ./vendor/bin/typo3 upgrade:run calendarize_calMigration
 
-.. versionchanged:: 8.2.0
+..  versionchanged:: 8.2.0
 
-   The identifier was formerly called :code:`HDNET\\Calendarize\\Updates\\CalMigrationUpdate`.
+    The identifier was formerly called :code:`HDNET\\Calendarize\\Updates\\CalMigrationUpdate`.
 
 
 Migration of plugins

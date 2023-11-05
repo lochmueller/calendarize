@@ -1,7 +1,9 @@
+..  include:: /Includes.txt
+
 Introduction
 ------------
 
-.. toctree::
+..  toctree::
 
-	WhatDoesItDo/Index
-	Credits/Index
+    WhatDoesItDo/Index
+    Credits/Index
