@@ -12,11 +12,11 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Index information.
- *
- * @DatabaseTable
  */
 class Index extends AbstractModel
 {
+    protected \DateTime $tstamp;
+
     /**
      * The unique register key of the used table/model configuration.
      */
@@ -112,6 +112,11 @@ class Index extends AbstractModel
         }
 
         return $date;
+    }
+
+    public function getTstamp(): \DateTime
+    {
+        return $this->tstamp;
     }
 
     /**

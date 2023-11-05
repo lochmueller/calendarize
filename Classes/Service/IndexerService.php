@@ -145,10 +145,6 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $this->reindex($configurationKey, $tableName, $liveId);
         }
 
-        if (!$rawRecord['calendarize']) {
-            return;
-        }
-
         $neededItems = $this->preparationService->prepareIndex($configurationKey, $tableName, $uid);
 
         $this->logger->debug('Update index of ' . $tableName . ':' . $uid . ' in  workspace ' . $workspace);

@@ -6,6 +6,7 @@ namespace HDNET\Calendarize\Typolink;
 
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
+use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
@@ -23,11 +24,10 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
     {
         if (isset($linkDetails['identifier']) && \in_array($linkDetails['identifier'], $this->getEventTables(), true)) {
             $eventId = $linkDetails['uid'];
-            $controller = $this->getTypoScriptFrontendController();
-            $defaultPid = (int)($controller->tmpl
-                ->setup['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
+            $typoScriptArray = $this->contentObjectRenderer->getRequest()->getAttribute('frontend.typoscript')?->getSetupArray() ?? [];
+            $defaultPid = (int)($typoScriptArray['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
             if ($defaultPid <= 0) {
-                throw new \Exception('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
+                throw new \RuntimeException('You have to configure calendarize:defaultDetailPid to use the linkhandler function');
             }
 
             $indexUid = $this->getIndexForEventUid($linkDetails['identifier'], $eventId);
@@ -51,20 +51,24 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
      */
     protected function populateRecordLinkConfiguration(string $eventTable, int $pageUid, int $indexUid): void
     {
-        $this->getTypoScriptFrontendController()
-            ->tmpl
-            ->setup['config.']['recordLinks.'][$eventTable . '.']['typolink.'] = [
-                'parameter' => $pageUid,
-                'additionalParams' => HttpUtility::buildQueryString([
-                    'tx_calendarize_calendar' => [
-                        'index' => $indexUid,
-                        'controller' => 'Calendar',
-                        'action' => 'detail',
-                    ],
-                ], '&'),
-            ];
+        /** @var FrontendTypoScript $frontendTypoScript */
+        $frontendTypoScript = $this->contentObjectRenderer->getRequest()->getAttribute('frontend.typoscript');
+        if (null === $frontendTypoScript) {
+            return;
+        }
 
-        parent::build($linkDetails, $linkText, $target, $conf);
+        $typoScriptArray = $frontendTypoScript->getSetupArray() ?? [];
+        $typoScriptArray['config.']['recordLinks.'][$eventTable . '.']['typolink.'] = [
+            'parameter' => $pageUid,
+            'additionalParams' => HttpUtility::buildQueryString([
+                'tx_calendarize_calendar' => [
+                    'index' => $indexUid,
+                    'controller' => 'Calendar',
+                    'action' => 'detail',
+                ],
+            ], '&'),
+        ];
+        $frontendTypoScript->setSetupArray($typoScriptArray);
     }
 
     protected function getIndexForEventUid($table, $uid): int

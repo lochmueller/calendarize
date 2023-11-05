@@ -118,7 +118,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
             )
             ->executeQuery();
 
-        return $result->fetchOne();
+        return $result->fetchFirstColumn();
     }
 
     protected function handleMenu(array &$menu, array $availableLanguages): void

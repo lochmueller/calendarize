@@ -122,8 +122,6 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'authMode' => 'explicitDeny',
-                'authMode_enforce' => 'strict',
                 'items' => [
                     ['label' => $ll . 'configuration.type.time', 'value' => 'time'],
                     ['label' => $ll . 'configuration.type.group', 'value' => 'group'],

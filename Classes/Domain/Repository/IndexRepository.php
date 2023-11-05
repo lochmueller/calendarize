@@ -189,8 +189,13 @@ class IndexRepository extends AbstractRepository
         array $customSearch = [],
         int $limit = 0
     ): array|QueryResultInterface {
-        $event = new IndexRepositoryFindBySearchEvent($startDate, $endDate, $customSearch, $this->indexTypes, false);
-        $this->eventDispatcher->dispatch($event);
+        $event = $this->eventDispatcher->dispatch(new IndexRepositoryFindBySearchEvent(
+            $startDate,
+            $endDate,
+            $customSearch,
+            $this->indexTypes,
+            false
+        ));
 
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -434,8 +439,9 @@ class IndexRepository extends AbstractRepository
         $constraints = $this->getDefaultConstraints($query);
         $this->addTimeFrameConstraints($constraints, $query, $startTime, $endTime);
 
-        $event = new IndexRepositoryTimeSlotEvent($constraints, $query);
-        $this->eventDispatcher->dispatch($event);
+        $event = $this->eventDispatcher->dispatch(
+            new IndexRepositoryTimeSlotEvent($constraints, $query)
+        );
 
         return $this->matchAndExecute($query, $event->getConstraints());
     }
@@ -492,8 +498,9 @@ class IndexRepository extends AbstractRepository
             $constraints[] = $query->in('pid', $storagePages);
         }
 
-        $event = new IndexRepositoryDefaultConstraintEvent([], $this->indexTypes, $this->additionalSlotArguments);
-        $this->eventDispatcher->dispatch($event);
+        $event = $this->eventDispatcher->dispatch(
+            new IndexRepositoryDefaultConstraintEvent([], $this->indexTypes, $this->additionalSlotArguments)
+        );
 
         if ($event->getForeignIds()) {
             $constraints[] = $this->addForeignIdConstraints($query, $event->getForeignIds());

@@ -89,7 +89,7 @@ class SlugService extends AbstractService
                 ?? "$uniqueRegisterKey-{$record['uid']}";
         }
 
-        $baseSlug = $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)->sanitize($baseSlug);
+        $baseSlug = $this->getSlugHelper($record['t3ver_wsid'] ?? 0)->sanitize($baseSlug);
 
         return $this->eventDispatcher->dispatch(new BaseSlugGenerationEvent(
             $uniqueRegisterKey,
@@ -119,7 +119,7 @@ class SlugService extends AbstractService
                 $indexSlug .= '-' . str_replace('-', '', $item['start_date']);
             }
 
-            $indexSlug = $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)->sanitize($indexSlug);
+            $indexSlug = $this->getSlugHelper($record['t3ver_wsid'] ?? 0)->sanitize($indexSlug);
             $addFields[$key]['slug'] = $this->eventDispatcher->dispatch(new SlugSuffixGenerationEvent(
                 $uniqueRegisterKey,
                 $item,

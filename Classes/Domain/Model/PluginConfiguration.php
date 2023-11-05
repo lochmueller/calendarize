@@ -9,10 +9,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * PluginConfiguration.
- *
- * @DatabaseTable
- *
- * @SmartExclude(excludes={"Workspaces"})
  */
 class PluginConfiguration extends AbstractModel
 {

@@ -34,6 +34,11 @@ return [
         ],
     ],
     'columns' => [
+        'tstamp' => [
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
         'fe_group' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.fe_group',

@@ -61,6 +61,7 @@ class PluginConfigurationService
             $config['items'][] = [
                 'label' => $configuration['title'],
                 'value' => $key,
+                'icon' => $GLOBALS['TCA'][$configuration['tableName']]['ctrl']['typeicon_classes']['default'] ?? 'tcarecords-' . $configuration['tableName'] . '-default',
             ];
         }
 

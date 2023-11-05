@@ -77,7 +77,7 @@
 									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
 									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
 									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
-									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
+									<numIndex index="4">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
 								</OR>
 							</displayCond>
 							<config>
@@ -251,6 +251,7 @@
 									</numIndex>
 								</items>
 							</config>
+                            <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
 						</TCEforms>
 					</settings.sortBy>
 
@@ -272,6 +273,7 @@
 									</numIndex>
 								</items>
 							</config>
+                            <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
 						</TCEforms>
 					</settings.sorting>
 
