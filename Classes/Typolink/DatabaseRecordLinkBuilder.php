@@ -14,6 +14,7 @@ use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Frontend\Typolink\DatabaseRecordLinkBuilder as BaseDatabaseRecordLinkBuilderAlias;
 use TYPO3\CMS\Frontend\Typolink\LinkResultInterface;
+use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 
 /**
  * DatabaseRecordLinkBuilder.
@@ -33,10 +34,7 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
             $indexUid = $this->getIndexForEventUid($linkDetails['identifier'], $eventId);
 
             if (!$indexUid) {
-                $conf['parameter'] = 0;
-                $linkDetails = [];
-
-                return parent::build($linkDetails, $linkText, $target, $conf);
+                throw new UnableToLinkException('Indices not found for "' . $linkDetails['typoLinkParameter'] . '", so "' . $linkText . '" was not linked.', 1699909349, null, $linkText);
             }
 
             $this->populateRecordLinkConfiguration($linkDetails['identifier'], $defaultPid, $indexUid);

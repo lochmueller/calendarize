@@ -14,7 +14,7 @@ This configuration is enabled by default.
     TCEMAIN {
       linkHandler {
         tx_calendarize_domain_model_event {
-          handler = TYPO3\CMS\Recordlist\LinkHandler\RecordLinkHandler
+          handler = TYPO3\CMS\Backend\LinkHandler\RecordLinkHandler
           label = Events
           configuration {
             table = tx_calendarize_domain_model_event

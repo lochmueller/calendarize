@@ -48,7 +48,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Override page ids.
      */
-    protected ?array $overridePageIds = [];
+    protected ?array $overridePageIds = null;
 
     protected EventDispatcherInterface $eventDispatcher;
 
@@ -68,7 +68,7 @@ class IndexRepository extends AbstractRepository
     /**
      * Override page IDs.
      */
-    public function setOverridePageIds(array $overridePageIds): void
+    public function setOverridePageIds(?array $overridePageIds): void
     {
         $this->overridePageIds = $overridePageIds;
     }
@@ -477,9 +477,7 @@ class IndexRepository extends AbstractRepository
         $frameworkConfig = $configurationManager
             ->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
-        return isset($frameworkConfig['persistence']['storagePid']) ?
-            GeneralUtility::intExplode(',', $frameworkConfig['persistence']['storagePid']) :
-            [];
+        return GeneralUtility::intExplode(',', (string)($frameworkConfig['persistence']['storagePid'] ?? ''));
     }
 
     /**

@@ -357,12 +357,12 @@ class CalendarController extends AbstractCompatibilityController
     /**
      * Quarter action.
      *
-     * @param int $year
-     * @param int $quarter 1-4
+     * @param int      $year
+     * @param int|null $quarter 1-4
      *
      * @return ResponseInterface
      */
-    public function quarterAction(int $year = 0, int $quarter = 1): ResponseInterface
+    public function quarterAction(int $year = 0, int $quarter = null): ResponseInterface
     {
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
