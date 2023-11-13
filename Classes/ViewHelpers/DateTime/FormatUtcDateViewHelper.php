@@ -24,8 +24,7 @@ class FormatUtcDateViewHelper extends DateViewHelper
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ): string
-    {
+    ): string {
         // save configured timezone
         $timezone = date_default_timezone_get();
         // set timezone to UTC

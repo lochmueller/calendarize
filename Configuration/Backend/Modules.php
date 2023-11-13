@@ -12,6 +12,6 @@ return [
         'controllerActions' => [
             \HDNET\Calendarize\Controller\BackendController::class => ['list'],
         ],
-        'aliases' => ['web_CalendarizeCalendarize']
+        'aliases' => ['web_CalendarizeCalendarize'],
     ],
 ];

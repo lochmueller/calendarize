@@ -28,7 +28,6 @@ class DateViewHelper extends AbstractViewHelper
 
     public function initializeArguments(): void
     {
-
         $this->registerArgument(
             'date',
             'mixed',
