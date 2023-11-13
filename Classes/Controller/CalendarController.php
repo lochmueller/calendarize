@@ -396,21 +396,6 @@ class CalendarController extends AbstractCompatibilityController
      */
     public function monthAction(int $year = 0, int $month = 0, int $day = 0): ResponseInterface
     {
-        // @todo Check how we could map the arguments automatically
-        $params = $this->request->getQueryParams();
-        $calendarize = $params['tx_calendarize_calendar'] ?? [];
-
-        if ($year === 0) {
-            $year = (int)($calendarize['year'] ?? 0);
-        }
-        if ($month === 0) {
-            $month = (int)($calendarize['month'] ?? 0);
-        }
-        if ($day === 0) {
-            $day = (int)($calendarize['day'] ?? 0);
-        }
-
-
         $this->checkStaticTemplateIsIncluded();
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
@@ -697,13 +682,11 @@ class CalendarController extends AbstractCompatibilityController
             $dummyIndex->setForeignTable($selection['configuration']['tableName']);
             $dummyIndex->setForeignUid((int)$selection['uid']);
 
-            $result = $this->indexRepository->findByTraversing($dummyIndex);
-            $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
+            $index = $this->indexRepository->findByTraversing($dummyIndex, true, false, 1)->getFirst();
             if (\is_object($index)) {
                 $indicies[] = $index;
             } else {
-                $result = $this->indexRepository->findByTraversing($dummyIndex, false, true);
-                $index = $result->getQuery()->setLimit(1)->execute()->getFirst();
+                $index = $this->indexRepository->findByTraversing($dummyIndex, false, true, 1)->getFirst();
                 if (\is_object($index)) {
                     $indicies[] = $index;
                 }

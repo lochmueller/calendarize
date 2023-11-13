@@ -248,26 +248,4 @@ class DateTimeUtility
 
         return $dateTime;
     }
-
-    /**
-     * Converts DateTime objects for native dates, so that they are stored "as is".
-     * This is required for Typo3 versions before 11, since they are formatted in UTC, but shouldn't.
-     *
-     * @deprecated wax used for fixing TYPO3 11 UTC error
-     */
-    public static function fixDateTimeForDb(?\DateTime $date): ?\DateTime
-    {
-        return $date;
-    }
-
-    /**
-     * Converts the native date object from UTC to the local timezone.
-     * This is required for Typo3 versions before 11, since the dates in the db are assumed as UTC, but aren't.
-     *
-     * @deprecated wax used for fixing TYPO3 11 UTC error
-     */
-    public static function fixDateTimeForExtbase(?\DateTime $date): ?\DateTime
-    {
-        return $date;
-    }
 }
