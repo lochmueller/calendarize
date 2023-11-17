@@ -52,7 +52,7 @@ class EventRepository extends AbstractRepository
         return $ids;
     }
 
-    public function findOneByImportId(string $importId): ?object
+    public function findOneByImportId(string $importId, int $pid): ?object
     {
         $query = $this->createQuery();
 
@@ -60,7 +60,10 @@ class EventRepository extends AbstractRepository
         $querySettings->setRespectStoragePage(false);
         $querySettings->setIgnoreEnableFields(true);
 
-        $query->matching($query->equals('importId', $importId));
+        $query->matching($query->logicalAnd(
+            $query->equals('importId', $importId),
+            $query->equals('pid', $pid),
+        ));
 
         return $query->execute()->getFirst();
     }
