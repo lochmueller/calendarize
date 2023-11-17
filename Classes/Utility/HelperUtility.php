@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Utility;
 
-use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -17,8 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Helper Utility.
@@ -50,9 +47,7 @@ class HelperUtility
         string $title = '',
         ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK
     ): void {
-        // Don't store flash messages in CLI context
-        // Note: the getUserByContext check is only required for TYPO3 v10 and is fixed in v11 (94418).
-        $storeInSession = !Environment::isCli() && null !== self::getUserByContext();
+        $storeInSession = !Environment::isCli();
         $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, $storeInSession);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
@@ -111,22 +106,6 @@ class HelperUtility
     public static function getQueryBuilder(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-    }
-
-    /**
-     * Gets user object by context.
-     * This class is also used in install tool, where $GLOBALS['BE_USER'] is not set and can be null.
-     */
-    protected static function getUserByContext(): ?AbstractUserAuthentication
-    {
-        if (
-            ($GLOBALS['TSFE'] ?? null) instanceof TypoScriptFrontendController
-            && $GLOBALS['TSFE']->fe_user instanceof FrontendUserAuthentication
-        ) {
-            return $GLOBALS['TSFE']->fe_user;
-        }
-
-        return $GLOBALS['BE_USER'] ?? null;
     }
 
     /**

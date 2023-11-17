@@ -20,7 +20,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
 abstract class AbstractController extends ActionController
@@ -221,9 +220,7 @@ abstract class AbstractController extends ActionController
      */
     protected function addCacheTags(array $tags): void
     {
-        if ($GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
-            $GLOBALS['TSFE']->addCacheTags($tags);
-        }
+        $this->request->getAttribute('frontend.controller')?->addCacheTags($tags);
     }
 
     protected function isDateOutOfTypoScriptConfiguration(\DateTime $dateTime): bool

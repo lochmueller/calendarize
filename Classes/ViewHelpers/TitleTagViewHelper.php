@@ -27,21 +27,10 @@ class TitleTagViewHelper extends AbstractViewHelper
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): void {
         $content = trim((string)$renderChildrenClosure());
-        if (!empty($content)) {
-            if (property_exists($GLOBALS['TSFE'], 'altPageTitle')) {
-                $GLOBALS['TSFE']->altPageTitle = $content;
-            }
-            if (property_exists($GLOBALS['TSFE'], 'indexedDocTitle')) {
-                $GLOBALS['TSFE']->indexedDocTitle = $content;
-            }
-        }
-
         if (!empty($content)) {
             GeneralUtility::makeInstance(CalendarizeTitleProvider::class)->setTitle($content);
         }
-
-        return '';
     }
 }

@@ -6,6 +6,7 @@ namespace HDNET\Calendarize\Service;
 
 use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -16,9 +17,9 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class BreadcrumbService extends AbstractService
 {
-    public function generate(string $content, array $configuration): string
+    public function generate(string $content, array $configuration, ServerRequestInterface $request): string
     {
-        $arguments = GeneralUtility::_GET('tx_calendarize_calendar');
+        $arguments = $request->getQueryParams()['tx_calendarize_calendar'] ?? null;
         $indexUid = isset($arguments['index']) ? (int)$arguments['index'] : 0;
         if (0 === $indexUid) {
             return $content;
@@ -32,11 +33,11 @@ class BreadcrumbService extends AbstractService
         $title = $this->getEventByIndex($index)->getTitle();
         $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 
-        if (isset($configuration['doNotLinkIt']) && (bool)$configuration['doNotLinkIt']) {
+        if ($configuration['doNotLinkIt'] ?? false) {
             $content = $title;
         } else {
             $linkConfiguration = [
-                'parameter' => $GLOBALS['TSFE']->id,
+                'parameter' => $request->getAttribute('routing')->getPageId(),
                 'additionalParams' => HttpUtility::buildQueryString([
                     'tx_calendarize_calendar' => [
                         'index' => $indexUid,

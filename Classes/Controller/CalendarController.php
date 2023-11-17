@@ -872,6 +872,6 @@ class CalendarController extends AbstractCompatibilityController
 
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
-        return $GLOBALS['TSFE'];
+        return $this->request->getAttribute('frontend.controller');
     }
 }
