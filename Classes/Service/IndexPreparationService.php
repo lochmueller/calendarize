@@ -37,7 +37,7 @@ class IndexPreparationService extends AbstractService
         $transPointer = $GLOBALS['TCA'][$tableName]['ctrl']['transOrigPointerField'] ?? false; // e.g. l10n_parent
         if ($transPointer && (int)$rawRecord[$transPointer] > 0) {
             $rawOriginalRecord = BackendUtility::getRecord($tableName, (int)$rawRecord[$transPointer]);
-            $configurations = GeneralUtility::intExplode(',', $rawOriginalRecord[$fieldName], true);
+            $configurations = GeneralUtility::intExplode(',', $rawOriginalRecord[$fieldName] ?? '', true);
         }
 
         $neededItems = [];
@@ -96,14 +96,8 @@ class IndexPreparationService extends AbstractService
 
         if ($transPointer && (int)$record[$transPointer] > 0) {
             foreach ($neededItems as $key => $value) {
-                $originalRecord = BackendUtility::getRecord(
-                    $value['foreign_table'],
-                    $value['foreign_uid'],
-                    $transPointer
-                );
-
                 $searchFor = $value;
-                $searchFor['foreign_uid'] = (int)$originalRecord[$transPointer];
+                $searchFor['foreign_uid'] = (int)$record[$transPointer];
 
                 $queryBuilder = HelperUtility::getQueryBuilder(IndexerService::TABLE_NAME);
                 $where = [];

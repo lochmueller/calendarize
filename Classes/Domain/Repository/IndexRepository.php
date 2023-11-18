@@ -650,7 +650,7 @@ class IndexRepository extends AbstractRepository
             if (\is_int($table)) {
                 // Plain integers (= deprecated old way, stays in for compatibility)
                 // Old way, just accept foreignUids as provided, not checking the table.
-                $foreignIdConstraints[] = $query->in('foreignUid', $ids);
+                $foreignIdConstraints[] = $query->equals('foreignUid', $ids);
                 @trigger_error(
                     'Using only foreign ID constraint without a table is deprecated and will be removed in a later version.',
                     \E_USER_DEPRECATED

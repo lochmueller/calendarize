@@ -64,6 +64,6 @@ class Search
 
     public function isSearch(): bool
     {
-        return 0 !== reset($this->categories) || '' !== $this->getFullText();
+        return !empty($this->categories) || '' !== $this->getFullText();
     }
 }

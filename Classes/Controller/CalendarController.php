@@ -555,13 +555,14 @@ class CalendarController extends AbstractController
                 if (!MathUtility::canBeInterpretedAsInteger($this->settings['listPid'])) {
                     return $this->htmlResponse(TranslateUtility::get('noEventDetailView'));
                 }
-                $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
+
+                return $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
             }
         }
         $uniqueRegisterKey = $index->getConfiguration()['uniqueRegisterKey'];
         $originalObject = $index->getOriginalObject();
         if (!$originalObject) {
-            $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
+            return $this->eventExtendedRedirect(__CLASS__, __FUNCTION__ . 'noEvent');
         }
 
         $this->addCacheTags(
@@ -661,8 +662,8 @@ class CalendarController extends AbstractController
         // prepare selection
         $selections = [];
         $configurations = $this->getCurrentConfigurations();
-        foreach (GeneralUtility::trimExplode(',', $this->settings['singleItems']) as $item) {
-            list($table, $uid) = BackendUtility::splitTable_Uid($item);
+        foreach (GeneralUtility::trimExplode(',', $this->settings['singleItems'] ?? '') as $item) {
+            [$table, $uid] = BackendUtility::splitTable_Uid($item);
             foreach ($configurations as $configuration) {
                 if ($configuration['tableName'] === $table) {
                     $selections[] = [
