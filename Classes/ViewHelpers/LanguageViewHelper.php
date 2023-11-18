@@ -6,6 +6,7 @@ namespace HDNET\Calendarize\ViewHelpers;
 
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 
 /**
  * LanguageViewHelper.
@@ -25,6 +26,9 @@ class LanguageViewHelper extends AbstractViewHelper
 
     protected function getRequest(): ServerRequestInterface
     {
-        return $GLOBALS['TYPO3_REQUEST'];
+        /** @var RenderingContext $renderingContext */
+        $renderingContext = $this->renderingContext;
+
+        return $renderingContext->getRequest();
     }
 }

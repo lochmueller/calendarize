@@ -234,7 +234,7 @@ abstract class AbstractController extends ActionController
     protected function return404Page(): ResponseInterface
     {
         return GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-            $GLOBALS['TYPO3_REQUEST'],
+            $this->request,
             'The requested page does not exist',
             ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
         );

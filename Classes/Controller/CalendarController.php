@@ -865,9 +865,7 @@ class CalendarController extends AbstractCompatibilityController
 
     protected function getBaseUri(): string
     {
-        $request = $GLOBALS['TYPO3_REQUEST'];
-
-        return $request->getAttribute('normalizedParams')->getSiteUrl();
+        return $this->request->getAttribute('normalizedParams')->getSiteUrl();
     }
 
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController

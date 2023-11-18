@@ -12,6 +12,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
@@ -23,13 +24,17 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 #[Controller]
 class BackendController extends AbstractController
 {
+    protected LanguageService $languageService;
+
     private const PATH_CORE_LOCALLANG = 'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf';
 
     public const OPTIONS_KEY = 'calendarize_be';
 
     public function __construct(
-        protected readonly ModuleTemplateFactory $moduleTemplateFactory
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
+        protected readonly LanguageServiceFactory $languageServiceFactory,
     ) {
+        $this->languageService = $this->languageServiceFactory->createFromUserPreferences($this->getBackendUser());
     }
 
     public function initializeListAction(): void
@@ -85,8 +90,8 @@ class BackendController extends AbstractController
             'pagination' => $pagination,
             'totalAmount' => \count($indices),
             'filterOptions' => [
-                'asc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':ascending') ?: 'ascending',
-                'desc' => $this->getLanguageService()->sL(self::PATH_CORE_LOCALLANG . ':descending') ?: 'descending',
+                'asc' => $this->languageService->sL(self::PATH_CORE_LOCALLANG . ':ascending') ?: 'ascending',
+                'desc' => $this->languageService->sL(self::PATH_CORE_LOCALLANG . ':descending') ?: 'descending',
             ],
         ]);
 
@@ -222,10 +227,5 @@ class BackendController extends AbstractController
     protected function getBackendUser(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
-    }
-
-    protected function getLanguageService(): ?LanguageService
-    {
-        return $GLOBALS['LANG'] ?? null;
     }
 }

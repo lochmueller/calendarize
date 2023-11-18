@@ -50,7 +50,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         if (!$processorConfiguration['menus']) {
             return $processedData;
         }
-        $indexId = $this->getIndexId();
+        $indexId = $this->getIndexId($cObj->getRequest());
         if (0 === $indexId) {
             return $processedData;
         }
@@ -138,10 +138,9 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         }
     }
 
-    protected function getIndexId(): int
+    protected function getIndexId(ServerRequestInterface $request): int
     {
         $indexId = 0;
-        $request = $this->getRequest();
         /** @var PageArguments $pageArguments */
         $pageArguments = $request->getAttribute('routing');
         if (isset($pageArguments->getRouteArguments()['tx_calendarize_calendar']['index'])) {
@@ -151,10 +150,5 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         }
 
         return $indexId;
-    }
-
-    protected function getRequest(): ServerRequestInterface
-    {
-        return $GLOBALS['TYPO3_REQUEST'];
     }
 }
