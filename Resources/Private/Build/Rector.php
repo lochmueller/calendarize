@@ -14,7 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $parameters->set(Option::SETS, [
         Typo3SetList::TYPO3_11,
-        #Typo3SetList::TYPO3_12,
+        // Typo3SetList::TYPO3_12,
     ]);
 
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);

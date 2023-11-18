@@ -100,6 +100,6 @@ class FullReindexTest extends AbstractFunctionalTestCase
 
         return $q->select('uid', 'foreign_table', 'foreign_uid', 'start_date', 't3ver_wsid', 't3ver_state')
             ->from('tx_calendarize_domain_model_index')
-            ->execute()->fetchAll();
+            ->executeQuery()->fetchAllAssociative();
     }
 }
