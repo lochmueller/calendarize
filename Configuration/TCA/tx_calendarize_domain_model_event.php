@@ -228,35 +228,13 @@ return [
             ],
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.categories',
         ],
-        'calendarize' => [
-            'label' => 'Calendarize',
-            'l10n_mode' => 'exclude',
-            'config' => [
-                'type' => 'inline',
-                'foreign_table' => 'tx_calendarize_domain_model_configuration',
-                'minitems' => 1,
-                'maxitems' => 99,
-                'behaviour' => [
-                    'enableCascadingDelete' => true,
-                ],
-            ],
-        ],
-        'calendarize_info' => [
-            'label' => $ll . 'tca.information',
-            'config' => [
-                'type' => 'none',
-                'renderType' => 'calendarizeInfoElement',
-                'parameters' => [
-                    'items' => 10,
-                ],
-            ],
-        ],
         't3_origuid' => [
             'config' => [
                 'type' => 'passthrough',
                 'default' => 0,
             ],
         ],
+        // The columns 'calendarize' and 'calendarize_info' are added in overrides
     ],
     'palettes' => [
         'language' => [

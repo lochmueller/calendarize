@@ -3,17 +3,15 @@
 /**
  * General ext_localconf file.
  */
-
 defined('TYPO3') or exit();
 
 use HDNET\Calendarize\Controller\BookingController;
 use HDNET\Calendarize\Controller\CalendarController;
-use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
-use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Form\Element\CalendarizeInfoElement;
 use HDNET\Calendarize\Hooks\KeSearchIndexer;
 use HDNET\Calendarize\Hooks\ProcessCmdmapClass;
 use HDNET\Calendarize\Hooks\ProcessDatamapClass;
+use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Xclass\WorkspaceRemoteServer;
@@ -22,25 +20,9 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
 
 (function () {
-    $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']['ConfigurationGroup'] = [
-        'uniqueRegisterKey' => 'ConfigurationGroup',
-        'title' => 'Calendarize Configuration Group',
-        'modelName' => ConfigurationGroup::class,
-        'partialIdentifier' => 'ConfigurationGroup',
-        'tableName' => 'tx_calendarize_domain_model_configurationgroup',
-        'required' => true,
-        'fieldName' => 'configurations',
-    ];
-
+    Register::extLocalconf(Register::getGroupCalendarizeConfiguration());
     if (!(bool)ConfigurationUtility::get('disableDefaultEvent')) {
-        $GLOBALS['TYPO3_CONF_VARS']['EXT']['Calendarize']['Event'] = [
-            'uniqueRegisterKey' => 'Event',
-            'title' => 'Calendarize Event',
-            'modelName' => Event::class,
-            'partialIdentifier' => 'Event',
-            'tableName' => 'tx_calendarize_domain_model_event',
-            'required' => true,
-        ];
+        Register::extLocalconf(Register::getDefaultCalendarizeConfiguration());
     }
 
     $calendar = CalendarController::class;

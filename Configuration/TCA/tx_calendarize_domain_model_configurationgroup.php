@@ -74,29 +74,6 @@ return [
                 'required' => true,
             ],
         ],
-        'configurations' => [
-            'label' => 'Calendarize',
-            'l10n_mode' => 'exclude',
-            'config' => [
-                'type' => 'inline',
-                'foreign_table' => 'tx_calendarize_domain_model_configuration',
-                'minitems' => 1,
-                'maxitems' => 99,
-                'behaviour' => [
-                    'enableCascadingDelete' => true,
-                ],
-            ],
-        ],
-        'calendarize_info' => [
-            'label' => $ll . 'tca.information',
-            'config' => [
-                'type' => 'none',
-                'renderType' => 'calendarizeInfoElement',
-                'parameters' => [
-                    'items' => 10,
-                ],
-            ],
-        ],
         'import_id' => [
             'label' => $ll . 'tx_calendarize_domain_model_configurationgroup.import_id',
             'exclude' => true,
@@ -105,6 +82,7 @@ return [
                 'readOnly' => true,
             ],
         ],
+        // The columns 'configurations' and 'calendarize_info' are added in overrides
     ],
     'palettes' => [
         'access' => [

@@ -19,6 +19,8 @@ class Register
      * Register in the extTables.
      *
      * @param array $configuration
+     *
+     * @deprecated use Register::extLocalconf in your ext_localconf and Register::createTcaConfiguration in your TCA override configuration
      */
     public static function extTables(array $configuration): void
     {
@@ -34,25 +36,6 @@ class Register
     public static function extLocalconf(array $configuration): void
     {
         self::registerItem($configuration);
-    }
-
-    /**
-     * Get the EXT:autoloader default configuration.
-     *
-     * @return array
-     */
-    public static function getDefaultAutoloader(): array
-    {
-        return [
-            // 'SmartObjects', replaced with tca and sql
-            // 'Hooks', see ext_localconf.php
-            // 'Slots', @todo replace with event listener
-            // 'FlexForms', see Overrides/tt_content.php
-            // 'Icon', see Icons.php
-            // 'CommandController', see services.yaml
-            // 'StaticTyposcript', see Overrides/sys_template.php
-            // 'TypeConverter', see services.yaml
-        ];
     }
 
     /**
