@@ -245,18 +245,24 @@ return [
             'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access',
             'showitem' => 'starttime, endtime, --linebreak--, hidden, editlock, --linebreak--, fe_group',
         ],
+        'location' => [
+            'showitem' => 'location,location_link',
+        ],
+        'organizer' => [
+            'showitem' => 'organizer,organizer_link',
+        ],
     ],
     'types' => [
         1 => [
             'showitem' => '
-                title,slug,abstract,description,location,location_link,organizer,organizer_link,import_id,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                --palette--;;language,
-                --div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:files,images,downloads,
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                --palette--;;access,
+                title,slug,abstract,description,--palette--;;location,--palette--;;organizer,import_id,
                 --div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:dateOptions,calendarize,calendarize_info,
                 --div--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_category.tabs.category,categories,
+                --div--;LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:files,images,downloads,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                --palette--;;language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                --palette--;;access,
                 --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
             ',
         ],
