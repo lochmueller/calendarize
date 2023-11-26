@@ -36,8 +36,8 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
 
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        // $uriBuilder = $this->renderingContext->getUriBuilder(); // Typo3 11 and later
         $this->lastHref = $uriBuilder->reset()
+            ->setRequest($this->getRequest())
             ->setTargetPageUid($pageUid)
             ->setSection($section)
             ->setCreateAbsoluteUri($absolute)

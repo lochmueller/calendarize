@@ -6,6 +6,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
@@ -54,8 +55,8 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     ): string {
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        // $uriBuilder = $this->renderingContext->getUriBuilder(); // Typo3 11 and later
         $this->lastHref = $uriBuilder->reset()
+            ->setRequest($this->getRequest())
             ->setTargetPageUid($pageUid)
             ->setSection($section)
             ->setArguments($additionalParams)
@@ -92,10 +93,16 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
             }
         }
 
+        return $this->getRequest()->getAttribute('routing')->getPageId() ?? 0;
+    }
+
+    protected function getRequest(): RequestInterface
+    {
         /** @var RenderingContext $renderingContext */
         $renderingContext = $this->renderingContext;
+        /** @var RequestInterface $request */
         $request = $renderingContext->getRequest();
 
-        return $request?->getAttribute('routing')->getPageId() ?? 0;
+        return $request;
     }
 }

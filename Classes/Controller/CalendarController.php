@@ -600,9 +600,12 @@ class CalendarController extends AbstractController
             }
         }
 
+        /** @var \TYPO3\CMS\Core\Http\NormalizedParams $normalizedParams */
+        $normalizedParams = $this->request->getAttribute('normalizedParams');
+
         $this->eventExtendedAssignMultiple([
             'index' => $index,
-            'domain' => GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY'),
+            'domain' => $normalizedParams->getRequestHostOnly(),
         ], __CLASS__, __FUNCTION__);
 
         return $this->htmlResponse($this->view->render());
