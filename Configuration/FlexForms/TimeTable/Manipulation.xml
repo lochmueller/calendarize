@@ -1,35 +1,25 @@
 <T3DataStructure>
-    <meta type="array">
-        <langChildren type="integer">0</langChildren>
-        <langDisable type="integer">1</langDisable>
-    </meta>
     <sheets>
         <general>
             <ROOT>
-                <TCEforms>
-                    <sheetTitle>General configuration</sheetTitle>
-                </TCEforms>
+                <sheetTitle>General configuration</sheetTitle>
                 <type>array</type>
                 <el>
                     <settings.fixedStartTime>
-                        <TCEforms>
-                            <label>Fix start time</label>
-                            <config>
-                                <type>datetime</type>
-                                <format>time</format>
-                                <nullable>1</nullable>
-                            </config>
-                        </TCEforms>
+                        <label>Fix start time</label>
+                        <config>
+                            <type>datetime</type>
+                            <format>time</format>
+                            <nullable>1</nullable>
+                        </config>
                     </settings.fixedStartTime>
                     <settings.fixedEndTime>
-                        <TCEforms>
-                            <label>Fix end time</label>
-                            <config>
-                                <type>datetime</type>
-                                <format>time</format>
-                                <nullable>1</nullable>
-                            </config>
-                        </TCEforms>
+                        <label>Fix end time</label>
+                        <config>
+                            <type>datetime</type>
+                            <format>time</format>
+                            <nullable>1</nullable>
+                        </config>
                     </settings.fixedEndTime>
                 </el>
             </ROOT>

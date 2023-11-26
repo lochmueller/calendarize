@@ -1,466 +1,403 @@
 <T3DataStructure>
-	<meta type="array">
-		<langChildren type="integer">0</langChildren>
-		<langDisable type="integer">1</langDisable>
-	</meta>
 	<sheets>
 		<main>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mainConfiguration</sheetTitle>
-				</TCEforms>
+                <sheetTitle>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mainConfiguration</sheetTitle>
 				<type>array</type>
 				<el>
 
 					<!-- Calendar configuration -->
 					<settings.pluginConfiguration>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginConfiguration</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<foreign_table>tx_calendarize_domain_model_pluginconfiguration</foreign_table>
-								<minitems>0</minitems>
-								<maxitems>1</maxitems>
-								<size>1</size>
-								<items>
-									<numIndex index="0">
-										<label/>
-										<value/>
-									</numIndex>
-								</items>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginConfiguration</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <foreign_table>tx_calendarize_domain_model_pluginconfiguration</foreign_table>
+                            <minitems>0</minitems>
+                            <maxitems>1</maxitems>
+                            <size>1</size>
+                            <items>
+                                <numIndex index="0">
+                                    <label/>
+                                    <value/>
+                                </numIndex>
+                            </items>
+                        </config>
 					</settings.pluginConfiguration>
 
 					<!-- Limit Start -->
 					<settings.limit>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:limit</label>
-							<displayCond>
-								<OR>
-									<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
-								</OR>
-							</displayCond>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<eval>num</eval>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:limit</label>
+                        <displayCond>
+                            <OR>
+                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                <numIndex index="3">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
+                            </OR>
+                        </displayCond>
+                        <config>
+                            <type>input</type>
+                            <size>5</size>
+                            <eval>num</eval>
+                        </config>
 					</settings.limit>
 
 
 					<settings.singleItems>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:singleItems</label>
-							<displayCond>FIELD:parentRec.list_type:=:calendarize_single</displayCond>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>*</allowed>
-								<prepend_tname>1</prepend_tname>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:singleItems</label>
+                        <displayCond>FIELD:parentRec.list_type:=:calendarize_single</displayCond>
+                        <config>
+                            <type>group</type>
+                            <allowed>*</allowed>
+                            <prepend_tname>1</prepend_tname>
+                        </config>
 					</settings.singleItems>
 
 					<!-- Hide pagination -->
 					<settings.hidePagination>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:hide.pagination.teaser</label>
-							<displayCond>
-								<OR>
-									<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-									<numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
-									<numIndex index="4">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
-								</OR>
-							</displayCond>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:hide.pagination.teaser</label>
+                        <displayCond>
+                            <OR>
+                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                <numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
+                                <numIndex index="4">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
+                            </OR>
+                        </displayCond>
+                        <config>
+                            <type>check</type>
+                        </config>
 					</settings.hidePagination>
 					<settings.useRelativeDate>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
-							<displayCond>
-								<OR>
-									<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-									<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-									<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-								</OR>
-							</displayCond>
-							<onChange>reload</onChange>
-							<config>
-								<type>check</type>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
+                        <displayCond>
+                            <OR>
+                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                            </OR>
+                        </displayCond>
+                        <onChange>reload</onChange>
+                        <config>
+                            <type>check</type>
+                        </config>
 					</settings.useRelativeDate>
 					<settings.overrideStartdate>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startdate</label>
-							<displayCond>
-								<AND>
-									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
-									<OR>
-										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-									</OR>
-								</AND>
-							</displayCond>
-							<config>
-								<type>datetime</type>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startdate</label>
+                        <displayCond>
+                            <AND>
+                                <numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
+                                <OR>
+                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                </OR>
+                            </AND>
+                        </displayCond>
+                        <config>
+                            <type>datetime</type>
+                        </config>
 					</settings.overrideStartdate>
 					<settings.overrideEnddate>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.enddate</label>
-							<displayCond>
-								<AND>
-									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
-									<OR>
-										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-									</OR>
-								</AND>
-							</displayCond>
-							<config>
-								<type>datetime</type>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.enddate</label>
+                        <displayCond>
+                            <AND>
+                                <numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
+                                <OR>
+                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                </OR>
+                            </AND>
+                        </displayCond>
+                        <config>
+                            <type>datetime</type>
+                        </config>
 					</settings.overrideEnddate>
 					<settings.overrideStartRelative>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startrelative</label>
-							<displayCond>
-								<AND>
-									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
-									<OR>
-										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-									</OR>
-								</AND>
-							</displayCond>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.startrelative</label>
+                        <displayCond>
+                            <AND>
+                                <numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
+                                <OR>
+                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                </OR>
+                            </AND>
+                        </displayCond>
+                        <config>
+                            <type>input</type>
+                            <eval>trim</eval>
+                        </config>
 					</settings.overrideStartRelative>
 					<settings.overrideEndRelative>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.endrelative</label>
-							<displayCond>
-								<AND>
-									<numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
-									<OR>
-										<numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-										<numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-										<numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-									</OR>
-								</AND>
-							</displayCond>
-							<config>
-								<type>input</type>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:override.endrelative</label>
+                        <displayCond>
+                            <AND>
+                                <numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
+                                <OR>
+                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                </OR>
+                            </AND>
+                        </displayCond>
+                        <config>
+                            <type>input</type>
+                            <eval>trim</eval>
+                        </config>
 					</settings.overrideEndRelative>
 				</el>
 			</ROOT>
 		</main>
 		<general>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>General configuration</sheetTitle>
-				</TCEforms>
+                <sheetTitle>General configuration</sheetTitle>
 				<type>array</type>
 				<el>
 
 
 					<!-- Calendar configuration -->
 					<settings.configuration>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:configuration</label>
-							<config>
-								<type>select</type>
-								<renderType>selectCheckBox</renderType>
-								<itemsProcFunc>HDNET\Calendarize\Service\PluginConfigurationService->addConfig</itemsProcFunc>
-								<minitems>1</minitems>
-								<maxitems>99</maxitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:configuration</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectCheckBox</renderType>
+                            <itemsProcFunc>HDNET\Calendarize\Service\PluginConfigurationService->addConfig</itemsProcFunc>
+                            <minitems>1</minitems>
+                            <maxitems>99</maxitems>
+                        </config>
+                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail</displayCond>
 					</settings.configuration>
 
 					<!-- Category Mode -->
 					<settings.categoryConjunction>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction</label>
-							<description>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.description</description>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.all</label>
-										<value>all</value>
-									</numIndex>
-									<numIndex index="1">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.or</label>
-										<value>or</value>
-									</numIndex>
-									<numIndex index="2">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.and</label>
-										<value>and</value>
-									</numIndex>
-								</items>
-								<default>or</default>
-							</config>
-                            <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_search,calendarize_result,calendarize_single</displayCond>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction</label>
+                        <description>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.description</description>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.all</label>
+                                    <value>all</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.or</label>
+                                    <value>or</value>
+                                </numIndex>
+                                <numIndex index="2">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:categoryConjunction.and</label>
+                                    <value>and</value>
+                                </numIndex>
+                            </items>
+                            <default>or</default>
+                        </config>
+                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_search,calendarize_result,calendarize_single</displayCond>
 					</settings.categoryConjunction>
 
 					<!-- Calendar configuration -->
 					<settings.sortBy>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sortBy</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.start_date</label>
-										<value>start</value>
-									</numIndex>
-									<numIndex index="1">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.end_date</label>
-										<value>end</value>
-									</numIndex>
-									<numIndex index="2">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.with_range_last</label>
-										<value>withrangelast</value>
-									</numIndex>
-								</items>
-							</config>
-                            <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sortBy</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.start_date</label>
+                                    <value>start</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.end_date</label>
+                                    <value>end</value>
+                                </numIndex>
+                                <numIndex index="2">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tx_calendarize_domain_model_configuration.with_range_last</label>
+                                    <value>withrangelast</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                        <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
 					</settings.sortBy>
 
 					<!-- Calendar configuration -->
 					<settings.sorting>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sorting</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<label>ASC</label>
-										<value>ASC</value>
-									</numIndex>
-									<numIndex index="1">
-										<label>DESC</label>
-										<value>DESC</value>
-									</numIndex>
-								</items>
-							</config>
-                            <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:sorting</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <label>ASC</label>
+                                    <value>ASC</value>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <label>DESC</label>
+                                    <value>DESC</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                        <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
 					</settings.sorting>
 
 					<!-- startingpoint -->
 					<persistence.storagePid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:startingpoint</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>3</size>
-								<maxitems>50</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:startingpoint</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>3</size>
+                            <maxitems>50</maxitems>
+                            <minitems>0</minitems>
+                        </config>
+                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_single</displayCond>
 					</persistence.storagePid>
 
 					<!-- recursive -->
 					<persistence.recursive>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items type="array">
-									<numIndex index="1" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:inherit</label>
-										<value/>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.0</label>
-										<value>0</value>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.1</label>
-										<value>1</value>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.2</label>
-										<value>2</value>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.3</label>
-										<value>3</value>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.4</label>
-										<value>4</value>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.5</label>
-										<value>250</value>
-									</numIndex>
-								</items>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items type="array">
+                                <numIndex index="1" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:inherit</label>
+                                    <value/>
+                                </numIndex>
+                                <numIndex index="2" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.0</label>
+                                    <value>0</value>
+                                </numIndex>
+                                <numIndex index="3" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.1</label>
+                                    <value>1</value>
+                                </numIndex>
+                                <numIndex index="4" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.2</label>
+                                    <value>2</value>
+                                </numIndex>
+                                <numIndex index="5" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.3</label>
+                                    <value>3</value>
+                                </numIndex>
+                                <numIndex index="6" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.4</label>
+                                    <value>4</value>
+                                </numIndex>
+                                <numIndex index="7" type="array">
+                                    <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:recursive.I.5</label>
+                                    <value>250</value>
+                                </numIndex>
+                            </items>
+                        </config>
+                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_single</displayCond>
 					</persistence.recursive>
 				</el>
 			</ROOT>
 		</general>
 		<pages>
 			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pidConfiguration</sheetTitle>
-				</TCEforms>
+                <sheetTitle>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pidConfiguration</sheetTitle>
 				<type>array</type>
 				<el>
 
 					<!-- PID Detail Page -->
 					<settings.detailPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:detailPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:detailPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.detailPid>
 
 					<!-- PID list Page -->
 					<settings.listPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:listPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:listPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.listPid>
 
 					<!-- PID year Page -->
 					<settings.yearPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:yearPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:yearPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.yearPid>
 
 					<!-- PID quarter Page -->
 					<settings.quarterPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:quarterPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:quarterPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.quarterPid>
 
 					<!-- PID month Page -->
 					<settings.monthPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:monthPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:monthPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.monthPid>
 
 					<!-- PID week Page -->
 					<settings.weekPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:weekPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:weekPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.weekPid>
 
 					<!-- PID day Page -->
 					<settings.dayPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:dayPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:dayPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.dayPid>
 
 					<!-- PID booking Page -->
 					<settings.bookingPid>
-						<TCEforms>
-							<label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:bookingPid</label>
-							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<minitems>0</minitems>
-							</config>
-						</TCEforms>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:bookingPid</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>pages</allowed>
+                            <size>1</size>
+                            <maxitems>1</maxitems>
+                            <minitems>0</minitems>
+                        </config>
 					</settings.bookingPid>
 				</el>
 			</ROOT>
