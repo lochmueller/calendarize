@@ -55,7 +55,6 @@
 	"require-dev": {
 		"typo3/testing-framework": "^8.0",
 		"typo3/cms-workspaces": "^12.4",
-		"squizlabs/php_codesniffer": "^2.6",
 		"friendsofphp/php-cs-fixer": "^3.0",
 		"phpmd/phpmd": "^2.4",
 		"scrutinizer/ocular": "^1.3",
@@ -84,9 +83,14 @@
 		"post-autoload-dump": [
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
-		"code": [
-			"@tool:php-cs-fixer",
-			"@tool:phpunit"
+		"code-fix": [
+			"@tool:php-cs-fixer"
+		],
+		"code-check": [
+			"@tool:php-cs-fixer-check",
+			"@tool:phpunit",
+			"@tool:phpstan",
+			"@tool:deptrac"
 		],
 		"tool:php-cs-fixer": [
 			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
@@ -107,7 +111,7 @@
 			"docker run --rm --volume $PWD:/app --user $(id -u):$(id -g) ghcr.io/sabbelasichon/typo3-rector process --config=Resources/Private/Build/Rector.php"
 		],
 		"tool:phpstan": [
-			"phpstan analyse -c phpstan.neon"
+			"phpstan analyse -c phpstan.neon --memory-limit=1G"
 		],
 		"tool:deptrac": [
 			"deptrac"

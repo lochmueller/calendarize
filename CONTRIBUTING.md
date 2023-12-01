@@ -8,7 +8,7 @@ Features: Please create a issue first and describe the feature!
 
 ## Code Checks
 
-The extension use PHP CS Fixer & PHP Unit in tooling. Please run "composer code" or equivalent to execute PHP CS Fixer and the tests in front of the commit!
+The extension use PHP CS Fixer & PHP Unit in tooling. Please run "composer code-fix"/"composer code-check" or equivalent to execute PHP CS Fixer and the tests in front of the commit!
 
 More tooling will be added shortly.
 

@@ -25,6 +25,6 @@ class CalendarizeFieldListener
             $sql[] = 'CREATE TABLE ' . $configuration['tableName'] . ' (' . $fieldName . ' tinytext);';
         }
 
-        return implode(LF, $sql);
+        return implode(\chr(10), $sql);
     }
 }

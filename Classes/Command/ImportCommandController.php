@@ -50,8 +50,8 @@ class ImportCommandController extends Command
                 'since',
                 's',
                 InputOption::VALUE_OPTIONAL,
-                'Imports all events since the given date.' . LF
-                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . LF
+                'Imports all events since the given date.' . \chr(10)
+                . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . \chr(10)
                 . '(Note: use --since="-x days" syntax on the console)'
             );
     }

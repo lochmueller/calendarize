@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Controller;
 
-use JetBrains\PhpStorm\NoReturn;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
@@ -47,12 +46,11 @@ abstract class AbstractCompatibilityController extends AbstractController
     /**
      * Send the content type header and the right file extension in front of the content.
      */
-    #[NoReturn]
     protected function sendHeaderAndFilename(
         ResponseInterface $response,
         string $contentType,
         string $fileExtension
-    ): void {
+    ): never {
         $testMode = (bool)$this->settings['feed']['debugMode'];
         if ($testMode) {
             header('Content-Type: text/plain; charset=utf-8');
