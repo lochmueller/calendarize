@@ -9,6 +9,7 @@ use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
  * Indices by object.
@@ -51,7 +52,7 @@ class IndicesByObjectViewHelper extends AbstractViewHelper
     /**
      * Render method.
      */
-    public function render(): array
+    public function render(): array|QueryResultInterface
     {
         /** @var AbstractEntity $object */
         $object = $this->arguments['object'];
