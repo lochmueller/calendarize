@@ -13,11 +13,13 @@ use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
@@ -103,6 +105,81 @@ abstract class AbstractController extends ActionController
         $this->request = $event->getRequest();
         $this->arguments = $event->getArguments();
         $this->settings = $event->getSettings();
+    }
+
+    /**
+     * Calls the specified action method and passes the arguments.
+     *
+     * If the action returns a string, it is appended to the content in the
+     * response object. If the action doesn't return anything and a valid
+     * view exists, the view is rendered automatically.
+     *
+     * @throws PropagateResponseException
+     *
+     * @api
+     */
+    protected function callActionMethod(RequestInterface $request): ResponseInterface
+    {
+        $response = parent::callActionMethod($request);
+        if (isset($this->feedFormats[$request->getFormat()])) {
+            if ($request->hasArgument('hmac')) {
+                $hmac = $request->getArgument('hmac');
+                if ($this->validatePluginHmac($hmac)) {
+                    $this->setHeadersAndExit(
+                        $response,
+                        $this->feedFormats[$request->getFormat()],
+                        $request->getFormat()
+                    );
+                }
+
+                // When the hmac does not match, the request belongs to a different action.
+                return $response;
+            }
+            // No hmac is set (default configuration in Template/Details.html), so we handle the first action.
+            $this->setHeadersAndExit($response, $this->feedFormats[$request->getFormat()], $request->getFormat());
+        }
+
+        return $response;
+    }
+
+    /**
+     * Send the content type header and the right file extension in front of the content.
+     *
+     * @throws PropagateResponseException
+     */
+    protected function setHeadersAndExit(
+        ResponseInterface $response,
+        string $contentType,
+        string $fileExtension
+    ): void {
+        if (200 !== $response->getStatusCode()) {
+            // Prevents html error pages to be returned with wrong Content-Type.
+            return;
+        }
+        $testMode = (bool)$this->settings['feed']['debugMode'];
+        if ($testMode) {
+            $response = $response->withHeader('Content-Type', 'text/plain; charset=utf-8');
+        } else {
+            $response = $response->withHeader('Content-Type', $contentType . '; charset=utf-8')
+                ->withHeader('Content-Disposition', 'attachment; filename=calendar.' . $fileExtension);
+        }
+
+        // Use CRLF, see https://tools.ietf.org/html/rfc5545#section-3.1
+        if ('ics' === $this->request->getFormat()) {
+            $response->getBody()->rewind();
+            $response = $response->withBody(
+                $this->streamFactory->createStream(
+                    str_replace("\n", "\r\n", $response->getBody()->getContents())
+                )
+            );
+        }
+        // Any other actions (rendered before this) returning a status code >= 300 code would cause the status header
+        // to be set. Other PSR-7 responses by extbase actions (< 300) don't set the status code.
+        // (see https://review.typo3.org/c/Packages/TYPO3.CMS/+/71014)
+        // This would cause the response to be ignored by the browser.
+        header('HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
+        // Prevents the HTML skeleton and any other (following) actions to be rendered.
+        throw new PropagateResponseException($response);
     }
 
     /**

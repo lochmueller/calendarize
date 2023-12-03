@@ -13,7 +13,7 @@ use TYPO3\CMS\Extbase\Annotation as Extbase;
 /**
  * BookingController.
  */
-class BookingController extends AbstractCompatibilityController
+class BookingController extends AbstractController
 {
     /**
      * Form action.

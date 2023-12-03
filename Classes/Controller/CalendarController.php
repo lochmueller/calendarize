@@ -35,7 +35,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * Calendar.
  */
-class CalendarController extends AbstractCompatibilityController
+class CalendarController extends AbstractController
 {
     /**
      * Init all actions.
