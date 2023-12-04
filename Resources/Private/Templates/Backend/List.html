@@ -20,7 +20,7 @@
 						<f:for each="{typePids}" key="pid" as="value">
 							<f:if condition="{options.type} === '' || {options.type} === {value}">
 								<be:link.newRecord class="btn btn-primary" table="{table}" pid="{pid}" style="margin-bottom:4px"
-																	 returnUrl="{f:be.uri(route: 'web_CalendarizeCalendarize')}">
+																	 returnUrl="{f:be.uri(route: 'web_calendarize')}">
 									<core:icon identifier="actions-document-new"/>
 									{value} <f:translate key="LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf:on">on</f:translate> {pids.{pid}}
 								</be:link.newRecord>
