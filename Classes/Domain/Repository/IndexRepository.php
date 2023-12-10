@@ -302,6 +302,44 @@ class IndexRepository extends AbstractRepository
         return $this->matchAndExecute($query, $constraints);
     }
 
+    public function findByTableAndUid(
+        string $table,
+        int $uid,
+        bool $future = true,
+        bool $past = false,
+        int $limit = 100,
+        string $sort = QueryInterface::ORDER_ASCENDING,
+        \DateTimeImmutable $referenceDate = null
+    ): array|QueryResultInterface {
+        if (!$future && !$past) {
+            return [];
+        }
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setRespectSysLanguage(false);
+
+        $constraints[] = $query->equals('foreignUid', $uid);
+        $constraints[] = $query->equals('foreignTable', $table);
+
+        $now = ($referenceDate ?? DateTimeUtility::getNow())->format('Y-m-d');
+        if (!$future) {
+            $constraints[] = $query->lessThanOrEqual('startDate', $now);
+        }
+        if (!$past) {
+            $constraints[] = $query->greaterThanOrEqual('startDate', $now);
+        }
+
+        if ($limit > 0) {
+            $query->setLimit($limit);
+        }
+        $sort = QueryInterface::ORDER_ASCENDING === $sort ?
+            QueryInterface::ORDER_ASCENDING :
+            QueryInterface::ORDER_DESCENDING;
+        $query->setOrderings($this->getSorting($sort));
+
+        return $this->matchAndExecute($query, $constraints);
+    }
+
     /**
      * Find by traversing information.
      */
@@ -315,35 +353,19 @@ class IndexRepository extends AbstractRepository
         if (!$future && !$past) {
             return [];
         }
-        $query = $this->createQuery();
-
-        $uniqueRegisterKey = ExtensionConfigurationUtility::getUniqueRegisterKeyForModel($event);
-
-        $this->setIndexTypes([$uniqueRegisterKey]);
-
-        $now = DateTimeUtility::getNow()->format('Y-m-d');
-
-        $constraints = [];
+        $tableName = ExtensionConfigurationUtility::getConfigurationForModel($event)['tableName'];
 
         $localizedUid = $event->_getProperty('_localizedUid');
         $selectUid = $localizedUid ?: $event->getUid();
 
-        $constraints[] = $query->equals('foreignUid', $selectUid);
-        $constraints[] = $query->in('uniqueRegisterKey', $this->indexTypes);
-        if (!$future) {
-            $constraints[] = $query->lessThanOrEqual('startDate', $now);
-        }
-        if (!$past) {
-            $constraints[] = $query->greaterThanOrEqual('startDate', $now);
-        }
-
-        $query->setLimit($limit);
-        $sort = QueryInterface::ORDER_ASCENDING === $sort ?
-            QueryInterface::ORDER_ASCENDING :
-            QueryInterface::ORDER_DESCENDING;
-        $query->setOrderings($this->getSorting($sort));
-
-        return $this->matchAndExecute($query, $constraints);
+        return $this->findByTableAndUid(
+            $tableName,
+            $selectUid,
+            $future,
+            $past,
+            $limit,
+            $sort
+        );
     }
 
     /**
@@ -451,16 +473,12 @@ class IndexRepository extends AbstractRepository
      */
     public function findByEvent(DomainObjectInterface $event): array|QueryResultInterface
     {
-        $query = $this->createQuery();
-
-        $uniqueRegisterKey = ExtensionConfigurationUtility::getUniqueRegisterKeyForModel($event);
-
-        $this->setIndexTypes([$uniqueRegisterKey]);
-        $constraints = $this->getDefaultConstraints($query);
-        $constraints[] = $query->equals('foreignUid', $event->getUid());
-        $query->matching($query->logicalAnd(...$constraints));
-
-        return $query->execute();
+        return $this->findByEventTraversing(
+            $event,
+            true,
+            true,
+            0
+        );
     }
 
     /**

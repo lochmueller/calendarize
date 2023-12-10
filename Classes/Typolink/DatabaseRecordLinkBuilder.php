@@ -7,10 +7,8 @@ namespace HDNET\Calendarize\Typolink;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
 use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
-use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Frontend\Typolink\DatabaseRecordLinkBuilder as BaseDatabaseRecordLinkBuilderAlias;
 use TYPO3\CMS\Frontend\Typolink\LinkResultInterface;
@@ -24,7 +22,7 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
     public function build(array &$linkDetails, string $linkText, string $target, array $conf): LinkResultInterface
     {
         if (isset($linkDetails['identifier']) && \in_array($linkDetails['identifier'], $this->getEventTables(), true)) {
-            $eventId = $linkDetails['uid'];
+            $eventId = (int)$linkDetails['uid'];
             $typoScriptArray = $this->contentObjectRenderer->getRequest()->getAttribute('frontend.typoscript')?->getSetupArray() ?? [];
             $defaultPid = (int)($typoScriptArray['plugin.']['tx_calendarize.']['settings.']['defaultDetailPid'] ?? 0);
             if ($defaultPid <= 0) {
@@ -69,37 +67,18 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
         $frontendTypoScript->setSetupArray($typoScriptArray);
     }
 
-    protected function getIndexForEventUid($table, $uid): int
+    protected function getIndexForEventUid(string $table, int $uid): int
     {
         $indexRepository = GeneralUtility::makeInstance(IndexRepository::class);
 
-        $event = null;
-        foreach (Register::getRegister() as $value) {
-            if ($value['tableName'] === $table) {
-                $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
-                if (class_exists($repositoryName)) {
-                    $repository = GeneralUtility::makeInstance($repositoryName);
-                    $event = $repository->findByUid($uid);
-                }
-            }
-        }
-
-        if (!($event instanceof DomainObjectInterface)) {
-            return 0;
-        }
-
-        $fetchEvent = $indexRepository->findByEventTraversing($event, true, false, 1)->toArray();
-        if (\count($fetchEvent) <= 0) {
+        $fetchEvent = $indexRepository->findByTableAndUid($table, $uid, true, false, 1)->getFirst();
+        if (null === $fetchEvent) {
             $fetchEvent = $indexRepository
-                ->findByEventTraversing($event, false, true, 1, QueryInterface::ORDER_DESCENDING)
-                ->toArray();
+                ->findByTableAndUid($table, $uid, false, true, 1, QueryInterface::ORDER_DESCENDING)
+                ->getFirst();
         }
 
-        if (empty($fetchEvent)) {
-            return 0;
-        }
-
-        return (int)$fetchEvent[0]->getUid();
+        return (int)$fetchEvent?->getUid();
     }
 
     protected function getEventTables(): array

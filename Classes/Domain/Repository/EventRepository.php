@@ -83,25 +83,20 @@ class EventRepository extends AbstractRepository
         }
 
         try {
-            $result = $this->indexRepository->findByEventTraversing($event, true, false, 1);
-            if (empty($result)) {
+            $result = $this->indexRepository->findByEventTraversing($event, true, false, 1)->getFirst();
+            if (null === $result) {
                 $result = $this->indexRepository->findByEventTraversing(
                     $event,
                     false,
                     true,
                     1,
                     QueryInterface::ORDER_DESCENDING
-                );
+                )->getFirst();
             }
         } catch (\Exception $exception) {
             return null;
         }
 
-        if (empty($result)) {
-            return null;
-        }
-
-        /* @var Index $index */
-        return $result->getFirst();
+        return $result;
     }
 }

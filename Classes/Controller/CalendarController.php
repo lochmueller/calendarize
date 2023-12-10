@@ -11,7 +11,6 @@ use HDNET\Calendarize\Event\DetermineSearchEvent;
 use HDNET\Calendarize\Event\PaginationEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\DateTimeUtility;
-use HDNET\Calendarize\Utility\EventUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use Psr\Http\Message\ResponseInterface;
@@ -105,12 +104,13 @@ class CalendarController extends AbstractController
             // get the configuration
             $configuration = ExtensionConfigurationUtility::get($configurationName);
 
-            // get Event by Configuration and Uid
-            $event = EventUtility::getOriginalRecordByConfiguration(
-                $configuration,
-                (int)$this->request->getArgument('event')
-            );
-            $index = $this->indexRepository->findByEventTraversing($event, true, false, 1)->getFirst();
+            $index = $this->indexRepository->findByTableAndUid(
+                $configuration['tableName'],
+                (int)$this->request->getArgument('event'),
+                true,
+                false,
+                1
+            )->getFirst();
 
             // if there is a valid index in the event
             if ($index) {
@@ -662,38 +662,21 @@ class CalendarController extends AbstractController
 
         $indicies = [];
 
-        // prepare selection
-        $selections = [];
         $configurations = $this->getCurrentConfigurations();
+        $configurationByTable = array_column($configurations, null, 'tableName');
+
         foreach (GeneralUtility::trimExplode(',', $this->settings['singleItems'] ?? '') as $item) {
             [$table, $uid] = BackendUtility::splitTable_Uid($item);
-            foreach ($configurations as $configuration) {
-                if ($configuration['tableName'] === $table) {
-                    $selections[] = [
-                        'configuration' => $configuration,
-                        'uid' => $uid,
-                    ];
-                    break;
-                }
+            $uid = (int)$uid;
+            if (!isset($configurationByTable[$table])) {
+                continue;
             }
-        }
-
-        // fetch index
-        foreach ($selections as $selection) {
-            $this->indexRepository->setIndexTypes([$selection['configuration']['uniqueRegisterKey']]);
-
-            $dummyIndex = new Index();
-            $dummyIndex->setForeignTable($selection['configuration']['tableName']);
-            $dummyIndex->setForeignUid((int)$selection['uid']);
-
-            $index = $this->indexRepository->findByTraversing($dummyIndex, true, false, 1)->getFirst();
-            if (\is_object($index)) {
+            $index = $this->indexRepository->findByTableAndUid($table, $uid, true, false, 1)->getFirst();
+            if (null === $index) {
+                $index = $this->indexRepository->findByTableAndUid($table, $uid, false, true, 1)->getFirst();
+            }
+            if ($index) {
                 $indicies[] = $index;
-            } else {
-                $index = $this->indexRepository->findByTraversing($dummyIndex, false, true, 1)->getFirst();
-                if (\is_object($index)) {
-                    $indicies[] = $index;
-                }
             }
         }
 
