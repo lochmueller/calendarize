@@ -104,13 +104,6 @@ class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
 
     protected function getEventTables(): array
     {
-        static $tables;
-        if (!\is_array($tables)) {
-            $tables = array_map(static function ($config) {
-                return $config['tableName'];
-            }, Register::getRegister());
-        }
-
-        return $tables;
+        return array_column(Register::getRegister(), 'tableName');
     }
 }

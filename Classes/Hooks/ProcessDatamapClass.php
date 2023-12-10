@@ -29,14 +29,11 @@ class ProcessDatamapClass
         array $fieldArray,
         DataHandler $dataHandler
     ): void {
-        $register = Register::getRegister();
-        foreach ($register as $configuration) {
-            if ($configuration['tableName'] === $table) {
-                if ('new' === $status && isset($dataHandler->substNEWwithIDs[$identifier])) {
-                    $identifier = $dataHandler->substNEWwithIDs[$identifier];
-                }
-                $this->indexItems[$table][] = $identifier;
+        if (\in_array($table, array_column(Register::getRegister(), 'tableName'), true)) {
+            if ('new' === $status && isset($dataHandler->substNEWwithIDs[$identifier])) {
+                $identifier = $dataHandler->substNEWwithIDs[$identifier];
             }
+            $this->indexItems[$table][] = $identifier;
         }
     }
 
@@ -48,17 +45,13 @@ class ProcessDatamapClass
         if (!$this->indexItems) {
             return;
         }
-        $register = Register::getRegister();
+        $configurationByTable = array_column(Register::getRegister(), null, 'tableName');
 
         /** @var IndexerService $indexer */
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
-        foreach ($register as $key => $configuration) {
-            foreach ($this->indexItems as $table => $identifiers) {
-                if ($table === $configuration['tableName']) {
-                    foreach ($identifiers as $uid) {
-                        $indexer->reindex($key, $table, (int)$uid);
-                    }
-                }
+        foreach ($this->indexItems as $table => $identifiers) {
+            foreach ($identifiers as $uid) {
+                $indexer->reindex($configurationByTable[$table]['uniqueRegisterKey'], $table, (int)$uid);
             }
         }
         $this->indexItems = [];

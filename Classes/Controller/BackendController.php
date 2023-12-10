@@ -176,13 +176,7 @@ class BackendController extends AbstractController
      */
     protected function getTypes(): array
     {
-        $types = [];
-
-        foreach (Register::getRegister() as $config) {
-            $types[$config['uniqueRegisterKey']] = $config['title'];
-        }
-
-        return $types;
+        return array_column(Register::getRegister(), 'title', 'uniqueRegisterKey');
     }
 
     /**

@@ -13,18 +13,11 @@ use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 class ExtensionConfigurationUtility
 {
     /**
-     * Configuration cache.
-     */
-    protected static ?array $configuration = null;
-
-    /**
      * Get the given configuration value.
      */
     public static function get(string $name): mixed
     {
-        self::loadConfiguration();
-
-        return self::$configuration[$name] ?? null;
+        return Register::getRegister()[$name] ?? null;
     }
 
     /**
@@ -34,32 +27,21 @@ class ExtensionConfigurationUtility
      */
     public static function getUniqueRegisterKeyForModel(DomainObjectInterface $event): string
     {
-        self::loadConfiguration();
+        return self::getConfigurationForModel($event)['uniqueRegisterKey'];
+    }
 
+    public static function getConfigurationForModel(DomainObjectInterface $event): array
+    {
         $eventClass = $event::class;
-        foreach (self::$configuration as $configuration) {
+        foreach (Register::getRegister() as $configuration) {
             if ($configuration['modelName'] === $eventClass) {
-                return $configuration['uniqueRegisterKey'];
+                return $configuration;
             }
-            if (
-                isset($configuration['subClasses'])
-                && \is_array($configuration['subClasses'])
-                && \in_array($eventClass, $configuration['subClasses'])
-            ) {
-                return $configuration['uniqueRegisterKey'];
+            if (\in_array($eventClass, $configuration['subClasses'] ?? [], true)) {
+                return $configuration;
             }
         }
 
         throw new \Exception('No valid uniqueRegisterKey for: ' . $eventClass, 1236712);
-    }
-
-    /**
-     * Load the current configuration.
-     */
-    protected static function loadConfiguration(): void
-    {
-        if (null === self::$configuration) {
-            self::$configuration = Register::getRegister();
-        }
     }
 }

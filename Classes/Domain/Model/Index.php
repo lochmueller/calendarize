@@ -76,13 +76,7 @@ class Index extends AbstractModel
      */
     public function getConfiguration(): array
     {
-        foreach (Register::getRegister() as $key => $configuration) {
-            if ($this->getUniqueRegisterKey() === $key) {
-                return $configuration;
-            }
-        }
-
-        return [];
+        return Register::getRegister()[$this->getUniqueRegisterKey()] ?? [];
     }
 
     /**
