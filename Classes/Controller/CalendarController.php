@@ -6,7 +6,6 @@ namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Model\Event;
 use HDNET\Calendarize\Domain\Model\Index;
-use HDNET\Calendarize\Domain\Repository\AbstractRepository;
 use HDNET\Calendarize\Event\DetermineSearchEvent;
 use HDNET\Calendarize\Event\PaginationEvent;
 use HDNET\Calendarize\Register;
@@ -17,12 +16,10 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
-use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -249,42 +246,23 @@ class CalendarController extends AbstractController
      */
     public function shortcutAction(): ResponseInterface
     {
-        $this->addCacheTags(['calendarize_shortcut']);
+        [$table, $uid] = explode(':', $this->getTypoScriptFrontendController()->currentRecord);
+        $uid = (int)$uid;
 
-        list($table, $uid) = explode(':', $this->getTypoScriptFrontendController()->currentRecord);
-        $register = Register::getRegister();
-
-        $event = null;
-        foreach ($register as $value) {
-            if ($value['tableName'] === $table) {
-                $repositoryName = ClassNamingUtility::translateModelNameToRepositoryName($value['modelName']);
-                if (class_exists($repositoryName)) {
-                    /** @var AbstractRepository $repository */
-                    $repository = GeneralUtility::makeInstance($repositoryName);
-                    $event = $repository->findByUid($uid);
-
-                    $this->addCacheTags(
-                        ['calendarize_' . lcfirst($value['uniqueRegisterKey']) . '_' . $event->getUid()]
-                    );
-                    break;
-                }
-            }
-        }
-
-        if (!($event instanceof DomainObjectInterface)) {
-            return $this->htmlResponse('Invalid object');
-        }
+        $configurationByTable = array_column(Register::getRegister(), null, 'tableName');
+        $this->addCacheTags([
+            'calendarize_shortcut',
+            'calendarize_' . lcfirst($configurationByTable[$table]['uniqueRegisterKey'] ?? 'unknown') . '_' . $uid,
+        ]);
 
         $limitEvents = (int)($this->settings['shortcutLimitEvents'] ?? 1);
 
-        $fetchEvent = $this->indexRepository->findByEventTraversing($event, true, false, $limitEvents);
+        $fetchEvent = $this->indexRepository->findByTableAndUid($table, $uid, true, false, $limitEvents)->toArray();
         if (\count($fetchEvent) <= 0) {
-            $fetchEvent = $this->indexRepository
-                ->findByEventTraversing($event, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING);
+            $fetchEvent = $this->indexRepository->findByTableAndUid($table, $uid, false, true, $limitEvents, QueryInterface::ORDER_DESCENDING)->toArray();
         }
 
         $this->view->assignMultiple([
-            'pagination' => $this->getPagination($fetchEvent),
             'indices' => $fetchEvent,
         ]);
 

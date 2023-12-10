@@ -137,6 +137,13 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
             $calendar => 'past',
         ]
     );
+    ExtensionUtility::configurePlugin(
+        'calendarize',
+        'Shortcut',
+        [
+            $calendar => 'shortcut',
+        ]
+    );
 
     ExtensionUtility::configurePlugin(
         'calendarize',

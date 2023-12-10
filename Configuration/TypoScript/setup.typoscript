@@ -119,21 +119,13 @@ plugin {
 
 # Rendering of calendarize, displayed by "Insert Record" content element
 tt_content.shortcut.20.tables := addToList(tx_calendarize_domain_model_event)
-tt_content.shortcut.20.conf.tx_calendarize_domain_model_event = USER
+tt_content.shortcut.20.conf.tx_calendarize_domain_model_event = EXTBASEPLUGIN
 tt_content.shortcut.20.conf.tx_calendarize_domain_model_event {
-  userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
   extensionName = Calendarize
-  pluginName = Calendar
-  vendorName = HDNET
-  switchableControllerActions {
-    Calendar {
-      1 = shortcut
-    }
-  }
+  pluginName = Shortcut
 
   settings =< plugin.tx_calendarize.settings
   settings {
-    insertRecord = 1
     hidePagination = 1
     detailPid = {$plugin.tx_calendarize.settings.defaultDetailPid}
   }
@@ -142,7 +134,7 @@ tt_content.shortcut.20.conf.tx_calendarize_domain_model_event {
 tt_content.shortcut.variables.shortcuts.tables := addToList(tx_calendarize_domain_model_event)
 tt_content.shortcut.variables.shortcuts.conf.tx_calendarize_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event
 
-# Add you own tables with (See: EXT:calendarize/Configuration/TCA/Overrides/tt_content.php)
+# Add you own tables
 # tt_content.shortcut.20.tables := addToList(tx_XXXXXX_domain_model_event)
 # tt_content.shortcut.20.conf.tx_XXXXX_domain_model_event =< tt_content.shortcut.20.conf.tx_calendarize_domain_model_event
 # tt_content.shortcut.variables.shortcuts.tables := addToList(tx_XXXXX_domain_model_event)
