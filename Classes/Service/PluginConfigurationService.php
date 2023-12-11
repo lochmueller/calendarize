@@ -87,6 +87,7 @@ class PluginConfigurationService
         $query = HelperUtility::getQuery($row['model_name']);
         $query
             ->getQuerySettings()
+            ->setRespectSysLanguage(false)
             ->setRespectStoragePage(false);
 
         return $query
