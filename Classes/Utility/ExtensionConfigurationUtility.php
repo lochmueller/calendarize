@@ -15,7 +15,7 @@ class ExtensionConfigurationUtility
     /**
      * Get the given configuration value.
      */
-    public static function get(string $name): mixed
+    public static function get(string $name): ?array
     {
         return Register::getRegister()[$name] ?? null;
     }

@@ -63,7 +63,6 @@ class CalendarController extends AbstractController
         }
 
         $this->modifyIndexRepository();
-        $this->redirectDetailWithEvent();
     }
 
     protected function modifyIndexRepository(): void
@@ -89,31 +88,28 @@ class CalendarController extends AbstractController
         }
     }
 
-    protected function redirectDetailWithEvent(): void
+    protected function redirectDetailWithEvent(): ?ResponseInterface
     {
-        if ($this->request->hasArgument('event') && 'detailAction' === $this->actionMethodName) {
-            // default configuration
-            $configurationName = $this->settings['configuration'] ?? '';
-            // configuration overwritten by argument?
-            if ($this->request->hasArgument('extensionConfiguration')) {
-                $configurationName = $this->request->getArgument('extensionConfiguration');
-            }
-            // get the configuration
-            $configuration = ExtensionConfigurationUtility::get($configurationName);
-
-            $index = $this->indexRepository->findByTableAndUid(
-                $configuration['tableName'],
-                (int)$this->request->getArgument('event'),
-                true,
-                false,
-                1
-            )->getFirst();
-
-            // if there is a valid index in the event
-            if ($index) {
-                $this->redirect('detail', null, null, ['index' => $index]);
-            }
+        if (!$this->request->hasArgument('extensionConfiguration') || !$this->request->hasArgument('event')) {
+            return null;
         }
+        $configuration = ExtensionConfigurationUtility::get($this->request->getArgument('extensionConfiguration'));
+        if (null === $configuration) {
+            return null;
+        }
+
+        $table = $configuration['tableName'];
+        $uid = (int)$this->request->getArgument('event');
+
+        $index = $this->indexRepository->findByTableAndUid($table, $uid, true, false, 1)->getFirst();
+        if (null === $index) {
+            $index = $this->indexRepository->findByTableAndUid($table, $uid, false, true, 1)->getFirst();
+        }
+        if ($index) {
+            return $this->redirect('detail', null, null, ['index' => $index]);
+        }
+
+        return null;
     }
 
     /**
@@ -520,6 +516,10 @@ class CalendarController extends AbstractController
      */
     public function detailAction(Index $index = null): ResponseInterface
     {
+        $redirectResponse = $this->redirectDetailWithEvent();
+        if ($redirectResponse) {
+            return $redirectResponse;
+        }
         if (null === $index) {
             // handle fallback for "strange language settings"
             if ($this->request->hasArgument('index')) {
