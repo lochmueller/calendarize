@@ -178,18 +178,13 @@
 				<source>Wrong date</source>
 			</trans-unit>
 			<trans-unit id="wrong.date.message">
-				<source>The date of one of the date configurations is wrong. The end date cannot be earlier than the
-					start date.
-				</source>
+				<source>The date of one of the date configurations is wrong. The end date cannot be earlier than the start date.</source>
 			</trans-unit>
 			<trans-unit id="wrong.time">
 				<source>Wrong time</source>
 			</trans-unit>
 			<trans-unit id="wrong.time.message">
-				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the
-					start time! If the end time is 00:00, then the end date must be at least one day later than the
-					start date.
-				</source>
+				<source>The time of one of the date configurations is wrong. The end time cannot be earlier than the start time! If the end time is 00:00, then the end date must be at least one day later than the start date.</source>
 			</trans-unit>
 			<trans-unit id="flashMessage.missingStartDate.title" resname="flashMessage.missingStartDate.title">
 				<source>Missing start date</source>
@@ -544,8 +539,7 @@
 				<source>Calendar Booking</source>
 			</trans-unit>
 			<trans-unit id="previewLabel">
-				<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today)
-					are
+				<source>There is/are %d item/items in the index of the current record. The next %d events (incl. today) are
 					(ignore enable columns)...
 				</source>
 			</trans-unit>
@@ -739,8 +733,7 @@
 				<source>Open End</source>
 			</trans-unit>
 			<trans-unit id="your_search">
-				<source>
-					<![CDATA[Your search in the time from <span class="date-start">%1$s</span> to <span class="date-end">%2$s</span> found these results]]></source>
+				<source><![CDATA[Your search in the time from <span class="date-start">%1$s</span> to <span class="date-end">%2$s</span> found these results]]></source>
 			</trans-unit>
 			<trans-unit id="search.button_label">
 				<source>Search</source>
