@@ -8,11 +8,12 @@ use HDNET\Calendarize\Domain\Model\Dto\Search;
 use HDNET\Calendarize\Domain\Repository\EventRepository;
 use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
 use HDNET\Calendarize\Register;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 
-class DefaultEventSearchListener
+/**
+ * Filters Event records by the search query ('categories' and 'fullText').
+ */
+class SearchConstraintEventListener
 {
     public function __construct(protected EventRepository $eventRepository)
     {
@@ -23,23 +24,21 @@ class DefaultEventSearchListener
         if (!\in_array(Register::UNIQUE_REGISTER_KEY, $event->getIndexTypes(), true)) {
             return;
         }
+        $foreignIds = $event->getForeignIds();
+        if (!empty($foreignIds['tx_calendarize_domain_model_event'])) {
+            // Skip if there are already ids (e.g. by other extensions)
+            return;
+        }
 
         $search = $this->getSearchDto($event);
-
         if (!$search->isSearch()) {
             return;
         }
 
-        /** @var Typo3QuerySettings $querySettings */
-        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-        $querySettings->setRespectStoragePage(false);
-        $this->eventRepository->setDefaultQuerySettings($querySettings);
         $searchTermIds = $this->eventRepository->findBySearch($search);
-
         // Blocks result (displaying no event) on no search match (empty id array)
         $searchTermIds[] = -1;
 
-        $foreignIds = $event->getForeignIds();
         $foreignIds['tx_calendarize_domain_model_event'] = $searchTermIds;
         $event->setForeignIds($foreignIds);
     }
@@ -56,6 +55,10 @@ class DefaultEventSearchListener
             $search->setCategories($categories);
         } elseif (MathUtility::canBeInterpretedAsInteger($customSearch['category'] ?? '')) {
             // Fallback for previous mode
+            @trigger_error(
+                'Search request with the parameter \'category\' is deprecated. Use \'categories\' instead.',
+                \E_USER_DEPRECATED
+            );
             $search->setCategories([(int)$customSearch['category']]);
         }
 

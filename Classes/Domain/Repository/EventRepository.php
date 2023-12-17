@@ -27,6 +27,8 @@ class EventRepository extends AbstractRepository
     public function findBySearch(Search $search): array
     {
         $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+
         $constraints = [];
         if ($search->getFullText()) {
             $constraints['fullText'] = $query->logicalOr(
@@ -44,12 +46,7 @@ class EventRepository extends AbstractRepository
         $query->matching($query->logicalAnd(...$constraints));
         $rows = $query->execute(true);
 
-        $ids = [];
-        foreach ($rows as $row) {
-            $ids[] = (int)$row['uid'];
-        }
-
-        return $ids;
+        return array_map(static fn ($row) => (int)($row['_LOCALIZED_UID'] ?? $row['uid']), $rows);
     }
 
     public function findOneByImportId(string $importId, int $pid = null): ?object

@@ -38,7 +38,7 @@ services:
         identifier: 'categoryFilter'
         event: HDNET\Calendarize\Event\GenericActionAssignmentEvent
 
-  HDNET\Calendarize\EventListener\DefaultEventSearchListener:
+  HDNET\Calendarize\EventListener\SearchConstraintEventListener:
     tags:
       - name: event.listener
         identifier: 'defaultEventSearch'
