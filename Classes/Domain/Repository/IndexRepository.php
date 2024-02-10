@@ -184,8 +184,8 @@ class IndexRepository extends AbstractRepository
      * Find by custom search.
      */
     public function findBySearch(
-        \DateTimeInterface $startDate = null,
-        \DateTimeInterface $endDate = null,
+        ?\DateTimeInterface $startDate = null,
+        ?\DateTimeInterface $endDate = null,
         array $customSearch = [],
         int $limit = 0
     ): array|QueryResultInterface {
@@ -309,7 +309,7 @@ class IndexRepository extends AbstractRepository
         bool $past = false,
         int $limit = 100,
         string $sort = QueryInterface::ORDER_ASCENDING,
-        \DateTimeImmutable $referenceDate = null
+        ?\DateTimeImmutable $referenceDate = null
     ): array|QueryResultInterface {
         if (!$future && !$past) {
             return [];
@@ -455,7 +455,7 @@ class IndexRepository extends AbstractRepository
      */
     public function findByTimeSlot(
         ?\DateTimeInterface $startTime,
-        \DateTimeInterface $endTime = null
+        ?\DateTimeInterface $endTime = null
     ): array|QueryResultInterface {
         $query = $this->createQuery();
         $constraints = $this->getDefaultConstraints($query);
@@ -538,8 +538,8 @@ class IndexRepository extends AbstractRepository
     protected function addTimeFrameConstraints(
         array &$constraints,
         QueryInterface $query,
-        \DateTimeInterface $startTime = null,
-        \DateTimeInterface $endTime = null
+        ?\DateTimeInterface $startTime = null,
+        ?\DateTimeInterface $endTime = null
     ): void {
         /** @var AddTimeFrameConstraintsEvent $event */
         $event = $this->eventDispatcher->dispatch(new AddTimeFrameConstraintsEvent(

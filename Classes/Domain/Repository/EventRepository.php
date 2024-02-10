@@ -49,7 +49,7 @@ class EventRepository extends AbstractRepository
         return array_map(static fn ($row) => (int)($row['_LOCALIZED_UID'] ?? $row['uid']), $rows);
     }
 
-    public function findOneByImportId(string $importId, int $pid = null): ?object
+    public function findOneByImportId(string $importId, ?int $pid = null): ?object
     {
         $query = $this->createQuery();
 

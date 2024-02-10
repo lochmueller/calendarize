@@ -143,13 +143,13 @@ class VObjectEventAdapter implements ICalEvent
     protected function getEndDateTime(): ?\DateTimeImmutable
     {
         if (isset($this->event->DTEND)) {
-            /** @var \Sabre\VObject\Property\ICalendar\DateTime $dtEnd */
+            /** @var Property\ICalendar\DateTime $dtEnd */
             $dtEnd = $this->event->DTEND;
 
             return $dtEnd->getDateTime();
         }
         if (isset($this->event->DURATION)) {
-            /** @var \Sabre\VObject\Property\ICalendar\DateTime $dtStart */
+            /** @var Property\ICalendar\DateTime $dtStart */
             $dtStart = $this->event->DTSTART;
             $duration = $this->event->DURATION->getDateInterval();
 
@@ -168,7 +168,7 @@ class VObjectEventAdapter implements ICalEvent
             return self::ALLDAY_START_TIME;
         }
 
-        /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
+        /** @var Property\ICalendar\DateTime $start */
         $start = $this->event->DTSTART;
 
         return DateTimeUtility::getNormalizedDaySecondsOfDateTime($start->getDateTime());
@@ -195,7 +195,7 @@ class VObjectEventAdapter implements ICalEvent
         if (!isset($this->event->DTSTART)) {
             return true;
         }
-        /** @var \Sabre\VObject\Property\ICalendar\DateTime $start */
+        /** @var Property\ICalendar\DateTime $start */
         $start = $this->event->DTSTART;
 
         return !$start->hasTime();
@@ -234,7 +234,7 @@ class VObjectEventAdapter implements ICalEvent
         }
         $rrule = $this->event->RRULE->getValue();
         if (\is_string($rrule)) {
-            $rrule = \Sabre\VObject\Property\ICalendar\Recur::stringToArray($rrule);
+            $rrule = Property\ICalendar\Recur::stringToArray($rrule);
         }
 
         return $rrule;

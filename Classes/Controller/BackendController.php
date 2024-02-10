@@ -58,7 +58,7 @@ class BackendController extends AbstractController
     /**
      * Basic backend list.
      */
-    public function listAction(OptionRequest $options = null, int $currentPage = 1): ResponseInterface
+    public function listAction(?OptionRequest $options = null, int $currentPage = 1): ResponseInterface
     {
         if (null === $options) {
             $options = $this->getOptions();

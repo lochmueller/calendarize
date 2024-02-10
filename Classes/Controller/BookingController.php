@@ -18,7 +18,7 @@ class BookingController extends AbstractController
     /**
      * Form action.
      */
-    public function bookingAction(Index $index = null): ResponseInterface
+    public function bookingAction(?Index $index = null): ResponseInterface
     {
         $this->view->assign('index', $index);
 

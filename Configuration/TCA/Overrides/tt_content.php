@@ -7,7 +7,7 @@ defined('TYPO3') or exit();
 $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
 foreach (['normal', 'special', 'booking'] as $itemGroup) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItemGroup(
+    TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItemGroup(
         'tt_content',
         'list_type',
         'calendarize_' . $itemGroup,
@@ -28,7 +28,7 @@ $pluginNameAndGroup = array_merge(
 );
 
 foreach ($pluginNameAndGroup as $name => $group) {
-    $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    $pluginSignature = TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'calendarize',
         $name,
         $ll . 'mode.' . strtolower($name),
@@ -40,7 +40,7 @@ foreach ($pluginNameAndGroup as $name => $group) {
     // Activate the display of the plug-in flexform field and set FlexForm definition
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         $pluginSignature,
         'FILE:EXT:calendarize/Configuration/FlexForms/Calendar.xml'
     );

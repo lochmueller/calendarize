@@ -140,7 +140,7 @@ return [
                 'items' => [
                     0 => [
                         'label' => 'Default',
-                        'value' => \HDNET\Calendarize\Domain\Model\PluginConfiguration::class,
+                        'value' => HDNET\Calendarize\Domain\Model\PluginConfiguration::class,
                     ],
                 ],
             ],

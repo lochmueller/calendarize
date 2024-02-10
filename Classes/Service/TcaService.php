@@ -19,7 +19,7 @@ class TcaService extends AbstractService
     /**
      * Render the configuration title.
      */
-    public function configurationTitle(array &$params, object $_ = null): void
+    public function configurationTitle(array &$params, ?object $_ = null): void
     {
         $row = $params['row'];
         $this->migrateFormEngineRow($row);

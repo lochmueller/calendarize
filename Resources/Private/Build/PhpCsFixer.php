@@ -14,7 +14,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in($baseDir . '/Configuration/TCA')
     ->in($baseDir . '/Resources/Private/Build');
 
-$config = new \PhpCsFixer\Config();
+$config = new PhpCsFixer\Config();
 
 return $config
     ->setRiskyAllowed(true)

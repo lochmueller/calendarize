@@ -27,7 +27,7 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
     /**
      * Render a link with action and controller.
      */
-    public function renderExtbaseLink(array $controllerArguments = [], int $pageUid = null): string
+    public function renderExtbaseLink(array $controllerArguments = [], ?int $pageUid = null): string
     {
         $absolute = $this->arguments['absolute'] ?? false;
         $pageUid = $pageUid ?? $this->getPageUid((int)($this->arguments['pageUid'] ?? 0));

@@ -119,9 +119,9 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function latestAction(
-        Index $index = null,
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        ?Index $index = null,
+        ?\DateTime $startDate = null,
+        ?\DateTime $endDate = null,
         array $customSearch = [],
         int $year = 0,
         int $month = 0,
@@ -160,9 +160,9 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function resultAction(
-        Index $index = null,
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        ?Index $index = null,
+        ?\DateTime $startDate = null,
+        ?\DateTime $endDate = null,
         array $customSearch = [],
         int $year = 0,
         int $month = 0,
@@ -201,9 +201,9 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function listAction(
-        Index $index = null,
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        ?Index $index = null,
+        ?\DateTime $startDate = null,
+        ?\DateTime $endDate = null,
         array $customSearch = [],
         int $year = 0,
         int $month = 0,
@@ -336,7 +336,7 @@ class CalendarController extends AbstractController
      *
      * @return ResponseInterface
      */
-    public function quarterAction(int $year = 0, int $quarter = null): ResponseInterface
+    public function quarterAction(int $year = 0, ?int $quarter = null): ResponseInterface
     {
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
@@ -415,7 +415,7 @@ class CalendarController extends AbstractController
     /**
      * Week action.
      */
-    public function weekAction(int $year = null, int $week = null): ResponseInterface
+    public function weekAction(?int $year = null, ?int $week = null): ResponseInterface
     {
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
@@ -514,7 +514,7 @@ class CalendarController extends AbstractController
     /**
      * Detail action.
      */
-    public function detailAction(Index $index = null): ResponseInterface
+    public function detailAction(?Index $index = null): ResponseInterface
     {
         $redirectResponse = $this->redirectDetailWithEvent();
         if ($redirectResponse) {
@@ -602,8 +602,8 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function searchAction(
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        ?\DateTime $startDate = null,
+        ?\DateTime $endDate = null,
         array $customSearch = []
     ): ResponseInterface {
         $this->addCacheTags(['calendarize_search']);
@@ -670,8 +670,8 @@ class CalendarController extends AbstractController
      * Build the search structure.
      */
     protected function determineSearch(
-        \DateTime $startDate = null,
-        \DateTime $endDate = null,
+        ?\DateTime $startDate = null,
+        ?\DateTime $endDate = null,
         array $customSearch = [],
         int $year = 0,
         int $month = 0,
@@ -748,7 +748,7 @@ class CalendarController extends AbstractController
         return $event->getVariables();
     }
 
-    protected function checkWrongDateOrder(\DateTime $startDate = null, \DateTime &$endDate = null): array
+    protected function checkWrongDateOrder(?\DateTime $startDate = null, ?\DateTime &$endDate = null): array
     {
         if ($startDate && $endDate && $endDate < $startDate) {
             // End date is before start date. So use start and end equals!

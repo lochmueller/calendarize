@@ -118,9 +118,9 @@ class DateTimeUtility
      * Get a normalize date time object.
      */
     public static function normalizeDateTime(
-        int $day = null,
-        int $month = null,
-        int $year = null
+        ?int $day = null,
+        ?int $month = null,
+        ?int $year = null
     ): \DateTime {
         $date = self::getNow();
         // Check if this date should handle always in UTC
@@ -148,7 +148,7 @@ class DateTimeUtility
     /**
      * Normalize quarter.
      */
-    public static function normalizeQuarter(int $quarter = null): int
+    public static function normalizeQuarter(?int $quarter = null): int
     {
         if (null === $quarter) {
             $quarter = self::getQuarter(self::getNow());
@@ -170,7 +170,7 @@ class DateTimeUtility
     /**
      * Reset the DateTime.
      */
-    public static function resetTime(string|\DateTimeInterface $dateTime = null): \DateTime
+    public static function resetTime(string|\DateTimeInterface|null $dateTime = null): \DateTime
     {
         $dateTime = self::normalizeDateTimeSingle($dateTime);
         $dateTime->setTime(0, 0);
@@ -184,8 +184,8 @@ class DateTimeUtility
      * @throws \Exception
      */
     public static function normalizeDateTimeSingle(
-        int|string|\DateTimeInterface $dateInformation = null,
-        \DateTimeZone $timezone = null
+        int|string|\DateTimeInterface|null $dateInformation = null,
+        ?\DateTimeZone $timezone = null
     ): \DateTime {
         $timezone = $timezone ?? self::getTimeZone();
         $date = self::getNow();
