@@ -76,7 +76,7 @@ class CleanupCommandController extends Command
      * Cleanup the event models.
      * Remove outdated events to keep a small footprint. This gain maybe a little more performance.
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Cleanup outdated events');
