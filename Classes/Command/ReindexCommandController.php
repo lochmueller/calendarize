@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ReindexCommandController extends Command
 {
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var IndexerService $indexer */
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
