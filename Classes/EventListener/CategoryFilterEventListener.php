@@ -69,6 +69,10 @@ class CategoryFilterEventListener
             ->executeQuery()
             ->fetchFirstColumn();
 
+        if (empty($categoryIds)) {
+            return [];
+        }
+
         return $this->categoryRepository->findByIds(
             $categoryIds,
             ['title' => QueryInterface::ORDER_ASCENDING]
