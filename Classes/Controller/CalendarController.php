@@ -15,7 +15,7 @@ use HDNET\Calendarize\Utility\TranslateUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
-use TYPO3\CMS\Core\Pagination\SimplePagination;
+use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -774,7 +774,7 @@ class CalendarController extends AbstractController
             : 1;
 
         $paginator = new QueryResultPaginator($queryResult, $currentPage, $itemsPerPage);
-        $pagination = new SimplePagination($paginator);
+        $pagination = new SlidingWindowPagination($paginator, $maximumNumberOfLinks);
 
         $event = new PaginationEvent(
             $paginator,
