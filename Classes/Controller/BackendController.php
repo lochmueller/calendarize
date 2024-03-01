@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
@@ -76,7 +77,7 @@ class BackendController extends AbstractController
             $indices = [];
             $paginator = new ArrayPaginator($indices, $currentPage, 50);
         }
-        $pagination = new SlidingWindowPagination($paginator);
+        $pagination = new SimplePagination($paginator);
 
         $view = $this->moduleTemplateFactory->create($this->request);
         $view->assignMultiple([
