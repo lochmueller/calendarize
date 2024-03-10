@@ -614,7 +614,7 @@ class CalendarController extends AbstractController
         }
         if (!($endDate instanceof \DateTimeInterface)) {
             $endDate = clone $startDate;
-            $modify = \is_string($this->settings['searchEndModifier'])
+            $modify = isset($this->settings['searchEndModifier']) && \is_string($this->settings['searchEndModifier'])
                 ? $this->settings['searchEndModifier']
                 : '+30 days';
             $endDate->modify($modify);
@@ -767,7 +767,7 @@ class CalendarController extends AbstractController
     protected function getPagination(QueryResultInterface $queryResult): array
     {
         $paginateConfiguration = $this->settings['paginateConfiguration'] ?? [];
-        $itemsPerPage = (int)($paginateConfiguration['itemsPerPage'] ?: 10);
+        $itemsPerPage = (int)($paginateConfiguration['itemsPerPage'] ?? 10);
         $maximumNumberOfLinks = (int)($paginateConfiguration['maximumNumberOfLinks'] ?? 10);
         $currentPage = $this->request->hasArgument('currentPage') ?
             (int)$this->request->getArgument('currentPage')
