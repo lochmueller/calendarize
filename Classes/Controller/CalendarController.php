@@ -279,8 +279,8 @@ class CalendarController extends AbstractController
         }
         $this->addCacheTags(['calendarize_past']);
 
-        $limit = $limit ?: (int)($this->settings['limit']);
-        $sort = $sort ?: $this->settings['sorting'];
+        $limit = (int)$this->settings['limit'] ?: $limit;
+        $sort = $this->settings['sorting'] ?: $sort;
         $this->checkStaticTemplateIsIncluded();
         $listStartTime = (string)$this->settings['listStartTime'];
         $indices = $this->indexRepository->findByPast($limit, $sort, $listStartTime);
