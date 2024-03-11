@@ -36,6 +36,9 @@
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_date_dynamic">
 				<source>End date (dynamic)</source>
 			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.flex_form">
+				<source>Configuration</source>
+			</trans-unit>
 			<trans-unit id="configuration.end_date_dynamic.1day">
 				<source>1 day</source>
 			</trans-unit>
@@ -361,6 +364,9 @@
 			</trans-unit>
 			<trans-unit id="configuration.type.timeExclude">
 				<source>Time (exclude)</source>
+			</trans-unit>
+			<trans-unit id="configuration.type.calendarize_manipulation">
+				<source>Time Manipulation</source>
 			</trans-unit>
 			<trans-unit id="configuration.state.canceled">
 				<source>Canceled</source>

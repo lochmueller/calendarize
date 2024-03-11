@@ -33,7 +33,7 @@ class ManipulationTimeTable extends AbstractTimeTable implements TimeTableInterf
 
     public function getLabel(): string
     {
-        return 'Manipulation';
+        return 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:configuration.type.calendarize_manipulation';
     }
 
     public function getTcaServiceTypeFields(): string
