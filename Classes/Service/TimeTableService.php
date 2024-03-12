@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TimeTableService extends AbstractService
 {
-    protected ConfigurationRepository $configurationRepository;
+    protected ?ConfigurationRepository $configurationRepository = null;
 
     public function setConfigurationRepository(ConfigurationRepository $configurationRepository): void
     {
@@ -31,12 +31,13 @@ class TimeTableService extends AbstractService
      */
     public function getTimeTablesByConfigurationIds(array $ids, int $workspace): array
     {
-        if (!$this->configurationRepository instanceof ConfigurationRepository) {
-            $this->configurationRepository = GeneralUtility::makeInstance(ConfigurationRepository::class);
-        }
         $timeTable = [];
         if (!$ids) {
             return $timeTable;
+        }
+
+        if (null === $this->configurationRepository) {
+            $this->configurationRepository = GeneralUtility::makeInstance(ConfigurationRepository::class);
         }
 
         foreach ($ids as $configurationUid) {
