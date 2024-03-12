@@ -39,10 +39,10 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
             return $configurations[$id] ?? null;
         });
 
-        $timeTableService = new TimeTableService($configurationRepository);
+        $timeTableService = new TimeTableService();
+        $timeTableService->setConfigurationRepository($configurationRepository);
 
         $result = $timeTableService->getTimeTablesByConfigurationIds(array_keys($configurations), 0);
-
         self::assertNotEmpty($result, 'There should be index entries');
         $assert($result);
     }
@@ -58,7 +58,7 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
         yield 'simple index Entry' => [
             [
                 1 => $new_configuration(102)
-                    ->setType(Configuration::TYPE_TIME)
+                    ->setType(ConfigurationInterface::TYPE_TIME)
                     ->setStartDate(new \DateTime('2022-07-01'))
                     ->setStartTime(60 * 60 * 12)
                     ->setOpenEndTime(true)
@@ -70,7 +70,7 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
         yield 'simple index Entry with hourly frequency' => [
             [
                 1 => $new_configuration(102)
-                    ->setType(Configuration::TYPE_TIME)
+                    ->setType(ConfigurationInterface::TYPE_TIME)
                     ->setStartDate(new \DateTime('2022-07-01'))
                     ->setStartTime(60 * 60 * 12)
                     ->setEndTime(60 * 60 * 12 + (30 * 60))
@@ -81,6 +81,7 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
             ],
             function ($result) {
                 $items = array_values($result);
+
                 self::assertCount(6, $items);
                 self::assertEquals('12:00:00', BackendUtility::time($items[0]['start_time']));
                 self::assertEquals('12:30:00', BackendUtility::time($items[0]['end_time']));

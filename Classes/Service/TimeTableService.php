@@ -19,11 +19,21 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TimeTableService extends AbstractService
 {
+    protected ConfigurationRepository $configurationRepository;
+
+    public function setConfigurationRepository(ConfigurationRepository $configurationRepository): void
+    {
+        $this->configurationRepository = $configurationRepository;
+    }
+
     /**
      * Build the timetable for the given configuration matrix (sorted).
      */
     public function getTimeTablesByConfigurationIds(array $ids, int $workspace): array
     {
+        if (!$this->configurationRepository instanceof ConfigurationRepository) {
+            $this->configurationRepository = GeneralUtility::makeInstance(ConfigurationRepository::class);
+        }
         $timeTable = [];
         if (!$ids) {
             return $timeTable;
@@ -41,7 +51,7 @@ class TimeTableService extends AbstractService
             // Disable Workspace for selection to get also offline versions of configuration
             $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = false;
             // Do not use DI for repo to avoid problem in ext_localconf.php loading context
-            $configuration = GeneralUtility::makeInstance(ConfigurationRepository::class)->findByUid($configurationUid);
+            $configuration = $this->configurationRepository->findByUid($configurationUid);
             $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = true;
             if (!($configuration instanceof Configuration)) {
                 continue;
