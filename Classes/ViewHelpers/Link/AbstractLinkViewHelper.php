@@ -76,8 +76,9 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     /**
      * Get the right page Uid.
      */
-    protected function getPageUid(int $pageUid, ?string $contextName = null): int
+    protected function getPageUid(?string $contextName = null): int
     {
+        $pageUid = (int)($this->arguments['pageUid'] ?? 0);
         if (MathUtility::canBeInterpretedAsInteger($pageUid) && $pageUid > 0) {
             return $pageUid;
         }

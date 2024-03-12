@@ -33,6 +33,6 @@ class IndexViewHelper extends AbstractActionViewHelper
             'index' => $this->arguments['index']->getUid(),
         ];
 
-        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid((int)$this->arguments['pageUid'], 'detailPid'));
+        return $this->renderExtbaseLink($pluginArgs, $this->getPageUid('detailPid'));
     }
 }
