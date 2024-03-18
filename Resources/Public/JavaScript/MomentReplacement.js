@@ -1,15 +1,12 @@
-if (window.jQuery) {
-	jQuery(function () {
-		jQuery('.momentJs').each(function () {
-			let $element = jQuery(this);
-			let language = $element.attr('data-language');
-			if (typeof language !== typeof undefined && language !== false) {
-				moment.locale(language);
-			}
-			let m = moment.parseZone($element.html());
-			jQuery(this).html(m.format($element.attr('data-format')));
-		});
-	});
-} else {
-	alert('The Moment.js function of the calendarize need jQuery!');
-}
+document.addEventListener('DOMContentLoaded', function () {
+  let timeEntries = document.getElementsByClassName("momentJs");
+  for (var i = 0; i < timeEntries.length; i++) {
+
+    let language = timeEntries[i].getAttribute('data-language');
+    if (typeof language !== typeof undefined && language !== false) {
+      moment.locale(language);
+    }
+    let m = moment.parseZone(timeEntries[i].innerHTML);
+    timeEntries[i].innerHTML = m.format(timeEntries[i].getAttribute('data-format'));
+  }
+});
