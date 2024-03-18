@@ -78,8 +78,8 @@
 			tmp.id = {index.uid};
 			tmp.allDay = false;
 			tmp.title = <f:format.raw><c:jsQuote><f:render partial="{index.configuration.partialIdentifier}/Title" arguments="{index: index}" /></c:jsQuote></f:format.raw>;
-			tmp.start = '<f:format.date format="c">{index.startDateComplete}</f:format.date>';
-			tmp.end =  '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}" base="{index.endDateComplete}">+1 day</f:format.date>';
+			tmp.start = '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}">{index.startDateComplete}</f:format.date>';
+			tmp.end =  '<f:format.date format="{f:if(condition: index.allDay, then: 'Y-m-d', else: 'c')}" base="{index.endDateComplete}">+{f:if(condition: index.allDay, then: '1', else: '0')} day</f:format.date>';
 			<f:if condition="{index.allDay}">
 				tmp.allDay = true;
 			</f:if>
