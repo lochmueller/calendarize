@@ -1,25 +1,22 @@
-if (window.jQuery) {
-	jQuery(function () {
-		let $monthCalendar = jQuery('.fullCalendarIo');
-		if ($monthCalendar.length && typeof monthEvents != 'undefined') {
-			monthFirstDay = parseInt(monthFirstDay, 10);
-			if (monthFirstDay == 7) {
-				monthFirstDay = 0;
-			}
+document.addEventListener('DOMContentLoaded', function () {
+  let calendarEl = document.getElementById('fullCalendarIo');
+  if (calendarEl && typeof monthEvents != 'undefined') {
+    let divsToHide = document.getElementsByClassName("regularMonthView");
+    for (let i = 0; i < divsToHide.length; i++) {
+      divsToHide[i].style.visibility = "hidden"; // or
+      divsToHide[i].style.display = "none"; // depending on what you're doing
+    }
 
-			let language = $monthCalendar.first().attr('data-language');
-			if (typeof language == typeof undefined || language == false) {
-				language = "en";
-			}
-			jQuery('.regularMonthView').hide();
-			$monthCalendar.fullCalendar({
-				locale: language, firstDay: monthFirstDay, header: {
-					left: '', center: '', right: ''
-				}, defaultDate: monthEventsCurrentDate, events: monthEvents
-			});
-		}
-
-	});
-} else {
-	alert('The Moment.js function of the calendarize need jQuery!');
-}
+    let language = calendarEl.getAttribute('data-language');
+    if (typeof language === typeof undefined || language === false) {
+      let language = "en";
+    }
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: language,
+      firstDay: monthFirstDay,
+      events: monthEvents
+    });
+    calendar.render();
+  }
+});
