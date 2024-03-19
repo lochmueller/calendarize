@@ -42,7 +42,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
         $this->registerArgument('past', 'bool', '', false, false);
         $this->registerArgument('limit', 'int', '', false, 100);
         $this->registerArgument('sort', 'string', '', false, QueryInterface::ORDER_ASCENDING);
-        $this->registerArgument('useIndexTime', 'string', '', false, '');
+        $this->registerArgument('useIndexTime', 'bool', '', false, false);
     }
 
     /**
@@ -56,7 +56,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
             $this->arguments['past'],
             (int)$this->arguments['limit'],
             $this->arguments['sort'],
-            $this->arguments['useIndexTime']
+            (bool)$this->arguments['useIndexTime']
         );
     }
 }
