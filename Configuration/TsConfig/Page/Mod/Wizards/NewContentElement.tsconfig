@@ -2,10 +2,28 @@ mod.wizards.newContentElement.wizardItems.calendarize.header = Calendarize Eleme
 mod.wizards.newContentElement.wizardItems.calendarize.show = *
 mod.wizards.newContentElement.wizardItems.calendarize.after = common
 mod.wizards.newContentElement.wizardItems.calendarize.elements {
+  calendarize_listdetail {
+    iconIdentifier = ext-calendarize-wizard-icon
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.listdetail
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.listdetail
+    tt_content_defValues {
+      CType = list
+      list_type = calendarize_listdetail
+    }
+  }
+  calendarize_list {
+    iconIdentifier = ext-calendarize-wizard-icon
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.list
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.list
+    tt_content_defValues {
+      CType = list
+      list_type = calendarize_list
+    }
+  }
   calendarize_detail {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.detail
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.detail
     tt_content_defValues {
       CType = list
       list_type = calendarize_detail
@@ -14,34 +32,16 @@ mod.wizards.newContentElement.wizardItems.calendarize.elements {
   calendarize_latest {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.latest
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.latest
     tt_content_defValues {
       CType = list
       list_type = calendarize_latest
     }
   }
-  calendarize_list {
-    iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.list
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
-    tt_content_defValues {
-      CType = list
-      list_type = calendarize_list
-    }
-  }
-  calendarize_listdetail {
-    iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.listdetail
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
-    tt_content_defValues {
-      CType = list
-      list_type = calendarize_listdetail
-    }
-  }
   calendarize_search {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.search
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.search
     tt_content_defValues {
       CType = list
       list_type = calendarize_search
@@ -50,7 +50,7 @@ mod.wizards.newContentElement.wizardItems.calendarize.elements {
   calendarize_result {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.result
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.result
     tt_content_defValues {
       CType = list
       list_type = calendarize_result
@@ -59,73 +59,73 @@ mod.wizards.newContentElement.wizardItems.calendarize.elements {
   calendarize_single {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.single
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.single
     tt_content_defValues {
       CType = list
       list_type = calendarize_single
     }
   }
-  calendarize_day {
-    iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.day
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
-    tt_content_defValues {
-      CType = list
-      list_type = calendarize_day
-    }
-  }
-  calendarize_month {
-    iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.month
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
-    tt_content_defValues {
-      CType = list
-      list_type = calendarize_month
-    }
-  }
   calendarize_past {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.past
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.past
     tt_content_defValues {
       CType = list
       list_type = calendarize_past
     }
   }
-  calendarize_quarter {
+  calendarize_booking {
     iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.quarter
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.booking
     tt_content_defValues {
       CType = list
-      list_type = calendarize_quarter
+      list_type = calendarize_booking
+    }
+  }
+  calendarize_day {
+    iconIdentifier = ext-calendarize-wizard-icon
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.day
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.day
+    tt_content_defValues {
+      CType = list
+      list_type = calendarize_day
     }
   }
   calendarize_week {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.week
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.week
     tt_content_defValues {
       CType = list
       list_type = calendarize_week
     }
   }
+  calendarize_month {
+    iconIdentifier = ext-calendarize-wizard-icon
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.month
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.month
+    tt_content_defValues {
+      CType = list
+      list_type = calendarize_month
+    }
+  }
+  calendarize_quarter {
+    iconIdentifier = ext-calendarize-wizard-icon
+    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.quarter
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.quarter
+    tt_content_defValues {
+      CType = list
+      list_type = calendarize_quarter
+    }
+  }
   calendarize_year {
     iconIdentifier = ext-calendarize-wizard-icon
     title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.year
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
+    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description.year
     tt_content_defValues {
       CType = list
       list_type = calendarize_year
-    }
-  }
-  calendarize_booking {
-    iconIdentifier = ext-calendarize-wizard-icon
-    title = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:mode.booking
-    description = LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:pluginName.description
-    tt_content_defValues {
-      CType = list
-      list_type = calendarize_booking
     }
   }
 }

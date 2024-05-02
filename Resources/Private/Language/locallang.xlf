@@ -538,8 +538,47 @@
 			<trans-unit id="pluginName">
 				<source>Calendar</source>
 			</trans-unit>
-			<trans-unit id="pluginName.description">
-				<source>Add a flexible calendar plugin to the current page (incl. different views)</source>
+			<trans-unit id="pluginName.description.listdetail">
+				<source>List and detail view in a single plugin for small calendar instances.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.list">
+				<source>List view for listing future events. Have to link with the detail view.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.detail">
+				<source>Detail view of a event.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.latest">
+				<source>A "Latest" view for events, that list the next few events.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.search">
+				<source>A search form for the events with a few default fields. Extendable via events.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.result">
+				<source>The search result plugin that output the results of the user search.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.single">
+				<source>Render a single event on a separated page - static.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.past">
+				<source>Display events from the past.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.booking">
+				<source>Render a booking form to book a event.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.day">
+				<source>Chronological view for days.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.week">
+				<source>Chronological view for weeks.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.month">
+				<source>Chronological view for months.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.quarter">
+				<source>Chronological view for quarters.</source>
+			</trans-unit>
+			<trans-unit id="pluginName.description.year">
+				<source>Chronological view for years.</source>
 			</trans-unit>
 			<trans-unit id="pluginNameBooking">
 				<source>Calendar Booking</source>
