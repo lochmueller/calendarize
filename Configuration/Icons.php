@@ -1,15 +1,35 @@
 <?php
 
+$wizards = [
+    'listdetail',
+    'list',
+    'detail',
+    'latest',
+    'search',
+    'result',
+    'single',
+    'past',
+    'booking',
+    'day',
+    'week',
+    'month',
+    'quarter',
+    'year',
+];
+
 $calendarizeIcons = [
-    'ext-calendarize-wizard-icon' => [
-        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        'source' => 'EXT:calendarize/Resources/Public/Icons/Extension.svg',
-    ],
     'apps-pagetree-folder-contains-calendarize' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:calendarize/Resources/Public/Icons/apps-pagetree-folder-contains-calendarize.svg',
     ],
 ];
+
+foreach ($wizards as $wizard) {
+    $calendarizeIcons['ext-calendarize-wizard-icon-' . $wizard] = [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:calendarize/Resources/Public/Icons/Wizard/' . ucfirst($wizard) . '.svg',
+    ];
+}
 
 $bitmapIcons = [
     // configuration types
