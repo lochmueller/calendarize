@@ -7,8 +7,10 @@
 /.deptrac.cache
 /composer.lock
 /Build/testing-docker/.env
+.DS_Store
 
 # ignore generated documentation
 *GENERATED*
 Tests/Unit/Build/.phpunit.cache/
 Tests/Functional/Build/.phpunit.cache/
+
