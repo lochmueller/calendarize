@@ -18,6 +18,10 @@ $wizards = [
 ];
 
 $calendarizeIcons = [
+    'ext-calendarize-wizard-icon' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:calendarize/Resources/Public/Icons/Extension.svg',
+    ],
     'apps-pagetree-folder-contains-calendarize' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:calendarize/Resources/Public/Icons/apps-pagetree-folder-contains-calendarize.svg',
