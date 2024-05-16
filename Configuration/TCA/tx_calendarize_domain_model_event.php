@@ -163,10 +163,8 @@ return [
             'config' => [
                 'type' => 'text',
                 'enableRichtext' => '1',
-                'richtextConfiguration' => 'default',
                 'softref' => 'typolink_tag,email[subst],url',
             ],
-            'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts_css]',
         ],
         'location' => [
             'exclude' => true,

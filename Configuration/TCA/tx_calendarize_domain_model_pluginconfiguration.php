@@ -214,7 +214,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.detail_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -227,7 +226,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.list_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -240,7 +238,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.year_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -253,7 +250,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.quarter_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -266,7 +262,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.month_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -279,7 +274,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.week_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -292,7 +286,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.day_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
@@ -305,7 +298,6 @@ return [
             'label' => $ll . 'tx_calendarize_domain_model_pluginconfiguration.booking_pid',
             'config' => [
                 'type' => 'group',
-                'eval' => 'int',
                 'size' => 1,
                 'allowed' => 'pages',
                 'maxitems' => 1,
