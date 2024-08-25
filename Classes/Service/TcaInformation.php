@@ -50,7 +50,7 @@ class TcaInformation extends AbstractService
             WorkspaceUtility::getCurrentWorkspaceId()
         );
 
-        return sprintf(TranslateUtility::get('previewLabel'), $count, $limit) . $this->getEventList($next);
+        return \sprintf(TranslateUtility::get('previewLabel'), $count, $limit) . $this->getEventList($next);
     }
 
     /**

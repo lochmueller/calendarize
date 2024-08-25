@@ -109,7 +109,9 @@ class TcaService extends AbstractService
         $groups = GeneralUtility::trimExplode(',', $row['groups'], true);
         foreach ($groups as $key => $id) {
             $row = BackendUtility::getRecord('tx_calendarize_domain_model_configurationgroup', $id);
-            $groups[$key] = $row['title'] . ' (#' . $id . ')';
+            if (!empty($row)) {
+                $groups[$key] = $row['title'] . ' (#' . $id . ')';
+            }
         }
         if ($groups) {
             $title .= '<ul><li>' . implode('</li><li>', $groups) . '</li></ul>';
