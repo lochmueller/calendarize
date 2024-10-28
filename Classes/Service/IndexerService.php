@@ -227,14 +227,16 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      */
     protected function generateSlugAndInsert(array $neededItems, int $workspace = 0): void
     {
+        $i = 0;
         foreach ($neededItems as $item) {
             if ($workspace) {
                 $item['t3ver_oid'] = 0;
             }
 
-            $item['slug'] = $this->slugService->makeSlugUnique($item);
+            $item['slug'] = $this->slugService->makeSlugUnique($item, $i);
             // We need to insert after each index, so subsequent indices do not get the same slug
             $this->rawIndexRepository->insert($item);
+            $i++;
         }
     }
 

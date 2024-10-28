@@ -135,10 +135,10 @@ class SlugService extends AbstractService
      * Process the record and make the slug unique in the table, e.g. adds a suffix on duplicate.
      *
      * @param array $recordData
-     *
+     * @param int|null $counter
      * @return string
      */
-    public function makeSlugUnique(array $recordData): string
+    public function makeSlugUnique(array $recordData, ?int $counter = null): string
     {
         // Create RecordState and generate slug
         $state = $this->stateFactory->fromArray(
@@ -149,7 +149,7 @@ class SlugService extends AbstractService
 
         /* @noinspection PhpUnhandledExceptionInspection */
         return $this->getSlugHelper($recordData['t3ver_wsid'] ?? 0)
-            ->buildSlugForUniqueInTable($recordData['slug'], $state);
+            ->buildSlugForUniqueInTable($recordData['slug'] . ($counter ? '-' . $counter : ''), $state);
     }
 
     protected function getSlugHelper(int $workspaceId = 0): SlugHelper
