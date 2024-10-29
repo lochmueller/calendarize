@@ -34,7 +34,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
         string $recurrence,
         string $day,
         int $interval = 1
-    ): \DateTime {
+    ): \DateTime|false {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' month');
     }
 
@@ -46,7 +46,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
         string $recurrence,
         string $day,
         int $interval = 1
-    ): \DateTime {
+    ): \DateTime|false {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' year');
     }
 
