@@ -49,7 +49,6 @@
 	},
 	"suggest": {
 		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience",
-		"georgringer/numbered-pagination": "Pagination with reduced amount of pages",
 		"typo3/cms-dashboard": "Dashboard widgets"
 	},
 	"require-dev": {
