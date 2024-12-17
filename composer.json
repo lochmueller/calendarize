@@ -36,7 +36,7 @@
 		"php": "^8.1",
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"typo3/cms-core": "^12.4",
+		"typo3/cms-core": "^13.4",
 		"sabre/vobject": "^4.2"
 	},
 	"replace": {
@@ -49,11 +49,12 @@
 	},
 	"suggest": {
 		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience",
+		"georgringer/numbered-pagination": "Pagination with reduced amount of pages",
 		"typo3/cms-dashboard": "Dashboard widgets"
 	},
 	"require-dev": {
 		"typo3/testing-framework": "^8.0",
-		"typo3/cms-workspaces": "^12.4",
+		"typo3/cms-workspaces": "^13.4",
 		"friendsofphp/php-cs-fixer": "^3.0",
 		"phpmd/phpmd": "^2.4",
 		"scrutinizer/ocular": "^1.3",
