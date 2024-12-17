@@ -11,7 +11,7 @@ namespace JMBTechnologyLimited\ICalDissect;
  */
 class ExDateTest extends \PHPUnit_Framework_TestCase
 {
-    public function test1()
+    public function test1(): void
     {
         $parser = new ICalParser();
         $this->assertTrue($parser->parseFromFile(dirname(__FILE__) . '/data/exdate1.ics'));

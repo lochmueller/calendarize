@@ -22,7 +22,7 @@ class RRuleTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataForTestRRule
      */
-    public function testGetByPosition($filename, $rrule)
+    public function testGetByPosition($filename, $rrule): void
     {
         $parser = new ICalParser();
         $this->assertTrue($parser->parseFromFile(dirname(__FILE__) . '/data/' . $filename));
@@ -40,7 +40,7 @@ class RRuleTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataForTestRRule
      */
-    public function testGetByArray($filename, $rrule)
+    public function testGetByArray($filename, $rrule): void
     {
         $parser = new ICalParser();
         $this->assertTrue($parser->parseFromFile(dirname(__FILE__) . '/data/' . $filename));
