@@ -16,19 +16,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  */
 class TitleTagViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
     /**
      * Render the title function.
      *
      * @return string
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): void {
-        $content = trim((string)$renderChildrenClosure());
+    public function render(): void
+    {
+        $content = trim((string)$this->renderChildren());
         if (!empty($content)) {
             GeneralUtility::makeInstance(CalendarizeTitleProvider::class)->setTitle($content);
         }
