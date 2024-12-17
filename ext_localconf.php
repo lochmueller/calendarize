@@ -181,12 +181,6 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['calendarize'] =
         ProcessDatamapClass::class;
 
-    // Include new content elements to modWizards
-    ExtensionManagementUtility::addPageTSConfig("
-        @import 'EXT:calendarize/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig'
-        @import 'EXT:calendarize/Configuration/TsConfig/Page/TCEMAIN/LinkHandler.tsconfig'
-    ");
-
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1591803668] = [
         'nodeName' => 'calendarizeInfoElement',
         'priority' => 40,
