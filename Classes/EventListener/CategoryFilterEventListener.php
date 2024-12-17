@@ -7,6 +7,7 @@ namespace HDNET\Calendarize\EventListener;
 use HDNET\Calendarize\Controller\CalendarController;
 use HDNET\Calendarize\Domain\Repository\CategoryRepository;
 use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
@@ -56,11 +57,11 @@ class CategoryFilterEventListener
                 $queryBuilder->expr()->and(
                     $queryBuilder->expr()->eq(
                         'sys_category_record_mm.tablenames',
-                        $queryBuilder->createNamedParameter($tableName, \PDO::PARAM_STR)
+                        $queryBuilder->createNamedParameter($tableName, Connection::PARAM_STR)
                     ),
                     $queryBuilder->expr()->eq(
                         'sys_category_record_mm.fieldname',
-                        $queryBuilder->createNamedParameter($fieldName, \PDO::PARAM_STR)
+                        $queryBuilder->createNamedParameter($fieldName, Connection::PARAM_STR)
                     )
                 )
             );

@@ -7,6 +7,7 @@ namespace HDNET\Calendarize\DataProcessing;
 use HDNET\Calendarize\Service\IndexerService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\WorkspaceRestriction;
 use TYPO3\CMS\Core\Routing\PageArguments;
@@ -107,12 +108,12 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                     // Current language of the record
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($indexId, \PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($indexId, Connection::PARAM_INT)
                     ),
                     // Translated versions of the records (found by l10n_parent)
                     $queryBuilder->expr()->eq(
                         $transOrigPointerField,
-                        $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
                     )
                 )
             )
