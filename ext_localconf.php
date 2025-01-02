@@ -15,7 +15,9 @@ use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Xclass\WorkspaceRemoteServer;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
 
@@ -186,6 +188,13 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'priority' => 40,
         'class' => CalendarizeInfoElement::class,
     ];
+    
+    if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() <= 12) {
+        // Include new content elements to modWizards
+        ExtensionManagementUtility::addPageTSConfig('
+            @import \'EXT:calendarize/Configuration/page.tsconfig\'
+        ');
+    }
 
     if (ExtensionManagementUtility::isLoaded('workspaces')) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][RemoteServer::class] = [
