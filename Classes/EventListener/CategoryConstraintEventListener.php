@@ -10,6 +10,7 @@ use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Utility\HelperUtility;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 class CategoryConstraintEventListener
@@ -175,7 +176,7 @@ class CategoryConstraintEventListener
                     )
                 )->having(
                     'COUNT(DISTINCT ' . $queryBuilder->quoteIdentifier($uidLocal_field) . ') = '
-                    . $queryBuilder->createNamedParameter(\count($categories), \PDO::PARAM_INT)
+                    . $queryBuilder->createNamedParameter(\count($categories), Connection::PARAM_INT)
                 );
                 break;
 

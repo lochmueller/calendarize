@@ -23,7 +23,7 @@ class LineTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataForTestMultiLineDescription
      */
-    public function testMultiLineDescription($filename, $output)
+    public function testMultiLineDescription($filename, $output): void
     {
         $parser = new ICalParser();
         $this->assertTrue($parser->parseFromFile(dirname(__FILE__) . '/data/' . $filename));

@@ -11,7 +11,7 @@ namespace JMBTechnologyLimited\ICalDissect;
  */
 class RawTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetDefaultValuesIfKeyNotFound()
+    public function testGetDefaultValuesIfKeyNotFound(): void
     {
         $parser = new ICalParser();
         $this->assertTrue($parser->parseFromFile(dirname(__FILE__) . '/data/rawtest1.ics'));

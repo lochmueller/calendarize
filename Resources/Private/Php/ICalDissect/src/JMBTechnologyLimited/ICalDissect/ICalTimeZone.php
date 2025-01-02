@@ -16,7 +16,7 @@ class ICalTimeZone
     {
     }
 
-    public function processLine($keyword, $value)
+    public function processLine($keyword, $value): void
     {
         if ($keyword == 'TZID') {
             $timezoneIdentifiers = \DateTimeZone::listIdentifiers();

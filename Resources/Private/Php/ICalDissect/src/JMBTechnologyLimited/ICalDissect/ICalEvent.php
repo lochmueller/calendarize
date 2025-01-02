@@ -52,7 +52,7 @@ class ICalEvent
         $this->timeZone = $timeZone ? $timeZone : $this->timeZoneUTC;
     }
 
-    public function processLine($keyword, $value, $keywordProperties = '')
+    public function processLine($keyword, $value, $keywordProperties = ''): void
     {
         if ($keyword == 'UID') {
             $this->uid = $value;
@@ -160,7 +160,7 @@ class ICalEvent
         return $this->uid;
     }
 
-    public function setUid($uid)
+    public function setUid($uid): void
     {
         $this->uid = $uid;
     }

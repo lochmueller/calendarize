@@ -11,6 +11,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 
 /**
  * Provides backend preview for calendarize plugins.
@@ -36,7 +37,7 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', Icon::SIZE_SMALL)->render();
+        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
         $listType = explode('_', $record['list_type'], 2)[1] ?? '';
