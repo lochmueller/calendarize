@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Controller;
 
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
+use HDNET\Calendarize\Event\DirectResponseEvent;
 use HDNET\Calendarize\Event\GenericActionAssignmentEvent;
 use HDNET\Calendarize\Event\GenericActionRedirectEvent;
 use HDNET\Calendarize\Event\InitializeActionEvent;
@@ -179,7 +180,11 @@ abstract class AbstractController extends ActionController
         // This would cause the response to be ignored by the browser.
         header('HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
         // Prevents the HTML skeleton and any other (following) actions to be rendered.
-        throw new PropagateResponseException($response);
+
+        $event = new DirectResponseEvent($response, $this);
+        $event = $this->eventDispatcher->dispatch($event);
+
+        throw new PropagateResponseException($event->getResponse());
     }
 
     /**
