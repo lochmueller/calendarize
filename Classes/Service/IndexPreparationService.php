@@ -57,12 +57,13 @@ class IndexPreparationService extends AbstractService
             }
         }
 
+        // Workspace information must be added before language information so we can set the correct l10n_parent
+        $this->addWorkspaceInformation($neededItems, $configurationKey, $rawRecord);
         // Language information must be added before ctrl/enable information
         $this->addLanguageInformation($neededItems, $tableName, $rawRecord);
         $this->addEnableFieldInformation($neededItems, $tableName, $rawRecord);
         $this->addCtrlFieldInformation($neededItems, $tableName, $rawRecord);
         $this->addSlugInformation($neededItems, $configurationKey, $rawRecord);
-        $this->addWorkspaceInformation($neededItems, $configurationKey, $rawRecord);
 
         return $neededItems;
     }
@@ -113,11 +114,15 @@ class IndexPreparationService extends AbstractService
                     ->select('uid')
                     ->from(IndexerService::TABLE_NAME)
                     ->andWhere(...$where)
-                    ->executeQuery()
-                    ->fetchAssociative();
+                    ->executeQuery();
 
-                if (isset($result['uid'])) {
-                    $neededItems[$key]['l10n_parent'] = (int)$result['uid'];
+                if ($result->rowCount() > 1) {
+                    throw new \RuntimeException('Multiple records found for original language record of index '.$record['uid']);
+                }
+
+                $originalLanguageRecord = $result->fetchAssociative();
+                if (isset($originalLanguageRecord['uid'])) {
+                    $neededItems[$key]['l10n_parent'] = (int)$originalLanguageRecord['uid'];
                 }
             }
         }
