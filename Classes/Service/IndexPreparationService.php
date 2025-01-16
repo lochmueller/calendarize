@@ -72,8 +72,12 @@ class IndexPreparationService extends AbstractService
     {
         $workspace = isset($record['t3ver_wsid']) ? (int)$record['t3ver_wsid'] : 0;
         $origId = isset($record['t3ver_oid']) ? (int)$record['t3ver_oid'] : 0;
-        $neededItems = array_map(static function ($item) use ($workspace, $origId, $record) {
+        $versionState = isset($record['t3ver_state']) ? (int)$record['t3ver_state'] : 0;
+        $versionStage = isset($record['t3ver_stage']) ? (int)$record['t3ver_stage'] : 0;
+        $neededItems = array_map(static function ($item) use ($workspace, $origId, $record, $versionState, $versionStage) {
             $item['t3ver_wsid'] = $workspace;
+            $item['t3ver_state'] = $versionState;
+            $item['t3ver_stage'] = $versionStage;
             // Set relation to the original record
             if ($workspace) {
                 $item['foreign_uid'] = $origId ?: (int)$record['uid'];
