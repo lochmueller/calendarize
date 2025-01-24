@@ -69,7 +69,7 @@ class AbstractBookingRequest extends AbstractTypeConverter
         $source,
         string $targetType,
         array $convertedChildProperties = [],
-        ?PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null,
     ) {
         $bookingRequest = $this->getBookingRequestModel();
         foreach ($source as $key => $value) {

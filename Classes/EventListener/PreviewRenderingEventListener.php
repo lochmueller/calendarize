@@ -23,9 +23,8 @@ class PreviewRenderingEventListener
     public function __construct(
         protected FlexFormService $flexFormService,
         protected ContentElementLayoutService $layoutService,
-        protected IconFactory $iconFactory
-    ) {
-    }
+        protected IconFactory $iconFactory,
+    ) {}
 
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
@@ -38,7 +37,6 @@ class PreviewRenderingEventListener
         if (!$this->flexFormService->isValid()) {
             return;
         }
-
 
         $iconSize = GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() <= 12 ? Icon::SIZE_SMALL : IconSize::SMALL;
 
@@ -54,14 +52,14 @@ class PreviewRenderingEventListener
             $row = BackendUtility::getRecord($table, $pluginConfiguration);
             $this->layoutService->addRow(
                 TranslateUtility::get('tx_calendarize_domain_model_pluginconfiguration'),
-                BackendUtility::getRecordTitle($table, $row)
+                BackendUtility::getRecordTitle($table, $row),
             );
         }
 
         if ('' !== trim((string)$this->flexFormService->get('settings.configuration', 'general'))) {
             $this->layoutService->addRow(
                 TranslateUtility::get('configuration'),
-                $this->flexFormService->get('settings.configuration', 'general')
+                $this->flexFormService->get('settings.configuration', 'general'),
             );
         }
 
@@ -83,14 +81,14 @@ class PreviewRenderingEventListener
             if ($overrideStartDate) {
                 $this->layoutService->addRow(
                     TranslateUtility::get('override.startdate'),
-                    BackendUtility::datetime($overrideStartDate)
+                    BackendUtility::datetime($overrideStartDate),
                 );
             }
             $overrideEndDate = (int)$this->flexFormService->get('settings.overrideEnddate', 'main');
             if ($overrideEndDate) {
                 $this->layoutService->addRow(
                     TranslateUtility::get('override.enddate'),
-                    BackendUtility::datetime($overrideEndDate)
+                    BackendUtility::datetime($overrideEndDate),
                 );
             }
         }
@@ -120,7 +118,7 @@ class PreviewRenderingEventListener
             if ($pageRow) {
                 $this->layoutService->addRow(
                     TranslateUtility::get($pageIdName),
-                    $pageRow['title'] . ' (' . $pageId . ')'
+                    $pageRow['title'] . ' (' . $pageId . ')',
                 );
             }
         }

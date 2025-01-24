@@ -35,7 +35,7 @@ class WorkspaceRemoteServer extends RemoteServer
             $pageId,
             $parameter->depth,
             'tables_select',
-            $parameter->language
+            $parameter->language,
         );
 
         // Drop Index Table from View
@@ -47,7 +47,7 @@ class WorkspaceRemoteServer extends RemoteServer
             $versions,
             $parameter,
             $this->getCurrentWorkspace(),
-            $request
+            $request,
         );
     }
 }

@@ -10,9 +10,8 @@ use TYPO3\CMS\Dashboard\Widgets\NumberWithIconDataProviderInterface;
 class IndexAmountDataProvider implements NumberWithIconDataProviderInterface
 {
     public function __construct(
-        protected IndexRepository $indexRepository
-    ) {
-    }
+        protected IndexRepository $indexRepository,
+    ) {}
 
     public function getNumber(): int
     {

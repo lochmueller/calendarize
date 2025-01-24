@@ -37,9 +37,8 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         protected EventDispatcherInterface $eventDispatcher,
         protected IndexPreparationService $preparationService,
         protected SlugService $slugService,
-        protected RawIndexRepository $rawIndexRepository
-    ) {
-    }
+        protected RawIndexRepository $rawIndexRepository,
+    ) {}
 
     /**
      * Reindex all elements.
@@ -102,7 +101,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $this->logger->debug('Start reindex SINGLE ' . $tableName . ':' . $uid);
 
         $this->eventDispatcher->dispatch(
-            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE)
+            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_PRE),
         );
 
         $this->removeInvalidConfigurationIndex();
@@ -110,7 +109,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $this->updateIndex($configurationKey, $tableName, $uid);
 
         $this->eventDispatcher->dispatch(
-            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST)
+            new IndexSingleEvent($configurationKey, $tableName, $uid, $this, IndexSingleEvent::POSITION_POST),
         );
     }
 
@@ -179,7 +178,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         array $neededItems,
         string $tableName,
         int $uid,
-        int $workspace = 0
+        int $workspace = 0,
     ): void {
         $currentItems = $this->rawIndexRepository->findAllEvents($tableName, $uid, $workspace);
 
@@ -236,7 +235,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $item['slug'] = $this->slugService->makeSlugUnique($item, $i);
             // We need to insert after each index, so subsequent indices do not get the same slug
             $this->rawIndexRepository->insert($item);
-            $i++;
+            ++$i;
         }
     }
 
@@ -261,7 +260,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         $queryBuilder = HelperUtility::getDatabaseConnection(self::TABLE_NAME)->createQueryBuilder();
         $queryBuilder->delete(self::TABLE_NAME)
             ->where(
-                $queryBuilder->expr()->eq('foreign_table', $queryBuilder->createNamedParameter($tableName))
+                $queryBuilder->expr()->eq('foreign_table', $queryBuilder->createNamedParameter($tableName)),
             );
 
         $ids = [];
@@ -270,7 +269,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         }
         if ($ids) {
             $queryBuilder->andWhere(
-                $queryBuilder->expr()->notIn('foreign_uid', $ids)
+                $queryBuilder->expr()->notIn('foreign_uid', $ids),
             );
         }
 

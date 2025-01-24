@@ -63,7 +63,7 @@ abstract class AbstractController extends ActionController
     {
         $this->configurationManager = $configurationManager;
         $this->settings = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
         );
         $this->settings = $this->pluginConfigurationService->respectPluginConfiguration($this->settings);
         $this->arguments = GeneralUtility::makeInstance(Arguments::class);
@@ -81,7 +81,7 @@ abstract class AbstractController extends ActionController
             $this->arguments,
             $this->settings,
             static::class,
-            $this->actionMethodName
+            $this->actionMethodName,
         );
         $this->eventDispatcher->dispatch($event);
         $this->request = $event->getRequest();
@@ -89,7 +89,7 @@ abstract class AbstractController extends ActionController
         $this->settings = $event->getSettings();
 
         AbstractBookingRequest::setConfigurations(
-            GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? '')
+            GeneralUtility::trimExplode(',', $this->settings['configuration'] ?? ''),
         );
     }
 
@@ -100,7 +100,7 @@ abstract class AbstractController extends ActionController
             $this->arguments,
             $this->settings,
             static::class,
-            $this->actionMethodName
+            $this->actionMethodName,
         );
         $this->eventDispatcher->dispatch($event);
         $this->request = $event->getRequest();
@@ -129,7 +129,7 @@ abstract class AbstractController extends ActionController
                     $this->setHeadersAndExit(
                         $response,
                         $this->feedFormats[$request->getFormat()],
-                        $request->getFormat()
+                        $request->getFormat(),
                     );
                 }
 
@@ -151,7 +151,7 @@ abstract class AbstractController extends ActionController
     protected function setHeadersAndExit(
         ResponseInterface $response,
         string $contentType,
-        string $fileExtension
+        string $fileExtension,
     ): void {
         if (200 !== $response->getStatusCode()) {
             // Prevents html error pages to be returned with wrong Content-Type.
@@ -170,8 +170,8 @@ abstract class AbstractController extends ActionController
             $response->getBody()->rewind();
             $response = $response->withBody(
                 $this->streamFactory->createStream(
-                    str_replace("\n", "\r\n", $response->getBody()->getContents())
-                )
+                    str_replace("\n", "\r\n", $response->getBody()->getContents()),
+                ),
             );
         }
         // Any other actions (rendered before this) returning a status code >= 300 code would cause the status header
@@ -210,7 +210,7 @@ abstract class AbstractController extends ActionController
     protected function eventExtendedRedirect(
         string $className,
         string $eventName,
-        array $variables = []
+        array $variables = [],
     ): ResponseInterface {
         // set default variables for the redirect
         if (empty($variables)) {
@@ -238,7 +238,7 @@ abstract class AbstractController extends ActionController
             $variables['extended']['arguments'],
             $variables['extended']['pageUid'],
             $variables['extended']['delay'],
-            $variables['extended']['statusCode']
+            $variables['extended']['statusCode'],
         );
     }
 
@@ -292,7 +292,7 @@ abstract class AbstractController extends ActionController
                 'Basic configuration settings are missing. It seems, that the Static Extension TypoScript
                  is not loaded to your TypoScript configuration. Please add the calendarize TS to your TS settings.',
                 'Configuration Error',
-                ContextualFeedbackSeverity::ERROR
+                ContextualFeedbackSeverity::ERROR,
             );
         }
     }
@@ -318,7 +318,7 @@ abstract class AbstractController extends ActionController
         return GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
             $this->request,
             'The requested page does not exist',
-            ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+            ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND],
         );
     }
 }

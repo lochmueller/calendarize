@@ -5,9 +5,8 @@ namespace HDNET\Calendarize\Event;
 final class PluginConfigurationSettingsEvent
 {
     public function __construct(
-        private array $settings
-    ) {
-    }
+        private array $settings,
+    ) {}
 
     public function getSettings(): array
     {

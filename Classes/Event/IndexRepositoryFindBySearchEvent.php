@@ -11,9 +11,8 @@ final class IndexRepositoryFindBySearchEvent
         protected ?\DateTimeInterface $endDate,
         protected array $customSearch,
         protected array $indexTypes,
-        protected bool $emptyPreResult
-    ) {
-    }
+        protected bool $emptyPreResult,
+    ) {}
 
     public function getForeignIds(): array
     {

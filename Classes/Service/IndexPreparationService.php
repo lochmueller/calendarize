@@ -16,9 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class IndexPreparationService extends AbstractService
 {
-    public function __construct(protected SlugService $slugService)
-    {
-    }
+    public function __construct(protected SlugService $slugService) {}
 
     /**
      * Build the index for one element.
@@ -45,7 +43,7 @@ class IndexPreparationService extends AbstractService
             $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
             $neededItems = $timeTableService->getTimeTablesByConfigurationIds(
                 $configurations,
-                (int)$rawRecord['t3ver_wsid']
+                (int)$rawRecord['t3ver_wsid'],
             );
             foreach ($neededItems as $key => $record) {
                 $record['foreign_table'] = $tableName;
@@ -121,7 +119,7 @@ class IndexPreparationService extends AbstractService
                     ->executeQuery();
 
                 if ($result->rowCount() > 1) {
-                    throw new \RuntimeException('Multiple records found for original language record of index '.$record['uid']);
+                    throw new \RuntimeException('Multiple records found for original language record of index ' . $record['uid']);
                 }
 
                 $originalLanguageRecord = $result->fetchAssociative();

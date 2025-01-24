@@ -11,9 +11,8 @@ class PaginationEvent
         protected AbstractPaginator $paginator,
         protected PaginationInterface $pagination,
         protected array $paginateConfiguration,
-        protected array $currentValues
-    ) {
-    }
+        protected array $currentValues,
+    ) {}
 
     public function setPaginator(AbstractPaginator $paginator): void
     {

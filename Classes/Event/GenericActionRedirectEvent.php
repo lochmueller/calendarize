@@ -7,9 +7,8 @@ final class GenericActionRedirectEvent
     public function __construct(
         private array $variables,
         private readonly string $className,
-        private readonly string $functionName
-    ) {
-    }
+        private readonly string $functionName,
+    ) {}
 
     public function getVariables(): array
     {

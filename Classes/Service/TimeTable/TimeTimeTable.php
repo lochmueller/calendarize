@@ -131,7 +131,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'flashMessage.missingStartDate.text',
                 'flashMessage.missingStartDate.title',
-                ContextualFeedbackSeverity::ERROR
+                ContextualFeedbackSeverity::ERROR,
             );
 
             return false;
@@ -142,7 +142,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.date.message',
                 'wrong.date',
-                ContextualFeedbackSeverity::ERROR
+                ContextualFeedbackSeverity::ERROR,
             );
 
             return false;
@@ -160,7 +160,7 @@ class TimeTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedFlashMessage(
                 'wrong.time.message',
                 'wrong.time',
-                ContextualFeedbackSeverity::ERROR
+                ContextualFeedbackSeverity::ERROR,
             );
 
             return false;
@@ -176,7 +176,7 @@ class TimeTimeTable extends AbstractTimeTable
         array &$times,
         Configuration $configuration,
         array $baseEntry,
-        array $tillDateConfiguration
+        array $tillDateConfiguration,
     ): void {
         $frequencyIncrement = $this->getFrequencyIncrement($configuration);
         if (!$frequencyIncrement) {
@@ -297,7 +297,7 @@ class TimeTimeTable extends AbstractTimeTable
         array &$times,
         Configuration $configuration,
         array $baseEntry,
-        array $tillDateConfiguration
+        array $tillDateConfiguration,
     ): void {
         if (
             ConfigurationInterface::RECURRENCE_NONE === $configuration->getRecurrence()
@@ -322,14 +322,14 @@ class TimeTimeTable extends AbstractTimeTable
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
                     $configuration->getDay(),
-                    $intervalCounter
+                    $intervalCounter,
                 );
             } elseif (ConfigurationInterface::FREQUENCY_YEARLY === $configuration->getFrequency()) {
                 $dateTime = $recurrenceService->getRecurrenceForNextYear(
                     $loopEntry['start_date'],
                     $configuration->getRecurrence(),
                     $configuration->getDay(),
-                    $intervalCounter
+                    $intervalCounter,
                 );
             }
             if (false === $dateTime) {
@@ -370,7 +370,7 @@ class TimeTimeTable extends AbstractTimeTable
         array &$times,
         Configuration $configuration,
         array $baseEntry,
-        array $tillDateConfiguration
+        array $tillDateConfiguration,
     ): void {
         $baseEntryKey = $this->calculateEntryKey($baseEntry);
         $tillDate = $configuration->getTillDate();

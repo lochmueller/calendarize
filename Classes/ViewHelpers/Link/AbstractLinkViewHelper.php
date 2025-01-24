@@ -40,7 +40,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
             'rel',
             'string',
             'Specifies the relationship between the current document and the linked document',
-            false
+            false,
         );
     }
 
@@ -51,7 +51,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         ?int $pageUid = null,
         array $additionalParams = [],
         bool $absolute = false,
-        $section = ''
+        $section = '',
     ): string {
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);

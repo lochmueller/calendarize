@@ -15,9 +15,8 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class NextEventsDataProvider implements ListDataProviderInterface
 {
     public function __construct(
-        protected IndexRepository $indexRepository
-    ) {
-    }
+        protected IndexRepository $indexRepository,
+    ) {}
 
     public function getItems(): array
     {

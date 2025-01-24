@@ -64,7 +64,7 @@ class Index extends AbstractModel
             }
             $this->originalObject = EventUtility::getOriginalRecordByConfiguration(
                 $configuration,
-                $this->getForeignUid()
+                $this->getForeignUid(),
             );
         }
 

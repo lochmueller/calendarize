@@ -32,25 +32,25 @@ class DateViewHelper extends AbstractViewHelper
             'date',
             'mixed',
             'Either an object implementing DateTimeInterface or a string that
-             is accepted by DateTime constructor'
+             is accepted by DateTime constructor',
         );
         $this->registerArgument(
             'format',
             'string',
             'Format String which is taken to format the Date/Time',
             false,
-            ''
+            '',
         );
         $this->registerArgument(
             'base',
             'mixed',
             'A base time (an object implementing DateTimeInterface or a string) used if $date is a relative
-             date specification. Defaults to current time.'
+             date specification. Defaults to current time.',
         );
         $this->registerArgument(
             'resetTimeZone',
             'bool',
-            ''
+            '',
         );
     }
 
@@ -62,7 +62,7 @@ class DateViewHelper extends AbstractViewHelper
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
+        RenderingContextInterface $renderingContext,
     ) {
         $format = $arguments['format'];
         $base = $arguments['base'] ?? GeneralUtility::makeInstance(Context::class)

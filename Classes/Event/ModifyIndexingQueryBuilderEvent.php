@@ -8,9 +8,8 @@ final class ModifyIndexingQueryBuilderEvent
 {
     public function __construct(
         private QueryBuilder $queryBuilder,
-        private readonly array $configuration
-    ) {
-    }
+        private readonly array $configuration,
+    ) {}
 
     public function setQueryBuilder(QueryBuilder $queryBuilder): void
     {

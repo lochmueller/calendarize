@@ -120,7 +120,7 @@ class DateTimeUtility
     public static function normalizeDateTime(
         ?int $day = null,
         ?int $month = null,
-        ?int $year = null
+        ?int $year = null,
     ): \DateTime {
         $date = self::getNow();
         // Check if this date should handle always in UTC
@@ -185,7 +185,7 @@ class DateTimeUtility
      */
     public static function normalizeDateTimeSingle(
         int|string|\DateTimeInterface|null $dateInformation = null,
-        ?\DateTimeZone $timezone = null
+        ?\DateTimeZone $timezone = null,
     ): \DateTime {
         $timezone = $timezone ?? self::getTimeZone();
         $date = self::getNow();
@@ -195,7 +195,7 @@ class DateTimeUtility
             $date = \DateTime::createFromFormat(
                 \DateTimeInterface::ATOM,
                 $dateInformation->format(\DateTimeInterface::ATOM),
-                $timezone
+                $timezone,
             );
         } elseif (MathUtility::canBeInterpretedAsInteger($dateInformation)) {
             // http://php.net/manual/en/datetime.construct#refsect1-datetime.construct-parameters :

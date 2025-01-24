@@ -27,7 +27,7 @@ class CalendarizeInfoElement extends AbstractFormElement
         $result['html'] = $tcaInformation->renderPreviewField(
             (string)$this->data['tableName'],
             (int)$this->data['vanillaUid'],
-            $previewLimit
+            $previewLimit,
         );
 
         return $result;

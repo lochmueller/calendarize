@@ -56,7 +56,7 @@ class IndexTraversingViewHelper extends AbstractViewHelper
             $this->arguments['past'],
             (int)$this->arguments['limit'],
             $this->arguments['sort'],
-            (bool)$this->arguments['useIndexTime']
+            (bool)$this->arguments['useIndexTime'],
         );
     }
 }

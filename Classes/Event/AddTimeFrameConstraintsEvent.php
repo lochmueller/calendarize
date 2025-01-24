@@ -18,9 +18,8 @@ final class AddTimeFrameConstraintsEvent
         private readonly QueryInterface $query,
         private readonly array $additionalArguments,
         private ?\DateTimeInterface $start,
-        private ?\DateTimeInterface $end
-    ) {
-    }
+        private ?\DateTimeInterface $end,
+    ) {}
 
     /**
      * @return ConstraintInterface[]

@@ -24,8 +24,7 @@ class CategoryFilterEventListener
     public function __construct(
         private readonly ConnectionPool $connectionPool,
         private readonly CategoryRepository $categoryRepository,
-    ) {
-    }
+    ) {}
 
     public function __invoke(GenericActionAssignmentEvent $event): void
     {
@@ -38,7 +37,7 @@ class CategoryFilterEventListener
         $variables = $event->getVariables();
         $variables['extended']['categories'] = array_merge(
             $variables['extended']['categories'] ?? [],
-            $this->getCategories($this->itemTableName, $this->itemFieldName)
+            $this->getCategories($this->itemTableName, $this->itemFieldName),
         );
 
         $event->setVariables($variables);
@@ -57,13 +56,13 @@ class CategoryFilterEventListener
                 $queryBuilder->expr()->and(
                     $queryBuilder->expr()->eq(
                         'sys_category_record_mm.tablenames',
-                        $queryBuilder->createNamedParameter($tableName, Connection::PARAM_STR)
+                        $queryBuilder->createNamedParameter($tableName, Connection::PARAM_STR),
                     ),
                     $queryBuilder->expr()->eq(
                         'sys_category_record_mm.fieldname',
-                        $queryBuilder->createNamedParameter($fieldName, Connection::PARAM_STR)
-                    )
-                )
+                        $queryBuilder->createNamedParameter($fieldName, Connection::PARAM_STR),
+                    ),
+                ),
             );
 
         $categoryIds = $queryBuilder
@@ -76,7 +75,7 @@ class CategoryFilterEventListener
 
         return $this->categoryRepository->findByIds(
             $categoryIds,
-            ['title' => QueryInterface::ORDER_ASCENDING]
+            ['title' => QueryInterface::ORDER_ASCENDING],
         )->toArray();
     }
 }

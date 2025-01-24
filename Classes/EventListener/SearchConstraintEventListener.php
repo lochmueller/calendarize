@@ -15,9 +15,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class SearchConstraintEventListener
 {
-    public function __construct(protected EventRepository $eventRepository)
-    {
-    }
+    public function __construct(protected EventRepository $eventRepository) {}
 
     public function __invoke(IndexRepositoryFindBySearchEvent $event): void
     {
@@ -57,7 +55,7 @@ class SearchConstraintEventListener
             // Fallback for previous mode
             @trigger_error(
                 'Search request with the parameter \'category\' is deprecated. Use \'categories\' instead.',
-                \E_USER_DEPRECATED
+                \E_USER_DEPRECATED,
             );
             $search->setCategories([(int)$customSearch['category']]);
         }

@@ -19,7 +19,7 @@ class IndexUtility
     public static function isIndexInRange(
         Index $index,
         \DateTimeInterface $rangeStart,
-        \DateTimeInterface $rangeEnd
+        \DateTimeInterface $rangeEnd,
     ): bool {
         $indexStart = $index->getStartDateComplete();
         $indexEnd = $index->getEndDateComplete();

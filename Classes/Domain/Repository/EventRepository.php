@@ -46,7 +46,7 @@ class EventRepository extends AbstractRepository
         $query->matching($query->logicalAnd(...$constraints));
         $rows = $query->execute(true);
 
-        return array_map(static fn ($row) => (int)($row['_LOCALIZED_UID'] ?? $row['uid']), $rows);
+        return array_map(static fn($row) => (int)($row['_LOCALIZED_UID'] ?? $row['uid']), $rows);
     }
 
     public function findOneByImportId(string $importId, ?int $pid = null): ?object
@@ -87,7 +87,7 @@ class EventRepository extends AbstractRepository
                     false,
                     true,
                     1,
-                    QueryInterface::ORDER_DESCENDING
+                    QueryInterface::ORDER_DESCENDING,
                 )->getFirst();
             }
         } catch (\Exception $exception) {

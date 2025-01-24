@@ -11,9 +11,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 class ManipulationTimeTable extends AbstractTimeTable implements TimeTableInterface
 {
-    public function __construct(protected FlexFormService $flexFormService)
-    {
-    }
+    public function __construct(protected FlexFormService $flexFormService) {}
 
     private function loadFlexForm($flexFormString): array
     {

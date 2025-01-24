@@ -28,9 +28,8 @@ class PopulateEventSlugs extends AbstractUpdate
      * PopulateEventSlugs constructor.
      */
     public function __construct(
-        protected IndexerService $indexerService
-    ) {
-    }
+        protected IndexerService $indexerService,
+    ) {}
 
     public function getIdentifier(): string
     {
@@ -59,8 +58,8 @@ class PopulateEventSlugs extends AbstractUpdate
             ->where(
                 $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq($field, $queryBuilder->createNamedParameter('')),
-                    $queryBuilder->expr()->isNull($field)
-                )
+                    $queryBuilder->expr()->isNull($field),
+                ),
             )
             ->executeQuery();
 
@@ -91,7 +90,7 @@ class PopulateEventSlugs extends AbstractUpdate
             $connection->update(
                 $table,
                 [$field => $slug],
-                ['uid' => $recordId]
+                ['uid' => $recordId],
             );
         }
     }
@@ -111,8 +110,8 @@ class PopulateEventSlugs extends AbstractUpdate
             ->where(
                 $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq($field, $queryBuilder->createNamedParameter('')),
-                    $queryBuilder->expr()->isNull($field)
-                )
+                    $queryBuilder->expr()->isNull($field),
+                ),
             )
             ->executeQuery()
             ->fetchOne();

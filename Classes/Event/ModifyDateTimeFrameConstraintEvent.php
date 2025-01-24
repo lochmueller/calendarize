@@ -2,21 +2,17 @@
 
 namespace HDNET\Calendarize\Event;
 
-use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
-use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 final class ModifyDateTimeFrameConstraintEvent
 {
     public function __construct(
-        protected QueryInterface      $query,
+        protected QueryInterface $query,
         protected ?\DateTimeInterface $start,
         protected ?\DateTimeInterface $end,
-        protected bool                $respectTime,
-        protected array               $dateConstraints,
-    )
-    {
-    }
+        protected bool $respectTime,
+        protected array $dateConstraints,
+    ) {}
 
     public function getQuery(): QueryInterface
     {
@@ -47,5 +43,4 @@ final class ModifyDateTimeFrameConstraintEvent
     {
         $this->dateConstraints = $dateConstraints;
     }
-
 }

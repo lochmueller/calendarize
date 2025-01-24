@@ -33,13 +33,13 @@ class RawIndexRepository extends AbstractRawRepository
 
         $queryBuilder->select('foreign_uid')
             ->addSelectLiteral(
-                $queryBuilder->expr()->max('end_date', 'max_end_date')
+                $queryBuilder->expr()->max('end_date', 'max_end_date'),
             )
             ->from($this->tableName)
             ->where($queryBuilder->expr()->eq('foreign_table', $queryBuilder->createNamedParameter($tableName)))
             ->groupBy('foreign_uid')
             ->having(
-                $queryBuilder->expr()->lt('max_end_date', $queryBuilder->createNamedParameter($now->format('Y-m-d')))
+                $queryBuilder->expr()->lt('max_end_date', $queryBuilder->createNamedParameter($now->format('Y-m-d'))),
             );
 
         return $queryBuilder->executeQuery()->fetchAllAssociative();
@@ -69,7 +69,7 @@ class RawIndexRepository extends AbstractRawRepository
         int $uid,
         \DateTime $dateTime,
         int $limit = 5,
-        int $workspace = 0
+        int $workspace = 0,
     ): array {
         $queryBuilder = $this->getQueryBuilder();
 
@@ -89,17 +89,17 @@ class RawIndexRepository extends AbstractRawRepository
                 $queryBuilder->expr()->and(
                     $queryBuilder->expr()->gte(
                         'start_date',
-                        $queryBuilder->createNamedParameter($dateTime->format('Y-m-d'))
+                        $queryBuilder->createNamedParameter($dateTime->format('Y-m-d')),
                     ),
                     $queryBuilder->expr()->eq(
                         'foreign_table',
-                        $queryBuilder->createNamedParameter($foreignTable)
+                        $queryBuilder->createNamedParameter($foreignTable),
                     ),
                     $queryBuilder->expr()->eq(
                         'foreign_uid',
-                        $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
-                    )
-                )
+                        $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT),
+                    ),
+                ),
             )
             ->addOrderBy('start_date', 'ASC')
             ->addOrderBy('start_time', 'ASC')
@@ -119,8 +119,8 @@ class RawIndexRepository extends AbstractRawRepository
                 $result,
                 static function ($item) {
                     return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
-                }
-            )
+                },
+            ),
         );
     }
 
@@ -145,7 +145,7 @@ class RawIndexRepository extends AbstractRawRepository
 
         $queryBuilder->delete($this->tableName)
             ->where(
-                $queryBuilder->expr()->notIn('unique_register_key', $validKeys)
+                $queryBuilder->expr()->notIn('unique_register_key', $validKeys),
             );
 
         return (bool)$queryBuilder->executeStatement();

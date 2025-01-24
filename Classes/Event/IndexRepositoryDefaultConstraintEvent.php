@@ -7,9 +7,8 @@ final class IndexRepositoryDefaultConstraintEvent
     public function __construct(
         private array $foreignIds,
         private readonly array $indexTypes,
-        private readonly array $additionalSlotArguments
-    ) {
-    }
+        private readonly array $additionalSlotArguments,
+    ) {}
 
     public function getForeignIds(): array
     {

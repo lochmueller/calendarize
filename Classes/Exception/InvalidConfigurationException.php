@@ -7,6 +7,4 @@ namespace HDNET\Calendarize\Exception;
 /**
  * Calendarize logical exception.
  */
-class InvalidConfigurationException extends \RuntimeException
-{
-}
+class InvalidConfigurationException extends \RuntimeException {}

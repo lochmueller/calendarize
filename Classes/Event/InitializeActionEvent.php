@@ -12,9 +12,8 @@ final class InitializeActionEvent
         private Arguments $arguments,
         private array $settings,
         private readonly string $className,
-        private readonly string $actionName
-    ) {
-    }
+        private readonly string $actionName,
+    ) {}
 
     public function getRequest(): Request
     {

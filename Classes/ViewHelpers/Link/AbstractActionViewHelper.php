@@ -46,7 +46,7 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
                 $controllerArguments,
                 $this->controllerName,
                 $this->extensionName,
-                $this->pluginName
+                $this->pluginName,
             );
 
         if ('' !== $this->lastHref) {

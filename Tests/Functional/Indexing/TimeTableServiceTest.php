@@ -64,8 +64,7 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
                     ->setOpenEndTime(true)
                     ->setHandling(ConfigurationInterface::HANDLING_INCLUDE),
             ],
-            function ($result) {
-            },
+            function ($result) {},
         ];
         yield 'simple index Entry with hourly frequency' => [
             [

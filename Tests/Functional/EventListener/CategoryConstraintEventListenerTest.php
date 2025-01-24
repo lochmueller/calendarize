@@ -42,7 +42,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
                     'categoryConjunction' => 'or',
                     'pluginConfiguration' => $pluginConfiguration,
                 ],
-            ]
+            ],
         );
         ($this->subject)($event);
 
@@ -68,7 +68,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
                     'categoryConjunction' => 'and',
                     'pluginConfiguration' => $pluginConfiguration,
                 ],
-            ]
+            ],
         );
         ($this->subject)($event);
         // The resulting category selection should be B & C (31 & 32)
@@ -127,7 +127,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
             [
                 'contentRecord' => ['uid' => $contentRecord],
                 'settings' => ['categoryConjunction' => $conjunction],
-            ]
+            ],
         );
         ($this->subject)($event);
 
@@ -142,7 +142,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
             [
                 'contentRecord' => ['uid' => 20],
                 'settings' => ['categoryConjunction' => 'or'],
-            ]
+            ],
         );
         ($this->subject)($event);
 
@@ -157,7 +157,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
             [
                 'contentRecord' => ['uid' => 20],
                 'settings' => ['categoryConjunction' => 'or'],
-            ]
+            ],
         );
         ($this->subject)($event);
 
@@ -172,7 +172,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
             [
                 'contentRecord' => ['uid' => 20],
                 'settings' => ['categoryConjunction' => 'or'],
-            ]
+            ],
         );
         ($this->subject)($event);
 

@@ -12,9 +12,8 @@ final class BaseSlugGenerationEvent
         private readonly string $uniqueRegisterKey,
         private readonly DomainObjectInterface $model,
         private readonly array $record,
-        private string $baseSlug
-    ) {
-    }
+        private string $baseSlug,
+    ) {}
 
     public function getBaseSlug(): string
     {

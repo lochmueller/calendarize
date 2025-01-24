@@ -32,7 +32,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
         $q = HelperUtility::getDatabaseConnection($table)->createQueryBuilder();
         $q->update($table)
             ->where(
-                $q->expr()->eq('type', $q->quote('timeExclude'))
+                $q->expr()->eq('type', $q->quote('timeExclude')),
             )
             ->set('type', ConfigurationInterface::TYPE_TIME)
             ->set('handling', ConfigurationInterface::HANDLING_INCLUDE);
@@ -41,7 +41,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
         $q->resetQueryParts();
         $q->update($table)
             ->where(
-                $q->expr()->eq('type', $q->quote('include'))
+                $q->expr()->eq('type', $q->quote('include')),
             )
             ->set('type', ConfigurationInterface::TYPE_GROUP)
             ->set('handling', ConfigurationInterface::HANDLING_INCLUDE);
@@ -50,7 +50,7 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
         $q->resetQueryParts();
         $q->update($table)
             ->where(
-                $q->expr()->eq('type', $q->quote('exclude'))
+                $q->expr()->eq('type', $q->quote('exclude')),
             )
             ->set('type', ConfigurationInterface::TYPE_GROUP)
             ->set('handling', ConfigurationInterface::HANDLING_EXCLUDE);
@@ -62,8 +62,8 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
             ->where(
                 $q->expr()->or(
                     $q->expr()->eq('handling', $q->quote('')),
-                    $q->expr()->isNull('handling')
-                )
+                    $q->expr()->isNull('handling'),
+                ),
             )
             ->set('handling', ConfigurationInterface::HANDLING_INCLUDE);
         $q->executeStatement();
@@ -81,8 +81,8 @@ class NewIncludeExcludeStructureUpdate extends AbstractUpdate
             ->where(
                 $q->expr()->or(
                     $q->expr()->eq('handling', $q->quote('')),
-                    $q->expr()->isNull('handling')
-                )
+                    $q->expr()->isNull('handling'),
+                ),
             );
 
         $count = $q->executeQuery()->fetchOne();

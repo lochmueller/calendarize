@@ -23,9 +23,8 @@ class ImportSingleIcalEventListener
     public function __construct(
         private readonly EventRepository $eventRepository,
         private readonly PersistenceManager $persistenceManager,
-        private readonly EventConfigurationService $eventConfigurationService
-    ) {
-    }
+        private readonly EventConfigurationService $eventConfigurationService,
+    ) {}
 
     public function __invoke(ImportSingleIcalEvent $event): void
     {

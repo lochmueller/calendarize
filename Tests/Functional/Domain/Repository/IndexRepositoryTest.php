@@ -36,7 +36,7 @@ class IndexRepositoryTest extends FunctionalTestCase
         ?\DateTimeInterface $endDate,
         array $customSearch,
         int $limit,
-        array $expectedEventIds
+        array $expectedEventIds,
     ): void {
         $context = GeneralUtility::makeInstance(Context::class);
         $context->setAspect('language', new LanguageAspect($language, $language, LanguageAspect::OVERLAYS_ON));
@@ -46,7 +46,7 @@ class IndexRepositoryTest extends FunctionalTestCase
         $subject->setOverridePageIds([2, 3]);
 
         $result = $subject->findBySearch($startDate, $endDate, $customSearch, $limit)->toArray();
-        $eventIds = array_map(static fn ($i) => $i->getForeignUid(), $result);
+        $eventIds = array_map(static fn($i) => $i->getForeignUid(), $result);
 
         self::assertEquals($expectedEventIds, $eventIds);
     }

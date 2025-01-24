@@ -32,7 +32,7 @@ class Search
     {
         @trigger_error(
             'HDNET\Calendarize\Domain\Model\Dto\Search::getCategory',
-            \E_USER_DEPRECATED
+            \E_USER_DEPRECATED,
         );
 
         return $this->categories[0] ?? 0;
@@ -47,7 +47,7 @@ class Search
     {
         @trigger_error(
             'HDNET\Calendarize\Domain\Model\Dto\Search::setCategory',
-            \E_USER_DEPRECATED
+            \E_USER_DEPRECATED,
         );
         $this->categories = [$category];
     }

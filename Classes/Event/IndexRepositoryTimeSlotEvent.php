@@ -8,9 +8,8 @@ final class IndexRepositoryTimeSlotEvent
 {
     public function __construct(
         private array $constraints,
-        private readonly QueryInterface $query
-    ) {
-    }
+        private readonly QueryInterface $query,
+    ) {}
 
     public function getConstraints(): array
     {

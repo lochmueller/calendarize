@@ -75,8 +75,8 @@ class CategoryConstraintEventListener
                     $queryBuilder->expr()->and(
                         $queryBuilder->expr()->eq('tablenames', $queryBuilder->createNamedParameter('tt_content')),
                         $queryBuilder->expr()->eq('fieldname', $queryBuilder->createNamedParameter('categories')),
-                        $queryBuilder->expr()->eq('uid_foreign', $queryBuilder->createNamedParameter($additionalSlotArguments['contentRecord']['uid']))
-                    )
+                        $queryBuilder->expr()->eq('uid_foreign', $queryBuilder->createNamedParameter($additionalSlotArguments['contentRecord']['uid'])),
+                    ),
                 )
                 ->executeQuery()
                 ->fetchFirstColumn();
@@ -158,12 +158,12 @@ class CategoryConstraintEventListener
             ->where(
                 $queryBuilder->expr()->eq(
                     'fieldname',
-                    $queryBuilder->createNamedParameter('categories')
+                    $queryBuilder->createNamedParameter('categories'),
                 ),
                 $queryBuilder->expr()->in(
                     $tableNames,
-                    $queryBuilder->createNamedParameter($tables, ArrayParameterType::STRING)
-                )
+                    $queryBuilder->createNamedParameter($tables, ArrayParameterType::STRING),
+                ),
             );
 
         switch ($conjunction) {
@@ -172,11 +172,11 @@ class CategoryConstraintEventListener
                 $queryBuilder->andWhere(
                     $queryBuilder->expr()->in(
                         $uidLocal_field,
-                        $queryBuilder->createNamedParameter($categories, ArrayParameterType::INTEGER)
-                    )
+                        $queryBuilder->createNamedParameter($categories, ArrayParameterType::INTEGER),
+                    ),
                 )->having(
                     'COUNT(DISTINCT ' . $queryBuilder->quoteIdentifier($uidLocal_field) . ') = '
-                    . $queryBuilder->createNamedParameter(\count($categories), Connection::PARAM_INT)
+                    . $queryBuilder->createNamedParameter(\count($categories), Connection::PARAM_INT),
                 );
                 break;
 
@@ -185,8 +185,8 @@ class CategoryConstraintEventListener
                 $queryBuilder->andWhere(
                     $queryBuilder->expr()->in(
                         $uidLocal_field,
-                        $queryBuilder->createNamedParameter($categories, ArrayParameterType::INTEGER)
-                    )
+                        $queryBuilder->createNamedParameter($categories, ArrayParameterType::INTEGER),
+                    ),
                 );
         }
 

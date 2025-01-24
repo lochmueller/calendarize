@@ -7,10 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 final class DirectResponseEvent
 {
-
-    public function __construct(protected ResponseInterface $response, protected AbstractController $controller)
-    {
-    }
+    public function __construct(protected ResponseInterface $response, protected AbstractController $controller) {}
 
     public function getResponse(): ResponseInterface
     {
@@ -26,6 +23,4 @@ final class DirectResponseEvent
     {
         $this->response = $response;
     }
-
-
 }

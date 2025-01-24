@@ -33,7 +33,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
         \DateTime $date,
         string $recurrence,
         string $day,
-        int $interval = 1
+        int $interval = 1,
     ): \DateTime|false {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' month');
     }
@@ -45,7 +45,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
         \DateTime $date,
         string $recurrence,
         string $day,
-        int $interval = 1
+        int $interval = 1,
     ): \DateTime|false {
         return $this->getRecurrenceForCurrentMonth($date, $recurrence, $day, '+' . $interval . ' year');
     }
@@ -57,7 +57,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
         \DateTime $date,
         string $recurrence,
         string $day,
-        string $modify
+        string $modify,
     ): \DateTime|false {
         // clone and reset and move to next month
         $dateTime = clone $date;
@@ -89,7 +89,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
             default:
                 $this->logger->notice(
                     'Invalid recurrence "{recurrence}" in frequency configuration.',
-                    ['recurrence' => $recurrence]
+                    ['recurrence' => $recurrence],
                 );
 
                 return false;
@@ -156,7 +156,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
         \DateTime $dateTime,
         string $direction,
         array $validDays,
-        int $position = 1
+        int $position = 1,
     ): \DateTime|false {
         if (self::DIRECTION_UP === $direction) {
             $dateTime->setDate((int)$dateTime->format('Y'), (int)$dateTime->format('m'), 1);
@@ -165,7 +165,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
             $dateTime->setDate(
                 (int)$dateTime->format('Y'),
                 (int)$dateTime->format('m'),
-                (int)$dateTime->format('t')
+                (int)$dateTime->format('t'),
             );
             $modify = '-1 day';
         }

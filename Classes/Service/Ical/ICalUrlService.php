@@ -61,7 +61,7 @@ class ICalUrlService extends AbstractService implements LoggerAwareInterface
             default:
                 $this->logger->error(
                     'Unsupported link type "{type}"',
-                    ['type' => $linkData['type'], 'linkData' => $linkData, 'url' => $url]
+                    ['type' => $linkData['type'], 'linkData' => $linkData, 'url' => $url],
                 );
                 throw new UnableToGetFileForUrlException("Unsupported link type \"{$linkData['type']}\"", 1645462630);
         }

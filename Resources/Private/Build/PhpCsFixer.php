@@ -20,8 +20,8 @@ return $config
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
-        '@Symfony' => true,
-        '@Symfony:risky' => true,
+        '@PER-CS2.0' => true,
+        '@PER-CS2.0:risky' => true,
         'no_superfluous_phpdoc_tags' => false,
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,

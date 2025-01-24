@@ -10,9 +10,8 @@ final class SlugSuffixGenerationEvent
         private readonly string $uniqueRegisterKey,
         private readonly array $record,
         private readonly string $baseSlug,
-        private string $slug
-    ) {
-    }
+        private string $slug,
+    ) {}
 
     public function getUniqueRegisterKey(): string
     {

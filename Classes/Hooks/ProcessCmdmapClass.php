@@ -28,7 +28,7 @@ class ProcessCmdmapClass
         mixed $value,
         DataHandler $handler,
         false|array $pasteUpdate,
-        array $pasteDatamap
+        array $pasteDatamap,
     ): void {
         /** @var IndexerService $indexer */
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
@@ -84,17 +84,17 @@ class ProcessCmdmapClass
                     $queryBuilder->expr()->eq('calendarize', $uid),
                     $queryBuilder->expr()->like(
                         'calendarize',
-                        $queryBuilder->createNamedParameter($uid . ',%')
+                        $queryBuilder->createNamedParameter($uid . ',%'),
                     ),
                     $queryBuilder->expr()->like(
                         'calendarize',
-                        $queryBuilder->createNamedParameter('%,' . $uid)
+                        $queryBuilder->createNamedParameter('%,' . $uid),
                     ),
                     $queryBuilder->expr()->like(
                         'calendarize',
-                        $queryBuilder->createNamedParameter('%,' . $uid . ',%')
-                    )
-                )
+                        $queryBuilder->createNamedParameter('%,' . $uid . ',%'),
+                    ),
+                ),
             )
             ->executeQuery()
             ->fetchAssociative();

@@ -45,7 +45,7 @@ class HelperUtility
     public static function createFlashMessage(
         string $message,
         string $title = '',
-        ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK
+        ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK,
     ): void {
         $storeInSession = !Environment::isCli();
         $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, $storeInSession);
@@ -62,7 +62,7 @@ class HelperUtility
     public static function createTranslatedFlashMessage(
         string $messageKey,
         string $titleKey = '',
-        ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK
+        ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK,
     ): void {
         try {
             $message = LocalizationUtility::translate($messageKey, 'calendarize') ?? $messageKey;
@@ -82,7 +82,7 @@ class HelperUtility
     public static function createTranslatedTitleFlashMessage(
         string $message,
         string $titleKey = '',
-        ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK
+        ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK,
     ): void {
         try {
             $title = LocalizationUtility::translate($titleKey, 'calendarize') ?? $titleKey;

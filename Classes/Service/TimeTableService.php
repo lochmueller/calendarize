@@ -64,7 +64,7 @@ class TimeTableService extends AbstractService
                 HelperUtility::createFlashMessage(
                     $exception->getMessage(),
                     'Index invalid',
-                    ContextualFeedbackSeverity::ERROR
+                    ContextualFeedbackSeverity::ERROR,
                 );
                 continue;
             }

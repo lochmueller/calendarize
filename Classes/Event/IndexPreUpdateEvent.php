@@ -7,9 +7,8 @@ final class IndexPreUpdateEvent
     public function __construct(
         private array $neededItems,
         private readonly string $tableName,
-        private readonly int $uid
-    ) {
-    }
+        private readonly int $uid,
+    ) {}
 
     public function getNeededItems(): array
     {

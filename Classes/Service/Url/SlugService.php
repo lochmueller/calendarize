@@ -58,7 +58,7 @@ class SlugService extends AbstractService
         $model = EventUtility::getOriginalRecordByConfigurationInWorkspace(
             $configuration ?? [],
             (int)$record['uid'],
-            $record['t3ver_wsid'] ?? 0
+            $record['t3ver_wsid'] ?? 0,
         );
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
@@ -95,7 +95,7 @@ class SlugService extends AbstractService
             $uniqueRegisterKey,
             $model,
             $record,
-            $baseSlug
+            $baseSlug,
         ))->getBaseSlug();
     }
 
@@ -124,7 +124,7 @@ class SlugService extends AbstractService
                 $uniqueRegisterKey,
                 $item,
                 $base,
-                $indexSlug
+                $indexSlug,
             ))->getSlug();
         }
 
@@ -134,8 +134,9 @@ class SlugService extends AbstractService
     /**
      * Process the record and make the slug unique in the table, e.g. adds a suffix on duplicate.
      *
-     * @param array $recordData
+     * @param array    $recordData
      * @param int|null $counter
+     *
      * @return string
      */
     public function makeSlugUnique(array $recordData, ?int $counter = null): string
@@ -144,7 +145,7 @@ class SlugService extends AbstractService
         $state = $this->stateFactory->fromArray(
             $recordData,
             $recordData['pid'],
-            $recordData['uid'] ?? ''
+            $recordData['uid'] ?? '',
         );
 
         /* @noinspection PhpUnhandledExceptionInspection */
@@ -159,7 +160,7 @@ class SlugService extends AbstractService
             self::TABLE_NAME,
             self::SLUG_NAME,
             $GLOBALS['TCA'][self::TABLE_NAME]['columns'][self::SLUG_NAME]['config'],
-            $workspaceId
+            $workspaceId,
         );
     }
 }

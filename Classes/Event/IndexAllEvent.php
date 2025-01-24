@@ -12,9 +12,8 @@ final class IndexAllEvent
 
     public function __construct(
         private readonly IndexerService $indexerService,
-        private readonly string $position
-    ) {
-    }
+        private readonly string $position,
+    ) {}
 
     public function getIndexerService(): IndexerService
     {

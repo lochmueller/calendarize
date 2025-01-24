@@ -36,7 +36,7 @@ class CleanupCommandController extends Command
         protected EventDispatcherInterface $eventDispatcher,
         protected RawIndexRepository $rawIndexRepository,
         protected IndexerService $indexerService,
-        protected DataMapper $dataMapper
+        protected DataMapper $dataMapper,
     ) {
         parent::__construct();
     }
@@ -49,26 +49,26 @@ class CleanupCommandController extends Command
                 'r',
                 InputOption::VALUE_REQUIRED,
                 'The repository of the event to clean up',
-                self::DEFAULT_CLEANUP_REPOSITORY
+                self::DEFAULT_CLEANUP_REPOSITORY,
             )
             ->addOption(
                 'modus',
                 'm',
                 InputOption::VALUE_REQUIRED,
                 'What to do with cleaned Events? Set them \'hide\' or \'delete\'',
-                self::MODE_HIDDEN
+                self::MODE_HIDDEN,
             )
             ->addOption(
                 'waitingPeriod',
                 'w',
                 InputOption::VALUE_REQUIRED,
                 'How many days to wait after ending the Event before \'hide/delete\' it',
-                self::DEFAULT_WAIT_PERIOD
+                self::DEFAULT_WAIT_PERIOD,
             )->addOption(
                 'dry-run',
                 null,
                 InputOption::VALUE_NONE,
-                'If this option is set, it only outputs the amount of records which would have been updated'
+                'If this option is set, it only outputs the amount of records which would have been updated',
             );
     }
 

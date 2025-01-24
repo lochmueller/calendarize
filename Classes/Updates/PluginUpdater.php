@@ -43,9 +43,8 @@ class PluginUpdater extends AbstractUpdate
         protected readonly QueryBuilder $contentElementsQueryBuilder,
         protected readonly QueryBuilder $backendGroupsQueryBuilder,
         protected readonly FlexFormTools $flexFormTools,
-        protected readonly FlexFormService $flexFormService
-    ) {
-    }
+        protected readonly FlexFormService $flexFormService,
+    ) {}
 
     /**
      * @var string
@@ -88,15 +87,15 @@ class PluginUpdater extends AbstractUpdate
     protected function getContentElementsToMigrate(): array
     {
         $this->contentElementsQueryBuilder->getRestrictions()->removeAll()->add(
-            GeneralUtility::makeInstance(DeletedRestriction::class)
+            GeneralUtility::makeInstance(DeletedRestriction::class),
         );
         $constraintsForActions = [];
         foreach ($this->migrationMap as $action => $_) {
             $constraintsForActions[] = $this->contentElementsQueryBuilder->expr()->like(
                 'pi_flexform',
                 $this->contentElementsQueryBuilder->createNamedParameter(
-                    '%>' . $this->contentElementsQueryBuilder->escapeLikeWildcards(htmlspecialchars($action)) . '<%'
-                )
+                    '%>' . $this->contentElementsQueryBuilder->escapeLikeWildcards(htmlspecialchars($action)) . '<%',
+                ),
             );
         }
 
@@ -106,13 +105,13 @@ class PluginUpdater extends AbstractUpdate
             ->where(
                 $this->contentElementsQueryBuilder->expr()->eq(
                     'CType',
-                    $this->contentElementsQueryBuilder->createNamedParameter('list')
+                    $this->contentElementsQueryBuilder->createNamedParameter('list'),
                 ),
                 $this->contentElementsQueryBuilder->expr()->eq(
                     'list_type',
-                    $this->contentElementsQueryBuilder->createNamedParameter(self::OLD_LIST_TYPE)
+                    $this->contentElementsQueryBuilder->createNamedParameter(self::OLD_LIST_TYPE),
                 ),
-                $this->contentElementsQueryBuilder->expr()->or(...$constraintsForActions)
+                $this->contentElementsQueryBuilder->expr()->or(...$constraintsForActions),
             )
             ->executeQuery()
             ->fetchAllAssociative();
@@ -175,8 +174,8 @@ class PluginUpdater extends AbstractUpdate
             ->where(
                 $this->contentElementsQueryBuilder->expr()->in(
                     'uid',
-                    $this->contentElementsQueryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
-                )
+                    $this->contentElementsQueryBuilder->createNamedParameter($uid, Connection::PARAM_INT),
+                ),
             )
             ->executeStatement();
     }
@@ -200,7 +199,7 @@ class PluginUpdater extends AbstractUpdate
     protected function getBackendUserGroupsToMigrate(): array
     {
         $this->backendGroupsQueryBuilder->getRestrictions()->removeAll()->add(
-            GeneralUtility::makeInstance(DeletedRestriction::class)
+            GeneralUtility::makeInstance(DeletedRestriction::class),
         );
 
         return $this->backendGroupsQueryBuilder
@@ -210,15 +209,15 @@ class PluginUpdater extends AbstractUpdate
                 $this->backendGroupsQueryBuilder->expr()->like(
                     'explicit_allowdeny',
                     $this->backendGroupsQueryBuilder->createNamedParameter(
-                        '%' . $this->backendGroupsQueryBuilder->escapeLikeWildcards($this->getOldListTypeForGroupPermissions()) . '%'
-                    )
+                        '%' . $this->backendGroupsQueryBuilder->escapeLikeWildcards($this->getOldListTypeForGroupPermissions()) . '%',
+                    ),
                 ),
                 $this->backendGroupsQueryBuilder->expr()->notLike(
                     'explicit_allowdeny',
                     $this->backendGroupsQueryBuilder->createNamedParameter(
-                        '%' . $this->backendGroupsQueryBuilder->escapeLikeWildcards($this->getNewListTypesForGroupPermissions()) . '%'
-                    )
-                )
+                        '%' . $this->backendGroupsQueryBuilder->escapeLikeWildcards($this->getNewListTypesForGroupPermissions()) . '%',
+                    ),
+                ),
             )
             ->executeQuery()
             ->fetchAllAssociative();
@@ -240,8 +239,8 @@ class PluginUpdater extends AbstractUpdate
             ->where(
                 $this->backendGroupsQueryBuilder->expr()->in(
                     'uid',
-                    $this->backendGroupsQueryBuilder->createNamedParameter($group['uid'], Connection::PARAM_INT)
-                )
+                    $this->backendGroupsQueryBuilder->createNamedParameter($group['uid'], Connection::PARAM_INT),
+                ),
             )
             ->executeStatement();
     }

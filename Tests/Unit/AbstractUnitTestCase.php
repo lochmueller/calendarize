@@ -9,6 +9,4 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 /**
  * AbstractUnitTestCase.
  */
-abstract class AbstractUnitTestCase extends UnitTestCase
-{
-}
+abstract class AbstractUnitTestCase extends UnitTestCase {}

@@ -9,6 +9,4 @@ use TYPO3\CMS\Core\SingletonInterface;
 /**
  * Service abstraction.
  */
-class AbstractService implements SingletonInterface
-{
-}
+class AbstractService implements SingletonInterface {}

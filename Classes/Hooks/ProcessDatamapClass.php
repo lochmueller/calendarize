@@ -27,7 +27,7 @@ class ProcessDatamapClass
         string $table,
         int|string $identifier,
         array $fieldArray,
-        DataHandler $dataHandler
+        DataHandler $dataHandler,
     ): void {
         if (\in_array($table, array_column(Register::getRegister(), 'tableName'), true)) {
             if ('new' === $status && isset($dataHandler->substNEWwithIDs[$identifier])) {

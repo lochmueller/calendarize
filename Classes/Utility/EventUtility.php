@@ -59,7 +59,7 @@ class EventUtility
     public static function getOriginalRecordByConfigurationInWorkspace(
         array $configuration,
         int $uid,
-        int $workspaceId
+        int $workspaceId,
     ): ?DomainObjectInterface {
         $table = $configuration['tableName'];
         $modelName = $configuration['modelName'];
@@ -71,7 +71,7 @@ class EventUtility
         $queryBuilder->select('*')
             ->from($table)
             ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT))
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)),
             );
 
         $row = $queryBuilder->executeQuery()->fetchAssociative();

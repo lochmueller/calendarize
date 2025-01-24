@@ -127,7 +127,7 @@ class Register
             $tableName,
             $fieldName . ',calendarize_info',
             $typeList,
-            $position
+            $position,
         );
     }
 

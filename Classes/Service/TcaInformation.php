@@ -34,7 +34,7 @@ class TcaInformation extends AbstractService
         return $this->wrapContent($this->renderPreviewField(
             (string)$configuration['table'],
             (int)$configuration['row']['uid'],
-            $previewLimit
+            $previewLimit,
         ));
     }
 
@@ -47,7 +47,7 @@ class TcaInformation extends AbstractService
             $tableName,
             $uid,
             $limit,
-            WorkspaceUtility::getCurrentWorkspaceId()
+            WorkspaceUtility::getCurrentWorkspaceId(),
         );
 
         return \sprintf(TranslateUtility::get('previewLabel'), $count, $limit) . $this->getEventList($next);

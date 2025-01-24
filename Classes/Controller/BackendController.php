@@ -45,13 +45,13 @@ class BackendController extends AbstractController
             ->setTypeConverterOption(
                 DateTimeConverter::class,
                 DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-                'Y-m-d'
+                'Y-m-d',
             );
         $optionsConfiguration->forProperty('endDate')
             ->setTypeConverterOption(
                 DateTimeConverter::class,
                 DateTimeConverter::CONFIGURATION_DATE_FORMAT,
-                'Y-m-d'
+                'Y-m-d',
             );
     }
 

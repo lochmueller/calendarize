@@ -55,7 +55,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         ObjectStorage $calendarize,
         EventConfigurationInterface $event,
         string $importId,
-        int $pid
+        int $pid,
     ): void {
         $configuration = $this->getOrCreateConfiguration($calendarize, $importId);
 
@@ -113,7 +113,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
     protected function hydrateRecurringConfiguration(
         Configuration $configuration,
         array $rrule,
-        string $importId = ''
+        string $importId = '',
     ): void {
         $row = $this->mapRruleToConfiguration($rrule, $importId);
 

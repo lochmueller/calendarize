@@ -25,7 +25,7 @@ class LineFoldingViewHelper extends AbstractViewHelper
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
+        RenderingContextInterface $renderingContext,
     ) {
         return preg_replace(
             // Line folding after 75 characters: RFC-5545/3-1-content-lines
@@ -37,7 +37,7 @@ class LineFoldingViewHelper extends AbstractViewHelper
                  (?=[^\r\n])     # exclude last match in a line to prevent extra match or linebreak
              )/x',
             "$1\n ",
-            $renderChildrenClosure()
+            $renderChildrenClosure(),
         );
     }
 }

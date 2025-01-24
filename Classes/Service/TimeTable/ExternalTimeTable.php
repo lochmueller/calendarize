@@ -52,7 +52,7 @@ class ExternalTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedTitleFlashMessage(
                 $e->getMessage(),
                 'flashMessage.invalidExternalUrl.title',
-                ContextualFeedbackSeverity::ERROR
+                ContextualFeedbackSeverity::ERROR,
             );
 
             return;
@@ -64,7 +64,7 @@ class ExternalTimeTable extends AbstractTimeTable
             HelperUtility::createTranslatedTitleFlashMessage(
                 $e->getMessage(),
                 'flashMessage.unableToProcessEvents.title',
-                ContextualFeedbackSeverity::ERROR
+                ContextualFeedbackSeverity::ERROR,
             );
 
             return;

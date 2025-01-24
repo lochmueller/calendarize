@@ -28,7 +28,7 @@ class ImportCommandController extends Command
         protected ICalServiceInterface $iCalService,
         protected EventDispatcherInterface $eventDispatcher,
         protected IndexerService $indexerService,
-        protected ICalUrlService $iCalUrlService
+        protected ICalUrlService $iCalUrlService,
     ) {
         parent::__construct();
     }
@@ -39,12 +39,12 @@ class ImportCommandController extends Command
             ->addArgument(
                 'icsCalendarUri',
                 InputArgument::REQUIRED,
-                'The URL of the iCalendar ICS or local file (t3://file?uid=23)'
+                'The URL of the iCalendar ICS or local file (t3://file?uid=23)',
             )
             ->addArgument(
                 'pid',
                 InputArgument::REQUIRED,
-                'The page ID to create new elements'
+                'The page ID to create new elements',
             )
             ->addOption(
                 'since',
@@ -52,7 +52,7 @@ class ImportCommandController extends Command
                 InputOption::VALUE_OPTIONAL,
                 'Imports all events since the given date.' . \chr(10)
                 . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . \chr(10)
-                . '(Note: use --since="-x days" syntax on the console)'
+                . '(Note: use --since="-x days" syntax on the console)',
             );
     }
 

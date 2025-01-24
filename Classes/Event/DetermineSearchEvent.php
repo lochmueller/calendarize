@@ -6,9 +6,8 @@ final class DetermineSearchEvent
 {
     public function __construct(
         private array $variables,
-        private readonly array $settings
-    ) {
-    }
+        private readonly array $settings,
+    ) {}
 
     public function getVariables(): array
     {

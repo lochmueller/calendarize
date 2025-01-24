@@ -46,7 +46,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         ContentObjectRenderer $cObj,
         array $contentObjectConfiguration,
         array $processorConfiguration,
-        array $processedData
+        array $processedData,
     ): array {
         if (!$processorConfiguration['menus']) {
             return $processedData;
@@ -97,7 +97,7 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->getRestrictions()->add(
-            GeneralUtility::makeInstance(WorkspaceRestriction::class)
+            GeneralUtility::makeInstance(WorkspaceRestriction::class),
         );
 
         $result = $queryBuilder
@@ -108,14 +108,14 @@ class DisableLanguageMenuProcessor implements DataProcessorInterface
                     // Current language of the record
                     $queryBuilder->expr()->eq(
                         'uid',
-                        $queryBuilder->createNamedParameter($indexId, Connection::PARAM_INT)
+                        $queryBuilder->createNamedParameter($indexId, Connection::PARAM_INT),
                     ),
                     // Translated versions of the records (found by l10n_parent)
                     $queryBuilder->expr()->eq(
                         $transOrigPointerField,
-                        $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
-                    )
-                )
+                        $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT),
+                    ),
+                ),
             )
             ->executeQuery();
 

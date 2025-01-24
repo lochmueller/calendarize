@@ -9,6 +9,4 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper as BaseAbstractViewHelpe
 /**
  * AbstractViewHelper.
  */
-abstract class AbstractViewHelper extends BaseAbstractViewHelper
-{
-}
+abstract class AbstractViewHelper extends BaseAbstractViewHelper {}

@@ -27,7 +27,7 @@ class VObjectICalService extends AbstractService implements ICalServiceInterface
         try {
             $vcalendar = Reader::read(
                 $content,
-                Reader::OPTION_FORGIVING
+                Reader::OPTION_FORGIVING,
             );
         } catch (ParseException $e) {
             // Rethrow the exception to abstract the type

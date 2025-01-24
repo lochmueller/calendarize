@@ -13,9 +13,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 class PluginConfigurationService
 {
     public function __construct(
-        protected EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+        protected EventDispatcherInterface $eventDispatcher,
+    ) {}
 
     /**
      * Respect plugin configuration.
@@ -23,7 +22,7 @@ class PluginConfigurationService
     public function respectPluginConfiguration(array $settings): array
     {
         $settings['pluginConfiguration'] = $this->buildPluginConfigurationObject(
-            (int)($settings['pluginConfiguration'] ?? 0)
+            (int)($settings['pluginConfiguration'] ?? 0),
         );
         if ($settings['pluginConfiguration'] instanceof PluginConfiguration) {
             $checkFields = [

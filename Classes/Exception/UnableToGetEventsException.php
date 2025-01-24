@@ -7,6 +7,4 @@ namespace HDNET\Calendarize\Exception;
 /**
  * File not found exception.
  */
-class UnableToGetEventsException extends \RuntimeException
-{
-}
+class UnableToGetEventsException extends \RuntimeException {}

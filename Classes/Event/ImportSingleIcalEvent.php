@@ -13,9 +13,8 @@ final class ImportSingleIcalEvent implements StoppableEventInterface
 
     public function __construct(
         private readonly ICalEvent $event,
-        private readonly int $pid
-    ) {
-    }
+        private readonly int $pid,
+    ) {}
 
     public function getEvent(): ICalEvent
     {

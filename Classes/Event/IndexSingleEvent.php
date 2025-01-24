@@ -15,9 +15,8 @@ final class IndexSingleEvent
         private readonly string $tableName,
         private readonly int $uid,
         private readonly IndexerService $indexerService,
-        private readonly string $position
-    ) {
-    }
+        private readonly string $position,
+    ) {}
 
     public function getConfigurationKey(): string
     {

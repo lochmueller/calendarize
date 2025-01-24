@@ -23,7 +23,7 @@ class FormatUtcDateViewHelper extends DateViewHelper
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
+        RenderingContextInterface $renderingContext,
     ): string {
         // save configured timezone
         $timezone = date_default_timezone_get();

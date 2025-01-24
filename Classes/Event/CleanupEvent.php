@@ -11,9 +11,8 @@ final class CleanupEvent
         private readonly string $modus,
         private readonly Repository $repository,
         private readonly AbstractEntity $model,
-        private \Closure $function
-    ) {
-    }
+        private \Closure $function,
+    ) {}
 
     public function getModus(): string
     {

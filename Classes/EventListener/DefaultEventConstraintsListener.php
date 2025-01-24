@@ -13,7 +13,7 @@ class DefaultEventConstraintsListener extends CategoryConstraintEventListener
     {
         @trigger_error(
             'The CategoryConstraintEventListener now handles all models (incl. custom models) that use the default categories column.',
-            \E_USER_DEPRECATED
+            \E_USER_DEPRECATED,
         );
     }
 }

@@ -23,7 +23,7 @@ class InArrayViewHelper extends AbstractViewHelper
             'boolean',
             'If true then the function will also check the types.',
             false,
-            false
+            false,
         );
     }
 
@@ -33,7 +33,7 @@ class InArrayViewHelper extends AbstractViewHelper
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
+        RenderingContextInterface $renderingContext,
     ) {
         if (!\is_array($arguments['haystack'])) {
             return false;

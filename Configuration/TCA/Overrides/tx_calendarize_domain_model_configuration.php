@@ -19,7 +19,7 @@ ExtensionManagementUtility::addTcaSelectItemGroup(
     'tx_calendarize_domain_model_configuration',
     'type',
     'secondary',
-    'Secondary'
+    'Secondary',
 );
 foreach ($services as $service) {
     $timeTable = [
@@ -31,7 +31,7 @@ foreach ($services as $service) {
     ExtensionManagementUtility::addTcaSelectItem(
         'tx_calendarize_domain_model_configuration',
         'type',
-        $timeTable
+        $timeTable,
     );
     $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['typeicon_classes'][$service->getIdentifier()] = 'apps-calendarize-type-' . Configuration::TYPE_TIME;
     $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['types'][$service->getIdentifier()]['showitem'] = $service->getTcaServiceTypeFields();
@@ -47,5 +47,5 @@ ExtensionManagementUtility::addTCAcolumns(
                 'ds' => $flexForms,
             ],
         ],
-    ]
+    ],
 );
