@@ -18,8 +18,6 @@ class Register
     /**
      * Register in the extTables.
      *
-     * @param array $configuration
-     *
      * @deprecated use Register::extLocalconf in your ext_localconf and Register::createTcaConfiguration in your TCA override configuration
      */
     public static function extTables(array $configuration): void
