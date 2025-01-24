@@ -10,6 +10,7 @@ use HDNET\Calendarize\Event\AddTimeFrameConstraintsEvent;
 use HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent;
 use HDNET\Calendarize\Event\IndexRepositoryFindBySearchEvent;
 use HDNET\Calendarize\Event\IndexRepositoryTimeSlotEvent;
+use HDNET\Calendarize\Event\ModifyDateTimeFrameConstraintEvent;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
@@ -633,8 +634,17 @@ class IndexRepository extends AbstractRepository
                 );
             }
         }
+        
+        /** @var ModifyDateTimeFrameConstraintEvent $event */
+        $event = $this->eventDispatcher->dispatch(new ModifyDateTimeFrameConstraintEvent(
+            $query,
+            $start,
+            $end,
+            $respectTime,
+            $dateConstraints
+        ));
 
-        $constraints[] = $query->logicalAnd(...$dateConstraints);
+        $constraints[] = $query->logicalAnd(...$event->getDateConstraints());
     }
 
     /**
