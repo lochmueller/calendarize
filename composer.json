@@ -53,11 +53,13 @@
 	},
 	"require-dev": {
 		"typo3/testing-framework": "^8.0",
+		"typo3/cms-core": "^12.4||^13.4",
+		"typo3/cms-install": "^12.4||^13.4",
 		"typo3/cms-workspaces": "^12.4||^13.4",
+		"typo3/cms-dashboard": "^12.4||^13.4",
 		"friendsofphp/php-cs-fixer": "^3.0",
 		"phpmd/phpmd": "^2.4",
-		"phpstan/phpstan": "^2.0",
-		"qossmic/deptrac-shim": "^0.24||^1.0"
+		"phpstan/phpstan": "^2.0"
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
@@ -90,8 +92,7 @@
 		"code-check": [
 			"@tool:php-cs-fixer-check",
 			"@tool:phpunit",
-			"@tool:phpstan",
-			"@tool:deptrac"
+			"@tool:phpstan"
 		],
 		"tool:php-cs-fixer": [
 			"PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
@@ -113,9 +114,6 @@
 		],
 		"tool:phpstan": [
 			"phpstan analyse -c phpstan.neon --memory-limit=1G"
-		],
-		"tool:deptrac": [
-			"deptrac"
 		]
 	}
 }
