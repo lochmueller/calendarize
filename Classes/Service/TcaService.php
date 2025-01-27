@@ -106,7 +106,7 @@ class TcaService extends AbstractService
     protected function getConfigurationGroupTitle(array $row): string
     {
         $title = '';
-        $groups = GeneralUtility::trimExplode(',', $row['groups'], true);
+        $groups = GeneralUtility::trimExplode(',', (string)$row['groups'], true);
         foreach ($groups as $key => $id) {
             $row = BackendUtility::getRecord('tx_calendarize_domain_model_configurationgroup', $id);
             if (!empty($row)) {

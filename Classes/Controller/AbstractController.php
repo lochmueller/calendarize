@@ -219,7 +219,7 @@ abstract class AbstractController extends ActionController
                 'controllerName' => null,
                 'extensionName' => null,
                 'arguments' => [],
-                'pageUid' => $this->settings['listPid'],
+                'pageUid' => (int)$this->settings['listPid'],
                 'delay' => 0,
                 'statusCode' => 301,
             ];
