@@ -10,3 +10,4 @@ For developers
     Features/SpeakingUrl
     Bookings
     TypoScript
+    PageTSConfig
