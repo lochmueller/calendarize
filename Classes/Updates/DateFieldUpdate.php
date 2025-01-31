@@ -81,7 +81,7 @@ class DateFieldUpdate extends AbstractUpdate
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($tableName);
         $schemaManager = $connection->createSchemaManager();
-        if (!$schemaManager->tablesExist($tableName)) {
+        if (!$schemaManager->tablesExist([$tableName])) {
             return false;
         }
 
