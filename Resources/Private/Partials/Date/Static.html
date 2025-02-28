@@ -1,6 +1,5 @@
 {index.startDate -> f:format.date(format: '{f:translate(key: \'dateFormat\')}')}
 <f:if condition="{index.allDay}">
-	<f:then></f:then>
 	<f:else>
 		<f:format.date format="{f:translate(key: 'timeFormat')}">{index.startDateComplete}</f:format.date>
 	</f:else>
@@ -18,17 +17,14 @@
 		<f:translate key="all_day" />
 	</f:then>
 	<f:else>
+        <f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
+            -
+        </f:if>
 		<f:if condition="{index.openEndTime}">
 			<f:then>
-				<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
-					-
-				</f:if>
 				<f:translate key="open_end" />
 			</f:then>
 			<f:else>
-				<f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
-					-
-				</f:if>
 				<f:format.date format="{f:translate(key: 'timeFormat')}">{index.endDateComplete}</f:format.date>
 			</f:else>
 		</f:if>
