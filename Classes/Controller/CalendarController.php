@@ -680,7 +680,7 @@ class CalendarController extends AbstractController
     ): array {
         $searchMode = false;
         [$startDate, $endDate] = $this->checkWrongDateOrder($startDate, $endDate);
-        if ($startDate || $endDate || !empty($customSearch)) {
+        if ($startDate || $endDate || $this->hasCustomSearch($customSearch)) {
             $searchMode = true;
             $limit = (int)($this->settings['limit'] ?? 0);
             $indices = $this->indexRepository->findBySearch($startDate, $endDate, $customSearch, $limit);
@@ -746,6 +746,12 @@ class CalendarController extends AbstractController
         $this->eventDispatcher->dispatch($event);
 
         return $event->getVariables();
+    }
+
+    protected function hasCustomSearch(array $customSearch): bool
+    {
+        // Do not use !empty($customSearch) to avoid empty entries in the search form
+        return implode('', $customSearch) !== '';
     }
 
     protected function checkWrongDateOrder(?\DateTime $startDate = null, ?\DateTime &$endDate = null): array
