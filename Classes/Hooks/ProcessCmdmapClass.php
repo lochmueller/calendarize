@@ -37,12 +37,13 @@ class ProcessCmdmapClass
         $workspaceId = $context->getPropertyFromAspect('workspace', 'id');
 
         $register = Register::getRegister();
+
         foreach ($register as $key => $configuration) {
-            if ('version' == $command && 'swap' == $value['action']) {
+            if ('version' === $command && 'publish' === ($value['action'] ?? '')) {
                 // do nothing with the event itself. The configuration is the last one, which is published
-                if ('tx_calendarize_domain_model_configuration' == $table) {
+                if ('tx_calendarize_domain_model_configuration' === $table) {
                     $parent = $this->findParentEventInThisTable($configuration['tableName'], (int)$uid);
-                    if (\count($parent)) {
+                    if (is_array($parent) && count($parent)) {
                         $parentConfigurations = GeneralUtility::trimExplode(',', $parent['calendarize']);
                         // we just re-index the last given configuration (this is just a workaround - but indexing
                         // of all leads to the behaviour, that only the first one is really indexed)
@@ -65,7 +66,7 @@ class ProcessCmdmapClass
         }
     }
 
-    protected function findParentEventInThisTable(string $table, int $uid): array
+    protected function findParentEventInThisTable(string $table, int $uid): array|bool
     {
         // there is no calendarize field, and we will not find our parent there
         if ('tx_calendarize_domain_model_configurationgroup' == $table) {

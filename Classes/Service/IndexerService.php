@@ -230,6 +230,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         foreach ($neededItems as $item) {
             if ($workspace) {
                 $item['t3ver_oid'] = 0;
+                $item['t3ver_state'] = VersionState::NEW_PLACEHOLDER;
             }
 
             $item['slug'] = $this->slugService->makeSlugUnique($item, $i);
