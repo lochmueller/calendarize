@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize;
 
+use HDNET\Calendarize\EventListener\HideIndexesInWorkspaceModuleEventListener;
 use HDNET\Calendarize\Service\Ical\DissectICalService;
 use HDNET\Calendarize\Service\Ical\ICalServiceInterface;
 use HDNET\Calendarize\Service\Ical\VObjectICalService;
@@ -15,8 +16,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 use TYPO3\CMS\Backend\View\BackendViewFactory;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListWidget;
 use TYPO3\CMS\Dashboard\Widgets\NumberWithIconWidget;
+use TYPO3\CMS\Workspaces\Event\AfterCompiledCacheableDataForWorkspaceEvent;
 
 return function (ContainerConfigurator $configurator, ContainerBuilder $containerBuilder) {
     $services = $configurator->services();
@@ -58,6 +61,15 @@ return function (ContainerConfigurator $configurator, ContainerBuilder $containe
                 'iconIdentifier' => 'ext-calendarize-wizard-icon',
                 'height' => 'small',
                 'width' => 'small',
+            ]);
+    }
+
+    if (ExtensionManagementUtility::isLoaded('workspaces')) {
+        $services->set('calendarize.event_listener.hide_indexes_in_workspace_module')
+            ->class(HideIndexesInWorkspaceModuleEventListener::class)
+            ->tag('event.listener', [
+                'identifier' => 'calendarize.event_listener.hide_indexes_in_workspace_module',
+                'event' => AfterCompiledCacheableDataForWorkspaceEvent::class,
             ]);
     }
 };
