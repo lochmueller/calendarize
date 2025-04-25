@@ -20,12 +20,6 @@ services:
         identifier: 'calendarizeField'
         event: TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent
 
-  HDNET\Calendarize\EventListener\HideIndexesInWorkspaceModuleEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'hideIndexesInWorkspaceModule'
-        event: TYPO3\CMS\Workspaces\Event\AfterCompiledCacheableDataForWorkspaceEvent
-
   HDNET\Calendarize\EventListener\ImportSingleIcalEventListener:
     tags:
       - name: event.listener
