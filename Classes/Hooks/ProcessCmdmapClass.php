@@ -47,8 +47,10 @@ class ProcessCmdmapClass
                         $parentConfigurations = GeneralUtility::trimExplode(',', $parent['calendarize']);
                         // we just re-index the last given configuration (this is just a workaround - but indexing
                         // of all leads to the behaviour, that only the first one is really indexed)
+
                         if ($uid == $parentConfigurations[\count($parentConfigurations) - 1]) {
                             $indexer->reindex($key, $configuration['tableName'], (int)$parent['uid']);
+                            $this->removeWorkspaceIndexes($configuration, (int)$parent['uid']);
                         }
                     }
                 }
@@ -64,6 +66,20 @@ class ProcessCmdmapClass
                 $indexer->reindex($key, $table, (int)$uid);
             }
         }
+    }
+
+    protected function removeWorkspaceIndexes(array $configuration, int $parentId) : void
+    {
+        $context = GeneralUtility::makeInstance(Context::class);
+        $workspaceId = $context->getPropertyFromAspect('workspace', 'id');
+
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_calendarize_domain_model_index');
+
+        $connection->delete(
+            'tx_calendarize_domain_model_index',
+            ['t3ver_wsid' => $workspaceId, 'foreign_uid' => $parentId, 'unique_register_key' => $configuration['uniqueRegisterKey']]
+        );
     }
 
     protected function findParentEventInThisTable(string $table, int $uid): array|bool
