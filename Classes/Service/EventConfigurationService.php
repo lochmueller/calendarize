@@ -66,6 +66,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         $configuration->setHandling(ConfigurationInterface::HANDLING_INCLUDE);
         $configuration->setState($event->getState());
         $configuration->setAllDay($event->isAllDay());
+        $configuration->setOpenEndTime($event->isOpenEndTime());
 
         $configuration->setStartDate($event->getStartDate());
         $configuration->setEndDate($event->getEndDate());
