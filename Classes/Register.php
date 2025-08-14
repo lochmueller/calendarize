@@ -111,16 +111,21 @@ class Register
             ],
         ];
 
+        if($GLOBALS['TCA'][$tableName]['columns']['calendarize_info']['config']['parameters']['items']){
+            $items = $GLOBALS['TCA'][$tableName]['columns']['calendarize_info']['config']['parameters']['items'];
+        }
+        
         $GLOBALS['TCA'][$tableName]['columns']['calendarize_info'] = [
             'label' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:tca.information',
             'config' => [
                 'type' => 'none',
                 'renderType' => 'calendarizeInfoElement',
                 'parameters' => [
-                    'items' => 10,
+                    'items' => $items ?? 10,
                 ],
             ],
         ];
+
         ExtensionManagementUtility::addToAllTCAtypes(
             $tableName,
             $fieldName . ',calendarize_info',

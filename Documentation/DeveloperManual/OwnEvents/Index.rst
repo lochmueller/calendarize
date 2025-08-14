@@ -62,4 +62,4 @@ To modify the amount of items shown in the preview you can change the amount in 
 ..  code-block:: php
     :caption: EXT:some_extension/Configuration/TCA/Overrides/<tx_extension_domain_model_event>.php
 
-    $GLOBALS['TCA']['tx_myextension_domain_model_myevent']['columns']['calendarize_info']['config']['items'] = 25;
+    $GLOBALS['TCA']['tx_myextension_domain_model_myevent']['columns']['calendarize_info']['config']['parameters']['items'] = 25;
