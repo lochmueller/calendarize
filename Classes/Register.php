@@ -117,10 +117,11 @@ class Register
                 'type' => 'none',
                 'renderType' => 'calendarizeInfoElement',
                 'parameters' => [
-                    'items' => 10,
+                    'items' => $GLOBALS['TCA'][$tableName]['columns']['calendarize_info']['config']['parameters']['items'] ?? 10,
                 ],
             ],
         ];
+
         ExtensionManagementUtility::addToAllTCAtypes(
             $tableName,
             $fieldName . ',calendarize_info',
