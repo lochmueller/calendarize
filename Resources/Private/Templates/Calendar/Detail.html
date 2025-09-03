@@ -15,8 +15,9 @@
 							<f:translate key="back"/>
 						</f:link.page>
 					</f:if>
-					<f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal
-					</f:link.action>
+                    <f:if condition="{settings.hideIcalLink} != 1">
+                        <f:link.action action="detail" arguments="{index: index}" format="ics" class="btn btn-default">ICS/iCal</f:link.action>
+                    </f:if>
 				</div>
 			</div>
 		</div>
