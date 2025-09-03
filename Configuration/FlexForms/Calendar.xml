@@ -70,6 +70,25 @@
                             <type>check</type>
                         </config>
 					</settings.hidePagination>
+
+                    <settings.hideIcalLink>
+                        <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:hide.link.ical</label>
+                        <displayCond>
+                            <OR>
+
+                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                <numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
+                                <numIndex index="4">FIELD:parentRec.list_type:=:calendarize_detail</numIndex>
+                                <!-- <numIndex index="5">FIELD:parentRec.list_type:=:calendarize_past</numIndex> -->
+                            </OR>
+                        </displayCond>
+                        <config>
+                            <type>check</type>
+                        </config>
+                    </settings.hideIcalLink>
+
 					<settings.useRelativeDate>
                         <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
                         <displayCond>
