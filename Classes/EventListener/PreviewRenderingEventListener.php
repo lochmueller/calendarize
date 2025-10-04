@@ -33,7 +33,7 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $this->flexFormService->load($record['pi_flexform']);
+        $this->flexFormService->load($record['pi_flexform'] ?? '');
         if (!$this->flexFormService->isValid()) {
             return;
         }
