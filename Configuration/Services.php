@@ -64,7 +64,7 @@ return function (ContainerConfigurator $configurator, ContainerBuilder $containe
                 'width' => 'small',
             ]);
     }
-    
+
     if ($containerBuilder->hasDefinition(AutoPublishCommand::class)) {
         $services->set('calendarize.event_listener.hide_indexes_in_workspace_module')
             ->class(HideIndexesInWorkspaceModuleEventListener::class)

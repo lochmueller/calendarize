@@ -53,7 +53,6 @@
 	},
 	"require-dev": {
 		"typo3/testing-framework": "^8.0",
-		"typo3/cms-core": "^12.4||^13.4",
 		"typo3/cms-install": "^12.4||^13.4",
 		"typo3/cms-workspaces": "^12.4||^13.4",
 		"typo3/cms-dashboard": "^12.4||^13.4",
