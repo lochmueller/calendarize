@@ -5,11 +5,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '8.2', '8.3', '8.4' ]
         typo3: [ '12', '13' ]
-        exclude:
-          - php: '8.1'
-            typo3: '13'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -60,9 +57,6 @@ jobs:
 
       - name: Run PHP CS Fixer checks
         run: composer run tool:php-cs-fixer-check
-
-#      - name: Run DepTrac
-#        run: composer run tool:deptrac
 
       - name: Reset composer.json
         run: git checkout composer.json;
