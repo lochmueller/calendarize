@@ -33,7 +33,7 @@
 		}
 	],
 	"require": {
-		"php": "^8.1",
+		"php": "^8.2",
 		"ext-json": "*",
 		"ext-pdo": "*",
 		"typo3/cms-core": "^12.4||^13.4",
@@ -95,10 +95,10 @@
 			"@tool:phpstan"
 		],
 		"tool:php-cs-fixer": [
-			"PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
+			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
 		],
 		"tool:php-cs-fixer-check": [
-			"PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php --dry-run"
+			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php --dry-run"
 		],
 		"tool:phpunit": [
 			"phpunit --configuration=Tests/Unit/Build/UnitTests.xml"

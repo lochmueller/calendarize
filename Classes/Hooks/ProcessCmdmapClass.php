@@ -33,18 +33,18 @@ class ProcessCmdmapClass
         DataHandler $handler,
         false|array $pasteUpdate,
     ): void {
-        if($command === 'version'){
+        if ($command === 'version') {
             $register = Register::getRegister();
 
             foreach ($register as $key => $configuration) {
                 // we just want the event!
-                if($key === 'ConfigurationGroup'){
+                if ($key === 'ConfigurationGroup') {
                     continue;
                 }
 
                 // if it is any event
-                if($configuration['tableName'] === $table){
-                    switch($value['action'] ?? ''){
+                if ($configuration['tableName'] === $table) {
+                    switch ($value['action'] ?? '') {
                         // We need to save the live-uid for deleting the workspace-indexes
                         // after deleting the workspace version
                         case 'clearWSID':
@@ -58,7 +58,7 @@ class ProcessCmdmapClass
                             self::$lastProcessedEventId = $uid;
                             self::$lastProcessedEventIdLive = $row['t3ver_oid'] ?? 0;
                             break;
-                        // we need to save both values for publishing a deleted record
+                            // we need to save both values for publishing a deleted record
                         case 'publish':
                             self::$lastProcessedEventId = $value['swapWith'] ?? 0;
                             self::$lastProcessedEventIdLive = $uid;
@@ -93,10 +93,10 @@ class ProcessCmdmapClass
 
         foreach ($register as $key => $configuration) {
             if ('version' === $command && 'tx_calendarize_domain_model_configuration' === $table) {
-                if('publish' === $action){
+                if ('publish' === $action) {
                     $indexer->reindex($key, $configuration['tableName'], self::$lastProcessedEventIdLive);
                     $this->removeWorkspaceIndexes($configuration, $workspaceId, self::$lastProcessedEventIdLive);
-                } elseif ('clearWSID' === $action){
+                } elseif ('clearWSID' === $action) {
                     $this->removeWorkspaceIndexes($configuration, $workspaceId, self::$lastProcessedEventIdLive);
                 }
             } elseif ($configuration['tableName'] === $table) {
@@ -112,14 +112,14 @@ class ProcessCmdmapClass
         }
     }
 
-    protected function removeWorkspaceIndexes(array $configuration, int $workspaceId, int $parentId) : void
+    protected function removeWorkspaceIndexes(array $configuration, int $workspaceId, int $parentId): void
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('tx_calendarize_domain_model_index');
 
         $connection->delete(
             'tx_calendarize_domain_model_index',
-            ['t3ver_wsid' => $workspaceId, 'foreign_uid' => $parentId, 'unique_register_key' => $configuration['uniqueRegisterKey']]
+            ['t3ver_wsid' => $workspaceId, 'foreign_uid' => $parentId, 'unique_register_key' => $configuration['uniqueRegisterKey']],
         );
     }
 }
