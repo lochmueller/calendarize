@@ -17,11 +17,13 @@ class FlexFormService extends AbstractService
     protected array $flexFormData = [];
 
     /**
-     * oad the given flex form into the service.
+     * Load the given flex form into the service.
      */
-    public function load(string $xml): void
+    public function load(?string $xml): void
     {
-        $this->flexFormData = GeneralUtility::xml2array($xml);
+        if (isset($xml)) {
+            $this->flexFormData = GeneralUtility::xml2array($xml);
+        }
     }
 
     /**
