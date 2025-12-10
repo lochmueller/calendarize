@@ -22,7 +22,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         if ((new Typo3Version())->getMajorVersion() >= 13) {
             $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories_v13.csv');
         } else {
