@@ -8,6 +8,7 @@ use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent;
 use HDNET\Calendarize\EventListener\CategoryConstraintEventListener;
 use HDNET\Calendarize\Register;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
@@ -21,7 +22,13 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories.csv');
+
+        if ((new Typo3Version())->getMajorVersion() >= 13) {
+            $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories_v13.csv');
+        } else {
+            $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories.csv');
+        }
+
         $this->subject = new CategoryConstraintEventListener();
     }
 
