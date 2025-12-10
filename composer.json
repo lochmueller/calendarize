@@ -97,7 +97,7 @@
 			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
 		],
 		"tool:php-cs-fixer-check": [
-			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php --dry-run"
+			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php --dry-run --diff"
 		],
 		"tool:phpunit": [
 			"phpunit --configuration=Tests/Unit/Build/UnitTests.xml"
