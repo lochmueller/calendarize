@@ -9,6 +9,7 @@ use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspect;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -21,7 +22,11 @@ class IndexRepositoryTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories.csv');
+        if ((new Typo3Version())->getMajorVersion() >= 13) {
+            $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories_v13.csv');
+        } else {
+            $this->importCSVDataSet(__DIR__ . '/Fixtures/EventsWithCategories.csv');
+        }
 
         $this->indexerService = GeneralUtility::makeInstance(IndexerService::class);
         $this->indexerService->reindexAll();
