@@ -9,11 +9,8 @@ use HDNET\Calendarize\Service\FlexFormService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
-use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Provides backend preview for calendarize plugins.
@@ -38,9 +35,7 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $iconSize = GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() <= 12 ? Icon::SIZE_SMALL : IconSize::SMALL;
-
-        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', $iconSize)->render();
+        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
         $listType = explode('_', $record['list_type'], 2)[1] ?? '';
