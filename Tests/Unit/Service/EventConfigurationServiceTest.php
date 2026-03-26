@@ -7,6 +7,7 @@ use HDNET\Calendarize\Service\EventConfigurationService;
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTestCase;
 use Psr\Log\NullLogger;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EventConfigurationServiceTest extends AbstractUnitTestCase
 {
@@ -73,12 +74,7 @@ class EventConfigurationServiceTest extends AbstractUnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider hydrateRecurringConfigurationDataProvider
-     *
-     * @param array $rrule
-     * @param array $expected
-     */
+    #[DataProvider(methodName: 'hydrateRecurringConfigurationDataProvider')]
     public function testHydrateRecurringConfiguration(array $rrule, array $expected): void
     {
         $subject = $this->getAccessibleMock(EventConfigurationService::class, null);
