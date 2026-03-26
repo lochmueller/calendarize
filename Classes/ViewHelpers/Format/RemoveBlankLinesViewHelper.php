@@ -22,15 +22,12 @@ class RemoveBlankLinesViewHelper extends AbstractViewHelper
     /**
      * @return string
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext,
-    ) {
+    public function render()
+    {
         return trim(preg_replace(
             '/[\r\n]+\s*[\r\n]+/',
             "\n",
-            $renderChildrenClosure(),
+            $this->renderChildren(),
         ));
     }
 }

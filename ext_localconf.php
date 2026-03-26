@@ -34,7 +34,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'ListDetail',
         [
             $calendar => 'list,detail',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -42,7 +44,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'List',
         [
             $calendar => 'list',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -50,7 +54,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Detail',
         [
             $calendar => 'detail',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -61,7 +67,8 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         ],
         [
             $calendar => 'search',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -72,7 +79,8 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         ],
         [
             $calendar => 'result',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -80,7 +88,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Latest',
         [
             $calendar => 'latest',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -88,7 +98,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Single',
         [
             $calendar => 'single',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -96,7 +108,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Year',
         [
             $calendar => 'year',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -104,7 +118,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Quarter',
         [
             $calendar => 'quarter',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -112,7 +128,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Month',
         [
             $calendar => 'month',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -120,7 +138,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Week',
         [
             $calendar => 'week',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -128,7 +148,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Day',
         [
             $calendar => 'day',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -136,14 +158,18 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'Past',
         [
             $calendar => 'past',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
     ExtensionUtility::configurePlugin(
         'calendarize',
         'Shortcut',
         [
             $calendar => 'shortcut',
-        ]
+        ],
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -156,7 +182,8 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         [
             $calendar => 'search,result',
             $booking => 'booking,send',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     ExtensionUtility::configurePlugin(
@@ -167,7 +194,8 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         ],
         [
             $booking => 'booking,send',
-        ]
+        ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = DatabaseRecordLinkBuilder::class;

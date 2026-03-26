@@ -25,7 +25,7 @@ class MonthViewHelper extends AbstractActionViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $date = $this->arguments['date'];
         $pluginArgs = [

@@ -16,7 +16,7 @@ class BookingViewHelper extends BaseBookingViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         parent::render();
 

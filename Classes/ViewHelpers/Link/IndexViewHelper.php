@@ -27,7 +27,7 @@ class IndexViewHelper extends AbstractActionViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $pluginArgs = [
             'index' => $this->arguments['index']->getUid(),

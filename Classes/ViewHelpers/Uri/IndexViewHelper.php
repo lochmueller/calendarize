@@ -16,7 +16,7 @@ class IndexViewHelper extends BaseIndexViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         parent::render();
 

@@ -28,8 +28,8 @@ class PreviewRenderingEventListener
 
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
-        $record = $event->getRecord();
-        if (!str_starts_with($record['list_type'] ?? '', 'calendarize_')) {
+        $record = $event->getRecord()->toArray();
+        if (!str_starts_with($record['CType'] ?? '', 'calendarize_')) {
             return;
         }
 

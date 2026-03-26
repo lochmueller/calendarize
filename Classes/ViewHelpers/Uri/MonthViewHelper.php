@@ -16,7 +16,7 @@ class MonthViewHelper extends BaseMonthViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         parent::render();
 

@@ -20,17 +20,14 @@ class FormatUtcDateViewHelper extends DateViewHelper
      *
      * @throws Exception
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext,
-    ): string {
+    public function render(): string
+    {
         // save configured timezone
         $timezone = date_default_timezone_get();
         // set timezone to UTC
         date_default_timezone_set('UTC');
 
-        $date = $arguments['date'];
+        $date = $this->arguments['date'];
         if ($date instanceof \DateTimeInterface) {
             $renderChildrenClosure = static function () use ($date) {
                 // Convert date to timestamp, so that it can be reparsed.
@@ -38,7 +35,7 @@ class FormatUtcDateViewHelper extends DateViewHelper
             };
         }
 
-        $result = parent::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
+        $result = parent::render();
 
         // restore timezone setting
         date_default_timezone_set($timezone);

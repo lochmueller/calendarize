@@ -10,15 +10,12 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * DateViewHelper.
  */
 class DateViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     /**
      * Needed as child node's output can return a DateTime object which can't be escaped.
      *
@@ -59,13 +56,10 @@ class DateViewHelper extends AbstractViewHelper
      *
      * @throws Exception
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext,
-    ) {
-        $format = $arguments['format'];
-        $base = $arguments['base'] ?? GeneralUtility::makeInstance(Context::class)
+    public function render()
+    {
+        $format = $this->arguments['format'];
+        $base = $this->arguments['base'] ?? GeneralUtility::makeInstance(Context::class)
             ->getPropertyFromAspect('date', 'timestamp');
         if (\is_string($base)) {
             $base = trim($base);

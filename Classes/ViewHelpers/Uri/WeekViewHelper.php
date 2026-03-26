@@ -16,7 +16,7 @@ class WeekViewHelper extends BaseWeekViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         parent::render();
 

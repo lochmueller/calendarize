@@ -24,7 +24,7 @@ class ListViewHelper extends AbstractActionViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->renderExtbaseLink([], $this->getPageUid('listPid'));
     }

@@ -16,7 +16,7 @@ class YearViewHelper extends BaseYearViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         parent::render();
 
