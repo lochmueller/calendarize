@@ -43,7 +43,7 @@ class PreviewRenderingEventListener
         $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
-        $listType = explode('_', $record['list_type'], 2)[1] ?? '';
+        $listType = explode('_', $record['CType'], 2)[1] ?? '';
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $listType));
 
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
