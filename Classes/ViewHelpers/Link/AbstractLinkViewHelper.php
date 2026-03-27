@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
@@ -95,12 +96,12 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         return $this->getRequest()->getAttribute('routing')->getPageId() ?? 0;
     }
 
-    protected function getRequest(): RequestInterface
+    protected function getRequest(): ?ServerRequestInterface
     {
-        /** @var RenderingContext $renderingContext */
-        $renderingContext = $this->renderingContext;
-        /** @var RequestInterface $request */
-        $request = $renderingContext->getRequest();
+        $request = null;
+        if ($this->renderingContext->hasAttribute(ServerRequestInterface::class)) {
+            $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        }
 
         return $request;
     }
