@@ -34,13 +34,11 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('target', 'string', 'Target of link', false);
-        $this->registerTagAttribute(
+        $this->registerArgument('target', 'string', 'Target of link');
+        $this->registerArgument(
             'rel',
             'string',
-            'Specifies the relationship between the current document and the linked document',
-            false,
+            'Specifies the relationship between the current document and the linked document'
         );
     }
 
