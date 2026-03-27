@@ -26,8 +26,17 @@ class PreviewRenderingEventListener
 
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
-        $record = $event->getRecord()->toArray();
-        if (!str_starts_with($record['CType'] ?? '', 'calendarize_')) {
+        $record = $event->getRecord();
+
+        /* keep v13 compatibility */
+        if (!is_array($record)) {
+            $record = $record->toArray();
+        }
+
+        /* keep v13 compatibility */
+        $listTypeField = isset($record['list_type']) ? 'list_type' : 'CType';
+
+        if (!str_starts_with($record[$listTypeField] ?? '', 'calendarize_')) {
             return;
         }
 
@@ -35,15 +44,10 @@ class PreviewRenderingEventListener
             return;
         }
 
-        /** @var FlexFormFieldValues $flexFormFieldValues */
-        $flexFormFieldValues = $record['pi_flexform'];
-
-        $flexFormFieldValues->toArray();
-
         $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
-        $listType = explode('_', $record['CType'], 2)[1] ?? '';
+        $listType = explode('_', $record[$listTypeField], 2)[1] ?? '';
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $listType));
 
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
