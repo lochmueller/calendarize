@@ -36,14 +36,14 @@ foreach ($pluginNameAndGroup as $pluginName => $group) {
         $group,
     );
     // Disable the display of layout and select_key fields for the plugin
-//    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'pages,recursive';
+    //    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'pages,recursive';
     // Activate the display of the plug-in flexform field and set FlexForm definition
-//    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+    //    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 
-//    TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-//        $pluginSignature,
-//        'FILE:EXT:calendarize/Configuration/FlexForms/Calendar.xml',
-//    );
+    //    TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    //        $pluginSignature,
+    //        'FILE:EXT:calendarize/Configuration/FlexForms/Calendar.xml',
+    //    );
 
     TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
         'tt_content',

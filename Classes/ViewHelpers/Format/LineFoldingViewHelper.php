@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\ViewHelpers\Format;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
  * Class LineFoldingViewHelper.

@@ -7,9 +7,7 @@ namespace HDNET\Calendarize\ViewHelpers\Link;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -39,7 +37,7 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         $this->registerArgument(
             'rel',
             'string',
-            'Specifies the relationship between the current document and the linked document'
+            'Specifies the relationship between the current document and the linked document',
         );
     }
 

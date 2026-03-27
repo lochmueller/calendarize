@@ -17,7 +17,7 @@ class NextEventsDataProvider implements ListDataProviderInterface
 {
     public function __construct(
         protected IndexRepository $indexRepository,
-        protected ViewFactoryInterface $viewFactory
+        protected ViewFactoryInterface $viewFactory,
     ) {}
 
     public function getItems(): array
@@ -35,9 +35,9 @@ class NextEventsDataProvider implements ListDataProviderInterface
                     [],
                     [
                         'EXT:calendarize/Resources/Private/Partials/',
-                        'EXT:calendarize_premium/Resources/Private/Partials/'
+                        'EXT:calendarize_premium/Resources/Private/Partials/',
                     ],
-                    []
+                    [],
                 );
 
                 /** @var ViewInterface $view */

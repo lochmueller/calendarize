@@ -41,7 +41,7 @@ class PluginUpdater extends AbstractUpdate
     public function __construct(
         protected readonly QueryBuilder $contentElementsQueryBuilder,
         protected readonly QueryBuilder $backendGroupsQueryBuilder,
-        protected readonly FlexFormTools $flexFormTools
+        protected readonly FlexFormTools $flexFormTools,
     ) {}
 
     /**
@@ -161,7 +161,7 @@ class PluginUpdater extends AbstractUpdate
         $spaceInd = 4;
         $output = GeneralUtility::array2xml($input, '', 0, 'T3FlexForms', $spaceInd, $options);
 
-        return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . LF . $output;
+        return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . "\n" . $output;
     }
 
     protected function updateContentElement(int $uid, string $newListType, string $flexform): void

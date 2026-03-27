@@ -203,7 +203,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getGroups(): ObjectStorage
     {
-        return $this->groups ?? new ObjectStorage();
+        return $this->groups;
     }
 
     /**

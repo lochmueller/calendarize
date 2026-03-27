@@ -6,7 +6,6 @@ namespace HDNET\Calendarize\ViewHelpers\Be;
 
 use HDNET\Calendarize\ViewHelpers\AbstractViewHelper;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
  * Gets the record by uid from the table as an array.
