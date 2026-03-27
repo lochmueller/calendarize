@@ -14,9 +14,6 @@ use HDNET\Calendarize\Hooks\ProcessDatamapClass;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
-use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
 
