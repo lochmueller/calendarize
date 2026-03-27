@@ -9,6 +9,7 @@ use HDNET\Calendarize\Service\FlexFormService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
+use TYPO3\CMS\Core\Domain\FlexFormFieldValues;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
 
@@ -30,10 +31,14 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $this->flexFormService->load($record['pi_flexform'] ?? '');
-        if (!$this->flexFormService->isValid()) {
+        if (!isset($record['pi_flexform'])) {
             return;
         }
+
+        /** @var FlexFormFieldValues $flexFormFieldValues */
+        $flexFormFieldValues = $record['pi_flexform'];
+
+        $flexFormFieldValues->toArray();
 
         $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
