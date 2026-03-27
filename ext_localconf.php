@@ -215,11 +215,4 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'priority' => 40,
         'class' => CalendarizeInfoElement::class,
     ];
-
-    if (GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() <= 12) {
-        // Include new content elements to modWizards
-        ExtensionManagementUtility::addPageTSConfig('
-            @import \'EXT:calendarize/Configuration/page.tsconfig\'
-        ');
-    }
 })();

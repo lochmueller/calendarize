@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 #[UpgradeWizard('calendarize_pluginUpdater')]
@@ -42,8 +41,7 @@ class PluginUpdater extends AbstractUpdate
     public function __construct(
         protected readonly QueryBuilder $contentElementsQueryBuilder,
         protected readonly QueryBuilder $backendGroupsQueryBuilder,
-        protected readonly FlexFormTools $flexFormTools,
-        protected readonly FlexFormService $flexFormService,
+        protected readonly FlexFormTools $flexFormTools
     ) {}
 
     /**
@@ -66,7 +64,7 @@ class PluginUpdater extends AbstractUpdate
         $this->output->writeln('Start migration of ' . \count($contentElements) . ' plugins.');
 
         foreach ($contentElements as $contentElement) {
-            $flexForm = $this->flexFormService->convertFlexFormContentToArray($contentElement['pi_flexform']);
+            $flexForm = $this->flexFormTools->convertFlexFormContentToArray($contentElement['pi_flexform']);
             $newListType = $this->getNewListType($flexForm['switchableControllerActions'] ?? '');
             $flexFormData = $this->removeFlexFormSettingsNotForListType($contentElement, $newListType);
 

@@ -8,7 +8,7 @@ use HDNET\Calendarize\Features\FeedInterface;
 use HDNET\Calendarize\Features\KeSearchIndexInterface;
 use HDNET\Calendarize\Features\SpeakingUrlInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;

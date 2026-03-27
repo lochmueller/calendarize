@@ -8,7 +8,7 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\AbstractBookingRequest;
 use HDNET\Calendarize\Validation\Validator\BookingRequestValidator;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute as Extbase;
 
 /**
  * BookingController.

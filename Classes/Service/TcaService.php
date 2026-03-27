@@ -53,7 +53,7 @@ class TcaService extends AbstractService
         // base title
         $table = $params['table'];
         unset($GLOBALS['TCA'][$table]['ctrl']['label_userFunc']);
-        $params['title'] = BackendUtility::getRecordTitle($table, $params['row']);
+        $params['title'] = $params['row']['title'];
         $GLOBALS['TCA'][$table]['ctrl']['label_userFunc'] = self::class . '->eventTitle';
 
         // base record

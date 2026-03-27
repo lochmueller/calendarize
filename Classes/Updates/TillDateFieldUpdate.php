@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 
 #[UpgradeWizard('calendarize_tillDateFieldUpdate')]
 class TillDateFieldUpdate extends DateFieldUpdate

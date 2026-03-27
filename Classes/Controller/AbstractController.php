@@ -14,6 +14,7 @@ use HDNET\Calendarize\Property\TypeConverter\AbstractBookingRequest;
 use HDNET\Calendarize\Service\PluginConfigurationService;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -21,7 +22,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
@@ -125,7 +125,7 @@ abstract class AbstractController extends ActionController
         if (isset($this->feedFormats[$request->getFormat()])) {
             if ($request->hasArgument('hmac')) {
                 $hmac = $request->getArgument('hmac');
-                if ($this->validatePluginHmac($hmac)) {
+                if ($this->validatePluginHmac($hmac, $this->request->getControllerActionName())) {
                     $this->setHeadersAndExit(
                         $response,
                         $this->feedFormats[$request->getFormat()],
@@ -194,7 +194,7 @@ abstract class AbstractController extends ActionController
     {
         // use this variable in your extension to add more custom variables
         $variables['extended'] = [];
-        $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
+        $variables['extended']['pluginHmac'] = $this->calculatePluginHmac($this->request->getControllerActionName());
         $variables['settings'] = $this->settings;
         $variables['contentObject'] = $this->request->getAttribute('currentContentObject')->data;
 
@@ -223,7 +223,7 @@ abstract class AbstractController extends ActionController
                 'delay' => 0,
                 'statusCode' => 301,
             ];
-            $variables['extended']['pluginHmac'] = $this->calculatePluginHmac();
+            $variables['extended']['pluginHmac'] = $this->calculatePluginHmac($this->request->getControllerActionName());
             $variables['settings'] = $this->settings;
         }
 
@@ -260,26 +260,36 @@ abstract class AbstractController extends ActionController
      *
      * @see HashService::generateHmac
      */
-    protected function calculatePluginHmac(): string
+    protected function calculatePluginHmac(string $context = 'default'): string
     {
+        /* Generate a secret that is unique per context */
+        $contentObject = $this->request->getAttribute('currentContentObject');
+        $uid = $contentObject ? (string)$contentObject->data['uid'] : '0';
+        $additionalSecret = $uid . $context;
+
         $string = $this->getStringForPluginHmac();
 
         $hashService = GeneralUtility::makeInstance(HashService::class);
 
-        return $hashService->generateHmac($string);
+        return $hashService->hmac($string, $additionalSecret);
     }
 
     /**
      * @see HashService::validateHmac
      */
-    protected function validatePluginHmac(string $hmac): bool
+    protected function validatePluginHmac(string $hmac, string $context = 'default'): bool
     {
+        /* Generate a secret that is unique per context */
+        $contentObject = $this->request->getAttribute('currentContentObject');
+        $uid = $contentObject ? (string)$contentObject->data['uid'] : '0';
+        $additionalSecret = $uid . $context;
+
         $string = $this->getStringForPluginHmac();
 
         /** @var HashService $hashService */
         $hashService = GeneralUtility::makeInstance(HashService::class);
 
-        return $hashService->validateHmac($string, $hmac);
+        return $hashService->validateHmac($string, $additionalSecret, $hmac);
     }
 
     /**
