@@ -7,11 +7,11 @@ namespace HDNET\Calendarize\Tests\Functional\Domain\Repository;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Service\IndexerService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspect;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class IndexRepositoryTest extends FunctionalTestCase

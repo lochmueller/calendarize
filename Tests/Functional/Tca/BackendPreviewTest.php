@@ -32,12 +32,12 @@ class BackendPreviewTest extends AbstractFunctionalTestCase
         $resultWorkspace = $this->rawIndexRepository->findNextEvents('tx_calendarize_domain_model_event', 1, 5, 91);
 
         self::assertCount(2, $resultLive, 'Live count');
-        self::assertEquals('2026-04-01', $resultLive[0]['start_date'], 'Live start_date 1');
-        self::assertEquals('2026-04-29', $resultLive[1]['start_date'], 'Live start_date 2');
+        self::assertEquals('2030-04-01', $resultLive[0]['start_date'], 'Live start_date 1');
+        self::assertEquals('2030-04-29', $resultLive[1]['start_date'], 'Live start_date 2');
 
         self::assertCount(3, $resultWorkspace, 'Workspace count');
-        self::assertEquals('2026-04-13', $resultWorkspace[0]['start_date'], 'Workspace start_date 1');
-        self::assertEquals('2026-04-16', $resultWorkspace[1]['start_date'], 'Workspace start_date 2');
-        self::assertEquals('2026-04-29', $resultWorkspace[2]['start_date'], 'Workspace start_date 3');
+        self::assertEquals('2030-04-13', $resultWorkspace[0]['start_date'], 'Workspace start_date 1');
+        self::assertEquals('2030-04-16', $resultWorkspace[1]['start_date'], 'Workspace start_date 2');
+        self::assertEquals('2030-04-29', $resultWorkspace[2]['start_date'], 'Workspace start_date 3');
     }
 }

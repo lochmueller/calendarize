@@ -15,7 +15,7 @@ abstract class AbstractViewHelperTestCase extends FunctionalTestCase
     protected array $testExtensionsToLoad = ['typo3conf/ext/calendarize'];
     protected bool $initializeDatabase = false;
 
-    protected function renderTemplate(string $template, array $variables = []): string
+    protected function renderTemplate(string $template, array $variables = []): mixed
     {
         $renderingContext = GeneralUtility::makeInstance(RenderingContextFactory::class)->create();
         $renderingContext->getTemplatePaths()->setTemplateSource($template);

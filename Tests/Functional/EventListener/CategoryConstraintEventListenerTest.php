@@ -8,10 +8,10 @@ use HDNET\Calendarize\Domain\Model\PluginConfiguration;
 use HDNET\Calendarize\Event\IndexRepositoryDefaultConstraintEvent;
 use HDNET\Calendarize\EventListener\CategoryConstraintEventListener;
 use HDNET\Calendarize\Register;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class CategoryConstraintEventListenerTest extends FunctionalTestCase

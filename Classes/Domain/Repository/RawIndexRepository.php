@@ -118,7 +118,7 @@ class RawIndexRepository extends AbstractRawRepository
             array_filter(
                 $result,
                 static function ($item) {
-                    return \is_array($item) && VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
+                    return \is_array($item) && VersionState::tryFrom((int)($item['t3ver_state'] ?? 0)) !== VersionState::DELETE_PLACEHOLDER;
                 },
             ),
         );

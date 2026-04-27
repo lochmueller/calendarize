@@ -12,8 +12,14 @@ The extension use PHP CS Fixer & PHP Unit in tooling. Please run "composer code-
 
 More tooling will be added shortly.
 
+## Unit tests
+
+Run `composer code-test`
+
 ## Functional tests
 
-Docker is required. Please run:
+Run the functional tests locally with SQLite:
 
-`./Build/Scripts/runTests.sh -s functional`
+```bash
+typo3DatabaseDriver=pdo_sqlite php -d memory_limit=-1 .Build/bin/phpunit --configuration=Tests/Functional/Build/FunctionalTests.xml
+```

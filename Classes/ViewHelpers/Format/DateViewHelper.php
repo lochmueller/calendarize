@@ -68,8 +68,7 @@ class DateViewHelper extends AbstractViewHelper
             $format = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?: 'Y-m-d';
         }
 
-        // @todo check
-        $date = $renderChildrenClosure();
+        $date = $this->arguments['date'] ?? $this->renderChildren();
         if (null === $date) {
             return '';
         }
@@ -95,8 +94,7 @@ class DateViewHelper extends AbstractViewHelper
             }
         }
 
-        // Add this line
-        if ($arguments['resetTimeZone']) {
+        if ($this->arguments['resetTimeZone']) {
             $date = new \DateTime($date->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
         }
 

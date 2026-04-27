@@ -128,7 +128,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
 
         $workspace = isset($rawRecord['t3ver_wsid']) ? (int)$rawRecord['t3ver_wsid'] : 0;
 
-        if (VersionState::DELETE_PLACEHOLDER === ($rawRecord['t3ver_state'] ?? false)) {
+        if (VersionState::tryFrom((int)($rawRecord['t3ver_state'] ?? 0)) === VersionState::DELETE_PLACEHOLDER) {
             // Remove all entries in current workspace that are related to the current item
             $this->rawIndexRepository->deleteByIdentifier([
                 't3ver_wsid' => $workspace,
@@ -160,7 +160,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid);
 
             foreach ($liveItems as $liveItem) {
-                $liveItem['t3ver_state'] = VersionState::DELETE_PLACEHOLDER;
+                $liveItem['t3ver_state'] = VersionState::DELETE_PLACEHOLDER->value;
                 $liveItem['t3ver_oid'] = $liveItem['uid'];
                 $liveItem['t3ver_wsid'] = $workspace;
                 unset($liveItem['uid']);
@@ -185,7 +185,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         if ($workspace) {
             // Placeholder are respect in function updateIndex
             $currentItems = array_filter($currentItems, static function ($item) {
-                return VersionState::DELETE_PLACEHOLDER !== ($item['t3ver_state'] ?? false);
+                return VersionState::tryFrom((int)($item['t3ver_state'] ?? 0)) !== VersionState::DELETE_PLACEHOLDER;
             });
         }
 
@@ -230,7 +230,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         foreach ($neededItems as $item) {
             if ($workspace) {
                 $item['t3ver_oid'] = 0;
-                $item['t3ver_state'] = VersionState::NEW_PLACEHOLDER;
+                $item['t3ver_state'] = VersionState::NEW_PLACEHOLDER->value;
             }
 
             $item['slug'] = $this->slugService->makeSlugUnique($item, $i);

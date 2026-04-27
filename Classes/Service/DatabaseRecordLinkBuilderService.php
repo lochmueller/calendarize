@@ -34,7 +34,7 @@ class DatabaseRecordLinkBuilderService
                 'Indices not found for "' . ($linkDetails['typoLinkParameter'] ?? '') . '", so "' . $linkText . '" was not linked.',
                 1699909349,
                 null,
-                $linkText
+                $linkText,
             );
         }
 
