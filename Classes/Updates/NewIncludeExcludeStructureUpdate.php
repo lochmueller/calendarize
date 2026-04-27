@@ -6,7 +6,7 @@ namespace HDNET\Calendarize\Updates;
 
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\HelperUtility;
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 #[UpgradeWizard('calendarize_newIncludeExcludeStructureUpdate')]

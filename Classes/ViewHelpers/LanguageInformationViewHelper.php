@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Backend\Configuration\TranslationConfigurationProvider;
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -54,7 +54,7 @@ class LanguageInformationViewHelper extends AbstractViewHelper
         $title = htmlspecialchars($sysLanguages[$langUid]['title']);
         if ($sysLanguages[$langUid]['flagIcon']) {
             $out .= '<span title="' . $title . '">'
-                . $iconFactory->getIcon($sysLanguages[$langUid]['flagIcon'], Icon::SIZE_SMALL)->render()
+                . $iconFactory->getIcon($sysLanguages[$langUid]['flagIcon'], IconSize::SMALL)->render()
                 . '</span>&nbsp;';
         }
         $out .= $title;

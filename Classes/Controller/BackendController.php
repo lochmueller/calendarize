@@ -7,7 +7,7 @@ namespace HDNET\Calendarize\Controller;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Register;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Backend\Attribute\Controller;
+use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 /**
  * BackendController.
  */
-#[Controller]
+#[AsController]
 class BackendController extends AbstractController
 {
     protected LanguageService $languageService;

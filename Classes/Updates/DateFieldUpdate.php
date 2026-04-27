@@ -7,9 +7,9 @@ namespace HDNET\Calendarize\Updates;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Types\DateType;
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 
 #[UpgradeWizard('calendarize_dateFieldUpdate')]
 class DateFieldUpdate extends AbstractUpdate

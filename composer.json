@@ -1,7 +1,48 @@
 {
 	"name": "lochmueller/calendarize",
-	"type": "typo3-cms-extension",
 	"description": "Create a structure for timely controlled tables (e.g. events) and one plugin for the different output of calendar views (list, detail, month, year, day, week...). The extension is shipped with one default event table, but you can also 'calendarize' your own table/model. It is completely independent and configurable! Use your own models as event items in this calender. Development on https://github.com/lochmueller/calendarize",
+	"license": "GPL-2.0-or-later",
+	"type": "typo3-cms-extension",
+	"keywords": [
+		"TYPO3 CMS",
+		"Calendarize",
+		"Calendar"
+	],
+	"authors": [
+		{
+			"name": "Tim Lochmüller",
+			"email": "webmaster@fruit-lab.de",
+			"homepage": "https://github.com/lochmueller",
+			"role": "Developer"
+		}
+	],
+	"homepage": "https://github.com/lochmueller/calendarize",
+	"support": {
+		"issues": "https://github.com/lochmueller/calendarize/issues"
+	},
+	"require": {
+		"php": "^8.2",
+		"ext-json": "*",
+		"ext-pdo": "*",
+		"sabre/vobject": "^4.2",
+		"typo3/cms-core": "^13.4 || ^14.1"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "^3.0",
+		"phpmd/phpmd": "^2.4",
+		"phpstan/phpstan": "^2.0",
+		"typo3/cms-dashboard": "^13.4 || ^14.1",
+		"typo3/cms-install": "^13.4 || ^14.1",
+		"typo3/cms-workspaces": "^13.4 || ^14.1",
+		"typo3/testing-framework": "^8.0 || ^9.4"
+	},
+	"replace": {
+		"typo3-ter/calendarize": "self.version"
+	},
+	"suggest": {
+		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience",
+		"typo3/cms-dashboard": "Dashboard widgets"
+	},
 	"repositories": [
 		{
 			"type": "composer",
@@ -19,79 +60,40 @@
 			"HDNET\\Calendarize\\Tests\\": "Tests"
 		}
 	},
-	"keywords": [
-		"TYPO3 CMS",
-		"Calendarize",
-		"Calendar"
-	],
-	"authors": [
-		{
-			"name": "Tim Lochmüller",
-			"email": "webmaster@fruit-lab.de",
-			"role": "Developer",
-			"homepage": "https://github.com/lochmueller"
-		}
-	],
-	"require": {
-		"php": "^8.2",
-		"ext-json": "*",
-		"ext-pdo": "*",
-		"typo3/cms-core": "^12.4 || ^13.4 || ^14",
-		"sabre/vobject": "^4.2"
-	},
-	"replace": {
-		"typo3-ter/calendarize": "self.version"
-	},
-	"homepage": "https://github.com/lochmueller/calendarize",
-	"license": "GPL-2.0-or-later",
-	"support": {
-		"issues": "https://github.com/lochmueller/calendarize/issues"
-	},
-	"suggest": {
-		"brotkrueml/schema": "Output of structured data information for better Google Search Result User Experience",
-		"typo3/cms-dashboard": "Dashboard widgets"
-	},
-	"require-dev": {
-		"typo3/testing-framework": "^8.0",
-		"typo3/cms-install": "^12.4 || ^13.4 || ^14",
-		"typo3/cms-workspaces": "^12.4 || ^13.4 || ^14",
-		"typo3/cms-dashboard": "^12.4 || ^13.4 || ^14",
-		"friendsofphp/php-cs-fixer": "^3.0",
-		"phpmd/phpmd": "^2.4",
-		"phpstan/phpstan": "^2.0"
-	},
 	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin",
 		"allow-plugins": {
-			"typo3/cms-composer-installers": true,
-			"typo3/class-alias-loader": true
-		}
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		},
+		"bin-dir": ".Build/bin",
+		"vendor-dir": ".Build/vendor"
 	},
 	"extra": {
-		"typo3/cms": {
-			"extension-key": "calendarize",
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"web-dir": ".Build/Web",
-			"Package": {
-				"partOfMinimalUsableSystem": true
-			}
-		},
 		"branch-alias": {
 			"dev-master": "13.x-dev"
+		},
+		"typo3/cms": {
+			"Package": {
+				"partOfMinimalUsableSystem": true
+			},
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"extension-key": "calendarize",
+			"web-dir": ".Build/Web"
 		}
 	},
 	"scripts": {
 		"post-autoload-dump": [
 			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
 		],
+		"code-check": [
+			"@tool:php-cs-fixer-check",
+			"@tool:phpstan"
+		],
 		"code-fix": [
 			"@tool:php-cs-fixer"
 		],
-		"code-check": [
-			"@tool:php-cs-fixer-check",
-			"@tool:phpunit",
-			"@tool:phpstan"
+		"code-test": [
+			"@tool:phpunit"
 		],
 		"tool:php-cs-fixer": [
 			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
@@ -99,20 +101,20 @@
 		"tool:php-cs-fixer-check": [
 			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php --dry-run --diff"
 		],
+		"tool:phpdoc": [
+			"docker run --rm -v $(pwd):/data phpdoc/phpdoc -d Classes -t .Build/phpdoc"
+		],
+		"tool:phpstan": [
+			"phpstan analyse -c phpstan.neon --memory-limit=1G"
+		],
 		"tool:phpunit": [
 			"phpunit --configuration=Tests/Unit/Build/UnitTests.xml"
 		],
 		"tool:phpunit:functional": [
 			"phpunit --configuration=Tests/Functional/Build/FunctionalTests.xml"
 		],
-		"tool:phpdoc": [
-			"docker run --rm -v $(pwd):/data phpdoc/phpdoc -d Classes -t .Build/phpdoc"
-		],
 		"tool:rector": [
 			"docker run --rm --volume $PWD:/app --user $(id -u):$(id -g) ghcr.io/sabbelasichon/typo3-rector process --config=Resources/Private/Build/Rector.php"
-		],
-		"tool:phpstan": [
-			"phpstan analyse -c phpstan.neon --memory-limit=1G"
 		]
 	}
 }

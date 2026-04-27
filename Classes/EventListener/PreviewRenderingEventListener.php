@@ -9,11 +9,9 @@ use HDNET\Calendarize\Service\FlexFormService;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
-use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Domain\FlexFormFieldValues;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
-use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Provides backend preview for calendarize plugins.
@@ -28,22 +26,28 @@ class PreviewRenderingEventListener
 
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
-        $record = $event->getRecord()->toArray();
-        if (!str_starts_with($record['CType'] ?? '', 'calendarize_')) {
+        $record = $event->getRecord();
+
+        /* keep v13 compatibility */
+        if (!is_array($record)) {
+            $record = $record->toArray();
+        }
+
+        /* keep v13 compatibility */
+        $listTypeField = isset($record['list_type']) ? 'list_type' : 'CType';
+
+        if (!str_starts_with($record[$listTypeField] ?? '', 'calendarize_')) {
             return;
         }
 
-        $this->flexFormService->load($record['pi_flexform'] ?? '');
-        if (!$this->flexFormService->isValid()) {
+        if (!isset($record['pi_flexform'])) {
             return;
         }
 
-        $iconSize = GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() <= 12 ? Icon::SIZE_SMALL : IconSize::SMALL;
-
-        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', $iconSize)->render();
+        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
         $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
 
-        $listType = explode('_', $record['list_type'], 2)[1] ?? '';
+        $listType = explode('_', $record[$listTypeField], 2)[1] ?? '';
         $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $listType));
 
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');

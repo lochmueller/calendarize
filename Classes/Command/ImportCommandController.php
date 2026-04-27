@@ -136,8 +136,10 @@ class ImportCommandController extends Command
         $io->text('Dispatched ' . $dispatchCount . ' Events');
         $io->text('Skipped ' . $skipCount . ' Events');
 
-        $io->section('Run Reindex process after import');
-        $this->indexerService->reindexAll();
+        if ($dispatchCount > 0) {
+            $io->section('Run Reindex process after import');
+            $this->indexerService->reindexAll();
+        }
 
         return self::SUCCESS;
     }

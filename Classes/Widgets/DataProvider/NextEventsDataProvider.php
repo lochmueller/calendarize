@@ -8,14 +8,16 @@ use HDNET\Calendarize\Domain\Model\Index;
 use HDNET\Calendarize\Domain\Model\Request\OptionRequest;
 use HDNET\Calendarize\Domain\Repository\IndexRepository;
 use HDNET\Calendarize\Utility\DateTimeUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3Fluid\Fluid\View\ViewInterface;
 
 class NextEventsDataProvider implements ListDataProviderInterface
 {
     public function __construct(
         protected IndexRepository $indexRepository,
+        protected ViewFactoryInterface $viewFactory,
     ) {}
 
     public function getItems(): array
@@ -29,16 +31,21 @@ class NextEventsDataProvider implements ListDataProviderInterface
 
         return array_map(function (Index $index) {
             try {
-                /** @var StandaloneView $standaloneView */
-                $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
-                $standaloneView->setPartialRootPaths([
-                    'EXT:calendarize/Resources/Private/Partials/',
-                    'EXT:calendarize_premium/Resources/Private/Partials/',
-                ]);
+                $viewFactoryData = new ViewFactoryData(
+                    [],
+                    [
+                        'EXT:calendarize/Resources/Private/Partials/',
+                        'EXT:calendarize_premium/Resources/Private/Partials/',
+                    ],
+                    [],
+                );
+
+                /** @var ViewInterface $view */
+                $view = $this->viewFactory->create($viewFactoryData);
 
                 $titlePartial = $index->getConfiguration()['partialIdentifier'] . '/Title';
 
-                return $standaloneView->renderPartial($titlePartial, null, ['index' => $index]);
+                return $view->renderPartial($titlePartial, null, ['index' => $index]);
             } catch (\Exception $exception) {
                 return $exception->getMessage();
             }

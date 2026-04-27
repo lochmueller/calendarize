@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -34,13 +33,11 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerUniversalTagAttributes();
-        $this->registerTagAttribute('target', 'string', 'Target of link', false);
-        $this->registerTagAttribute(
+        $this->registerArgument('target', 'string', 'Target of link');
+        $this->registerArgument(
             'rel',
             'string',
             'Specifies the relationship between the current document and the linked document',
-            false,
         );
     }
 
@@ -97,12 +94,12 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         return $this->getRequest()->getAttribute('routing')->getPageId() ?? 0;
     }
 
-    protected function getRequest(): RequestInterface
+    protected function getRequest(): ?ServerRequestInterface
     {
-        /** @var RenderingContext $renderingContext */
-        $renderingContext = $this->renderingContext;
-        /** @var RequestInterface $request */
-        $request = $renderingContext->getRequest();
+        $request = null;
+        if ($this->renderingContext->hasAttribute(ServerRequestInterface::class)) {
+            $request = $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        }
 
         return $request;
     }

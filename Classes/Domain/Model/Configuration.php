@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Attribute as Extbase;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -203,7 +203,7 @@ class Configuration extends AbstractModel implements ConfigurationInterface
      */
     public function getGroups(): ObjectStorage
     {
-        return $this->groups ?? new ObjectStorage();
+        return $this->groups;
     }
 
     /**

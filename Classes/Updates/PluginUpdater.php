@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Updates;
 
+use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Service\FlexFormService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
 #[UpgradeWizard('calendarize_pluginUpdater')]
@@ -43,7 +42,6 @@ class PluginUpdater extends AbstractUpdate
         protected readonly QueryBuilder $contentElementsQueryBuilder,
         protected readonly QueryBuilder $backendGroupsQueryBuilder,
         protected readonly FlexFormTools $flexFormTools,
-        protected readonly FlexFormService $flexFormService,
     ) {}
 
     /**
@@ -66,7 +64,7 @@ class PluginUpdater extends AbstractUpdate
         $this->output->writeln('Start migration of ' . \count($contentElements) . ' plugins.');
 
         foreach ($contentElements as $contentElement) {
-            $flexForm = $this->flexFormService->convertFlexFormContentToArray($contentElement['pi_flexform']);
+            $flexForm = $this->flexFormTools->convertFlexFormContentToArray($contentElement['pi_flexform']);
             $newListType = $this->getNewListType($flexForm['switchableControllerActions'] ?? '');
             $flexFormData = $this->removeFlexFormSettingsNotForListType($contentElement, $newListType);
 
@@ -163,7 +161,7 @@ class PluginUpdater extends AbstractUpdate
         $spaceInd = 4;
         $output = GeneralUtility::array2xml($input, '', 0, 'T3FlexForms', $spaceInd, $options);
 
-        return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . LF . $output;
+        return '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>' . "\n" . $output;
     }
 
     protected function updateContentElement(int $uid, string $newListType, string $flexform): void

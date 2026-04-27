@@ -7,7 +7,6 @@ namespace HDNET\Calendarize\ViewHelpers\Format;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
@@ -69,6 +68,7 @@ class DateViewHelper extends AbstractViewHelper
             $format = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] ?: 'Y-m-d';
         }
 
+        // @todo check
         $date = $renderChildrenClosure();
         if (null === $date) {
             return '';

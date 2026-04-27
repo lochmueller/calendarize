@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers;
 
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-
 /**
  * Checks if an element (needle) is in an array (haystack).
  */

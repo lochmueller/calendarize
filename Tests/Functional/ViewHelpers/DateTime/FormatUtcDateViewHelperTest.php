@@ -33,6 +33,8 @@ class FormatUtcDateViewHelperTest extends AbstractViewHelperTestCase
     public function testDateIsUtcTimezone(\DateTimeInterface|string $date, string $expected): void
     {
         date_default_timezone_set('Europe/Moscow');
+
+        // @todo Call viewHelper without rendering a template
         $view = new StandaloneView();
         $template = '{namespace c=HDNET\Calendarize\ViewHelpers}' .
             '<c:dateTime.formatUtcDate date="{date}" format="Ymd\THis\Z" />';
