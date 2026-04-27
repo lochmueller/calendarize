@@ -14,6 +14,7 @@ use HDNET\Calendarize\Hooks\ProcessDatamapClass;
 use HDNET\Calendarize\Register;
 use HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
 
@@ -195,7 +196,9 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = DatabaseRecordLinkBuilder::class;
+    if ((new Typo3Version())->getMajorVersion() < 14) {
+        $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = DatabaseRecordLinkBuilder::class;
+    }
 
     // hooks
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration']['calendarize'] =

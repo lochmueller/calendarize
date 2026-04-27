@@ -128,10 +128,13 @@ class TcaService extends AbstractService
         $title = '';
         if ($row['start_date']) {
             try {
-                $dateStart = BackendUtility::date((new \DateTime($row['start_date']))->getTimestamp());
-                $dateEnd = BackendUtility::date(
-                    (new \DateTime($row['end_date'] ?: $row['start_date']))->getTimestamp(),
-                );
+                $dateStart = BackendUtility::date((is_string($row['start_date']) ? new \DateTime($row['start_date']) : $row['start_date'])->getTimestamp());
+                if ($row['end_date']) {
+                    $dateEnd = BackendUtility::date((is_string($row['end_date']) ? new \DateTime($row['end_date']) : $row['end_date'])->getTimestamp());
+                } else {
+                    $dateEnd = $dateStart;
+                }
+
                 $title .= $dateStart;
                 if ($dateStart !== $dateEnd) {
                     $title .= ' - ' . $dateEnd;
@@ -142,11 +145,11 @@ class TcaService extends AbstractService
         if ($row['all_day']) {
             $title .= ' ' . TranslateUtility::get('tx_calendarize_domain_model_index.all_day');
         } elseif ($row['start_time']) {
-            $title .= ' <br />' . BackendUtility::time($row['start_time'] % DateTimeUtility::SECONDS_DAY, false);
+            $title .= ' <br />' . BackendUtility::time(($row['start_time'] instanceOf \DateTimeImmutable ? $row['start_time']->getTimestamp() : $row['start_time']) % DateTimeUtility::SECONDS_DAY, false);
             if ($row['open_end_time']) {
                 $title .= ' - ' . TranslateUtility::get('open_end');
             } else {
-                $title .= ' - ' . BackendUtility::time($row['end_time'] % DateTimeUtility::SECONDS_DAY, false);
+                $title .= ' - ' . BackendUtility::time(($row['end_time'] instanceOf \DateTimeImmutable ? $row['end_time']->getTimestamp() : $row['end_time']) % DateTimeUtility::SECONDS_DAY, false);
             }
         }
         if ($row['frequency'] && ConfigurationInterface::FREQUENCY_NONE !== $row['frequency']) {
