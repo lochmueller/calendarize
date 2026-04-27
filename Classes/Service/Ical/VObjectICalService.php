@@ -37,7 +37,7 @@ class VObjectICalService extends AbstractService implements ICalServiceInterface
         /** @var VEvent[] $events */
         $events = [];
 
-        foreach ($vcalendar->VEVENT as $event) {
+        foreach (($vcalendar->VEVENT ?? []) as $event) {
             $events[] = new VObjectEventAdapter($event);
         }
 
