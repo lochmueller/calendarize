@@ -14,7 +14,6 @@ use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 
 class HandleLinksListener
 {
-
     #[AsEventListener(
         identifier: 'calendarizeHandleLinks',
     )]

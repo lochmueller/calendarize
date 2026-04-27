@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Tests\Functional\ViewHelpers;
 
-use TYPO3\CMS\Fluid\View\StandaloneView;
-
 /**
  * Check if a date is lower.
  */
@@ -19,17 +17,13 @@ class IfDateLowerViewHelperTest extends AbstractViewHelperTestCase
      */
     public function testValidCheck($base, $check, $expected): void
     {
-        $view = new StandaloneView();
         $template = '{namespace c=HDNET\Calendarize\ViewHelpers}' .
             '<c:ifDateLower base="{base}" check="{check}" />';
 
-        $view->setTemplateSource($template);
-        $view->assignMultiple([
+        self::assertEquals($expected, $this->renderTemplate($template, [
             'base' => $base,
             'check' => new \DateTime($check),
-        ]);
-
-        self::assertEquals($expected, $view->render());
+        ]));
     }
 
     public static function validCheckDataProvider(): \Generator

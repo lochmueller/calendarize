@@ -27,8 +27,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Calendar.
@@ -121,15 +119,14 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function latestAction(
-        ?Index     $index = null,
+        ?Index $index = null,
         ?\DateTime $startDate = null,
         ?\DateTime $endDate = null,
-        array      $customSearch = [],
-        int        $year = 0,
-        int        $month = 0,
-        int        $week = 0,
-    ): ResponseInterface
-    {
+        array $customSearch = [],
+        int $year = 0,
+        int $month = 0,
+        int $week = 0,
+    ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
@@ -163,15 +160,14 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function resultAction(
-        ?Index     $index = null,
+        ?Index $index = null,
         ?\DateTime $startDate = null,
         ?\DateTime $endDate = null,
-        array      $customSearch = [],
-        int        $year = 0,
-        int        $month = 0,
-        int        $week = 0,
-    ): ResponseInterface
-    {
+        array $customSearch = [],
+        int $year = 0,
+        int $month = 0,
+        int $week = 0,
+    ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
@@ -205,16 +201,15 @@ class CalendarController extends AbstractController
     #[Extbase\IgnoreValidation(['argumentName' => 'endDate'])]
     #[Extbase\IgnoreValidation(['argumentName' => 'customSearch'])]
     public function listAction(
-        ?Index     $index = null,
+        ?Index $index = null,
         ?\DateTime $startDate = null,
         ?\DateTime $endDate = null,
-        array      $customSearch = [],
-        int        $year = 0,
-        int        $month = 0,
-        int        $day = 0,
-        int        $week = 0,
-    ): ResponseInterface
-    {
+        array $customSearch = [],
+        int $year = 0,
+        int $month = 0,
+        int $day = 0,
+        int $week = 0,
+    ): ResponseInterface {
         $this->checkStaticTemplateIsIncluded();
         if (($index instanceof Index) && \in_array('detail', $this->getAllowedActions(), true)) {
             return new ForwardResponse('detail');
@@ -274,10 +269,9 @@ class CalendarController extends AbstractController
      * Past action.
      */
     public function pastAction(
-        int    $limit = 100,
+        int $limit = 100,
         string $sort = 'ASC',
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         if ($this->request->hasArgument('format')) {
             if ('html' != $this->request->getArgument('format')) {
                 return $this->return404Page();
@@ -553,7 +547,7 @@ class CalendarController extends AbstractController
             ['calendarize_detail', 'calendarize_index_' . $index->getUid(), 'calendarize_'
                 . lcfirst($uniqueRegisterKey)
                 . '_'
-                . $originalObject->getUid(),],
+                . $originalObject->getUid(), ],
         );
 
         // Meta tags
@@ -609,9 +603,8 @@ class CalendarController extends AbstractController
     public function searchAction(
         ?\DateTime $startDate = null,
         ?\DateTime $endDate = null,
-        array      $customSearch = [],
-    ): ResponseInterface
-    {
+        array $customSearch = [],
+    ): ResponseInterface {
         $this->addCacheTags(['calendarize_search']);
 
         $baseDate = DateTimeUtility::getNow();
@@ -678,13 +671,12 @@ class CalendarController extends AbstractController
     protected function determineSearch(
         ?\DateTime $startDate = null,
         ?\DateTime $endDate = null,
-        array      $customSearch = [],
-        int        $year = 0,
-        int        $month = 0,
-        int        $day = 0,
-        int        $week = 0,
-    ): array
-    {
+        array $customSearch = [],
+        int $year = 0,
+        int $month = 0,
+        int $day = 0,
+        int $week = 0,
+    ): array {
         $searchMode = false;
         [$startDate, $endDate] = $this->checkWrongDateOrder($startDate, $endDate);
         if ($startDate || $endDate || $this->hasCustomSearch($customSearch)) {

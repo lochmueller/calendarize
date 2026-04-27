@@ -145,11 +145,11 @@ class TcaService extends AbstractService
         if ($row['all_day']) {
             $title .= ' ' . TranslateUtility::get('tx_calendarize_domain_model_index.all_day');
         } elseif ($row['start_time']) {
-            $title .= ' <br />' . BackendUtility::time(($row['start_time'] instanceOf \DateTimeImmutable ? $row['start_time']->getTimestamp() : $row['start_time']) % DateTimeUtility::SECONDS_DAY, false);
+            $title .= ' <br />' . BackendUtility::time(($row['start_time'] instanceof \DateTimeImmutable ? $row['start_time']->getTimestamp() : $row['start_time']) % DateTimeUtility::SECONDS_DAY, false);
             if ($row['open_end_time']) {
                 $title .= ' - ' . TranslateUtility::get('open_end');
             } else {
-                $title .= ' - ' . BackendUtility::time(($row['end_time'] instanceOf \DateTimeImmutable ? $row['end_time']->getTimestamp() : $row['end_time']) % DateTimeUtility::SECONDS_DAY, false);
+                $title .= ' - ' . BackendUtility::time(($row['end_time'] instanceof \DateTimeImmutable ? $row['end_time']->getTimestamp() : $row['end_time']) % DateTimeUtility::SECONDS_DAY, false);
             }
         }
         if ($row['frequency'] && ConfigurationInterface::FREQUENCY_NONE !== $row['frequency']) {

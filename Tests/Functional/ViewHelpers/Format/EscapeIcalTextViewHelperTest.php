@@ -1,28 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Tests\Functional\ViewHelpers\Format;
 
 use HDNET\Calendarize\Tests\Functional\ViewHelpers\AbstractViewHelperTestCase;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class EscapeIcalTextViewHelperTest extends AbstractViewHelperTestCase
 {
     /**
      * @dataProvider textEscapeDataProvider
-     *
-     * @param string $value
-     * @param string $expected
      */
     public function testTextEscape(string $value, string $expected): void
     {
-        $view = new StandaloneView();
         $template = '{namespace c=HDNET\Calendarize\ViewHelpers}' .
             '{value -> c:format.escapeIcalText()}';
 
-        $view->setTemplateSource($template);
-        $view->assign('value', $value);
-
-        self::assertEquals($expected, $view->render());
+        self::assertEquals($expected, $this->renderTemplate($template, ['value' => $value]));
     }
 
     public static function textEscapeDataProvider(): \Generator

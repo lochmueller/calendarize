@@ -1,15 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Calendarize\Tests\Functional\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Tests\Functional\ViewHelpers\AbstractViewHelperTestCase;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class FormatUtcDateViewHelperTest extends AbstractViewHelperTestCase
 {
-    /**
-     * @var string Backup of current timezone, it is manipulated in tests
-     */
     protected string $timezone;
 
     protected function setUp(): void
@@ -26,23 +24,15 @@ class FormatUtcDateViewHelperTest extends AbstractViewHelperTestCase
 
     /**
      * @dataProvider dateIsUtcTimezoneDataProvider
-     *
-     * @param \DateTimeInterface|string $date
-     * @param string                    $expected
      */
     public function testDateIsUtcTimezone(\DateTimeInterface|string $date, string $expected): void
     {
         date_default_timezone_set('Europe/Moscow');
 
-        // @todo Call viewHelper without rendering a template
-        $view = new StandaloneView();
         $template = '{namespace c=HDNET\Calendarize\ViewHelpers}' .
             '<c:dateTime.formatUtcDate date="{date}" format="Ymd\THis\Z" />';
 
-        $view->setTemplateSource($template);
-        $view->assign('date', $date);
-
-        self::assertEquals($expected, $view->render());
+        self::assertEquals($expected, $this->renderTemplate($template, ['date' => $date]));
     }
 
     public static function dateIsUtcTimezoneDataProvider(): \Generator
