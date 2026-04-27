@@ -17,7 +17,7 @@ use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 /**
  * DatabaseRecordLinkBuilder.
  */
-class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
+readonly class DatabaseRecordLinkBuilder extends BaseDatabaseRecordLinkBuilderAlias
 {
     public function build(array &$linkDetails, string $linkText, string $target, array $conf): LinkResultInterface
     {
