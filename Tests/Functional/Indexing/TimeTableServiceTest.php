@@ -10,6 +10,7 @@ use HDNET\Calendarize\Domain\Repository\ConfigurationRepository;
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Service\TimeTableService;
 use HDNET\Calendarize\Tests\Functional\AbstractFunctionalTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -27,11 +28,7 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
         $this->rawIndexRepository = GeneralUtility::makeInstance(RawIndexRepository::class);
     }
 
-    /**
-     * @dataProvider configurationProvider
-     *
-     * @group tmp
-     */
+    #[DataProvider('configurationProvider')]
     public function testIndexConfiguration(array $configurations, callable $assert)
     {
         $configurationRepository = $this->createMock(ConfigurationRepository::class);

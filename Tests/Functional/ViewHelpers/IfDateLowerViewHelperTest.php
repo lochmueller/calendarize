@@ -7,14 +7,14 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Tests\Functional\ViewHelpers;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /**
  * Check if a date is lower.
  */
 class IfDateLowerViewHelperTest extends AbstractViewHelperTestCase
 {
-    /**
-     * @dataProvider validCheckDataProvider
-     */
+    #[DataProvider('validCheckDataProvider')]
     public function testValidCheck($base, $check, $expected): void
     {
         $template = '{namespace c=HDNET\Calendarize\ViewHelpers}' .

@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\LanguageAspect;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class IndexRepositoryTest extends FunctionalTestCase
@@ -32,9 +33,7 @@ class IndexRepositoryTest extends FunctionalTestCase
         $this->indexerService->reindexAll();
     }
 
-    /**
-     * @dataProvider findBySearchDataProvider
-     */
+    #[DataProvider('findBySearchDataProvider')]
     public function testFindBySearch(
         int $language,
         ?\DateTimeInterface $startDate,

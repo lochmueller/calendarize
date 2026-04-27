@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Tests\Functional\ViewHelpers\Format;
 
 use HDNET\Calendarize\Tests\Functional\ViewHelpers\AbstractViewHelperTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EscapeIcalTextViewHelperTest extends AbstractViewHelperTestCase
 {
-    /**
-     * @dataProvider textEscapeDataProvider
-     */
+    #[DataProvider('textEscapeDataProvider')]
     public function testTextEscape(string $value, string $expected): void
     {
         $template = '{namespace c=HDNET\Calendarize\ViewHelpers}' .

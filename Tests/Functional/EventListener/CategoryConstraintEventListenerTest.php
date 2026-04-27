@@ -11,6 +11,7 @@ use HDNET\Calendarize\Register;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class CategoryConstraintEventListenerTest extends FunctionalTestCase
@@ -123,9 +124,7 @@ class CategoryConstraintEventListenerTest extends FunctionalTestCase
         ];
     }
 
-    /**
-     * @dataProvider contentRecordDataProvider
-     */
+    #[DataProvider('contentRecordDataProvider')]
     public function testContentRecordEventCategories(int $contentRecord, string $conjunction, array $expectedIndexIds): void
     {
         $event = new IndexRepositoryDefaultConstraintEvent(

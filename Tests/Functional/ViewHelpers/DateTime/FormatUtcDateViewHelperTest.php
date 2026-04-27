@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Tests\Functional\ViewHelpers\DateTime;
 
 use HDNET\Calendarize\Tests\Functional\ViewHelpers\AbstractViewHelperTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FormatUtcDateViewHelperTest extends AbstractViewHelperTestCase
 {
@@ -22,9 +23,7 @@ class FormatUtcDateViewHelperTest extends AbstractViewHelperTestCase
         parent::tearDown();
     }
 
-    /**
-     * @dataProvider dateIsUtcTimezoneDataProvider
-     */
+    #[DataProvider('dateIsUtcTimezoneDataProvider')]
     public function testDateIsUtcTimezone(\DateTimeInterface|string $date, string $expected): void
     {
         date_default_timezone_set('Europe/Moscow');
