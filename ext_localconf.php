@@ -196,9 +196,7 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
-    if ((new Typo3Version())->getMajorVersion() < 14) {
-        $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = DatabaseRecordLinkBuilder::class;
-    }
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['typolinkBuilder']['record'] = DatabaseRecordLinkBuilder::class;
 
     // hooks
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration']['calendarize'] =
