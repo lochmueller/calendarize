@@ -139,14 +139,3 @@ config.pageTitleProviders {
     before = altPageTitle,record,seo
   }
 }
-
-[compatVersion("14")]
-config.recordLinks.tx_calendarize_domain_model_event {
-  forceLink = 0
-  typolink {
-    parameter = {$plugin.tx_calendarize.settings.defaultDetailPid}
-    additionalParams.data = field:index_uid
-    additionalParams.wrap = &tx_calendarize_calendar[controller]=Calendar&tx_calendarize_calendar[action]=detail&tx_calendarize_calendar[index]=|
-  }
-}
-[END]
