@@ -87,6 +87,12 @@ services:
   HDNET\Calendarize\Service\PluginConfigurationService:
     public: true
 
+  HDNET\Calendarize\Service\DatabaseRecordLinkBuilderService:
+    public: true
+
+  HDNET\Calendarize\Typolink\DatabaseRecordLinkBuilder:
+    public: true
+
   QueryBuilder.tt_content:
     class: 'TYPO3\CMS\Core\Database\Query\QueryBuilder'
     factory:
