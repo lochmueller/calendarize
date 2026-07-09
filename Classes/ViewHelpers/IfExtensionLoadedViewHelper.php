@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
@@ -22,18 +23,13 @@ class IfExtensionLoadedViewHelper extends AbstractConditionViewHelper
     }
 
     /**
-     * Add the condition.
-     *
-     * @param array|null $arguments
-     *
-     * @return bool
+     * @param array<string, mixed> $arguments
      */
-    public static function evaluateCondition($arguments = null)
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
     {
         if (!isset($arguments['extensionKey'])) {
             return false;
         }
-
         return ExtensionManagementUtility::isLoaded($arguments['extensionKey']);
     }
 }
