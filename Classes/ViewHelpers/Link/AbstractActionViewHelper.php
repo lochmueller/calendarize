@@ -58,6 +58,6 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
             $result = $this->renderChildren();
         }
 
-        return $result;
+        return (string)$result;
     }
 }
