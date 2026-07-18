@@ -11,22 +11,22 @@ class PluginListTypeToCTypeUpdate extends AbstractListTypeToCTypeUpdate
     protected function getListTypeToCTypeMapping(): array
     {
         return [
-            'calenarize_listdetail' => 'calenarize_listdetail',
-            'calenarize_list' => 'calenarize_list',
-            'calenarize_detail' => 'calenarize_detail',
-            'calenarize_search' => 'calenarize_search',
-            'calenarize_result' => 'calenarize_result',
-            'calenarize_latest' => 'calenarize_latest',
-            'calenarize_single' => 'calenarize_single',
-            'calenarize_year' => 'calenarize_year',
-            'calenarize_quarter' => 'calenarize_quarter',
-            'calenarize_month' => 'calenarize_month',
-            'calenarize_week' => 'calenarize_week',
-            'calenarize_day' => 'calenarize_day',
-            'calenarize_past' => 'calenarize_past',
-            'calenarize_shortcut' => 'calenarize_shortcut',
-            'calenarize_calendar' => 'calenarize_calendar',
-            'calenarize_booking' => 'calenarize_booking',
+            'calendarize_listdetail' => 'calendarize_listdetail',
+            'calendarize_list' => 'calendarize_list',
+            'calendarize_detail' => 'calendarize_detail',
+            'calendarize_search' => 'calendarize_search',
+            'calendarize_result' => 'calendarize_result',
+            'calendarize_latest' => 'calendarize_latest',
+            'calendarize_single' => 'calendarize_single',
+            'calendarize_year' => 'calendarize_year',
+            'calendarize_quarter' => 'calendarize_quarter',
+            'calendarize_month' => 'calendarize_month',
+            'calendarize_week' => 'calendarize_week',
+            'calendarize_day' => 'calendarize_day',
+            'calendarize_past' => 'calendarize_past',
+            'calendarize_shortcut' => 'calendarize_shortcut',
+            'calendarize_calendar' => 'calendarize_calendar',
+            'calendarize_booking' => 'calendarize_booking',
         ];
     }
 
