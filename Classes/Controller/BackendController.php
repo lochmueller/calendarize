@@ -210,9 +210,7 @@ class BackendController extends AbstractController
     {
         $dbMounts = (int)($this->getBackendUser()->uc['pageTree_temporaryMountPoint'] ?? 0);
         if (!$dbMounts) {
-            $dbMounts = array_map('intval', $this->getBackendUser()->returnWebmounts());
-
-            return array_unique($dbMounts);
+            return $this->getBackendUser()->getWebmounts();
         }
 
         return [$dbMounts];
