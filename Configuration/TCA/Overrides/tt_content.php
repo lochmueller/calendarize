@@ -28,11 +28,12 @@ $pluginNameAndGroup = array_merge(
 );
 
 foreach ($pluginNameAndGroup as $pluginName => $group) {
+    $pluginNameLowercase = strtolower($pluginName);
     $pluginSignature = TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'calendarize',
         $pluginName,
-        $ll . 'mode.' . strtolower($pluginName),
-        null,
+        $ll . 'mode.' . $pluginNameLowercase,
+        'ext-calendarize-wizard-icon-' . $pluginNameLowercase,
         $group,
     );
     // Disable the display of layout and select_key fields for the plugin
