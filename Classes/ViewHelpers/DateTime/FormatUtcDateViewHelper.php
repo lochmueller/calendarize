@@ -28,10 +28,8 @@ class FormatUtcDateViewHelper extends DateViewHelper
 
         $date = $this->arguments['date'];
         if ($date instanceof \DateTimeInterface) {
-            $renderChildrenClosure = static function () use ($date) {
-                // Convert date to timestamp, so that it can be reparsed.
-                return $date->getTimestamp();
-            };
+            // Convert date to timestamp, so that the parent reparses it in the UTC timezone.
+            $this->arguments['date'] = $date->getTimestamp();
         }
 
         $result = parent::render();
