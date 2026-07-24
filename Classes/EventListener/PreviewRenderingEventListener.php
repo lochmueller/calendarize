@@ -32,8 +32,8 @@ class PreviewRenderingEventListener
             $record = $record->toArray();
         }
 
-        /* keep v13 compatibility */
-        $listTypeField = isset($record['list_type']) ? 'list_type' : 'CType';
+        /* We assume migration to CType has been completed */
+        $listTypeField = 'CType';
 
         if (!str_starts_with($record[$listTypeField] ?? '', 'calendarize_')) {
             return;

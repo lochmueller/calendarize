@@ -9,9 +9,14 @@ use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 
+/**
+ * This Upgrade wizard should have already been run previously. It will no longer work in TYPO3 v14 because
+ * the tt_content.list_type database field is missing. In TYPO3 v13, it should run before PluginListTypeToCTypeUpdate.
+ */
 #[UpgradeWizard('calendarize_pluginUpdater')]
 class PluginUpdater extends AbstractUpdate
 {
@@ -42,6 +47,7 @@ class PluginUpdater extends AbstractUpdate
         protected readonly QueryBuilder $contentElementsQueryBuilder,
         protected readonly QueryBuilder $backendGroupsQueryBuilder,
         protected readonly FlexFormTools $flexFormTools,
+        protected readonly Typo3Version $typo3Version
     ) {}
 
     /**
@@ -260,6 +266,10 @@ class PluginUpdater extends AbstractUpdate
 
     public function updateNecessary(): bool
     {
+        // in TYPO3 v14 it is no longer possible to perform this wizard as the list_type field is missing!
+        if ($this->typo3Version->getMajorVersion() >= 14) {
+            return false;
+        }
         return \count($this->getContentElementsToMigrate()) > 0 || \count($this->getBackendUserGroupsToMigrate()) > 0;
     }
 

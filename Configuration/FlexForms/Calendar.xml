@@ -30,10 +30,10 @@
                         <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:limit</label>
                         <displayCond>
                             <OR>
-                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-                                <numIndex index="3">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
+                                <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
+                                <numIndex index="3">FIELD:parentRec.CType:=:calendarize_past</numIndex>
                             </OR>
                         </displayCond>
                         <config>
@@ -46,7 +46,7 @@
 
 					<settings.singleItems>
                         <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:singleItems</label>
-                        <displayCond>FIELD:parentRec.list_type:=:calendarize_single</displayCond>
+                        <displayCond>FIELD:parentRec.CType:=:calendarize_single</displayCond>
                         <config>
                             <type>group</type>
                             <allowed>*</allowed>
@@ -59,11 +59,11 @@
                         <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:hide.pagination.teaser</label>
                         <displayCond>
                             <OR>
-                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-                                <numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
-                                <numIndex index="4">FIELD:parentRec.list_type:=:calendarize_past</numIndex>
+                                <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
+                                <numIndex index="3">FIELD:parentRec.CType:=:calendarize_result</numIndex>
+                                <numIndex index="4">FIELD:parentRec.CType:=:calendarize_past</numIndex>
                             </OR>
                         </displayCond>
                         <config>
@@ -76,12 +76,12 @@
                         <displayCond>
                             <OR>
 
-                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
-                                <numIndex index="3">FIELD:parentRec.list_type:=:calendarize_result</numIndex>
-                                <numIndex index="4">FIELD:parentRec.list_type:=:calendarize_detail</numIndex>
-                                <!-- <numIndex index="5">FIELD:parentRec.list_type:=:calendarize_past</numIndex> -->
+                                <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
+                                <numIndex index="3">FIELD:parentRec.CType:=:calendarize_result</numIndex>
+                                <numIndex index="4">FIELD:parentRec.CType:=:calendarize_detail</numIndex>
+                                <!-- <numIndex index="5">FIELD:parentRec.CType:=:calendarize_past</numIndex> -->
                             </OR>
                         </displayCond>
                         <config>
@@ -93,9 +93,9 @@
                         <label>LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:useRelativeDate</label>
                         <displayCond>
                             <OR>
-                                <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
                             </OR>
                         </displayCond>
                         <onChange>reload</onChange>
@@ -109,9 +109,9 @@
                             <AND>
                                 <numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
                                 <OR>
-                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                    <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
                                 </OR>
                             </AND>
                         </displayCond>
@@ -125,9 +125,9 @@
                             <AND>
                                 <numIndex index="0">FIELD:settings.useRelativeDate:REQ:false</numIndex>
                                 <OR>
-                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                    <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
                                 </OR>
                             </AND>
                         </displayCond>
@@ -141,9 +141,9 @@
                             <AND>
                                 <numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
                                 <OR>
-                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                    <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
                                 </OR>
                             </AND>
                         </displayCond>
@@ -158,9 +158,9 @@
                             <AND>
                                 <numIndex index="0">FIELD:settings.useRelativeDate:REQ:true</numIndex>
                                 <OR>
-                                    <numIndex index="0">FIELD:parentRec.list_type:=:calendarize_listdetail</numIndex>
-                                    <numIndex index="1">FIELD:parentRec.list_type:=:calendarize_list</numIndex>
-                                    <numIndex index="2">FIELD:parentRec.list_type:=:calendarize_latest</numIndex>
+                                    <numIndex index="0">FIELD:parentRec.CType:=:calendarize_listdetail</numIndex>
+                                    <numIndex index="1">FIELD:parentRec.CType:=:calendarize_list</numIndex>
+                                    <numIndex index="2">FIELD:parentRec.CType:=:calendarize_latest</numIndex>
                                 </OR>
                             </AND>
                         </displayCond>
@@ -189,7 +189,7 @@
                             <minitems>1</minitems>
                             <maxitems>99</maxitems>
                         </config>
-                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail</displayCond>
+                        <displayCond>FIELD:parentRec.CType:!IN:calendarize_detail</displayCond>
 					</settings.configuration>
 
 					<!-- Category Mode -->
@@ -215,7 +215,7 @@
                             </items>
                             <default>or</default>
                         </config>
-                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_search,calendarize_result,calendarize_single</displayCond>
+                        <displayCond>FIELD:parentRec.CType:!IN:calendarize_detail,calendarize_search,calendarize_result,calendarize_single</displayCond>
 					</settings.categoryConjunction>
 
 					<!-- Calendar configuration -->
@@ -239,7 +239,7 @@
                                 </numIndex>
                             </items>
                         </config>
-                        <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
+                        <displayCond>FIELD:parentRec.CType:!=:calendarize_detail</displayCond>
 					</settings.sortBy>
 
 					<!-- Calendar configuration -->
@@ -259,7 +259,7 @@
                                 </numIndex>
                             </items>
                         </config>
-                        <displayCond>FIELD:parentRec.list_type:!=:calendarize_detail</displayCond>
+                        <displayCond>FIELD:parentRec.CType:!=:calendarize_detail</displayCond>
 					</settings.sorting>
 
 					<!-- startingpoint -->
@@ -272,7 +272,7 @@
                             <maxitems>50</maxitems>
                             <minitems>0</minitems>
                         </config>
-                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_single</displayCond>
+                        <displayCond>FIELD:parentRec.CType:!IN:calendarize_detail,calendarize_single</displayCond>
 					</persistence.storagePid>
 
 					<!-- recursive -->
@@ -312,7 +312,7 @@
                                 </numIndex>
                             </items>
                         </config>
-                        <displayCond>FIELD:parentRec.list_type:!IN:calendarize_detail,calendarize_single</displayCond>
+                        <displayCond>FIELD:parentRec.CType:!IN:calendarize_detail,calendarize_single</displayCond>
 					</persistence.recursive>
 				</el>
 			</ROOT>
