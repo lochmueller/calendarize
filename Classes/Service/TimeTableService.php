@@ -13,6 +13,7 @@ use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * Time table builder service.
@@ -42,18 +43,27 @@ class TimeTableService extends AbstractService
 
         foreach ($ids as $configurationUid) {
             if ($workspace) {
+                // Load the configuration incl. its workspace overlay and map the raw record
+                // directly: since TYPO3 v14 the Extbase query parser always excludes offline
+                // versions (t3ver_oid != 0), so versioned configurations can no longer be
+                // fetched via the repository (the former $GLOBALS['TCA'][...]['versioningWS']
+                // runtime toggle is ignored, the workspace state comes from the TcaSchemaFactory).
                 $row = BackendUtility::getRecord('tx_calendarize_domain_model_configuration', $configurationUid);
-                BackendUtility::workspaceOL('tx_calendarize_domain_model_configuration', $row, $workspace);
-                if (isset($row['_ORIG_uid'])) {
-                    $configurationUid = (int)$row['_ORIG_uid'];
+                if (!\is_array($row)) {
+                    continue;
                 }
+                BackendUtility::workspaceOL('tx_calendarize_domain_model_configuration', $row, $workspace);
+                if (!\is_array($row)) {
+                    continue;
+                }
+
+                $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+                $configuration = $dataMapper->map(Configuration::class, [$row])[0] ?? null;
+            } else {
+                // Do not use DI for repo to avoid problem in ext_localconf.php loading context
+                $configuration = $this->configurationRepository->findByUid($configurationUid);
             }
 
-            // Disable Workspace for selection to get also offline versions of configuration
-            $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = false;
-            // Do not use DI for repo to avoid problem in ext_localconf.php loading context
-            $configuration = $this->configurationRepository->findByUid($configurationUid);
-            $GLOBALS['TCA']['tx_calendarize_domain_model_configuration']['ctrl']['versioningWS'] = true;
             if (!($configuration instanceof Configuration)) {
                 continue;
             }
