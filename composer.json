@@ -24,7 +24,7 @@
 		"php": "^8.2",
 		"ext-json": "*",
 		"ext-pdo": "*",
-		"sabre/vobject": "^4.2",
+		"sabre/vobject": "^5.0",
 		"typo3/cms-core": "^13.4 || ^14.1"
 	},
 	"require-dev": {

@@ -11,12 +11,10 @@ namespace HDNET\Calendarize\Updates;
 //use TYPO3\CMS\Core\Attribute\UpgradeWizard;
 // v13 path, works for v13 and v14
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
-
 // v14
 //use TYPO3\CMS\Core\Upgrades\AbstractListTypeToCTypeUpdate;
 // v13 path, works for v13 and v14
 use TYPO3\CMS\Install\Updates\AbstractListTypeToCTypeUpdate;
-
 
 #[UpgradeWizard('calendarize_pluginListTypeToCTypeUpdate')]
 class PluginListTypeToCTypeUpdate extends AbstractListTypeToCTypeUpdate

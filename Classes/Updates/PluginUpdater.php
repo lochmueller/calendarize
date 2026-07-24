@@ -47,7 +47,7 @@ class PluginUpdater extends AbstractUpdate
         protected readonly QueryBuilder $contentElementsQueryBuilder,
         protected readonly QueryBuilder $backendGroupsQueryBuilder,
         protected readonly FlexFormTools $flexFormTools,
-        protected readonly Typo3Version $typo3Version
+        protected readonly Typo3Version $typo3Version,
     ) {}
 
     /**
