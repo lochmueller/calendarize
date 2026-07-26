@@ -14,13 +14,13 @@ TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItemGroup(
 );
 
 $pluginNameAndGroup = array_fill_keys(
-        [
-            'ListDetail', 'List', 'Detail', 'Search', 'Result', 'Latest', 'Single',
-            'Year', 'Quarter', 'Month', 'Week', 'Day', 'Past',
-            'Booking',
-        ],
-        'calendarize',
-    );
+    [
+        'ListDetail', 'List', 'Detail', 'Search', 'Result', 'Latest', 'Single',
+        'Year', 'Quarter', 'Month', 'Week', 'Day', 'Past',
+        'Booking',
+    ],
+    'calendarize',
+);
 
 foreach ($pluginNameAndGroup as $pluginName => $group) {
     $pluginNameLowercase = strtolower($pluginName);
