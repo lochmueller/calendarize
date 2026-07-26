@@ -43,11 +43,7 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $extensionIconUsage = $this->iconFactory->getIcon('ext-calendarize-wizard-icon', IconSize::SMALL)->render();
-        $this->layoutService->setTitle($extensionIconUsage . ' Calendarize');
-
-        $listType = explode('_', $record[$listTypeField], 2)[1] ?? '';
-        $this->layoutService->addRow(TranslateUtility::get('mode'), TranslateUtility::get('mode.' . $listType));
+        $this->layoutService->setTitle(' Calendarize');
 
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {
