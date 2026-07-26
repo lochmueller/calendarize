@@ -6,26 +6,21 @@ defined('TYPO3') or exit();
 
 $ll = 'LLL:EXT:calendarize/Resources/Private/Language/locallang.xlf:';
 
-foreach (['normal', 'special', 'booking'] as $itemGroup) {
-    TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItemGroup(
-        'tt_content',
-        'CType',
-        'calendarize_' . $itemGroup,
-        $ll . 'mode.' . $itemGroup,
-    );
-}
-
-$pluginNameAndGroup = array_merge(
-    array_fill_keys(
-        ['ListDetail', 'List', 'Detail', 'Search', 'Result', 'Latest', 'Single'],
-        'calendarize_normal',
-    ),
-    array_fill_keys(
-        ['Year', 'Quarter', 'Month', 'Week', 'Day', 'Past'],
-        'calendarize_special',
-    ),
-    ['Booking' => 'calendarize_booking'],
+TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItemGroup(
+    'tt_content',
+    'CType',
+    'calendarize',
+    'Calendarize',
 );
+
+$pluginNameAndGroup = array_fill_keys(
+        [
+            'ListDetail', 'List', 'Detail', 'Search', 'Result', 'Latest', 'Single',
+            'Year', 'Quarter', 'Month', 'Week', 'Day', 'Past',
+            'Booking',
+        ],
+        'calendarize',
+    );
 
 foreach ($pluginNameAndGroup as $pluginName => $group) {
     $pluginNameLowercase = strtolower($pluginName);
