@@ -1,14 +1,14 @@
-{index.startDate -> f:format.date(format: '{f:translate(key: \'dateFormat\')}')}
+<time datetime="{index.startDate -> f:format.date(format: 'Y-m-d')}">{index.startDate -> f:format.date(format: '{f:translate(key: \'dateFormat\')}')}</time>
 <f:if condition="{index.allDay}">
 	<f:else>
-		<f:format.date format="{f:translate(key: 'timeFormat')}">{index.startDateComplete}</f:format.date>
+		<time datetime="{index.startDateComplete -> f:format.date(format: 'H:i')}"><f:format.date format="{f:translate(key: 'timeFormat')}">{index.startDateComplete}</f:format.date></time>
 	</f:else>
 </f:if>
 
 <f:if condition="{index.startDate -> f:format.date(format: 'd.m.Y')} == {index.endDate -> f:format.date(format: 'd.m.Y')}">
 	<f:then></f:then>
 	<f:else>
-		- {index.endDate -> f:format.date(format: '{f:translate(key: \'dateFormat\')}')}
+		- <time datetime="{index.endDate -> f:format.date(format: 'Y-m-d')}">{index.endDate -> f:format.date(format: '{f:translate(key: \'dateFormat\')}')}</time>
 	</f:else>
 </f:if>
 
@@ -25,7 +25,7 @@
 				<f:translate key="open_end" />
 			</f:then>
 			<f:else>
-				<f:format.date format="{f:translate(key: 'timeFormat')}">{index.endDateComplete}</f:format.date>
+				<time datetime="{index.endDateComplete -> f:format.date(format: 'H:i')}"><f:format.date format="{f:translate(key: 'timeFormat')}">{index.endDateComplete}</f:format.date></time>
 			</f:else>
 		</f:if>
 	</f:else>

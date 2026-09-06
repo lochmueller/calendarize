@@ -9,7 +9,7 @@
 				</li>
 			</f:comment>
 			<li class="previous">
-				<f:render section="PaginationLink" arguments="{actionName:actionName, page: pagination.previousPageNumber, title: '{f:translate(key:\'pagination.previous\')}', searchMode:searchMode}" contentAs="content">
+				<f:render section="PaginationLink" arguments="{actionName:actionName, page: pagination.previousPageNumber, title: '{f:translate(key:\'pagination.previous\')}', searchMode:searchMode, rel: 'prev'}" contentAs="content">
 					{f:translate(key:'widget.pagination.previous', extensionName: 'fluid')}
 				</f:render>
 			</li>
@@ -27,7 +27,7 @@
 	<f:for each="{pagination.allPageNumbers}" as="page">
 		<f:if condition="{page} == {paginator.currentPageNumber}">
 			<f:then>
-				<li class="current">{page}</li>
+				<li class="current"><span aria-current="page">{page}</span></li>
 			</f:then>
 			<f:else>
 				<li>
@@ -44,7 +44,7 @@
 	<f:if condition="{pagination.nextPageNumber} && {pagination.nextPageNumber} <= {pagination.lastPageNumber}">
 		<f:then>
 			<li class="next">
-				<f:render section="PaginationLink" arguments="{actionName:actionName, page: pagination.nextPageNumber, title: '{f:translate(key:\'pagination.next\')}', searchMode:searchMode}" contentAs="content">
+				<f:render section="PaginationLink" arguments="{actionName:actionName, page: pagination.nextPageNumber, title: '{f:translate(key:\'pagination.next\')}', searchMode:searchMode, rel: 'next'}" contentAs="content">
 					{f:translate(key:'widget.pagination.next', extensionName: 'fluid')}
 				</f:render>
 			</li>
@@ -70,13 +70,14 @@
 		<f:then>
 			<a href="#"
 				 title="{title}"
+				 {f:if(condition: rel, then: 'rel="{rel}"')}
 				 onclick="if(document.getElementById('calendarizePage')){document.getElementById('calendarizePage').value={page};document.getElementById('calendarizeSearchForm').submit();return false;}">
 				{content}
 			</a>
 		</f:then>
 		<f:else>
 			<a href="{f:uri.action(action:actionName, arguments:{currentPage: page})}"
-				 title="{title}">
+				 title="{title}"{f:if(condition: rel, then: ' rel="{rel}"')}>
 				{content}
 			</a>
 		</f:else>

@@ -7,7 +7,7 @@
 			<div class="media calendarize-item">
 				<f:for each="{event.images}" as="image" iteration="i">
 					<f:if condition="{i.isFirst}">
-						<c:link.index index="{index}">
+						<c:link.index index="{index}" additionalAttributes="{'aria-hidden': 'true', 'tabindex': '-1'}">
 	                  		<f:if condition="{image.originalResource.type}==4">
 	                            <f:then>
 	                                <f:media file="{image}" />
