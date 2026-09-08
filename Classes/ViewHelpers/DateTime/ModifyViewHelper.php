@@ -18,7 +18,7 @@ class ModifyViewHelper extends AbstractViewHelper
     public function initializeArguments(): void
     {
         parent::initializeArguments();
-        $this->registerArgument('modification', 'string', 'DateTime Object Modification String', true, '');
+        $this->registerArgument('modification', 'string', 'DateTime Object Modification String', true);
         $this->registerArgument('dateTime', \DateTimeInterface::class, 'DateTime to modify', false, null);
     }
 
