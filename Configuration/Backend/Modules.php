@@ -5,7 +5,7 @@ return [
         'parent' => 'web',
         'access' => 'user',
         'path' => '/module/web/calendarize',
-        'iconIdentifier' => 'ext-calendarize-wizard-icon',
+        'iconIdentifier' => 'ext-calendarize-module-icon',
         'labels' => 'LLL:EXT:calendarize/Resources/Private/Language/locallang_mod.xlf',
         'inheritNavigationComponentFromMainModule' => false,
         'extensionName' => 'calendarize',

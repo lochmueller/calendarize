@@ -1,5 +1,10 @@
 <?php
 
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+$typo3version = (int)GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion();
+
 $wizards = [
     'listdetail',
     'list',
@@ -18,6 +23,10 @@ $wizards = [
 ];
 
 $calendarizeIcons = [
+    'ext-calendarize-module-icon' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:calendarize/Resources/Public/Icons/Module.svg',
+    ],
     'ext-calendarize-wizard-icon' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:calendarize/Resources/Public/Icons/Extension.svg',
@@ -27,6 +36,10 @@ $calendarizeIcons = [
         'source' => 'EXT:calendarize/Resources/Public/Icons/apps-pagetree-folder-contains-calendarize.svg',
     ],
 ];
+
+if ($typo3version < 14) {
+    $calendarizeIcons['ext-calendarize-module-icon']['source'] = 'EXT:calendarize/Resources/Public/Icons/Extension.svg';
+}
 
 foreach ($wizards as $wizard) {
     $calendarizeIcons['ext-calendarize-wizard-icon-' . $wizard] = [
