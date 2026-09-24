@@ -26,6 +26,10 @@ class LanguageViewHelper extends AbstractViewHelper
 
     protected function getRequest(): ServerRequestInterface
     {
+        if ($this->renderingContext->hasAttribute(ServerRequestInterface::class)) {
+            return $this->renderingContext->getAttribute(ServerRequestInterface::class);
+        }
+
         /** @var RenderingContext $renderingContext */
         $renderingContext = $this->renderingContext;
 
