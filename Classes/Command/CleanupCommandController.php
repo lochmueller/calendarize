@@ -120,8 +120,11 @@ class CleanupCommandController extends Command
         $io->section('Cleanup outdated events now');
         // climb through the events and hide/delete them
         foreach ($events as $event) {
-            /** @var AbstractEntity $model */
-            $model = $repository->findByUid((int)$event['foreign_uid']);
+            $model = $this->findEventModel($repository, (int)$event['foreign_uid']);
+            if (!$model instanceof AbstractEntity) {
+                $io->warning('Event with UID ' . (int)$event['foreign_uid'] . ' could not be loaded and is skipped.');
+                continue;
+            }
             $this->processEvent($repository, $model, $mode);
         }
         $io->text('Events processed.');
@@ -133,6 +136,25 @@ class CleanupCommandController extends Command
         $this->indexerService->reindexAll();
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Load the event model independent of storage page, language and the time/access based
+     * enable fields (starttime, endtime, fe_group). The outdated events are selected via the
+     * index table, which only respects the hidden and deleted flags. Respecting e.g. an endtime
+     * in the past here would result in no model at all.
+     */
+    protected function findEventModel(Repository $repository, int $uid): ?object
+    {
+        $query = $repository->createQuery();
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false)
+            ->setRespectSysLanguage(false)
+            ->setIgnoreEnableFields(true)
+            ->setEnableFieldsToBeIgnored(['starttime', 'endtime', 'fe_group']);
+        $query->matching($query->equals('uid', $uid));
+
+        return $query->execute()->getFirst();
     }
 
     /**
