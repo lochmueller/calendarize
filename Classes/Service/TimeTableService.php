@@ -61,7 +61,9 @@ class TimeTableService extends AbstractService
                 $configuration = $dataMapper->map(Configuration::class, [$row])[0] ?? null;
             } else {
                 // Do not use DI for repo to avoid problem in ext_localconf.php loading context
-                $configuration = $this->configurationRepository->findByUid($configurationUid);
+                // Respect enable fields explicitly: since TYPO3 13.4.34 Extbase ignores them in
+                // backend requests, which would index hidden configurations on save.
+                $configuration = $this->configurationRepository->findByUidsRespectingEnableFields([$configurationUid])[0] ?? null;
             }
 
             if (!($configuration instanceof Configuration)) {
