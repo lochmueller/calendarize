@@ -7,7 +7,19 @@ jobs:
       matrix:
         php: [ '8.2', '8.3', '8.4', '8.5' ]
         typo3: [ '13', '14' ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -41,10 +53,6 @@ jobs:
 
       - name: Unit Tests with phpunit
         run: composer run tool:phpunit --
-
-      # start db
-      - name: Start MySQL
-        run: sudo /etc/init.d/mysql start
 
       # functional tests
       - name: Functional Tests

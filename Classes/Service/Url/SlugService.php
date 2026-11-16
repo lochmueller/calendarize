@@ -63,7 +63,7 @@ class SlugService extends AbstractService
 
         $baseSlug = $this->generateBaseSlug($uniqueRegisterKey, $record, $model);
 
-        return $this->generateSlugSuffix($uniqueRegisterKey, $baseSlug, $neededItems);
+        return $this->generateSlugSuffix($uniqueRegisterKey, $baseSlug, $neededItems, (int)($record['t3ver_wsid'] ?? 0));
     }
 
     /**
@@ -105,10 +105,11 @@ class SlugService extends AbstractService
      * @param string $uniqueRegisterKey
      * @param string $base
      * @param array  $items
+     * @param int    $workspaceId
      *
      * @return array
      */
-    protected function generateSlugSuffix(string $uniqueRegisterKey, string $base, array $items): array
+    protected function generateSlugSuffix(string $uniqueRegisterKey, string $base, array $items, int $workspaceId = 0): array
     {
         $addFields = [];
         foreach ($items as $key => $item) {
@@ -119,7 +120,7 @@ class SlugService extends AbstractService
                 $indexSlug .= '-' . str_replace('-', '', $item['start_date']);
             }
 
-            $indexSlug = $this->getSlugHelper($record['t3ver_wsid'] ?? 0)->sanitize($indexSlug);
+            $indexSlug = $this->getSlugHelper($workspaceId)->sanitize($indexSlug);
             $addFields[$key]['slug'] = $this->eventDispatcher->dispatch(new SlugSuffixGenerationEvent(
                 $uniqueRegisterKey,
                 $item,

@@ -28,6 +28,11 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
     protected string $lastHref = '';
 
     /**
+     * Action name used to resolve the target page via settings (e.g. "listPid").
+     */
+    protected ?string $actionName = null;
+
+    /**
      * Arguments initialization.
      */
     public function initializeArguments(): void

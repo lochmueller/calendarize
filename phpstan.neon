@@ -3,3 +3,17 @@ parameters:
 	paths:
 		- Classes
 		- Tests
+	excludePaths:
+		# Declares the class conditionally (readonly for TYPO3 v14+, non-readonly for v13).
+		# PHPStan can only analyse one branch against the installed core version.
+		- Classes/Typolink/DatabaseRecordLinkBuilder.php
+	ignoreErrors:
+		# Optional integrations, guarded at runtime and not part of require-dev
+		-
+			identifier: class.notFound
+			path: Classes/EventListener/BookingCountriesListener.php
+			message: '#SJBR\\StaticInfoTables\\#'
+		-
+			identifier: class.notFound
+			path: Classes/Hooks/KeSearchIndexer.php
+			message: '#Tpwd\\KeSearch\\#'

@@ -15,12 +15,12 @@ class ICalEvent
 
     /**
      * Start, in UTC.
-     * @var \DateTime **/
+     * @var \DateTime|null **/
     protected $start;
 
     /**
      * End, in UTC.
-     * @var \DateTime **/
+     * @var \DateTime|null **/
     protected $end;
 
 
@@ -167,7 +167,7 @@ class ICalEvent
 
     /**
      * In UTC
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getStart()
     {
@@ -176,7 +176,7 @@ class ICalEvent
 
     /**
      * In UTC
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getEnd()
     {

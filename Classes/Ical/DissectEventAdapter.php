@@ -79,7 +79,7 @@ class DissectEventAdapter implements ICalEvent
     public function getStartDate(): ?\DateTime
     {
         $startDate = $this->event->getStart();
-        if (empty($startDate)) {
+        if (null === $startDate) {
             return null;
         }
         if ($this->isAllDay()) {
@@ -95,7 +95,7 @@ class DissectEventAdapter implements ICalEvent
      */
     public function getStartTime(): int
     {
-        if ($this->isAllDay() || empty($this->event->getStart())) {
+        if ($this->isAllDay() || null === $this->event->getStart()) {
             return self::ALLDAY_START_TIME;
         }
 
@@ -108,7 +108,7 @@ class DissectEventAdapter implements ICalEvent
     public function getEndDate(): ?\DateTime
     {
         $endDate = $this->event->getEnd();
-        if (empty($endDate)) {
+        if (null === $endDate) {
             return null;
         }
         if ($this->isAllDay()) {
