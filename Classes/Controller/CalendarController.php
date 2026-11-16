@@ -380,7 +380,9 @@ class CalendarController extends AbstractController
         $this->addCacheTags(['calendarize_month']);
         $arguments = $this->request->getArguments();
 
-        $date = DateTimeUtility::normalizeDateTime($day, $month, $year);
+        // Use the first day of the month, if no day is given. Otherwise, the current day of the month
+        // is used and the month browser (that checks the first day of the month) could link to a 404 page.
+        $date = DateTimeUtility::normalizeDateTime(0 === $day ? 1 : $day, $month, $year);
 
         $now = DateTimeUtility::getNow();
         $useCurrentDate = $now->format('Y-m') === $date->format('Y-m');

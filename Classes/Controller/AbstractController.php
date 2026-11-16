@@ -323,12 +323,20 @@ abstract class AbstractController extends ActionController
         return $prev > $dateTime || $next < $dateTime;
     }
 
+    /**
+     * Stop the rendering and return the 404 page of the site as a real (full page) response.
+     * A returned response would only be rendered as content of the plugin.
+     *
+     * @throws PropagateResponseException
+     */
     protected function return404Page(): ResponseInterface
     {
-        return GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+        $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
             $this->request,
             'The requested page does not exist',
             ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND],
         );
+
+        throw new PropagateResponseException($response, 1763300000);
     }
 }

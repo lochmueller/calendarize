@@ -174,7 +174,7 @@ use TYPO3\CMS\Workspaces\Controller\Remote\RemoteServer;
         'calendarize',
         'Calendar',
         [
-            $calendar => 'list,past,latest,year,quater,month,week,day,detail,search,result,single,shortcut',
+            $calendar => 'list,past,latest,year,quarter,month,week,day,detail,search,result,single,shortcut',
             $booking => 'booking,send',
         ],
         [

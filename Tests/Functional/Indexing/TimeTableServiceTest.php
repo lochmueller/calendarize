@@ -33,7 +33,7 @@ class TimeTableServiceTest extends AbstractFunctionalTestCase
     {
         $configurationRepository = $this->createMock(ConfigurationRepository::class);
         $configurationRepository->method('findByUidsRespectingEnableFields')->willReturnCallback(function (array $ids) use ($configurations) {
-            return array_values(array_filter(array_map(fn ($id) => $configurations[$id] ?? null, $ids)));
+            return array_values(array_filter(array_map(fn($id) => $configurations[$id] ?? null, $ids)));
         });
 
         $timeTableService = new TimeTableService();
