@@ -14,6 +14,7 @@ use HDNET\Calendarize\Event\ModifyDateTimeFrameConstraintEvent;
 use HDNET\Calendarize\Utility\ConfigurationUtility;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\ExtensionConfigurationUtility;
+use HDNET\Calendarize\Utility\WorkspaceUtility;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Context\LanguageAspect;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -113,6 +114,14 @@ class IndexRepository extends AbstractRepository
         }
 
         $constraints = [];
+
+        // Extbase only adds a "t3ver_oid = 0" constraint in backend context, so the index records
+        // of a workspace (which are stored as new placeholder with t3ver_oid = 0) would also be
+        // visible in the live view. Therefore limit the records to the current workspace.
+        $workspaceId = WorkspaceUtility::getCurrentWorkspaceId();
+        $constraints[] = $workspaceId > 0
+            ? $query->in('t3ver_wsid', [0, $workspaceId])
+            : $query->equals('t3ver_wsid', 0);
 
         if ((int)$options->getPid() > 0) {
             $constraints[] = $query->equals('pid', (int)$options->getPid());

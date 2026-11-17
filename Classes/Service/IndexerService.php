@@ -175,6 +175,10 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
                 'foreign_uid' => $checkUid,
             ]);
 
+            // The record is deleted in the workspace, so the entries of the live workspace
+            // have to be marked as deleted for the current workspace
+            $this->createDeletePlaceholderForLiveItems($tableName, $checkUid, $workspace);
+
             return;
         }
 
@@ -196,18 +200,29 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
             ]);
 
             // Create deleted items for every entry in the live workspace
-            $liveItems = $this->rawIndexRepository->findAllEvents($tableName, $checkUid);
-
-            foreach ($liveItems as $liveItem) {
-                $liveItem['t3ver_state'] = VersionState::DELETE_PLACEHOLDER->value;
-                $liveItem['t3ver_oid'] = $liveItem['uid'];
-                $liveItem['t3ver_wsid'] = $workspace;
-                unset($liveItem['uid']);
-                $this->rawIndexRepository->insert($liveItem);
-            }
+            $this->createDeletePlaceholderForLiveItems($tableName, $checkUid, $workspace);
         }
 
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
+    }
+
+    /**
+     * Create a delete placeholder in the given workspace for every index item of the live workspace.
+     * Otherwise, the live items would still be visible in the workspace.
+     */
+    protected function createDeletePlaceholderForLiveItems(string $tableName, int $liveUid, int $workspace): void
+    {
+        if (!$workspace) {
+            return;
+        }
+
+        foreach ($this->rawIndexRepository->findAllEvents($tableName, $liveUid) as $liveItem) {
+            $liveItem['t3ver_state'] = VersionState::DELETE_PLACEHOLDER->value;
+            $liveItem['t3ver_oid'] = $liveItem['uid'];
+            $liveItem['t3ver_wsid'] = $workspace;
+            unset($liveItem['uid']);
+            $this->rawIndexRepository->insert($liveItem);
+        }
     }
 
     /**

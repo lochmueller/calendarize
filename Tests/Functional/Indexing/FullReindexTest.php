@@ -69,8 +69,7 @@ class FullReindexTest extends AbstractFunctionalTestCase
         $workspace3 = $this->rawIndexRepository->findAllEvents('tx_calendarize_domain_model_event', 3, 91);
 
         self::assertCount(0, $live3, 'Live 3 count');
-        // @todo Check
-        // self::assertCount(1, $workspace3, 'Workspace 3 count');
+        self::assertCount(1, $workspace3, 'Workspace 3 count');
 
         $live4 = $this->rawIndexRepository->findAllEvents('tx_calendarize_domain_model_event', 4, 0);
         $workspace4 = $this->rawIndexRepository->findAllEvents('tx_calendarize_domain_model_event', 4, 91);
@@ -88,8 +87,7 @@ class FullReindexTest extends AbstractFunctionalTestCase
         $workspace6 = $this->rawIndexRepository->findAllEvents('tx_calendarize_domain_model_event', 6, 91);
 
         self::assertCount(1, $live6, 'Live 6 count');
-        // @todo Check
-        // self::assertCount(0, $workspace6, 'Workspace 6 count');
+        self::assertCount(0, $workspace6, 'Workspace 6 count');
     }
 
     protected function fetchAllIndex(): array
