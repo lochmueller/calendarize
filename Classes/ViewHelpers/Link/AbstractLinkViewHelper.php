@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
@@ -123,7 +124,9 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
             'parameter' => (int)$pageUid > 0 ? (int)$pageUid : 'current',
         ];
         if ([] !== $queryParameters) {
-            $typolinkConfiguration['queryParameters'] = $queryParameters;
+            // "additionalParams" instead of "queryParameters", because the array based
+            // configuration is only available since TYPO3 v14.
+            $typolinkConfiguration['additionalParams'] = HttpUtility::buildQueryString($queryParameters, '&');
         }
         if ('' !== $section) {
             $typolinkConfiguration['section'] = $section;
