@@ -1,0 +1,10 @@
+page = PAGE
+page.10 = FLUIDTEMPLATE
+page.10 {
+    template = TEXT
+    template.value (
+        {namespace c=HDNET\Calendarize\ViewHelpers}
+        <div id="uri-list"><c:uri.list pageUid="2" /></div>
+        <div id="link-list"><c:link.list pageUid="2">List</c:link.list></div>
+    )
+}

@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Typolink\LinkFactory;
+use TYPO3\CMS\Frontend\Typolink\UnableToLinkException;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
@@ -55,15 +61,8 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
         bool $absolute = false,
         $section = '',
     ): string {
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $this->lastHref = $uriBuilder->reset()
-            ->setRequest($this->getRequest())
-            ->setTargetPageUid($pageUid)
-            ->setSection($section)
-            ->setArguments($additionalParams)
-            ->setCreateAbsoluteUri($absolute)
-            ->build();
+        $this->lastHref = $this->buildUri($pageUid, $additionalParams, $absolute, (string)$section);
+
         if ('' !== $this->lastHref) {
             $this->tag->addAttribute('href', $this->lastHref);
             $this->tag->setContent($this->renderChildren());
@@ -72,7 +71,80 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
             $result = $this->renderChildren();
         }
 
-        return $result;
+        return (string)$result;
+    }
+
+    /**
+     * Build the URI for the given page and query parameters.
+     *
+     * Works with an Extbase request as well as with a plain PSR-7 request, which is
+     * the case if the ViewHelper is used outside of an Extbase context (e.g. in a
+     * FLUIDTEMPLATE or in a template rendered by another extension).
+     */
+    protected function buildUri(
+        ?int $pageUid,
+        array $queryParameters = [],
+        bool $absolute = false,
+        string $section = '',
+    ): string {
+        $request = $this->getRequest();
+
+        if ($request instanceof ExtbaseRequestInterface) {
+            /** @var UriBuilder $uriBuilder */
+            $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+
+            return $uriBuilder->reset()
+                ->setRequest($request)
+                ->setTargetPageUid($pageUid)
+                ->setSection($section)
+                ->setArguments($queryParameters)
+                ->setCreateAbsoluteUri($absolute)
+                ->build();
+        }
+
+        if ($request instanceof ServerRequestInterface && $this->isFrontendRequest($request)) {
+            return $this->buildFrontendUri($request, $pageUid, $queryParameters, $absolute, $section);
+        }
+
+        return '';
+    }
+
+    /**
+     * Build the URI via typolink, without any Extbase context.
+     */
+    protected function buildFrontendUri(
+        ServerRequestInterface $request,
+        ?int $pageUid,
+        array $queryParameters = [],
+        bool $absolute = false,
+        string $section = '',
+    ): string {
+        $typolinkConfiguration = [
+            'parameter' => (int)$pageUid > 0 ? (int)$pageUid : 'current',
+        ];
+        if ([] !== $queryParameters) {
+            $typolinkConfiguration['queryParameters'] = $queryParameters;
+        }
+        if ('' !== $section) {
+            $typolinkConfiguration['section'] = $section;
+        }
+        if ($absolute) {
+            $typolinkConfiguration['forceAbsoluteUrl'] = true;
+        }
+
+        $contentObjectRenderer = $request->getAttribute('currentContentObject');
+        if (!$contentObjectRenderer instanceof ContentObjectRenderer) {
+            $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+            $contentObjectRenderer->setRequest($request);
+        }
+
+        try {
+            return GeneralUtility::makeInstance(LinkFactory::class)
+                ->create('', $typolinkConfiguration, $contentObjectRenderer)
+                ->getUrl();
+        } catch (UnableToLinkException) {
+            return '';
+        }
     }
 
     /**
@@ -96,7 +168,36 @@ abstract class AbstractLinkViewHelper extends AbstractTagBasedViewHelper
             }
         }
 
-        return $this->getRequest()->getAttribute('routing')->getPageId() ?? 0;
+        return $this->getCurrentPageUid();
+    }
+
+    /**
+     * Get the UID of the current page, if there is any.
+     */
+    protected function getCurrentPageUid(): int
+    {
+        $request = $this->getRequest();
+        if (!$request instanceof ServerRequestInterface) {
+            return 0;
+        }
+
+        $pageInformation = $request->getAttribute('frontend.page.information');
+        if (null !== $pageInformation) {
+            return (int)$pageInformation->getId();
+        }
+
+        $pageArguments = $request->getAttribute('routing');
+        if ($pageArguments instanceof PageArguments) {
+            return $pageArguments->getPageId();
+        }
+
+        return 0;
+    }
+
+    protected function isFrontendRequest(ServerRequestInterface $request): bool
+    {
+        return is_int($request->getAttribute('applicationType'))
+            && ApplicationType::fromRequest($request)->isFrontend();
     }
 
     protected function getRequest(): ?ServerRequestInterface

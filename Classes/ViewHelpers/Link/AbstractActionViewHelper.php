@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\ViewHelpers\Link;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface as ExtbaseRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Extbase\Service\ExtensionService;
 
 class AbstractActionViewHelper extends AbstractLinkViewHelper
 {
@@ -29,25 +32,12 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
      */
     public function renderExtbaseLink(array $controllerArguments = [], ?int $pageUid = null): string
     {
-        $absolute = $this->arguments['absolute'] ?? false;
+        $absolute = (bool)($this->arguments['absolute'] ?? false);
         $pageUid = $pageUid ?? $this->getPageUid();
 
-        $section = $this->arguments['section'] ?? '';
+        $section = (string)($this->arguments['section'] ?? '');
 
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $this->lastHref = $uriBuilder->reset()
-            ->setRequest($this->getRequest())
-            ->setTargetPageUid($pageUid)
-            ->setSection($section)
-            ->setCreateAbsoluteUri($absolute)
-            ->uriFor(
-                $this->actionName,
-                $controllerArguments,
-                $this->controllerName,
-                $this->extensionName,
-                $this->pluginName,
-            );
+        $this->lastHref = $this->buildActionUri($controllerArguments, $pageUid, $absolute, $section);
 
         if ('' !== $this->lastHref) {
             $this->tag->addAttribute('href', $this->lastHref);
@@ -59,5 +49,73 @@ class AbstractActionViewHelper extends AbstractLinkViewHelper
         }
 
         return (string)$result;
+    }
+
+    /**
+     * Build the URI to the Extbase action.
+     *
+     * If the ViewHelper is used outside of an Extbase context, the rendering context only
+     * provides a plain PSR-7 request, which the Extbase UriBuilder cannot handle. In that
+     * case the controller arguments are prefixed with the plugin namespace manually and
+     * the link is built via typolink.
+     */
+    protected function buildActionUri(
+        array $controllerArguments,
+        ?int $pageUid,
+        bool $absolute,
+        string $section,
+    ): string {
+        $request = $this->getRequest();
+
+        if ($request instanceof ExtbaseRequestInterface) {
+            /** @var UriBuilder $uriBuilder */
+            $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+
+            return $uriBuilder->reset()
+                ->setRequest($request)
+                ->setTargetPageUid($pageUid)
+                ->setSection($section)
+                ->setCreateAbsoluteUri($absolute)
+                ->uriFor(
+                    $this->actionName,
+                    $controllerArguments,
+                    $this->controllerName,
+                    $this->extensionName,
+                    $this->pluginName,
+                );
+        }
+
+        if (!$request instanceof ServerRequestInterface || !$this->isFrontendRequest($request)) {
+            return '';
+        }
+
+        if (null !== $this->actionName) {
+            $controllerArguments['action'] = $this->actionName;
+        }
+        if (null !== $this->controllerName) {
+            $controllerArguments['controller'] = $this->controllerName;
+        }
+
+        return $this->buildFrontendUri(
+            $request,
+            $pageUid,
+            [$this->getPluginNamespace() => $controllerArguments],
+            $absolute,
+            $section,
+        );
+    }
+
+    /**
+     * Resolve the plugin namespace (e.g. "tx_calendarize_calendar") of the target plugin.
+     */
+    protected function getPluginNamespace(): string
+    {
+        try {
+            return GeneralUtility::makeInstance(ExtensionService::class)
+                ->getPluginNamespace($this->extensionName, $this->pluginName);
+        } catch (\Throwable) {
+            // The ExtensionService is not available in every context, use the default namespace
+            return 'tx_' . strtolower($this->extensionName . '_' . $this->pluginName);
+        }
     }
 }
