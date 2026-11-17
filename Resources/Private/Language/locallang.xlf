@@ -471,40 +471,40 @@
 				<source>Booking</source>
 			</trans-unit>
 			<trans-unit id="mode.day">
-				<source>Day</source>
+				<source>Calendarize - Day</source>
 			</trans-unit>
 			<trans-unit id="mode.detail">
-				<source>Detail only</source>
+				<source>Calendarize - Detail only</source>
 			</trans-unit>
 			<trans-unit id="mode.latest">
-				<source>Latest</source>
+				<source>Calendarize - Latest</source>
 			</trans-unit>
 			<trans-unit id="mode.list">
-				<source>List only</source>
+				<source>Calendarize - List only</source>
 			</trans-unit>
 			<trans-unit id="mode.listdetail">
-				<source>List + Detail</source>
+				<source>Calendarize - List + Detail</source>
 			</trans-unit>
 			<trans-unit id="mode.month">
-				<source>Month</source>
+				<source>Calendarize - Month</source>
 			</trans-unit>
 			<trans-unit id="mode.normal">
 				<source>Calendarize - Normal</source>
 			</trans-unit>
 			<trans-unit id="mode.result">
-				<source>Search result</source>
+				<source>Calendarize - Search result</source>
 			</trans-unit>
 			<trans-unit id="mode.search">
-				<source>Search</source>
+				<source>Calendarize - Search</source>
 			</trans-unit>
 			<trans-unit id="mode.special">
 				<source>Calendarize - Special Views</source>
 			</trans-unit>
 			<trans-unit id="mode.single">
-				<source>Single</source>
+				<source>Calendarize - Single</source>
 			</trans-unit>
 			<trans-unit id="mode.past">
-				<source>Past</source>
+				<source>Calendarize - Past</source>
 			</trans-unit>
 			<trans-unit id="singleItems">
 				<source>Single items</source>
@@ -512,16 +512,16 @@
 
 
 			<trans-unit id="mode.week">
-				<source>Week</source>
+				<source>Calendarize - Week</source>
 			</trans-unit>
 			<trans-unit id="week">
 				<source>Week</source>
 			</trans-unit>
 			<trans-unit id="mode.year">
-				<source>Year</source>
+				<source>Calendarize - Year</source>
 			</trans-unit>
 			<trans-unit id="mode.quarter">
-				<source>Quarter</source>
+				<source>Calendarize - Quarter</source>
 			</trans-unit>
 			<trans-unit id="monthPid">
 				<source>Month PID</source>

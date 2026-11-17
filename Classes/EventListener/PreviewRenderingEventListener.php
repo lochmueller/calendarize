@@ -42,7 +42,7 @@ class PreviewRenderingEventListener
             return;
         }
 
-        $this->layoutService->setTitle(' Calendarize');
+        $this->layoutService->setTitle('Calendarize');
 
         $pluginConfiguration = (int)$this->flexFormService->get('settings.pluginConfiguration', 'main');
         if ($pluginConfiguration) {
