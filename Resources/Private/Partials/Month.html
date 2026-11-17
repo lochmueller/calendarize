@@ -67,13 +67,15 @@
 </table>
 
 <f:if condition="{settings.useMomentFullCalendarIo}">
-	<div id="fullCalendarIo" class="fullCalendarIo" data-language="{c:language()}">&nbsp;</div>
+	<f:variable name="fullCalendarIoId">fullCalendarIo-c{contentObject.uid}-{date -> f:format.date(format: 'Y-m')}</f:variable>
+	<div id="{fullCalendarIoId}" class="fullCalendarIo" data-language="{c:language()}" data-initial-date="{date -> f:format.date(format: 'Y-m-d')}" data-first-day="{settings.weekStart}">&nbsp;</div>
 
 	<script type="text/javascript">
-		let monthEvents = [];
-		let monthEventsCurrentDate = '<f:format.date format="Y-m-d">{date}</f:format.date>';
-		let monthFirstDay = '{settings.weekStart}';
-		<f:for each="{indices}" as="index">
+		(function () {
+			let calendarEl = document.getElementById('{fullCalendarIoId}');
+			let monthEvents = [];
+			let tmp;
+			<f:for each="{indices}" as="index">
 			tmp = {};
 			tmp.id = {index.uid};
 			tmp.allDay = false;
@@ -85,6 +87,14 @@
 			</f:if>
 			tmp.url = '<c:uri.index index="{index}" pageUid="{settings.detailPid}" />';
 			monthEvents.push(tmp);
-		</f:for>
+			</f:for>
+			if (calendarEl) {
+				calendarEl.calendarizeEvents = monthEvents;
+			}
+			// Deprecated globals, only kept for custom JavaScript that relies on them
+			window.monthEvents = monthEvents;
+			window.monthEventsCurrentDate = '<f:format.date format="Y-m-d">{date}</f:format.date>';
+			window.monthFirstDay = '{settings.weekStart}';
+		})();
 	</script>
 </f:if>
