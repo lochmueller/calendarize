@@ -752,7 +752,15 @@ class CalendarController extends AbstractController
     protected function hasCustomSearch(array $customSearch): bool
     {
         // Do not use !empty($customSearch) to avoid empty entries in the search form
-        return implode('', $customSearch) !== '';
+        // Walk recursively, because customSearch can contain nested values (e.g. multi selects)
+        $hasSearch = false;
+        array_walk_recursive($customSearch, static function ($value) use (&$hasSearch): void {
+            if ($value !== null && $value !== '') {
+                $hasSearch = true;
+            }
+        });
+
+        return $hasSearch;
     }
 
     protected function checkWrongDateOrder(?\DateTime $startDate = null, ?\DateTime &$endDate = null): array
