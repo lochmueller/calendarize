@@ -1,0 +1,7 @@
+"tx_calendarize_domain_model_event"
+,"uid","pid","sys_language_uid","l10n_parent","title","calendarize","deleted"
+,1,1,0,0,"Event with group 1",10,0
+# Translation of the event 1 (uses the configurations of the default language)
+,2,1,1,1,"Event with group 1 (DE)","",0
+,3,1,0,0,"Event with nested group",12,0
+,4,1,0,0,"Event without group",13,0

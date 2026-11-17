@@ -1,0 +1,7 @@
+"tx_calendarize_domain_model_configurationgroup"
+,"uid","pid","title","configurations","deleted"
+,1,1,"Group 1","1,2",0
+,2,1,"Group 2","3",0
+# Nested group, that uses the group 1 via the configuration 11
+,3,1,"Nested group","11",0
+,4,1,"Unrelated group","",0

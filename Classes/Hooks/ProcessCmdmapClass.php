@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Hooks;
 
 use HDNET\Calendarize\Register;
+use HDNET\Calendarize\Service\ConfigurationRelationService;
 use HDNET\Calendarize\Service\IndexerService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Context\Context;
@@ -108,6 +109,15 @@ class ProcessCmdmapClass
                     }
                 }
                 $indexer->reindex($key, $table, (int)$uid);
+            }
+        }
+
+        // Deleting/restoring a configuration or a configuration group affects all records that use them
+        if (\in_array($command, ['delete', 'undelete'], true)) {
+            if (ConfigurationRelationService::GROUP_TABLE === $table) {
+                $indexer->reindexByConfigurationGroups([(int)$uid]);
+            } elseif (ConfigurationRelationService::CONFIGURATION_TABLE === $table) {
+                $indexer->reindexByConfigurations([(int)$uid]);
             }
         }
     }

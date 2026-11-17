@@ -1,0 +1,15 @@
+"tx_calendarize_domain_model_configuration"
+,"uid","pid","type","handling","start_date","all_day","groups","deleted"
+# Configurations of the group 1
+,1,1,"time","include","2026-04-01",1,"",0
+,2,1,"time","include","2026-04-02",1,"",0
+# Configurations of the group 2
+,3,1,"time","include","2026-05-01",1,"",0
+# Configuration of the type "group", that uses the group 1
+,10,1,"group","include","\NULL",0,"1",0
+# Configuration of the type "group", that uses the group 1 and 2
+,11,1,"group","include","\NULL",0,"1,2",0
+# Configuration of the type "group", that uses the group 3 (nested group)
+,12,1,"group","include","\NULL",0,"3",0
+# Configuration of the type "group", that uses a complete other group
+,13,1,"group","include","\NULL",0,"4",0

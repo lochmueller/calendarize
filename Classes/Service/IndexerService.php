@@ -114,6 +114,45 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
     }
 
     /**
+     * Reindex all records (e.g. events), that use one of the given configuration groups.
+     * This also includes the records, that use the group via another (nested) group.
+     *
+     * @param int[] $groupUids
+     */
+    public function reindexByConfigurationGroups(array $groupUids): void
+    {
+        $this->reindexAffectedRecords([], $groupUids);
+    }
+
+    /**
+     * Reindex all records (e.g. events and configuration groups), that use one of the given configurations.
+     *
+     * @param int[] $configurationUids
+     */
+    public function reindexByConfigurations(array $configurationUids): void
+    {
+        $this->reindexAffectedRecords($configurationUids, []);
+    }
+
+    /**
+     * Reindex all records that are affected by the given configurations and/or configuration groups.
+     *
+     * @param int[] $configurationUids
+     * @param int[] $groupUids
+     */
+    public function reindexAffectedRecords(array $configurationUids, array $groupUids): void
+    {
+        if (!$configurationUids && !$groupUids) {
+            return;
+        }
+
+        $relationService = GeneralUtility::makeInstance(ConfigurationRelationService::class);
+        foreach ($relationService->findAffectedRecords($configurationUids, $groupUids) as $record) {
+            $this->reindex($record['uniqueRegisterKey'], $record['tableName'], $record['uid']);
+        }
+    }
+
+    /**
      * Build the index for one element.
      */
     protected function updateIndex(string $configurationKey, string $tableName, int $uid): void
