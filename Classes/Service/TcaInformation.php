@@ -63,7 +63,7 @@ class TcaInformation extends AbstractService
             return $this->wrapContent(TranslateUtility::get('save.first'));
         }
         $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
-        $items = $timeTableService->getTimeTablesByConfigurationIds($ids, 0);
+        $items = $timeTableService->getTimeTablesByConfigurationIds($ids, WorkspaceUtility::getCurrentWorkspaceId());
 
         return $this->wrapContent($this->getEventList($items));
     }

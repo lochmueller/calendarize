@@ -18,13 +18,23 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ProcessCmdmapClass
 {
-    protected static int $lastProcessedEventId = 0;
-    protected static int $lastProcessedEventIdLive = 0;
+    /**
+     * Information about the event (or any other calendarize record) that is currently
+     * published or discarded.
+     *
+     * @var array{key: string, tableName: string, uid: int, liveUid: int}
+     */
+    protected static array $lastProcessedEvent = [
+        'key' => '',
+        'tableName' => '',
+        'uid' => 0,
+        'liveUid' => 0,
+    ];
 
     /**
-     * As the versioning process is always handles in the same order - first events, then configurations - we
-     * have to save the event-ids, which are handled and do the actions later on the configurations.
-     * Reindexing only make sense after publishing the last configuration!
+     * As the versioning process is always handled in the same order - first events, then configurations - we
+     * have to save the event, which is handled and do the actions later on the configurations.
+     * Reindexing only makes sense after publishing the last configuration!
      */
     public function processCmdmap_preProcess(
         int|string $command,
@@ -34,38 +44,43 @@ class ProcessCmdmapClass
         DataHandler $handler,
         false|array $pasteUpdate,
     ): void {
-        if ($command === 'version') {
-            $register = Register::getRegister();
+        if ('version' !== $command) {
+            return;
+        }
 
-            foreach ($register as $key => $configuration) {
-                // we just want the event!
-                if ($key === 'ConfigurationGroup') {
-                    continue;
-                }
+        foreach (Register::getRegister() as $key => $configuration) {
+            // we just want the event!
+            if ('ConfigurationGroup' === $key || $configuration['tableName'] !== $table) {
+                continue;
+            }
 
-                // if it is any event
-                if ($configuration['tableName'] === $table) {
-                    switch ($value['action'] ?? '') {
-                        // We need to save the live-uid for deleting the workspace-indexes
-                        // after deleting the workspace version
-                        case 'clearWSID':
-                            $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-                                ->getConnectionForTable($table);
+            switch ($value['action'] ?? '') {
+                // We need to save the live-uid for deleting the workspace-indexes
+                // after deleting the workspace version
+                case 'clearWSID':
+                    $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+                        ->getConnectionForTable($table);
 
-                            // get original version of this record
-                            $row = $connection->select(['t3ver_oid'], $table, ['uid' => $uid])
-                                ->fetchAssociative();
+                    // get original version of this record
+                    $row = $connection->select(['t3ver_oid'], $table, ['uid' => $uid])
+                        ->fetchAssociative();
 
-                            self::$lastProcessedEventId = $uid;
-                            self::$lastProcessedEventIdLive = $row['t3ver_oid'] ?? 0;
-                            break;
-                            // we need to save both values for publishing a deleted record
-                        case 'publish':
-                            self::$lastProcessedEventId = $value['swapWith'] ?? 0;
-                            self::$lastProcessedEventIdLive = $uid;
-                            break;
-                    }
-                }
+                    self::$lastProcessedEvent = [
+                        'key' => $key,
+                        'tableName' => $table,
+                        'uid' => (int)$uid,
+                        'liveUid' => (int)($row['t3ver_oid'] ?? 0),
+                    ];
+                    break;
+                    // we need to save both values for publishing a deleted record
+                case 'publish':
+                    self::$lastProcessedEvent = [
+                        'key' => $key,
+                        'tableName' => $table,
+                        'uid' => (int)($value['swapWith'] ?? 0),
+                        'liveUid' => (int)$uid,
+                    ];
+                    break;
             }
         }
     }
@@ -86,30 +101,39 @@ class ProcessCmdmapClass
         $indexer = GeneralUtility::makeInstance(IndexerService::class);
         /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
-        $workspaceId = $context->getPropertyFromAspect('workspace', 'id');
+        $workspaceId = (int)$context->getPropertyFromAspect('workspace', 'id');
 
-        $register = Register::getRegister();
+        $action = \is_array($value) ? (string)($value['action'] ?? '') : '';
 
-        $action = $value['action'] ?? '';
+        // The configurations of a record are published/discarded after the record itself. As the
+        // index is based on the data of the configurations, it has to be rebuilt afterwards.
+        if ('version' === $command && ConfigurationRelationService::CONFIGURATION_TABLE === $table) {
+            $this->finishVersionAction($indexer, $action, $workspaceId);
 
-        foreach ($register as $key => $configuration) {
-            if ('version' === $command && 'tx_calendarize_domain_model_configuration' === $table) {
-                if ('publish' === $action) {
-                    $indexer->reindex($key, $configuration['tableName'], self::$lastProcessedEventIdLive);
-                    $this->removeWorkspaceIndexes($configuration, $workspaceId, self::$lastProcessedEventIdLive);
-                } elseif ('clearWSID' === $action) {
-                    $this->removeWorkspaceIndexes($configuration, $workspaceId, self::$lastProcessedEventIdLive);
-                }
-            } elseif ($configuration['tableName'] === $table) {
-                // the live-uid is given there. But we need the overlayed one for further process
-                if ('delete' === $command && $workspaceId) {
-                    $wsOverlay = BackendUtility::getRecordWSOL($table, $uid, '', false);
-                    if ($wsOverlay['_ORIG_uid']) {
-                        $uid = $wsOverlay['_ORIG_uid'];
-                    }
-                }
-                $indexer->reindex($key, $table, (int)$uid);
+            return;
+        }
+
+        foreach (Register::getRegister() as $key => $configuration) {
+            if ($configuration['tableName'] !== $table) {
+                continue;
             }
+
+            if ('version' === $command && \in_array($action, ['publish', 'clearWSID'], true)) {
+                // Configurations that are handled internally by the core (e.g. on discard) never
+                // show up in the command map, so the index is also updated for the record itself.
+                $this->finishVersionAction($indexer, $action, $workspaceId);
+
+                continue;
+            }
+
+            // the live-uid is given there. But we need the overlayed one for further process
+            if ('delete' === $command && $workspaceId) {
+                $wsOverlay = BackendUtility::getRecordWSOL($table, (int)$uid, '', false);
+                if ($wsOverlay['_ORIG_uid'] ?? false) {
+                    $uid = $wsOverlay['_ORIG_uid'];
+                }
+            }
+            $indexer->reindex($key, $table, (int)$uid);
         }
 
         // Deleting/restoring a configuration or a configuration group affects all records that use them
@@ -122,14 +146,55 @@ class ProcessCmdmapClass
         }
     }
 
+    /**
+     * Update the index after a record (or one of its configurations) was published or discarded.
+     *
+     * In both cases the workspace indexes of the record are obsolete: after publishing the data
+     * lives in the live workspace, after discarding the workspace version is gone. The live
+     * record itself is reindexed, as its configurations may have changed with the publishing.
+     */
+    protected function finishVersionAction(IndexerService $indexer, string $action, int $workspaceId): void
+    {
+        if (!\in_array($action, ['publish', 'clearWSID'], true)) {
+            return;
+        }
+
+        $event = self::$lastProcessedEvent;
+        if ('' === $event['key']) {
+            return;
+        }
+
+        $configuration = Register::getRegister()[$event['key']] ?? null;
+        if (null === $configuration) {
+            return;
+        }
+
+        // A record that only exists in the workspace has no live counterpart, its indexes are
+        // related to the workspace record itself.
+        $this->removeWorkspaceIndexes($configuration, $workspaceId, $event['liveUid'] ?: $event['uid']);
+
+        $liveUid = $event['liveUid'] ?: ('publish' === $action ? $event['uid'] : 0);
+        if ($liveUid > 0) {
+            $indexer->reindex($event['key'], $event['tableName'], $liveUid);
+        }
+    }
+
     protected function removeWorkspaceIndexes(array $configuration, int $workspaceId, int $parentId): void
     {
+        if (!$workspaceId || !$parentId) {
+            return;
+        }
+
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('tx_calendarize_domain_model_index');
+            ->getConnectionForTable(IndexerService::TABLE_NAME);
 
         $connection->delete(
-            'tx_calendarize_domain_model_index',
-            ['t3ver_wsid' => $workspaceId, 'foreign_uid' => $parentId, 'unique_register_key' => $configuration['uniqueRegisterKey']],
+            IndexerService::TABLE_NAME,
+            [
+                't3ver_wsid' => $workspaceId,
+                'foreign_uid' => $parentId,
+                'unique_register_key' => $configuration['uniqueRegisterKey'],
+            ],
         );
     }
 }

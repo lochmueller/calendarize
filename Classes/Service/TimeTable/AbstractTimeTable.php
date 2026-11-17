@@ -8,6 +8,7 @@ use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 use HDNET\Calendarize\Service\AbstractService;
 use HDNET\Calendarize\Service\TimeTableService;
+use HDNET\Calendarize\Utility\WorkspaceUtility;
 
 /**
  * Abstract time table service.
@@ -34,10 +35,16 @@ abstract class AbstractTimeTable extends AbstractService
 
     /**
      * Build a single timetable by group.
+     *
+     * The configurations of the group are resolved in the workspace of the record that is
+     * currently processed (the TimeTableService sets the workspace of the context).
      */
     protected function buildSingleTimeTableByGroup(ConfigurationGroup $group): array
     {
-        return $this->timeTableService->getTimeTablesByConfigurationIds($group->getConfigurationIds(), 0);
+        return $this->timeTableService->getTimeTablesByConfigurationIds(
+            $group->getConfigurationIds(),
+            WorkspaceUtility::getCurrentWorkspaceId(),
+        );
     }
 
     /**

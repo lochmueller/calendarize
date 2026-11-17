@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Domain\Model\Configuration;
+use HDNET\Calendarize\Domain\Model\ConfigurationGroup;
 use HDNET\Calendarize\Domain\Repository\RawIndexRepository;
 use HDNET\Calendarize\Event\IndexAllEvent;
 use HDNET\Calendarize\Event\IndexPreUpdateEvent;
@@ -20,6 +22,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Versioning\VersionState;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 
 /**
  * Index the given events.
@@ -38,6 +41,7 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         protected IndexPreparationService $preparationService,
         protected SlugService $slugService,
         protected RawIndexRepository $rawIndexRepository,
+        protected Session $persistenceSession,
     ) {}
 
     /**
@@ -157,6 +161,8 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
      */
     protected function updateIndex(string $configurationKey, string $tableName, int $uid): void
     {
+        $this->purgeConfigurationsFromPersistenceSession();
+
         $rawRecord = BackendUtility::getRecord($tableName, $uid);
 
         $checkUid = $uid;
@@ -204,6 +210,30 @@ class IndexerService extends AbstractService implements LoggerAwareInterface
         }
 
         $this->insertAndUpdateNeededItems($neededItems, $tableName, $uid, $workspace);
+    }
+
+    /**
+     * Drop all calendarize configurations from the Extbase identity map (persistence session).
+     *
+     * Extbase keeps every mapped object in the persistence session and returns the very same
+     * object for all following queries. If the underlying record changes within the same request -
+     * which happens while the DataHandler publishes or discards a workspace version - the
+     * repositories hand out the outdated object and the index would be rebuilt with stale data.
+     *
+     * @see https://github.com/lochmueller/calendarize/issues/662
+     */
+    protected function purgeConfigurationsFromPersistenceSession(): void
+    {
+        foreach ($this->persistenceSession->getReconstitutedEntities() as $entity) {
+            if (!($entity instanceof Configuration || $entity instanceof ConfigurationGroup)) {
+                continue;
+            }
+
+            $this->persistenceSession->unregisterReconstitutedEntity($entity);
+            if ($this->persistenceSession->hasObject($entity)) {
+                $this->persistenceSession->unregisterObject($entity);
+            }
+        }
     }
 
     /**

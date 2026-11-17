@@ -1,0 +1,6 @@
+"tx_calendarize_domain_model_event"
+,"uid","pid","title","calendarize","t3ver_state","t3ver_oid","t3ver_wsid","deleted"
+# Live event, that is modified in the workspace during the tests
+,1,102,"Live Event",1,0,0,0,0
+# Event that only exists in the workspace
+,10,102,"Workspace only",10,1,0,91,0

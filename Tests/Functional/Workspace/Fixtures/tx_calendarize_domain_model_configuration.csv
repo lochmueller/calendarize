@@ -1,0 +1,4 @@
+"tx_calendarize_domain_model_configuration"
+,"uid","pid","type","handling","start_date","all_day","t3ver_state","t3ver_oid","t3ver_wsid","deleted"
+,1,102,"time","include","2026-04-01",1,0,0,0,0
+,10,102,"time","include","2026-05-05",1,1,0,91,0

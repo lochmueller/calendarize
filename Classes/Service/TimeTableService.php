@@ -11,6 +11,8 @@ use HDNET\Calendarize\Service\TimeTable\AbstractTimeTable;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use HDNET\Calendarize\Utility\HelperUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\WorkspaceAspect;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
@@ -29,13 +31,37 @@ class TimeTableService extends AbstractService
 
     /**
      * Build the timetable for the given configuration matrix (sorted).
+     *
+     * The timetable is always built with the data of the given workspace, independent of the
+     * workspace the current backend user is working in. Otherwise, publishing or discarding a
+     * version from within a workspace would build the index of the live record with the data of
+     * the workspace version (Extbase overlays every record with the workspace of the context).
+     *
+     * @see https://github.com/lochmueller/calendarize/issues/662
      */
     public function getTimeTablesByConfigurationIds(array $ids, int $workspace): array
     {
-        $timeTable = [];
         if (!$ids) {
-            return $timeTable;
+            return [];
         }
+
+        $context = GeneralUtility::makeInstance(Context::class);
+        $previousWorkspaceAspect = $context->getAspect('workspace');
+        $context->setAspect('workspace', new WorkspaceAspect($workspace));
+
+        try {
+            return $this->buildTimeTablesByConfigurationIds($ids, $workspace);
+        } finally {
+            $context->setAspect('workspace', $previousWorkspaceAspect);
+        }
+    }
+
+    /**
+     * Build the timetable for the given configuration matrix (sorted).
+     */
+    protected function buildTimeTablesByConfigurationIds(array $ids, int $workspace): array
+    {
+        $timeTable = [];
 
         if (null === $this->configurationRepository) {
             $this->configurationRepository = GeneralUtility::makeInstance(ConfigurationRepository::class);
