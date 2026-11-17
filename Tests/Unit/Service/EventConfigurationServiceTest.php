@@ -27,6 +27,32 @@ class EventConfigurationServiceTest extends AbstractUnitTestCase
             ['FREQ' => 'DAILY'],
             ['frequency' => ConfigurationInterface::FREQUENCY_DAILY],
         ];
+        yield 'daily frequency limited to weekdays' => [
+            ['FREQ' => 'DAILY', 'BYDAY' => 'MO,WE'],
+            [
+                'frequency' => ConfigurationInterface::FREQUENCY_DAILY,
+                'day' => [ConfigurationInterface::DAY_MONDAY, ConfigurationInterface::DAY_WEDNESDAY],
+            ],
+        ];
+        yield 'hourly frequency limited to a weekday (BYDAY as array)' => [
+            ['FREQ' => 'HOURLY', 'BYDAY' => ['SA'], 'INTERVAL' => '2'],
+            [
+                'frequency' => ConfigurationInterface::FREQUENCY_HOURLY,
+                'counterInterval' => 2,
+                'day' => [ConfigurationInterface::DAY_SATURDAY],
+            ],
+        ];
+        yield 'daily frequency ignores BYSETPOS' => [
+            ['FREQ' => 'DAILY', 'BYDAY' => 'FR', 'BYSETPOS' => '2'],
+            [
+                'frequency' => ConfigurationInterface::FREQUENCY_DAILY,
+                'day' => [ConfigurationInterface::DAY_FRIDAY],
+            ],
+        ];
+        yield 'weekly frequency ignores BYDAY' => [
+            ['FREQ' => 'WEEKLY', 'BYDAY' => 'MO'],
+            ['frequency' => ConfigurationInterface::FREQUENCY_WEEKLY],
+        ];
         yield 'weekly frequency with until' => [
             ['FREQ' => 'MONTHLY', 'UNTIL' => '20060402T070000Z'],
             ['frequency' => ConfigurationInterface::FREQUENCY_MONTHLY, 'tillDate' => '2006-04-02'],

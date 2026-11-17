@@ -20,6 +20,15 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 class TimeTimeTable extends AbstractTimeTable
 {
     /**
+     * Frequencies that support the day field as a filter.
+     */
+    protected const DAY_FILTER_FREQUENCIES = [
+        ConfigurationInterface::FREQUENCY_MINUTELY,
+        ConfigurationInterface::FREQUENCY_HOURLY,
+        ConfigurationInterface::FREQUENCY_DAILY,
+    ];
+
+    /**
      * Modify the given times via the configuration.
      *
      * @param array         $times
@@ -42,12 +51,64 @@ class TimeTimeTable extends AbstractTimeTable
         if (!$this->validateBaseEntry($baseEntry)) {
             return;
         }
-        $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
+        $entriesBefore = \count($times);
+        $dayFilter = $this->getDayFilter($configuration);
+        // The base entry is only part of the time table, if it matches the day filter
+        if ($this->matchesDayFilter($baseEntry, $dayFilter)) {
+            $times[$this->calculateEntryKey($baseEntry)] = $baseEntry;
+        }
         $tillDateConfiguration = $this->getTillDateConfiguration($configuration, $baseEntry);
         $this->addFrequencyItems($times, $configuration, $baseEntry, $tillDateConfiguration);
         $this->addRecurrenceItems($times, $configuration, $baseEntry, $tillDateConfiguration);
         $this->respectDynamicEndDates($times, $configuration);
         $this->removeBaseEntryIfNecessary($times, $configuration, $baseEntry, $tillDateConfiguration);
+
+        if ([] !== $dayFilter && \count($times) === $entriesBefore) {
+            HelperUtility::createTranslatedFlashMessage(
+                'flashMessage.dayFilterNoResult.text',
+                'flashMessage.dayFilterNoResult.title',
+                ContextualFeedbackSeverity::WARNING,
+            );
+        }
+    }
+
+    /**
+     * Get the weekdays (date format 'N') the generated items are limited to.
+     *
+     * In contrast to the monthly/yearly frequencies - where the day is the anchor of the
+     * recurrence (e.g. "first monday of the month") - the day acts as a filter for the
+     * day based frequencies. This matches the BYDAY "limit" behaviour of RFC 5545.
+     *
+     * @return array<int> empty, if no filter is configured
+     */
+    protected function getDayFilter(Configuration $configuration): array
+    {
+        if (ConfigurationInterface::DAY_NONE === $configuration->getDay()) {
+            return [];
+        }
+
+        if (!\in_array($configuration->getFrequency(), self::DAY_FILTER_FREQUENCIES, true)) {
+            return [];
+        }
+
+        /** @var RecurrenceService $recurrenceService */
+        $recurrenceService = GeneralUtility::makeInstance(RecurrenceService::class);
+
+        return $recurrenceService->getValidDays($configuration->getDay());
+    }
+
+    /**
+     * Check if the entry starts on one of the given weekdays.
+     *
+     * @param array<int> $dayFilter
+     */
+    protected function matchesDayFilter(array $entry, array $dayFilter): bool
+    {
+        if ([] === $dayFilter || !($entry['start_date'] instanceof \DateTimeInterface)) {
+            return true;
+        }
+
+        return \in_array((int)$entry['start_date']->format('N'), $dayFilter, true);
     }
 
     /**
@@ -182,11 +243,14 @@ class TimeTimeTable extends AbstractTimeTable
         if (!$frequencyIncrement) {
             return;
         }
+        $dayFilter = $this->getDayFilter($configuration);
         $amountCounter = $configuration->getCounterAmount();
         $maxLimit = $this->getFrequencyLimitPerItem();
         $lastLoop = $baseEntry;
         $loopEntriesAdded = 0;
-        for ($i = 0; $loopEntriesAdded < $maxLimit && (0 === $amountCounter || $i < $amountCounter); ++$i) {
+        $repetitions = 0;
+        $skippedDays = [];
+        while ($loopEntriesAdded < $maxLimit && (0 === $amountCounter || $repetitions < $amountCounter)) {
             $loopEntry = $this->createNextLoopEntry($lastLoop, $frequencyIncrement);
 
             if (
@@ -197,6 +261,21 @@ class TimeTimeTable extends AbstractTimeTable
             }
 
             $lastLoop = $loopEntry;
+
+            // Filtered days are no repetitions at all (RFC 5545 counts the remaining occurrences)
+            if (!$this->matchesDayFilter($loopEntry, $dayFilter)) {
+                $skippedDays[$loopEntry['start_date']->format('Y-m-d')] = true;
+                // If seven different days in a row do not match, the increment (e.g. every
+                // seventh day) can never reach one of the configured weekdays.
+                if (\count($skippedDays) > 7) {
+                    break;
+                }
+
+                continue;
+            }
+
+            $skippedDays = [];
+            ++$repetitions;
 
             if (
                 $tillDateConfiguration['tillDatePast'] instanceof \DateTimeInterface

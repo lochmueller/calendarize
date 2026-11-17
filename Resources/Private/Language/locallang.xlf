@@ -195,6 +195,12 @@
 			<trans-unit id="flashMessage.missingStartDate.text" resname="flashMessage.missingStartDate.text">
 				<source>Missing start date of the configuration!</source>
 			</trans-unit>
+			<trans-unit id="flashMessage.dayFilterNoResult.title" resname="flashMessage.dayFilterNoResult.title">
+				<source>No matching weekday</source>
+			</trans-unit>
+			<trans-unit id="flashMessage.dayFilterNoResult.text" resname="flashMessage.dayFilterNoResult.text">
+				<source>The selected weekdays of the date configuration never match the configured frequency and interval, therefore no dates are created.</source>
+			</trans-unit>
 			<trans-unit id="flashMessage.invalidExternalUrl.title" resname="flashMessage.invalidExternalUrl.title">
 				<source>Invalid external URL</source>
 			</trans-unit>
@@ -659,6 +665,9 @@
 			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.day">
 				<source>Day</source>
+			</trans-unit>
+			<trans-unit id="tx_calendarize_domain_model_configuration.day.description">
+				<source>Minutely/hourly/daily frequency: only create dates that start on one of the selected weekdays. Monthly/yearly frequency: the weekday the recurrence (e.g. "first") refers to.</source>
 			</trans-unit>
 			<trans-unit id="tx_calendarize_domain_model_configuration.end_date">
 				<source>End date - duration (optionally)</source>

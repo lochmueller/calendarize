@@ -442,6 +442,7 @@ return [
         ],
         'day' => [
             'label' => $ll . 'tx_calendarize_domain_model_configuration.day',
+            'description' => $ll . 'tx_calendarize_domain_model_configuration.day.description',
             'exclude' => true,
             'config' => [
                 'type' => 'select',
@@ -497,8 +498,13 @@ return [
             ],
             'displayCond' => [
                 'OR' => [
+                    // Anchor of the recurrence (e.g. the first monday of the month)
                     'FIELD:frequency:=:' . Configuration::FREQUENCY_MONTHLY,
                     'FIELD:frequency:=:' . Configuration::FREQUENCY_YEARLY,
+                    // Limit the generated items to the selected weekdays
+                    'FIELD:frequency:=:' . Configuration::FREQUENCY_MINUTELY,
+                    'FIELD:frequency:=:' . Configuration::FREQUENCY_HOURLY,
+                    'FIELD:frequency:=:' . Configuration::FREQUENCY_DAILY,
                 ],
             ],
         ],

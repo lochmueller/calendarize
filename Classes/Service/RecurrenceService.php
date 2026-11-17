@@ -99,7 +99,7 @@ class RecurrenceService extends AbstractService implements LoggerAwareInterface
     /**
      * Numbers are match against the date format 'N' 1 => mon till 7 => sun.
      */
-    protected function getValidDays(string $dayString): array
+    public function getValidDays(string $dayString): array
     {
         $days = [];
         $dayList = GeneralUtility::trimExplode(',', $dayString, true);

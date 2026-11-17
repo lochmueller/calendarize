@@ -54,6 +54,7 @@ The generation of (event) configurations currently support following properties 
     *   until / last date (`UNTIL`)
     *   the number of occurrences (`COUNT`)
     *   (simple) recurrences with monthly/yearly frequencies (e.g. every first Monday into the month) (`BYDAY`, `BYSETPOS`)
+    *   limitation of minutely/hourly/daily frequencies to certain weekdays (e.g. every day, but only on Monday and Wednesday) (`BYDAY`)
 
 In addition to them the **default event** makes use of:
 

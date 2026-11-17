@@ -198,10 +198,23 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         }
 
         // BYDAY (OPTIONAL)
-        if (
-            ($rrule['BYDAY'] ?? false)
-            && \in_array($frequency, [ConfigurationInterface::FREQUENCY_MONTHLY, ConfigurationInterface::FREQUENCY_YEARLY], true)
-        ) {
+        // For monthly/yearly frequencies the day is the anchor of the recurrence ("expand"),
+        // for the day based frequencies it limits the generated dates to these weekdays ("limit").
+        $supportsRecurrence = \in_array(
+            $frequency,
+            [ConfigurationInterface::FREQUENCY_MONTHLY, ConfigurationInterface::FREQUENCY_YEARLY],
+            true,
+        );
+        $supportsDayFilter = \in_array(
+            $frequency,
+            [
+                ConfigurationInterface::FREQUENCY_MINUTELY,
+                ConfigurationInterface::FREQUENCY_HOURLY,
+                ConfigurationInterface::FREQUENCY_DAILY,
+            ],
+            true,
+        );
+        if (($rrule['BYDAY'] ?? false) && ($supportsRecurrence || $supportsDayFilter)) {
             if (\is_array($rrule['BYDAY'])) {
                 $byDay = $rrule['BYDAY'];
             } else {
@@ -230,7 +243,16 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
 
             // The numeric values corresponds to an offset in the month (e.g. first/last)
             // Only valid for monthly/yearly frequencies
-            if (1 === \count($nthDays)) {
+            if (!empty($nthDays) && !$supportsRecurrence) {
+                $this->logger->warning(
+                    'Numeric values in BYDAY are not supported for the "{frequency}" frequency.',
+                    [
+                        'frequency' => $frequency,
+                        'nthDays' => $nthDays,
+                        'importId' => $importId,
+                    ],
+                );
+            } elseif (1 === \count($nthDays)) {
                 // Currently, recurrence is only supported for one day of the week
                 // Other construct are not supported
                 $recurrence = self::RECURRENCE_MAPPING[$nthDays[0]] ?? false;
@@ -250,7 +272,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
             }
 
             // BYSETPOS can be a comma separated list, however this only supports one value
-            if (MathUtility::canBeInterpretedAsInteger($rrule['BYSETPOS'] ?? '')) {
+            if ($supportsRecurrence && MathUtility::canBeInterpretedAsInteger($rrule['BYSETPOS'] ?? '')) {
                 // only relevant for monthly/yearly frequencies with BYDAY set
                 $setPos = (int)$rrule['BYSETPOS'];
 
