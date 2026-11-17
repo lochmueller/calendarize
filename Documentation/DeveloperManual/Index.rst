@@ -9,5 +9,6 @@ For developers
     Features/Index
     Features/SpeakingUrl
     Bookings
+    BackendLabelImpact
     TypoScript
     PageTSConfig

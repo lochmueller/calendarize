@@ -4,18 +4,38 @@ declare(strict_types=1);
 
 namespace HDNET\Calendarize\Service;
 
+use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
+use HDNET\Calendarize\Utility\HelperUtility;
 use HDNET\Calendarize\Utility\TranslateUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
 /**
  * TCA service.
  */
 class TcaService extends AbstractService
 {
+    /**
+     * The configuration only affects dates that are already over.
+     */
+    public const IMPACT_PAST = 'past';
+
+    /**
+     * The configuration (also) affects dates of today or of the future.
+     */
+    public const IMPACT_FUTURE = 'future';
+
+    /**
+     * Runtime cache for the already calculated impacts.
+     *
+     * @var array<int, string|null>
+     */
+    protected static array $impactCache = [];
+
     /**
      * Render the configuration title.
      */
@@ -25,19 +45,99 @@ class TcaService extends AbstractService
         $this->migrateFormEngineRow($row);
 
         $handling = \is_array($row['handling']) ? array_shift($row['handling']) : $row['handling'];
-        $params['title'] .= '<b>' . TranslateUtility::get('configuration.type.' . $row['type'])
+        $title = '<b>' . TranslateUtility::get('configuration.type.' . $row['type'])
             . ' (' . TranslateUtility::get('configuration.handling.' . $handling) . ')</b><br /> ';
         switch ($row['type']) {
             case ConfigurationInterface::TYPE_TIME:
-                $params['title'] .= $this->getConfigurationTitleTime($row);
+                $title .= $this->getConfigurationTitleTime($row);
                 break;
             case ConfigurationInterface::TYPE_GROUP:
-                $params['title'] .= $this->getConfigurationGroupTitle($row);
+                $title .= $this->getConfigurationGroupTitle($row);
                 break;
             case ConfigurationInterface::TYPE_EXTERNAL:
-                $params['title'] .= 'URL: ' . $row['external_ics_url'];
+                $title .= 'URL: ' . $row['external_ics_url'];
                 break;
         }
+
+        // The impact is only relevant for the inline records in the backend form. Other
+        // contexts (e.g. the event label in record lists) can skip the calculation.
+        $impact = false !== ($params['calculateImpact'] ?? true) ? $this->getConfigurationImpact($row) : null;
+        if (null !== $impact) {
+            $title = '<span data-impact="' . htmlspecialchars($impact) . '">' . $title . '</span>';
+        }
+
+        $params['title'] .= $title;
+    }
+
+    /**
+     * Check, if the given configuration row has any impact in the past (all dates are over)
+     * or in the future (there is at least one date of today or later). Returns null, if the
+     * impact can not be calculated (e.g. new records or external calendars, that would have
+     * to be downloaded for every single rendering of the label).
+     */
+    protected function getConfigurationImpact(array $row): ?string
+    {
+        $uid = $row['uid'] ?? null;
+        if (!MathUtility::canBeInterpretedAsInteger($uid)) {
+            return null;
+        }
+        $uid = (int)$uid;
+
+        if (!\in_array($row['type'], [
+            ConfigurationInterface::TYPE_TIME,
+            ConfigurationInterface::TYPE_GROUP,
+        ], true)) {
+            return null;
+        }
+
+        if (\array_key_exists($uid, self::$impactCache)) {
+            return self::$impactCache[$uid];
+        }
+
+        self::$impactCache[$uid] = $this->calculateConfigurationImpact($uid);
+
+        return self::$impactCache[$uid];
+    }
+
+    /**
+     * Execute the configuration to check, if there is any date of today or of the future.
+     */
+    protected function calculateConfigurationImpact(int $uid): ?string
+    {
+        $record = BackendUtility::getRecordWSOL('tx_calendarize_domain_model_configuration', $uid);
+        if (!\is_array($record)) {
+            return null;
+        }
+
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
+        $configuration = $dataMapper->map(Configuration::class, [$record])[0] ?? null;
+        if (!($configuration instanceof Configuration)) {
+            return null;
+        }
+
+        $timeTableService = GeneralUtility::makeInstance(TimeTableService::class);
+        // The label is rendered in a "dry run" context, so do not bother the editor with
+        // flash messages of the executed configurations (the indexer already handles them).
+        $times = HelperUtility::silentFlashMessages(
+            static fn(): array => $timeTableService->getTimesByConfiguration($configuration),
+        );
+
+        if (empty($times)) {
+            return null;
+        }
+
+        $today = DateTimeUtility::resetTime(DateTimeUtility::getNow());
+        foreach ($times as $time) {
+            $date = $time['end_date'] ?? $time['start_date'] ?? null;
+            if (!($date instanceof \DateTimeInterface)) {
+                continue;
+            }
+            if ($date >= $today) {
+                return self::IMPACT_FUTURE;
+            }
+        }
+
+        return self::IMPACT_PAST;
     }
 
     /**
@@ -81,6 +181,7 @@ class TcaService extends AbstractService
                     $value,
                 ) ?? [],
                 'title' => '',
+                'calculateImpact' => false,
             ];
             $this->configurationTitle($paramsInternal);
             $configurations[$key] = strip_tags($paramsInternal['title']);

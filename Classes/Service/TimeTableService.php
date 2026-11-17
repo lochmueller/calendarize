@@ -105,6 +105,26 @@ class TimeTableService extends AbstractService
     }
 
     /**
+     * Build the times of a single configuration, independent of its handling (include, exclude,
+     * cutout, override). Useful to check, if the configuration itself has any impact in the past
+     * or in the future.
+     */
+    public function getTimesByConfiguration(Configuration $configuration): array
+    {
+        $times = [];
+
+        try {
+            $handler = $this->buildConfigurationHandler($configuration);
+        } catch (\Exception $exception) {
+            return $times;
+        }
+
+        $handler->handleConfiguration($times, $configuration);
+
+        return $times;
+    }
+
+    /**
      * Selects events by given times.
      */
     public function selectTimesBy(array $base, array $selectBy): array

@@ -23,6 +23,30 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class HelperUtility
 {
     /**
+     * If this is false, all flash messages created by this utility are dropped.
+     *
+     * @see silentFlashMessages()
+     */
+    protected static bool $flashMessagesEnabled = true;
+
+    /**
+     * Execute the given callback without creating any flash message. Useful for "dry run"
+     * executions (e.g. the backend label rendering), that should not notify the user about
+     * problems of the processed records.
+     */
+    public static function silentFlashMessages(\Closure $callback): mixed
+    {
+        $before = self::$flashMessagesEnabled;
+        self::$flashMessagesEnabled = false;
+
+        try {
+            return $callback();
+        } finally {
+            self::$flashMessagesEnabled = $before;
+        }
+    }
+
+    /**
      * Get the query for the given class name oder object.
      */
     public static function getQuery(string|object $objectName): QueryInterface
@@ -47,6 +71,10 @@ class HelperUtility
         string $title = '',
         ContextualFeedbackSeverity $mode = ContextualFeedbackSeverity::OK,
     ): void {
+        if (!self::$flashMessagesEnabled) {
+            return;
+        }
+
         $storeInSession = !Environment::isCli();
         $flashMessage = GeneralUtility::makeInstance(FlashMessage::class, $message, $title, $mode, $storeInSession);
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
