@@ -2,7 +2,11 @@
 
 namespace HDNET\Calendarize\Tests\Unit\Service;
 
+use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
+use HDNET\Calendarize\Ical\VObjectEventAdapter;
+use Sabre\VObject\Reader;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use HDNET\Calendarize\Service\EventConfigurationService;
 use HDNET\Calendarize\Tests\Unit\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
@@ -121,5 +125,53 @@ class EventConfigurationServiceTest extends AbstractUnitTestCase
         }
 
         self::assertEqualsCanonicalizing($expected, $row);
+    }
+
+    public function testHydrateCalendarizeAddsAndCleansUpExclusions(): void
+    {
+        $timezone = @date_default_timezone_get();
+        date_default_timezone_set('UTC');
+
+        $ics = 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//CalendarizeTest
+BEGIN:VEVENT
+UID:series@example.com
+DTSTART:20240101T100000Z
+DTEND:20240101T110000Z
+RRULE:FREQ=WEEKLY;COUNT=5
+%s
+END:VEVENT
+END:VCALENDAR
+';
+        $subject = new EventConfigurationService();
+        $subject->setLogger(new NullLogger());
+        $calendarize = new ObjectStorage();
+
+        try {
+            $event = new VObjectEventAdapter(Reader::read(\sprintf($ics, 'EXDATE:20240108T100000Z,20240115T100000Z'))->VEVENT);
+            $subject->hydrateCalendarize($calendarize, $event, 'series', 1);
+
+            $configurations = iterator_to_array($calendarize, false);
+            self::assertCount(3, $configurations);
+            /** @var Configuration $exclude */
+            $exclude = $configurations[1];
+            self::assertSame(ConfigurationInterface::HANDLING_EXCLUDE, $exclude->getHandling());
+            self::assertSame('2024-01-08', $exclude->getStartDate()->format('Y-m-d'));
+            self::assertSame(36000, $exclude->getStartTime());
+            self::assertSame(ConfigurationInterface::FREQUENCY_NONE, $exclude->getFrequency());
+
+            // Re-import without the first EXDATE removes the outdated exclusion
+            $event = new VObjectEventAdapter(Reader::read(\sprintf($ics, 'EXDATE:20240115T100000Z'))->VEVENT);
+            $subject->hydrateCalendarize($calendarize, $event, 'series', 1);
+
+            $importIds = array_map(
+                static fn(Configuration $configuration) => $configuration->getImportId(),
+                iterator_to_array($calendarize, false),
+            );
+            self::assertSame(['series', 'series-exclude-20240115T36000'], $importIds);
+        } finally {
+            date_default_timezone_set($timezone);
+        }
     }
 }

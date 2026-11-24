@@ -7,6 +7,7 @@ namespace HDNET\Calendarize\Service;
 use HDNET\Calendarize\Domain\Model\Configuration;
 use HDNET\Calendarize\Domain\Model\ConfigurationInterface;
 use HDNET\Calendarize\Ical\EventConfigurationInterface;
+use HDNET\Calendarize\Ical\EventExclusionInterface;
 use HDNET\Calendarize\Utility\DateTimeUtility;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -30,6 +31,7 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         'FR' => ConfigurationInterface::DAY_FRIDAY,
         'SA' => ConfigurationInterface::DAY_SATURDAY,
     ];
+    public const EXCLUDE_IMPORT_ID_SEPARATOR = '-exclude-';
     public const RECURRENCE_MAPPING = [
         -3 => ConfigurationInterface::RECURRENCE_THIRD_LAST,
         -2 => ConfigurationInterface::RECURRENCE_NEXT_TO_LAST,
@@ -74,6 +76,63 @@ class EventConfigurationService extends AbstractService implements LoggerAwareIn
         $configuration->setEndTime($event->getEndTime());
 
         $this->hydrateRecurringConfiguration($configuration, $event->getRRule(), $importId);
+
+        $excludedDates = $event instanceof EventExclusionInterface ? $event->getExcludedDates() : [];
+        $this->hydrateExclusionConfigurations($calendarize, $event, $excludedDates, $importId, $pid);
+    }
+
+    /**
+     * Adds an exclude configuration for each excluded occurrence (EXDATE / RECURRENCE-ID)
+     * and removes exclude configurations of previous imports, that are no longer part of the event.
+     *
+     * @param ObjectStorage<Configuration> $calendarize
+     * @param \DateTimeInterface[]         $excludedDates
+     */
+    protected function hydrateExclusionConfigurations(
+        ObjectStorage $calendarize,
+        EventConfigurationInterface $event,
+        array $excludedDates,
+        string $importId,
+        int $pid,
+    ): void {
+        $prefix = $importId . self::EXCLUDE_IMPORT_ID_SEPARATOR;
+        $validImportIds = [];
+
+        foreach ($excludedDates as $excludedDate) {
+            if ($event->isAllDay()) {
+                // Allows the date to be reparsed with the right timezone (see adapters).
+                $startDate = DateTimeUtility::getDayStart($excludedDate->format('Y-m-d'));
+                $startTime = 0;
+            } else {
+                $startDate = DateTimeUtility::getDayStart(DateTimeUtility::normalizeDateTimeSingle($excludedDate));
+                $startTime = DateTimeUtility::getNormalizedDaySecondsOfDateTime($excludedDate);
+            }
+
+            $excludeImportId = $prefix . $startDate->format('Ymd') . 'T' . $startTime;
+            $validImportIds[] = $excludeImportId;
+
+            $configuration = $this->getOrCreateConfiguration($calendarize, $excludeImportId);
+            $configuration->setPid($pid);
+            $configuration->setType(ConfigurationInterface::TYPE_TIME);
+            $configuration->setHandling(ConfigurationInterface::HANDLING_EXCLUDE);
+            $configuration->setState(ConfigurationInterface::STATE_DEFAULT);
+            $configuration->setAllDay($event->isAllDay());
+            $configuration->setOpenEndTime(false);
+            $configuration->setStartDate($startDate);
+            $configuration->setEndDate($startDate);
+            // The exclusion covers the start of the occurrence, so only the matching occurrence is removed.
+            $configuration->setStartTime($startTime);
+            $configuration->setEndTime(min($startTime + 1, DateTimeUtility::SECONDS_DAY - 1));
+            $this->hydrateRecurringConfiguration($configuration, [], $excludeImportId);
+        }
+
+        foreach (iterator_to_array($calendarize, false) as $item) {
+            /** @var Configuration $item */
+            $itemImportId = (string)$item->getImportId();
+            if (str_starts_with($itemImportId, $prefix) && !\in_array($itemImportId, $validImportIds, true)) {
+                $calendarize->detach($item);
+            }
+        }
     }
 
     /**

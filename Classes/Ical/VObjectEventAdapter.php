@@ -9,7 +9,7 @@ use HDNET\Calendarize\Utility\DateTimeUtility;
 use Sabre\VObject\Component\VEvent;
 use Sabre\VObject\Property;
 
-class VObjectEventAdapter implements ICalEvent
+class VObjectEventAdapter implements ICalEvent, EventExclusionInterface
 {
     protected VEvent $event;
 
@@ -46,7 +46,54 @@ class VObjectEventAdapter implements ICalEvent
      */
     public function getUid(): string
     {
-        return $this->event->UID->getValue();
+        $uid = (string)$this->event->UID?->getValue();
+
+        // Modified occurrences of a recurring event share the UID of the main event
+        // and are identified by the additional RECURRENCE-ID (RFC 5545, 3.8.4.4).
+        if (isset($this->event->{'RECURRENCE-ID'})) {
+            $uid .= '-' . $this->event->{'RECURRENCE-ID'}->getValue();
+        }
+
+        return $uid;
+    }
+
+    /**
+     * Excluded occurrences of the recurrence: all EXDATE values and the original dates of
+     * occurrences, that are modified by separate VEVENTs with the same UID and a RECURRENCE-ID.
+     *
+     * {@inheritdoc}
+     */
+    public function getExcludedDates(): array
+    {
+        if (!isset($this->event->RRULE) || isset($this->event->{'RECURRENCE-ID'})) {
+            return [];
+        }
+
+        $dates = [];
+        foreach ($this->event->select('EXDATE') as $exDate) {
+            if ($exDate instanceof Property\ICalendar\DateTime) {
+                foreach ($exDate->getDateTimes() as $dateTime) {
+                    $dates[] = $dateTime;
+                }
+            }
+        }
+
+        $uid = (string)$this->event->UID?->getValue();
+        $calendar = $this->event->parent;
+        if ('' !== $uid && null !== $calendar) {
+            foreach ($calendar->select('VEVENT') as $sibling) {
+                if (
+                    $sibling !== $this->event
+                    && isset($sibling->{'RECURRENCE-ID'})
+                    && (string)$sibling->UID?->getValue() === $uid
+                    && $sibling->{'RECURRENCE-ID'} instanceof Property\ICalendar\DateTime
+                ) {
+                    $dates[] = $sibling->{'RECURRENCE-ID'}->getDateTime();
+                }
+            }
+        }
+
+        return $dates;
     }
 
     /**
