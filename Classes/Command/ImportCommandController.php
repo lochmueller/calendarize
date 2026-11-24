@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Calendarize\Command;
 
 use HDNET\Calendarize\Event\ImportSingleIcalEvent;
+use HDNET\Calendarize\Event\ImportStartEvent;
 use HDNET\Calendarize\Exception\UnableToGetFileForUrlException;
 use HDNET\Calendarize\Service\Ical\ICalServiceInterface;
 use HDNET\Calendarize\Service\Ical\ICalUrlService;
@@ -53,6 +54,13 @@ class ImportCommandController extends Command
                 'Imports all events since the given date.' . \chr(10)
                 . 'Valid PHP date format e.g. "2014-04-14", "-10 days"' . \chr(10)
                 . '(Note: use --since="-x days" syntax on the console)',
+            )
+            ->addOption(
+                'disable-not-imported',
+                'd',
+                InputOption::VALUE_NONE,
+                'Disables all previously imported events on the given page, that are not part of the current import'
+                . ' (e.g. removed in the external calendar).',
             );
     }
 
@@ -115,6 +123,9 @@ class ImportCommandController extends Command
 
         $io->text('Found ' . \count($events) . ' events in ' . $icsCalendarUri);
 
+        $disableNotImported = (bool)$input->getOption('disable-not-imported');
+        $this->eventDispatcher->dispatch(new ImportStartEvent($icsCalendarUri, $pid, $disableNotImported));
+
         $io->section('Send ImportSingleIcalEvent for each event');
         $io->progressStart(\count($events));
 
@@ -136,7 +147,7 @@ class ImportCommandController extends Command
         $io->text('Dispatched ' . $dispatchCount . ' Events');
         $io->text('Skipped ' . $skipCount . ' Events');
 
-        if ($dispatchCount > 0) {
+        if ($dispatchCount > 0 || $disableNotImported) {
             $io->section('Run Reindex process after import');
             $this->indexerService->reindexAll();
         }

@@ -9,6 +9,8 @@ An external ICS calendar can be imported with a scheduler task.
 For this the scheduler task creates default events on the given pid.
 If an event already exists (determined by UID inside importId) on **ANY pid**, the event only gets updated.
 For your own events implement the :file:`ImportSingleIcalEventListener`.
+Before the single events are dispatched, the :php:`HDNET\Calendarize\Event\ImportStartEvent`
+is dispatched once (e.g. to disable outdated events of your own event models).
 
 #.  Add a new Scheduler Task
 #.  Select the class :guilabel:`Execute console commands`
@@ -32,6 +34,12 @@ Arguments
 | since          | Imports all events since the given date.                  | 2020-07-23                                                                                                 |
 | (optional)     | You can use relative and absolute PHP dates.              |                                                                                                            |
 |                | Note: For recurring even only the start date is relevant. | -10 days                                                                                                   |
++----------------+-----------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| disable-not-   | Disables all previously imported events on the given pid, | (checkbox / flag)                                                                                          |
+| imported       | that are not part of the current import (e.g. events that |                                                                                                            |
+| (optional)     | were removed in the external calendar). Events without an |                                                                                                            |
+|                | importId (created manually) are not touched. Do not use   |                                                                                                            |
+|                | this flag, if multiple calendars are imported to one pid. |                                                                                                            |
 +----------------+-----------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
 

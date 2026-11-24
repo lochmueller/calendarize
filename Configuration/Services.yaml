@@ -26,6 +26,12 @@ services:
         identifier: 'importSingelIcal'
         event: HDNET\Calendarize\Event\ImportSingleIcalEvent
 
+  HDNET\Calendarize\EventListener\ImportStartEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'calendarizeImportStart'
+        event: HDNET\Calendarize\Event\ImportStartEvent
+
   HDNET\Calendarize\EventListener\BookingCountriesListener:
     tags:
       - name: event.listener
